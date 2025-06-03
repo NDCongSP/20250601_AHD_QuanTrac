@@ -1,0 +1,13 @@
+﻿@typeparam TItem
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+<div class="@(!_showList ? "hidden" : null)">
+    @ListView(_listContext)
+</div>
+@if (_showDetail)
+{
+    @DetailView(_detailContext)
+}
