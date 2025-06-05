@@ -1,0 +1,477 @@
+﻿@page "/"
+@using System.Text.RegularExpressions
+@using Radzen.Blazor.Rendering
+
+<RadzenStack Gap="1rem" Style="position: relative">
+    <RadzenCard Visible=@fetchingData Style="z-index: 3; text-align: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, .5)">
+        <RadzenCard Visible=@(error == null) class="rz-my-12 rz-mx-auto rz-p-12" Style="width: 80%">
+            <RadzenText TextStyle="TextStyle.H6" class="rz-my-12">Fetching data from GitHub...</RadzenText>
+            <RadzenText TextStyle="TextStyle.Subtitle1">Page @currentPage of @totalPages</RadzenText>
+            <RadzenProgressBar Value=@currentPage Max=@totalPages ShowValue="false" Style="display: inline-block; width: 180px; margin-top: 16px" />
+        </RadzenCard>
+        <RadzenCard Visible=@(error != null) class="rz-my-12 rz-mx-auto rz-p-12" Style="width: 80%">
+            <RadzenText TextStyle="TextStyle.H6" class="rz-my-8">An error has occurred: @error. Try reloading your browser.</RadzenText>
+        </RadzenCard>
+    </RadzenCard>
+
+    <RadzenRow Style="--rz-text-h2-line-height: 1; --rz-text-h2-font-weight: 200;">
+        <RadzenColumn Size="12" SizeMD="12" SizeXL="2">
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="4" SizeXL="12">
+                    <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                        <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Style="height: 100%;">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenText TextStyle="TextStyle.H6">Progress</RadzenText>
+                                <RadzenText TextStyle="TextStyle.H2" class="rz-color-info rz-m-0">@($"{Math.Round(closeRatioPercentage)}%")</RadzenText>
+                            </RadzenStack>
+                            <RadzenProgressBar ProgressBarStyle="ProgressBarStyle.Info" @bind-Value=@closeRatioPercentage ShowValue="false" Style="--rz-progressbar-background-color: var(--rz-info-lighter); --rz-progressbar-height: 1rem;" />
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" SizeXL="12">
+                    <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                        <RadzenStack Gap="0">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenText TextStyle="TextStyle.H6">Open Issues</RadzenText>
+                                <RadzenText TextStyle="TextStyle.H2" class="rz-color-success rz-m-0">@openIssues?.Count()</RadzenText>
+                            </RadzenStack>
+                            <RadzenSparkline Style="width: 100%; height: 80px;">
+                                <RadzenColumnSeries Data=@openIssuesByDate ValueProperty="Count" CategoryProperty="Week" Title="Issues" Fill="var(--rz-success)" />
+                                <RadzenColumnOptions Margin="0" />
+                                <RadzenCategoryAxis Padding="20" Visible="false" />
+                            </RadzenSparkline>
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" SizeXL="12">
+                    <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                        <RadzenStack Gap="0">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenText TextStyle="TextStyle.H6">Closed Issues</RadzenText>
+                                <RadzenText TextStyle="TextStyle.H2" class="rz-color-danger rz-m-0">@closedIssues?.Count()</RadzenText>
+                            </RadzenStack>
+                            <RadzenSparkline Style="width: 100%; height: 80px;">
+                                <RadzenColumnSeries Data=@closedIssuesByDate ValueProperty="Count" CategoryProperty="Week" Title="Issues" Fill="var(--rz-danger)" />
+                                <RadzenColumnOptions Margin="0" Width="30" />
+                                <RadzenCategoryAxis Padding="20" Visible="false" />
+                            </RadzenSparkline>
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                <RadzenStack Style="height: 100%;" JustifyContent="JustifyContent.SpaceBetween">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                        <RadzenText TextStyle="TextStyle.H6">All Issues</RadzenText>
+                        <RadzenText TextStyle="TextStyle.H2" class="rz-m-0">@issues?.Count()</RadzenText>
+                    </RadzenStack>
+                    <RadzenChart Style="width: 100%; height: 80%;">
+                        <RadzenAreaSeries Data=@openIssuesByDate ValueProperty="Count" CategoryProperty="Week" Title="Open Issues" Smooth="true" Stroke="var(--rz-success)" Fill="var(--rz-success-lighter)">
+                            <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                        </RadzenAreaSeries>
+                        <RadzenAreaSeries Data=@closedIssuesByDate ValueProperty="Count" CategoryProperty="Week" Title="Closed Issues" Smooth="true" Stroke="var(--rz-danger)" Fill="var(--rz-danger-lighter)">
+                            <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                        </RadzenAreaSeries>
+                        <RadzenValueAxis>
+                            <RadzenGridLines Visible="true" />
+                        </RadzenValueAxis>
+                        <RadzenCategoryAxis Padding="40" Formatter=@(value => ((DateTime)value).ToString("MMMM d")) />
+                        <RadzenLegend Visible="false" />
+                    </RadzenChart>
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeXL="4">
+            <RadzenCard Variant="Variant.Outlined" Style="height: 100%; --rz-card-padding: 0;">
+                <RadzenTabs Style="height: 100%; min-height: 330px">
+                    <Tabs>
+                        <RadzenTabsItem Text="Top Contributors">
+                            <RadzenChart Style="width: 100%; height: 100%;">
+                                <RadzenDonutSeries Data=@openByGroups CategoryProperty="Name" ValueProperty="Count" />
+                            </RadzenChart>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Top Labels">
+                            <RadzenChart Style="width: 100%; height: 100%;">
+                                <RadzenDonutSeries Data=@labelGroups CategoryProperty="Label" ValueProperty="Count" Fills=@labelColors />
+                            </RadzenChart>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Most Active Member">
+                            <div class="rz-text-align-center">
+                                <img Style="width: 120px; border-radius: 50%; margin: 20px 0;" src=@mostActiveMember?.AvatarUrl alt="Most active member avatar" />
+                                <h4>
+                                    @mostActiveMember?.Login
+                                </h4>
+                            </div>
+                        </RadzenTabsItem>
+                    </Tabs>
+                </RadzenTabs>
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn Size="12">
+            <RadzenDataGrid Data=@filteredIssues Style="height: 600px" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" AllowSorting="true">
+                <HeaderTemplate>
+                    <RadzenDropDown Data=@issueStates @bind-Value="selectedState" Change=@FilterIssues>
+                        <Template Context="issueState">
+                            @Enum.GetName(typeof(IssueState), issueState) issues
+                        </Template>
+                    </RadzenDropDown>
+                </HeaderTemplate>
+                <Columns>
+                    <RadzenDataGridColumn Property="@nameof(Issue.State)" Title="State" Width="120px">
+                        <FilterTemplate>
+                            <RadzenDropDown Style="width: 100%" Data=@issueStates @bind-Value="selectedState" Change=@FilterIssues>
+                                <Template Context="issueState">
+                                    @issueState.ToString()
+                                </Template>
+                            </RadzenDropDown>
+                        </FilterTemplate>
+                        <Template Context="issue">
+                            @if (issue.State == IssueState.Open)
+                            {
+                                <RadzenBadge Text="Open" IsPill="true" Variant="Variant.Flat" Shade="Shade.Light" BadgeStyle="BadgeStyle.Success" Style="width: 60px;" />
+                            }
+                            else
+                            {
+                                <RadzenBadge Text="Closed" IsPill="true" Variant="Variant.Flat" Shade="Shade.Light" BadgeStyle="BadgeStyle.Danger" Style="width: 60px;" />
+                            }
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Property="@nameof(Issue.Title)" Title="Title" Width="650px">
+                        <Template Context="issue">
+                            <RadzenLink Path=@issue.Url Text=@issue.Title Target="_blank" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Labels" Sortable="false">
+                        <FilterTemplate>
+                            <RadzenDropDown Style="width: 100%" AllowClear="true" AllowFiltering="true" Multiple="true" Data=@labels @bind-Value="selectedLabels" Change=@FilterIssues>
+                                <Template Context="label">
+                                    @Regex.Replace(label, ":\\w+:", "")
+                                </Template>
+                            </RadzenDropDown>
+                        </FilterTemplate>
+
+                        <Template Context="issue">
+                            @foreach (var label in issue.Labels)
+                            {
+                                <span class="rz-badge rz-badge-pill rz-me-1 rz-mb-1" Style="background-color: #@label.Color">@Regex.Replace(label.Name, ":\\w+:", "")</span>
+                            }
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="User" Property="User.Login" FilterValue="@selectedUser?.Login">
+                        <FilterTemplate>
+                            <RadzenDropDown AllowClear="true" AllowFiltering="true" Data=@users TextProperty="Login" @bind-Value="selectedUser" Change=@FilterIssues>
+                                <Template Context="user">
+                                    <div Style="white-space: nowrap">
+                                        <img Style="width: 24px; height: 24px; border-radius: 50%; margin-inline-end: 8px;" src=@user.AvatarUrl alt="User avatar" />@user.Login
+                                    </div>
+                                </Template>
+                            </RadzenDropDown>
+                        </FilterTemplate>
+                        <Template Context="issue">
+                            <img Style="width: 32px; height: 32px; border-radius: 50%; margin-inline-end: 8px; border: 1px solid #cccccc;" src=@issue.User.AvatarUrl alt="User avatar" /><b>@issue.User.Login</b>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenStack>
+
+<style>
+    .rz-tabview-panel {
+        height: 100%;
+    }
+
+    .rz-default,
+    .rz-dark,
+    .rz-standard,
+    .rz-standard-dark,
+    .rz-software,
+    .rz-software-dark,
+    .rz-humanistic,
+    .rz-humanistic-dark {
+        .rz-card:has(.rz-tabview)
+
+    {
+        --rz-card-border: none;
+    }
+
+    }
+</style>
+
+@code {
+    // Initial model and fake data for demonstration
+
+    public class Issue
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public IssueState State { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ClosedAt { get; set; }
+        public User User { get; set; }
+        public List<User> Assignees { get; set; }
+        public List<Label> Labels { get; set; }
+    }
+
+    public class User
+    {
+        public string Login { get; set; }
+        public string AvatarUrl { get; set; }
+    }
+
+    public class Label
+    {
+        public string Name { get; set; }
+        public string Color { get; set; }
+    }
+
+    public enum IssueState
+    {
+        All,
+        Open,
+        Closed
+    }
+
+    IEnumerable<Issue> issues;
+    IEnumerable<Issue> openIssues;
+    IEnumerable<Issue> closedIssues;
+
+    class IssueGroup
+    {
+        public int Count { get; set; }
+        public DateTime Week { get; set; }
+    }
+
+    class LabelGroup
+    {
+        public int Count { get; set; }
+        public string Label { get; set; }
+        public string Color { get; set; }
+    }
+
+    class UserGroup
+    {
+        public int Count { get; set; }
+        public string Name { get; set; }
+    }
+
+    IEnumerable<IssueGroup> openIssuesByDate;
+    IEnumerable<IssueGroup> closedIssuesByDate;
+    IEnumerable<LabelGroup> labelGroups;
+    IEnumerable<UserGroup> openByGroups;
+    IEnumerable<User> users;
+    IEnumerable<Issue> filteredIssues;
+    IEnumerable<string> labels;
+    IEnumerable<string> selectedLabels;
+    IEnumerable<IssueState> issueStates = Enum.GetValues(typeof(IssueState)).Cast<IssueState>();
+    IEnumerable<string> labelColors;
+    IssueState selectedState = IssueState.All;
+    User mostActiveMember;
+    User selectedUser;
+    double closeRatio = 0;
+    double closeRatioPercentage = 0;
+    int currentPage = 1;
+    int totalPages = 1;
+    bool fetchingData = false;
+    string error = null;
+
+    class UserComparer : IEqualityComparer<User>
+    {
+        public bool Equals(User x, User y)
+        {
+            return x.Login.Equals(y.Login);
+        }
+
+        public int GetHashCode(User user)
+        {
+            return user.Login.GetHashCode();
+        }
+    }
+
+    class LabelComparer : IEqualityComparer<Label>
+    {
+        public bool Equals(Label x, Label y)
+        {
+            return x.Name.Equals(y.Name);
+        }
+
+        public int GetHashCode(Label user)
+        {
+            return user.Name.GetHashCode();
+        }
+    }
+
+    void FilterIssues()
+    {
+        filteredIssues = issues.OrderByDescending(issue => issue.CreatedAt);
+
+        if (selectedUser != null)
+        {
+            filteredIssues = filteredIssues.Where(issue => issue.User.Login == selectedUser.Login);
+        }
+
+        if (selectedLabels != null && selectedLabels.Any())
+        {
+            foreach (var selectedLabel in selectedLabels)
+            {
+                filteredIssues = filteredIssues.Where(issue => issue.Labels.Any(label => label.Name == selectedLabel));
+            }
+        }
+
+        if (selectedState != IssueState.All)
+        {
+            filteredIssues = filteredIssues.Where(issue => issue.State == selectedState);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        // Fake users
+        var user1 = new User { Login = "alice", AvatarUrl = "https://i.pravatar.cc/120?img=1" };
+        var user2 = new User { Login = "bob", AvatarUrl = "https://i.pravatar.cc/120?img=2" };
+        var user3 = new User { Login = "carol", AvatarUrl = "https://i.pravatar.cc/120?img=3" };
+
+        // Fake labels
+        var labelBug = new Label { Name = "bug", Color = "e74c3c" };
+        var labelFeature = new Label { Name = "feature", Color = "27ae60" };
+        var labelHelp = new Label { Name = "help wanted", Color = "f1c40f" };
+        var labelDocs = new Label { Name = "documentation", Color = "2980b9" };
+
+        // Fake issues
+        issues = new List<Issue>
+        {
+            new Issue
+            {
+                Id = 1,
+                Title = "Fix login bug",
+                Url = "https://github.com/fake/repo/issues/1",
+                State = IssueState.Open,
+                CreatedAt = DateTime.Now.AddDays(-10),
+                User = user1,
+                Assignees = new List<User> { user1 },
+                Labels = new List<Label> { labelBug, labelHelp }
+            },
+            new Issue
+            {
+                Id = 2,
+                Title = "Add new feature",
+                Url = "https://github.com/fake/repo/issues/2",
+                State = IssueState.Closed,
+                CreatedAt = DateTime.Now.AddDays(-20),
+                ClosedAt = DateTime.Now.AddDays(-5),
+                User = user2,
+                Assignees = new List<User> { user2 },
+                Labels = new List<Label> { labelFeature }
+            },
+            new Issue
+            {
+                Id = 3,
+                Title = "Improve documentation",
+                Url = "https://github.com/fake/repo/issues/3",
+                State = IssueState.Open,
+                CreatedAt = DateTime.Now.AddDays(-3),
+                User = user3,
+                Assignees = new List<User> { user3 },
+                Labels = new List<Label> { labelDocs }
+            },
+            new Issue
+            {
+                Id = 3,
+                Title = "Improve documentation",
+                Url = "https://github.com/fake/repo/issues/3",
+                State = IssueState.Open,
+                CreatedAt = DateTime.Now.AddDays(-7),
+                User = user3,
+                Assignees = new List<User> { user3 },
+                Labels = new List<Label> { labelDocs }
+            },
+            new Issue
+            {
+                Id = 4,
+                Title = "Refactor codebase",
+                Url = "https://github.com/fake/repo/issues/4",
+                State = IssueState.Closed,
+                CreatedAt = DateTime.Now.AddDays(-15),
+                ClosedAt = DateTime.Now.AddDays(-2),
+                User = user1,
+                Assignees = new List<User> { user1, user2 },
+                Labels = new List<Label> { labelFeature, labelDocs }
+            },
+            new Issue
+            {
+                Id = 5,
+                Title = "Update dependencies",
+                Url = "https://github.com/fake/repo/issues/5",
+                State = IssueState.Open,
+                CreatedAt = DateTime.Now.AddDays(-1),
+                User = user2,
+                Assignees = new List<User> { user2 },
+                Labels = new List<Label> { labelHelp }
+            }
+        };
+
+        openIssues = issues.Where(issue => issue.State == IssueState.Open).ToList();
+        closedIssues = issues.Where(issue => issue.State == IssueState.Closed).ToList();
+
+        closeRatio = issues.Any() ? closedIssues.Count() / (double)issues.Count() : 0;
+        closeRatioPercentage = closeRatio * 100;
+
+        // Fake grouping by week (just use CreatedAt week for open, ClosedAt week for closed)
+        openIssuesByDate = openIssues
+            .GroupBy(issue => StartOfWeek(issue.CreatedAt))
+            .Select(g => new IssueGroup { Week = g.Key, Count = g.Count() })
+            .OrderBy(g => g.Week)
+            .ToList();
+
+        closedIssuesByDate = closedIssues
+            .Where(issue => issue.ClosedAt.HasValue)
+            .GroupBy(issue => StartOfWeek(issue.ClosedAt.Value))
+            .Select(g => new IssueGroup { Week = g.Key, Count = g.Count() })
+            .OrderBy(g => g.Week)
+            .ToList();
+
+        labels = issues.SelectMany(issue => issue.Labels).Select(label => label.Name).Distinct().ToList();
+
+        labelGroups = issues.SelectMany(issue => issue.Labels)
+            .GroupBy(label => label, new LabelComparer())
+            .Select(g => new LabelGroup { Label = Regex.Replace(g.Key.Name, ":\\w+:", ""), Color = $"#{g.Key.Color}", Count = g.Count() })
+            .OrderByDescending(g => g.Count)
+            .Take(5)
+            .ToList();
+
+        labelColors = labelGroups.Select(lg => lg.Color).ToList();
+
+        openByGroups = issues.GroupBy(issue => issue.User.Login)
+            .Select(g => new UserGroup { Name = g.Key, Count = g.Count() })
+            .OrderByDescending(g => g.Count)
+            .Take(7)
+            .ToList();
+
+        mostActiveMember = issues.SelectMany(issue => issue.Assignees)
+            .GroupBy(u => u, new UserComparer())
+            .Select(g => new { User = g.Key, Count = g.Count() })
+            .OrderByDescending(g => g.Count)
+            .Select(g => g.User)
+            .FirstOrDefault();
+
+        users = issues.Select(issue => issue.User).Distinct(new UserComparer()).ToList();
+
+        filteredIssues = issues.OrderByDescending(issue => issue.CreatedAt).ToList();
+
+        fetchingData = false;
+        error = null;
+    }
+
+    DateTime StartOfWeek(DateTime dt)
+    {
+        var diff = (7 + (dt.DayOfWeek - DayOfWeek.Monday)) % 7;
+        return dt.AddDays(-1 * diff).Date;
+    }
+}

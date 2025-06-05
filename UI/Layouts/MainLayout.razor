@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+            <RadzenLabel Text="Hệ thống thông tin hỗ trợ vận hành CỔNG CÁI LỚN - CÁI BÉ" />
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar Responsive="false" Style="@(sidebarExpanded ? "width: 13vw" : "width: max-content")">
+        <RadzenPanelMenu DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
+            <RadzenPanelMenuItem Path="/" Text="Dashboard" Icon="dashboard" />
+            <RadzenPanelMenuItem Text="Quản lý trạm" Icon="home">
+                <RadzenPanelMenuItem Path="/gate-detail" Text="Trạm A" Icon="eject" />
+                <RadzenPanelMenuItem Path="/gate-detail-b" Text="Trạm B" Icon="eject" />
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Quản lý người dùng" Icon="account_box">
+                <RadzenPanelMenuItem Path="/users" Text="Danh sách" Icon="accessibility" />
+                <RadzenPanelMenuItem Path="/roles" Text="Roles" Icon="lock_open" />
+                <RadzenPanelMenuItem Path="/permissions" Text="Permisions" Icon="gavel" />
+            </RadzenPanelMenuItem>
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="rz-p-4">
+            @Body
+        </div>
+    </RadzenBody>
+@*     <RadzenFooter>
+        Footer
+    </RadzenFooter> *@
+</RadzenLayout>
+
+@code {
+    bool sidebarExpanded = true;
+}
