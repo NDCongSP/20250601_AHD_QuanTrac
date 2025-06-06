@@ -69,6 +69,7 @@
         margin-top: 10px;
         font-size: 14px;
     }
+
     .panel-title {
         font-weight: bold;
         padding: 8px 10px;
@@ -170,7 +171,7 @@
                             <div class="info-label">@info.Label</div>
                             <div class="info-value">
                                 @info.Value (@info.Unit)<br />
-                                <RadzenIcon Icon="access_time" /> @info.Time
+                                <i class="ri-time-line"></i> @info.Time
                             </div>
                         </div>
                     }
@@ -194,7 +195,7 @@
                             <div class="info-label">@info.Label</div>
                             <div class="info-value">
                                 @info.Value (@info.Unit)<br />
-                                <RadzenIcon Icon="access_time" /> @info.Time
+                                <i class="ri-time-line"></i> @info.Time
                             </div>
                         </div>
                     }
@@ -207,36 +208,78 @@
                     <div class="panel-title">@gateModel.StatusPanelTitle</div>
                     <div class="group-section">
                         <RadzenLabel Text="Trạng thái vận hành cửa cống" Style="font-weight:600; font-size:13px;" />
-                        <RadzenRadioButtonList @bind-Value="@operationStatus" TValue="string" Orientation="Orientation.Horizontal" Style="gap: 1rem;">
-                            <Items>
-                                @foreach (var item in gateModel.OperationStatusOptions)
-                                {
-                                    <RadzenRadioButtonListItem Text="@item" Value="@item" />
-                                }
-                            </Items>
-                        </RadzenRadioButtonList>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <RadzenRadioButtonList @bind-Value="@operationStatus" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.OperationStatusOptions.Take(gateModel.OperationStatusOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                            <RadzenRadioButtonList @bind-Value="@operationStatus" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.OperationStatusOptions.Skip(gateModel.OperationStatusOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                        </div>
                     </div>
                     <div class="group-section">
                         <RadzenLabel Text="Tín hiệu cửa" Style="font-weight:600; font-size:13px;" />
-                        <RadzenRadioButtonList @bind-Value="@doorSignal" TValue="string" Orientation="Orientation.Horizontal" Style="gap: 1rem;">
-                            <Items>
-                                @foreach (var item in gateModel.DoorSignalOptions)
-                                {
-                                    <RadzenRadioButtonListItem Text="@item" Value="@item" />
-                                }
-                            </Items>
-                        </RadzenRadioButtonList>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <RadzenRadioButtonList @bind-Value="@doorSignal" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.DoorSignalOptions.Take(gateModel.DoorSignalOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                            <RadzenRadioButtonList @bind-Value="@doorSignal" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.DoorSignalOptions.Skip(gateModel.DoorSignalOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                        </div>
                     </div>
                     <div class="group-section">
                         <RadzenLabel Text="Tín hiệu chốt" Style="font-weight:600; font-size:13px;" />
-                        <RadzenRadioButtonList @bind-Value="@lockSignal" TValue="string" Orientation="Orientation.Horizontal" Style="gap: 1rem;">
-                            <Items>
-                                @foreach (var item in gateModel.LockSignalOptions)
-                                {
-                                    <RadzenRadioButtonListItem Text="@item" Value="@item" />
-                                }
-                            </Items>
-                        </RadzenRadioButtonList>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <RadzenRadioButtonList @bind-Value="@lockSignal" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.LockSignalOptions.Take(gateModel.LockSignalOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                            <RadzenRadioButtonList @bind-Value="@lockSignal" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.LockSignalOptions.Skip(gateModel.LockSignalOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                        </div>
                     </div>
                 </div>
 
@@ -245,25 +288,53 @@
                     <div class="panel-title">@gateModel.ControlPanelTitle</div>
                     <div class="group-section">
                         <RadzenLabel Text="Chế độ điều khiển" Style="font-weight:600; font-size:13px;" />
-                        <RadzenRadioButtonList @bind-Value="@controlMode" TValue="string" Orientation="Orientation.Horizontal" Style="gap: 1rem;">
-                            <Items>
-                                @foreach (var item in gateModel.ControlModeOptions)
-                                {
-                                    <RadzenRadioButtonListItem Text="@item" Value="@item" />
-                                }
-                            </Items>
-                        </RadzenRadioButtonList>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <RadzenRadioButtonList @bind-Value="@controlMode" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.ControlModeOptions.Take(gateModel.ControlModeOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                            <RadzenRadioButtonList @bind-Value="@controlMode" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.ControlModeOptions.Skip(gateModel.ControlModeOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                        </div>
                     </div>
                     <div class="group-section">
                         <RadzenLabel Text="Cơ chế điều khiển" Style="font-weight:600; font-size:13px;" />
-                        <RadzenRadioButtonList @bind-Value="@controlMechanism" TValue="string" Orientation="Orientation.Horizontal" Style="gap: 1rem;">
-                            <Items>
-                                @foreach (var item in gateModel.ControlMechanismOptions)
-                                {
-                                    <RadzenRadioButtonListItem Text="@item" Value="@item" />
-                                }
-                            </Items>
-                        </RadzenRadioButtonList>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <RadzenRadioButtonList @bind-Value="@controlMechanism" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.ControlMechanismOptions.Take(gateModel.ControlMechanismOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                            <RadzenRadioButtonList @bind-Value="@controlMechanism" TValue="string"
+                                Orientation="Orientation.Vertical">
+                                <Items>
+                                    @foreach (var item in
+                                                                        gateModel.ControlMechanismOptions.Skip(gateModel.ControlMechanismOptions.Count / 2))
+                                    {
+                                        <RadzenRadioButtonListItem Text="@item" Value="@item" />
+                                    }
+                                </Items>
+                            </RadzenRadioButtonList>
+                        </div>
                     </div>
                 </div>
 
@@ -272,43 +343,31 @@
                     <div class="panel-title">@gateModel.StatusPanelTitle</div>
                     <div class="group-section">
                         <RadzenLabel Text="Tín hiệu động cơ vận hành" Style="font-weight:600; font-size:13px;" />
-                        <div class="checkbox-row">
-                            <RadzenCheckBox TValue="bool" @bind-Value="@motorError" />
-                            <label>Lỗi kẹt cửa</label>
+                        <div class="checkbox-row" style="margin-bottom: 10px;">
+                            <RadzenCheckBox TValue="bool" @bind-Value="@motorError" Style="margin-right: 6px;" />
+                            <label style="margin-bottom: 0;">Lỗi kẹt cửa</label>
                         </div>
                     </div>
-                    @* <div class="group-section">
-                    <div class="subsection-title">TRẠM TRỤ BÊN TRÁI</div>
-                    <div class="switch-label">
-                    <span>Bơm 1</span>
-                    <RadzenSwitch @bind-Value="@leftPump1" Style="background-color:lime;" />
-                    <span>Bơm 2</span>
-                    <RadzenSwitch @bind-Value="@leftPump2" />
-                    </div>
-                    @foreach (var err in gateModel.LeftStationErrors)
-                    {
-                    <div class="checkbox-row">
-                    <RadzenCheckBox TValue="bool" @bind-Value="@err.BindValue" />
-                    <label>@err.Label</label>
-                    </div>
-                    }
+                    <div class="group-section">
+                        <div class="subsection-title" style="margin-bottom: 6px;">TRẠM TRỤ BÊN TRÁI</div>
+                        @foreach (var err in gateModel.LeftStationErrors)
+                        {
+                            <div class="checkbox-row" style="margin-bottom: 6px;">
+                                <RadzenCheckBox TValue="bool" @bind-Value="@err.BindValue" Style="margin-right: 6px;" />
+                                <label style="margin-bottom: 0;">@err.Label</label>
+                            </div>
+                        }
                     </div>
                     <div class="group-section">
-                    <div class="subsection-title">TRẠM TRỤ BÊN PHẢI</div>
-                    <div class="switch-label">
-                    <span>Bơm 1</span>
-                    <RadzenSwitch @bind-Value="@rightPump1" Style="background-color:lime;" />
-                    <span>Bơm 2</span>
-                    <RadzenSwitch @bind-Value="@rightPump2" />
+                        <div class="subsection-title" style="margin-bottom: 6px;">TRẠM TRỤ BÊN PHẢI</div>
+                        @foreach (var err in gateModel.RightStationErrors)
+                        {
+                            <div class="checkbox-row" style="margin-bottom: 6px;">
+                                <RadzenCheckBox TValue="bool" @bind-Value="@err.BindValue" Style="margin-right: 6px;" />
+                                <label style="margin-bottom: 0;">@err.Label</label>
+                            </div>
+                        }
                     </div>
-                    @foreach (var err in gateModel.RightStationErrors)
-                    {
-                    <div class="checkbox-row">
-                    <RadzenCheckBox TValue="bool" @bind-Value="@err.BindValue" />
-                    <label>@err.Label</label>
-                    </div>
-                    }
-                    </div> *@
                 </div>
             </div>
 
@@ -391,68 +450,66 @@
     protected override void OnInitialized()
     {
         gateModel = new GateDetailModel
-        {
-            GateName = "CỔNG CÁI LỚN - CỬA SỐ 9",
-            LeftBoxInfos = new List<GateInfo>
             {
-                new GateInfo { Label = "Mực nước HL", Value = "-3.64", Unit = "m", Time = "07:53" },
-                new GateInfo { Label = "Độ mặn HL", Value = "0", Unit = "%", Time = "07:53" },
-                new GateInfo { Label = "Áp suất trạm trụ phải", Value = "0", Unit = "bar", Time = "07:53" }
-            },
-            RightBoxInfos = new List<GateInfo>
-            {
-                new GateInfo { Label = "Mực nước TL", Value = "-3.30", Unit = "m", Time = "07:53" },
-                new GateInfo { Label = "Độ mặn TL", Value = "0", Unit = "%", Time = "07:53" },
-                new GateInfo { Label = "Áp suất trạm trụ trái", Value = "0", Unit = "bar", Time = "07:53" }
-            },
-            GateOpenValue = "10.94",
-            GateOpenPercent = "97.68%",
-            WaterLevelPercent = 65, // percent
-            StatusPanelTitle = "BẢNG TRẠNG THÁI CỬA CỐNG",
-            ControlPanelTitle = "CHẾ ĐỘ ĐIỀU KHIỂN TRUNG TÂM",
-            OperationStatusOptions = new List<string>
-            {
-                "Sẵn sàng nâng", "Sẵn sàng hạ", "Cửa tự chốt", "Đang kết nối tủ xi lanh"
-            },
-            DoorSignalOptions = new List<string>
-            {
-                "Đang đóng", "Đang mở"
-            },
-            LockSignalOptions = new List<string>
-            {
-                "Chốt đóng", "Chốt đang mở"
-            },
-            ControlModeOptions = new List<string>
-            {
-                "Tại chỗ", "Từ xa tại nhà quản lý", "Từ xa trên phần mềm"
-            },
-            ControlMechanismOptions = new List<string>
-            {
-                "Tự động", "Bán tự động"
-            },
-            // LeftStationErrors = new List<StationError>
-            // {
-            //     new StationError { Label = "Lỗi động cơ quá tải", BindValue = BindConverter.Create(() => leftOverload, v => leftOverload = v) },
-            //     new StationError { Label = "Lỗi áp suất đầu cao", BindValue = BindConverter.Create(() => leftHighPressure, v => leftHighPressure = v) },
-            //     new StationError { Label = "Lỗi áp cao hạ trạm", BindValue = BindConverter.Create(() => leftStationPressure, v => leftStationPressure = v) },
-            //     new StationError { Label = "Lỗi nguồn điện", BindValue = BindConverter.Create(() => leftLowPower, v => leftLowPower = v) },
-            //     new StationError { Label = "Lỗi áp suất đầu thấp", BindValue = BindConverter.Create(() => leftLowPressure, v => leftLowPressure = v) },
-            //     new StationError { Label = "Mức dầu thấp", BindValue = BindConverter.Create(() => leftLowLevel, v => leftLowLevel = v) }
-            // },
-            // RightStationErrors = new List<StationError>
-            // {
-            //     new StationError { Label = "Lỗi động cơ quá tải", BindValue = BindConverter.Create(() => rightOverload, v => rightOverload = v) },
-            //     new StationError { Label = "Lỗi áp suất đầu cao", BindValue = BindConverter.Create(() => rightHighPressure, v => rightHighPressure = v) },
-            //     new StationError { Label = "Lỗi áp cao hạ trạm", BindValue = BindConverter.Create(() => rightStationPressure, v => rightStationPressure = v) },
-            //     new StationError { Label = "Lỗi nguồn điện", BindValue = BindConverter.Create(() => rightLowPower, v => rightLowPower = v) },
-            //     new StationError { Label = "Lỗi áp suất đầu thấp", BindValue = BindConverter.Create(() => rightLowPressure, v => rightLowPressure = v) },
-            //     new StationError { Label = "Mức dầu thấp", BindValue = BindConverter.Create(() => rightLowLevel, v => rightLowLevel = v) }
-            // }
-        };
-    }
-
+                GateName = "CỔNG CÁI LỚN - CỬA SỐ 9",
+                LeftBoxInfos = new List<GateInfo>
+                {
+                    new GateInfo { Label = "Mực nước HL", Value = "-3.64", Unit = "m", Time = "07:53" },
+                    new GateInfo { Label = "Độ mặn HL", Value = "0", Unit = "%", Time = "07:53" },
+                    new GateInfo { Label = "Áp suất trạm trụ phải", Value = "0", Unit = "bar", Time = "07:53" }
+                },
+                RightBoxInfos = new List<GateInfo>
+                {
+                    new GateInfo { Label = "Mực nước TL", Value = "-3.30", Unit = "m", Time = "07:53" },
+                    new GateInfo { Label = "Độ mặn TL", Value = "0", Unit = "%", Time = "07:53" },
+                    new GateInfo { Label = "Áp suất trạm trụ trái", Value = "0", Unit = "bar", Time = "07:53" }
+                },
+                GateOpenValue = "10.94",
+                GateOpenPercent = "97.68%",
+                WaterLevelPercent = 65, // percent
+                StatusPanelTitle = "BẢNG TRẠNG THÁI CỬA CỐNG",
+                ControlPanelTitle = "CHẾ ĐỘ ĐIỀU KHIỂN TRUNG TÂM",
+                OperationStatusOptions = new List<string>
+                {
+                    "Sẵn sàng nâng", "Sẵn sàng hạ", "Cửa tự chốt", "Đang kết nối tủ xi lanh"
+                },
+                DoorSignalOptions = new List<string>
+                {
+                    "Đang đóng", "Đang mở"
+                },
+                LockSignalOptions = new List<string>
+                {
+                    "Chốt đóng", "Chốt đang mở"
+                },
+                ControlModeOptions = new List<string>
+                {
+                    "Tại chỗ", "Từ xa tại nhà quản lý", "Từ xa trên phần mềm"
+                },
+                ControlMechanismOptions = new List<string>
+                {
+                    "Tự động", "Bán tự động"
+                },
+                // Trong phần GateDetailModel khởi tạo, sửa lại phần LeftStationErrors và RightStationErrors
+                LeftStationErrors = new List<StationError>
+                {
+                    new StationError { Label = "Bơm 1", BindValue = new BindConverter<bool>(() => leftPump1, v => leftPump1 = v) },
+                    new StationError { Label = "Bơm 2", BindValue = new BindConverter<bool>(() => leftPump2, v => leftPump2 = v) },
+                    new StationError { Label = "Lỗi động cơ quá tải", BindValue = new BindConverter<bool>(() => leftOverload, v => leftOverload = v) },
+                    new StationError { Label = "Lỗi áp xuất điện cục", BindValue = new BindConverter<bool>(() => leftHighPressure, v => leftHighPressure = v) },
+                    new StationError { Label = "Lỗi áp xuất điện thấp", BindValue = new BindConverter<bool>(() => leftLowPressure, v => leftLowPressure = v) }
+                },
+                RightStationErrors = new List<StationError>
+                {
+                    new StationError { Label = "Bơm 1", BindValue = new BindConverter<bool>(() => rightPump1, v => rightPump1 = v) },
+                    new StationError { Label = "Bơm 2", BindValue = new BindConverter<bool>(() => rightPump2, v => rightPump2 = v) },
+                    new StationError { Label = "Lỗi động cơ quá tải", BindValue = new BindConverter<bool>(() => rightOverload, v => rightOverload = v) },
+                    new StationError { Label = "Lỗi áp xuất điện cục", BindValue = new BindConverter<bool>(() => rightHighPressure, v => rightHighPressure = v) },
+                    new StationError { Label = "Lỗi áp xuất điện thấp", BindValue = new BindConverter<bool>(() => rightLowPressure, v => rightLowPressure = v) }
+                }
+            };
+            }
     // Helper for two-way binding in foreach
-    public class BindConverter<T>
+public class BindConverter<T>
     {
         public Func<T> Getter { get; }
         public Action<T> Setter { get; }
