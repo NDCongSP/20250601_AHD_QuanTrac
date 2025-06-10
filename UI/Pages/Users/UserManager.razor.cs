@@ -1,0 +1,173 @@
+﻿using Application.DTOs.Request;
+using Application.DTOs.Request.Account;
+using Application.DTOs.Response;
+using Application.DTOs.Response.Account;
+using Newtonsoft.Json;
+using RestEase;
+using WebUIFinal.Models;
+
+namespace WebUIFinal.Pages.Account;
+
+public partial class UserManager : ListBaseComponent<GetUserWithRoleResponseDTO>
+{
+    List<GetUserWithRoleResponseDTO> _users = new List<GetUserWithRoleResponseDTO>();
+    List<GetUserWithRoleResponseDTO> _userSearch = new List<GetUserWithRoleResponseDTO>();
+    GetUserWithRoleResponseDTO _userModel = new GetUserWithRoleResponseDTO();
+
+    CreateAccountRequestDTO _registerModel = new CreateAccountRequestDTO();
+    string _roleSelect;
+    List<string> _role = new List<string>() { "User", "Operator" };
+
+    RadzenDataGrid<GetUserWithRoleResponseDTO> _profileGrid;
+    UserSearchRequestDTO _searchModel = new UserSearchRequestDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (_isFirstRender)
+        {
+            await base.OnInitializedAsync();
+            _pagingSummaryFormat = _localizer["DisplayPage"] + " {0} " + _localizer["Of"] + " {1} <b>(" + _localizer["Total"] + " {2} " + _localizer["Records"] + ")</b>";
+            await RefreshDataAsync();
+            _isFirstRender = false;
+        }
+    }
+
+    public override async Task LoadDataAsync()
+    {
+        await RefreshDataAsync();
+        SubmitData(_searchModel);
+    }
+
+    async Task DeleteItemAsync(UpdateDeleteRequestDTO model)
+    {
+        try
+        {
+            var confirm = await _dialogService.Confirm($"{_localizer["Confirmation.Delete"]} {_localizer["User"]}: {model.Name}?", $"{_localizer["Delete"]} {_localizer["User"]}", new ConfirmOptions()
+            {
+                OkButtonText = _localizer["Yes"],
+                CancelButtonText = _localizer["No"],
+                AutoFocusFirstElement = true,
+            });
+
+            if (confirm == null || confirm == false) return;
+
+            var res = await _authenServices.DeleteUserAsync(model);
+
+            if (res.Flag)
+            {
+                _notificationService.Notify(new NotificationMessage()
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = _localizer["Success"],
+                    Detail = res.Message,
+                    Duration = 5000
+                });
+
+                _registerModel = null;
+                _registerModel = new CreateAccountRequestDTO();
+
+                await RefreshDataAsync();
+            }
+            else
+            {
+                _notificationService.Notify(new NotificationMessage()
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = _localizer["Error"],
+                    Detail = res.Message,
+                    Duration = 5000
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = _localizer["Error"],
+                Detail = ex.Message,
+                Duration = 5000
+            });
+
+            return;
+        }
+    }
+
+    async Task ViewItemAsync(string id)
+    {
+        await OnView.InvokeAsync(new DetailViewData($"{_localizer["Detail.View"]} {_localizer["User"]}|{id}", id));
+    }
+
+    async Task EditItemAsync(string id)
+    {
+        await OnEdit.InvokeAsync(new DetailViewData($"{_localizer["Detail.Edit"]} {_localizer["User"]}|{id}|True", id));
+    }
+
+    async Task AddNewItemAsync()
+    {
+        await OnAddNew.InvokeAsync(new DetailViewData($"{_localizer["Detail.Create"]} {_localizer["User"]}"));
+    }
+
+    async Task RefreshDataAsync()
+    {
+        try
+        {
+            _role = null; _role = new List<string>();
+            var resultRole = await _authenServices.GetRolesAsync();
+            if (resultRole != null || resultRole.Count > 0)
+            {
+                foreach (var item in resultRole)
+                {
+                    _role.Add(item.Name);
+                }
+            }
+
+            var res = await _authenServices.GetUsersWithRolesAsync();
+            _users = new List<GetUserWithRoleResponseDTO>();
+
+            if (res != null)
+                _users.AddRange(res.Where(_ => _.Roles.FirstOrDefault()?.Name != "Warehouse API"));
+            _userSearch = _users;
+            StateHasChanged();
+        }
+        catch (UnauthorizedAccessException) { }
+        catch (ApiException ex)
+        {
+            ApiErrorResponse errorResponse = null;
+
+            if (ex.Content != null)
+            {
+                errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
+            }
+
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
+            return;
+        }
+        catch (Exception ex)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+            return;
+        }
+    }
+
+    async void SubmitData(UserSearchRequestDTO arg)
+    {
+        _userSearch = _users.Where(x => (string.IsNullOrEmpty(arg.Keyword)
+                                    || x.Email.ToLower().Contains(arg.Keyword.ToLower())
+                                    || x.UserName.ToLower().Contains(arg.Keyword.ToLower())
+                                    || x.FullName.ToLower().Contains(arg.Keyword.ToLower())) &&
+                                    (string.IsNullOrEmpty(arg.RoleID) || x.Roles.Any(xx => xx.Name.ToLower() == arg.RoleID.ToLower()))).ToList();
+        StateHasChanged();
+    }
+    async Task ClearFilter()
+    {
+        _searchModel = new UserSearchRequestDTO();
+        SubmitData(_searchModel);
+    }
+
+    private async Task ReloadData()
+    {
+        _searchModel = new();
+        await RefreshDataAsync();
+    }
+}

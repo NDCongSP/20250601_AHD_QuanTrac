@@ -14,12 +14,8 @@
 
   <ItemGroup>
     <Folder Include="Pages\Components\" />
-    <Folder Include="Pages\Authentications\" />
     <Folder Include="Pages\Settings\" />
     <Folder Include="Pages\Notifications\" />
-    <Folder Include="Pages\Roles\" />
-    <Folder Include="Pages\Permissions\" />
-    <Folder Include="Pages\Users\" />
   </ItemGroup>
 
   <ItemGroup>
