@@ -11,7 +11,6 @@ public interface IAccount
     Task<GeneralResponse> CreateSuperAdminAsync();
     Task<GeneralResponse> CreateAccountAsync([Body] CreateAccountRequestDTO model);
     Task<LoginResponse> LoginAccountAsync([Body] LoginRequestDTO model);
-    Task<LoginResponse> LoginAccountHTAsync([Body] LoginRequestDTO model);
     Task<LoginResponse> RefreshTokenAsync([Body] RefreshTokenRequestDTO model);
     Task<GeneralResponse> CreateRoleAsync([Body] CreateRoleRequestDTO model);
     Task<List<GetRoleResponseDTO>> GetRolesAsync();

@@ -6,7 +6,6 @@ using Application.Extentions;
 using Application.Models;
 using Application.Services.Authen;
 using ClosedXML.Excel;
-using Dapper;
 using Domain;
 using Domain.Entities;
 using Infrastructure.Data;
@@ -18,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using QRCoder.Core;
 using RestEase;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
@@ -811,9 +809,6 @@ namespace Infrastructure.Repositories
                             throw new Exception(JsonConvert.SerializeObject(err));
                         }
 
-                        var u2t = await dbContext.UserToTenants.Where(x => x.UserId == user.Id).ToListAsync();
-
-                        dbContext.UserToTenants.RemoveRange(u2t);
                         await dbContext.SaveChangesAsync();
 
                         await tran.CommitAsync();
@@ -1002,7 +997,7 @@ namespace Infrastructure.Repositories
                         {
                             await tran.RollbackAsync();
                             var err = new ErrorResponse();
-                            err.Errors.Add("Warning",error);
+                            err.Errors.Add("Warning", error);
 
                             await tran.RollbackAsync();
 
@@ -1066,7 +1061,7 @@ namespace Infrastructure.Repositories
                     UserName = user.UserName,
                     Email = user.Email,
                     Roles = roles,
-                    Status=user.Status
+                    Status = user.Status
                 };
                 return res;
             }
@@ -1195,174 +1190,6 @@ namespace Infrastructure.Repositories
             catch (Exception ex)
             {
                 return null;
-            }
-        }
-
-
-        #region Tạo PDF chuyển sang base64 rồi trả về client
-
-        /// <summary>
-        /// Method to generate QR code base64.
-        /// </summary>
-        /// <param name="inputText"></param>
-        /// <returns></returns>
-        private string GenerateQRCode(string inputText)
-        {
-            if (string.IsNullOrEmpty(inputText))
-                return null;
-
-            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
-            {
-                QRCodeData qrCodeData = qrGenerator.CreateQrCode(inputText, QRCodeGenerator.ECCLevel.Q);
-                PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
-                byte[] qrCodeImage = qrCode.GetGraphic(20);
-
-                return $"data:image/png;base64,{Convert.ToBase64String(qrCodeImage)}";
-            }
-        }
-        public async Task<byte[]> GetReportBytes(List<ApplicationUser> data)
-        {
-            using (var wb = new XLWorkbook())
-            {
-                wb.Properties.Author = "the Author";
-                wb.Properties.Title = "the Title";
-                wb.Properties.Subject = "the Subject";
-                wb.Properties.Category = "the Category";
-                wb.Properties.Keywords = "the Keywords";
-                wb.Properties.Comments = "the Comments";
-                wb.Properties.Status = "the Status";
-                wb.Properties.LastModifiedBy = "the Last Modified By";
-                wb.Properties.Company = "the Company";
-                wb.Properties.Manager = "the Manager";
-
-                var ws = wb.Worksheets.Add("UserInfo");
-
-                ws.Range(1, 1, 1, 8).Merge().Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-                .Alignment.SetVertical(XLAlignmentVerticalValues.Center)
-                .Font.SetFontSize(15).Font.SetBold(true)
-                ;
-
-                ws.Range(2, 1, 2, 8).Merge().Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
-               .Alignment.SetVertical(XLAlignmentVerticalValues.Center);
-
-                ws.Cell(1, 1).Value = "REPORT";
-                ws.Cell(1, 1).Style.Fill.BackgroundColor = XLColor.Orange;
-                ws.Cell(2, 1).Value = $"Thời gian:";
-
-                ws.Cell(3, 1).Value = "Thời gian";
-                ws.Cell(3, 2).Value = "Id";
-                ws.Cell(3, 3).Value = "Oven";
-                ws.Cell(3, 4).Value = "Nhiệt độ đặt (oC)";
-                ws.Cell(3, 5).Value = "Nhiệt độ (oC)";
-                ws.Cell(3, 6).Value = "Profile";
-                ws.Cell(3, 7).Value = "Step";
-                ws.Cell(3, 8).Value = "Cảnh báo";
-
-                ws.Range(3, 1, 3, 8).SetAutoFilter(true);
-                ws.Range(3, 1, 3, 8).Style.Fill.BackgroundColor = XLColor.LightCyan;
-
-                // Fill a cell with a date
-                //ws.Range($"A3:A{data.Count + 3}").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left)
-                //                                   .Alignment.SetVertical(XLAlignmentVerticalValues.Center)
-                //                                   .DateFormat.Format = "yyyy-MM-dd HH:mm:ss";
-
-                ws.Range($"A3:H{data.Count + 3}").Style.Border.SetInsideBorder(XLBorderStyleValues.Thin)
-                                       .Border.SetOutsideBorder(XLBorderStyleValues.Thin);
-
-                var row = 0;
-                foreach (var item in data)
-                {
-                    // The apostrophe is to force ClosedXML to treat the date as a string
-                    //thay chi tiet cac cot data vao bem duoi.
-                    ws.Cell(row + 4, 1).Value = item.Email;
-                    ws.Cell(row + 4, 2).Value = item.FullName;
-                    row += 1;
-                }
-
-                ws.Columns().AdjustToContents();//Adjust Row Height and Column Width to Contents
-
-                var bytes = new byte[0];
-                using (var ms = new MemoryStream())
-                {
-                    wb.SaveAs(ms);
-
-                    bytes = ms.ToArray();
-                }
-
-                return bytes;
-            }
-        }
-        #endregion
-
-        /// <summary>
-        /// password ở đây nó là PasswordHash.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public async Task<LoginResponse> LoginAccountHTAsync([Body] LoginRequestDTO model)
-        {
-            try
-            {
-                //var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-                //if(!result.Succeeded) return new LoginResponse() { flag = false ,message="Username and password are invalid."};
-
-                var user = await FindUserByEmailAsync(model.EmailAddress);
-                if (user == null) return new LoginResponse()
-                {
-                    Flag = false,
-                    Message = "Email not found",
-                };
-
-                var allPermission = new List<PermissionsListModel>();
-                int rowCount = 0;
-                var c = dbContext.Database.GetConnectionString();
-                using (var connection = new SqlConnection(c))
-                {
-                    rowCount = (int)await connection.ExecuteScalarAsync($"SELECT COUNT(*) FROM wms.[AspNetUsers] WHERE PasswordHash = '{model.Password}'");
-                }
-
-                if (rowCount <= 0) return new LoginResponse()
-                {
-                    Flag = false,
-                    Message = "Invalid credentials"
-                };
-
-                var jwtToken = await GenerateToken(user);
-                string token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-                string refreshToken = GenerateRefreshToken();
-
-                if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(refreshToken))
-                    return new LoginResponse()
-                    {
-                        Flag = false,
-                        Message = "Error occured while in account, please contact administrator."
-                    };
-                else
-                {
-                    //save token after login successfull 
-                    var expiryRefreshToken = config["Jwt:AddTimeType"] != "Second" ?
-                                   DateTime.Now.AddDays(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out double value) ? value : 60) :
-                                   DateTime.Now.AddSeconds(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out value) ? value : 60);
-                    var saveResult = await SaveRefreshTokenAsync(user.Id, token, refreshToken, expiryRefreshToken);
-                    if (saveResult.Flag)
-                        return new LoginResponse()
-                        {
-                            Flag = true,
-                            Message = $"{user.FullName} successfully logged in.",
-                            Token = token,
-                            RefreshToken = refreshToken,
-                            Expiration = jwtToken.ValidTo.ToString()
-                        };
-                    else return new LoginResponse();
-                }
-            }
-            catch (Exception ex)
-            {
-                return new LoginResponse()
-                {
-                    Flag = false,
-                    Message = $"{ex.Message}{Environment.NewLine}{ex.InnerException}",
-                };
             }
         }
 
