@@ -1,11 +1,8 @@
-﻿@inherits ListBaseComponent<PermissionsListResponseDTO>
+﻿@* @page "/permissionmanager"
 
 @using Application.DTOs.Response.Account
 @using Application.Extentions
 @using Microsoft.AspNetCore.Authorization
-
-@inject IStringLocalizer<CommonResources> _localizer
-@inject IStringLocalizer<NotificationMessageResources> _localizerNotification
 
 @attribute [Authorize(Policy = "Admin")]
 @if (_dataGrid == null)
@@ -35,9 +32,6 @@ else
                                         @_localizer["Permission.Name"]
                                     </HeaderTemplate>
                                     <Template Context="data">
-                                       @*  <NavLink class="nav-link" href="javascript:void(0)" @onclick="@(() => EditItemAsync(data.Id.ToString()))" Match="NavLinkMatch.All" style="padding: 0!important;cursor: pointer;">
-                                            @data.Name
-                                        </NavLink> *@
                                         <a class="text-green" @onclick="@(() => EditItemAsync(data.Id.ToString()))" style="cursor:pointer;">
                                             @data.Name
                                         </a>
@@ -67,3 +61,4 @@ else
         </RadzenColumn>
     </RadzenRow>
 }
+ *@

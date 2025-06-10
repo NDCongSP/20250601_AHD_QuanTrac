@@ -1,11 +1,8 @@
-﻿@page "/addpermission/{Title}"
-@inherits DetailBaseComponent
+﻿@* @page "/permission-detail/{id}"
 
 @using Application.DTOs.Response.Account
 @using Application.Extentions
 @using Microsoft.AspNetCore.Authorization
-@inject IStringLocalizer<CommonResources> _localizer
-@inject IStringLocalizer<NotificationMessageResources> _localizerNotification
 
 @attribute [Authorize(Policy = "Admin")]
 @if (_roles.Count <= 0 || _model == null)
@@ -72,4 +69,4 @@ else
             </RadzenColumn>
         </RadzenRow>
     </RadzenTemplateForm>
-}
+} *@

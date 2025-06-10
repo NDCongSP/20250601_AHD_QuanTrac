@@ -6,12 +6,14 @@
 @using Microsoft.JSInterop
 @using UI
 @using UI.Layouts
+@using Application.Services.Authen
+@using Application.Services.Authen.UI
+@using Microsoft.Extensions.Localization
 
 @using Radzen
 @using Radzen.Blazor
 
-@* @inject IJSRuntime _jsRuntime
-@inject MasterTransferToDetails _MasterTransferToDetails
+@inject IJSRuntime _jsRuntime
 
 @inject NotificationService _notificationService
 @inject DialogService _dialogService
@@ -22,4 +24,4 @@
 @inject AuthenticationStateProvider _authStateProvider
 @inject IHttpInterceptorManager _httpInterceptorManager
 @inject IPermissions _permissionsServices
-@inject IRoleToPermissions _roleToPermissionServices *@
+@inject IRoleToPermissions _roleToPermissionServices

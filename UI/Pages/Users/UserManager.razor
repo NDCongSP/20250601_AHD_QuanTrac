@@ -1,18 +1,17 @@
-﻿@inherits ListBaseComponent<GetUserWithRoleResponseDTO>
+﻿@page "/usermanagers"
+@attribute [Authorize(Roles = ConstantExtention.Roles.WarehouseAdmin)]
+@inject IStringLocalizer<CommonResource> _localizer
 
 @using Application.DTOs.Request
 @using Application.DTOs.Response.Account
 @using Application.Extentions
 @using Microsoft.AspNetCore.Authorization
 
-@inject IStringLocalizer<CommonResources> _localizer
-@inject IStringLocalizer<EnumStatusResources> _localizerEnumStatus
-@inject IStringLocalizer<NotificationMessageResources> _localizerNotification
 
-@attribute [Authorize(Roles = ConstantExtention.Roles.WarehouseAdmin)]
 @{
     string placeHolder = $"{_localizer["UserName"]}, {_localizer["Fullname"]}, {_localizer["Email"]}";
 }
+
 @if (_users == null || _users.Count <= 0)
 {
     <p><em>@_localizer["Loading"]...</em></p>
@@ -72,19 +71,13 @@ else
                         <RadzenDataGrid Style="width: 100%;" @ref="_profileGrid" Data="@_userSearch" TItem="GetUserWithRoleResponseDTO" AllowFiltering="true"
                                         FilterPopupRenderMode="PopupRenderMode.OnDemand" AllowPaging="true" PageSize="20" PageSizeText="@_localizer["items per page"]" AllowSorting="true"
                                         AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false" EmptyText="@_localizer["No records to display."]"
-                                        GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false"
-                                        ShowPagingSummary=@_showPagerSummary PagingSummaryFormat="@_pagingSummaryFormat"
-                                        PageSizeOptions="@_pageSizeOptions"
-                                        >
+                                        GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
                             <Columns>
                                 <RadzenDataGridColumn Width="200px" Property="@nameof(GetUserWithRoleResponseDTO.UserName)" TextAlign="TextAlign.Center" CssClass="rz-grid-col-flex-start">
                                     <HeaderTemplate>
                                         @_localizer["UserName"]
                                     </HeaderTemplate>
                                     <Template Context="data">
-                                     @*    <NavLink class="nav-link"  @onclick="@(() => EditItemAsync(data.Id))" Match="NavLinkMatch.All" style="padding: 0!important;">
-                                            @data.UserName
-                                        </NavLink> *@
                                         <a class="text-green" @onclick="@(() => EditItemAsync(data.Id))" style="cursor:pointer;">
                                             @data.UserName
                                         </a>

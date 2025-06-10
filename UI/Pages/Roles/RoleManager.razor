@@ -1,13 +1,9 @@
-﻿@inherits ListBaseComponent<GetRoleResponseDTO>
+﻿@* @page "/rolemanagers"
 
 @using Application.DTOs.Request.Account
 @using Application.DTOs.Response.Account
 @using Application.Extentions
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.Extensions.Localization
-
-@inject IStringLocalizer<CommonResources> _localizer
-@inject IStringLocalizer<NotificationMessageResources> _localizerNotification
 
 @attribute [Authorize(Policy = "Admin")]
 @if (_dataGrid == null)
@@ -75,4 +71,4 @@ else
 
         _tooltipService.Open(elementReference, $"{pString}", options);
     }
-}
+} *@

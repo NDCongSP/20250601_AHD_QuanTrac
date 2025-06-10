@@ -1,12 +1,9 @@
-﻿@page "/adduser/{Title}"
-@inherits DetailBaseComponent
+﻿@page "/user-detail/{id}"
 
 @using Application.DTOs.Request.Account
 @using Application.DTOs.Response.Account
 @using Microsoft.AspNetCore.Authorization
-@inject IStringLocalizer<CommonResources> _localizer
-@inject IStringLocalizer<NotificationMessageResources> _localizerNotification
-@inject IStringLocalizer<EnumStatusResources> _localizerEnumStatus
+@inject IStringLocalizer<CommonResource> _localizer
 
 @attribute [Authorize]
 @if (_roles.Count <= 0 || _model == null)
@@ -117,7 +114,6 @@ else
         <RadzenRow Gap="1rem" Class="padding-body-content">
             <RadzenColumn Size="12" SizeSM="12">
                 <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem" Class="rz-mt-8 rz-mb-4">
-                    @* <RadzenButton Click=@(_ => _navigation.NavigateTo("/userlist")) Style="background-color:cadetblue" Size="ButtonSize.Large" Icon="cancel" Text="@_localizer["Cancel"]" Disabled="@(!_visible)" /> *@
                         <RadzenButton ButtonType="Radzen.ButtonType.Submit" Icon="save" Text="@_localizer["Save"]"
                                       Disabled="@(!_visible||(_model.UserName.Contains("OMS") && GlobalVariable.UserAuthorizationInfo.UserName =="Admin"))" />
                     <RadzenButton Click=@(args => ResetPass()) Variant="Variant.Flat"

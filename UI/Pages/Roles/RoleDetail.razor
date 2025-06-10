@@ -1,5 +1,4 @@
-﻿@page "/addrole/{Title}"
-@inherits DetailBaseComponent
+﻿@* @page "/role-detail/{id}"
 
 @using Application.DTOs.Request.Account
 @using Application.DTOs.Response.Account
@@ -7,9 +6,6 @@
 @using Microsoft.AspNetCore.Authorization
 
 @attribute [Authorize(Policy = "Admin")]
-
-@inject IStringLocalizer<CommonResources> _localizer
-@inject IStringLocalizer<NotificationMessageResources> _localizerNotification
 
 @if (_model == null)
 {
@@ -99,4 +95,4 @@ else
     {
         // NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "ToggleButton Changed", Detail = $"{newValue}" });
     }
-}
+} *@

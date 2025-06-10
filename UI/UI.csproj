@@ -9,7 +9,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.16" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.16" />
     <PackageReference Include="Radzen.Blazor" Version="7.0.7" />
+    <PackageReference Include="RestEase" Version="1.6.4" />
+    <PackageReference Include="RestEase.HttpClientFactory" Version="1.6.4" />
   </ItemGroup>
 
   <ItemGroup>

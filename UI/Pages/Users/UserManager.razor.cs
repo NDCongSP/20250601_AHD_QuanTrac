@@ -1,14 +1,9 @@
-﻿using Application.DTOs.Request;
-using Application.DTOs.Request.Account;
-using Application.DTOs.Response;
+﻿using Application.DTOs.Request.Account;
 using Application.DTOs.Response.Account;
-using Newtonsoft.Json;
-using RestEase;
-using WebUIFinal.Models;
 
-namespace WebUIFinal.Pages.Account;
+namespace UI.Pages.Users;
 
-public partial class UserManager : ListBaseComponent<GetUserWithRoleResponseDTO>
+public partial class UserManager
 {
     List<GetUserWithRoleResponseDTO> _users = new List<GetUserWithRoleResponseDTO>();
     List<GetUserWithRoleResponseDTO> _userSearch = new List<GetUserWithRoleResponseDTO>();
@@ -23,20 +18,20 @@ public partial class UserManager : ListBaseComponent<GetUserWithRoleResponseDTO>
 
     protected override async Task OnInitializedAsync()
     {
-        if (_isFirstRender)
+        if (true)
         {
             await base.OnInitializedAsync();
-            _pagingSummaryFormat = _localizer["DisplayPage"] + " {0} " + _localizer["Of"] + " {1} <b>(" + _localizer["Total"] + " {2} " + _localizer["Records"] + ")</b>";
+            //_pagingSummaryFormat = _localizer["DisplayPage"] + " {0} " + _localizer["Of"] + " {1} <b>(" + _localizer["Total"] + " {2} " + _localizer["Records"] + ")</b>";
             await RefreshDataAsync();
-            _isFirstRender = false;
+            //_isFirstRender = false;
         }
     }
 
-    public override async Task LoadDataAsync()
-    {
-        await RefreshDataAsync();
-        SubmitData(_searchModel);
-    }
+    //public override async Task LoadDataAsync()
+    //{
+    //    await RefreshDataAsync();
+    //    SubmitData(_searchModel);
+    //}
 
     async Task DeleteItemAsync(UpdateDeleteRequestDTO model)
     {
@@ -95,17 +90,14 @@ public partial class UserManager : ListBaseComponent<GetUserWithRoleResponseDTO>
 
     async Task ViewItemAsync(string id)
     {
-        await OnView.InvokeAsync(new DetailViewData($"{_localizer["Detail.View"]} {_localizer["User"]}|{id}", id));
     }
 
     async Task EditItemAsync(string id)
     {
-        await OnEdit.InvokeAsync(new DetailViewData($"{_localizer["Detail.Edit"]} {_localizer["User"]}|{id}|True", id));
     }
 
     async Task AddNewItemAsync()
     {
-        await OnAddNew.InvokeAsync(new DetailViewData($"{_localizer["Detail.Create"]} {_localizer["User"]}"));
     }
 
     async Task RefreshDataAsync()
@@ -131,23 +123,23 @@ public partial class UserManager : ListBaseComponent<GetUserWithRoleResponseDTO>
             StateHasChanged();
         }
         catch (UnauthorizedAccessException) { }
-        catch (ApiException ex)
-        {
-            ApiErrorResponse errorResponse = null;
+        //catch (ApiException ex)
+        //{
+        //    ApiErrorResponse errorResponse = null;
 
-            if (ex.Content != null)
-            {
-                errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-            }
+        //    if (ex.Content != null)
+        //    {
+        //        errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
+        //    }
 
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
-            return;
-        }
-        catch (Exception ex)
-        {
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
-            return;
-        }
+        //    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
+        //    return;
+        //}
+        //catch (Exception ex)
+        //{
+        //    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+        //    return;
+        //}
     }
 
     async void SubmitData(UserSearchRequestDTO arg)
