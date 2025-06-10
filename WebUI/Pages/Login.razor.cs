@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Radzen;
 using System.Security.Claims;
 
-namespace WebUI.Pages
+namespace UI.Pages
 {
     [AllowAnonymous]
     public partial class Login

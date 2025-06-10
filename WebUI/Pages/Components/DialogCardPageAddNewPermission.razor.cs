@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using RestEase;
 using WebUI.Models;
 
-namespace WebUI.Pages.Components
+namespace UI.Pages.Components
 {
     public partial class DialogCardPageAddNewPermission : DetailBaseComponent
     {

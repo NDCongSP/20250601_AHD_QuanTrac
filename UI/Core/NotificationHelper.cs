@@ -1,4 +1,6 @@
-﻿namespace UI
+﻿using Radzen;
+
+namespace UI
 {
     public static class NotificationHelper
     {

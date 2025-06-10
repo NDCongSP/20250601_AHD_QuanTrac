@@ -1,7 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Models;
 
-namespace WebUI.Core
+namespace UI.Core
 {
     public class MasterTransferToDetails
     {

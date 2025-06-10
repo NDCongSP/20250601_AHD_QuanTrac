@@ -1,4 +1,4 @@
-﻿namespace WebUI.Pages.Components.ViewMultipleManager;
+﻿namespace UI.Pages.Components.ViewMultipleManager;
 
 public class DetailViewData
 {

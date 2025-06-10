@@ -119,9 +119,8 @@ builder.Services.AddHttpClient("WebUI")
     .AddHttpMessageHandler<TokenRetrievalHandler>()
 
     .UseWithRestEaseClient<IPermissions>()
-    .UseWithRestEaseClient<IRoleToPermissions>()
-    .UseWithRestEaseClient<ITenants>()
-    .UseWithRestEaseClient<IUserToTenant>();
+    .UseWithRestEaseClient<IRoleToPermissions>();
+
 
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("WebUI"));
 builder.Services.AddBlazoredLocalStorage();

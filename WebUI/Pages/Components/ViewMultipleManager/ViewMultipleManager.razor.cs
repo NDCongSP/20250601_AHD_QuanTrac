@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using WebUI.Pages.Components.ViewMultipleManager;
 
-namespace WebUI.Components.ViewMultipleManager;
+namespace UI.Components.ViewMultipleManager;
 
 public partial class ViewMultipleManager<TItem> : ComponentBase
 {

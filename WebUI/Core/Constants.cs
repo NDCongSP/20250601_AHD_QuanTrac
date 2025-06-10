@@ -1,4 +1,4 @@
-﻿namespace WebUI.Core
+﻿namespace UI.Core
 {
     public class Constants
     {

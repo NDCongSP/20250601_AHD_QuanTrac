@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Radzen;
 using RestEase;
 
-namespace WebUI.Pages.Components
+namespace UI.Pages.Components
 {
     public partial class DialogCardPageAddNewRole
     {

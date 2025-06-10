@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebUI.Core.Dto
+namespace UI.Core.Dto
 {
     public class LocationDisplayDto
     {

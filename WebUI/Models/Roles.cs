@@ -1,6 +1,6 @@
 ﻿
 
-namespace WebUI
+namespace UI
 {
     public class Roles
     {

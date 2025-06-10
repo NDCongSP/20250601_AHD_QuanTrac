@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using QRCoder.Core;
 
-namespace WebUI
+namespace UI
 {
     public static class GlobalVariable
     {

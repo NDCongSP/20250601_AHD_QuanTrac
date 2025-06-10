@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using RestEase;
 using WebUI.Models;
 
-namespace WebUI.Pages.Account;
+namespace UI.Pages.Account;
 
 public partial class Permission : ListBaseComponent<PermissionsListResponseDTO>
 {

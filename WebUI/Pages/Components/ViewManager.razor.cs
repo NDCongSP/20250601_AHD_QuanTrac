@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 using WebUI.Models;
-namespace WebUI.Pages.Components;
+namespace UI.Pages.Components;
 
 public partial class ViewManager<TItem>
 {

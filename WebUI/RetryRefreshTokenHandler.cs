@@ -2,7 +2,7 @@
 using Polly;
 using System.Net;
 
-namespace WebUI
+namespace UI
 {
     public static class RetryRefreshTokenHandler
     {

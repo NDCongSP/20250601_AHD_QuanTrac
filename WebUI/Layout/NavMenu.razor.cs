@@ -3,7 +3,7 @@ using Radzen;
 using System;
 using WebUI;
 
-namespace WebUI.Layout
+namespace UI.Layout
 {
     public partial class NavMenu
     {

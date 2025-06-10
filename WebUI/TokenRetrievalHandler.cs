@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
 using Polly;
 using System.Net.Http.Headers;
 
-namespace WebUI
+namespace UI
 {
     public class TokenRetrievalHandler : DelegatingHandler
     {

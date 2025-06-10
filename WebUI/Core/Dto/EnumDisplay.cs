@@ -1,4 +1,4 @@
-﻿namespace WebUI.Core.Dto
+﻿namespace UI.Core.Dto
 {
     public class EnumDisplay<T>
     {

@@ -7,7 +7,7 @@ using QRCoder.Core;
 using RestEase;
 using WebUI.Models;
 
-namespace WebUI.Pages.Components;
+namespace UI.Pages.Components;
 
 public partial class DialogCardPageAddNewUser : DetailBaseComponent
 {

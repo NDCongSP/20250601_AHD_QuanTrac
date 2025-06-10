@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Security.Claims;
 using WebUI.Pages.Components;
 
-namespace WebUI.Layout
+namespace UI.Layout
 {
     public partial class MainLayout
     {

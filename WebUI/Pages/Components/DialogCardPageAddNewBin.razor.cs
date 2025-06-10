@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using RestEase;
 
-namespace WebUI.Pages.Components
+namespace UI.Pages.Components
 {
     public partial class DialogCardPageAddNewBin
     {
