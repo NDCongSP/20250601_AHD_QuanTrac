@@ -20,8 +20,10 @@
 @inject TooltipService _tooltipService
 @inject NavigationManager _navigation
 
+@inject IAccount _accountServices
 @inject IAuthServices _authenServices
-@inject AuthenticationStateProvider _authStateProvider
+
+@inject ApiAuthenticationStateProvider _authStateProvider
 @inject IHttpInterceptorManager _httpInterceptorManager
 @inject IPermissions _permissionsServices
 @inject IRoleToPermissions _roleToPermissionServices

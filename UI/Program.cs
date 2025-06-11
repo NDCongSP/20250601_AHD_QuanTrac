@@ -82,6 +82,7 @@ builder.Services.AddHttpClient("UI")
         x.EnableIntercept(sp);
     })
     .AddHttpMessageHandler<AuthenticationHeaderHandler>()
+    .UseWithRestEaseClient<IAccount>()
     .UseWithRestEaseClient<IPermissions>()
     .UseWithRestEaseClient<IRoleToPermissions>()
     .UseWithRestEaseClient<ITenants>();

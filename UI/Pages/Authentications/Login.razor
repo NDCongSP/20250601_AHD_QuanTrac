@@ -2,8 +2,7 @@
 @using Application.DTOs.Request.Account
 
 @layout LoginLayout
-@inject IStringLocalizer<CommonResources> _localizer
-@inject IStringLocalizer<NotificationMessageResources> _localizerNotification
+@inject IStringLocalizer<CommonResource> _localizer
 
 <RadzenCard id="_login"  Style="width: 100%; max-width: 400px; overflow: hidden">
     @if (_loginRequest == null)
