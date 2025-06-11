@@ -46,7 +46,7 @@ public partial class UserManager
 
             if (confirm == null || confirm == false) return;
 
-            var res = await _authenServices.DeleteUserAsync(model);
+            var res = await _accountServices.DeleteUserAsync(model);
 
             if (res.Flag)
             {
@@ -105,7 +105,7 @@ public partial class UserManager
         try
         {
             _role = null; _role = new List<string>();
-            var resultRole = await _authenServices.GetRolesAsync();
+            var resultRole = await _accountServices.GetRolesAsync();
             if (resultRole != null || resultRole.Count > 0)
             {
                 foreach (var item in resultRole)
@@ -114,7 +114,7 @@ public partial class UserManager
                 }
             }
 
-            var res = await _authenServices.GetUsersWithRolesAsync();
+            var res = await _accountServices.GetUsersWithRolesAsync();
             _users = new List<GetUserWithRoleResponseDTO>();
 
             if (res != null)

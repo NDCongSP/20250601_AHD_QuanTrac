@@ -6,7 +6,7 @@ using RestEase;
 
 namespace UI.Pages.Roles;
 
-public partial class DialogCardPageAddNewRole
+public partial class RoleDetail
 {
     [Parameter] public CreateRoleRequestDTO _model { get; set; } = new CreateRoleRequestDTO();
     private GetRoleResponseDTO _roleInfo;
@@ -73,7 +73,7 @@ public partial class DialogCardPageAddNewRole
                 Title = arr[0];
                 _id = arr[1];
 
-                var roleResult = await _authenServices.RoleGetById(_id);
+                var roleResult = await _accountServices.RoleGetById(_id);
 
                 if (roleResult == null)
                 {

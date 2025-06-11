@@ -1,19 +1,13 @@
 ﻿using Application.Extentions;
 using Application.Services.Base;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RestEase;
 using System.Reflection;
-using System.Security.Claims;
 
 namespace API.Controllers.Base
 {
-    //[Authorize]//không cần xét role, login vào là gọi đc API    
     [Route("api/[controller]")]
     [ApiController]
-    //[ApiController,JsonifyErrors]
     public class BaseController<TId, T> : ControllerBase, IRepository<TId, T> where T : class
     {
         readonly IRepository<TId, T> _repository;

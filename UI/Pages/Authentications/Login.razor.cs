@@ -35,7 +35,7 @@ public partial class Login
         //Console.WriteLine($"Username: {arg.EmailAddress} and password: {arg.Password}");
         try
         {
-            var result = await _authenServices.LoginAccountAsync(arg);
+            var result = await _accountServices.LoginAccountAsync(arg);
 
             //Fail
             if (!result.Flag)
@@ -50,12 +50,12 @@ public partial class Login
             }
 
             #region Check the pasword is a default pass then madatory to change pass.
-            var ck = await _authenServices.CheckPasswordAsync(arg.EmailAddress, arg.Password);
+            var ck = await _accountServices.CheckPasswordAsync(arg.EmailAddress, arg.Password);
             if (arg.Password == "wms@tealife.co.jp_RS1")
             {
                 _navigation.NavigateTo($"/changepassdefault/{arg.EmailAddress}");
 
-                _authenServices.LoginAccountAsync(arg);
+                _accountServices.LoginAccountAsync(arg);
                 return;
             }
             #endregion

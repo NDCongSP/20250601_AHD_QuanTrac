@@ -46,11 +46,7 @@
             public const string DeleteRole = "identity/role/delete";
             public const string UserGetByEmail = "identity/UserGetByEmail/{email}";
             public const string RoleGetById = "identity/Role/{id}";
-            public const string GetReportBase64 = "identity/GetReportBase64/{id}";
-            public const string GeneratePdf = "identity/GeneratePdf";
-            public const string GetLabelById = "identity/GetLabelById/{id}";
-            public const string GetLabelsAll = "identity/GetLabelsAll";
-            public const string JobApi = "JobApi";
+            public const string CheckPasswordAsync = "identity/CheckPasswordAsync/{email}/{password}";
         }
         public static class Permissions
         {

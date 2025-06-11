@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
-using Application.DTOs.Response.Account;
-using Application.DTOs.Response;
+﻿using Application.DTOs.Response.Account;
+using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
-using RestEase;
-using WebUIFinal.Models;
 
-namespace WebUIFinal.Pages.Components
+namespace UI.Pages.Permissions
 {
-    public partial class DialogCardPageAddNewPermission : DetailBaseComponent
+    public partial class PermissionDetail
     {
         [Parameter] public PermissionsListResponseDTO _model { get; set; } = new PermissionsListResponseDTO();
 
@@ -22,11 +19,6 @@ namespace WebUIFinal.Pages.Components
 
             await RefreshDataAsync();
         }
-        
-        //protected override async Task OnParametersSetAsync()
-        //{
-        //    await RefreshDataAsync();
-        //}
 
         async Task RefreshDataAsync()
         {
@@ -51,7 +43,7 @@ namespace WebUIFinal.Pages.Components
 
                         NotificationHelper.ShowNotification(_notificationService
                             , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                            , _localizerNotification[error?.Key], _localizerNotification[error?.Value]);
+                            , _localizer[error?.Key], _localizer[error?.Value]);
 
                         return;
                     }
@@ -83,7 +75,7 @@ namespace WebUIFinal.Pages.Components
                 #region Get role information
                 _roles = new List<GetRoleResponseDTO>();
 
-                var result = await _authenServices.GetRolesAsync();
+                var result = await _accountServices.GetRolesAsync();
 
                 foreach (var role in result)
                 {
@@ -92,8 +84,8 @@ namespace WebUIFinal.Pages.Components
 
                 if (_roles == null)
                 {
-                    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizerNotification["Warning"]
-                        , _localizerNotification["Result user null."]);
+                    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"]
+                        , _localizer["Result user null."]);
 
                     return;
                 }
@@ -111,12 +103,12 @@ namespace WebUIFinal.Pages.Components
                     errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
                 }
 
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], _localizer[errorResponse?.error]);
                 return;
             }
             catch (Exception ex)
             {
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
                 return;
             }
         }
@@ -159,12 +151,12 @@ namespace WebUIFinal.Pages.Components
 
                     NotificationHelper.ShowNotification(_notificationService
                        , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                       , _localizerNotification[error?.Key], _localizerNotification[error?.Value]);
+                       , _localizer[error?.Key], _localizer[error?.Value]);
 
                     return;
                 }
 
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizerNotification["Success"], _localizerNotification["Success"]);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
                 IsNeedsRefresh = true;
                 _dialogService.Close("Success");
             }
@@ -177,12 +169,12 @@ namespace WebUIFinal.Pages.Components
                     errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
                 }
 
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], _localizer[errorResponse?.error]);
                 return;
             }
             catch (Exception ex)
             {
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
                 return;
             }
         }
@@ -208,13 +200,13 @@ namespace WebUIFinal.Pages.Components
 
                     NotificationHelper.ShowNotification(_notificationService
                        , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                       , _localizerNotification[error?.Key], _localizerNotification[error?.Value]);
+                       , _localizer[error?.Key], _localizer[error?.Value]);
 
                     return;
                 }
 
 
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizerNotification["Success"], _localizerNotification["Success"]);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
                 await OnSaved.InvokeAsync(true);
             }
             catch (ApiException ex)
@@ -226,12 +218,12 @@ namespace WebUIFinal.Pages.Components
                     errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
                 }
 
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], _localizer[errorResponse?.error]);
                 return;
             }
             catch (Exception ex)
             {
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
                 return;
             }
         }

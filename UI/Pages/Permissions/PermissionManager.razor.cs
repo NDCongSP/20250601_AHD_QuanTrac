@@ -1,13 +1,11 @@
-﻿using Application.DTOs.Response;
-using Application.DTOs.Response.Account;
+﻿using Application.DTOs.Response.Account;
 
 using Newtonsoft.Json;
 using RestEase;
-using WebUIFinal.Models;
 
-namespace WebUIFinal.Pages.Account;
+namespace UI.Pages.Permissions;
 
-public partial class Permission : ListBaseComponent<PermissionsListResponseDTO>
+public partial class PermissionManager
 {
     List<PermissionsListResponseDTO> _dataGrid = null;
     RadzenDataGrid<PermissionsListResponseDTO> _profileGrid;

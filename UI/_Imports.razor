@@ -21,9 +21,10 @@
 @inject NavigationManager _navigation
 
 @inject IAccount _accountServices
-@inject IAuthServices _authenServices
+@* @inject IAuthServices _authenServices *@
 
 @inject ApiAuthenticationStateProvider _authStateProvider
 @inject IHttpInterceptorManager _httpInterceptorManager
 @inject IPermissions _permissionsServices
 @inject IRoleToPermissions _roleToPermissionServices
+@inject IStringLocalizer<CommonResource> _localizer

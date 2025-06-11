@@ -1,13 +1,10 @@
-﻿using Application.DTOs.Request.Account;
-using Application.DTOs.Response;
-using Application.DTOs.Response.Account;
+﻿using Application.DTOs.Response.Account;
 using Newtonsoft.Json;
 using RestEase;
-using WebUIFinal.Models;
 
-namespace WebUIFinal.Pages.Account;
+namespace UI.Pages.Roles;
 
-public partial class Roles : ListBaseComponent<GetRoleResponseDTO>
+public partial class RoleManager
 {
     List<GetRoleResponseDTO> _dataGrid = null;
     RadzenDataGrid<GetRoleResponseDTO> _profileGrid;

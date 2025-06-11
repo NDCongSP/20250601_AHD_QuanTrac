@@ -1313,5 +1313,38 @@ namespace Infrastructure.Repositories
                 };
             }
         }
+
+        public async Task<string> CheckPasswordAsync([Path] string email, [Path] string password)
+        {
+            try
+            {
+                //var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+                //if(!result.Succeeded) return new LoginResponse() { flag = false ,message="Username and password are invalid."};
+                var startTime = DateTime.Now;
+
+                var user = await FindUserByEmailAsync(email);
+                if (user == null)
+                {
+                    return null;
+                }
+
+                //await dbContext.SaveChangesAsync();
+
+                SignInResult result = null;
+
+                result = await signInManager.CheckPasswordSignInAsync(user, password, false);
+
+                //await dbContext.SaveChangesAsync();
+
+                if (!result.Succeeded)
+                    return null;
+
+                return "Successful";
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
