@@ -1,7 +1,5 @@
 ﻿using Application.DTOs.Response.Account;
-
 using Newtonsoft.Json;
-using RestEase;
 
 namespace UI.Pages.Permissions;
 
@@ -12,18 +10,8 @@ public partial class PermissionManager
     
     protected override async Task OnInitializedAsync()
     {
-        if (_isFirstRender)
-        {
             await base.OnInitializedAsync();
-            _pagingSummaryFormat = _localizer["DisplayPage"] + " {0} " + _localizer["Of"] + " {1} <b>(" + _localizer["Total"] + " {2} " + _localizer["Records"] + ")</b>";
             await RefreshDataAsync();
-            _isFirstRender = false;
-        }
-    }
-
-    public override async Task LoadDataAsync()
-    {
-        await RefreshDataAsync();
     }
 
     async Task DeleteItemAsync(PermissionsListResponseDTO model)
@@ -80,17 +68,14 @@ public partial class PermissionManager
 
     async Task EditItemAsync(string id)
     {
-        await OnEdit.InvokeAsync(new Models.DetailViewData($"{_localizer["Detail.Edit"]} {_localizer["Permission"]}|{id}", id));
     }
 
     async Task AddNewItemAsync()
     {
-        await OnAddNew.InvokeAsync(new Models.DetailViewData($"{_localizer["Detail.Create"]} {_localizer["Permission"]}"));
     }
 
     async Task ViewItemAsync(string id)
     {
-        await OnView.InvokeAsync(new Models.DetailViewData($"{_localizer["Detail.View"]} {_localizer["Permission"]}|{id}", id));
     }
 
     async Task RefreshDataAsync()
@@ -105,7 +90,7 @@ public partial class PermissionManager
 
                 NotificationHelper.ShowNotification(_notificationService
                    , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                   , _localizerNotification[error?.Key], _localizerNotification[error?.Value]);
+                   , _localizer[error?.Key], _localizer[error?.Value]);
 
                 return;
             }
@@ -117,21 +102,9 @@ public partial class PermissionManager
             StateHasChanged();
         }
         catch (UnauthorizedAccessException) { }
-        catch (ApiException ex)
-        {
-            ApiErrorResponse errorResponse = null;
-
-            if (ex.Content != null)
-            {
-                errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-            }
-
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
-            return;
-        }
         catch (Exception ex)
         {
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
             return;
         }
     }

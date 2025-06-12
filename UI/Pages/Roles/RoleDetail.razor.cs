@@ -8,6 +8,8 @@ namespace UI.Pages.Roles;
 
 public partial class RoleDetail
 {
+    string Title { get; set; } = "";
+    [Parameter] public string Id { get; set; }
     [Parameter] public CreateRoleRequestDTO _model { get; set; } = new CreateRoleRequestDTO();
     private GetRoleResponseDTO _roleInfo;
 
@@ -51,20 +53,12 @@ public partial class RoleDetail
 
                 NotificationHelper.ShowNotification(_notificationService
                     , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                    , _localizerNotification[error?.Key], _localizerNotification[error?.Value]);
+                    , _localizer[error?.Key], _localizer[error?.Value]);
 
                 return;
             }
 
-            // Cấu hình AutoMapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Permissions, PermissionsInRoleModel>();
-                //cfg.CreateMap<List<Permissions>, List<PermissionsInRoleModel>>();
-            });
-            var mapper = config.CreateMapper();
-
-            _dataGrid = mapper.Map<List<PermissionsInRoleModel>>(p.Data);
+            //_dataGrid = mapper.Map<List<PermissionsInRoleModel>>(p.Data);
             #endregion
 
             if (Title.Contains("|"))
@@ -81,7 +75,7 @@ public partial class RoleDetail
 
                     NotificationHelper.ShowNotification(_notificationService
                         , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                        , _localizerNotification[error?.Key], _localizerNotification["Could not load data."]);
+                        , _localizer[error?.Key], _localizer["Could not load data."]);
 
                     return;
                 }
@@ -100,21 +94,9 @@ public partial class RoleDetail
             StateHasChanged();
         }
         catch (UnauthorizedAccessException) { }
-        catch (ApiException ex)
-        {
-            ApiErrorResponse errorResponse = null;
-
-            if (ex.Content != null)
-            {
-                errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-            }
-
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
-            return;
-        }
         catch (Exception ex)
         {
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
             return;
         }
     }
@@ -126,13 +108,6 @@ public partial class RoleDetail
             var response = new GeneralResponse();
 
             #region Get permission
-            // Cấu hình AutoMapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Permissions, PermissionsInRoleModel>();
-            });
-            var mapper = config.CreateMapper();
-
             foreach (var item in _dataGrid)
             {
                 var p = _model.Permissions.FirstOrDefault(_ => _.Id == item.Id);
@@ -141,7 +116,7 @@ public partial class RoleDetail
                 {
                     if (p is null)
                     {
-                        _model.Permissions.Add(mapper.Map<PermissionsInRoleModel>(item));
+                        //_model.Permissions.Add(mapper.Map<PermissionsInRoleModel>(item));
                     }
                 }
                 else
@@ -166,8 +141,8 @@ public partial class RoleDetail
 
                 _model.Name = arg.Name;
 
-                //response = await _authenServices.UpdateRoleAsync(new UpdateDeleteRequestDTO() { Id = _model.Id, Name = _model.Name });
-                response = await _authenServices.UpdateRoleDTOAsync(_model);
+                //response = await _accountServices.UpdateRoleAsync(new UpdateDeleteRequestDTO() { Id = _model.Id, Name = _model.Name });
+                response = await _accountServices.UpdateRoleDTOAsync(_model);
             }
             else if (Title.Contains(_localizer["Detail.Create"]))
             {
@@ -183,7 +158,7 @@ public partial class RoleDetail
                 //_model.Id = Guid.NewGuid().ToString();
                 _model.Name = arg.Name;
 
-                response = await _authenServices.CreateRoleAsysnc(_model);
+                response = await _accountServices.CreateRoleAsync(_model);
             }
 
             if (!response.Flag)
@@ -192,30 +167,17 @@ public partial class RoleDetail
 
                 NotificationHelper.ShowNotification(_notificationService
                     , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                    , _localizerNotification[error?.Key], _localizerNotification["Could not load data."]);
+                    , _localizer[error?.Key], _localizer["Could not load data."]);
 
                 return;
             }
-            IsNeedsRefresh = true;  
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizerNotification["Success"], _localizerNotification["Success"]);
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
 
             _dialogService.Close("Success");
         }
-        catch (ApiException ex)
-        {
-            ApiErrorResponse errorResponse = null;
-
-            if (ex.Content != null)
-            {
-                errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-            }
-
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
-            return;
-        }
         catch (Exception ex)
         {
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
             return;
         }
     }
@@ -233,7 +195,7 @@ public partial class RoleDetail
 
             if (confirm == null || confirm == false) return;
 
-            var res = await _authenServices.DeleteRoleAsync(new UpdateDeleteRequestDTO() { Id = model.Id, Name = model.Name });
+            var res = await _accountServices.DeleteRoleAsync(new UpdateDeleteRequestDTO() { Id = model.Id, Name = model.Name });
 
             if (!res.Flag)
             {
@@ -241,30 +203,16 @@ public partial class RoleDetail
 
                 NotificationHelper.ShowNotification(_notificationService
                     , error?.Key == "Warning" ? NotificationSeverity.Warning : NotificationSeverity.Error
-                    , _localizerNotification[error?.Key], _localizerNotification["Could not load data."]);
+                    , _localizer[error?.Key], _localizer["Could not load data."]);
 
                 return;
             }
 
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizerNotification["Success"], _localizerNotification["Success"]);
-
-            await OnSaved.InvokeAsync(true);
-        }
-        catch (ApiException ex)
-        {
-            ApiErrorResponse errorResponse = null;
-
-            if (ex.Content != null)
-            {
-                errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-            }
-
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
-            return;
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
         }
         catch (Exception ex)
         {
-            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
             return;
         }
     }

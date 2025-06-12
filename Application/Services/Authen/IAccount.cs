@@ -1,8 +1,4 @@
-﻿using RestEase;
-using Application.Extentions;
-using Application.DTOs.Response;
-using Application.DTOs.Request.Account;
-using Application.DTOs.Response.Account;
+﻿using Application.DTOs.Request.Account;
 
 namespace Application.Services.Authen;
 

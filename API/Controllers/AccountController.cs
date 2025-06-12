@@ -1,12 +1,6 @@
 ﻿using Application.DTOs.Request.Account;
 using Application.DTOs.Response;
-using Application.DTOs.Response.Account;
-using Application.Extentions;
-using Application.Services.Authen;
 using Application.Services.Authen.UI;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using RestEase;
 
 namespace API.Controllers
 {

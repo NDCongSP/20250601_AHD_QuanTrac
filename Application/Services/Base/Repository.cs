@@ -1,0 +1,20 @@
+﻿using Application.Services.Authen;
+
+namespace Application.Services.Repositories;
+
+public class Repository
+{
+    public IPermissions SPermissions { get; set; }
+    public IPermissionTenant SPermissionTenant { get; set; }
+    public IRoleToPermissions SRoleToPermissions { get; set; }
+    public IRoleToPermissionTenant SRoleToPermissionTenant { get; set; }
+
+    public Repository(IPermissions sPermissions = null, IPermissionTenant sPermissionTenant = null
+        , IRoleToPermissions sRoleToPermissions = null, IRoleToPermissionTenant sRoleToPermissionTenant = null)
+    {
+        SPermissions = sPermissions;
+        SPermissionTenant = sPermissionTenant;
+        SRoleToPermissions = sRoleToPermissions;
+        SRoleToPermissionTenant = sRoleToPermissionTenant;
+    }
+}

@@ -4,7 +4,6 @@
 
 @inject IHttpInterceptorManager _interceptorManager
 @implements IDisposable
-@inject IStringLocalizer<CommonResources> _localizer
 
 @* phải có dòng này để thay dổi theme *@
 <RadzenTheme Theme="Material" />
@@ -17,7 +16,7 @@
                 <NotAuthorized>
                     @if (!context.User.Claims.Any())
                     {
-                        <WebUIFinal.Pages.Components.RedirectToLogin/>
+                        <UI.Pages.UI.Pages.Authentications.RedirectToLogin/>
                     }
                     else
                     {

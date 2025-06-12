@@ -1,36 +1,30 @@
-﻿using UI;
-using Radzen;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.JSInterop;
-using Application.Extentions;
-using Application.Services.Authen.UI;
+﻿using Application.Services;
 using Application.Services.Authen;
-using Application.Services;
+using Application.Services.Authen.UI;
 using Blazored.LocalStorage;
-using System.Globalization;
 using Blazored.SessionStorage;
-using RestEase.HttpClientFactory;
 using Microsoft.AspNetCore.Components.Authorization;
-using Toolbelt.Blazor.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using RestEase.HttpClientFactory;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
+using UI;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-var jsInterop = builder.Build().Services.GetRequiredService<IJSRuntime>();
-var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
-var culture = result ?? "ja-JP";
-CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
-CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+//builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+//var jsInterop = builder.Build().Services.GetRequiredService<IJSRuntime>();
+//var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
+//var culture = result ?? "ja-JP";
+//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+//CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
 
 builder.Services.AddRadzenComponents();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
-builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
-//builder.Services.AddScoped<IAuthServices, AuthServices>();
 
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>()
     .AddScoped(sp => (ApiAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>())

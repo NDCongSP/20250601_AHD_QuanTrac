@@ -9,15 +9,15 @@ public class HttpInterceptorManager : IHttpInterceptorManager
     private readonly NotificationService _notify;
     private readonly NavigationManager _navigationManager;
     private readonly HttpClientInterceptor _httpInterceptor;
-    private readonly IAuthServices _authService;
+    private readonly IAccount _accountService;
 
     public HttpInterceptorManager(NotificationService notify, NavigationManager navigationManager
-        , HttpClientInterceptor httpInterceptor, IAuthServices authService)
+        , HttpClientInterceptor httpInterceptor, IAccount accountService)
     {
         _notify = notify;
         _navigationManager = navigationManager;
         _httpInterceptor = httpInterceptor;
-        _authService = authService;
+        _accountService = accountService;
     }
 
     public void DisposeEvent()
@@ -32,15 +32,6 @@ public class HttpInterceptorManager : IHttpInterceptorManager
         {
             try
             {
-                //var result = await _authService.RefreshTokenAsync();
-                //if (result != null && result.Flag == true)
-                //{                        
-                //    args.Request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", result.Token);                        
-                //}
-                //else
-                //{
-                //    throw new UnauthorizedAccessException(result?.Message);
-                //}
             }
             catch (Exception ex)
             {                    
@@ -52,7 +43,7 @@ public class HttpInterceptorManager : IHttpInterceptorManager
                     Detail = ex.Message ?? "Your session was expired",
                     Duration = 5000
                 });
-                await _authService.LogoutAsync();
+                //await _accountService.LogoutAsync();
                 throw;
             }
         }
@@ -60,8 +51,6 @@ public class HttpInterceptorManager : IHttpInterceptorManager
 
     public void RegisterEvent()
     {
-        //_httpInterceptor.BeforeSendAsync += InterceptBeforeHttpAsync;
-        //_httpInterceptor.AfterSendAsync += _httpInterceptor_AfterSendAsync;
     }
 
     private Task _httpInterceptor_AfterSendAsync(object sender, HttpClientInterceptorEventArgs e)

@@ -142,7 +142,7 @@ public partial class UserManager
         //}
     }
 
-    async void SubmitData(UserSearchRequestDTO arg)
+    async Task SubmitData(UserSearchRequestDTO arg)
     {
         _userSearch = _users.Where(x => (string.IsNullOrEmpty(arg.Keyword)
                                     || x.Email.ToLower().Contains(arg.Keyword.ToLower())

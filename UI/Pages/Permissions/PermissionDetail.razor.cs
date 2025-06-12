@@ -6,6 +6,8 @@ namespace UI.Pages.Permissions
 {
     public partial class PermissionDetail
     {
+        [Parameter] public string? Id { get; set; } = string.Empty;
+        [Parameter] public string? Title { get; set; } = string.Empty;
         [Parameter] public PermissionsListResponseDTO _model { get; set; } = new PermissionsListResponseDTO();
 
         List<GetRoleResponseDTO> _roles = new List<GetRoleResponseDTO>();
@@ -94,18 +96,6 @@ namespace UI.Pages.Permissions
                 StateHasChanged();
             }
             catch (UnauthorizedAccessException) { }
-            catch (ApiException ex)
-            {
-                ApiErrorResponse errorResponse = null;
-
-                if (ex.Content != null)
-                {
-                    errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-                }
-
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], _localizer[errorResponse?.error]);
-                return;
-            }
             catch (Exception ex)
             {
                 NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
@@ -157,20 +147,7 @@ namespace UI.Pages.Permissions
                 }
 
                 NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
-                IsNeedsRefresh = true;
                 _dialogService.Close("Success");
-            }
-            catch (ApiException ex)
-            {
-                ApiErrorResponse errorResponse = null;
-
-                if (ex.Content != null)
-                {
-                    errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-                }
-
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], _localizer[errorResponse?.error]);
-                return;
             }
             catch (Exception ex)
             {
@@ -207,19 +184,6 @@ namespace UI.Pages.Permissions
 
 
                 NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
-                await OnSaved.InvokeAsync(true);
-            }
-            catch (ApiException ex)
-            {
-                ApiErrorResponse errorResponse = null;
-
-                if (ex.Content != null)
-                {
-                    errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-                }
-
-                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], _localizer[errorResponse?.error]);
-                return;
             }
             catch (Exception ex)
             {
