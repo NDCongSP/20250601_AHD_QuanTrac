@@ -21,11 +21,13 @@ namespace RegistrationForm1
         {
             InitializeComponent();
             Load += FrmHome_Load;
+
+            var eeee = 10000;
         }
         IAhdDriverConnector driver;
         private void FrmHome_Load(object sender, EventArgs e)
         {
-          //  lbl_User.Text = "Xin Chào    " + FrmLogin1.User_V;
+            //  lbl_User.Text = "Xin Chào    " + FrmLogin1.User_V;
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
             if (!driver.IsStarted)
                 driver.Started += Driver_Started;
@@ -339,8 +341,8 @@ namespace RegistrationForm1
 
         }
 
-       
-       
+
+
         private void _btnGhiStatus_Click(object sender, EventArgs e)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
