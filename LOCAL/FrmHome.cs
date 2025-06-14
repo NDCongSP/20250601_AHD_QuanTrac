@@ -22,7 +22,7 @@ namespace RegistrationForm1
             InitializeComponent();
             Load += FrmHome_Load;
 
-            var eeee = 10000;
+          
         }
         IAhdDriverConnector driver;
         private void FrmHome_Load(object sender, EventArgs e)
