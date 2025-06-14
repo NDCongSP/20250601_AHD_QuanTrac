@@ -49,14 +49,9 @@
             this.panelDesktop = new System.Windows.Forms.Panel();
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.lbl_User = new System.Windows.Forms.Label();
-            this.labDriverStatus = new System.Windows.Forms.Label();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
-            this.panelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -255,10 +250,6 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.M2;
-            this.panelDesktop.Controls.Add(this.lbl_User);
-            this.panelDesktop.Controls.Add(this.labDriverStatus);
-            this.panelDesktop.Controls.Add(this.lblDate);
-            this.panelDesktop.Controls.Add(this.lblTime);
             this.panelDesktop.Location = new System.Drawing.Point(195, 154);
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1733, 887);
@@ -279,49 +270,7 @@
             // 
             // timer1
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // lbl_User
-            // 
-            this.lbl_User.AutoSize = true;
-            this.lbl_User.Location = new System.Drawing.Point(710, 101);
-            this.lbl_User.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_User.Name = "lbl_User";
-            this.lbl_User.Size = new System.Drawing.Size(57, 13);
-            this.lbl_User.TabIndex = 270;
-            this.lbl_User.Text = "UserDislay";
-            // 
-            // labDriverStatus
-            // 
-            this.labDriverStatus.AutoSize = true;
-            this.labDriverStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labDriverStatus.Location = new System.Drawing.Point(929, 140);
-            this.labDriverStatus.Name = "labDriverStatus";
-            this.labDriverStatus.Size = new System.Drawing.Size(68, 13);
-            this.labDriverStatus.TabIndex = 269;
-            this.labDriverStatus.Text = "Driver Status";
-            // 
-            // lblDate
-            // 
-            this.lblDate.AutoSize = true;
-            this.lblDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(811, 136);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(48, 20);
-            this.lblDate.TabIndex = 268;
-            this.lblDate.Text = "Date";
-            // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(707, 136);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(47, 20);
-            this.lblTime.TabIndex = 267;
-            this.lblTime.Text = "Time";
+           
             // 
             // FrmMain
             // 
@@ -344,8 +293,6 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
-            this.panelDesktop.ResumeLayout(false);
-            this.panelDesktop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
             this.ResumeLayout(false);
 
@@ -371,9 +318,5 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label lbl_User;
-        private System.Windows.Forms.Label labDriverStatus;
-        private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.Label lblTime;
     }
 }

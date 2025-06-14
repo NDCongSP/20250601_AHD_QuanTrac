@@ -48,27 +48,36 @@ namespace RegistrationForm1
                     return;
                 }
 
-                // Đóng form con hiện tại nếu có
-                if (currentChildForm != null)
+                // Ẩn form hiện tại (nếu khác form đang mở)
+                if (currentChildForm != null && currentChildForm != childForm)
                 {
-                    currentChildForm.Close();
+                    currentChildForm.Hide(); // ✅ Không huỷ form
                     currentChildForm = null;
                 }
 
-                // Thiết lập form con
+                // Nếu form chưa được add vào panel thì add
+                if (!panelDesktop.Controls.Contains(childForm))
+                {
+                    childForm.TopLevel = false;
+                    childForm.FormBorderStyle = FormBorderStyle.None;
+                    childForm.Dock = DockStyle.Fill;
+                    panelDesktop.Controls.Add(childForm);
+                }
+
                 currentChildForm = childForm;
-                childForm.TopLevel = false; // Quan trọng: Không phải top-level window
-                childForm.FormBorderStyle = FormBorderStyle.None; // Bỏ border
-                childForm.Dock = DockStyle.Fill; // Fill toàn bộ panel
-               
-                panelDesktop.Controls.Add(childForm);
+                childForm.BringToFront();
                 childForm.Show();
+
+                // Gán tiêu đề nếu có
                 if (label1 != null)
                 {
                     label1.Text = Title;
                 }
+
+                // Đăng ký sự kiện nếu form đúng kiểu
                 if (childForm is Home homeForm)
                 {
+                    homeForm.TitleChanged -= HomeForm_TitleChanged; // tránh lặp event
                     homeForm.TitleChanged += HomeForm_TitleChanged;
                 }
             }
@@ -200,25 +209,6 @@ namespace RegistrationForm1
             loginForm.ShowDialog();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
-            lblTime.Text = DateTime.Now.ToLongTimeString();
-            //  lblDate.Text = DateTime.Now.ToLongDateString();
-            lblDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            //  lblTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-
-
-            if (ahdDriverConnector1.ConnectionStatus == ConnectionStatus.Connected)
-            {
-                labDriverStatus.BackColor = Color.Green;
-                labDriverStatus.Text = "PLC Đang Kết Nối";
-            }
-            else
-            {
-                labDriverStatus.BackColor = Color.Red;
-                labDriverStatus.Text = "PLC Mất Kết Nối";
-            }
-        }
+        
     }
 }
