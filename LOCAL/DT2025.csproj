@@ -166,6 +166,11 @@
     <Compile Include="FrmTran.Designer.cs">
       <DependentUpon>FrmTran.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,14 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -282,9 +282,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PIC\M1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PIC\MAIN.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PIC\CHAY.png" />
@@ -318,6 +315,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PIC\MN2BMP.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\MNEW.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\M.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\Tron_Xanh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\Tron_Vang.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\Tron_Do.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

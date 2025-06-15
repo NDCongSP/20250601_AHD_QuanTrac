@@ -94,6 +94,16 @@
             this.Fllow_Ho = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel10 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tm_login = new System.Windows.Forms.Timer(this.components);
+            this._btnGhiStatus = new System.Windows.Forms.Button();
+            this.Temp_Oil3 = new Ahd.Winforms.Controls.AhdLabel();
+            this.Temp_Oil2 = new Ahd.Winforms.Controls.AhdLabel();
+            this.Temp_Oil1 = new Ahd.Winforms.Controls.AhdLabel();
+            this.lbl_User = new System.Windows.Forms.Label();
+            this.labDriverStatus = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
             this.Pic_DC3Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_DC2Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_DC1Stop = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -111,16 +121,26 @@
             this.Pic_Doorlock2_2Open = new System.Windows.Forms.PictureBox();
             this.Pic_Doorlock2_2Close = new System.Windows.Forms.PictureBox();
             this.Pic_DC1Runing = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tm_login = new System.Windows.Forms.Timer(this.components);
-            this._btnGhiStatus = new System.Windows.Forms.Button();
-            this.Temp_Oil3 = new Ahd.Winforms.Controls.AhdLabel();
-            this.Temp_Oil2 = new Ahd.Winforms.Controls.AhdLabel();
-            this.Temp_Oil1 = new Ahd.Winforms.Controls.AhdLabel();
-            this.lbl_User = new System.Windows.Forms.Label();
-            this.labDriverStatus = new System.Windows.Forms.Label();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
+            this.Pic_Door3_Opening = new System.Windows.Forms.PictureBox();
+            this.Pic_Door3_Closing = new System.Windows.Forms.PictureBox();
+            this.Pic_Door4_Opening = new System.Windows.Forms.PictureBox();
+            this.Pic_Door4_Closing = new System.Windows.Forms.PictureBox();
+            this.Pic_Door5_Opening = new System.Windows.Forms.PictureBox();
+            this.Pic_Door5_Closing = new System.Windows.Forms.PictureBox();
+            this.Pic_Door6_Opening = new System.Windows.Forms.PictureBox();
+            this.Pic_Door6_Closing = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock3_1Open = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock3_1Close = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock3_2Open = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock3_2Close = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock4_1Open = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock4_1Close = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock4_2Open = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock4_2Close = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock5_1Open = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock5_1Close = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock5_2Open = new System.Windows.Forms.PictureBox();
+            this.Pic_Doorlock5_2Close = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Total_Fllow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblChot6)).BeginInit();
@@ -173,6 +193,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Fllow_Ho)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC3Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC2Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC1Stop)).BeginInit();
@@ -190,9 +213,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Open)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC1Runing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Opening)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_Opening)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door5_Opening)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door5_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door6_Opening)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door6_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_1Open)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_1Close)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Open)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Close)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_1Open)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_1Close)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Open)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Close)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Open)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -1159,6 +1199,114 @@
             this.ahdDriverConnector1.Timeout = 30;
             this.ahdDriverConnector1.UseMongoDb = false;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 200;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // tm_login
+            // 
+            this.tm_login.Enabled = true;
+            this.tm_login.Tick += new System.EventHandler(this.tm_login_Tick);
+            // 
+            // _btnGhiStatus
+            // 
+            this._btnGhiStatus.Location = new System.Drawing.Point(623, 294);
+            this._btnGhiStatus.Name = "_btnGhiStatus";
+            this._btnGhiStatus.Size = new System.Drawing.Size(75, 23);
+            this._btnGhiStatus.TabIndex = 259;
+            this._btnGhiStatus.Text = "Ghi Status";
+            this._btnGhiStatus.UseVisualStyleBackColor = true;
+            this._btnGhiStatus.Click += new System.EventHandler(this._btnGhiStatus_Click);
+            // 
+            // Temp_Oil3
+            // 
+            this.Temp_Oil3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Temp_Oil3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.Temp_Oil3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Temp_Oil3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Temp_Oil3.Location = new System.Drawing.Point(1230, 363);
+            this.Temp_Oil3.Name = "Temp_Oil3";
+            this.Temp_Oil3.Size = new System.Drawing.Size(55, 35);
+            this.Temp_Oil3.StringFormat = null;
+            this.Temp_Oil3.TabIndex = 262;
+            this.Temp_Oil3.TagPath = "Local Station/Channel1/Device1/Temp_Oil1";
+            this.Temp_Oil3.Text = "0.0";
+            this.Temp_Oil3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Temp_Oil2
+            // 
+            this.Temp_Oil2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Temp_Oil2.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.Temp_Oil2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Temp_Oil2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Temp_Oil2.Location = new System.Drawing.Point(853, 363);
+            this.Temp_Oil2.Name = "Temp_Oil2";
+            this.Temp_Oil2.Size = new System.Drawing.Size(55, 35);
+            this.Temp_Oil2.StringFormat = null;
+            this.Temp_Oil2.TabIndex = 261;
+            this.Temp_Oil2.TagPath = "Local Station/Channel1/Device1/Temp_Oil2";
+            this.Temp_Oil2.Text = "0.0";
+            this.Temp_Oil2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Temp_Oil1
+            // 
+            this.Temp_Oil1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Temp_Oil1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.Temp_Oil1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Temp_Oil1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Temp_Oil1.Location = new System.Drawing.Point(477, 363);
+            this.Temp_Oil1.Name = "Temp_Oil1";
+            this.Temp_Oil1.Size = new System.Drawing.Size(55, 35);
+            this.Temp_Oil1.StringFormat = null;
+            this.Temp_Oil1.TabIndex = 260;
+            this.Temp_Oil1.TagPath = "Local Station/Channel1/Device1/Temp_Oil3";
+            this.Temp_Oil1.Text = "0.0";
+            this.Temp_Oil1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_User
+            // 
+            this.lbl_User.AutoSize = true;
+            this.lbl_User.Location = new System.Drawing.Point(1310, 65);
+            this.lbl_User.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_User.Name = "lbl_User";
+            this.lbl_User.Size = new System.Drawing.Size(57, 13);
+            this.lbl_User.TabIndex = 266;
+            this.lbl_User.Text = "UserDislay";
+            // 
+            // labDriverStatus
+            // 
+            this.labDriverStatus.AutoSize = true;
+            this.labDriverStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labDriverStatus.Location = new System.Drawing.Point(1529, 104);
+            this.labDriverStatus.Name = "labDriverStatus";
+            this.labDriverStatus.Size = new System.Drawing.Size(68, 13);
+            this.labDriverStatus.TabIndex = 265;
+            this.labDriverStatus.Text = "Driver Status";
+            // 
+            // lblDate
+            // 
+            this.lblDate.AutoSize = true;
+            this.lblDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Location = new System.Drawing.Point(1411, 100);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(48, 20);
+            this.lblDate.TabIndex = 264;
+            this.lblDate.Text = "Date";
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Location = new System.Drawing.Point(1307, 100);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(47, 20);
+            this.lblTime.TabIndex = 263;
+            this.lblTime.Text = "Time";
+            // 
             // Pic_DC3Stop
             // 
             this.Pic_DC3Stop.BackColor = System.Drawing.Color.Transparent;
@@ -1291,7 +1439,7 @@
             // 
             this.Pic_Door2_Opening.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Door2_Opening.Image = global::RegistrationForm1.Properties.Resources.len;
-            this.Pic_Door2_Opening.Location = new System.Drawing.Point(1046, 381);
+            this.Pic_Door2_Opening.Location = new System.Drawing.Point(1060, 499);
             this.Pic_Door2_Opening.Name = "Pic_Door2_Opening";
             this.Pic_Door2_Opening.Size = new System.Drawing.Size(18, 37);
             this.Pic_Door2_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1302,7 +1450,7 @@
             // 
             this.Pic_Door2_Closing.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Door2_Closing.Image = global::RegistrationForm1.Properties.Resources.xuong;
-            this.Pic_Door2_Closing.Location = new System.Drawing.Point(1046, 419);
+            this.Pic_Door2_Closing.Location = new System.Drawing.Point(1060, 537);
             this.Pic_Door2_Closing.Name = "Pic_Door2_Closing";
             this.Pic_Door2_Closing.Size = new System.Drawing.Size(18, 37);
             this.Pic_Door2_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1312,7 +1460,7 @@
             // Pic_Doorlock2_1Open
             // 
             this.Pic_Doorlock2_1Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
-            this.Pic_Doorlock2_1Open.Location = new System.Drawing.Point(1076, 336);
+            this.Pic_Doorlock2_1Open.Location = new System.Drawing.Point(1089, 453);
             this.Pic_Doorlock2_1Open.Name = "Pic_Doorlock2_1Open";
             this.Pic_Doorlock2_1Open.Size = new System.Drawing.Size(77, 41);
             this.Pic_Doorlock2_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1322,7 +1470,7 @@
             // Pic_Doorlock2_1Close
             // 
             this.Pic_Doorlock2_1Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
-            this.Pic_Doorlock2_1Close.Location = new System.Drawing.Point(1076, 513);
+            this.Pic_Doorlock2_1Close.Location = new System.Drawing.Point(1089, 623);
             this.Pic_Doorlock2_1Close.Name = "Pic_Doorlock2_1Close";
             this.Pic_Doorlock2_1Close.Size = new System.Drawing.Size(77, 41);
             this.Pic_Doorlock2_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1333,7 +1481,7 @@
             // 
             this.Pic_Door1_Opening.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Door1_Opening.Image = global::RegistrationForm1.Properties.Resources.len;
-            this.Pic_Door1_Opening.Location = new System.Drawing.Point(1260, 381);
+            this.Pic_Door1_Opening.Location = new System.Drawing.Point(1249, 497);
             this.Pic_Door1_Opening.Name = "Pic_Door1_Opening";
             this.Pic_Door1_Opening.Size = new System.Drawing.Size(18, 37);
             this.Pic_Door1_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1344,7 +1492,7 @@
             // 
             this.Pic_Door1_Closing.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Door1_Closing.Image = global::RegistrationForm1.Properties.Resources.xuong;
-            this.Pic_Door1_Closing.Location = new System.Drawing.Point(1260, 419);
+            this.Pic_Door1_Closing.Location = new System.Drawing.Point(1249, 535);
             this.Pic_Door1_Closing.Name = "Pic_Door1_Closing";
             this.Pic_Door1_Closing.Size = new System.Drawing.Size(18, 37);
             this.Pic_Door1_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1354,7 +1502,7 @@
             // Pic_Doorlock2_2Open
             // 
             this.Pic_Doorlock2_2Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
-            this.Pic_Doorlock2_2Open.Location = new System.Drawing.Point(1289, 336);
+            this.Pic_Doorlock2_2Open.Location = new System.Drawing.Point(1165, 453);
             this.Pic_Doorlock2_2Open.Name = "Pic_Doorlock2_2Open";
             this.Pic_Doorlock2_2Open.Size = new System.Drawing.Size(77, 41);
             this.Pic_Doorlock2_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1364,7 +1512,7 @@
             // Pic_Doorlock2_2Close
             // 
             this.Pic_Doorlock2_2Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
-            this.Pic_Doorlock2_2Close.Location = new System.Drawing.Point(1289, 513);
+            this.Pic_Doorlock2_2Close.Location = new System.Drawing.Point(1165, 623);
             this.Pic_Doorlock2_2Close.Name = "Pic_Doorlock2_2Close";
             this.Pic_Doorlock2_2Close.Size = new System.Drawing.Size(77, 41);
             this.Pic_Doorlock2_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1386,120 +1534,240 @@
             this.Pic_DC1Runing.TabIndex = 242;
             this.Pic_DC1Runing.TagPath = null;
             // 
-            // timer1
+            // Pic_Door3_Opening
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 200;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.Pic_Door3_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door3_Opening.Image = global::RegistrationForm1.Properties.Resources.len;
+            this.Pic_Door3_Opening.Location = new System.Drawing.Point(870, 497);
+            this.Pic_Door3_Opening.Name = "Pic_Door3_Opening";
+            this.Pic_Door3_Opening.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door3_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door3_Opening.TabIndex = 268;
+            this.Pic_Door3_Opening.TabStop = false;
             // 
-            // tm_login
+            // Pic_Door3_Closing
             // 
-            this.tm_login.Enabled = true;
-            this.tm_login.Tick += new System.EventHandler(this.tm_login_Tick);
+            this.Pic_Door3_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door3_Closing.Image = global::RegistrationForm1.Properties.Resources.xuong;
+            this.Pic_Door3_Closing.Location = new System.Drawing.Point(870, 535);
+            this.Pic_Door3_Closing.Name = "Pic_Door3_Closing";
+            this.Pic_Door3_Closing.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door3_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door3_Closing.TabIndex = 267;
+            this.Pic_Door3_Closing.TabStop = false;
             // 
-            // _btnGhiStatus
+            // Pic_Door4_Opening
             // 
-            this._btnGhiStatus.Location = new System.Drawing.Point(623, 294);
-            this._btnGhiStatus.Name = "_btnGhiStatus";
-            this._btnGhiStatus.Size = new System.Drawing.Size(75, 23);
-            this._btnGhiStatus.TabIndex = 259;
-            this._btnGhiStatus.Text = "Ghi Status";
-            this._btnGhiStatus.UseVisualStyleBackColor = true;
-            this._btnGhiStatus.Click += new System.EventHandler(this._btnGhiStatus_Click);
+            this.Pic_Door4_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door4_Opening.Image = global::RegistrationForm1.Properties.Resources.len;
+            this.Pic_Door4_Opening.Location = new System.Drawing.Point(680, 497);
+            this.Pic_Door4_Opening.Name = "Pic_Door4_Opening";
+            this.Pic_Door4_Opening.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door4_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door4_Opening.TabIndex = 270;
+            this.Pic_Door4_Opening.TabStop = false;
             // 
-            // Temp_Oil3
+            // Pic_Door4_Closing
             // 
-            this.Temp_Oil3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Temp_Oil3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.Temp_Oil3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Temp_Oil3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil3.Location = new System.Drawing.Point(1267, 407);
-            this.Temp_Oil3.Name = "Temp_Oil3";
-            this.Temp_Oil3.Size = new System.Drawing.Size(55, 35);
-            this.Temp_Oil3.StringFormat = null;
-            this.Temp_Oil3.TabIndex = 262;
-            this.Temp_Oil3.TagPath = "Local Station/Channel1/Device1/Temp_Oil1";
-            this.Temp_Oil3.Text = "0.0";
-            this.Temp_Oil3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Pic_Door4_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door4_Closing.Image = global::RegistrationForm1.Properties.Resources.xuong;
+            this.Pic_Door4_Closing.Location = new System.Drawing.Point(680, 535);
+            this.Pic_Door4_Closing.Name = "Pic_Door4_Closing";
+            this.Pic_Door4_Closing.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door4_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door4_Closing.TabIndex = 269;
+            this.Pic_Door4_Closing.TabStop = false;
             // 
-            // Temp_Oil2
+            // Pic_Door5_Opening
             // 
-            this.Temp_Oil2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Temp_Oil2.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.Temp_Oil2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Temp_Oil2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil2.Location = new System.Drawing.Point(829, 407);
-            this.Temp_Oil2.Name = "Temp_Oil2";
-            this.Temp_Oil2.Size = new System.Drawing.Size(55, 35);
-            this.Temp_Oil2.StringFormat = null;
-            this.Temp_Oil2.TabIndex = 261;
-            this.Temp_Oil2.TagPath = "Local Station/Channel1/Device1/Temp_Oil2";
-            this.Temp_Oil2.Text = "0.0";
-            this.Temp_Oil2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Pic_Door5_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door5_Opening.Image = global::RegistrationForm1.Properties.Resources.len;
+            this.Pic_Door5_Opening.Location = new System.Drawing.Point(492, 497);
+            this.Pic_Door5_Opening.Name = "Pic_Door5_Opening";
+            this.Pic_Door5_Opening.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door5_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door5_Opening.TabIndex = 272;
+            this.Pic_Door5_Opening.TabStop = false;
             // 
-            // Temp_Oil1
+            // Pic_Door5_Closing
             // 
-            this.Temp_Oil1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Temp_Oil1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.Temp_Oil1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Temp_Oil1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil1.Location = new System.Drawing.Point(395, 407);
-            this.Temp_Oil1.Name = "Temp_Oil1";
-            this.Temp_Oil1.Size = new System.Drawing.Size(55, 35);
-            this.Temp_Oil1.StringFormat = null;
-            this.Temp_Oil1.TabIndex = 260;
-            this.Temp_Oil1.TagPath = "Local Station/Channel1/Device1/Temp_Oil3";
-            this.Temp_Oil1.Text = "0.0";
-            this.Temp_Oil1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Pic_Door5_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door5_Closing.Image = global::RegistrationForm1.Properties.Resources.xuong;
+            this.Pic_Door5_Closing.Location = new System.Drawing.Point(492, 535);
+            this.Pic_Door5_Closing.Name = "Pic_Door5_Closing";
+            this.Pic_Door5_Closing.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door5_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door5_Closing.TabIndex = 271;
+            this.Pic_Door5_Closing.TabStop = false;
             // 
-            // lbl_User
+            // Pic_Door6_Opening
             // 
-            this.lbl_User.AutoSize = true;
-            this.lbl_User.Location = new System.Drawing.Point(1310, 65);
-            this.lbl_User.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_User.Name = "lbl_User";
-            this.lbl_User.Size = new System.Drawing.Size(57, 13);
-            this.lbl_User.TabIndex = 266;
-            this.lbl_User.Text = "UserDislay";
+            this.Pic_Door6_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door6_Opening.Image = global::RegistrationForm1.Properties.Resources.len;
+            this.Pic_Door6_Opening.Location = new System.Drawing.Point(301, 497);
+            this.Pic_Door6_Opening.Name = "Pic_Door6_Opening";
+            this.Pic_Door6_Opening.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door6_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door6_Opening.TabIndex = 274;
+            this.Pic_Door6_Opening.TabStop = false;
             // 
-            // labDriverStatus
+            // Pic_Door6_Closing
             // 
-            this.labDriverStatus.AutoSize = true;
-            this.labDriverStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labDriverStatus.Location = new System.Drawing.Point(1529, 104);
-            this.labDriverStatus.Name = "labDriverStatus";
-            this.labDriverStatus.Size = new System.Drawing.Size(68, 13);
-            this.labDriverStatus.TabIndex = 265;
-            this.labDriverStatus.Text = "Driver Status";
+            this.Pic_Door6_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door6_Closing.Image = global::RegistrationForm1.Properties.Resources.xuong;
+            this.Pic_Door6_Closing.Location = new System.Drawing.Point(301, 535);
+            this.Pic_Door6_Closing.Name = "Pic_Door6_Closing";
+            this.Pic_Door6_Closing.Size = new System.Drawing.Size(18, 37);
+            this.Pic_Door6_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Pic_Door6_Closing.TabIndex = 273;
+            this.Pic_Door6_Closing.TabStop = false;
             // 
-            // lblDate
+            // Pic_Doorlock3_1Open
             // 
-            this.lblDate.AutoSize = true;
-            this.lblDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(1411, 100);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(48, 20);
-            this.lblDate.TabIndex = 264;
-            this.lblDate.Text = "Date";
+            this.Pic_Doorlock3_1Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
+            this.Pic_Doorlock3_1Open.Location = new System.Drawing.Point(900, 453);
+            this.Pic_Doorlock3_1Open.Name = "Pic_Doorlock3_1Open";
+            this.Pic_Doorlock3_1Open.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock3_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock3_1Open.TabIndex = 276;
+            this.Pic_Doorlock3_1Open.TabStop = false;
             // 
-            // lblTime
+            // Pic_Doorlock3_1Close
             // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(1307, 100);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(47, 20);
-            this.lblTime.TabIndex = 263;
-            this.lblTime.Text = "Time";
+            this.Pic_Doorlock3_1Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
+            this.Pic_Doorlock3_1Close.Location = new System.Drawing.Point(900, 623);
+            this.Pic_Doorlock3_1Close.Name = "Pic_Doorlock3_1Close";
+            this.Pic_Doorlock3_1Close.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock3_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock3_1Close.TabIndex = 275;
+            this.Pic_Doorlock3_1Close.TabStop = false;
+            // 
+            // Pic_Doorlock3_2Open
+            // 
+            this.Pic_Doorlock3_2Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
+            this.Pic_Doorlock3_2Open.Location = new System.Drawing.Point(977, 453);
+            this.Pic_Doorlock3_2Open.Name = "Pic_Doorlock3_2Open";
+            this.Pic_Doorlock3_2Open.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock3_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock3_2Open.TabIndex = 278;
+            this.Pic_Doorlock3_2Open.TabStop = false;
+            // 
+            // Pic_Doorlock3_2Close
+            // 
+            this.Pic_Doorlock3_2Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
+            this.Pic_Doorlock3_2Close.Location = new System.Drawing.Point(977, 623);
+            this.Pic_Doorlock3_2Close.Name = "Pic_Doorlock3_2Close";
+            this.Pic_Doorlock3_2Close.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock3_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock3_2Close.TabIndex = 277;
+            this.Pic_Doorlock3_2Close.TabStop = false;
+            // 
+            // Pic_Doorlock4_1Open
+            // 
+            this.Pic_Doorlock4_1Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
+            this.Pic_Doorlock4_1Open.Location = new System.Drawing.Point(705, 453);
+            this.Pic_Doorlock4_1Open.Name = "Pic_Doorlock4_1Open";
+            this.Pic_Doorlock4_1Open.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock4_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock4_1Open.TabIndex = 280;
+            this.Pic_Doorlock4_1Open.TabStop = false;
+            // 
+            // Pic_Doorlock4_1Close
+            // 
+            this.Pic_Doorlock4_1Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
+            this.Pic_Doorlock4_1Close.Location = new System.Drawing.Point(705, 623);
+            this.Pic_Doorlock4_1Close.Name = "Pic_Doorlock4_1Close";
+            this.Pic_Doorlock4_1Close.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock4_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock4_1Close.TabIndex = 279;
+            this.Pic_Doorlock4_1Close.TabStop = false;
+            // 
+            // Pic_Doorlock4_2Open
+            // 
+            this.Pic_Doorlock4_2Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
+            this.Pic_Doorlock4_2Open.Location = new System.Drawing.Point(782, 453);
+            this.Pic_Doorlock4_2Open.Name = "Pic_Doorlock4_2Open";
+            this.Pic_Doorlock4_2Open.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock4_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock4_2Open.TabIndex = 282;
+            this.Pic_Doorlock4_2Open.TabStop = false;
+            // 
+            // Pic_Doorlock4_2Close
+            // 
+            this.Pic_Doorlock4_2Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
+            this.Pic_Doorlock4_2Close.Location = new System.Drawing.Point(782, 623);
+            this.Pic_Doorlock4_2Close.Name = "Pic_Doorlock4_2Close";
+            this.Pic_Doorlock4_2Close.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock4_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock4_2Close.TabIndex = 281;
+            this.Pic_Doorlock4_2Close.TabStop = false;
+            // 
+            // Pic_Doorlock5_1Open
+            // 
+            this.Pic_Doorlock5_1Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
+            this.Pic_Doorlock5_1Open.Location = new System.Drawing.Point(517, 453);
+            this.Pic_Doorlock5_1Open.Name = "Pic_Doorlock5_1Open";
+            this.Pic_Doorlock5_1Open.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock5_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock5_1Open.TabIndex = 284;
+            this.Pic_Doorlock5_1Open.TabStop = false;
+            // 
+            // Pic_Doorlock5_1Close
+            // 
+            this.Pic_Doorlock5_1Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
+            this.Pic_Doorlock5_1Close.Location = new System.Drawing.Point(517, 623);
+            this.Pic_Doorlock5_1Close.Name = "Pic_Doorlock5_1Close";
+            this.Pic_Doorlock5_1Close.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock5_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock5_1Close.TabIndex = 283;
+            this.Pic_Doorlock5_1Close.TabStop = false;
+            // 
+            // Pic_Doorlock5_2Open
+            // 
+            this.Pic_Doorlock5_2Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
+            this.Pic_Doorlock5_2Open.Location = new System.Drawing.Point(595, 453);
+            this.Pic_Doorlock5_2Open.Name = "Pic_Doorlock5_2Open";
+            this.Pic_Doorlock5_2Open.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock5_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock5_2Open.TabIndex = 286;
+            this.Pic_Doorlock5_2Open.TabStop = false;
+            // 
+            // Pic_Doorlock5_2Close
+            // 
+            this.Pic_Doorlock5_2Close.Image = global::RegistrationForm1.Properties.Resources.chotdonghet;
+            this.Pic_Doorlock5_2Close.Location = new System.Drawing.Point(595, 623);
+            this.Pic_Doorlock5_2Close.Name = "Pic_Doorlock5_2Close";
+            this.Pic_Doorlock5_2Close.Size = new System.Drawing.Size(77, 41);
+            this.Pic_Doorlock5_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Pic_Doorlock5_2Close.TabIndex = 285;
+            this.Pic_Doorlock5_2Close.TabStop = false;
             // 
             // FrmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1717, 848);
+            this.BackgroundImage = global::RegistrationForm1.Properties.Resources.M;
+            this.ClientSize = new System.Drawing.Size(1694, 848);
+            this.Controls.Add(this.Pic_Doorlock5_2Open);
+            this.Controls.Add(this.Pic_Doorlock5_2Close);
+            this.Controls.Add(this.Pic_Doorlock5_1Open);
+            this.Controls.Add(this.Pic_Doorlock5_1Close);
+            this.Controls.Add(this.Pic_Doorlock4_2Open);
+            this.Controls.Add(this.Pic_Doorlock4_2Close);
+            this.Controls.Add(this.Pic_Doorlock4_1Open);
+            this.Controls.Add(this.Pic_Doorlock4_1Close);
+            this.Controls.Add(this.Pic_Doorlock3_2Open);
+            this.Controls.Add(this.Pic_Doorlock3_2Close);
+            this.Controls.Add(this.Pic_Doorlock3_1Open);
+            this.Controls.Add(this.Pic_Doorlock3_1Close);
+            this.Controls.Add(this.Pic_Door6_Opening);
+            this.Controls.Add(this.Pic_Door6_Closing);
+            this.Controls.Add(this.Pic_Door5_Opening);
+            this.Controls.Add(this.Pic_Door5_Closing);
+            this.Controls.Add(this.Pic_Door4_Opening);
+            this.Controls.Add(this.Pic_Door4_Closing);
+            this.Controls.Add(this.Pic_Door3_Opening);
+            this.Controls.Add(this.Pic_Door3_Closing);
             this.Controls.Add(this.lbl_User);
             this.Controls.Add(this.labDriverStatus);
             this.Controls.Add(this.lblDate);
@@ -1594,6 +1862,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Fllow_Ho)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC3Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC2Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC1Stop)).EndInit();
@@ -1611,9 +1882,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Open)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_DC1Runing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Opening)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_Opening)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door5_Opening)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door5_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door6_Opening)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door6_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_1Open)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_1Close)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Open)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Close)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_1Open)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_1Close)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Open)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Close)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Open)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1712,5 +2000,25 @@
         private System.Windows.Forms.Label labDriverStatus;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.PictureBox Pic_Door3_Opening;
+        private System.Windows.Forms.PictureBox Pic_Door3_Closing;
+        private System.Windows.Forms.PictureBox Pic_Door4_Opening;
+        private System.Windows.Forms.PictureBox Pic_Door4_Closing;
+        private System.Windows.Forms.PictureBox Pic_Door5_Opening;
+        private System.Windows.Forms.PictureBox Pic_Door5_Closing;
+        private System.Windows.Forms.PictureBox Pic_Door6_Opening;
+        private System.Windows.Forms.PictureBox Pic_Door6_Closing;
+        private System.Windows.Forms.PictureBox Pic_Doorlock3_1Open;
+        private System.Windows.Forms.PictureBox Pic_Doorlock3_1Close;
+        private System.Windows.Forms.PictureBox Pic_Doorlock3_2Open;
+        private System.Windows.Forms.PictureBox Pic_Doorlock3_2Close;
+        private System.Windows.Forms.PictureBox Pic_Doorlock4_1Open;
+        private System.Windows.Forms.PictureBox Pic_Doorlock4_1Close;
+        private System.Windows.Forms.PictureBox Pic_Doorlock4_2Open;
+        private System.Windows.Forms.PictureBox Pic_Doorlock4_2Close;
+        private System.Windows.Forms.PictureBox Pic_Doorlock5_1Open;
+        private System.Windows.Forms.PictureBox Pic_Doorlock5_1Close;
+        private System.Windows.Forms.PictureBox Pic_Doorlock5_2Open;
+        private System.Windows.Forms.PictureBox Pic_Doorlock5_2Close;
     }
 }
