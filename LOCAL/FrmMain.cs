@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RegistrationForm1
-{
-    
+{    
     public partial class FrmMain : Form
     {
         private User currentUser;
@@ -22,7 +21,7 @@ namespace RegistrationForm1
         {
             InitializeComponent();
             this.currentUser = loggedInUser;
-
+            lbl_User.Text = $"Xin chào: {loggedInUser.FullName}";
         }
         IAhdDriverConnector driver;
         private void MainHome_FormClosing(object sender, FormClosingEventArgs e)
@@ -97,19 +96,15 @@ namespace RegistrationForm1
         private void btnUser_Click(object sender, EventArgs e)
         {
             try
-            {
-                
+            {               
                 if (currentUser == null)
                 {
                     MessageBox.Show("Không có thông tin user để mở Home form!", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
-               
+                }              
                 Home homeForm = new Home(currentUser);
                 OpenFormInPanel(homeForm, "Hệ thống quản lý tài khoản");
-
-
             }
             catch (Exception ex)
             {
@@ -123,14 +118,12 @@ namespace RegistrationForm1
             DeviceStatusManager d = new DeviceStatusManager(currentUser);
             OpenFormInPanel(d, "Hệ thống quản lý thiết bị");
 
-        }
-             
+        }            
         private void btnDataMonitor_Click(object sender, EventArgs e)
         {
             DataCollection data = new DataCollection(currentUser);
             OpenFormInPanel(data, "Hệ thống thu thập dữ liệu");
         }
-
         private void bnt_Tran_Click(object sender, EventArgs e)
         {
             FrmTran data = new FrmTran();
@@ -159,9 +152,7 @@ namespace RegistrationForm1
         {
             FrmBaoCao baocao = new FrmBaoCao();
             OpenFormInPanel(baocao, "Báo Cáo");
-        }
-
-       
+        }  
 
         private void bnt_Exit_Click(object sender, EventArgs e)
         {

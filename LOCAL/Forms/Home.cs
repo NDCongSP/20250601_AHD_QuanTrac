@@ -22,7 +22,6 @@ namespace RegistrationForm1
         Maintenance = 2,   // Vận hành bảo trì - chỉ sửa
         Admin = 3          // Quản trị viên - tất cả quyền
     }
-
     public partial class Home : Form
     {
         private UserRole currentUserRole;
@@ -195,8 +194,6 @@ namespace RegistrationForm1
                     return false;
             }
         }
-
-
 
         private void LoadUserData()
         {
@@ -674,6 +671,11 @@ namespace RegistrationForm1
                     MessageBox.Show("Xuất  file không  thành  công !\n"+ex.Message);
                 }
             }
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }  
 }

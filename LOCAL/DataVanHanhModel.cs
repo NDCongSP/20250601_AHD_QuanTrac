@@ -96,5 +96,6 @@ namespace RegistrationForm1
         [DisplayName("Mực Nước Sơn Đài")] // Chú thích tiếng việt ra Dvg 
         public string Fllow_SonDai { get; set; }
 
+
     }
 }

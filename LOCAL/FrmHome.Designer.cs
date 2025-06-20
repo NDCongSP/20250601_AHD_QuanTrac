@@ -141,6 +141,11 @@
             this.Pic_Doorlock5_1Close = new System.Windows.Forms.PictureBox();
             this.Pic_Doorlock5_2Open = new System.Windows.Forms.PictureBox();
             this.Pic_Doorlock5_2Close = new System.Windows.Forms.PictureBox();
+            this.lbl_Remote = new Ahd.Winforms.Controls.AhdLabel();
+            this.lbl_Local = new Ahd.Winforms.Controls.AhdLabel();
+            this.lbl_Auto = new Ahd.Winforms.Controls.AhdLabel();
+            this.lbl_Man = new Ahd.Winforms.Controls.AhdLabel();
+            this.lbl_Stop = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Total_Fllow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblChot6)).BeginInit();
@@ -233,6 +238,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Remote)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Local)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Auto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Man)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Stop)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -1218,7 +1228,7 @@
             this._btnGhiStatus.TabIndex = 259;
             this._btnGhiStatus.Text = "Ghi Status";
             this._btnGhiStatus.UseVisualStyleBackColor = true;
-            this._btnGhiStatus.Click += new System.EventHandler(this._btnGhiStatus_Click);
+         
             // 
             // Temp_Oil3
             // 
@@ -1226,12 +1236,12 @@
             this.Temp_Oil3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.Temp_Oil3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Temp_Oil3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil3.Location = new System.Drawing.Point(1230, 363);
+            this.Temp_Oil3.Location = new System.Drawing.Point(471, 363);
             this.Temp_Oil3.Name = "Temp_Oil3";
             this.Temp_Oil3.Size = new System.Drawing.Size(55, 35);
             this.Temp_Oil3.StringFormat = null;
             this.Temp_Oil3.TabIndex = 262;
-            this.Temp_Oil3.TagPath = "Local Station/Channel1/Device1/Temp_Oil1";
+            this.Temp_Oil3.TagPath = "Local Station/Channel1/Device1/S3_Temp_Oil3";
             this.Temp_Oil3.Text = "0.0";
             this.Temp_Oil3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1246,7 +1256,7 @@
             this.Temp_Oil2.Size = new System.Drawing.Size(55, 35);
             this.Temp_Oil2.StringFormat = null;
             this.Temp_Oil2.TabIndex = 261;
-            this.Temp_Oil2.TagPath = "Local Station/Channel1/Device1/Temp_Oil2";
+            this.Temp_Oil2.TagPath = "Local Station/Channel1/Device1/S2_Temp_Oil2";
             this.Temp_Oil2.Text = "0.0";
             this.Temp_Oil2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1256,14 +1266,15 @@
             this.Temp_Oil1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.Temp_Oil1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Temp_Oil1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil1.Location = new System.Drawing.Point(477, 363);
+            this.Temp_Oil1.Location = new System.Drawing.Point(1230, 363);
             this.Temp_Oil1.Name = "Temp_Oil1";
             this.Temp_Oil1.Size = new System.Drawing.Size(55, 35);
             this.Temp_Oil1.StringFormat = null;
             this.Temp_Oil1.TabIndex = 260;
-            this.Temp_Oil1.TagPath = "Local Station/Channel1/Device1/Temp_Oil3";
+            this.Temp_Oil1.TagPath = "Local Station/Channel1/Device1/S1_Temp_Oil";
             this.Temp_Oil1.Text = "0.0";
             this.Temp_Oil1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Temp_Oil1.Visible = false;
             // 
             // lbl_User
             // 
@@ -1742,12 +1753,72 @@
             this.Pic_Doorlock5_2Close.TabIndex = 285;
             this.Pic_Doorlock5_2Close.TabStop = false;
             // 
+            // lbl_Remote
+            // 
+            this.lbl_Remote.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.lbl_Remote.Location = new System.Drawing.Point(1304, 659);
+            this.lbl_Remote.Name = "lbl_Remote";
+            this.lbl_Remote.Size = new System.Drawing.Size(100, 23);
+            this.lbl_Remote.StringFormat = null;
+            this.lbl_Remote.TabIndex = 287;
+            this.lbl_Remote.TagPath = "Local Station/Channel1/Device1/Remote";
+            this.lbl_Remote.Text = "Remote";
+            // 
+            // lbl_Local
+            // 
+            this.lbl_Local.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.lbl_Local.Location = new System.Drawing.Point(1304, 697);
+            this.lbl_Local.Name = "lbl_Local";
+            this.lbl_Local.Size = new System.Drawing.Size(100, 23);
+            this.lbl_Local.StringFormat = null;
+            this.lbl_Local.TabIndex = 288;
+            this.lbl_Local.TagPath = "Local Station/Channel1/Device1/Local";
+            this.lbl_Local.Text = "Local";
+            // 
+            // lbl_Auto
+            // 
+            this.lbl_Auto.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.lbl_Auto.Location = new System.Drawing.Point(1304, 730);
+            this.lbl_Auto.Name = "lbl_Auto";
+            this.lbl_Auto.Size = new System.Drawing.Size(100, 23);
+            this.lbl_Auto.StringFormat = null;
+            this.lbl_Auto.TabIndex = 289;
+            this.lbl_Auto.TagPath = "Local Station/Channel1/Device1/Auto";
+            this.lbl_Auto.Text = "Auto";
+            // 
+            // lbl_Man
+            // 
+            this.lbl_Man.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.lbl_Man.Location = new System.Drawing.Point(1304, 758);
+            this.lbl_Man.Name = "lbl_Man";
+            this.lbl_Man.Size = new System.Drawing.Size(100, 23);
+            this.lbl_Man.StringFormat = null;
+            this.lbl_Man.TabIndex = 290;
+            this.lbl_Man.TagPath = "Local Station/Channel1/Device1/Man";
+            this.lbl_Man.Text = "Man";
+            // 
+            // lbl_Stop
+            // 
+            this.lbl_Stop.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this.lbl_Stop.Location = new System.Drawing.Point(1304, 797);
+            this.lbl_Stop.Name = "lbl_Stop";
+            this.lbl_Stop.Size = new System.Drawing.Size(100, 23);
+            this.lbl_Stop.StringFormat = null;
+            this.lbl_Stop.TabIndex = 291;
+            this.lbl_Stop.TagPath = "Local Station/Channel1/Device1/Local_Stop";
+            this.lbl_Stop.Text = "Stop";
+            // 
             // FrmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::RegistrationForm1.Properties.Resources.M;
             this.ClientSize = new System.Drawing.Size(1694, 848);
+            this.Controls.Add(this.lbl_Stop);
+            this.Controls.Add(this.lbl_Man);
+            this.Controls.Add(this.lbl_Auto);
+            this.Controls.Add(this.lbl_Local);
+            this.Controls.Add(this.lbl_Remote);
             this.Controls.Add(this.Pic_Doorlock5_2Open);
             this.Controls.Add(this.Pic_Doorlock5_2Close);
             this.Controls.Add(this.Pic_Doorlock5_1Open);
@@ -1902,6 +1973,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Remote)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Local)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Auto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Man)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_Stop)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2020,5 +2096,10 @@
         private System.Windows.Forms.PictureBox Pic_Doorlock5_1Close;
         private System.Windows.Forms.PictureBox Pic_Doorlock5_2Open;
         private System.Windows.Forms.PictureBox Pic_Doorlock5_2Close;
+        private Ahd.Winforms.Controls.AhdLabel lbl_Remote;
+        private Ahd.Winforms.Controls.AhdLabel lbl_Local;
+        private Ahd.Winforms.Controls.AhdLabel lbl_Auto;
+        private Ahd.Winforms.Controls.AhdLabel lbl_Man;
+        private Ahd.Winforms.Controls.AhdLabel lbl_Stop;
     }
 }

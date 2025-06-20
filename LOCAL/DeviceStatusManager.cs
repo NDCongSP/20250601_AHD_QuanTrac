@@ -26,10 +26,10 @@ namespace RegistrationForm1
             this.currentUser = loggedInUser;
 
             InitializeComponent();
-            InitializeDatabase();
+         //   InitializeDatabase();
             LoadDeviceData();
-            SetupAlertSystem();
-            ConfigureWindowControls();
+         //   SetupAlertSystem();
+          //  ConfigureWindowControls();
             
 
 
@@ -248,7 +248,7 @@ namespace RegistrationForm1
             }
         }
         private int savedScrollPosition = -1;
-        private bool isManualRefresh = false;
+   //     private bool isManualRefresh = false;
 
         private void SaveScrollPosition()
         {

@@ -16,6 +16,7 @@ namespace RegistrationForm1
     public partial class FrmHome : Form
     {
         private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=RegistrationForm4;Integrated Security=True;TrustServerCertificate=True";
+      
         int _id = 1;
         public FrmHome()
         {
@@ -25,7 +26,9 @@ namespace RegistrationForm1
         IAhdDriverConnector driver;
         private void FrmHome_Load(object sender, EventArgs e)
         {
-            //  lbl_User.Text = "Xin Chào    " + FrmLogin1.User_V;
+            lbl_User.Text = "Xin Chào   " ;
+          //  lbl_User.Text = "Xin Chào    " + { currentUserName};
+            
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
             if (!driver.IsStarted)
                 driver.Started += Driver_Started;
@@ -42,10 +45,10 @@ namespace RegistrationForm1
                 t.Enabled = true;
             };
         }
+        //
+              
         private void Driver_Started(object sender, EventArgs e)
         {// khai báo sự kiện
-
-
             // Trạng thái động cơ Trạm 1,2,3
             ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Station1_Run").ValueChanged += Station1_Run_ValueChanged;//Su kien trạm 1 đang chạy        
             ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Station1_Stop").ValueChanged += Station1_Stop_ValueChanged;//Su kien trạm 1 đang dừng       
@@ -473,8 +476,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Doorlock2_2Close.Visible = false; });
         }
-
-
         // Trạng thái chốt đang mở, đang đóng 2 -> 5
         private void Doorlock5_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -578,7 +579,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { lblCua5.Text = "Cửa 5"; lblCua5.ForeColor = DefaultForeColor; lblCua5.BackColor = DefaultBackColor; });
         }
-
         private void Door5_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -597,7 +597,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { lblCua4.Text = "Cửa 4"; lblCua4.ForeColor = DefaultForeColor; lblCua4.BackColor = DefaultBackColor; });
         }
-
         private void Door4_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -616,7 +615,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { lblCua3.Text = "Cửa 3"; lblCua3.ForeColor = DefaultForeColor; lblCua3.BackColor = DefaultBackColor; });
         }
-
         private void Door3_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -635,7 +633,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { lblCua2.Text = "Cửa 2"; lblCua2.ForeColor = DefaultForeColor; lblCua2.BackColor = DefaultBackColor; });
         }
-
         private void Door2_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -654,7 +651,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { lblCua1.Text = "Cửa 1"; lblCua1.ForeColor = DefaultForeColor; lblCua1.BackColor = DefaultBackColor; });
         }
-
         private void Door1_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -863,9 +859,6 @@ namespace RegistrationForm1
                 this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; Pic_DC1Runing.Visible = false; });
         }
         // Kết thúc Trạng thái động cơ Trạm 1
-
-
-
         private void DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -884,7 +877,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = false; Pic_DC2Runing.Visible = false; Pic_DC2Stop.Visible = false; });
         }
-
         private void DC1_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -925,8 +917,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = true; Pic_DC1Runing.Visible = false; });
         }
-
-
         private void S2_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -980,82 +970,34 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = true; Pic_DC1Runing.Visible = false; });
-        }
-        
-        
-        
-
-        
-
-       
-
-
-       
-
-        
-
-
-        private void _btnGhiStatus_Click(object sender, EventArgs e)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                // doc data để lấy Id hiện tại
-                string sqlQuery = "SELECT * FROM Datavanhanh";
-                List<DataVanHanhModel> data = db.Query<DataVanHanhModel>(sqlQuery).AsList();
-                _id = (data != null && data.Any()) ? data.Max(x => x.Id) : 0;
-                // Thêm một dòng mới
-                //tạo dữ liệu để thêm vào
-                var newRow = new DataVanHanhModel
-                {
-                    Id = _id + 1,
-                    CreateAt = DateTime.Now,
-                    HT_Cylinder1_1 = HT_Cylinder1_1.Text,
-                    HT_Cylinder1_2 = HT_Cylinder1_2.Text,
-                    HT_Cylinder2_1 = HT_Cylinder2_1.Text,
-                    HT_Cylinder2_2 = HT_Cylinder2_2.Text,
-                    HT_Cylinder3_1 = HT_Cylinder3_1.Text,
-                    HT_Cylinder3_2 = HT_Cylinder3_2.Text,
-                    HT_Cylinder4_1 = HT_Cylinder4_1.Text,
-                    HT_Cylinder4_2 = HT_Cylinder4_2.Text,
-                    HT_Cylinder5_1 = HT_Cylinder5_1.Text,
-                    HT_Cylinder5_2 = HT_Cylinder5_2.Text,
-                    HT_Cylinder6_1 = HT_Cylinder6_1.Text,
-                    HT_Cylinder6_2 = HT_Cylinder6_2.Text,
-                    Door1_Aperture = Door1_Aperture.Text,
-                    Door2_Aperture = Door2_Aperture.Text,
-                    Door3_Aperture = Door3_Aperture.Text,
-                    Door4_Aperture = Door4_Aperture.Text,
-                    Door5_Aperture = Door5_Aperture.Text,
-                    Door6_Aperture = Door6_Aperture.Text,
-                    Temp_Oil1 = Temp_Oil1.Text,
-                    Temp_Oil2 = Temp_Oil2.Text,
-                    Temp_Oil3 = Temp_Oil3.Text,
-                    Fllow_Door1 = Fllow_Door1.Text,
-                    Fllow_Door2 = Fllow_Door2.Text,
-                    Fllow_Door3 = Fllow_Door3.Text,
-                    Fllow_Door4 = Fllow_Door4.Text,
-                    Fllow_Door5 = Fllow_Door5.Text,
-                    Fllow_Door6 = Fllow_Door6.Text,
-                    Total_Fllow = Total_Fllow.Text,
-                    Fllow_Ho = Fllow_Ho.Text,
-                    Fllow_DauTieng = Fllow_DauTieng.Text,
-                    Fllow_BenSuc = Fllow_BenSuc.Text,
-                    Fllow_SonDai = Fllow_SonDai.Text,
-                };
-                // tao câu quẻy
-                string insertQuery = "INSERT INTO Datavanhanh (Id,CreateAt,HT_Cylinder1_1, HT_Cylinder1_2, HT_Cylinder2_1,HT_Cylinder2_2,HT_Cylinder3_1,HT_Cylinder3_2,HT_Cylinder4_1,HT_Cylinder4_2,HT_Cylinder5_1,HT_Cylinder5_2,HT_Cylinder6_1,HT_Cylinder6_2," +
-                    "Door1_Aperture,Door2_Aperture,Door3_Aperture,Door4_Aperture,Door5_Aperture,Door6_Aperture,Temp_Oil1,Temp_Oil2,Temp_Oil3," +
-                    "Fllow_Door1,Fllow_Door2,Fllow_Door3,Fllow_Door4,Fllow_Door5,Fllow_Door6,Total_Fllow, Fllow_Ho, Fllow_DauTieng,Fllow_BenSuc,Fllow_SonDai) " +
-
-                    "VALUES (@Id, @CreateAt, @HT_Cylinder1_1,@HT_Cylinder1_2,@HT_Cylinder2_1,@HT_Cylinder2_2,@HT_Cylinder3_1,@HT_Cylinder3_2,@HT_Cylinder4_1,@HT_Cylinder4_2,@HT_Cylinder5_1,@HT_Cylinder5_2,@HT_Cylinder6_1,@HT_Cylinder6_2," +
-                                        "@Door1_Aperture,@Door2_Aperture,@Door3_Aperture,@Door4_Aperture,@Door5_Aperture,@Door6_Aperture,@Temp_Oil1,@Temp_Oil2,@Temp_Oil3," +
-                                        "@Fllow_Door1,@Fllow_Door2,@Fllow_Door3,@Fllow_Door4,@Fllow_Door5,@Fllow_Door6,@Total_Fllow,@Fllow_Ho,@Fllow_DauTieng, @Fllow_BenSuc, @Fllow_SonDai)";
-
-                db.Execute(insertQuery, newRow);
-            }
-        }
-
+        }               
+        //private void _btnGhiStatus_Click(object sender, EventArgs e)
+        //{
+        //    using (IDbConnection dbb = new SqlConnection(connectionString))
+        //    {
+        //        dbb.Open();
+        //        // doc data để lấy Id hiện tại
+        //        string sqlQuery = "SELECT * FROM TrangThaiTram";
+        //        List<DataTrangThaiTramModel> data = dbb.Query<DataTrangThaiTramModel>(sqlQuery).AsList();
+        //        _id = (data != null && data.Any()) ? data.Max(x => x.Id) : 0;
+        //        // Thêm một dòng mới
+        //        //tạo dữ liệu để thêm vào
+        //        var newRow = new DataTrangThaiTramModel
+        //        {
+        //            Id = _id + 1,
+        //            CreateAt = DateTime.Now,
+        //            Remote = lbl_Remote.Text,
+        //            Local = lbl_Local.Text,
+        //            Auto = lbl_Auto.Text,
+        //            Man = lbl_Man.Text,
+        //            Local_Stop = lbl_Stop.Text,                  
+        //        };
+        //        // tao câu quẻy
+        //        string insertQuery = "INSERT INTO TrangThaiTram (Id,CreateAt,Remote, Local, Auto,Man,Local_Stop)" +
+        //                                "VALUES (@Id, @CreateAt, @Remote,@Local,@Auto,@Man,@Local_Stop)";                                                                         
+        //        dbb.Execute(insertQuery, newRow);
+        //    }
+        //}
         private void timer1_Tick(object sender, EventArgs e)
         {
             lblTime.Text = DateTime.Now.ToLongTimeString();
@@ -1136,5 +1078,7 @@ namespace RegistrationForm1
                 db.Execute(insertQuery, newRow);
             }
         }
+
+       
     }
 }

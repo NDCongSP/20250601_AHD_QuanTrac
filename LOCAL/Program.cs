@@ -22,6 +22,8 @@ namespace RegistrationForm1
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //  Application.Run(new FrmTran());
+          //    Application.Run(new Home());
             Application.Run(new LoginForm());
         }
     }

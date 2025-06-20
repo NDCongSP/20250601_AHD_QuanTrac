@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -49,9 +50,9 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(32, 143);
+            this.btnAdd.Location = new System.Drawing.Point(51, 182);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(130, 36);
+            this.btnAdd.Size = new System.Drawing.Size(170, 36);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Thêm";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -59,9 +60,9 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(32, 215);
+            this.btnEdit.Location = new System.Drawing.Point(51, 254);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(130, 36);
+            this.btnEdit.Size = new System.Drawing.Size(170, 36);
             this.btnEdit.TabIndex = 3;
             this.btnEdit.Text = "Sửa";
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -69,9 +70,9 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(32, 287);
+            this.btnDelete.Location = new System.Drawing.Point(51, 326);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(130, 36);
+            this.btnDelete.Size = new System.Drawing.Size(170, 36);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Xóa";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -79,9 +80,9 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(32, 514);
+            this.btnExit.Location = new System.Drawing.Point(51, 553);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(130, 36);
+            this.btnExit.Size = new System.Drawing.Size(170, 36);
             this.btnExit.TabIndex = 5;
             this.btnExit.Text = "Thoát";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -92,21 +93,21 @@
             this.dataGridView1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.Aquamarine;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 246);
+            this.dataGridView1.Location = new System.Drawing.Point(7, 180);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1512, 505);
+            this.dataGridView1.Size = new System.Drawing.Size(1434, 710);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(32, 362);
+            this.btnRefresh.Location = new System.Drawing.Point(51, 401);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(130, 36);
+            this.btnRefresh.Size = new System.Drawing.Size(170, 36);
             this.btnRefresh.TabIndex = 7;
             this.btnRefresh.Text = "Làm mới";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -114,7 +115,7 @@
             // 
             // btnResearch
             // 
-            this.btnResearch.Location = new System.Drawing.Point(1192, 45);
+            this.btnResearch.Location = new System.Drawing.Point(1189, 59);
             this.btnResearch.Name = "btnResearch";
             this.btnResearch.Size = new System.Drawing.Size(94, 36);
             this.btnResearch.TabIndex = 8;
@@ -126,7 +127,7 @@
             // 
             this.dtpToDate.CustomFormat = "dd/MM/yyyy";
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpToDate.Location = new System.Drawing.Point(905, 119);
+            this.dtpToDate.Location = new System.Drawing.Point(814, 102);
             this.dtpToDate.Name = "dtpToDate";
             this.dtpToDate.ShowUpDown = true;
             this.dtpToDate.Size = new System.Drawing.Size(200, 22);
@@ -136,7 +137,7 @@
             // lblFromDate
             // 
             this.lblFromDate.AutoSize = true;
-            this.lblFromDate.Location = new System.Drawing.Point(500, 110);
+            this.lblFromDate.Location = new System.Drawing.Point(409, 106);
             this.lblFromDate.Name = "lblFromDate";
             this.lblFromDate.Size = new System.Drawing.Size(56, 15);
             this.lblFromDate.TabIndex = 11;
@@ -145,7 +146,7 @@
             // lblToDate
             // 
             this.lblToDate.AutoSize = true;
-            this.lblToDate.Location = new System.Drawing.Point(800, 122);
+            this.lblToDate.Location = new System.Drawing.Point(709, 106);
             this.lblToDate.Name = "lblToDate";
             this.lblToDate.Size = new System.Drawing.Size(62, 15);
             this.lblToDate.TabIndex = 12;
@@ -153,7 +154,7 @@
             // 
             // btnClearResarch
             // 
-            this.btnClearResarch.Location = new System.Drawing.Point(1192, 110);
+            this.btnClearResarch.Location = new System.Drawing.Point(1189, 106);
             this.btnClearResarch.Name = "btnClearResarch";
             this.btnClearResarch.Size = new System.Drawing.Size(94, 36);
             this.btnClearResarch.TabIndex = 13;
@@ -164,9 +165,9 @@
             // btnExportExcel
             // 
             this.btnExportExcel.BackColor = System.Drawing.Color.Lime;
-            this.btnExportExcel.Location = new System.Drawing.Point(32, 437);
+            this.btnExportExcel.Location = new System.Drawing.Point(51, 476);
             this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(130, 36);
+            this.btnExportExcel.Size = new System.Drawing.Size(170, 36);
             this.btnExportExcel.TabIndex = 14;
             this.btnExportExcel.Text = "Xuất Excel";
             this.btnExportExcel.UseVisualStyleBackColor = false;
@@ -184,16 +185,17 @@
             this.panel2.Controls.Add(this.btnDelete);
             this.panel2.Controls.Add(this.btnRefresh);
             this.panel2.Controls.Add(this.btnExit);
-            this.panel2.Location = new System.Drawing.Point(1518, 1);
+            this.panel2.Location = new System.Drawing.Point(1452, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(215, 929);
+            this.panel2.Size = new System.Drawing.Size(258, 846);
             this.panel2.TabIndex = 16;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // dtpFromDate
             // 
             this.dtpFromDate.CustomFormat = "dd/MM/yyyy";
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFromDate.Location = new System.Drawing.Point(573, 116);
+            this.dtpFromDate.Location = new System.Drawing.Point(482, 102);
             this.dtpFromDate.Name = "dtpFromDate";
             this.dtpFromDate.ShowUpDown = true;
             this.dtpFromDate.Size = new System.Drawing.Size(200, 22);
@@ -204,20 +206,20 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(581, 45);
+            this.label1.Location = new System.Drawing.Point(529, 42);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(281, 26);
+            this.label1.Size = new System.Drawing.Size(348, 26);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Thông Tin Người Sử Dụng";
+            this.label1.Text = "THÔNG TIN NGƯỜI SỬ DỤNG";
             this.label1.Visible = false;
             // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Teal;
-            this.ClientSize = new System.Drawing.Size(1717, 930);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.ClientSize = new System.Drawing.Size(1710, 848);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnClearResarch);
@@ -228,6 +230,7 @@
             this.Controls.Add(this.btnResearch);
             this.Controls.Add(this.dataGridView1);
             this.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Home";
             this.Text = "Home";

@@ -22,14 +22,13 @@ namespace RegistrationForm1
         {
             try
             {
-                // Validation
+                // Kiểm tra 
                 if (string.IsNullOrWhiteSpace(txtFullName.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 // Đăng nhập
                 User loggedInUser = UserService.LoginUser(txtFullName.Text.Trim(), txtPassword.Text);
                 if (loggedInUser != null)

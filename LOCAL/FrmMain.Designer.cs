@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
+            this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -48,11 +49,11 @@
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
-            this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.lbl_User = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -91,9 +92,25 @@
             this.label5.Text = "CÔNG TY TNHH MỘT THÀNH VIÊN KHAI THÁC THỦY LỢI MIỀN NAM";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // ahdPictureBox1
+            // 
+            this.ahdPictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.ahdPictureBox1.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.ahdPictureBox1.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.ahdPictureBox1.Image = global::RegistrationForm1.Properties.Resources.logo_removebg_preview;
+            this.ahdPictureBox1.Location = new System.Drawing.Point(3, 12);
+            this.ahdPictureBox1.Name = "ahdPictureBox1";
+            this.ahdPictureBox1.RotateAngle = 0;
+            this.ahdPictureBox1.ShadedColor = System.Drawing.Color.Gray;
+            this.ahdPictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.ahdPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.ahdPictureBox1.TabIndex = 8;
+            this.ahdPictureBox1.TagPath = null;
+            this.ahdPictureBox1.Text = "ahdPictureBox1";
+            // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Aquamarine;
+            this.panel2.BackColor = System.Drawing.Color.MediumAquamarine;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.button1);
@@ -252,28 +269,23 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
-            // ahdPictureBox1
+            // lbl_User
             // 
-            this.ahdPictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.ahdPictureBox1.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.ahdPictureBox1.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.ahdPictureBox1.Image = global::RegistrationForm1.Properties.Resources.logo_removebg_preview;
-            this.ahdPictureBox1.Location = new System.Drawing.Point(3, 12);
-            this.ahdPictureBox1.Name = "ahdPictureBox1";
-            this.ahdPictureBox1.RotateAngle = 0;
-            this.ahdPictureBox1.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox1.Size = new System.Drawing.Size(100, 100);
-            this.ahdPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.ahdPictureBox1.TabIndex = 8;
-            this.ahdPictureBox1.TagPath = null;
-            this.ahdPictureBox1.Text = "ahdPictureBox1";
+            this.lbl_User.AutoSize = true;
+            this.lbl_User.Location = new System.Drawing.Point(1640, 125);
+            this.lbl_User.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_User.Name = "lbl_User";
+            this.lbl_User.Size = new System.Drawing.Size(57, 13);
+            this.lbl_User.TabIndex = 267;
+            this.lbl_User.Text = "UserDislay";
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.BackColor = System.Drawing.Color.PowderBlue;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this.lbl_User);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panelDesktop);
             this.Controls.Add(this.panel2);
@@ -287,10 +299,11 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -314,5 +327,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lbl_User;
     }
 }
