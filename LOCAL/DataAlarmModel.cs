@@ -13,6 +13,15 @@ namespace RegistrationForm1
         public int Id { get; set; }
         [DisplayName("Thời Gian")]
         public DateTime CreateAt { get; set; }
+        // Các thông tin mở rộng
+        [DisplayName("Mã Thiết Bị")]
+        public string DeviceCode { get; set; }
+
+        [DisplayName("Khu Vực")]
+        public string Area { get; set; }
+
+        [DisplayName("Mức Độ Cảnh Báo")]
+        public string Severity { get; set; }
 
         [DisplayName("Áp Suất Dầu Cửa 1 Cao")] // Chú thích tiếng việt ra Dvg
         public string Door1_PressureHigh { get; set; }

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OfficeOpenXml;
-using System.Globalization;
-using System.Threading;
+//using System.Globalization;
+//using System.Threading;
 
 namespace RegistrationForm1
 {
