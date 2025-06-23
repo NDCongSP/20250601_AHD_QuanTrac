@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\HomePage\WaterLevel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.16" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.16" />
@@ -29,6 +33,18 @@
     <Content Update="wwwroot\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\HomePage\WaterLevel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\HomePage\WaterLevel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\HomePage\WaterLevel.razor" />
   </ItemGroup>
 
 </Project>

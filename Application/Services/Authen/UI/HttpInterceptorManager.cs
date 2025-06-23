@@ -52,7 +52,7 @@ public class HttpInterceptorManager : IHttpInterceptorManager
     public void RegisterEvent()
     {
     }
-
+     
     private Task _httpInterceptor_AfterSendAsync(object sender, HttpClientInterceptorEventArgs e)
     {
         return Task.CompletedTask;

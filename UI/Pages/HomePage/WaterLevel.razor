@@ -1,0 +1,76 @@
+﻿@page "/waterlevel"
+@using System.Globalization
+@using Radzen
+<RadzenChart Style="height: 500px;">
+    <RadzenCategoryAxis Title="Ngày" />
+    <RadzenValueAxis Title="Mực nước (m)" />
+
+    <RadzenLineSeries Data="@WaterData2025"
+                      CategoryProperty="DateLabel"
+                      ValueProperty="Value"
+                      Title="Năm nay 2025"
+                      Stroke="blue" />
+
+    <RadzenLineSeries Data="@WaterData2024"
+                      CategoryProperty="DateLabel"
+                      ValueProperty="Value"
+                      Title="Năm 2024"
+                      Stroke="violet" />
+
+    <RadzenLineSeries Data="@WaterDataMax"
+                      CategoryProperty="DateLabel"
+                      ValueProperty="Value"
+                      Title="Năm Max: 2009"
+                      Stroke="red"
+                      LineType="LineType.Dashed" />
+
+    <RadzenLineSeries Data="@WaterDataMin"
+                      CategoryProperty="DateLabel"
+                      ValueProperty="Value"
+                      Title="Năm Min: 2010"
+                      Stroke="black"
+                      LineType="LineType.Dotted" />
+</RadzenChart>
+
+@code {
+    public class WaterLevel1
+    {
+        public DateTime Date { get; set; }
+        public string DateLabel => Date.ToString("dd/MM");
+        public double Value { get; set; }
+    }
+
+    List<WaterLevel1> WaterData2025 = new()
+    {
+        new() { Date = new DateTime(2025, 1, 1), Value = 23.5 },
+        new() { Date = new DateTime(2025, 2, 1), Value = 22.8 },
+        new() { Date = new DateTime(2025, 3, 1), Value = 21.5 },
+        new() { Date = new DateTime(2025, 4, 1), Value = 20.0 },
+        new() { Date = new DateTime(2025, 5, 1), Value = 19.6 },
+        new() { Date = new DateTime(2025, 6, 1), Value = 19.3 },
+        new() { Date = new DateTime(2025, 7, 1), Value = 19.0 },
+        new() { Date = new DateTime(2025, 8, 1), Value = 20.4 },
+        new() { Date = new DateTime(2025, 9, 1), Value = 22.1 },
+        new() { Date = new DateTime(2025, 10, 1), Value = 23.5 },
+        new() { Date = new DateTime(2025, 11, 1), Value = 24.0 },
+        new() { Date = new DateTime(2025, 12, 1), Value = 24.3 },
+    };
+
+    List<WaterLevel1> WaterData2024 => WaterData2025.Select(x => new WaterLevel1
+        {
+            Date = x.Date,
+            Value = x.Value - 0.5
+        }).ToList();
+
+    List<WaterLevel1> WaterDataMax => WaterData2025.Select(x => new WaterLevel1
+        {
+            Date = x.Date,
+            Value = x.Value + 1.0
+        }).ToList();
+
+    List<WaterLevel1> WaterDataMin => WaterData2025.Select(x => new WaterLevel1
+        {
+            Date = x.Date,
+            Value = x.Value - 2.0
+        }).ToList();
+}

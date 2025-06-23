@@ -26,7 +26,8 @@ namespace Infrastructure.Data
 
             //var units = new List<Unit>();
             //units.Add(new Unit()
-            //{
+            //{  
+
             //    Id = Guid.NewGuid(),
             //    Name = "Box",
             //    CreatedDate = DateTime.Now,
@@ -89,138 +90,6 @@ namespace Infrastructure.Data
                 {
                     Name = ConstantExtention.Roles.WarehouseSystem,
                     NormalizedName = ConstantExtention.Roles.WarehouseSystem.ToUpper()
-                });
-            }
-
-            //if (!context.Permissions.Any())
-            //{
-            //    await context.Permissions.AddAsync(new Domain.Entities.Authentication.Permissions()
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        Name = "Insert",
-            //        Description = "Allow add new data",
-            //        CreateAt = DateTime.Now,
-            //    });
-
-            //    await context.Permissions.AddAsync(new Domain.Entities.Authentication.Permissions()
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        Name = "Update",
-            //        Description = "Allow update data",
-            //        CreateAt = DateTime.Now,
-            //    });
-
-            //    await context.Permissions.AddAsync(new Domain.Entities.Authentication.Permissions()
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        Name = "Delete",
-            //        Description = "Allow delete new data",
-            //        CreateAt = DateTime.Now,
-            //    });
-            //}
-
-            //if (!context.Permissions.Any())
-            //{
-            //    await context.AddAsync(new Permissions()
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        Name = "Add",
-            //        Description = "Can add data"
-            //    });
-            //    await context.AddAsync(new Permissions()
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        Name = "Update",
-            //        Description = "Can update data"
-            //    });
-            //    await context.AddAsync(new Permissions()
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        Name = "Delete",
-            //        Description = "Can delete data"
-            //    });
-            //}
-
-            //if (!context.Units.Any())
-            //{
-            //    await context.Units.AddRangeAsync(units);
-            //}
-
-            //if (!context.Categorys.Any())
-            //{
-            //    await context.Categorys.AddRangeAsync(categorys);
-            //}
-
-            //if (!context.Products.Any())
-            //{
-            //    await context.Products.AddRangeAsync(products);
-            //}
-
-            if (!context.Units.Any())
-            {
-                await context.Units.AddAsync(new Domain.Entities.Unit()
-                {
-                    UnitName = "Box",
-                    Description = "BOX",
-                    Status = EnumStatus.Activated,
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
-                });
-                await context.Units.AddAsync(new Domain.Entities.Unit()
-                {
-                    UnitName = "Pcs",
-                    Description = "PCS",
-                    Status = EnumStatus.Activated,
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
-                });
-                await context.Units.AddAsync(new Domain.Entities.Unit()
-                {
-                    UnitName = "Pallet",
-                    Description = "PALLET",
-                    Status = EnumStatus.Activated,
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
-                });
-            }
-
-            if (!context.ProductCategories.Any())
-            {
-                await context.ProductCategories.AddAsync(new Domain.Entities.ProductCategory()
-                {
-                    CategoryName = "Category 1",
-                    Description = "Test",
-                    Status = EnumStatus.Activated,
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
-                });
-                await context.ProductCategories.AddAsync(new Domain.Entities.ProductCategory()
-                {
-                    CategoryName = "Category 2",
-                    Description = "Test",
-                    Status = EnumStatus.Activated,
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
-                });
-            }
-
-            if (!context.Currencies.Any())
-            {
-                await context.Currencies.AddAsync(new Domain.Entities.Currency()
-                {
-                    CurrencyCode = "JPY",
-                    Country = "Japan",
-                    Description = "Japan Yen",
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
-                });
-                await context.Currencies.AddAsync(new Domain.Entities.Currency()
-                {
-                    CurrencyCode = "USD",
-                    Country = "United States",
-                    Description = "United States Dollar",
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false,
                 });
             }
 
