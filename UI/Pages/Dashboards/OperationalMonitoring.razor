@@ -1,0 +1,292 @@
+@page "/operational-monitoring"
+
+@using Radzen
+@using Radzen.Blazor
+
+<style>
+    .main-container {
+        background-color: #f5f5f5;
+        min-height: 100vh;
+    }
+
+    .summary-card-1 {
+        padding: 1rem;
+    }
+    
+    .summary-card-1-value {
+        font-size: 2rem;
+        font-weight: bold;
+        line-height: 1;
+        margin:0;
+    }
+
+    .summary-card-1-label {
+        font-size: 1rem;
+        color: grey;
+        margin:0;
+    }
+
+    .grid-card {
+        margin-top: 1rem;
+    }
+
+    .grid-header {
+        font-weight: bold;
+    }
+    
+    .rz-grid-table {
+        font-size: 0.9rem;
+    }
+
+    .support-cell {
+        padding: 1rem;
+        text-align: center;
+        border-right: 1px dotted #e0e0e0;
+        border-bottom: 1px dotted #e0e0e0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .support-cell:hover {
+        background-color: #f5f5f5;
+    }
+
+    .no-right-border {
+        border-right: none;
+    }
+
+    .no-bottom-border {
+        border-bottom: none;
+    }
+</style>
+
+<div class="main-container">
+    <div class="rz-mx-4 rz-mt-4">
+        <RadzenText Text="QUAN TRẮC - GIÁM SÁT VẬN HÀNH" Style="font-weight: bold; color: #0d6efd; background-color: #e7f3ff; padding: 6px 12px; border-radius: 4px; display: inline-block;" />
+        <RadzenCard class="rz-mt-2" Style="padding:0;">
+            <RadzenRow RowGap="0">
+                <RadzenColumn Size="12" SizeMD="6" class="support-cell no-bottom-border">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Trạm giám sát" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="radar" Style="font-size: 40px; color: #1e88e5;" />
+                    </RadzenStack>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6" class="support-cell no-right-border no-bottom-border">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Vận hành" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="engineering" Style="font-size: 40px; color: #43a047;" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenCard>
+    </div>
+
+    <RadzenCard class="rz-mx-4 grid-card">
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center" Class="rz-mb-4">
+            <RadzenText Text="Trạm giám sát vận hành" TxtType="TxtType.H6" />
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                <RadzenButton Icon="keyboard_arrow_left" ButtonStyle="ButtonStyle.Secondary" Click="() => ChangeDate(-1)" />
+                <RadzenDatePicker @bind-Value="date" ShowTime="true" DateFormat="HH:mm dd/MM/yyyy" />
+                <RadzenButton Icon="keyboard_arrow_right" ButtonStyle="ButtonStyle.Secondary" Click="() => ChangeDate(1)" />
+            </RadzenStack>
+        </RadzenStack>
+
+        <RadzenDataGrid @ref="grid" Data="@stationData" TItem="StationData" AllowPaging="true" PageSize="12" PagerHorizontalAlign="HorizontalAlign.Left" RowRender="@RowRender">
+            <Columns>
+                <RadzenDataGridColumn TItem="StationData" Title="Điểm đo" Width="300px">
+                    <Template Context="data">
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                             <RadzenIcon Icon="location_on" Style="color: #d9534f;" />
+                            <RadzenStack Gap="0">
+                                <RadzenText Text=@($"{@data.Id}. {@data.Name}") Style="font-weight:bold" />
+                                <RadzenText Text=@($"Nguồn: {@data.Source}") Style="font-size:smaller; color:grey;" />
+                            </RadzenStack>
+                        </RadzenStack>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="StationData" Title="Độ mặn" TextAlign="TextAlign.Right">
+                    <Template Context="data">
+                        @if (data.Salinity.HasValue)
+                        {
+                            <RadzenStack Gap="0" AlignItems="AlignItems.End">
+                                <RadzenText Text=@(string.Format("{0:0.00}", data.Salinity.Value)) Style="font-weight:bold" />
+                                <RadzenText Text=@(data.SalinityTimestamp?.ToString("HH:mm")) Style="font-size:smaller; color:grey;" />
+                            </RadzenStack>
+                        }
+                        else
+                        {
+                            <RadzenText Text="" />
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="StationData" Title="PH" TextAlign="TextAlign.Right">
+                     <Template Context="data">
+                        @if (data.PH.HasValue)
+                        {
+                            <RadzenStack Gap="0" AlignItems="AlignItems.End">
+                                <RadzenText Text=@(string.Format("{0:0.00}", data.PH.Value)) Style="font-weight:bold" />
+                                <RadzenText Text=@(data.PHTimestamp?.ToString("HH:mm")) Style="font-size:smaller; color:grey;" />
+                            </RadzenStack>
+                        }
+                        else
+                        {
+                            <RadzenText Text="" />
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="StationData" Title="BOD" TextAlign="TextAlign.Right">
+                    <Template Context="data">
+                        @if (data.BOD.HasValue)
+                        {
+                            <RadzenStack Gap="0" AlignItems="AlignItems.End">
+                                <RadzenText Text=@(string.Format("{0:0.00}", data.BOD.Value)) Style="font-weight:bold" />
+                                <RadzenText Text=@(data.BODTimestamp?.ToString("HH:mm")) Style="font-size:smaller; color:grey;" />
+                            </RadzenStack>
+                        }
+                        else
+                        {
+                            <RadzenText Text="" />
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="StationData" Title="COD" TextAlign="TextAlign.Right">
+                    <Template Context="data">
+                        @if (data.COD.HasValue)
+                        {
+                            <RadzenStack Gap="0" AlignItems="AlignItems.End">
+                                <RadzenText Text=@(string.Format("{0:0.00}", data.COD.Value)) Style="font-weight:bold" />
+                                <RadzenText Text=@(data.CODTimestamp?.ToString("HH:mm")) Style="font-size:smaller; color:grey;" />
+                            </RadzenStack>
+                        }
+                        else
+                        {
+                            <RadzenText Text="" />
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="StationData" Title="MN" TextAlign="TextAlign.Right">
+                    <Template Context="data">
+                        @if (data.MN.HasValue)
+                        {
+                            <RadzenStack Gap="0" AlignItems="AlignItems.End">
+                                <RadzenText Text=@(string.Format("{0:0.00}", data.MN.Value)) Style="font-weight:bold" />
+                                <RadzenText Text=@(data.MNTimestamp?.ToString("HH:mm")) Style="font-size:smaller; color:grey;" />
+                            </RadzenStack>
+                        }
+                        else
+                        {
+                            <RadzenText Text="" />
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+
+    <div class="rz-mx-4 rz-mt-4 rz-mb-4">
+        <RadzenText Text="HỖ TRỢ VẬN HÀNH" Style="font-weight: bold; color: #0d6efd; background-color: #e7f3ff; padding: 6px 12px; border-radius: 4px; display: inline-block;" />
+        <RadzenCard class="rz-mt-2" Style="padding:0;">
+            <RadzenRow RowGap="0">
+                <RadzenColumn Size="12" SizeMD="4" class="support-cell">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Báo cáo tổng hợp" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="assessment" Style="font-size: 40px; color: #1e88e5;" />
+                    </RadzenStack>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" class="support-cell">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Nhập liệu thủ công" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="drive_file_rename_outline" Style="font-size: 40px; color: #43a047;" />
+                    </RadzenStack>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" class="support-cell no-right-border">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Camera" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="photo_camera" Style="font-size: 40px; color: #5e35b1;" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow RowGap="0">
+                <RadzenColumn Size="12" SizeMD="4" class="support-cell no-bottom-border">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Vận hành SCADA" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="settings_input_component" Style="font-size: 40px; color: #1e88e5;" />
+                    </RadzenStack>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" class="support-cell no-bottom-border">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Quan trắc mưa" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="water_drop" Style="font-size: 40px; color: #00acc1;" />
+                    </RadzenStack>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" class="support-cell no-right-border no-bottom-border">
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem" Style="min-height: 100px;">
+                        <RadzenText Text="Mực nước thủy văn" Style="font-weight: 500;" />
+                        <RadzenIcon Icon="area_chart" Style="font-size: 40px; color: #f4511e;" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenCard>
+    </div>
+</div>
+
+@code {
+    DateTime date = new DateTime(2025, 6, 23, 13, 45, 0);
+    RadzenDataGrid<StationData> grid;
+    IEnumerable<StationData> stationData;
+
+    void RowRender(RowRenderEventArgs<StationData> args)
+    {
+        if (stationData != null && stationData.Any())
+        {
+            if (Array.IndexOf(stationData.ToArray(), args.Data) % 2 == 0)
+            {
+                args.Attributes.Add("style", "background-color: #f9f9f9;");
+            }
+        }
+    }
+
+    void ChangeDate(int days)
+    {
+        date = date.AddDays(days);
+    }
+
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle("QUAN TRẮC - GIÁM SÁT VẬN HÀNH", "THÔNG TIN TỔNG HỢP");
+
+        var baseTime = new DateTime(2025, 6, 23, 13, 45, 0);
+        stationData = new List<StationData>
+        {
+            new StationData { Id = 1, Name = "KCVH - HL Cái Lớn", Source = "04.MTL.CLGB.gs7", Salinity = 4.59, SalinityTimestamp = baseTime.AddMinutes(-1), PH = null, BOD = 5.27, BODTimestamp = baseTime.AddMinutes(-3), COD = 12.95, CODTimestamp = baseTime.AddMinutes(-3), MN = 0.78, MNTimestamp = baseTime.AddMinutes(-5) },
+            new StationData { Id = 2, Name = "GSMT - TL Cái Lớn", Source = "04.MTL.CLGB.gs7", Salinity = 0, SalinityTimestamp = baseTime, PH = 0, PHTimestamp = baseTime.AddMinutes(-8), BOD = 5.27, BODTimestamp = baseTime.AddMinutes(-3), COD = 12.95, CODTimestamp = baseTime.AddMinutes(-3), MN = -0.78, MNTimestamp = baseTime.AddMinutes(-5) },
+            new StationData { Id = 3, Name = "GSMT - Đông Yên", Source = "04.MTL.CLGB.gs7", Salinity = 3.40, SalinityTimestamp = baseTime.AddMinutes(-2), PH = 7.91, PHTimestamp = baseTime.AddMinutes(-1), BOD = 6.40, BODTimestamp = baseTime.AddMinutes(-1), COD = 15.21, CODTimestamp = baseTime.AddMinutes(-2), MN = 0.68, MNTimestamp = baseTime.AddMinutes(-2) },
+            new StationData { Id = 4, Name = "GSMT - Gò Quao", Source = "04.MTL.CLGB.gs7", Salinity = 0.99, SalinityTimestamp = baseTime.AddMinutes(-5), PH = 0, PHTimestamp = baseTime.AddMinutes(-3), BOD = 5.28, BODTimestamp = baseTime.AddMinutes(-3), COD = 12.95, CODTimestamp = baseTime.AddMinutes(-3), MN = 0.83, MNTimestamp = baseTime.AddMinutes(-3) },
+            new StationData { Id = 5, Name = "KCVH - Cầu Cái Tư", Source = "04.MTL.CLGB.gs7", Salinity = 0.19, SalinityTimestamp = baseTime, PH = null, BOD = null, COD = null, MN = 0.50, MNTimestamp = baseTime.AddMinutes(-5) },
+            new StationData { Id = 6, Name = "GSMT - TL Cái Bé", Source = "04.MTL.CLGB.gs7", Salinity = 0.19, SalinityTimestamp = baseTime.AddMinutes(-1), PH = 6.21, PHTimestamp = baseTime, BOD = 5.10, BODTimestamp = baseTime.AddMinutes(-1), COD = 12.60, CODTimestamp = baseTime, MN = 0.81, MNTimestamp = baseTime.AddMinutes(-1) },
+            new StationData { Id = 7, Name = "KCVH - Tràm Bầu", Source = "04.MTL.CLGB.gs7", Salinity = 0.12, SalinityTimestamp = baseTime.AddMinutes(-1), PH = null, BOD = null, COD = null, MN = 0.73, MNTimestamp = baseTime.AddMinutes(-1) },
+            new StationData { Id = 8, Name = "KCVH - Xèo Quao", Source = "04.MTL.CLGB.gs7", Salinity = 6.97, SalinityTimestamp = baseTime, PH = null, BOD = null, COD = null, MN = 0.60, MNTimestamp = baseTime.AddMinutes(-1) },
+            new StationData { Id = 9, Name = "KCVH - Kênh Quý", Source = "04.MTL.CLGB.gs7", Salinity = 10.75, SalinityTimestamp = baseTime, PH = null, BOD = null, COD = null, MN = 0.61, MNTimestamp = baseTime },
+            new StationData { Id = 10, Name = "GSMT - Ngã 3 Chắc Băng Cần Gáo", Source = "04.MTL.CLGB.gs7", Salinity = 0, SalinityTimestamp = baseTime.AddMinutes(-1), PH = 8.50, PHTimestamp = baseTime.AddMinutes(-3), BOD = 6.53, BODTimestamp = baseTime.AddMinutes(-3), COD = 15.45, CODTimestamp = baseTime.AddMinutes(-3), MN = -0.11, MNTimestamp = baseTime.AddMinutes(-3) },
+            new StationData { Id = 11, Name = "GSMT - Ngã 3 Đình", Source = "04.MTL.CLGB.gs7", Salinity = 9.40, SalinityTimestamp = baseTime, PH = 7.69, PHTimestamp = baseTime.AddMinutes(-2), BOD = 5.23, BODTimestamp = baseTime.AddMinutes(-2), COD = 12.85, CODTimestamp = baseTime.AddMinutes(-2), MN = 0.61, MNTimestamp = baseTime.AddMinutes(-1) },
+            new StationData { Id = 12, Name = "GSMT - Bắc Hồng Dân", Source = "04.MTL.CLGB.gs7", Salinity = 4.85, SalinityTimestamp = baseTime.AddMinutes(-5), PH = 7.99, PHTimestamp = baseTime.AddMinutes(-5), BOD = 5.80, BODTimestamp = baseTime.AddMinutes(-5), COD = 13.99, CODTimestamp = baseTime.AddMinutes(-5), MN = 0.43, MNTimestamp = baseTime.AddMinutes(-5) }
+        };
+    }
+
+    public class StationData
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Source { get; set; }
+        public double? Salinity { get; set; }
+        public DateTime? SalinityTimestamp { get; set; }
+        public double? PH { get; set; }
+        public DateTime? PHTimestamp { get; set; }
+        public double? BOD { get; set; }
+        public DateTime? BODTimestamp { get; set; }
+        public double? COD { get; set; }
+        public DateTime? CODTimestamp { get; set; }
+        public double? MN { get; set; }
+        public DateTime? MNTimestamp { get; set; }
+    }
+}

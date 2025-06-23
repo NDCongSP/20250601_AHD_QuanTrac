@@ -7,11 +7,12 @@ public partial class PermissionManager
 {
     List<PermissionsListResponseDTO> _dataGrid = null;
     RadzenDataGrid<PermissionsListResponseDTO> _profileGrid;
-    
+
     protected override async Task OnInitializedAsync()
     {
-            await base.OnInitializedAsync();
-            await RefreshDataAsync();
+        await base.OnInitializedAsync();
+        LayoutState.SetTitle("QUẢN LÝ CHỨC NĂNG");
+        await RefreshDataAsync();
     }
 
     async Task DeleteItemAsync(PermissionsListResponseDTO model)

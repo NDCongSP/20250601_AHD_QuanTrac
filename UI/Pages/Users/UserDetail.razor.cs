@@ -37,7 +37,7 @@ public partial class UserDetail
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
+        LayoutState.SetTitle("CHI TIẾT NGƯỜI DÙNG");
         await RefreshDataAsync();
     }
 

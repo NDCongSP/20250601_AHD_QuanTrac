@@ -1,10 +1,28 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject UI.Services.LayoutStateService LayoutState
+@inject UI.Services.ThemeService ThemeService
 
 <RadzenLayout>
     <RadzenHeader>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
-            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-            <RadzenLabel Text="Hệ thống thông tin hỗ trợ vận hành CỔNG CÁI LỚN - CÁI BÉ" />
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="0" Class="rz-py-2 rz-px-4">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="1rem">
+                <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+                <RadzenStack Gap="0">
+                    @if (!string.IsNullOrEmpty(LayoutState.Subtitle))
+                    {
+                        <RadzenText Text="@LayoutState.Subtitle" TextStyle="TextStyle.Subtitle2" Class="rz-mb-0" Style="color: white; opacity: 0.8;" />
+                    }
+                    <RadzenText Text="@LayoutState.Title" TextStyle="TextStyle.H6" Class="rz-mb-0" Style="color: white;" />
+                </RadzenStack>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                <RadzenButton Icon="home" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
+                <RadzenButton Icon="account_circle" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
+                <RadzenAppearanceToggle />
+
+                @* <RadzenButton Icon="@(ThemeService.IsDarkMode ? "light_mode" : "dark_mode")" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Click="ToggleTheme" /> *@
+            </RadzenStack>
         </RadzenStack>
     </RadzenHeader>
     <RadzenSidebar Responsive="false" Style="@(sidebarExpanded ? "width: 13vw" : "width: max-content")">
@@ -22,15 +40,31 @@
         </RadzenPanelMenu>
     </RadzenSidebar>
     <RadzenBody>
-        <div class="rz-p-4">
+        <div class="rz-p-4" style="background-color: var(--rz-grid-header-background-color);">
             @Body
         </div>
     </RadzenBody>
-@*     <RadzenFooter>
-        Footer
-    </RadzenFooter> *@
 </RadzenLayout>
 
 @code {
     bool sidebarExpanded = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ThemeService.InitializeAsync();
+        LayoutState.OnChange += StateHasChanged;
+        ThemeService.OnChange += StateHasChanged;
+        LayoutState.SetTitle(""); // Default title
+    }
+
+    public void Dispose()
+    {
+        LayoutState.OnChange -= StateHasChanged;
+        ThemeService.OnChange -= StateHasChanged;
+    }
+
+    async Task ToggleTheme()
+    {
+        await ThemeService.ToggleThemeAsync();
+    }
 }

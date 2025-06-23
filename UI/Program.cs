@@ -12,6 +12,7 @@ using Microsoft.JSInterop;
 using RestEase.HttpClientFactory;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using UI;
+using UI.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -24,6 +25,7 @@ var jsInterop = builder.Build().Services.GetRequiredService<IJSRuntime>();
 //CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
 
 builder.Services.AddRadzenComponents();
+builder.Services.AddScoped<UI.Services.LayoutStateService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
 
@@ -85,10 +87,10 @@ builder.Services.AddHttpClient("UI")
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));
 builder.Services.AddBlazoredLocalStorage();
 
+builder.Services.AddScoped<UI.Services.ThemeService>();
 
 builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 builder.Logging.SetMinimumLevel(LogLevel.Warning);
-
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Logging.SetMinimumLevel(LogLevel.Warning);

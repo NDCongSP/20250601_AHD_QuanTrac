@@ -9,11 +9,12 @@
 @using Application.Services.Authen
 @using Application.Services.Authen.UI
 @using Microsoft.Extensions.Localization
-
+@using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Radzen
 @using Radzen.Blazor
 
 @inject IJSRuntime _jsRuntime
+@inject UI.Services.LayoutStateService LayoutState
 
 @inject NotificationService _notificationService
 @inject DialogService _dialogService
@@ -21,8 +22,6 @@
 @inject NavigationManager _navigation
 
 @inject IAccount _accountServices
-@* @inject IAuthServices _authenServices *@
-
 @inject ApiAuthenticationStateProvider _authStateProvider
 @inject IHttpInterceptorManager _httpInterceptorManager
 @inject IPermissions _permissionsServices

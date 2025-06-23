@@ -21,17 +21,10 @@ public partial class UserManager
         if (true)
         {
             await base.OnInitializedAsync();
-            //_pagingSummaryFormat = _localizer["DisplayPage"] + " {0} " + _localizer["Of"] + " {1} <b>(" + _localizer["Total"] + " {2} " + _localizer["Records"] + ")</b>";
+            LayoutState.SetTitle("QUẢN LÝ NGƯỜI DÙNG");
             await RefreshDataAsync();
-            //_isFirstRender = false;
         }
     }
-
-    //public override async Task LoadDataAsync()
-    //{
-    //    await RefreshDataAsync();
-    //    SubmitData(_searchModel);
-    //}
 
     async Task DeleteItemAsync(UpdateDeleteRequestDTO model)
     {

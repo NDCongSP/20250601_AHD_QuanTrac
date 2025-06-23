@@ -1,35 +1,36 @@
 ﻿@page "/waterlevel"
 @using System.Globalization
 @using Radzen
+
 <RadzenChart Style="height: 500px;">
-    <RadzenCategoryAxis Title="Ngày" />
-    <RadzenValueAxis Title="Mực nước (m)" />
+    <RadzenCategoryAxis/>
+    <RadzenValueAxis/>
 
     <RadzenLineSeries Data="@WaterData2025"
                       CategoryProperty="DateLabel"
                       ValueProperty="Value"
                       Title="Năm nay 2025"
-                      Stroke="blue" />
+                      Stroke="blue" Smooth="true" />
 
     <RadzenLineSeries Data="@WaterData2024"
                       CategoryProperty="DateLabel"
                       ValueProperty="Value"
                       Title="Năm 2024"
-                      Stroke="violet" />
+                      Stroke="violet" Smooth="true" />
 
     <RadzenLineSeries Data="@WaterDataMax"
                       CategoryProperty="DateLabel"
                       ValueProperty="Value"
                       Title="Năm Max: 2009"
                       Stroke="red"
-                      LineType="LineType.Dashed" />
+                      LineType="LineType.Dashed" Smooth="true" />
 
     <RadzenLineSeries Data="@WaterDataMin"
                       CategoryProperty="DateLabel"
                       ValueProperty="Value"
                       Title="Năm Min: 2010"
                       Stroke="black"
-                      LineType="LineType.Dotted" />
+                      LineType="LineType.Dotted" Smooth="true" />
 </RadzenChart>
 
 @code {
@@ -73,4 +74,9 @@
             Date = x.Date,
             Value = x.Value - 2.0
         }).ToList();
+
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle("DIỄN BIẾN MỰC NƯỚC HỒ DẦU TIẾNG");
+    }
 }

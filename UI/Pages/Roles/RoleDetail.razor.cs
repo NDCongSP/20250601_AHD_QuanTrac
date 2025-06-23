@@ -28,7 +28,7 @@ public partial class RoleDetail
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
+        LayoutState.SetTitle("CHI TIẾT PHÂN QUYỀN");
         _pagingSummaryFormat = _localizer["DisplayPage"] + " {0} " + _localizer["Of"] + " {1} <b>(" + _localizer["Total"] + " {2} " + _localizer["Records"] + ")</b>";
 
         await RefreshDataAsync();

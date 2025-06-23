@@ -8,7 +8,8 @@
 
     <!--CSS region-->
     <link href="css/app.css" rel="stylesheet" />
-    <link rel="stylesheet" href="_content/Radzen.Blazor/css/material-base.css">
+    <link id="radzen-theme" rel="stylesheet" />
+    <link href="css/custom-colors.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"/>
@@ -38,6 +39,26 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            const themeLink = document.getElementById('radzen-theme');
+            themeLink.href = `_content/Radzen.Blazor/css/material${theme === 'dark' ? '-dark' : ''}-base.css`;
+        })();
+
+        window.setTheme = (theme) => {
+            console.log(`[Theme] Setting theme to: ${theme}`);
+            localStorage.setItem('theme', theme);
+            const themeLink = document.getElementById('radzen-theme');
+            if (themeLink) {
+                const newHref = `_content/Radzen.Blazor/css/material${theme === 'dark' ? '-dark' : ''}-base.css`;
+                console.log(`[Theme] New CSS href: ${newHref}`);
+                themeLink.href = newHref;
+            } else {
+                console.error('[Theme] Error: Could not find element with id #radzen-theme.');
+            }
+        };
+    </script>
 </body>
 
 </html>

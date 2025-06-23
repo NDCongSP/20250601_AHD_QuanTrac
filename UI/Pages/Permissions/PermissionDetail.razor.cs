@@ -17,6 +17,7 @@ namespace UI.Pages.Permissions
 
         protected override async Task OnInitializedAsync()
         {
+            LayoutState.SetTitle("CHI TIẾT CHỨC NĂNG");
             await base.OnInitializedAsync();
 
             await RefreshDataAsync();
