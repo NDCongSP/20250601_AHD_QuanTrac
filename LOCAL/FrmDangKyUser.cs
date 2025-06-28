@@ -1,224 +1,205 @@
-﻿using RegistrationForm1;
+﻿using Org.BouncyCastle.Crypto.Generators;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace RegistrationForm1
-{
+{//private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
     public partial class FrmDangKyUser : Form
     {
-        public bool IsRegistrationMode { get; set; } = true;
-        public bool IsPublicRegistration { get; set; } = false;
+        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        private int? editingUserId = null;
         public FrmDangKyUser()
         {
             InitializeComponent();
-            IsRegistrationMode = true; // Đảm bảo mặc định là true
-            IsPublicRegistration = false;
-        }
-        public FrmDangKyUser(bool isRegistrationMode = true, bool isPublicRegistration = false)
-        {
-            InitializeComponent();
-            IsRegistrationMode = isRegistrationMode;
-            IsPublicRegistration = isPublicRegistration;
-
-            // Cập nhật giao diện dựa trên chức năng
-            if (!IsRegistrationMode)
-            {
-                this.Text = "Thêm người dùng mới";
-                btnSignup.Text = "Thêm người dùng";
-            }
-            else
-            {
-                if (isPublicRegistration)
-                {
-                    this.Text = "Đăng ký tài khoản mới";
-                    btnSignup.Text = "Đăng ký";
-                }
-                else
-                {
-                    this.Text = "Đăng ký tài khoản";
-                    btnSignup.Text = "Đăng ký";
-                }
-            }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
+            cboRole.Items.AddRange(new string[] { "Quản Lý", "Vận Hành", "Cài Đặt", "Bảo Trì" });
+            cboRole.SelectedIndex = 0;
 
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Constructor nhận userId để chỉnh sửa
+        /// </summary>
+        /// <param name="userId">ID của user cần chỉnh sửa</param>
+        public FrmDangKyUser(int userId) : this()
         {
-            SetupFormByMode();
-        }
-        private void SetupFormByMode()
-        {
-            if (IsRegistrationMode)
-            {
-                // Chế độ đăng ký - cho phép tất cả chức vụ
-                this.Text = "Đăng ký tài khoản";
-                btnSignup.Text = "Đăng ký";
-            }
-            else
-            {
-                // Chế độ thêm user từ admin - có thể hạn chế một số chức vụ
-                this.Text = "Thêm người dùng mới";
-                btnSignup.Text = "Thêm người dùng";
-            }
+            editingUserId = userId;
+            LoadUserData();
         }
 
-
-        private void btnSignup_Click_1(object sender, EventArgs e)
+        /// <summary>
+        /// Load dữ liệu user khi chỉnh sửa
+        /// </summary>
+        private void LoadUserData()
         {
-            try
+            if (!editingUserId.HasValue)
+                return;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE Id = @id", conn);
+                cmd.Parameters.AddWithValue("@id", editingUserId.Value);
+                SqlDataReader reader = cmd.ExecuteReader();
 
-                // Validation
-                if (string.IsNullOrWhiteSpace(txtFullName.Text))
+                if (reader.Read())
                 {
-                    MessageBox.Show("Vui lòng nhập họ tên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtFullName.Focus();
-                    return;
-                }
+                    txtFullName.Text = reader["FullName"].ToString();
+                    txtUsername.Text = reader["Username"].ToString();
+                    txtPosition.Text = reader["Position"].ToString();
+                    cboRole.SelectedItem = reader["Role"].ToString();
 
-
-                if (string.IsNullOrWhiteSpace(txtPassword.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtPassword.Focus();
-                    return;
-                }
-
-                if (txtPassword.Text != txtconPassword.Text)
-                {
-                    MessageBox.Show("Mật khẩu xác nhận không khớp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtconPassword.Focus();
-                    return;
-                }
-
-                if (cmbPosition.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Vui lòng chọn chức vụ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cmbPosition.Focus();
-                    return;
-                }
-
-                if (txtPassword.Text.Length < 6)
-                {
-                    MessageBox.Show("Mật khẩu phải có ít nhất 6 ký tự!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtPassword.Focus();
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(txtPhoneNumber.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập số điện thoại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtPhoneNumber.Focus();
-                    return;
-                    // Kiểm tra format số điện thoại (chỉ số và ít nhất 10 ký tự)
-                    
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(txtPhoneNumber.Text, @"^[0-9]{10,15}$"))
-                {
-                    MessageBox.Show("Số điện thoại không hợp lệ! Vui lòng nhập 10-15 số.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtPhoneNumber.Focus();
-                    return;
-                }
-
-                // Kiểm tra số điện thoại đã tồn tại
-                if (UserService.CheckPhoneExists(txtPhoneNumber.Text))
-                {
-                    MessageBox.Show("Số điện thoại đã được sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtPhoneNumber.Focus();
-                    return;
-                }
-                string selectedPosition = cmbPosition.SelectedItem.ToString();
-                if (!IsRegistrationMode && UserService.IsAdminPosition(selectedPosition))
-                {
-                    // Chỉ kiểm tra giới hạn admin khi thêm user từ bên trong hệ thống
-                    if (!UserService.CanCreateAdmin())
-                    {
-                        MessageBox.Show("Hệ thống chỉ cho phép có 1 quản trị viên!\nVui lòng chọn chức vụ khác.",
-                            "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        cmbPosition.Focus();
-                        return;
-                    }
-                }
-                else if (IsRegistrationMode && UserService.IsAdminPosition(selectedPosition))
-                {
-                    // THÊM: Trong chế độ đăng ký, vẫn kiểm tra admin nhưng với thông báo khác
-                    if (!UserService.CanCreateAdmin())
-                    {
-                        MessageBox.Show("Hệ thống đã có quản trị viên!\nVui lòng chọn chức vụ khác để đăng ký.",
-                            "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        cmbPosition.Focus();
-                        return;
-                    }
-                }
-
-                // Check if username exists
-                if (UserService.CheckUsernameExists(txtFullName.Text))
-                {
-                    MessageBox.Show("Tên đăng nhập đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtFullName.Focus();
-                    return;
-                }
-
-                // Create user object
-                User newUser = new User
-                {
-                    FullName = txtFullName.Text.Trim(),
-                    DateOfBirth = dtpBirth.Value,
-                    Password = txtPassword.Text,
-                    Position = cmbPosition.SelectedItem.ToString(),
-                    PhoneNumber = txtPhoneNumber.Text.Trim()
-                };
-
-                // Register user
-                bool success = false;
-                if (IsPublicRegistration)
-                {
-                    // Đăng ký công khai - không kiểm tra quyền
-                    success = UserService.RegisterUserPublic(newUser);
-                }
-                else
-                {
-                    // Đăng ký từ admin - có kiểm tra quyền
-                    success = UserService.RegisterUser(newUser);
-                }
-
-                if (success)
-                {
-                    if (IsRegistrationMode)
-                    {
-                        string message = IsPublicRegistration ?
-                            "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ." :
-                            "Đăng ký thành công!";
-
-                        MessageBox.Show(message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-                    }
+                    if (reader["DateOfBirth"] != DBNull.Value)
+                        dtpDOB.Value = Convert.ToDateTime(reader["DateOfBirth"]);
                     else
-                    {
-                        MessageBox.Show("Thêm người dùng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-
-
-
-                    }
+                        dtpDOB.Value = DateTime.Now;
                 }
             }
-            catch (Exception ex)
+        }
+        /// <summary>
+        /// Lưu dữ liệu khi bấm Lưu
+        /// </summary>
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtFullName.Text))
             {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            if (editingUserId.HasValue)
+            {
+                UpdateUser(); // cập nhật user
+            }
+            else
+            {
+                AddUser(); // thêm user mới
+            }
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+        /// <summary>
+        /// Thêm mới user
+        /// </summary>
+        private void AddUser()
+        {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(txtPassword.Text.Trim());
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO Users (FullName, Username, Password, DateOfBirth, Position, Role) VALUES (@f, @u, @p, @dob, @pos, @r)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@f", txtFullName.Text);
+                cmd.Parameters.AddWithValue("@u", txtUsername.Text);
+                cmd.Parameters.AddWithValue("@p", hashedPassword);
+                cmd.Parameters.AddWithValue("@dob", dtpDOB.Value);
+                cmd.Parameters.AddWithValue("@pos", txtPosition.Text);
+                cmd.Parameters.AddWithValue("@r", cboRole.SelectedItem?.ToString() ?? "");
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Cập nhật user
+        /// </summary>
+        private void UpdateUser()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE Users SET FullName=@f, DateOfBirth=@dob, Position=@p, Role=@r WHERE Id=@id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@f", txtFullName.Text);
+                cmd.Parameters.AddWithValue("@dob", dtpDOB.Value);
+                cmd.Parameters.AddWithValue("@p", txtPosition.Text);
+                cmd.Parameters.AddWithValue("@r", cboRole.SelectedItem?.ToString() ?? "");
+                cmd.Parameters.AddWithValue("@id", editingUserId.Value);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        /// <summary>
+        /// Đóng form
+        /// </summary>
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        // Sự kiện khi nhấn nút "Đăng ký"
+        private void btnOpenRegister_Click(object sender, EventArgs e)
+        {
+            // Chỉ Admin mới được phép mở form này
+            if (!PermissionManager.CheckPermissionWithMessage("add_user"))
+                return;
+
+            FrmDangKyUser frm = new FrmDangKyUser();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show("Tài khoản mới đã được tạo thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            string fullName = txtFullName.Text.Trim();
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text.Trim();
+            DateTime dob = dtpDOB.Value.Date;
+            string position = txtPosition.Text.Trim();
+            string role = cboRole.SelectedItem?.ToString();
+
+            if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(username) ||
+                string.IsNullOrEmpty(password) || string.IsNullOrEmpty(role))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.");
+                return;
+            }
+
+            // Băm mật khẩu
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Kiểm tra username có bị trùng không
+                string checkQuery = "SELECT COUNT(*) FROM Users WHERE Username = @u";
+                SqlCommand checkCmd = new SqlCommand(checkQuery, conn);
+                checkCmd.Parameters.AddWithValue("@u", username);
+
+                int count = (int)checkCmd.ExecuteScalar();
+                if (count > 0)
+                {
+                    MessageBox.Show("Tên đăng nhập đã tồn tại.");
+                    return;
+                }
+
+                string query = @"INSERT INTO Users (FullName, Username, Password, DateOfBirth, Position, Role)
+                                 VALUES (@FullName, @Username, @Password, @DateOfBirth, @Position, @Role)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@FullName", fullName);
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.AddWithValue("@Password", hashedPassword);
+                cmd.Parameters.AddWithValue("@DateOfBirth", dob);
+                cmd.Parameters.AddWithValue("@Position", position);
+                cmd.Parameters.AddWithValue("@Role", role);
+
+                int result = cmd.ExecuteNonQuery();
+
+                if (result > 0)
+                {
+                    MessageBox.Show("Đăng ký thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Đăng ký thất bại!");
+                }
             }
         }
     }
- }
+}
+    
+ 

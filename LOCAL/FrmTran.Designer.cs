@@ -935,7 +935,7 @@
             this.bntLoad.TabIndex = 233;
             this.bntLoad.Text = "Load";
             this.bntLoad.UseVisualStyleBackColor = true;
-            this.bntLoad.Click += new System.EventHandler(this.bntLoad_Click);
+         
             // 
             // groupBox2
             // 

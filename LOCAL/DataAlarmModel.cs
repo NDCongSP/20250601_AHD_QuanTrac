@@ -9,11 +9,13 @@ namespace RegistrationForm1
 {
     public class DataAlarmModel
     {
-        // [Browsable(false)] // Không cho hiện ID 
+        [Browsable(false)]
+        public string TagName { get; set; }  // dùng để so sánh
         public int Id { get; set; }
+
         [DisplayName("Thời Gian")]
         public DateTime CreateAt { get; set; }
-        // Các thông tin mở rộng
+
         [DisplayName("Mã Thiết Bị")]
         public string DeviceCode { get; set; }
 
@@ -23,45 +25,31 @@ namespace RegistrationForm1
         [DisplayName("Mức Độ Cảnh Báo")]
         public string Severity { get; set; }
 
-        [DisplayName("Áp Suất Dầu Cửa 1 Cao")] // Chú thích tiếng việt ra Dvg
-        public string Door1_PressureHigh { get; set; }
+        // Cảnh báo áp suất dầu các cửa
+        [DisplayName("Áp Suất Dầu Cửa 1 Cao")] public string Door1_PressureHigh { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 1 Thấp")] public string Door1_PressureLow { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 2 Cao")] public string Door2_PressureHigh { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 2 Thấp")] public string Door2_PressureLow { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 3 Cao")] public string Door3_PressureHigh { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 3 Thấp")] public string Door3_PressureLow { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 4 Cao")] public string Door4_PressureHigh { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 4 Thấp")] public string Door4_PressureLow { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 5 Cao")] public string Door5_PressureHigh { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 5 Thấp")] public string Door5_PressureLow { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 6 Cao")] public string Door6_PressureHigh { get; set; }
+        [DisplayName("Áp Suất Dầu Cửa 6 Thấp")] public string Door6_PressureLow { get; set; }
 
-        [DisplayName("Áp Suất Dầu Cửa 1 Thấp")] // Chú thích tiếng việt ra Dvg
-        public string Door1_PressureLow { get; set; }
-        [DisplayName("Áp Suất Dầu Cửa 2 Cao")] // Chú thích tiếng việt ra Dvg
-        public string Door2_PressureHigh { get; set; }
+        // Cảnh báo động cơ quá tải theo trạm
+        [DisplayName("S1_DC1 Lỗi LLLLL")] public string S1_DC1_Over { get; set; }
+        [DisplayName("S1_DC2 Lỗi")] public string S1_DC2_Over { get; set; }
+        [DisplayName("S1_DC3 Lỗi")] public string S1_DC3_Over { get; set; }
 
-        [DisplayName("Áp Suất Dầu Cửa 2 Thấp")] // Chú thích tiếng việt ra Dvg
-        public string Door2_PressureLow { get; set; }
-        [DisplayName("Áp Suất Dầu Cửa 3 Cao")] // Chú thích tiếng việt ra Dvg
-        public string Door3_PressureHigh { get; set; }
+        [DisplayName("S2_DC1 Lỗi")] public string S2_DC1_Over { get; set; }
+        [DisplayName("S2_DC2 Lỗi")] public string S2_DC2_Over { get; set; }
+        [DisplayName("S2_DC3 Lỗi")] public string S2_DC3_Over { get; set; }
 
-        [DisplayName("Áp Suất Dầu Cửa 3 Thấp")] // Chú thích tiếng việt ra Dvg
-        public string Door3_PressureLow { get; set; }
-        [DisplayName("Áp Suất Dầu Cửa 4 Cao")] // Chú thích tiếng việt ra Dvg
-        public string Door4_PressureHigh { get; set; }
-
-        [DisplayName("Áp Suất Dầu Cửa 4 Thấp")] // Chú thích tiếng việt ra Dvg
-        public string Door4_PressureLow { get; set; }
-        [DisplayName("Áp Suất Dầu Cửa 5 Cao")] // Chú thích tiếng việt ra Dvg
-        public string Door5_PressureHigh { get; set; }
-
-        [DisplayName("Áp Suất Dầu Cửa 5 Thấp")] // Chú thích tiếng việt ra Dvg
-        public string Door5_PressureLow { get; set; }
-        [DisplayName("Áp Suất Dầu Cửa 6 Cao")] // Chú thích tiếng việt ra Dvg
-        public string Door6_PressureHigh { get; set; }
-
-        [DisplayName("Áp Suất Dầu Cửa 6 Thấp")] // Chú thích tiếng việt ra Dvg
-        public string Door6_PressureLow { get; set; }
-        [DisplayName("DC1 Lỗi")] // Chú thích tiếng việt ra Dvg
-        public string DC1_Over { get; set; }
-       
-        [DisplayName("DC2 Lỗi")] // Chú thích tiếng việt ra Dvg
-        public string DC2_Over { get; set; }
-        [DisplayName("DC3 Lỗi")] // Chú thích tiếng việt ra Dvg
-        public string DC3_Over { get; set; }
-
-
-
+        [DisplayName("S3_DC1 Lỗi")] public string S3_DC1_Over { get; set; }
+        [DisplayName("S3_DC2 Lỗi")] public string S3_DC2_Over { get; set; }
+        [DisplayName("S3_DC3 Lỗi")] public string S3_DC3_Over { get; set; }
     }
 }

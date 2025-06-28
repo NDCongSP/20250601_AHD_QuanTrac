@@ -19,12 +19,12 @@ namespace RegistrationForm1
     {
         private DataTranModel _lastData = new DataTranModel(); // giá trị lần trước
         private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        private readonly Dictionary<string, string> lastValues = new Dictionary<string, string>();
         public FrmTran()
         {        
             InitializeComponent();
             Load += FrmTran_Load;
-            // LoadDataToGrid();
-            //    InitializeDatabase(); // Khởi tạo database và bảng nếu chưa có
+            
             EnsureTableCreated(); // tạo bảng nếu chưa có
         }
         IAhdDriverConnector driver;
@@ -36,144 +36,17 @@ namespace RegistrationForm1
             else
                 Driver_Started(driver, null);
         }
-        //Khởi tạo Database
-        private void InitializeDatabase()
-        {
-            try
-            {
-                //using (SqlConnection conn = new SqlConnection(connectionString))
-                //{
-                //    conn.Open();
-                //    // Tạo database
-                //    string createDbQuery = @"
-                //        IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DeviceDBNew')
-                //        CREATE DATABASE DeviceDBNew";
-                //    using (SqlCommand cmd = new SqlCommand(createDbQuery, conn))
-                //    {
-                //        cmd.ExecuteNonQuery();
-                //    }
-                //}
-                // Tạo bảng và nhập vào sample data
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string createTableQuery = @"
-                        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='TrangThaiThietBi' AND xtype='U')
-                        CREATE TABLE TrangThaiThietBi (
-                            Id INT IDENTITY(1,1) PRIMARY KEY,
-                            DeviceId NVARCHAR(100) NOT NULL,
-                            DeviceName NVARCHAR(100) NOT NULL,
-                            Status INT NOT NULL CHECK (Status IN (0,1)),
-                            Position INT NOT NULL CHECK (Position IN (1,2,3)),
-                            LastUpdated DATETIME DEFAULT GETDATE(),
-                            AlertTime DATETIME NULL,
-                            PreviousStatus INT NULL
-                        )";
-
-                    using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // Thêm PreviousStatus nếu nó không có tồn tại
-                    string addColumnQuery = @"
-                        IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('TrangThaiThietBi') AND name = 'PreviousStatus')
-                        ALTER TABLE TrangThaiThietBi ADD PreviousStatus INT NULL";
-
-                    using (SqlCommand cmd = new SqlCommand(addColumnQuery, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // Nhập vào sample data nếu ko có 
-                    string checkDataQuery = "SELECT COUNT(*) FROM TrangThaiThietBi";
-                    using (SqlCommand cmd = new SqlCommand(checkDataQuery, conn))
-                    {
-                        int count = (int)cmd.ExecuteScalar();
-                        if (count == 0)
-                        {
-                            InsertSampleData(conn);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Tạo một chuỗi để chứa toàn bộ thông tin lỗi
-                var errorMessage = new System.Text.StringBuilder();
-                errorMessage.AppendLine("Đã xảy ra lỗi nghiêm trọng khi khởi tạo kết nối Database.");
-                errorMessage.AppendLine("-------------------------------------------------");
-
-                // Lấy thông tin từ exception gốc
-                errorMessage.AppendLine($"Loại lỗi: {ex.GetType().Name}");
-                errorMessage.AppendLine($"Thông báo: {ex.Message}");
-                errorMessage.AppendLine($"Stack Trace:\n{ex.StackTrace}\n");
-
-                // === PHẦN QUAN TRỌNG NHẤT: Lấy thông tin từ INNER EXCEPTION ===
-                Exception inner = ex.InnerException;
-                int level = 1;
-                while (inner != null)
-                {
-                    errorMessage.AppendLine($"--- Lỗi bên trong (Inner Exception Level {level}) ---");
-                    errorMessage.AppendLine($"Loại lỗi: {inner.GetType().Name}");
-                    errorMessage.AppendLine($"Thông báo: {inner.Message}");
-                    errorMessage.AppendLine($"Stack Trace:\n{inner.StackTrace}\n");
-
-                    // Đi sâu vào cấp tiếp theo
-                    inner = inner.InnerException;
-                    level++;
-                }
-
-                // Hiển thị hộp thoại lỗi chi tiết
-                MessageBox.Show(errorMessage.ToString(), "Lỗi chi tiết", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void InsertSampleData(SqlConnection conn)
-        {
-            Random rand = new Random();
-            for (int i = 1; i <= 100; i++)
-            {
-                int status = rand.Next(0, 2);
-                int position = rand.Next(1, 4);
-                string insertQuery = @"
-                    INSERT INTO TrangThaiThietBi (DeviceId, DeviceName, Status, Position,  LastUpdated, PreviousStatus) 
-                    VALUES (@DeviceId, @DeviceName, @Status, @Position, @LastUpdated, @PreviousStatus)";
-
-                using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.AddWithValue("@DeviceId", $"DH{i:D3}");
-                    cmd.Parameters.AddWithValue("@DeviceName", $"Đồng hồ số {i}");
-                    cmd.Parameters.AddWithValue("@Status", status);
-                    cmd.Parameters.AddWithValue("@Position", position);
-                    cmd.Parameters.AddWithValue("@LastUpdated", DateTime.Now.AddMinutes(-rand.Next(0, 1440)));
-                    cmd.Parameters.AddWithValue("@PreviousStatus", status);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-        //private void LoadDataToGrid()
-        //{
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        string query = "SELECT Id,CreateAt FROM TrangThaiChiTiet ORDER BY Id DESC";
-        //        var data = conn.Query<Tran1Model>(query).ToList();  // Dapper lấy dữ liệu
-
-        //        dataGridViewT1.DataSource = data;
-        //       dataGridViewT1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-        //     //   dataGridViewT1.Columns["Id"].Visible = false;
-        //    }
-        //}
-
-        //
-        // 
+        
+        
+       
         private void Driver_Started(object sender, EventArgs e)
         {
             // bảng điều khiển trạm 1
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Remote").ValueChanged += S1_Remote_ValueChanged;//Su kien áp cửa 1 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local").ValueChanged += S1_Local_ValueChanged;//sự kiện áp cửa 1 thấp
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Auto").ValueChanged += S1_Auto_ValueChanged;//Su kien cửa 1 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Man").ValueChanged += S1_Man_ValueChanged;//Su kien cửa 1 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local_Stop").ValueChanged += S1_Local_Stop_ValueChanged;//Su kien mở hết cửa
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote").ValueChanged += S1_Remote_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local").ValueChanged += S1_Local_ValueChanged;//sự kiện áp cửa 1 thấp
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto").ValueChanged += S1_Auto_ValueChanged;//Su kien cửa 1 đang mở
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man").ValueChanged += S1_Man_ValueChanged;//Su kien cửa 1 đang đóng 
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop").ValueChanged += S1_Local_Stop_ValueChanged;//Su kien mở hết cửa
             // bảng điều khiển trạm 2
             ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote").ValueChanged += S2_Remote_ValueChanged;//Su kien áp cửa 1 cao
             ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local").ValueChanged += S2_Local_ValueChanged;//sự kiện áp cửa 1 thấp
@@ -276,21 +149,21 @@ namespace RegistrationForm1
 
             //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running").ValueChanged += S3_DC3_Running_ValueChanged;//Su kien động cơ 3 đang chạy
             // Trạng thái bảng điều khiển
-            S1_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Remote"),
-                             new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Remote")
-                             , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Remote").Value));
-            S1_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local").Value));
-            S1_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Auto"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Auto")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Auto").Value));
-            S1_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Man"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Man")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Man").Value));
-            S1_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local_Stop"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local_Stop")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Local_Stop").Value));
+            S1_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote"),
+                             new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote")
+                             , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote").Value));
+            S1_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local"),
+                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local")
+                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local").Value));
+            S1_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto"),
+                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto")
+                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto").Value));
+            S1_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man"),
+                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man")
+                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man").Value));
+            S1_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop"),
+                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop")
+                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop").Value));
             S2_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote"),
                               new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote")
                               , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote").Value));
@@ -1361,37 +1234,11 @@ namespace RegistrationForm1
                 }
             }
         }
-        // Hàm Load dữ liệu từ SQL Server vào DataGridView
-        private void LoadData()
-        {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
+       
+        
+       
 
-            using (var db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                var data = db.Query<Tran1Model>("SELECT * FROM TrangThaiChiTiet").ToList();
-                dataGridViewT1.DataSource = data;
-                FormatColumnHeaders(); // ← đổi tên cột sang tiếng Việt
-            }
-        }
-        private static string GetSqlType(Type type)
-        {
-            if (type == typeof(int) || type == typeof(int?))
-                return "INT";
-            if (type == typeof(string))
-                return "NVARCHAR(MAX)";
-            if (type == typeof(DateTime) || type == typeof(DateTime?))
-                return "DATETIME";
-            if (type == typeof(bool) || type == typeof(bool?))
-                return "BIT";
-            // thêm nếu cần kiểu khác
-            return "NVARCHAR(MAX)";
-        }
-
-        private static bool IsNullable(Type type)
-        {
-            return Nullable.GetUnderlyingType(type) != null || !type.IsValueType;
-        }
+       
         // Tạo bảng 1 lần 
         private void EnsureTableCreated()
         {
@@ -1475,10 +1322,7 @@ namespace RegistrationForm1
             SaveToSql(data);
         }
 
-        private void bntLoad_Click(object sender, EventArgs e)
-        {
-            LoadData();
-        }
+        
 
         
     }

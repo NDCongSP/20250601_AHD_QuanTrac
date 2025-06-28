@@ -101,9 +101,6 @@
             this.Temp_Oil2 = new Ahd.Winforms.Controls.AhdLabel();
             this.Temp_Oil1 = new Ahd.Winforms.Controls.AhdLabel();
             this.lbl_User = new System.Windows.Forms.Label();
-            this.labDriverStatus = new System.Windows.Forms.Label();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
             this.Pic_DC3Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_DC2Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_DC1Stop = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -141,10 +138,6 @@
             this.Pic_Doorlock5_1Close = new System.Windows.Forms.PictureBox();
             this.Pic_Doorlock5_2Open = new System.Windows.Forms.PictureBox();
             this.Pic_Doorlock5_2Close = new System.Windows.Forms.PictureBox();
-            this.lbl_Remote = new Ahd.Winforms.Controls.AhdLabel();
-            this.lbl_Local = new Ahd.Winforms.Controls.AhdLabel();
-            this.lbl_Auto = new Ahd.Winforms.Controls.AhdLabel();
-            this.lbl_Man = new Ahd.Winforms.Controls.AhdLabel();
             this.lbl_Stop = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Total_Fllow)).BeginInit();
@@ -238,10 +231,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Remote)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Local)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Auto)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Man)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Stop)).BeginInit();
             this.SuspendLayout();
             // 
@@ -1228,7 +1217,6 @@
             this._btnGhiStatus.TabIndex = 259;
             this._btnGhiStatus.Text = "Ghi Status";
             this._btnGhiStatus.UseVisualStyleBackColor = true;
-         
             // 
             // Temp_Oil3
             // 
@@ -1285,38 +1273,6 @@
             this.lbl_User.Size = new System.Drawing.Size(57, 13);
             this.lbl_User.TabIndex = 266;
             this.lbl_User.Text = "UserDislay";
-            // 
-            // labDriverStatus
-            // 
-            this.labDriverStatus.AutoSize = true;
-            this.labDriverStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labDriverStatus.Location = new System.Drawing.Point(1529, 104);
-            this.labDriverStatus.Name = "labDriverStatus";
-            this.labDriverStatus.Size = new System.Drawing.Size(68, 13);
-            this.labDriverStatus.TabIndex = 265;
-            this.labDriverStatus.Text = "Driver Status";
-            // 
-            // lblDate
-            // 
-            this.lblDate.AutoSize = true;
-            this.lblDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(1411, 100);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(48, 20);
-            this.lblDate.TabIndex = 264;
-            this.lblDate.Text = "Date";
-            // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(1307, 100);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(47, 20);
-            this.lblTime.TabIndex = 263;
-            this.lblTime.Text = "Time";
             // 
             // Pic_DC3Stop
             // 
@@ -1753,50 +1709,6 @@
             this.Pic_Doorlock5_2Close.TabIndex = 285;
             this.Pic_Doorlock5_2Close.TabStop = false;
             // 
-            // lbl_Remote
-            // 
-            this.lbl_Remote.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.lbl_Remote.Location = new System.Drawing.Point(1304, 659);
-            this.lbl_Remote.Name = "lbl_Remote";
-            this.lbl_Remote.Size = new System.Drawing.Size(100, 23);
-            this.lbl_Remote.StringFormat = null;
-            this.lbl_Remote.TabIndex = 287;
-            this.lbl_Remote.TagPath = "Local Station/Channel1/Device1/Remote";
-            this.lbl_Remote.Text = "Remote";
-            // 
-            // lbl_Local
-            // 
-            this.lbl_Local.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.lbl_Local.Location = new System.Drawing.Point(1304, 697);
-            this.lbl_Local.Name = "lbl_Local";
-            this.lbl_Local.Size = new System.Drawing.Size(100, 23);
-            this.lbl_Local.StringFormat = null;
-            this.lbl_Local.TabIndex = 288;
-            this.lbl_Local.TagPath = "Local Station/Channel1/Device1/Local";
-            this.lbl_Local.Text = "Local";
-            // 
-            // lbl_Auto
-            // 
-            this.lbl_Auto.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.lbl_Auto.Location = new System.Drawing.Point(1304, 730);
-            this.lbl_Auto.Name = "lbl_Auto";
-            this.lbl_Auto.Size = new System.Drawing.Size(100, 23);
-            this.lbl_Auto.StringFormat = null;
-            this.lbl_Auto.TabIndex = 289;
-            this.lbl_Auto.TagPath = "Local Station/Channel1/Device1/Auto";
-            this.lbl_Auto.Text = "Auto";
-            // 
-            // lbl_Man
-            // 
-            this.lbl_Man.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.lbl_Man.Location = new System.Drawing.Point(1304, 758);
-            this.lbl_Man.Name = "lbl_Man";
-            this.lbl_Man.Size = new System.Drawing.Size(100, 23);
-            this.lbl_Man.StringFormat = null;
-            this.lbl_Man.TabIndex = 290;
-            this.lbl_Man.TagPath = "Local Station/Channel1/Device1/Man";
-            this.lbl_Man.Text = "Man";
-            // 
             // lbl_Stop
             // 
             this.lbl_Stop.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
@@ -1815,10 +1727,6 @@
             this.BackgroundImage = global::RegistrationForm1.Properties.Resources.M;
             this.ClientSize = new System.Drawing.Size(1694, 848);
             this.Controls.Add(this.lbl_Stop);
-            this.Controls.Add(this.lbl_Man);
-            this.Controls.Add(this.lbl_Auto);
-            this.Controls.Add(this.lbl_Local);
-            this.Controls.Add(this.lbl_Remote);
             this.Controls.Add(this.Pic_Doorlock5_2Open);
             this.Controls.Add(this.Pic_Doorlock5_2Close);
             this.Controls.Add(this.Pic_Doorlock5_1Open);
@@ -1840,9 +1748,6 @@
             this.Controls.Add(this.Pic_Door3_Opening);
             this.Controls.Add(this.Pic_Door3_Closing);
             this.Controls.Add(this.lbl_User);
-            this.Controls.Add(this.labDriverStatus);
-            this.Controls.Add(this.lblDate);
-            this.Controls.Add(this.lblTime);
             this.Controls.Add(this.Temp_Oil3);
             this.Controls.Add(this.Temp_Oil2);
             this.Controls.Add(this.Temp_Oil1);
@@ -1973,10 +1878,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Remote)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Local)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Auto)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbl_Man)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Stop)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2073,9 +1974,6 @@
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil2;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil1;
         private System.Windows.Forms.Label lbl_User;
-        private System.Windows.Forms.Label labDriverStatus;
-        private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.PictureBox Pic_Door3_Opening;
         private System.Windows.Forms.PictureBox Pic_Door3_Closing;
         private System.Windows.Forms.PictureBox Pic_Door4_Opening;
@@ -2096,10 +1994,6 @@
         private System.Windows.Forms.PictureBox Pic_Doorlock5_1Close;
         private System.Windows.Forms.PictureBox Pic_Doorlock5_2Open;
         private System.Windows.Forms.PictureBox Pic_Doorlock5_2Close;
-        private Ahd.Winforms.Controls.AhdLabel lbl_Remote;
-        private Ahd.Winforms.Controls.AhdLabel lbl_Local;
-        private Ahd.Winforms.Controls.AhdLabel lbl_Auto;
-        private Ahd.Winforms.Controls.AhdLabel lbl_Man;
         private Ahd.Winforms.Controls.AhdLabel lbl_Stop;
     }
 }

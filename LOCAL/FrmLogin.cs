@@ -1,0 +1,186 @@
+﻿using System;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Windows.Forms;
+
+namespace RegistrationForm1
+{
+    public partial class FrmLogin : Form
+    {
+        public static int currentLoginLogId = 0; // Share giữa 2 form (FrmLogin và FrmMain)
+        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        public FrmLogin()
+        {
+            InitializeComponent();
+            CreateTestUser(); // Tạo user test mặc định (admin / 123456)
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text.Trim();
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (CheckLogin(username, password))
+            {
+                this.DialogResult = DialogResult.OK; // trả kết quả OK
+            }
+            else
+            {
+                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+
+        private bool CheckLogin(string username, string password)
+        {
+            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+            string query = "SELECT Password, Role FROM Users WHERE Username = @username";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    string storedHash = reader.GetString(0);
+                    string role = reader.GetString(1);
+
+                    bool isSuccess = BCrypt.Net.BCrypt.Verify(password, storedHash);
+                    reader.Close();
+
+                    if (isSuccess)
+                    {
+                        currentLoginLogId = SaveLoginLog(username, true); // ✅ lưu login log và lấy ID
+                        PermissionManager.SetUser(username, role);
+                        return true;
+                    }
+                    else
+                    {
+                        SaveLoginLog(username, false);
+                    }
+                }
+                else
+                {
+                    SaveLoginLog(username, false);
+                }
+
+                return false;
+            }
+        }
+
+        private void CreateTestUser()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string checkQuery = "SELECT COUNT(*) FROM Users WHERE Username = 'admin'";
+                SqlCommand checkCmd = new SqlCommand(checkQuery, conn);
+                int count = (int)checkCmd.ExecuteScalar();
+
+                if (count > 0) return;
+
+                string hashed = BCrypt.Net.BCrypt.HashPassword("123456");
+                string query = "INSERT INTO Users (Username, Password, Role) VALUES ('admin', @p, 'Admin')";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@p", hashed);
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Tài khoản test admin/123456 đã được tạo.");
+            }
+        }
+        // Khi User thoát đăng nhập, lưu log đăng nhập
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (FrmLogin.currentLoginLogId > 0)
+            {
+                SaveLogoutTime(FrmLogin.currentLoginLogId);
+            }
+        }
+        // LƯu thời gian đăng xuất vào bảng LoginLogs
+        public static void SaveLogoutTime(int logId)
+        {
+            string query = "UPDATE LoginLogs SET LogoutTime = @logout WHERE Id = @id";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@logout", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@id", logId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lưu LogoutTime: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private int SaveLoginLog(string username, bool isSuccess)
+        {
+            string ip = GetLocalIPAddress();
+            string query = "INSERT INTO LoginLogs (Username, LoginTime, IPAddress, IsSuccess) OUTPUT INSERTED.Id VALUES (@username, @time, @ip, @success)";
+
+            using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+                cmd.Parameters.AddWithValue("@time", DateTime.Now);
+                cmd.Parameters.AddWithValue("@ip", ip);
+                cmd.Parameters.AddWithValue("@success", isSuccess);
+                return (int)cmd.ExecuteScalar(); // trả về ID mới insert
+            }
+        }
+        private string GetLocalIPAddress()
+        {
+            string localIP = "Unknown";
+            try
+            {
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (var ip in host.AddressList)
+                {
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        localIP = ip.ToString();
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy IP Address: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return localIP;
+        }
+
+        private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+
+            if (checkBox.Checked)
+            {
+                txtPassword.UseSystemPasswordChar = true;
+            }
+            else
+            {
+                txtPassword.UseSystemPasswordChar = false;
+            }
+        }
+    }
+}

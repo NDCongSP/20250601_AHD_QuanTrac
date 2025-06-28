@@ -15,7 +15,7 @@ namespace RegistrationForm1
 {
     public partial class FrmHome : Form
     {
-        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=RegistrationForm4;Integrated Security=True;TrustServerCertificate=True";
+        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
       
         int _id = 1;
         public FrmHome()
@@ -25,17 +25,14 @@ namespace RegistrationForm1
         }
         IAhdDriverConnector driver;
         private void FrmHome_Load(object sender, EventArgs e)
-        {
-            lbl_User.Text = "Xin Chào   " ;
-          //  lbl_User.Text = "Xin Chào    " + { currentUserName};
-            
+        {                    
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
             if (!driver.IsStarted)
                 driver.Started += Driver_Started;
             else
                 Driver_Started(driver, null);
             timer1.Enabled = true;
-            tm_login.Interval = 30000;
+            tm_login.Interval = 60000;
             tm_login.Enabled = true;
             tm_login.Tick += (s, o) =>
             {
@@ -45,7 +42,6 @@ namespace RegistrationForm1
                 t.Enabled = true;
             };
         }
-        //
               
         private void Driver_Started(object sender, EventArgs e)
         {// khai báo sự kiện
@@ -1000,22 +996,7 @@ namespace RegistrationForm1
         //}
         private void timer1_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = DateTime.Now.ToLongTimeString();
-            //  lblDate.Text = DateTime.Now.ToLongDateString();
-            lblDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            //  lblTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-
-
-            if (ahdDriverConnector1.ConnectionStatus == ConnectionStatus.Connected)
-            {
-                labDriverStatus.BackColor = Color.Green;
-                labDriverStatus.Text = "PLC Đang Kết Nối";
-            }
-            else
-            {
-                labDriverStatus.BackColor = Color.Red;
-                labDriverStatus.Text = "PLC Mất Kết Nối";
-            }
+            
         }
 
         private void tm_login_Tick(object sender, EventArgs e)
@@ -1023,15 +1004,9 @@ namespace RegistrationForm1
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 db.Open();
-                // doc data để lấy Id hiện tại
-                string sqlQuery = "SELECT * FROM Datavanhanh";
-                List<DataVanHanhModel> data = db.Query<DataVanHanhModel>(sqlQuery).AsList();
-                _id = (data != null && data.Any()) ? data.Max(x => x.Id) : 0;
-                // Thêm một dòng mới
-                //tạo dữ liệu để thêm vào
+
                 var newRow = new DataVanHanhModel
                 {
-                    Id = _id + 1,
                     CreateAt = DateTime.Now,
                     HT_Cylinder1_1 = HT_Cylinder1_1.Text,
                     HT_Cylinder1_2 = HT_Cylinder1_2.Text,
@@ -1066,19 +1041,28 @@ namespace RegistrationForm1
                     Fllow_BenSuc = Fllow_BenSuc.Text,
                     Fllow_SonDai = Fllow_SonDai.Text,
                 };
-                // tao câu quẻy
-                string insertQuery = "INSERT INTO Datavanhanh (Id,CreateAt,HT_Cylinder1_1, HT_Cylinder1_2, HT_Cylinder2_1,HT_Cylinder2_2,HT_Cylinder3_1,HT_Cylinder3_2,HT_Cylinder4_1,HT_Cylinder4_2,HT_Cylinder5_1,HT_Cylinder5_2,HT_Cylinder6_1,HT_Cylinder6_2," +
-                    "Door1_Aperture,Door2_Aperture,Door3_Aperture,Door4_Aperture,Door5_Aperture,Door6_Aperture,Temp_Oil1,Temp_Oil2,Temp_Oil3," +
-                    "Fllow_Door1,Fllow_Door2,Fllow_Door3,Fllow_Door4,Fllow_Door5,Fllow_Door6,Total_Fllow, Fllow_Ho, Fllow_DauTieng,Fllow_BenSuc,Fllow_SonDai) " +
 
-                    "VALUES (@Id, @CreateAt, @HT_Cylinder1_1,@HT_Cylinder1_2,@HT_Cylinder2_1,@HT_Cylinder2_2,@HT_Cylinder3_1,@HT_Cylinder3_2,@HT_Cylinder4_1,@HT_Cylinder4_2,@HT_Cylinder5_1,@HT_Cylinder5_2,@HT_Cylinder6_1,@HT_Cylinder6_2," +
-                                        "@Door1_Aperture,@Door2_Aperture,@Door3_Aperture,@Door4_Aperture,@Door5_Aperture,@Door6_Aperture,@Temp_Oil1,@Temp_Oil2,@Temp_Oil3," +
-                                        "@Fllow_Door1,@Fllow_Door2,@Fllow_Door3,@Fllow_Door4,@Fllow_Door5,@Fllow_Door6,@Total_Fllow,@Fllow_Ho,@Fllow_DauTieng, @Fllow_BenSuc, @Fllow_SonDai)";
+                string insertQuery = @"INSERT INTO Datavanhanh 
+        (CreateAt, HT_Cylinder1_1, HT_Cylinder1_2, HT_Cylinder2_1, HT_Cylinder2_2,
+         HT_Cylinder3_1, HT_Cylinder3_2, HT_Cylinder4_1, HT_Cylinder4_2,
+         HT_Cylinder5_1, HT_Cylinder5_2, HT_Cylinder6_1, HT_Cylinder6_2,
+         Door1_Aperture, Door2_Aperture, Door3_Aperture, Door4_Aperture, Door5_Aperture, Door6_Aperture,
+         Temp_Oil1, Temp_Oil2, Temp_Oil3,
+         Fllow_Door1, Fllow_Door2, Fllow_Door3, Fllow_Door4, Fllow_Door5, Fllow_Door6,
+         Total_Fllow, Fllow_Ho, Fllow_DauTieng, Fllow_BenSuc, Fllow_SonDai)
+        VALUES 
+        (@CreateAt, @HT_Cylinder1_1, @HT_Cylinder1_2, @HT_Cylinder2_1, @HT_Cylinder2_2,
+         @HT_Cylinder3_1, @HT_Cylinder3_2, @HT_Cylinder4_1, @HT_Cylinder4_2,
+         @HT_Cylinder5_1, @HT_Cylinder5_2, @HT_Cylinder6_1, @HT_Cylinder6_2,
+         @Door1_Aperture, @Door2_Aperture, @Door3_Aperture, @Door4_Aperture, @Door5_Aperture, @Door6_Aperture,
+         @Temp_Oil1, @Temp_Oil2, @Temp_Oil3,
+         @Fllow_Door1, @Fllow_Door2, @Fllow_Door3, @Fllow_Door4, @Fllow_Door5, @Fllow_Door6,
+         @Total_Fllow, @Fllow_Ho, @Fllow_DauTieng, @Fllow_BenSuc, @Fllow_SonDai)";
 
                 db.Execute(insertQuery, newRow);
             }
         }
 
-       
+
     }
 }

@@ -49,7 +49,10 @@
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
-            this.lbl_User = new System.Windows.Forms.Label();
+            this.lblWelcome = new System.Windows.Forms.Label();
+            this.labDriverStatus = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -260,6 +263,11 @@
             this.ahdDriverConnector1.Timeout = 30;
             this.ahdDriverConnector1.UseMongoDb = false;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // panelDesktop
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
@@ -269,15 +277,49 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
-            // lbl_User
+            // lblWelcome
             // 
-            this.lbl_User.AutoSize = true;
-            this.lbl_User.Location = new System.Drawing.Point(1640, 125);
-            this.lbl_User.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_User.Name = "lbl_User";
-            this.lbl_User.Size = new System.Drawing.Size(57, 13);
-            this.lbl_User.TabIndex = 267;
-            this.lbl_User.Text = "UserDislay";
+            this.lblWelcome.AutoSize = true;
+            this.lblWelcome.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWelcome.Location = new System.Drawing.Point(1575, 108);
+            this.lblWelcome.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new System.Drawing.Size(66, 15);
+            this.lblWelcome.TabIndex = 267;
+            this.lblWelcome.Text = "UserDislay";
+            // 
+            // labDriverStatus
+            // 
+            this.labDriverStatus.AutoSize = true;
+            this.labDriverStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labDriverStatus.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labDriverStatus.Location = new System.Drawing.Point(1759, 132);
+            this.labDriverStatus.Name = "labDriverStatus";
+            this.labDriverStatus.Size = new System.Drawing.Size(77, 15);
+            this.labDriverStatus.TabIndex = 270;
+            this.labDriverStatus.Text = "Driver Status";
+            // 
+            // lblDate
+            // 
+            this.lblDate.AutoSize = true;
+            this.lblDate.BackColor = System.Drawing.Color.Transparent;
+            this.lblDate.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Location = new System.Drawing.Point(1641, 128);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(42, 19);
+            this.lblDate.TabIndex = 269;
+            this.lblDate.Text = "Date";
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.BackColor = System.Drawing.Color.Transparent;
+            this.lblTime.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Location = new System.Drawing.Point(1537, 127);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(43, 19);
+            this.lblTime.TabIndex = 268;
+            this.lblTime.Text = "Time";
             // 
             // FrmMain
             // 
@@ -285,7 +327,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PowderBlue;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
-            this.Controls.Add(this.lbl_User);
+            this.Controls.Add(this.labDriverStatus);
+            this.Controls.Add(this.lblDate);
+            this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.lblWelcome);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panelDesktop);
             this.Controls.Add(this.panel2);
@@ -327,6 +372,9 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label lbl_User;
+        private System.Windows.Forms.Label lblWelcome;
+        private System.Windows.Forms.Label labDriverStatus;
+        private System.Windows.Forms.Label lblDate;
+        private System.Windows.Forms.Label lblTime;
     }
 }

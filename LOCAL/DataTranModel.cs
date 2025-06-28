@@ -13,7 +13,25 @@ namespace RegistrationForm1
         public int Id { get; set; }
         [DisplayName("Thời Gian")]
         public DateTime CreateAt { get; set; }
-       // [DisplayName("Mô Tả")] // chốt đang mở , đang đóng
+      
+        public string S1_Remote { get; set; }
+        public string S1_Local { get; set; }
+        public string S1_Auto { get; set; }
+        public string S1_Man { get; set; }
+        public string S1_Local_Stop { get; set; }
+        public string S1_Stop_Remote { get; set; }
+        public string S2_Remote { get; set; }
+        public string S2_Local { get; set; }
+        public string S2_Auto { get; set; }
+        public string S2_Man { get; set; }
+        public string S2_Local_Stop { get; set; }
+        public string S2_Stop_Remote { get; set; }
+        public string S3_Remote { get; set; }
+        public string S3_Local { get; set; }
+        public string S3_Auto { get; set; }
+        public string S3_Man { get; set; }
+        public string S3_Local_Stop { get; set; }
+        public string S3_Stop_Remote { get; set; }
         public string S1_DC1_Running { get; set; }
         public string S1_DC2_Running { get; set; }
         public string S1_DC3_Running { get; set; }

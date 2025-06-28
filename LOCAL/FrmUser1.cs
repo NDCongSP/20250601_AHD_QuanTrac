@@ -10,13 +10,11 @@ using System.Windows.Forms;
 
 namespace RegistrationForm1
 {
-    public partial class TestForm : Form
+    public partial class FrmUser1 : Form
     {
-        //private FrmUser currentUser;
-        //public TestForm(FrmUser loggedInUser)
-        //{
-        //    this.currentUser = loggedInUser;
-        //    InitializeComponent();
-        //}
+        public FrmUser1()
+        {
+            InitializeComponent();
+        }
     }
 }

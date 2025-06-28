@@ -53,7 +53,7 @@ namespace RegistrationForm1
             this.BtnRegister.TabIndex = 13;
             this.BtnRegister.Text = "Đăng ký";
             this.BtnRegister.UseVisualStyleBackColor = true;
-            this.BtnRegister.Click += new System.EventHandler(this.BtnRegister_Click);
+         
             // 
             // BtnLogin
             // 
@@ -63,7 +63,7 @@ namespace RegistrationForm1
             this.BtnLogin.TabIndex = 12;
             this.BtnLogin.Text = "Đăng nhập";
             this.BtnLogin.UseVisualStyleBackColor = true;
-            this.BtnLogin.Click += new System.EventHandler(this.BtnLogin_Click_1);
+         
             // 
             // txtPassword
             // 

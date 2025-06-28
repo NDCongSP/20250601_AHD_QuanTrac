@@ -23,8 +23,13 @@ namespace RegistrationForm1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //  Application.Run(new FrmTran());
-          //    Application.Run(new Home());
-            Application.Run(new LoginForm());
+            //    Application.Run(new Home());
+            // Application.Run(new FrmLogin());
+            FrmLogin login = new FrmLogin();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new FrmMain());
+            }
         }
     }
 }
