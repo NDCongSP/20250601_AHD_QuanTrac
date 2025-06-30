@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTran));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.bntGhiTran = new System.Windows.Forms.Button();
             this.dataGridViewT1 = new System.Windows.Forms.DataGridView();
             this.bntLoad = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -528,8 +528,6 @@
             this.ahdLabel84 = new Ahd.Winforms.Controls.AhdLabel();
             this.label112 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
-            this.bntGhiTran = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT1)).BeginInit();
@@ -845,7 +843,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -912,11 +909,20 @@
             this.tabPage1.ForeColor = System.Drawing.Color.Blue;
             this.tabPage1.Location = new System.Drawing.Point(4, 54);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.tabPage1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tabPage1.Size = new System.Drawing.Size(1716, 807);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "          TRÀN 1          ";
+            // 
+            // bntGhiTran
+            // 
+            this.bntGhiTran.Location = new System.Drawing.Point(487, 536);
+            this.bntGhiTran.Name = "bntGhiTran";
+            this.bntGhiTran.Size = new System.Drawing.Size(125, 35);
+            this.bntGhiTran.TabIndex = 293;
+            this.bntGhiTran.Text = "ghi tràn";
+            this.bntGhiTran.UseVisualStyleBackColor = true;
             // 
             // dataGridViewT1
             // 
@@ -924,6 +930,7 @@
             this.dataGridViewT1.Location = new System.Drawing.Point(681, 348);
             this.dataGridViewT1.Name = "dataGridViewT1";
             this.dataGridViewT1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dataGridViewT1.RowHeadersWidth = 82;
             this.dataGridViewT1.Size = new System.Drawing.Size(605, 432);
             this.dataGridViewT1.TabIndex = 234;
             // 
@@ -935,7 +942,7 @@
             this.bntLoad.TabIndex = 233;
             this.bntLoad.Text = "Load";
             this.bntLoad.UseVisualStyleBackColor = true;
-         
+            this.bntLoad.Click += new System.EventHandler(this.bntLoad_Click);
             // 
             // groupBox2
             // 
@@ -1567,7 +1574,7 @@
             this.groupBox3.Location = new System.Drawing.Point(7, 332);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(320, 239);
+            this.groupBox3.Size = new System.Drawing.Size(320, 294);
             this.groupBox3.TabIndex = 203;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bơm Dầu";
@@ -3200,7 +3207,7 @@
             this.tabPage3.Controls.Add(this.tableLayoutPanel6);
             this.tabPage3.Location = new System.Drawing.Point(4, 54);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.tabPage3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tabPage3.Size = new System.Drawing.Size(1716, 807);
             this.tabPage3.TabIndex = 2;
@@ -4432,7 +4439,7 @@
             this.tabPage4.Controls.Add(this.tableLayoutPanel8);
             this.tabPage4.Location = new System.Drawing.Point(4, 54);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.tabPage4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tabPage4.Size = new System.Drawing.Size(1716, 807);
             this.tabPage4.TabIndex = 3;
@@ -5664,7 +5671,7 @@
             this.tabPage5.Controls.Add(this.tableLayoutPanel10);
             this.tabPage5.Location = new System.Drawing.Point(4, 54);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.tabPage5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tabPage5.Size = new System.Drawing.Size(1716, 807);
             this.tabPage5.TabIndex = 4;
@@ -6895,7 +6902,7 @@
             this.tabPage6.Controls.Add(this.tableLayoutPanel12);
             this.tabPage6.Location = new System.Drawing.Point(4, 54);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.tabPage6.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tabPage6.Size = new System.Drawing.Size(1716, 807);
             this.tabPage6.TabIndex = 5;
@@ -7896,29 +7903,6 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(1745, 39);
             this.tableLayoutPanel12.TabIndex = 235;
             // 
-            // ahdDriverConnector1
-            // 
-            this.ahdDriverConnector1.CollectionName = null;
-            this.ahdDriverConnector1.CommunicationMode = Ahd.Core.CommunicationMode.ReceiveFromServer;
-            this.ahdDriverConnector1.DatabaseName = null;
-            this.ahdDriverConnector1.MongoDb_ConnectionString = null;
-            this.ahdDriverConnector1.Port = ((ushort)(8800));
-            this.ahdDriverConnector1.RefreshRate = 1000;
-            this.ahdDriverConnector1.ServerAddress = "127.0.0.1";
-            this.ahdDriverConnector1.StationName = null;
-            this.ahdDriverConnector1.Timeout = 30;
-            this.ahdDriverConnector1.UseMongoDb = false;
-            // 
-            // bntGhiTran
-            // 
-            this.bntGhiTran.Location = new System.Drawing.Point(487, 536);
-            this.bntGhiTran.Name = "bntGhiTran";
-            this.bntGhiTran.Size = new System.Drawing.Size(125, 35);
-            this.bntGhiTran.TabIndex = 293;
-            this.bntGhiTran.Text = "ghi tràn";
-            this.bntGhiTran.UseVisualStyleBackColor = true;
-            this.bntGhiTran.Click += new System.EventHandler(this.bntGhiTran_Click);
-            // 
             // FrmTran
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -8265,7 +8249,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -8594,7 +8577,6 @@
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Doorlock4_2Open;
         private System.Windows.Forms.Label label115;
         private System.Windows.Forms.Label label116;
-        private Ahd.Winforms.Controls.AhdDriverConnector ahdDriverConnector1;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_S1_DC2_Over;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_S1_DC2_Running;
         private System.Windows.Forms.Label label117;

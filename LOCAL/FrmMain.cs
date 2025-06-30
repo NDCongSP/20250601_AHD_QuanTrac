@@ -17,7 +17,46 @@ namespace RegistrationForm1
 {    
     public partial class FrmMain : Form
     {
-       
+        // ✅ Event phải đặt bên trong class
+        public event EventHandler<TagValueChangedEventArgs> S1RemoteChanged;
+        public event EventHandler<TagValueChangedEventArgs> S1LocalChanged;
+        public event EventHandler<TagValueChangedEventArgs> S1AutoChanged;
+        public event EventHandler<TagValueChangedEventArgs> S1ManChanged;
+        public event EventHandler<TagValueChangedEventArgs> S1LocalStopChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2RemoteChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2LocalChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2AutoChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2ManChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2LocalStopChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3RemoteChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3LocalChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3AutoChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3ManChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3LocalStopChanged;
+        public event EventHandler<TagValueChangedEventArgs> S1_DC1_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S1_DC2_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S1_DC3_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2_DC1_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2_DC2_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S2_DC3_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3_DC1_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3_DC2_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> S3_DC3_RunningChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door1_OpeningChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door1_ClosingChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door2_OpeningChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door2_ClosingChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door3_OpeningChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door3_ClosingChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door4_OpeningChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door4_ClosingChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door5_OpeningChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door5_ClosingChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door6_OpeningChanged;
+        public event EventHandler<TagValueChangedEventArgs> Door6_ClosingChanged;
+
+
+
         private Form currentChildForm = null;
     
         private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
@@ -46,7 +85,7 @@ namespace RegistrationForm1
         public FrmMain()
         {
             InitializeComponent();
-        
+       Load += FrmMain_Load; // Đăng ký sự kiện Load của Form
             _httpClient = new HttpClient(); // Khởi tạo HttpClient để gọi API
             InitializeTimer(); // Cấu hình Timer
             // --- Bắt đầu cập nhật tự động ngay khi Form khởi chạy ---
@@ -60,8 +99,1022 @@ namespace RegistrationForm1
             Task.Run(async () => await OnManualTimerTick());
          //   this.currentUser = loggedInUser;
         }
-        
         IAhdDriverConnector driver;
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+            lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
+            //      btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
+            driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
+            if (!driver.IsStarted)
+                driver.Started += Driver_Started;
+            else
+                Driver_Started(driver, null);
+            timer1.Enabled = true;
+        }
+        private void Driver_Started(object sender, EventArgs e)
+        {
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote").ValueChanged += S1_Remote_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local").ValueChanged += S1_Local_ValueChanged;//sự kiện áp cửa 1 thấp
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto").ValueChanged += S1_Auto_ValueChanged;//Su kien cửa 1 đang mở
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man").ValueChanged += S1_Man_ValueChanged;//Su kien cửa 1 đang đóng 
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop").ValueChanged += S1_Local_Stop_ValueChanged;//Su kien mở hết cửa
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote").ValueChanged += S2_Remote_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local").ValueChanged += S2_Local_ValueChanged;//sự kiện áp cửa 1 thấp
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto").ValueChanged += S2_Auto_ValueChanged;//Su kien cửa 1 đang mở
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man").ValueChanged += S2_Man_ValueChanged;//Su kien cửa 1 đang đóng 
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop").ValueChanged += S2_Local_Stop_ValueChanged;//Su kien mở hết cửa
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote").ValueChanged += S3_Remote_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local").ValueChanged += S3_Local_ValueChanged;//sự kiện áp cửa 1 thấp
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto").ValueChanged += S3_Auto_ValueChanged;//Su kien cửa 1 đang mở
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man").ValueChanged += S3_Man_ValueChanged;//Su kien cửa 1 đang đóng 
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop").ValueChanged += S3_Local_Stop_ValueChanged;//Su kien mở hết cửa
+
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running").ValueChanged += S1_DC1_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running").ValueChanged += S1_DC2_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running").ValueChanged += S1_DC3_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running").ValueChanged += S2_DC1_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running").ValueChanged += S2_DC2_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running").ValueChanged += S2_DC3_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running").ValueChanged += S3_DC1_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running").ValueChanged += S3_DC2_Running_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running").ValueChanged += S3_DC3_Running_ValueChanged;//Su kien áp cửa 1 cao
+
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening").ValueChanged += Door1_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing").ValueChanged += Door1_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening").ValueChanged += Door2_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing").ValueChanged += Door2_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening").ValueChanged += Door3_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing").ValueChanged += Door3_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening").ValueChanged += Door4_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing").ValueChanged += Door4_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening").ValueChanged += Door5_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing").ValueChanged += Door5_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening").ValueChanged += Door6_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing").ValueChanged += Door6_Closing_ValueChanged;//Su kien áp cửa 1 cao
+
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock1_Opening").ValueChanged += Doorlock1_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock1_Closing").ValueChanged += Doorlock1_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_Opening").ValueChanged += Doorlock2_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_Closing").ValueChanged += Doorlock2_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_Opening").ValueChanged += Doorlock3_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_Closing").ValueChanged += Doorlock3_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_Opening").ValueChanged += Doorlock4_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_Closing").ValueChanged += Doorlock4_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_Opening").ValueChanged += Doorlock5_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_Closing").ValueChanged += Doorlock5_Closing_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock6_Opening").ValueChanged += Doorlock6_Opening_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock6_Closing").ValueChanged += Doorlock6_Closing_ValueChanged;//Su kien áp cửa 1 cao
+
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Open").ValueChanged += Door1_Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Close").ValueChanged += Door1_Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Open").ValueChanged += Door2_Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Close").ValueChanged += Door2_Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Open").ValueChanged += Door3_Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Close").ValueChanged += Door3_Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Open").ValueChanged += Door4_Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Close").ValueChanged += Door4_Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Open").ValueChanged += Door5_Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Close").ValueChanged += Door5_Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Open").ValueChanged += Door6_Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Close").ValueChanged += Door6_Close_ValueChanged;//Su kien áp cửa 1 cao
+
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock1_1Open").ValueChanged += Doorlock1_1Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock1_1Close").ValueChanged += Doorlock1_1Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock1_2Open").ValueChanged += Doorlock1_2Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock1_2Close").ValueChanged += Doorlock1_2Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Open").ValueChanged += Doorlock2_1Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Close").ValueChanged += Doorlock2_1Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Open").ValueChanged += Doorlock2_2Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Close").ValueChanged += Doorlock2_2Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Open").ValueChanged += Doorlock3_1Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Close").ValueChanged += Doorlock3_1Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Open").ValueChanged += Doorlock3_2Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Close").ValueChanged += Doorlock3_2Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Open").ValueChanged += Doorlock4_1Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Close").ValueChanged += Doorlock4_1Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Open").ValueChanged += Doorlock4_2Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Close").ValueChanged += Doorlock4_2Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Open").ValueChanged += Doorlock5_1Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Close").ValueChanged += Doorlock5_1Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Open").ValueChanged += Doorlock5_2Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Close").ValueChanged += Doorlock5_2Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock6_1Open").ValueChanged += Doorlock6_1Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock6_1Close").ValueChanged += Doorlock6_1Close_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock6_2Open").ValueChanged += Doorlock6_2Open_ValueChanged;//Su kien áp cửa 1 cao
+            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock6_2Close").ValueChanged += Doorlock6_2Close_ValueChanged;//Su kien áp cửa 1 cao
+
+            // Gọi lần đầu khi load form để publish trạng thái hiện tại
+            PublishInitialValues();
+        }
+        private void PublishInitialValues()
+        {
+
+            Door1_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening"), "", GetDoor1_OpeningValue()));
+            Door1_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing"), "", GetDoor1_ClosingValue()));
+            Door2_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening"), "", GetDoor2_OpeningValue()));
+            Door2_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing"), "", GetDoor2_ClosingValue()));
+            Door3_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening"), "", GetDoor3_OpeningValue()));
+            Door3_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing"), "", GetDoor3_ClosingValue()));
+            Door4_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening"), "", GetDoor4_OpeningValue()));
+            Door4_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing"), "", GetDoor4_ClosingValue()));
+            Door5_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening"), "", GetDoor5_OpeningValue()));
+            Door5_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing"), "", GetDoor5_ClosingValue()));
+            Door6_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening"), "", GetDoor6_OpeningValue()));
+            Door6_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing"), "", GetDoor6_ClosingValue()));
+
+            S3_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running"), "", GetS3_DC3_RunningValue()));
+            S3_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running"), "", GetS3_DC2_RunningValue()));
+            S3_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running"), "", GetS3_DC1_RunningValue()));
+           
+            S2_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running"), "", GetS2_DC3_RunningValue()));
+            S2_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running"), "", GetS2_DC2_RunningValue()));
+            S2_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running"), "", GetS2_DC1_RunningValue()));
+            S1_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running"), "", GetS1_DC3_RunningValue()));
+            S1_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running"), "", GetS1_DC2_RunningValue()));
+            S1_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running"), "", GetS1_DC1_RunningValue()));
+
+
+            S3_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote"), "", GetS3RemoteValue()));
+            S3_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local"), "", GetS3LocalValue()));
+            S3_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto"), "", GetS3AutoValue()));
+            S3_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man"), "", GetS3ManValue()));
+            S3_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop"), "", GetS3LocalStopValue()));
+            S2_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote"), "", GetS2RemoteValue()));
+            S2_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local"), "", GetS2LocalValue()));
+            S2_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto"), "", GetS2AutoValue()));
+            S2_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man"), "", GetS2ManValue()));
+            S2_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop"), "", GetS2LocalStopValue()));
+            S1_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote") , "", GetS1RemoteValue()));                
+            S1_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local"), "", GetS1LocalValue()));               
+            S1_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto"), "", GetS1AutoValue()));
+            S1_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man"), "", GetS1ManValue()));
+            S1_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop"), "", GetS1LocalStopValue()));
+        }
+        private void InsertAllTagsToSQL()
+        {
+
+            DataTranModel model = new DataTranModel
+            {
+                CreateAt = DateTime.Now,
+                S1_Remote = GetS1RemoteValue(),
+                S1_Local = GetS1LocalValue(),
+                S1_Auto = GetS1AutoValue(),
+                S1_Man = GetS1ManValue(),
+                S1_Local_Stop = GetS1LocalStopValue(),
+                S2_Remote = GetS2RemoteValue(),
+                S2_Local = GetS2LocalValue(),
+                S2_Auto = GetS2AutoValue(),
+                S2_Man = GetS2ManValue(),
+                S2_Local_Stop = GetS2LocalStopValue(),
+                S3_Remote = GetS3RemoteValue(),
+                S3_Local = GetS3LocalValue(),
+                S3_Auto = GetS3AutoValue(),
+                S3_Man = GetS3ManValue(),
+                S3_Local_Stop = GetS3LocalStopValue(),
+
+                // Tiếp tục gán toàn bộ các tag khác tương tự
+            };
+
+
+            SQLLogin.InsertAllTagsToSQL(model);
+        }
+        private string prevS1Remote = "0", prevS1Local = "0", prevS1Auto = "0", prevS1Man = "0", prevS1LocalStop = "0"; // biến lưu trạng thái trước đó
+        private string prevS2Remote = "0", prevS2Local = "0", prevS2Auto = "0", prevS2Man = "0", prevS2LocalStop = "0"; // biến lưu trạng thái trước đó
+        private string prevS3Remote = "0", prevS3Local = "0", prevS3Auto = "0", prevS3Man = "0", prevS3LocalStop = "0"; // biến lưu trạng thái trước đó
+        private string prevS1_DC1_Running = "0", prevS1_DC2_Running = "0", prevS1_DC3_Running = "0"; // biến lưu trạng thái trước đó
+        private string prevS2_DC1_Running = "0", prevS2_DC2_Running = "0", prevS2_DC3_Running = "0"; // biến lưu trạng thái trước đó
+        private string prevS3_DC1_Running = "0", prevS3_DC2_Running = "0", prevS3_DC3_Running = "0"; // biến lưu trạng thái trước đó
+        private string prevDoor1_Opening = "0", prevDoor1_Closing = "0"; // biến lưu trạng thái trước đó
+        private string prevDoor2_Opening = "0", prevDoor2_Closing = "0"; // biến lưu trạng thái trước đó
+        private string prevDoor3_Opening = "0", prevDoor3_Closing = "0"; // biến lưu trạng thái trước đó
+        private string prevDoor4_Opening = "0", prevDoor4_Closing = "0"; // biến lưu trạng thái trước đó
+        private string prevDoor5_Opening = "0", prevDoor5_Closing = "0"; // biến lưu trạng thái trước đó
+        private string prevDoor6_Opening = "0", prevDoor6_Closing = "0"; // biến lưu trạng thái trước đó
+
+
+
+        private void Door1_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door1_OpeningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor1_Opening == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door1_Opening = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor1_Opening = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door1_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door1_ClosingChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor1_Closing == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door1_Closing = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor1_Closing = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door2_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door2_OpeningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor2_Opening == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door2_Opening = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor2_Opening = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door2_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door2_ClosingChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor2_Closing == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door2_Closing = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor2_Closing = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door3_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door3_OpeningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor3_Opening == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door3_Opening = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor3_Opening = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door3_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door3_ClosingChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor3_Closing == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door3_Closing = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor3_Closing = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door4_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door4_OpeningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor4_Opening == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door4_Opening = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor4_Opening = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door4_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door4_ClosingChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor4_Closing == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door4_Closing = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor4_Closing = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door5_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door5_OpeningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor5_Opening == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door5_Opening = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor5_Opening = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door5_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door5_ClosingChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor5_Closing == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door5_Closing = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor5_Closing = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door6_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door6_OpeningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor6_Opening == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door6_Opening = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor6_Opening = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Door6_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Door6_ClosingChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevDoor6_Closing == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    Door6_Closing = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevDoor6_Closing = e.NewValue; // Cập nhật trạng thái trước
+        }
+
+        private void S1_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            
+            S1_DC1_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1_DC1_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_DC1_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS1_DC1_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S1_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S1_DC2_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1_DC2_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_DC2_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS1_DC2_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S1_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S1_DC3_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1_DC3_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_DC3_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS1_DC3_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S2_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S2_DC1_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS2_DC1_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_DC1_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS2_DC1_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S2_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S2_DC2_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS2_DC2_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_DC2_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS2_DC2_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S2_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S2_DC3_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS2_DC3_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_DC3_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS2_DC3_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S3_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S3_DC1_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS3_DC1_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_DC1_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS3_DC1_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S3_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S3_DC2_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS3_DC2_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_DC2_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS3_DC2_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void S3_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            S3_DC3_RunningChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS3_DC3_Running == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_DC3_Running = e.NewValue,
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            prevS3_DC3_Running = e.NewValue; // Cập nhật trạng thái trước
+        }
+
+        private void S1_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {  
+  //          this.Invoke((MethodInvoker)(() =>
+  //          {
+  ////              button1.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor; label1.Text = $"Đang Mở: {e.NewValue}";
+  //          }));
+            // 🔔 Raise event để form khác nhận
+            S1RemoteChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1Remote == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_Remote = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS1Remote = e.NewValue;
+        }
+        private void S1_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            //this.Invoke((MethodInvoker)(() =>
+            //{
+            //    //              button1.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor; label1.Text = $"Đang Mở: {e.NewValue}";
+            //}));
+            // 🔔 Raise event để form khác nhận
+            S1LocalChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1Local == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_Local = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS1Local = e.NewValue;
+        }
+        private void S1_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            //this.Invoke((MethodInvoker)(() =>
+            //{
+            //    //              button1.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor; label1.Text = $"Đang Mở: {e.NewValue}";
+            //}));
+            // 🔔 Raise event để form khác nhận
+            S1AutoChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1Auto == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_Auto = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS1Auto = e.NewValue;
+        }
+        private void S1_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            //this.Invoke((MethodInvoker)(() =>
+            //{
+            ////    button4.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor;
+            //}));
+
+            S1ManChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1Man == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_Man = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS1Man = e.NewValue;
+        }
+        private void S1_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            //this.Invoke((MethodInvoker)(() =>
+            //{
+            // //   button5.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor;
+            //}));
+
+            S1LocalStopChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS1LocalStop == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_Local_Stop = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS1LocalStop = e.NewValue;
+        }
+        private void S2_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {        
+            // 🔔 Raise event để form khác nhận
+            S2RemoteChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS2Remote == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_Remote = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS2Remote = e.NewValue;
+        }
+        private void S2_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {         
+            // 🔔 Raise event để form khác nhận
+            S2LocalChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS2Local == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_Local = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS2Local = e.NewValue;
+        }
+        private void S2_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {         
+            // 🔔 Raise event để form khác nhận
+            S2AutoChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS2Auto == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_Auto = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS2Auto = e.NewValue;
+        }
+        private void S2_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {         
+            S2ManChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS2Man == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_Man = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS2Man = e.NewValue;
+        }
+        private void S2_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {          
+            S2LocalStopChanged?.Invoke(this, e);
+            if (prevS2LocalStop == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S2_Local_Stop = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS2LocalStop = e.NewValue;
+        }
+        private void S3_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {       
+            S3RemoteChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS3Remote == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_Remote = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS3Remote = e.NewValue;
+        }
+        private void S3_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {         
+            S3LocalChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS3Local == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_Local = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS3Local = e.NewValue;
+        }
+        private void S3_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {        
+            S3AutoChanged?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevS3Auto == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_Auto = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS3Auto = e.NewValue;
+        }
+        private void S3_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {           
+            S3ManChanged?.Invoke(this, e);
+            if (prevS3Man == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_Man = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS3Man = e.NewValue;
+        }
+        private void S3_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {         
+            S3LocalStopChanged?.Invoke(this, e);
+            if (prevS3LocalStop == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S3_Local_Stop = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLogin.InsertAllTagsToSQL(model);
+            }
+            // Cập nhật trạng thái trước
+            prevS3LocalStop = e.NewValue;
+        }
+
+
+        #region GetCurrentValue
+
+        public string GetDoor1_OpeningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening").Value;
+        }
+        public string GetDoor1_ClosingValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing").Value;
+        }
+        public string GetDoor2_OpeningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening").Value;
+        }
+        public string GetDoor2_ClosingValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing").Value;
+        }
+        public string GetDoor3_OpeningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening").Value;
+        }
+        public string GetDoor3_ClosingValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing").Value;
+        }
+        public string GetDoor4_OpeningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening").Value;
+        }
+        public string GetDoor4_ClosingValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing").Value;
+        }
+        public string GetDoor5_OpeningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening").Value;
+        }
+        public string GetDoor5_ClosingValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing").Value;
+        }
+        public string GetDoor6_OpeningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening").Value;
+        }
+        public string GetDoor6_ClosingValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing").Value;
+        }
+
+        public string GetS3_DC3_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running").Value;
+        }
+        public string GetS3_DC2_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running").Value;
+        }
+        public string GetS3_DC1_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running").Value;
+        }
+        public string GetS2_DC3_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running").Value;
+        }
+        public string GetS2_DC2_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running").Value;
+        }
+        public string GetS2_DC1_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running").Value;
+        }
+        public string GetS1_DC3_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running").Value;
+        }
+        public string GetS1_DC2_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running").Value;
+        }
+        public string GetS1_DC1_RunningValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running").Value;
+        }
+
+        public string GetS1RemoteValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote").Value;
+        }
+        public string GetS1LocalValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local").Value;
+        }
+        public string GetS1AutoValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto").Value;
+        }
+        public string GetS1ManValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man").Value;
+        }
+        public string GetS1LocalStopValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop").Value;
+        }
+        public string GetS2RemoteValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote").Value;
+        }
+        public string GetS2LocalValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local").Value;
+        }
+        public string GetS2AutoValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto").Value;
+        }
+        public string GetS2ManValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man").Value;
+        }
+        public string GetS2LocalStopValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop").Value;
+        }
+        public string GetS3RemoteValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote").Value;
+        }
+        public string GetS3LocalValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local").Value;
+        }
+        public string GetS3AutoValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto").Value;
+        }
+        public string GetS3ManValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man").Value;
+        }
+        public string GetS3LocalStopValue()
+        {
+            return ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop").Value;
+        }
+        #endregion
+
         private void InitializeTimer()
         {
             _updateTimer = new Timer();
@@ -525,14 +1578,10 @@ namespace RegistrationForm1
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
-
         
         private void bnt_Tran_Click(object sender, EventArgs e)
         {
-            FrmTran data = new FrmTran();
+            FrmTran data = new FrmTran(this);
             OpenFormInPanel(data, "Hệ thống tràn");
         }
 
@@ -565,23 +1614,8 @@ namespace RegistrationForm1
             this.Close();
         }
 
-        private void FrmMain_Load(object sender, EventArgs e)
-        {
-          
-            lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
-            //      btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
-            driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
-            if (!driver.IsStarted)
-                driver.Started += Driver_Started;
-            else
-                Driver_Started(driver, null);
-            timer1.Enabled = true;
-        }
-        private void Driver_Started(object sender, EventArgs e)
-        {// khai báo sự kiện
-            // Trạng thái động cơ Trạm 1,2,3
-          //  ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Station1_Run").ValueChanged += Station1_Run_ValueChanged;//Su kien trạm 1 đang chạy     
-        }
+        
+        
         private void bnt_CaiDat_Click(object sender, EventArgs e)
         {
             FrmCaiDat caiDat = new FrmCaiDat();
@@ -602,18 +1636,7 @@ namespace RegistrationForm1
             }
         }
 
-        //private void btnOpenRegister_Click(object sender, EventArgs e)
-        //{
-        //    // Chỉ Admin mới được phép mở form này
-        //    if (!PermissionManager.CheckPermissionWithMessage("add_user"))
-        //        return;
-
-        //    FrmDangKyUser frm = new FrmDangKyUser();
-        //    if (frm.ShowDialog() == DialogResult.OK)
-        //    {
-        //        MessageBox.Show("Tài khoản mới đã được tạo thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //}
+        
 
         private void bnt_User_Click(object sender, EventArgs e)
         {

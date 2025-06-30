@@ -17,415 +17,122 @@ namespace RegistrationForm1
 {
     public partial class FrmTran : Form
     {
+        private FrmMain _mainForm;
         private DataTranModel _lastData = new DataTranModel(); // giá trị lần trước
         private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
         private readonly Dictionary<string, string> lastValues = new Dictionary<string, string>();
-        public FrmTran()
+        public FrmTran(FrmMain frmMain)
         {        
             InitializeComponent();
-            Load += FrmTran_Load;
-            
-            EnsureTableCreated(); // tạo bảng nếu chưa có
-        }
-        IAhdDriverConnector driver;
-        private void FrmTran_Load(object sender, EventArgs e)
-        {
-            driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
-            if (!driver.IsStarted)
-                driver.Started += Driver_Started;
+            //  Load += FrmTran_Load;
+            _mainForm = frmMain; // ✅ Gán trước khi sử dụng
+            if (_mainForm != null)
+            {
+                // Subscribe to events
+                _mainForm.S1RemoteChanged += MainForm_S1RemoteChanged;
+                _mainForm.S1LocalChanged += MainForm_S1LocalChanged;
+                _mainForm.S1AutoChanged += MainForm_S1AutoChanged;
+                _mainForm.S1ManChanged += MainForm_S1ManChanged;
+                _mainForm.S1LocalStopChanged += MainForm_S1LocalStopChanged;
+
+                _mainForm.S2RemoteChanged += S2_Remote_ValueChanged;
+                _mainForm.S2LocalChanged += S2_Local_ValueChanged;
+                _mainForm.S2AutoChanged += S2_Auto_ValueChanged;
+                _mainForm.S2ManChanged += S2_Man_ValueChanged;
+                _mainForm.S2LocalStopChanged += S2_Local_Stop_ValueChanged;
+
+                _mainForm.S3RemoteChanged += S3_Remote_ValueChanged;
+                _mainForm.S3LocalChanged += S3_Local_ValueChanged;
+                _mainForm.S3AutoChanged += S3_Auto_ValueChanged;
+                _mainForm.S3ManChanged += S3_Man_ValueChanged;
+                _mainForm.S3LocalStopChanged += S3_Local_Stop_ValueChanged;
+                // Subscribe to DC Running events
+                _mainForm.S1_DC1_RunningChanged += S1_DC1_Running_ValueChanged;
+                _mainForm.S1_DC2_RunningChanged += S1_DC2_Running_ValueChanged;
+                _mainForm.S1_DC3_RunningChanged += S1_DC3_Running_ValueChanged;
+                _mainForm.S2_DC1_RunningChanged += S2_DC1_Running_ValueChanged;
+                _mainForm.S2_DC2_RunningChanged += S2_DC2_Running_ValueChanged;
+                _mainForm.S2_DC3_RunningChanged += S2_DC3_Running_ValueChanged;
+                _mainForm.S3_DC1_RunningChanged += S3_DC1_Running_ValueChanged;
+                _mainForm.S3_DC2_RunningChanged += S3_DC2_Running_ValueChanged;
+                _mainForm.S3_DC3_RunningChanged += S3_DC3_Running_ValueChanged;
+                // Subscribe to Door events
+                _mainForm.Door1_OpeningChanged += Door1_Opening_ValueChanged;
+                _mainForm.Door1_ClosingChanged += Door1_Closing_ValueChanged;
+                _mainForm.Door2_OpeningChanged += Door2_Opening_ValueChanged;
+                _mainForm.Door2_ClosingChanged += Door2_Closing_ValueChanged;
+                _mainForm.Door3_OpeningChanged += Door3_Opening_ValueChanged;
+                _mainForm.Door3_ClosingChanged += Door3_Closing_ValueChanged;
+                _mainForm.Door4_OpeningChanged += Door4_Opening_ValueChanged;
+                _mainForm.Door4_ClosingChanged += Door4_Closing_ValueChanged;
+                _mainForm.Door5_OpeningChanged += Door5_Opening_ValueChanged;
+                _mainForm.Door5_ClosingChanged += Door5_Closing_ValueChanged;
+                _mainForm.Door6_OpeningChanged += Door6_Opening_ValueChanged;
+                _mainForm.Door6_ClosingChanged += Door6_Closing_ValueChanged;
+
+
+
+
+            }
             else
-                Driver_Started(driver, null);
+            {
+                MessageBox.Show("FrmMain instance is null. Please check.");
+            }
+            // ✅ Load trạng thái ban đầu ngay khi khởi tạo
+            LoadInitialValues();
+
+          //  EnsureTableCreated(); // tạo bảng nếu chưa có
         }
+
         
-        
-       
-        private void Driver_Started(object sender, EventArgs e)
+
+        private void LoadInitialValues() // Load giá trị ban đầu từ FrmMain
         {
-            // bảng điều khiển trạm 1
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote").ValueChanged += S1_Remote_ValueChanged;//Su kien áp cửa 1 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local").ValueChanged += S1_Local_ValueChanged;//sự kiện áp cửa 1 thấp
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto").ValueChanged += S1_Auto_ValueChanged;//Su kien cửa 1 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man").ValueChanged += S1_Man_ValueChanged;//Su kien cửa 1 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop").ValueChanged += S1_Local_Stop_ValueChanged;//Su kien mở hết cửa
-            // bảng điều khiển trạm 2
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote").ValueChanged += S2_Remote_ValueChanged;//Su kien áp cửa 1 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local").ValueChanged += S2_Local_ValueChanged;//sự kiện áp cửa 1 thấp
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto").ValueChanged += S2_Auto_ValueChanged;//Su kien cửa 1 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man").ValueChanged += S2_Man_ValueChanged;//Su kien cửa 1 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop").ValueChanged += S2_Local_Stop_ValueChanged;//Su kien mở hết cửa
-           // bảng điều khiển trạm 2 3                                                                                                                  
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote").ValueChanged += S3_Remote_ValueChanged;//Su kien áp cửa 1 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local").ValueChanged += S3_Local_ValueChanged;//sự kiện áp cửa 1 thấp
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto").ValueChanged += S3_Auto_ValueChanged;//Su kien cửa 1 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man").ValueChanged += S3_Man_ValueChanged;//Su kien cửa 1 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop").ValueChanged += S3_Local_Stop_ValueChanged;//Su kien mở hết cửa
-            // Tràn 1
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureHigh").ValueChanged += Door1_PressureHigh_ValueChanged;//Su kien áp cửa 1 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureLow").ValueChanged += Door1_PressureLow_ValueChanged;//sự kiện áp cửa 1 thấp
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening").ValueChanged += Door1_Opening_ValueChanged;//Su kien cửa 1 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing").ValueChanged += Door1_Closing_ValueChanged;//Su kien cửa 1 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Open").ValueChanged += Door1_Open_ValueChanged;//Su kien mở hết cửa 1
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Close").ValueChanged += Door1_Close_ValueChanged;//Su kien đóng hết cửa 1
-            // Tràn 2
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Open").ValueChanged += Doorlock2_1Open_ValueChanged;//Su kien Chốt bên trái cửa 2 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Close").ValueChanged += Doorlock2_1Close_ValueChanged;//Chốt bên trái cửa 2 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Open").ValueChanged += Doorlock2_2Open_ValueChanged;//Su kien Chốt bên trái cửa 2 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Close").ValueChanged += Doorlock2_2Close_ValueChanged;//Chốt bên trái cửa 2 đóng hết          
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening").ValueChanged += Door2_Opening_ValueChanged;//Su kien cửa 2 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing").ValueChanged += Door2_Closing_ValueChanged;//Sự kiện cửa 2 đang đóng
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Open").ValueChanged += Door2_Open_ValueChanged;//Su kien Chốt bên trái cửa 2 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Close").ValueChanged += Door2_Close_ValueChanged;//Chốt bên trái cửa 2 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureHigh").ValueChanged += Door2_PressureHigh_ValueChanged;//Su kien áp cửa 1 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureLow").ValueChanged += Door2_PressureLow_ValueChanged;//sự kiện áp cửa 1 thấp
-            // Tràn 3
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Open").ValueChanged += Doorlock3_1Open_ValueChanged;//Su kien Chốt bên trái cửa 3 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Close").ValueChanged += Doorlock3_1Close_ValueChanged;//Chốt bên trái cửa 3 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Open").ValueChanged += Doorlock3_2Open_ValueChanged;//Su kien Chốt bên trái cửa 3 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Close").ValueChanged += Doorlock3_2Close_ValueChanged;//Chốt bên trái cửa 3 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening").ValueChanged += Door3_Opening_ValueChanged;//Su kien cửa 3 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing").ValueChanged += Door3_Closing_ValueChanged;//Su kien cửa 3 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Open").ValueChanged += Door3_Open_ValueChanged;//Su kien mở hết cửa 3
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Close").ValueChanged += Door3_Close_ValueChanged;//Su kien đóng hết cửa 3
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureHigh").ValueChanged += Door3_PressureHigh_ValueChanged;//Su kien áp cửa 1 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureLow").ValueChanged += Door3_PressureLow_ValueChanged;//sự kiện áp cửa 1 thấp
-            // End Tràn 3
-            //Tràn 4
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Open").ValueChanged += Doorlock4_1Open_ValueChanged;//Su kien Chốt bên trái cửa 4 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Close").ValueChanged += Doorlock4_1Close_ValueChanged;//Chốt bên trái cửa 4 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Open").ValueChanged += Doorlock4_2Open_ValueChanged;//Su kien Chốt bên trái cửa 4 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Close").ValueChanged += Doorlock4_2Close_ValueChanged;//Chốt bên trái cửa 4 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening").ValueChanged += Door4_Opening_ValueChanged;//Su kien cửa 4 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing").ValueChanged += Door4_Closing_ValueChanged;//Su kien cửa 4 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Open").ValueChanged += Door4_Open_ValueChanged;//Su kien mở hết cửa 4
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Close").ValueChanged += Door4_Close_ValueChanged;//Su kien đóng hết cửa 4
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureHigh").ValueChanged += Door4_PressureHigh_ValueChanged;//Su kien áp cửa 4 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureLow").ValueChanged += Door4_PressureLow_ValueChanged;//sự kiện áp cửa 4 thấp
-            // End Tràn 4
-            //Tràn 5        
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Open").ValueChanged += Doorlock5_1Open_ValueChanged;//Su kien Chốt bên trái cửa 5 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Close").ValueChanged += Doorlock5_1Close_ValueChanged;//Chốt bên trái cửa 5 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Open").ValueChanged += Doorlock5_2Open_ValueChanged;//Su kien Chốt bên trái cửa 5 mở hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Close").ValueChanged += Doorlock5_2Close_ValueChanged;//Chốt bên trái cửa 5 đóng hết
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening").ValueChanged += Door5_Opening_ValueChanged;//Su kien cửa 5 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing").ValueChanged += Door5_Closing_ValueChanged;//Su kien cửa 5 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Open").ValueChanged += Door5_Open_ValueChanged;//Su kien mở hết cửa 5
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Close").ValueChanged += Door5_Close_ValueChanged;//Su kien đóng hết cửa 5
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureHigh").ValueChanged += Door5_PressureHigh_ValueChanged;//Su kien áp cửa 5 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureLow").ValueChanged += Door5_PressureLow_ValueChanged;//sự kiện áp cửa 5 thấp
-            //End Tràn 5
-            //Tràn 6
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureHigh").ValueChanged += Door6_PressureHigh_ValueChanged;//Su kien áp cửa 6 cao
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureLow").ValueChanged += Door6_PressureLow_ValueChanged;//sự kiện áp cửa 6 thấp
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening").ValueChanged += Door6_Opening_ValueChanged;//Su kien cửa 6 đang mở
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing").ValueChanged += Door6_Closing_ValueChanged;//Su kien cửa 6 đang đóng 
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Open").ValueChanged += Door6_Open_ValueChanged;//Su kien mở hết cửa 6
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Close").ValueChanged += Door6_Close_ValueChanged;//Su kien đóng hết cửa 6
-            //End Tràn 6
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running").ValueChanged += S1_DC1_Running_ValueChanged;//Su kien trạm 1 động cơ 1 đang chạy        
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running").ValueChanged += S1_DC2_Running_ValueChanged;//Su kien trạm 1 động cơ 2 đang chạy       
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running").ValueChanged += S1_DC3_Running_ValueChanged;//Su kien trạm 1 động cơ 3 đang chạy
-            // Trạng thái lổi động cơ Trạm 1
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Over").ValueChanged += S1_DC1_Over_ValueChanged;//Su kien lổi động cơ 1        
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Over").ValueChanged += S1_DC2_Over_ValueChanged;//Su kien lổi động cơ 2         
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Over").ValueChanged += S1_DC3_Over_ValueChanged;//Su kien lổi động cơ 3  
-               // Trạng thái động cơ Trạm 2                                                                                                               
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running").ValueChanged += S2_DC1_Running_ValueChanged;//Su kien trạm 2 động cơ 1 đang chạy        
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running").ValueChanged += S2_DC2_Running_ValueChanged;//Su kien trạm 2 động cơ 2 đang chạy       
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running").ValueChanged += S2_DC3_Running_ValueChanged;//Su kien trạm 2 động cơ 3 đang chạy
-            // Trạng thái lổi động cơ Trạm 2
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Over").ValueChanged += S2_DC1_Over_ValueChanged;//Su kien lổi động cơ 1        
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Over").ValueChanged += S2_DC2_Over_ValueChanged;//Su kien lổi động cơ 2         
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Over").ValueChanged += S2_DC3_Over_ValueChanged;//Su kien lổi động cơ 3  
-
-            // Trạng thái động cơ Trạm 3                                                                                                              
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running").ValueChanged += S3_DC1_Running_ValueChanged;//Su kien trạm 3 động cơ 1 đang chạy        
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running").ValueChanged += S3_DC2_Running_ValueChanged;//Su kien trạm 3 động cơ 2 đang chạy       
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running").ValueChanged += S3_DC3_Running_ValueChanged;//Su kien trạm 3 động cơ 3 đang chạy
-            // Trạng thái lổi động cơ Trạm 3
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Over").ValueChanged += S3_DC1_Over_ValueChanged;//Su kien lổi động cơ 1        
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Over").ValueChanged += S3_DC2_Over_ValueChanged;//Su kien lổi động cơ 2         
-            ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Over").ValueChanged += S3_DC3_Over_ValueChanged;//Su kien lổi động cơ 3  
 
 
-            //ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running").ValueChanged += S3_DC3_Running_ValueChanged;//Su kien động cơ 3 đang chạy
-            // Trạng thái bảng điều khiển
-            S1_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote"),
-                             new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote")
-                             , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Remote").Value));
-            S1_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local").Value));
-            S1_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Auto").Value));
-            S1_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Man").Value));
-            S1_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_Local_Stop").Value));
-            S2_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote"),
-                              new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote")
-                              , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Remote").Value));
-            S2_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local").Value));
-            S2_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Auto").Value));
-            S2_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Man").Value));
-            S2_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_Local_Stop").Value));
-            S3_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote"),
-                             new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote")
-                             , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Remote").Value));
-            S3_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local").Value));
-            S3_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Auto").Value));
-            S3_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Man").Value));
-            S3_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_Local_Stop").Value));
+            // Sử dụng hàm GetCurrentValue() từ FrmMain
+            label1.Text = $"S1_Remote: {_mainForm.GetS1RemoteValue()}"; bnt_Remote_T1.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Remote_T2.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Remote_T3.BackColor = _mainForm.GetS2RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Remote_T4.BackColor = _mainForm.GetS2RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Remote_T5.BackColor = _mainForm.GetS3RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Remote_T6.BackColor = _mainForm.GetS3RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;        
+           
+            label2.Text = $"S1_Local: {_mainForm.GetS1LocalValue()}"; bnt_Local_T1.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Local_T2.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Local_T3.BackColor = _mainForm.GetS2LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Local_T4.BackColor = _mainForm.GetS2LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Local_T5.BackColor = _mainForm.GetS3LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Local_T6.BackColor = _mainForm.GetS3LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
 
-            // End Trạng thái bảng điều khiển
+            label3.Text = $"S1_Auto: {_mainForm.GetS1AutoValue()}"; bnt_Auto_T1.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Auto_T2.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Auto_T3.BackColor = _mainForm.GetS2AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Auto_T4.BackColor = _mainForm.GetS2AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Auto_T5.BackColor = _mainForm.GetS3AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Auto_T6.BackColor = _mainForm.GetS3AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
 
-            //Tràn 6
-            Door6_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureHigh"),
-                             new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureHigh")
-                             , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureHigh").Value));
-            Door6_PressureLow_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureLow"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureLow")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_PressureLow").Value));
-            Door6_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Opening").Value));
-            Door6_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Closing").Value));
-            Door6_Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Open").Value));
-            Door6_Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door6_Close").Value));
-            //End Tràn 6
-            // Tràn 5           
-            Door5_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureHigh"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureHigh")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureHigh").Value));
-            Door5_PressureLow_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureLow"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureLow")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_PressureLow").Value));
-            Door5_Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Open").Value));
-            Door5_Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Close").Value));
-            Door5_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Opening").Value));
-            Door5_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door5_Closing").Value));
-            Doorlock5_1Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Open").Value));
-            Doorlock5_1Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_1Close").Value));
-            Doorlock5_2Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Open").Value));
-            Doorlock5_2Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock5_2Close").Value));
-            //End Tràn 5
-            // Tràn 4
-            Door4_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureHigh"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureHigh")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureHigh").Value));
-            Door4_PressureLow_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureLow"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureLow")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_PressureLow").Value));
-            Door4_Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Open").Value));
-            Door4_Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Close").Value));
-            Door4_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Opening").Value));
-            Door4_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door4_Closing").Value));
-            Doorlock4_1Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Open").Value));
-            Doorlock4_1Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_1Close").Value));
-            Doorlock4_2Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Open").Value));
-            Doorlock4_2Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock4_2Close").Value));
-            //End Tràn 4
-            // Tràn 3,
-            Door3_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureHigh"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureHigh")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureHigh").Value));
-            Door3_PressureLow_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureLow"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureLow")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_PressureLow").Value));
-            Door3_Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Open").Value));
-            Door3_Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Close").Value));
-            Door3_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Opening").Value));
-            Door3_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door3_Closing").Value));
-            Doorlock3_1Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Open").Value));
-            Doorlock3_1Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_1Close").Value));
-            Doorlock3_2Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Open").Value));
-            Doorlock3_2Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock3_2Close").Value));
+            label4.Text = $"S1_Man: {_mainForm.GetS1ManValue()}"; bnt_Hand_T1.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Hand_T2.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Hand_T3.BackColor = _mainForm.GetS2ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Hand_T4.BackColor = _mainForm.GetS2ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Hand_T5.BackColor = _mainForm.GetS3ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Hand_T6.BackColor = _mainForm.GetS3ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
 
-            // Tràn 1 
-
-            Door1_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureHigh"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureHigh")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureHigh").Value));
-            Door1_PressureLow_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureLow"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureLow")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_PressureLow").Value));
-            Door1_Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Open"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Open")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Open").Value));
-            Door1_Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Close").Value));
-            Door1_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening"),
-                             new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening")
-                             , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Opening").Value));
-            Door1_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door1_Closing").Value));
-            // Tràn 2
-
-            Door2_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening"),
-                           new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening")
-                           , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Opening").Value));
-            Door2_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Closing").Value));
-            Door2_Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Open"),
-                           new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Open")
-                           , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Open").Value));
-            Door2_Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_Close").Value));
-            Door2_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureHigh"),
-                          new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureHigh")
-                          , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureHigh").Value));
-            Door2_PressureLow_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureLow"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureLow")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Door2_PressureLow").Value)); 
-            Doorlock2_2Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Open"),
-                           new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Open")
-                           , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Open").Value));
-            Doorlock2_2Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_2Close").Value));
-            Doorlock2_1Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Open"),
-                           new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Open")
-                           , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Open").Value));
-            Doorlock2_1Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Close"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Close")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/Doorlock2_1Close").Value));
-//////////////////////////////////
-
-            S3_DC1_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Over"),
-                           new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Over")
-                           , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Over").Value));
-            S3_DC2_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Over"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Over")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Over").Value));
-            S3_DC3_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Over"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Over")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Over").Value));
-            S3_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC1_Running").Value));
-            S3_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC2_Running").Value));
-            S3_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S3_DC3_Running").Value));
+            label5.Text = $"S1_Local_Stop: {_mainForm.GetS1LocalStopValue()}"; bnt_Estop_T1.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Estop_T2.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Estop_T3.BackColor = _mainForm.GetS2LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Estop_T4.BackColor = _mainForm.GetS2LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Estop_T5.BackColor = _mainForm.GetS3LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Estop_T6.BackColor = _mainForm.GetS3LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
 
 
-            S2_DC1_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Over"),
-                             new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Over")
-                             , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Over").Value));
-            S2_DC2_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Over"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Over")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Over").Value));
-            S2_DC3_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Over"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Over")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Over").Value));
-            S2_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC1_Running").Value));
-            S2_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC2_Running").Value));
-            S2_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S2_DC3_Running").Value));
 
-            S1_DC1_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Over"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Over")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Over").Value));
-            S1_DC2_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Over"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Over")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Over").Value));
-            S1_DC3_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Over"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Over")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Over").Value));
-            S1_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC1_Running").Value));
-            S1_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC2_Running").Value));
-            S1_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running"),
-                            new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running")
-                            , "", ahdDriverConnector1.GetTag("Local Station/Channel1/Device1/S1_DC3_Running").Value));
+
 
         }
+
+
         // Bảng điều khiển 3
         private void S3_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -518,10 +225,8 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Estop_T3.BackColor = DefaultBackColor; bnt_Estop_T4.BackColor = DefaultBackColor; });
-        }
-        // End Bảng điều khiển 2
-        // Bảng điều khiển 1,
-        private void S1_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
+        }       
+        private void MainForm_S1RemoteChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -530,7 +235,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Remote_T1.BackColor = DefaultBackColor;bnt_Remote_T2.BackColor = DefaultBackColor; });
         }
-        private void S1_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void MainForm_S1LocalChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -539,7 +244,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Local_T1.BackColor = DefaultBackColor; bnt_Local_T2.BackColor = DefaultBackColor; });
         }
-        private void S1_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void MainForm_S1AutoChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -548,7 +253,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Auto_T1.BackColor = DefaultBackColor; bnt_Auto_T2.BackColor = DefaultBackColor; });
         }
-        private void S1_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void MainForm_S1ManChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -557,7 +262,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Hand_T1.BackColor = DefaultBackColor; bnt_Hand_T2.BackColor = DefaultBackColor; });
         }
-        private void S1_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void MainForm_S1LocalStopChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -662,7 +367,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door5_Closing_Stop.Visible = true; Pic_Door5_Closing.Visible = false; });
         }
-
         private void Door5_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -906,7 +610,6 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door3_Closing_Stop.Visible = true; Pic_Door3_Closing.Visible = false; });
         }
-
         private void Door3_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -1220,110 +923,12 @@ namespace RegistrationForm1
                 this.Invoke((MethodInvoker)delegate { Pic_S1_DC1_Stop.Visible = true; PicT2_S1_DC1_Stop.Visible = true; Pic_S1_DC1_Running.Visible = false; PicT2_S1_DC1_Running.Visible = false; });
         }
 
-        private void FormatColumnHeaders()
-        {
-            foreach (var prop in typeof(DataTrangThaiModel).GetProperties())
-            {
-                var displayNameAttr = prop.GetCustomAttributes(typeof(DisplayNameAttribute), false).FirstOrDefault() as DisplayNameAttribute;
-                if (displayNameAttr != null)
-                {
-                    if (dataGridViewT1.Columns[prop.Name] != null)
-                    {
-                        dataGridViewT1.Columns[prop.Name].HeaderText = displayNameAttr.DisplayName;
-                    }
-                }
-            }
-        }
-       
-        
-       
-
-       
-        // Tạo bảng 1 lần 
-        private void EnsureTableCreated()
-        {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
-            using (var db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                string sql = GenerateCreateTableSQL<DataTrangThaiModel>("TrangThaiChiTiet");
-                db.Execute(sql);
-            }
-        }
-        private void SaveToSql(DataTrangThaiModel data)
-        {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
-
-            using (var db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                var props = typeof(DataTrangThaiModel).GetProperties()
-                    .Where(p => p.Name != "Id").ToList();
-
-                string columns = string.Join(",", props.Select(p => p.Name));
-                string values = string.Join(",", props.Select(p => "@" + p.Name));
-
-                string sql = $"INSERT INTO TrangThaiChiTiet ({columns}) VALUES ({values})";
-
-                db.Execute(sql, data);
-                MessageBox.Show("Lưu thành công!");
-            }
-        }
+      
         
 
-        // CREATE TABLE từ class:
-        public string GenerateCreateTableSQL<T>(string tableName)
+        private void bntLoad_Click(object sender, EventArgs e)
         {
-            var props = typeof(T).GetProperties();
-            var sql = new StringBuilder();
-            sql.AppendLine($"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='{tableName}' AND xtype='U')");
-            sql.AppendLine($"CREATE TABLE {tableName} (");
 
-            foreach (var prop in props)
-            {
-                string colName = prop.Name;
-                string sqlType = "NVARCHAR(MAX)";
-
-                if (prop.PropertyType == typeof(int))
-                    sqlType = "INT";
-                else if (prop.PropertyType == typeof(DateTime))
-                    sqlType = "DATETIME";
-
-                if (colName == "Id")
-                    sql.AppendLine($"    {colName} INT IDENTITY(1,1) PRIMARY KEY,");
-                else
-                    sql.AppendLine($"    {colName} {sqlType},");
-            }
-
-            sql.Length--; // xóa dấu phẩy cuối
-            sql.AppendLine(")");
-
-            return sql.ToString();
         }
-        private void bntGhiTran_Click(object sender, EventArgs e)
-        {
-            var data = new DataTrangThaiModel
-            {
-                CreateAt = DateTime.Now,
-                S1_Remote = "Từ xa",
-                S1_Local = "Tại chỗ",
-                S1_Auto = "Tự động",
-                S1_Man = "Thủ công",
-                S1_Local_Stop = "Không",
-                S1_Stop_Remote = "Không",
-                S1_DC1_Running = "Chạy",
-                S1_DC2_Running = "Dừng",
-                S1_DC3_Running = "Chạy",
-                Door1_Opening = "Đang mở",
-                Door1_Closing = "Đang đóng",
-                // ... các trường còn lại
-            };
-
-            SaveToSql(data);
-        }
-
-        
-
-        
     }
 }

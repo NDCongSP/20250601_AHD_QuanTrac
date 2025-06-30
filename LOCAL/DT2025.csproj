@@ -282,6 +282,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SQLLogin.cs" />
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
