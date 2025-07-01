@@ -283,6 +283,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SQLLogin.cs" />
+    <Compile Include="SQLLoginAlarm.cs" />
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
