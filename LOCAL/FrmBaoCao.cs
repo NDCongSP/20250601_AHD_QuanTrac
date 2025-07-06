@@ -53,130 +53,130 @@ namespace RegistrationForm1
             dtFrom.Value = DateTime.Now.AddMinutes(-5);
 
         }
-        private static string GetSqlType(Type type)
-        {
-            if (type == typeof(int) || type == typeof(int?))
-                return "INT";
-            if (type == typeof(string))
-                return "NVARCHAR(MAX)";
-            if (type == typeof(DateTime) || type == typeof(DateTime?))
-                return "DATETIME";
-            if (type == typeof(bool) || type == typeof(bool?))
-                return "BIT";
-            // thêm nếu cần kiểu khác
-            return "NVARCHAR(MAX)";
-        }
-        private static bool IsNullable(Type type)
-        {
-            return Nullable.GetUnderlyingType(type) != null || !type.IsValueType;
-        }
+        //private static string GetSqlType(Type type)
+        //{
+        //    if (type == typeof(int) || type == typeof(int?))
+        //        return "INT";
+        //    if (type == typeof(string))
+        //        return "NVARCHAR(MAX)";
+        //    if (type == typeof(DateTime) || type == typeof(DateTime?))
+        //        return "DATETIME";
+        //    if (type == typeof(bool) || type == typeof(bool?))
+        //        return "BIT";
+        //    // thêm nếu cần kiểu khác
+        //    return "NVARCHAR(MAX)";
+        //}
+        //private static bool IsNullable(Type type)
+        //{
+        //    return Nullable.GetUnderlyingType(type) != null || !type.IsValueType;
+        //}
         // CREATE TABLE từ class:
-        public string GenerateCreateTableSQL<T>(string tableName)
-        {
-            var props = typeof(T).GetProperties();
-            var sql = new StringBuilder();
-            sql.AppendLine($"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='{tableName}' AND xtype='U')");
-            sql.AppendLine($"CREATE TABLE {tableName} (");
+        //public string GenerateCreateTableSQL<T>(string tableName)
+        //{
+        //    var props = typeof(T).GetProperties();
+        //    var sql = new StringBuilder();
+        //    sql.AppendLine($"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='{tableName}' AND xtype='U')");
+        //    sql.AppendLine($"CREATE TABLE {tableName} (");
 
-            foreach (var prop in props)
-            {
-                string colName = prop.Name;
-                string sqlType = "NVARCHAR(MAX)";
+        //    foreach (var prop in props)
+        //    {
+        //        string colName = prop.Name;
+        //        string sqlType = "NVARCHAR(MAX)";
 
-                if (prop.PropertyType == typeof(int))
-                    sqlType = "INT";
-                else if (prop.PropertyType == typeof(DateTime))
-                    sqlType = "DATETIME";
+        //        if (prop.PropertyType == typeof(int))
+        //            sqlType = "INT";
+        //        else if (prop.PropertyType == typeof(DateTime))
+        //            sqlType = "DATETIME";
 
-                if (colName == "Id")
-                    sql.AppendLine($"    {colName} INT IDENTITY(1,1) PRIMARY KEY,");
-                else
-                    sql.AppendLine($"    {colName} {sqlType},");
-            }
+        //        if (colName == "Id")
+        //            sql.AppendLine($"    {colName} INT IDENTITY(1,1) PRIMARY KEY,");
+        //        else
+        //            sql.AppendLine($"    {colName} {sqlType},");
+        //    }
 
-            sql.Length--; // xóa dấu phẩy cuối
-            sql.AppendLine(")");
+        //    sql.Length--; // xóa dấu phẩy cuối
+        //    sql.AppendLine(")");
 
-            return sql.ToString();
-        }
+        //    return sql.ToString();
+        //}
         // Tạo bảng 1 lần 
-        private void EnsureTableCreated()
-        {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
-            using (var db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                string sql = GenerateCreateTableSQL<DataMucNuocModel>("MucNuoc");
-                db.Execute(sql);
-            }
-        }
-        private void SavemnToSql(DataMucNuocModel data)
-        {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
+        //private void EnsureTableCreated()
+        //{
+        //    string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
+        //    using (var db = new SqlConnection(connectionString))
+        //    {
+        //        db.Open();
+        //        string sql = GenerateCreateTableSQL<DataMucNuocModel>("MucNuoc");
+        //        db.Execute(sql);
+        //    }
+        //}
+        //private void SavemnToSql(DataMucNuocModel data)
+        //{
+        //    string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
 
-            using (var db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                var props = typeof(DataMucNuocModel).GetProperties()
-                    .Where(p => p.Name != "Id").ToList();
+        //    using (var db = new SqlConnection(connectionString))
+        //    {
+        //        db.Open();
+        //        var props = typeof(DataMucNuocModel).GetProperties()
+        //            .Where(p => p.Name != "Id").ToList();
 
-                string columns = string.Join(",", props.Select(p => p.Name));
-                string values = string.Join(",", props.Select(p => "@" + p.Name));
-                string sql = $"INSERT INTO MucNuoc ({columns}) VALUES ({values})";
-                db.Execute(sql, data);
-                MessageBox.Show("Lưu thành công!");
-            }
-        }
-        private void SavevhToSql(Vanhanh datavh)
-        {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
+        //        string columns = string.Join(",", props.Select(p => p.Name));
+        //        string values = string.Join(",", props.Select(p => "@" + p.Name));
+        //        string sql = $"INSERT INTO MucNuoc ({columns}) VALUES ({values})";
+        //        db.Execute(sql, data);
+        //        MessageBox.Show("Lưu thành công!");
+        //    }
+        //}
+        //private void SavevhToSql(Vanhanh datavh)
+        //{
+        //    string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
 
-            using (var db = new SqlConnection(connectionString))
-            {
-                db.Open();
-                var props = typeof(Vanhanh).GetProperties()
-                    .Where(p => p.Name != "Id").ToList();
+        //    using (var db = new SqlConnection(connectionString))
+        //    {
+        //        db.Open();
+        //        var props = typeof(Vanhanh).GetProperties()
+        //            .Where(p => p.Name != "Id").ToList();
 
-                string columns = string.Join(",", props.Select(p => p.Name));
-                string values = string.Join(",", props.Select(p => "@" + p.Name));
-                string sql = $"INSERT INTO VanHanh ({columns}) VALUES ({values})";
-                db.Execute(sql, datavh);
-                MessageBox.Show("Lưu thành công!");
-            }
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var data = new DataMucNuocModel
-            {
-                CreateAt = DateTime.Now,
-                Fllow_Ho = "100",
-                Fllow_DauTieng = "150",
-                Fllow_BenSuc = "160",
-                Fllow_SonDai = "90",
+        //        string columns = string.Join(",", props.Select(p => p.Name));
+        //        string values = string.Join(",", props.Select(p => "@" + p.Name));
+        //        string sql = $"INSERT INTO VanHanh ({columns}) VALUES ({values})";
+        //        db.Execute(sql, datavh);
+        //        MessageBox.Show("Lưu thành công!");
+        //    }
+        //}
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    var data = new DataMucNuocModel
+        //    {
+        //        CreateAt = DateTime.Now,
+        //        Fllow_Ho = "100",
+        //        Fllow_DauTieng = "150",
+        //        Fllow_BenSuc = "160",
+        //        Fllow_SonDai = "90",
                 
-                // ... các trường còn lại
-            };
-            SavemnToSql(data);
-        }
+        //        // ... các trường còn lại
+        //    };
+        //    SavemnToSql(data);
+        //}
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            var datavh = new Vanhanh
-            {
-                CreateAt = DateTime.Now,
-                Fllow_Ho = "100",
-                Door1_Aperture = "110",
-                Door2_Aperture = "160",
-                Door3_Aperture = "90",
-                Door4_Aperture = "150",
-                Door5_Aperture = "160",
-                Door6_Aperture = "80",
-                Total_Fllow = "200",
+        //private void button2_Click(object sender, EventArgs e)
+        //{
+        //    var datavh = new Vanhanh
+        //    {
+        //        CreateAt = DateTime.Now,
+        //        Fllow_Ho = "100",
+        //        Door1_Aperture = "110",
+        //        Door2_Aperture = "160",
+        //        Door3_Aperture = "90",
+        //        Door4_Aperture = "150",
+        //        Door5_Aperture = "160",
+        //        Door6_Aperture = "80",
+        //        Total_Fllow = "200",
 
-                // ... các trường còn lại
-            };
-            SavevhToSql(datavh);
-        }
+        //        // ... các trường còn lại
+        //    };
+        //    SavevhToSql(datavh);
+        //}
         //private void FormatDataGridViewColumns()
         //{
         //    foreach (var prop in typeof(Vanhanh).GetProperties())
@@ -207,7 +207,7 @@ namespace RegistrationForm1
             DateTime fromTime = fromPicker;
             DateTime toTime = toPicker;
 
-            // Nếu người dùng chọn "5 phút", "10 phút" v.v...
+            // Xử lý nếu user chọn preset
             if (selected != "Tất cả")
             {
                 int minutes = 0;
@@ -228,30 +228,46 @@ namespace RegistrationForm1
                     MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-               
             }
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                conn.Open();
-
-                string query = "SELECT * FROM VanHanh WHERE CreateAt BETWEEN @FromTime AND @ToTime ORDER BY CreateAt DESC";
-
-                var data = conn.Query<Vanhanh>(query, new
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    FromTime = fromTime,
-                    ToTime = toTime
-                }).ToList();
+                    conn.Open();
 
-                dataGridView1.DataSource = data;
+                    string query = @"
+                SELECT Id, CreateAt, Fllow_Ho, Door1_Aperture, Door2_Aperture, Door3_Aperture, 
+                       Door4_Aperture, Door5_Aperture, Door6_Aperture, Total_Fllow
+                FROM DataVanHanh
+                WHERE CreateAt BETWEEN @FromTime AND @ToTime
+                ORDER BY CreateAt DESC";
 
-                if (data.Count == 0)
-                {
-                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // 🔑 Sử dụng Dapper nếu đã import
+                    var data = conn.Query<Vanhanh>(query, new
+                    {
+                        FromTime = fromTime,
+                        ToTime = toTime
+                    }).ToList();
+
+                    dataGridView1.DataSource = null;
+                    dataGridView1.DataSource = data;
+
+                    if (data.Count == 0)
+                    {
+                        MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // Vẽ biểu đồ từ dữ liệu vận hành
+                       DrawChartFromVanHanhData();
+                    }
                 }
-                DrawChartFromVanHanhData();// Gọi hàm vẽ biểu đồ từ dữ liệu vận hành
             }
-            
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi truy vấn dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void ExportDataGridViewToPDF(DataGridView dgv, string filePath)
         {

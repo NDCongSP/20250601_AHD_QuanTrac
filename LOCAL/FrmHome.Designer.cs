@@ -95,7 +95,6 @@
             this.ahdLabel10 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tm_login = new System.Windows.Forms.Timer(this.components);
             this._btnGhiStatus = new System.Windows.Forms.Button();
             this.Temp_Oil3 = new Ahd.Winforms.Controls.AhdLabel();
             this.Temp_Oil2 = new Ahd.Winforms.Controls.AhdLabel();
@@ -508,7 +507,7 @@
             this.HT_Cylinder5_2.Size = new System.Drawing.Size(55, 35);
             this.HT_Cylinder5_2.StringFormat = null;
             this.HT_Cylinder5_2.TabIndex = 59;
-            this.HT_Cylinder5_2.TagPath = null;
+            this.HT_Cylinder5_2.TagPath = "Local Station/Channel1/Device1/HT_Cylinder5_2";
             this.HT_Cylinder5_2.Text = "0";
             this.HT_Cylinder5_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -523,7 +522,7 @@
             this.HT_Cylinder6_2.Size = new System.Drawing.Size(55, 35);
             this.HT_Cylinder6_2.StringFormat = null;
             this.HT_Cylinder6_2.TabIndex = 58;
-            this.HT_Cylinder6_2.TagPath = null;
+            this.HT_Cylinder6_2.TagPath = "Local Station/Channel1/Device1/HT_Cylinder6_2";
             this.HT_Cylinder6_2.Text = "0";
             this.HT_Cylinder6_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -763,7 +762,7 @@
             this.HT_Cylinder5_1.Size = new System.Drawing.Size(55, 35);
             this.HT_Cylinder5_1.StringFormat = null;
             this.HT_Cylinder5_1.TabIndex = 41;
-            this.HT_Cylinder5_1.TagPath = "Local Station/Channel1/Device1/Cylinder5";
+            this.HT_Cylinder5_1.TagPath = "Local Station/Channel1/Device1/HT_Cylinder5_1";
             this.HT_Cylinder5_1.Text = "0.0";
             this.HT_Cylinder5_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -778,7 +777,7 @@
             this.HT_Cylinder6_1.Size = new System.Drawing.Size(55, 35);
             this.HT_Cylinder6_1.StringFormat = null;
             this.HT_Cylinder6_1.TabIndex = 40;
-            this.HT_Cylinder6_1.TagPath = "Local Station/Channel1/Device1/Cylinder6";
+            this.HT_Cylinder6_1.TagPath = "Local Station/Channel1/Device1/HT_Cylinder6_1";
             this.HT_Cylinder6_1.Text = "0.0";
             this.HT_Cylinder6_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1203,11 +1202,6 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 200;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // tm_login
-            // 
-            this.tm_login.Enabled = true;
-            this.tm_login.Tick += new System.EventHandler(this.tm_login_Tick);
             // 
             // _btnGhiStatus
             // 
@@ -1968,7 +1962,6 @@
         private System.Windows.Forms.PictureBox Pic_Doorlock2_2Close;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_DC1Runing;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Timer tm_login;
         private System.Windows.Forms.Button _btnGhiStatus;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil3;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil2;

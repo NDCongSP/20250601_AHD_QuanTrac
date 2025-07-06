@@ -22,7 +22,7 @@ namespace RegistrationForm1
   //      private List<DataAlarmModel> alarmList = new List<DataAlarmModel>();
      //   private DataAlarmModel lastAlarm = null;    
     
-        private DataTable alarmTable = null;
+     
         private readonly Dictionary<string, string> lastValues = new Dictionary<string, string>();
         private readonly Dictionary<string, DataAlarmModel> activeAlarms = new Dictionary<string, DataAlarmModel>();
         private List<DataAlarmModel> alarmList = new List<DataAlarmModel>();

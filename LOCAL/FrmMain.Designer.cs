@@ -53,6 +53,7 @@
             this.labDriverStatus = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
+            this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -321,6 +322,10 @@
             this.lblTime.TabIndex = 268;
             this.lblTime.Text = "Time";
             // 
+            // tm_login
+            // 
+            this.tm_login.Tick += new System.EventHandler(this.tm_login_Tick);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,5 +381,6 @@
         private System.Windows.Forms.Label labDriverStatus;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Timer tm_login;
     }
 }

@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTran));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.bntGhiTran = new System.Windows.Forms.Button();
             this.dataGridViewT1 = new System.Windows.Forms.DataGridView();
             this.bntLoad = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -143,7 +142,7 @@
             this.label124 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewT2 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.bnt_Hand_T2 = new System.Windows.Forms.Button();
             this.bnt_Estop_T2 = new System.Windows.Forms.Button();
@@ -213,7 +212,7 @@
             this.Pic_S2_DC1_Running = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label127 = new System.Windows.Forms.Label();
             this.label128 = new System.Windows.Forms.Label();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewT3 = new System.Windows.Forms.DataGridView();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.bnt_Hand_T3 = new System.Windows.Forms.Button();
             this.bnt_Estop_T3 = new System.Windows.Forms.Button();
@@ -300,7 +299,7 @@
             this.PicT4_S2_DC1_Running = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label131 = new System.Windows.Forms.Label();
             this.label132 = new System.Windows.Forms.Label();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewT4 = new System.Windows.Forms.DataGridView();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
             this.bnt_Hand_T4 = new System.Windows.Forms.Button();
             this.bnt_Estop_T4 = new System.Windows.Forms.Button();
@@ -387,7 +386,7 @@
             this.Pic_S3_DC1_Running = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label135 = new System.Windows.Forms.Label();
             this.label136 = new System.Windows.Forms.Label();
-            this.dataGridView5 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewT5 = new System.Windows.Forms.DataGridView();
             this.groupBox21 = new System.Windows.Forms.GroupBox();
             this.bnt_Hand_T5 = new System.Windows.Forms.Button();
             this.bnt_Estop_T5 = new System.Windows.Forms.Button();
@@ -474,7 +473,7 @@
             this.PicT6_S3_DC1_Running = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label139 = new System.Windows.Forms.Label();
             this.label140 = new System.Windows.Forms.Label();
-            this.dataGridView6 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewT6 = new System.Windows.Forms.DataGridView();
             this.groupBox26 = new System.Windows.Forms.GroupBox();
             this.bnt_Hand_T6 = new System.Windows.Forms.Button();
             this.bnt_Estop_T6 = new System.Windows.Forms.Button();
@@ -528,6 +527,7 @@
             this.ahdLabel84 = new Ahd.Winforms.Controls.AhdLabel();
             this.label112 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.bntLoadT2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT1)).BeginInit();
@@ -600,7 +600,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicT2_S1_DC2_Running)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT2_S1_DC1_Over)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT2_S1_DC1_Running)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT2)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).BeginInit();
@@ -646,7 +646,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S2_DC2_Running)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S2_DC1_Over)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S2_DC1_Running)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT3)).BeginInit();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar3)).BeginInit();
@@ -701,7 +701,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicT4_S2_DC2_Running)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT4_S2_DC1_Over)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT4_S2_DC1_Running)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT4)).BeginInit();
             this.groupBox16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).BeginInit();
@@ -756,7 +756,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S3_DC2_Running)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S3_DC1_Over)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S3_DC1_Running)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT5)).BeginInit();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox36)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).BeginInit();
@@ -811,7 +811,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicT6_S3_DC2_Running)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT6_S3_DC1_Over)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT6_S3_DC1_Running)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT6)).BeginInit();
             this.groupBox26.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox47)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar6)).BeginInit();
@@ -869,7 +869,6 @@
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
             this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tabPage1.Controls.Add(this.bntGhiTran);
             this.tabPage1.Controls.Add(this.dataGridViewT1);
             this.tabPage1.Controls.Add(this.bntLoad);
             this.tabPage1.Controls.Add(this.groupBox2);
@@ -914,15 +913,6 @@
             this.tabPage1.Size = new System.Drawing.Size(1716, 807);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "          TRÀN 1          ";
-            // 
-            // bntGhiTran
-            // 
-            this.bntGhiTran.Location = new System.Drawing.Point(487, 536);
-            this.bntGhiTran.Name = "bntGhiTran";
-            this.bntGhiTran.Size = new System.Drawing.Size(125, 35);
-            this.bntGhiTran.TabIndex = 293;
-            this.bntGhiTran.Text = "ghi tràn";
-            this.bntGhiTran.UseVisualStyleBackColor = true;
             // 
             // dataGridViewT1
             // 
@@ -1574,7 +1564,7 @@
             this.groupBox3.Location = new System.Drawing.Point(7, 332);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(320, 321);
+            this.groupBox3.Size = new System.Drawing.Size(320, 183);
             this.groupBox3.TabIndex = 203;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bơm Dầu";
@@ -1965,11 +1955,12 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.bntLoadT2);
             this.tabPage2.Controls.Add(this.groupBox5);
             this.tabPage2.Controls.Add(this.groupBox10);
             this.tabPage2.Controls.Add(this.tableLayoutPanel3);
             this.tabPage2.Controls.Add(this.tableLayoutPanel4);
-            this.tabPage2.Controls.Add(this.dataGridView2);
+            this.tabPage2.Controls.Add(this.dataGridViewT2);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.ahdBar1);
             this.tabPage2.Controls.Add(this.label5);
@@ -2500,15 +2491,15 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1745, 39);
             this.tableLayoutPanel4.TabIndex = 264;
             // 
-            // dataGridView2
+            // dataGridViewT2
             // 
-            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(695, 347);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidth = 82;
-            this.dataGridView2.Size = new System.Drawing.Size(578, 455);
-            this.dataGridView2.TabIndex = 263;
+            this.dataGridViewT2.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridViewT2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewT2.Location = new System.Drawing.Point(695, 347);
+            this.dataGridViewT2.Name = "dataGridViewT2";
+            this.dataGridViewT2.RowHeadersWidth = 82;
+            this.dataGridViewT2.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT2.TabIndex = 263;
             // 
             // groupBox1
             // 
@@ -3173,7 +3164,7 @@
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.groupBox15);
-            this.tabPage3.Controls.Add(this.dataGridView3);
+            this.tabPage3.Controls.Add(this.dataGridViewT3);
             this.tabPage3.Controls.Add(this.groupBox11);
             this.tabPage3.Controls.Add(this.ahdPictureBox14);
             this.tabPage3.Controls.Add(this.ahdBar3);
@@ -3497,15 +3488,16 @@
             this.label128.TabIndex = 0;
             this.label128.Text = "Bơm 1";
             // 
-            // dataGridView3
+            // dataGridViewT3
             // 
-            this.dataGridView3.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(696, 347);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowHeadersWidth = 82;
-            this.dataGridView3.Size = new System.Drawing.Size(578, 455);
-            this.dataGridView3.TabIndex = 265;
+            this.dataGridViewT3.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridViewT3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewT3.Location = new System.Drawing.Point(696, 347);
+            this.dataGridViewT3.Name = "dataGridViewT3";
+            this.dataGridViewT3.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dataGridViewT3.RowHeadersWidth = 82;
+            this.dataGridViewT3.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT3.TabIndex = 265;
             // 
             // groupBox11
             // 
@@ -4405,7 +4397,7 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.groupBox20);
-            this.tabPage4.Controls.Add(this.dataGridView4);
+            this.tabPage4.Controls.Add(this.dataGridViewT4);
             this.tabPage4.Controls.Add(this.groupBox16);
             this.tabPage4.Controls.Add(this.ahdPictureBox25);
             this.tabPage4.Controls.Add(this.ahdBar4);
@@ -4729,15 +4721,16 @@
             this.label132.TabIndex = 0;
             this.label132.Text = "Bơm 1";
             // 
-            // dataGridView4
+            // dataGridViewT4
             // 
-            this.dataGridView4.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(696, 347);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowHeadersWidth = 82;
-            this.dataGridView4.Size = new System.Drawing.Size(578, 455);
-            this.dataGridView4.TabIndex = 265;
+            this.dataGridViewT4.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridViewT4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewT4.Location = new System.Drawing.Point(696, 347);
+            this.dataGridViewT4.Name = "dataGridViewT4";
+            this.dataGridViewT4.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dataGridViewT4.RowHeadersWidth = 82;
+            this.dataGridViewT4.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT4.TabIndex = 265;
             // 
             // groupBox16
             // 
@@ -5637,7 +5630,7 @@
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.groupBox25);
-            this.tabPage5.Controls.Add(this.dataGridView5);
+            this.tabPage5.Controls.Add(this.dataGridViewT5);
             this.tabPage5.Controls.Add(this.groupBox21);
             this.tabPage5.Controls.Add(this.ahdPictureBox36);
             this.tabPage5.Controls.Add(this.ahdBar5);
@@ -5961,15 +5954,16 @@
             this.label136.TabIndex = 0;
             this.label136.Text = "Bơm 1";
             // 
-            // dataGridView5
+            // dataGridViewT5
             // 
-            this.dataGridView5.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(696, 347);
-            this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.RowHeadersWidth = 82;
-            this.dataGridView5.Size = new System.Drawing.Size(578, 455);
-            this.dataGridView5.TabIndex = 265;
+            this.dataGridViewT5.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridViewT5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewT5.Location = new System.Drawing.Point(696, 347);
+            this.dataGridViewT5.Name = "dataGridViewT5";
+            this.dataGridViewT5.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dataGridViewT5.RowHeadersWidth = 82;
+            this.dataGridViewT5.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT5.TabIndex = 265;
             // 
             // groupBox21
             // 
@@ -6869,7 +6863,7 @@
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.groupBox30);
-            this.tabPage6.Controls.Add(this.dataGridView6);
+            this.tabPage6.Controls.Add(this.dataGridViewT6);
             this.tabPage6.Controls.Add(this.groupBox26);
             this.tabPage6.Controls.Add(this.ahdPictureBox47);
             this.tabPage6.Controls.Add(this.ahdBar6);
@@ -7192,15 +7186,16 @@
             this.label140.TabIndex = 0;
             this.label140.Text = "Bơm 1";
             // 
-            // dataGridView6
+            // dataGridViewT6
             // 
-            this.dataGridView6.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Location = new System.Drawing.Point(696, 347);
-            this.dataGridView6.Name = "dataGridView6";
-            this.dataGridView6.RowHeadersWidth = 82;
-            this.dataGridView6.Size = new System.Drawing.Size(578, 455);
-            this.dataGridView6.TabIndex = 265;
+            this.dataGridViewT6.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridViewT6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewT6.Location = new System.Drawing.Point(696, 347);
+            this.dataGridViewT6.Name = "dataGridViewT6";
+            this.dataGridViewT6.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dataGridViewT6.RowHeadersWidth = 82;
+            this.dataGridViewT6.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT6.TabIndex = 265;
             // 
             // groupBox26
             // 
@@ -7903,6 +7898,16 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(1745, 39);
             this.tableLayoutPanel12.TabIndex = 235;
             // 
+            // bntLoadT2
+            // 
+            this.bntLoadT2.Location = new System.Drawing.Point(499, 700);
+            this.bntLoadT2.Name = "bntLoadT2";
+            this.bntLoadT2.Size = new System.Drawing.Size(75, 36);
+            this.bntLoadT2.TabIndex = 268;
+            this.bntLoadT2.Text = "Load";
+            this.bntLoadT2.UseVisualStyleBackColor = true;
+            this.bntLoadT2.Click += new System.EventHandler(this.bntLoadT2_Click);
+            // 
             // FrmTran
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -7989,7 +7994,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicT2_S1_DC2_Running)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT2_S1_DC1_Over)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT2_S1_DC1_Running)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT2)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).EndInit();
@@ -8038,7 +8043,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S2_DC2_Running)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S2_DC1_Over)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S2_DC1_Running)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT3)).EndInit();
             this.groupBox11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar3)).EndInit();
@@ -8097,7 +8102,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicT4_S2_DC2_Running)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT4_S2_DC1_Over)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT4_S2_DC1_Running)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT4)).EndInit();
             this.groupBox16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).EndInit();
@@ -8156,7 +8161,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S3_DC2_Running)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S3_DC1_Over)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_S3_DC1_Running)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT5)).EndInit();
             this.groupBox21.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox36)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).EndInit();
@@ -8215,7 +8220,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicT6_S3_DC2_Running)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT6_S3_DC1_Over)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicT6_S3_DC1_Running)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT6)).EndInit();
             this.groupBox26.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox47)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar6)).EndInit();
@@ -8316,7 +8321,7 @@
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door1_PressureLow;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door1_PressureHigh;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dataGridViewT2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button bnt_Hand_T2;
         private System.Windows.Forms.Button bnt_Estop_T2;
@@ -8362,7 +8367,7 @@
         private Ahd.Winforms.Controls.AhdLabel ahdLabel17;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView dataGridViewT3;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Button bnt_Hand_T3;
         private System.Windows.Forms.Button bnt_Estop_T3;
@@ -8415,7 +8420,7 @@
         private Ahd.Winforms.Controls.AhdLabel ahdLabel38;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridView dataGridViewT4;
         private System.Windows.Forms.GroupBox groupBox16;
         private System.Windows.Forms.Button bnt_Hand_T4;
         private System.Windows.Forms.Button bnt_Estop_T4;
@@ -8468,7 +8473,7 @@
         private Ahd.Winforms.Controls.AhdLabel ahdLabel56;
         private System.Windows.Forms.Label label74;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.DataGridView dataGridView5;
+        private System.Windows.Forms.DataGridView dataGridViewT5;
         private System.Windows.Forms.GroupBox groupBox21;
         private System.Windows.Forms.Button bnt_Hand_T5;
         private System.Windows.Forms.Button bnt_Estop_T5;
@@ -8521,7 +8526,7 @@
         private Ahd.Winforms.Controls.AhdLabel ahdLabel70;
         private System.Windows.Forms.Label label93;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.DataGridView dataGridViewT6;
         private System.Windows.Forms.GroupBox groupBox26;
         private System.Windows.Forms.Button bnt_Hand_T6;
         private System.Windows.Forms.Button bnt_Estop_T6;
@@ -8753,6 +8758,6 @@
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door6_Opening_Stop;
         private System.Windows.Forms.Button bntLoad;
         private System.Windows.Forms.DataGridView dataGridViewT1;
-        private System.Windows.Forms.Button bntGhiTran;
+        private System.Windows.Forms.Button bntLoadT2;
     }
 }

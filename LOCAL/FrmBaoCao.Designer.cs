@@ -136,7 +136,6 @@
             this.button1.TabIndex = 26;
             this.button1.Text = "GhiDataMucNuoc";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -146,7 +145,6 @@
             this.button2.TabIndex = 27;
             this.button2.Text = "GhiDataVanhHanh";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridView1
             // 
@@ -179,7 +177,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.MistyRose;
+            this.tabPage1.BackColor = System.Drawing.Color.MediumAquamarine;
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
