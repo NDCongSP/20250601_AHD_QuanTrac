@@ -67,7 +67,7 @@ public partial class RoleDetail
                 Title = arr[0];
                 _id = arr[1];
 
-                var roleResult = await _accountServices.RoleGetById(_id);
+                var roleResult = await _accountServices.RoleGetByIdAsync(_id);
 
                 if (roleResult == null)
                 {

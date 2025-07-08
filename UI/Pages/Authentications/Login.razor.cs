@@ -81,9 +81,9 @@ public partial class Login
             //truyen authState
             GlobalVariable.AuthenticationStateTask = authState;
 
-            if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.WarehouseAdmin))
+            if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.Admin))
                 _navigation.NavigateTo("/userlist");
-            else if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.WarehouseStaff))
+            else if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.Operation))
                 _navigation.NavigateTo("/");
             else
                 _navigation.NavigateTo("/numbersequence");

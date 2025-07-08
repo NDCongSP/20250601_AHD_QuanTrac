@@ -26,27 +26,27 @@
         public static class Identity
         {
             public const string BasePath = "api/account";
-            public const string Login = "identity/loginasync";
+            public const string LoginAccountAsync = "LoginAccountAsync";
             public const string LoginHt = "identity/loginht";
-            public const string CreateAccount = "identity/create";
-            public const string RefreshToken = "identity/refresh-token";
-            public const string CreateRole = "identity/role/create";
-            public const string RoleList = "identity/role/list";
-            public const string CreateSuperAdminAccount = "identity/setting";
-            public const string UserWithRole = "identity/user-with-role";
-            public const string ChangePassword = "identity/change-pass";
-            public const string ChangeUserRole = "identity/change-role";
-            public const string AssignUserRole = "identity/assign_user_role";
-            public const string DeleteUser = "identity/delete-user";
-            public const string DeleteUserRole = "identity/delete-user-role";
-            public const string UpdateRole = "identity/update-role-name";
-            public const string UpdateRoleDTO = "identity/update-role";
-            public const string UpdateUserInfo = "identity/update-user-info";
-            public const string UserGetById = "identity/{id}";
-            public const string DeleteRole = "identity/role/delete";
-            public const string UserGetByEmail = "identity/UserGetByEmail/{email}";
-            public const string RoleGetById = "identity/Role/{id}";
-            public const string CheckPasswordAsync = "identity/CheckPasswordAsync/{email}/{password}";
+            public const string CreateAccountAsync = "CreateAccountAsync";
+            public const string RefreshTokenAsync = "RefreshTokenAsync";
+            public const string CreateRoleAsync = "CreateRoleAsync";
+            public const string GetRolesAsync = "GetRolesAsync";
+            public const string CreateSuperAdminAsync = "CreateSuperAdminAsync";
+            public const string GetUsersWithRolesAsync = "GetUsersWithRolesAsync";
+            public const string ChangePassAsync = "ChangePassAsync";
+            public const string ChangeUserRoleAsync = "ChangeUserRoleAsync";
+            public const string AssignUserRoleAsync = "AssignUserRoleAsync";
+            public const string DeleteUserAsync = "DeleteUserAsync";
+            public const string DeleteUserRoleAsync = "DeleteUserRoleAsync";
+            public const string UpdateRoleAsync = "UpdateRoleAsync";
+            public const string UpdateRoleDTOAsync = "UpdateRoleDTOAsync";
+            public const string UpdateUserInfoAsync = "UpdateUserInfoAsync";
+            public const string UserGetByIdAsync = "UserGetByIdAsync/{id}";
+            public const string DeleteRoleAsync = "DeleteRoleAsync";
+            public const string UserGetByEmailAsync = "UserGetByEmailAsync/{email}";
+            public const string RoleGetByIdAsync = "RoleGetByIdAsync/{id}";
+            public const string CheckPasswordAsync = "CheckPasswordAsync/{email}/{password}";
         }
         public static class Permissions
         {

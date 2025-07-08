@@ -320,15 +320,15 @@ namespace Infrastructure.Repositories
                 var roles = new List<CreateRoleRequestDTO>();
                 roles.Add(new CreateRoleRequestDTO()
                 {
-                    Name = ConstantExtention.Roles.WarehouseAdmin
+                    Name = ConstantExtention.Roles.Admin
                 });
 
                 var supeAdmin = new CreateAccountRequestDTO()
                 {
                     FullName = "Admin",
                     UserName = "Admin",
-                    Password = "fbt_wms_admin@tealife.co.jp",
-                    Email = "fbt_wms_admin@tealife.co.jp",
+                    Password = "Admin1@gmail.com",
+                    Email = "admin@gmail.com",
                     Roles = roles,
                     Status = EnumStatus.Activated
                 };
@@ -520,7 +520,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<LoginResponse> LoginAccountAsync(LoginRequestDTO model)
+        public async Task<Result<LoginResponse>> LoginAccountAsync(LoginRequestDTO model)
         {
             try
             {
@@ -534,11 +534,7 @@ namespace Infrastructure.Repositories
                     var err = new ErrorResponse();
                     err.Errors.Add("Warning", "Email not found.");
 
-                    return new LoginResponse()
-                    {
-                        Flag = false,
-                        Message = JsonConvert.SerializeObject(err)//"Email not found",
-                    };
+                    return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
                 }
 
                 //await dbContext.LogTimes.AddAsync(new Domain.LogTime()
@@ -564,11 +560,7 @@ namespace Infrastructure.Repositories
                 {
                     var err = new ErrorResponse();
                     err.Errors.Add("Warning", "Invalid credentials.");
-                    return new LoginResponse()
-                    {
-                        Flag = false,
-                        Message = JsonConvert.SerializeObject(err)
-                    };
+                    return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
                 }
 
                 var jwtToken = await GenerateToken(user);
@@ -586,17 +578,13 @@ namespace Infrastructure.Repositories
                 {
                     var err = new ErrorResponse();
                     err.Errors.Add("Warning", "There was a problem with the account; please get in touch with the administrator.");
-                    return new LoginResponse()
-                    {
-                        Flag = false,
-                        Message = JsonConvert.SerializeObject(err)
-                    };
+                    return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
                 }
 
                 //save token after login successfull 
                 var expiryRefreshToken = config["Jwt:AddTimeType"] != "Second" ?
-                               DateTime.Now.AddDays(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out double value) ? value : 60) :
-                               DateTime.Now.AddSeconds(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out value) ? value : 60);
+                               DateTime.UtcNow.AddDays(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out double value) ? value : 60) :
+                               DateTime.UtcNow.AddSeconds(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out value) ? value : 60);
 
                 var saveResult = await SaveRefreshTokenAsync(user.Id, token, refreshToken, expiryRefreshToken);
 
@@ -610,7 +598,7 @@ namespace Infrastructure.Repositories
 
                 if (saveResult.Flag)
                 {
-                    return new LoginResponse()
+                    var res = new LoginResponse()
                     {
                         Flag = true,
                         Message = $"Success",
@@ -618,27 +606,34 @@ namespace Infrastructure.Repositories
                         RefreshToken = refreshToken,
                         Expiration = jwtToken.ValidTo.ToString()
                     };
+                    return await Result<LoginResponse>.SuccessAsync(res);
                 }
-                else return new LoginResponse();
+                else
+                {
+                    var err = new ErrorResponse();
+                    err.Errors.Add("Error", saveResult.Message);
+                    return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
+                }
             }
             catch (Exception ex)
             {
                 var err = new ErrorResponse();
                 err.Errors.Add("Error", ex.Message);
-                return new LoginResponse()
-                {
-                    Flag = false,
-                    Message = JsonConvert.SerializeObject(err)
-                };
+                return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
             }
         }
 
-        public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenRequestDTO model)
+        public async Task<Result<LoginResponse>> RefreshTokenAsync(RefreshTokenRequestDTO model)
         {
             try
             {
                 var token = await dbContext.RefreshTokens.FirstOrDefaultAsync(x => x.RefreshToken == model.RefreshToken && x.Activated == true);
-                if (token is null) return new LoginResponse() { Flag = false, Message = "Refresh token is invalid" };
+                if (token is null)
+                {
+                    var err = new ErrorResponse();
+                    err.Errors.Add("Warning", "Refresh token is invalid");
+                    return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
+                }
 
                 if (token.ExpirationTime < DateTime.Now)
                 {
@@ -648,11 +643,7 @@ namespace Infrastructure.Repositories
 
                     var err = new ErrorResponse();
                     err.Errors.Add("Warning", "The refresh token has expired.");
-                    return new LoginResponse()
-                    {
-                        Flag = false,
-                        Message = JsonConvert.SerializeObject(err)
-                    };
+                    return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
                 }
 
                 var user = await userManager.FindByIdAsync(token.UserId);
@@ -665,7 +656,8 @@ namespace Infrastructure.Repositories
                                        DateTime.Now.AddSeconds(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out value) ? value : 10);
                 var saveResult = await SaveRefreshTokenAsync(user.Id, newToken, newRefreshToken, expiryRefreshToken, model.RefreshToken);
                 if (saveResult.Flag)
-                    return new LoginResponse()
+                {
+                    var res= new LoginResponse()
                     {
                         Flag = true,
                         Message = $"Refresh token success.",
@@ -673,22 +665,21 @@ namespace Infrastructure.Repositories
                         RefreshToken = newRefreshToken,
                         Expiration = newJwtToken.ValidTo.ToString()
                     };
+
+                    return await Result<LoginResponse>.SuccessAsync(res);
+                }
                 else
-                    return new LoginResponse()
-                    {
-                        Flag = false,
-                        Message = saveResult.Message
-                    };
+                {
+                    var err = new ErrorResponse();
+                    err.Errors.Add("Warning", saveResult.Message);
+                    return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
+                }
             }
             catch (Exception ex)
             {
                 var err = new ErrorResponse();
                 err.Errors.Add("Error", ex.Message);
-                return new LoginResponse()
-                {
-                    Flag = false,
-                    Message = JsonConvert.SerializeObject(err)
-                };
+                return await Result<LoginResponse>.FailAsync(JsonConvert.SerializeObject(err));
             }
         }
 
@@ -1032,7 +1023,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<GetUserWithRoleResponseDTO> UserGetById([Path] string id)
+        public async Task<GetUserWithRoleResponseDTO> UserGetByIdAsync([Path] string id)
         {
             try
             {
@@ -1163,7 +1154,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<GetRoleResponseDTO> RoleGetById([Path] string id)
+        public async Task<GetRoleResponseDTO> RoleGetByIdAsync([Path] string id)
         {
             try
             {

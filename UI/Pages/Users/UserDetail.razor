@@ -26,7 +26,7 @@ else
             <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="10px" class="mb-2">
                 <RadzenButton Click=@(args => DeleteItemAsync(_model)) Variant="Variant.Flat" Shade="Shade.Dark"
                               Text="@_localizer["Delete"]" Icon="delete" ButtonStyle="ButtonStyle.Danger"
-                              Disabled="@(Title.Contains($"{_localizer["Detail.Create"]}") || _model.Roles.FirstOrDefault().Name==ConstantExtention.Roles.WarehouseAdmin || !_visible || _model.UserName.Contains("OMS"))" />
+                              Disabled="@(Title.Contains($"{_localizer["Detail.Create"]}") || _model.Roles.FirstOrDefault().Name==ConstantExtention.Roles.Admin || !_visible || _model.UserName.Contains("OMS"))" />
             </RadzenStack>
         </RadzenColumn>
     </RadzenRow>

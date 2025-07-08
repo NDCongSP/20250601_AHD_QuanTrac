@@ -75,7 +75,7 @@ public partial class UserDetail
                 }
 
                 #region Get user info
-                var resultUser = await _accountServices.UserGetById(Id);
+                var resultUser = await _accountServices.UserGetByIdAsync(Id);
                 if (resultUser == null)
                 {
                     NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"], _localizer["Result user null."]);

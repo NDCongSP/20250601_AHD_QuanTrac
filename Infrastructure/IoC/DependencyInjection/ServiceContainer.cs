@@ -65,6 +65,15 @@ public static class ServiceContainer
 
             option.Events = new JwtBearerEvents()
             {
+                OnAuthenticationFailed = context =>
+                {
+                    if (context.Exception is SecurityTokenExpiredException expiredEx)
+                    {
+                        context.Response.Headers.Add("x-token-expired", expiredEx.Expires.ToString("o"));
+                    }
+                    return Task.CompletedTask;
+                },
+
                 OnChallenge = context =>
                 {
                     context.HandleResponse();
@@ -78,13 +87,13 @@ public static class ServiceContainer
                     if (string.IsNullOrEmpty(context.ErrorDescription))
                         context.ErrorDescription = "This request requires a valid JWT access token to be provided";
 
-                    // Add some extra context for expired tokens.
-                    if (context.AuthenticateFailure != null && context.AuthenticateFailure.GetType() == typeof(SecurityTokenExpiredException))
-                    {
-                        var authenticationException = context.AuthenticateFailure as SecurityTokenExpiredException;
-                        context.Response.Headers.Add("x-token-expired", authenticationException.Expires.ToString("o"));
-                        context.ErrorDescription = $"The token expired on {authenticationException.Expires.ToString("o")}";
-                    }
+                    //// Add some extra context for expired tokens.
+                    //if (context.AuthenticateFailure != null && context.AuthenticateFailure.GetType() == typeof(SecurityTokenExpiredException))
+                    //{
+                    //    var authenticationException = context.AuthenticateFailure as SecurityTokenExpiredException;
+                    //    context.Response.Headers.Add("x-token-expired", authenticationException.Expires.ToString("o"));
+                    //    context.ErrorDescription = $"The token expired on {authenticationException.Expires.ToString("o")}";
+                    //}
 
                     return context.Response.WriteAsync(JsonSerializer.Serialize(new
                     {

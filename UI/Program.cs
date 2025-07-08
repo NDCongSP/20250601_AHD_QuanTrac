@@ -42,29 +42,29 @@ builder.Services.AddAuthorizationCore(b =>
 {
     b.AddPolicy("Admin", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseAdmin);
+        p.RequireRole(ConstantExtention.Roles.Admin);
         //p.RequireClaim("Permission", "1");
     });
 
     b.AddPolicy("Staff", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseStaff);
+        p.RequireRole(ConstantExtention.Roles.Operation);
         p.RequireClaim("Permission", "Warehouse Staff");
     });
 
     b.AddPolicy("System", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseSystem);
+        p.RequireRole(ConstantExtention.Roles.System);
     });
 
     b.AddPolicy("AdminAndSystem", p =>
     {
-        p.RequireRole(new string[] { ConstantExtention.Roles.WarehouseAdmin, ConstantExtention.Roles.WarehouseSystem });
+        p.RequireRole(new string[] { ConstantExtention.Roles.Admin, ConstantExtention.Roles.System });
     });
 
     b.AddPolicy("AdminAndStaff", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseAdmin, ConstantExtention.Roles.WarehouseStaff);
+        p.RequireRole(ConstantExtention.Roles.Admin, ConstantExtention.Roles.Operation);
     });
 });
 

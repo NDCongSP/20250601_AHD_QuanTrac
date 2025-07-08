@@ -8,9 +8,9 @@
 
         public static class Roles
         {
-            public const string WarehouseAdmin = "Warehouse Admin";
-            public const string WarehouseStaff = "Warehouse Staff";
-            public const string WarehouseSystem = "Warehouse System";
+            public const string Admin = "Admin";
+            public const string Operation = "Operation";
+            public const string System = "System";
         }
 
         public static class StorageConst

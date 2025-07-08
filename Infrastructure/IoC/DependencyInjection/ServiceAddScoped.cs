@@ -11,7 +11,6 @@ namespace Infrastructure.IoC.DependencyInjection
             services.AddScoped<IAccount, RepositoryAccountServices>();
             services.AddScoped<IPermissions, RepositoryPermissionsServices>();
             services.AddScoped<IRoleToPermissions, RepositoryRoleToPermissionsServices>();
-            services.AddScoped<IRoleToPermissionTenant, RepositoryRoleToPermissionTenantTenantServices>();
             services.AddScoped<Repository>();
         }
     }

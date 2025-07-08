@@ -78,40 +78,18 @@ namespace Infrastructure.Data
             {
                 await context.Roles.AddAsync(new Microsoft.AspNetCore.Identity.IdentityRole()
                 {
-                    Name = ConstantExtention.Roles.WarehouseAdmin,
-                    NormalizedName = ConstantExtention.Roles.WarehouseAdmin.ToUpper()
+                    Name = ConstantExtention.Roles.Admin,
+                    NormalizedName = ConstantExtention.Roles.Admin.ToUpper()
                 });
                 await context.Roles.AddAsync(new Microsoft.AspNetCore.Identity.IdentityRole()
                 {
-                    Name = ConstantExtention.Roles.WarehouseStaff,
-                    NormalizedName = ConstantExtention.Roles.WarehouseStaff.ToUpper()
+                    Name = ConstantExtention.Roles.Operation,
+                    NormalizedName = ConstantExtention.Roles.Operation.ToUpper()
                 });
                 await context.Roles.AddAsync(new Microsoft.AspNetCore.Identity.IdentityRole()
                 {
-                    Name = ConstantExtention.Roles.WarehouseSystem,
-                    NormalizedName = ConstantExtention.Roles.WarehouseSystem.ToUpper()
-                });
-            }
-
-            if (!context.TenantAuth.Any())
-            {
-                await context.TenantAuth.AddAsync(new Domain.TenantAuth()
-                {
-                    //TenantId=1,
-                    ParentTenantId = 1,
-                    ParentDataKey = "1",
-                    TenantFullName = "Tealine",
-                    IsHierarchical = true,
-                    HasOwnDb = false,
-                });
-                await context.TenantAuth.AddAsync(new Domain.TenantAuth()
-                {
-                    //TenantId = 2,
-                    ParentTenantId = 1,
-                    ParentDataKey = "1",
-                    TenantFullName = "Tealine | KOKORO",
-                    IsHierarchical = true,
-                    HasOwnDb = false,
+                    Name = ConstantExtention.Roles.System,
+                    NormalizedName = ConstantExtention.Roles.System.ToUpper()
                 });
             }
 

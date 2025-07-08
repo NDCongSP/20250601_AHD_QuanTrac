@@ -195,14 +195,14 @@ namespace Application.Services.Authen.UI
         //    return loginResponse;
         //}
 
-        //public async Task LogoutAsync()
-        //{
-        //    await _authStateProvider.ClearCacheAsync();
-        //    ((ApiAuthenticationStateProvider)_authStateProvider).MarkUserAsLoggedOut();
-        //    _httpClient.DefaultRequestHeaders.Authorization = null;
+        public async Task LogoutAsync()
+        {
+            await _authStateProvider.ClearCacheAsync();
+            ((ApiAuthenticationStateProvider)_authStateProvider).MarkUserAsLoggedOut();
+            _httpClient.DefaultRequestHeaders.Authorization = null;
 
-        //    _navigationManager.NavigateTo("/login");
-        //}
+            _navigationManager.NavigateTo("/login");
+        }
 
         //public async Task<LoginResponse> RefreshTokenAsync()
         //{
