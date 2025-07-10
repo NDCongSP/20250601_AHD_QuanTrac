@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Request.Account;
-
+using Application.Services.Authen.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
@@ -32,7 +32,6 @@ public partial class Login
 
     async void Submit(LoginRequestDTO arg)
     {
-        //Console.WriteLine($"Username: {arg.EmailAddress} and password: {arg.Password}");
         try
         {
             var result = await _accountServices.LoginAccountAsync(arg);
@@ -62,11 +61,9 @@ public partial class Login
 
             token = result.Token;
             login = result;
-
+            await _authStateProvider.CacheAuthTokensAsync(result.Token, result.RefreshToken, string.Empty);
+            ((ApiAuthenticationStateProvider)_authStateProvider).MarkUserAsAuthenticated();
             NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Login OK."]);
-
-            //await InvokeAsync(StateHasChanged);
-            //StateHasChanged();
 
             var claimsIdentity = new ClaimsIdentity(JwtHelper.GetClaimsFromJwt(token), "jwt");
             var user = new ClaimsPrincipal(claimsIdentity);
@@ -80,13 +77,11 @@ public partial class Login
 
             //truyen authState
             GlobalVariable.AuthenticationStateTask = authState;
+            _navigation.NavigateTo("/");
 
-            if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.WarehouseAdmin))
-                _navigation.NavigateTo("/userlist");
-            else if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.WarehouseStaff))
-                _navigation.NavigateTo("/");
-            else
-                _navigation.NavigateTo("/numbersequence");
+            //if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.WarehouseAdmin))
+            //else if (GlobalVariable.AuthenticationStateTask.HasRole(ConstantExtention.Roles.WarehouseStaff))
+            //    _navigation.NavigateTo("/");
         }
         catch (Exception ex)
         {

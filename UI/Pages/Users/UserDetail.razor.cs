@@ -1,17 +1,16 @@
 ﻿using Application.DTOs.Request.Account;
 using Domain;
-using Domain.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
-using RestEase;
 
 namespace UI.Pages.Users;
 
 public partial class UserDetail
 {
     string? Title { get; set; }
-    [Parameter] public string Id { get; set; } = string.Empty;
+    string Mode { get; set; } = "Create";
+    [Parameter] public string? Id { get; set; } = string.Empty;
     CreateAccountRequestDTO _model = new CreateAccountRequestDTO();
     List<CreateRoleRequestDTO> _roles = new List<CreateRoleRequestDTO>();
     IList<string> _selectedRoles = [];
@@ -45,29 +44,22 @@ public partial class UserDetail
     {
         try
         {
-            if (Title.Contains(_localizer["Detail.Create"]))//Add
-                _visibleResetBtn = false;
-            else
-                _visibleResetBtn = true;
-
             var result = await _accountServices.GetRolesAsync();
-
             foreach (var role in result)
             {
                 _roles.Add(new CreateRoleRequestDTO() { Name = role.Name, Id = role.Id });
             }
-
-            _selectStatus = EnumStatus.Activated;
-
-            if (Title.Contains("|"))
+            if (string.IsNullOrEmpty(Id)){
+                _visibleResetBtn = false;
+                Mode = "Create";
+                Title = "Tạo mới người dùng";
+            }
+            else
             {
-                var sub = Title.Split('|');
-                Title = sub[0];
-                Id = sub[1];
-                _visible = sub[2] == "True" ? true : false;
-
-                if (!_visible) _disable = true;//disable fielfSet user information when page opening from userInfo menu
-
+                _visibleResetBtn = true;
+                Title = "Chỉnh sửa người dùng";
+                Mode = "Edit";
+                if (!_visible) _disable = true;
                 if (string.IsNullOrEmpty(Id))
                 {
                     var user = await _accountServices.UserGetByEmailAsync(GlobalVariable.UserAuthorizationInfo.EmailName);
@@ -103,9 +95,8 @@ public partial class UserDetail
                 #endregion
 
                 _visibleResetBtn = _model.Roles.FirstOrDefault(x => x.Name == "Warehouse Admin") != null ? false : true;
-
             }
-            //Title = Title.Contains("View") ? $"{_localizer["Detail.View"]} User" : Title.Contains("Edit") ? $"{_localizer["Detail.Edit"]} User" : $"{_localizer["Detail.Create"]} User";
+            _selectStatus = EnumStatus.Activated;
 
             StateHasChanged();
         }
@@ -121,7 +112,7 @@ public partial class UserDetail
     {
         try
         {
-            if (Title.Contains(_localizer["Detail.Create"]))//Add
+            if (Mode == "Create")
             {
                 var confirm = await _dialogService.Confirm($"{_localizer["User"]}: {arg.UserName} {_localizer["Confirmation.Create"]}?", $"{_localizer["Create"]} {_localizer["User"]}", new ConfirmOptions()
                 {
@@ -162,7 +153,7 @@ public partial class UserDetail
 
             arg.Status = _selectStatus;
             arg.ConfirmPassword = arg.Password;
-            if (Title.Contains(_localizer["Detail.Create"]))//Add
+            if (Mode == "Create")//Add
             {
                 var res = await _accountServices.CreateAccountAsync(arg);
 
@@ -176,7 +167,7 @@ public partial class UserDetail
                 }
                 NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
             }
-            else if (Title.Contains(_localizer["Detail.Edit"]))//update
+            else if (Mode == "Edit")//update
             {
                 var userInfoUpdate = new UpdateUserInfoRequestDTO();
                 userInfoUpdate.Id = Id;
@@ -251,15 +242,6 @@ public partial class UserDetail
     {
         try
         {
-            //_ovenId = int.TryParse(OvenId, out int value) ? value : 0;
-
-            //var res = await _ft01Client.GetAllAsync();
-
-            //if (res == null)
-            //    return;
-            //_ft01 = res.Data.ToList();
-
-            //_ovenInfo = JsonConvert.DeserializeObject<OvensInfo>(_ft01.FirstOrDefault().C001).FirstOrDefault(x => x.Id == _ovenId);
         }
         catch (Exception ex)
         {

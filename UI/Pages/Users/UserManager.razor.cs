@@ -87,10 +87,12 @@ public partial class UserManager
 
     async Task EditItemAsync(string id)
     {
+        _navigation.NavigateTo($"/user-detail/{id}");
     }
 
     async Task AddNewItemAsync()
     {
+        _navigation.NavigateTo($"/user-detail");
     }
 
     async Task RefreshDataAsync()
@@ -99,7 +101,7 @@ public partial class UserManager
         {
             _role = null; _role = new List<string>();
             var resultRole = await _accountServices.GetRolesAsync();
-            if (resultRole != null || resultRole.Count > 0)
+            if (resultRole != null || resultRole?.Count > 0)
             {
                 foreach (var item in resultRole)
                 {

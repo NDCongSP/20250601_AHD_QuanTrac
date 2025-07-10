@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("RefreshTokens", Schema = "wms")]
     public class RefreshTokens
     {
         public string UserId { get; set; }

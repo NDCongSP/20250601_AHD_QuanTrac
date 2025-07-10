@@ -2,6 +2,7 @@
 
 namespace Application.Services.Authen;
 
+[BasePath(ApiRoutes.Identity.BasePath)]
 public interface IAccount
 {
     [Post(ApiRoutes.Identity.CreateSuperAdminAccount)]

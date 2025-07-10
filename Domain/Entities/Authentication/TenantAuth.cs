@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain;
 
-[Table("Tenants")]
+[Table("Tenants", Schema = "wms")]
 public partial class TenantAuth
 {
     [Key] public int TenantId { get; set; }

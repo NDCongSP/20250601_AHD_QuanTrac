@@ -1,5 +1,4 @@
-﻿using Application.Services;
-using Application.Services.Authen;
+﻿using Application.Services.Authen;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 namespace Infrastructure.IoC.DependencyInjection

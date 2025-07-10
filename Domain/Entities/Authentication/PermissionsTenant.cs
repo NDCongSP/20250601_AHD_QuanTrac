@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-    [Table("PermissionsTenant")]
+    [Table("PermissionsTenant", Schema = "wms")]
     public class PermissionsTenant: GenericEntity
     {
         [Key] public Guid Id { get; set; }

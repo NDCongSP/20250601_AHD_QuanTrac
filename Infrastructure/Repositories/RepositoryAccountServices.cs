@@ -125,9 +125,6 @@ namespace Infrastructure.Repositories
             foreach (var roleItem in roles)
             {
                 var roleToPer = await dbContext.RoleToPermissions.Where(x => x.RoleName == roleItem).ToListAsync();
-
-                //userClaims.Add(new Claim("RoleToPermission", JsonConvert.SerializeObject(roleToPer)));
-
                 foreach (var itemPermission in roleToPer)
                 {
                     userClaims.Add(new Claim("Permission", itemPermission.PermisionName));
@@ -524,8 +521,6 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                //var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-                //if(!result.Succeeded) return new LoginResponse() { flag = false ,message="Username and password are invalid."};
                 var startTime = DateTime.Now;
 
                 var user = await FindUserByEmailAsync(model.EmailAddress);
@@ -541,25 +536,9 @@ namespace Infrastructure.Repositories
                     };
                 }
 
-                //await dbContext.LogTimes.AddAsync(new Domain.LogTime()
-                //{
-                //    LogName = $"userManager.FindByNameAsync({model.EmailAddress})",
-                //    EslapseTime = (DateTime.Now - startTime).TotalMilliseconds,
-                //    CreatedDate = DateTime.Now
-                //});
-
-                //await dbContext.SaveChangesAsync();
-
                 SignInResult result = null;
 
                 result = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-                //dbContext.LogTimes.Add(new Domain.WMS.LogTime()
-                //{
-                //    LogName = $"await signInManager.CheckPasswordSignInAsync(user, model.Password, false)",
-                //    EslapseTime = (DateTime.Now - startTime).TotalMilliseconds,
-                //    CreatedDate = DateTime.Now
-                //});
-
                 if (!result.Succeeded)
                 {
                     var err = new ErrorResponse();
@@ -574,12 +553,6 @@ namespace Infrastructure.Repositories
                 var jwtToken = await GenerateToken(user);
                 string token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
                 string refreshToken = GenerateRefreshToken();
-                //dbContext.LogTimes.Add(new Domain.WMS.LogTime()
-                //{
-                //    LogName = $"await GenerateToken(user)|",
-                //    EslapseTime = (DateTime.Now - startTime).TotalMilliseconds,
-                //    CreatedDate = DateTime.Now
-                //});
                 await dbContext.SaveChangesAsync();
 
                 if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(refreshToken))
@@ -599,13 +572,6 @@ namespace Infrastructure.Repositories
                                DateTime.Now.AddSeconds(double.TryParse(config["Jwt:JwtExpiryTimeRefreshToken"], out value) ? value : 60);
 
                 var saveResult = await SaveRefreshTokenAsync(user.Id, token, refreshToken, expiryRefreshToken);
-
-                //dbContext.LogTimes.Add(new Domain.WMS.LogTime()
-                //{
-                //    LogName = $"await SaveRefreshTokenAsync(user.Id, token, refreshToken, expiryRefreshToken)",
-                //    EslapseTime = (DateTime.Now - startTime).TotalMilliseconds,
-                //    CreatedDate = DateTime.Now
-                //});
                 await dbContext.SaveChangesAsync();
 
                 if (saveResult.Flag)

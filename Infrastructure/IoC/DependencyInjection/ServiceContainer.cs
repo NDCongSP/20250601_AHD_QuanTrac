@@ -1,6 +1,10 @@
-﻿using Domain.Entities;
+﻿using Application.Services.Authen.UI;
+using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -107,7 +111,7 @@ public static class ServiceContainer
         {
             services.AddCors(option =>
             {
-                option.AddPolicy("WebUI",
+                option.AddPolicy("UI",
                     builder => builder                                    
                                 .AllowAnyOrigin()
                                 .AllowAnyMethod()
@@ -119,7 +123,7 @@ public static class ServiceContainer
         {
             services.AddCors(option =>
             {
-                option.AddPolicy("WebUI",
+                option.AddPolicy("UI",
                     builder => builder
                                 .WithOrigins(allowedOrigins)                                    
                                 .AllowAnyMethod()

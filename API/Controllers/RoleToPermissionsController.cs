@@ -1,4 +1,6 @@
-﻿namespace API.Controllers;
+﻿using Infrastructure.Repositories;
+
+namespace API.Controllers;
 
 [Authorize]
 [Route("api/[controller]")]

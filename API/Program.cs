@@ -73,7 +73,7 @@ builder.Services.AddInfrastructureService(config);
 var app = builder.Build();
 
 // Áp dụng CORS trước UseAuthorization
-app.UseCors("WebUI");
+app.UseCors("UI");
 
 // Seeding the database when the application starts
 using (var scope = app.Services.CreateScope())
@@ -89,7 +89,7 @@ using (var scope = app.Services.CreateScope())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "WMS API V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "AHD API V1");
     });
 }
 

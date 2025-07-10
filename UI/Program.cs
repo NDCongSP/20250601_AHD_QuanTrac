@@ -13,6 +13,7 @@ using RestEase.HttpClientFactory;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using UI;
 using UI.Services;
+using static Application.Extentions.ApiRoutes;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -29,13 +30,15 @@ builder.Services.AddScoped<UI.Services.LayoutStateService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
 
+builder.Services.AddHttpClientInterceptor();
+
+builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>()
     .AddScoped(sp => (ApiAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>())
     .AddScoped(sp => (IAccessTokenProvider)sp.GetRequiredService<AuthenticationStateProvider>())
     .AddScoped<IAccessTokenProviderAccessor, AccessTokenProviderAccessor>()
     .AddScoped<AuthenticationHeaderHandler>();
 
-builder.Services.AddHttpClientInterceptor();
 builder.Services.AddScoped<IHttpInterceptorManager, HttpInterceptorManager>();
 
 builder.Services.AddAuthorizationCore(b =>
@@ -81,8 +84,7 @@ builder.Services.AddHttpClient("UI")
     .AddHttpMessageHandler<AuthenticationHeaderHandler>()
     .UseWithRestEaseClient<IAccount>()
     .UseWithRestEaseClient<IPermissions>()
-    .UseWithRestEaseClient<IRoleToPermissions>()
-    .UseWithRestEaseClient<ITenants>();
+    .UseWithRestEaseClient<IRoleToPermissions>();
 
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));
 builder.Services.AddBlazoredLocalStorage();
