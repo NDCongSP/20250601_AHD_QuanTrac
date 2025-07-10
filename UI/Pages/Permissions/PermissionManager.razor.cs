@@ -69,10 +69,12 @@ public partial class PermissionManager
 
     async Task EditItemAsync(string id)
     {
+        _navigation.NavigateTo($"/permission-detail&id={id}");
     }
 
     async Task AddNewItemAsync()
     {
+        _navigation.NavigateTo($"/permission-detail");
     }
 
     async Task ViewItemAsync(string id)

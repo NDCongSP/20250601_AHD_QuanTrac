@@ -1,4 +1,4 @@
-﻿@page "/permission-detail/{Id}"
+﻿@page "/permission-detail&id={Id}"
 
 @using Application.DTOs.Response.Account
 @using Application.Extentions
@@ -15,6 +15,7 @@ else
         <RadzenColumn Size="12" SizeSM="12">
             <RadzenButton Size="ButtonSize.ExtraSmall" Icon="arrow_back_ios"
                           Style="background-color:dimgrey"
+                          Click="@(() => _navigation.NavigateTo("/permissions"))"
                           Text="@_localizer["Detail.BackToList"]" Visible="true" />
         </RadzenColumn>
     </RadzenRow>

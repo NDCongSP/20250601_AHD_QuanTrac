@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-    [Table("RefreshTokens", Schema = "wms")]
+    [Table("RefreshTokens")]
     public class RefreshTokens
     {
         public string UserId { get; set; }

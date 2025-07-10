@@ -234,8 +234,8 @@ namespace Infrastructure.Repositories
                 using (var connection = new SqlConnection(dbContext.Database.GetConnectionString()))
                 {
                     allPermission = connection.Query<PermissionsListModel>($"SELECT _per.*,_roleToPer.RoleId,_roleToPer.RoleName " +
-                               $"FROM wms.[Permissions] _per " +
-                               $"LEFT JOIN wms.RoleToPermission _roleToPer ON _roleToPer.PermissionId = _per.Id")
+                               $"FROM dbo.[Permissions] _per " +
+                               $"LEFT JOIN dbo.RoleToPermission _roleToPer ON _roleToPer.PermissionId = _per.Id")
                    .ToList();
                 }
 

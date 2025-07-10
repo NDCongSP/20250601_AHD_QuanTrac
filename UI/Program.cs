@@ -1,5 +1,4 @@
-﻿using Application.Services;
-using Application.Services.Authen;
+﻿using Application.Services.Authen;
 using Application.Services.Authen.UI;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
@@ -12,8 +11,6 @@ using Microsoft.JSInterop;
 using RestEase.HttpClientFactory;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using UI;
-using UI.Services;
-using static Application.Extentions.ApiRoutes;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -45,35 +42,36 @@ builder.Services.AddAuthorizationCore(b =>
 {
     b.AddPolicy("Admin", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseAdmin);
+        p.RequireRole(ConstantExtention.Roles.Admin);
         //p.RequireClaim("Permission", "1");
     });
 
-    b.AddPolicy("Staff", p =>
+    b.AddPolicy("Operator", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseStaff);
-        p.RequireClaim("Permission", "Warehouse Staff");
+        p.RequireRole(ConstantExtention.Roles.Operator);
+        p.RequireClaim("Permission", "Operator");
     });
 
     b.AddPolicy("System", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseSystem);
+        p.RequireRole(ConstantExtention.Roles.System);
     });
 
     b.AddPolicy("AdminAndSystem", p =>
     {
-        p.RequireRole(new string[] { ConstantExtention.Roles.WarehouseAdmin, ConstantExtention.Roles.WarehouseSystem });
+        p.RequireRole(new string[] { ConstantExtention.Roles.Admin, ConstantExtention.Roles.System });
     });
 
-    b.AddPolicy("AdminAndStaff", p =>
+    b.AddPolicy("AdminAndOperator", p =>
     {
-        p.RequireRole(ConstantExtention.Roles.WarehouseAdmin, ConstantExtention.Roles.WarehouseStaff);
+        p.RequireRole(ConstantExtention.Roles.Admin, ConstantExtention.Roles.Operator);
     });
 });
 
 builder.Services.AddCascadingAuthenticationState();
 var config = builder.Configuration;
 var url = config["ApiUrl:ApiBaseUrl"];
+builder.Services.AddScoped<TokenRetrievalHandler>();
 
 builder.Services.AddHttpClient("UI")
     .ConfigureHttpClient((sp, x) =>
@@ -82,6 +80,9 @@ builder.Services.AddHttpClient("UI")
         x.EnableIntercept(sp);
     })
     .AddHttpMessageHandler<AuthenticationHeaderHandler>()
+    .AddPolicyHandler((sp, request) => RetryRefreshTokenHandler.GetTokenRefresher(sp, request))
+    .AddHttpMessageHandler<TokenRetrievalHandler>()
+
     .UseWithRestEaseClient<IAccount>()
     .UseWithRestEaseClient<IPermissions>()
     .UseWithRestEaseClient<IRoleToPermissions>();

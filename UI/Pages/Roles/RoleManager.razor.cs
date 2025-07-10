@@ -16,10 +16,12 @@ public partial class RoleManager
 
     async Task EditItemAsync(string id)
     {
+        _navigation.NavigateTo($"/role-detail&id={id}");
     }
 
     async Task AddNewItemAsync()
     {
+        _navigation.NavigateTo($"/role-detail");
     }
 
     async Task ViewItemAsync(string id)

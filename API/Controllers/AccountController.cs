@@ -30,9 +30,6 @@ namespace API.Controllers
         {
             if (model == null) return BadRequest("Model cannot be null");
             var result = await _account.LoginAccountAsync(model);
-            //todo test
-            //await _authStateProvider.CacheAuthTokensAsync(result.Token, result.RefreshToken, string.Empty);
-            //((ApiAuthenticationStateProvider)_authStateProvider).MarkUserAsAuthenticated();
             return Ok(result);
         }
 

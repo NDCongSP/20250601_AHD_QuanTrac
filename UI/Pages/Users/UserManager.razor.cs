@@ -87,7 +87,7 @@ public partial class UserManager
 
     async Task EditItemAsync(string id)
     {
-        _navigation.NavigateTo($"/user-detail/{id}");
+        _navigation.NavigateTo($"/user-detail&id={id}");
     }
 
     async Task AddNewItemAsync()

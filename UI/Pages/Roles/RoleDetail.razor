@@ -1,4 +1,4 @@
-﻿@page "/role-detail/{Id}"
+﻿@page "/role-detail&id={Id}"
 
 @using Application.DTOs.Request.Account
 @using Application.DTOs.Response.Account
@@ -17,6 +17,7 @@ else
         <RadzenColumn Size="12" SizeSM="12">
             <RadzenButton Size="ButtonSize.ExtraSmall" Icon="arrow_back_ios"
                           Style="background-color:dimgrey"
+                          Click="@(() => _navigation.NavigateTo("/roles"))"
                           Text="@_localizer["Detail.BackToList"]" Visible="true" />
         </RadzenColumn>
     </RadzenRow>

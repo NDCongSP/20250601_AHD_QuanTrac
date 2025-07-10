@@ -317,7 +317,7 @@ namespace Infrastructure.Repositories
                 var roles = new List<CreateRoleRequestDTO>();
                 roles.Add(new CreateRoleRequestDTO()
                 {
-                    Name = ConstantExtention.Roles.WarehouseAdmin
+                    Name = ConstantExtention.Roles.Admin
                 });
 
                 var supeAdmin = new CreateAccountRequestDTO()

@@ -16,7 +16,6 @@ public partial class UserDetail
     IList<string> _selectedRoles = [];
     List<string> _status = new List<string>();
     EnumStatus? _selectStatus;
-    RadzenDataGrid<TenantAuth> _profileGrid;
     bool allowRowSelectOnRowClick = true;
     IEnumerable<int> _pageSizeOptions = new int[] { 5, 10, 20, 50, 100 };
     bool _showPagerSummary = true;
