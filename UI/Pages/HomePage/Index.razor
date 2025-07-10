@@ -1,6 +1,8 @@
 ﻿@page "/"
+@attribute [Authorize(Roles = ConstantExtention.Roles.Admin)]
 @using System.Text.RegularExpressions
 @using Radzen.Blazor.Rendering
+@using System.Security.Claims
 
 <RadzenStack Gap="1rem" Style="position: relative">
     <RadzenCard Visible=@fetchingData Style="z-index: 3; text-align: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, .5)">
@@ -331,8 +333,9 @@
         }
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        await GetCurrentUserLogin();
         // Fake users
         var user1 = new User { Login = "alice", AvatarUrl = "https://i.pravatar.cc/120?img=1" };
         var user2 = new User { Login = "bob", AvatarUrl = "https://i.pravatar.cc/120?img=2" };
@@ -473,5 +476,15 @@
     {
         var diff = (7 + (dt.DayOfWeek - DayOfWeek.Monday)) % 7;
         return dt.AddDays(-1 * diff).Date;
+    }
+
+    async Task GetCurrentUserLogin()
+    {
+        var authState = await _authStateProvider.GetAuthenticationStateAsync();
+        GlobalVariable.UserAuthorizationInfo.UserName = authState?.User?.Identity.Name;
+        GlobalVariable.UserAuthorizationInfo.FullName = authState?.User?.FindFirst("FullName").Value;
+        GlobalVariable.UserAuthorizationInfo.EmailName = authState?.User?.FindFirst(ClaimTypes.Email).Value;
+        GlobalVariable.UserAuthorizationInfo.UserId = authState?.User?.FindFirst("UserId").Value;
+        StateHasChanged();
     }
 }
