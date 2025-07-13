@@ -324,8 +324,8 @@ namespace Infrastructure.Repositories
                 {
                     FullName = "Admin",
                     UserName = "Admin",
-                    Password = "fbt_wms_admin@tealife.co.jp",
-                    Email = "fbt_wms_admin@tealife.co.jp",
+                    Password = "admin@admin.comP1",
+                    Email = "admin@admin.com",
                     Roles = roles,
                     Status = EnumStatus.Activated
                 };

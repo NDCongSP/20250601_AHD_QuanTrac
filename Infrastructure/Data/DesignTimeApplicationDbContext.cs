@@ -8,9 +8,9 @@ public class DesignTimeApplicationDbContext : IDesignTimeDbContextFactory<Applic
     public ApplicationDbContext CreateDbContext(string[] args)
     {
         var builder =new DbContextOptionsBuilder<ApplicationDbContext>();
-        builder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=AHD;Trusted_Connection=True;", b =>
+        builder.UseSqlServer(@"Server=phucthinhautomation.ddns.net;Initial Catalog=ahd;Persist Security Info=True;User ID=dev1;Password=Dev@12345;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30000;", b =>
         {
-            b.MigrationsHistoryTable("__EFMigrationsHistoryWMS");
+            b.MigrationsHistoryTable("__EFMigrationsHistory");
         });
         return new ApplicationDbContext(builder.Options);
     }

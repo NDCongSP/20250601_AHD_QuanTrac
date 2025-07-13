@@ -31,18 +31,18 @@ namespace Infrastructure.Data
                     NormalizedName = ConstantExtention.Roles.System.ToUpper()
                 });
             }
-            if (!context.Users.Any())
-            {
-                await context.Users.AddAsync(new Domain.Entities.ApplicationUser()
-                {
-                    Email = "admin@gmail.com",
-                    EmailConfirmed = true,
-                    FullName = "Admin",
-                    UserName = "admin",
-                    PasswordHash = "admin@gmail.com1",
-                    Status = EnumStatus.Activated,
-                });
-            }
+            //if (!context.Users.Any())
+            //{
+            //    await context.Users.AddAsync(new Domain.Entities.ApplicationUser()
+            //    {
+            //        Email = "admin@gmail.com",
+            //        EmailConfirmed = true,
+            //        FullName = "Admin",
+            //        UserName = "admin",
+            //        PasswordHash = "admin@gmail.com1",
+            //        Status = EnumStatus.Activated,
+            //    });
+            //}
 
                 // save the changes to the database
                 await context.SaveChangesAsync();

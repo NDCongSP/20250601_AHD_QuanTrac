@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.Request.Account;
 using Application.DTOs.Response.Account;
+using Newtonsoft.Json;
+using RestEase;
 
 namespace UI.Pages.Users;
 
@@ -118,23 +120,23 @@ public partial class UserManager
             StateHasChanged();
         }
         catch (UnauthorizedAccessException) { }
-        //catch (ApiException ex)
-        //{
-        //    ApiErrorResponse errorResponse = null;
+        catch (ApiException ex)
+        {
+            ApiErrorResponse errorResponse = null;
 
-        //    if (ex.Content != null)
-        //    {
-        //        errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
-        //    }
+            if (ex.Content != null)
+            {
+                errorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(ex.Content.ToString());
+            }
 
-        //    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
-        //    return;
-        //}
-        //catch (Exception ex)
-        //{
-        //    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
-        //    return;
-        //}
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], _localizerNotification[errorResponse?.error]);
+            return;
+        }
+        catch (Exception ex)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizerNotification["Error"], ex.Message);
+            return;
+        }
     }
 
     async Task SubmitData(UserSearchRequestDTO arg)

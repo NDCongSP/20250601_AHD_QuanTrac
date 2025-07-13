@@ -6,6 +6,7 @@
 @using Application.Extentions
 @using Microsoft.AspNetCore.Authorization
 
+@inject IStringLocalizer<CommonResource> _localizerNotification
 
 @{
     string placeHolder = $"{_localizer["UserName"]}, {_localizer["Fullname"]}, {_localizer["Email"]}";
