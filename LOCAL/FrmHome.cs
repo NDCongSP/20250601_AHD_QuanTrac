@@ -19,7 +19,7 @@ namespace RegistrationForm1
         public FrmHome(FrmMain frmMain)
         {
             InitializeComponent();
-            _mainForm = frmMain; // ✅ Gán trước khi sử dụng
+            _mainForm = frmMain; // Gán trước khi sử dụng
             Load += FrmHome_Load;
             if (_mainForm != null)
             {
@@ -73,9 +73,15 @@ namespace RegistrationForm1
                 _mainForm.Door5_CloseChanged += Door5_Close_ValueChanged;
                 _mainForm.Door6_OpenChanged += Door6_Open_ValueChanged;
                 _mainForm.Door6_CloseChanged += Door6_Close_ValueChanged;
-               
-
-
+                _mainForm.S1_Station_RunChanged += S1_Station_Run_ValueChanged;
+                _mainForm.S1_Station_StopChanged += S1_Station_Stop_ValueChanged;
+                _mainForm.S1_Station_AlarmChanged += S1_Station_Alarm_ValueChanged;
+                _mainForm.S2_Station_RunChanged += S2_Station_Run_ValueChanged;
+                _mainForm.S2_Station_StopChanged += S2_Station_Stop_ValueChanged;
+                _mainForm.S2_Station_AlarmChanged += S2_Station_Alarm_ValueChanged;
+                _mainForm.S3_Station_RunChanged += S3_Station_Run_ValueChanged;
+                _mainForm.S3_Station_StopChanged += S3_Station_Stop_ValueChanged;
+                _mainForm.S3_Station_AlarmChanged += S3_Station_Alarm_ValueChanged;
 
 
 
@@ -84,7 +90,7 @@ namespace RegistrationForm1
             {
                 MessageBox.Show("FrmMain instance is null. Please check.");
             }
-            // ✅ Load trạng thái ban đầu ngay khi khởi tạo
+            // Load trạng thái ban đầu ngay khi khởi tạo
             LoadInitialValues();
         }
 
@@ -108,6 +114,16 @@ namespace RegistrationForm1
         }
         private void LoadInitialValues()
             {
+            Pic_Station1_Run.Visible = _mainForm.GetS1_Station_RunValue() == "1";
+            Pic_Station1_Stop.Visible = _mainForm.GetS1_Station_StopValue() == "1";
+            Pic_Station1_Alarm.Visible = _mainForm.GetS1_Station_AlarmValue() == "1";
+            Pic_Station2_Run.Visible = _mainForm.GetS2_Station_RunValue() == "1";
+            Pic_Station2_Stop.Visible = _mainForm.GetS2_Station_StopValue() == "1";
+            Pic_Station2_Alarm.Visible = _mainForm.GetS2_Station_AlarmValue() == "1";
+            Pic_Station3_Run.Visible = _mainForm.GetS3_Station_RunValue() == "1";
+            Pic_Station3_Stop.Visible = _mainForm.GetS3_Station_StopValue() == "1";
+            Pic_Station3_Alarm.Visible = _mainForm.GetS3_Station_AlarmValue() == "1";
+
             Pic_Doorlock2_1Open.Visible = _mainForm.GetDoorlock2_1OpenValue() == "1";
             Pic_Doorlock2_1Close.Visible = _mainForm.GetDoorlock2_1CloseValue() == "1";
             Pic_Doorlock2_2Open.Visible = _mainForm.GetDoorlock2_2OpenValue() == "1";
@@ -156,16 +172,7 @@ namespace RegistrationForm1
         private void FrmHome_Load(object sender, EventArgs e)
         {                    
 
-            //timer1.Enabled = true;
-            //tm_login.Interval = 60000;
-            //tm_login.Enabled = true;
-            //tm_login.Tick += (s, o) =>
-            //{
-            //    Timer t = (Timer)s;
-            //    t.Enabled = false;
-            //    this.Invoke((MethodInvoker)delegate { tm_login.Start(); });
-            //    t.Enabled = true;
-            //};
+           
         }
         
         // Trạng thái chốt đóng hết , mở hết 2 -> 5
@@ -608,120 +615,120 @@ namespace RegistrationForm1
         }
         // Kết thúc TRạng thái đang đóng , đang mở cửa 1 -> 6
         // Trang thái động cơ Trạm 3
-        private void Station3_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S3_Station_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC3Runing.Visible = true; Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Run.Visible = true; Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = false; Pic_DC3Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = false; Pic_Station3_Run.Visible = false; });
         }
-        private void Station3_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S3_Station_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC3Stop.Visible = true; Pic_DC3_Over.Visible = false; Pic_DC3Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Stop.Visible = true; Pic_Station3_Alarm.Visible = false; Pic_Station3_Run.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = false; Pic_DC3Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = false; Pic_Station3_Run.Visible = false; });
         }
-        private void Station3_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S3_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = true; Pic_DC3Runing.Visible = false; Pic_DC3Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = true; Pic_Station3_Run.Visible = false; Pic_Station3_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = false; Pic_DC3Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = false; Pic_Station3_Run.Visible = false; });
         }
         // Trang thái động cơ Trạm 2
-        private void Station2_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S2_Station_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC2Runing.Visible = true; Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Run.Visible = true; Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = false; Pic_DC2Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = false; Pic_Station2_Run.Visible = false; });
         }
-        private void Station2_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S2_Station_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC2Stop.Visible = true; Pic_DC2_Over.Visible = false; Pic_DC2Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Stop.Visible = true; Pic_Station2_Alarm.Visible = false; Pic_Station2_Run.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = false; Pic_DC2Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = false; Pic_Station2_Run.Visible = false; });
         }
-        private void Station2_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S2_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = true; Pic_DC2Runing.Visible = false; Pic_DC2Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = true; Pic_Station2_Run.Visible = false; Pic_Station2_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = false; Pic_DC2Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = false; Pic_Station2_Run.Visible = false; });
         }
 
         // Kết thúc Trạng thái động cơ Trạm 2
 
 
         // Trạng thái động cơ Trạm 1
-        private void Station1_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Station_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1Runing.Visible = true; Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Run.Visible = true; Pic_Station1_Stop.Visible = false; Pic_Station1_Alarm.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Run.Visible = false; Pic_Station1_Stop.Visible = false; Pic_Station1_Run.Visible = false; });
         }
-        private void Station1_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Station_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1Stop.Visible = true; Pic_DC1_Over.Visible = false; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Stop.Visible = true; Pic_Station1_Run.Visible = false; Pic_Station1_Alarm.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = false; Pic_Station1_Run.Visible = false; });
         }
-        private void Station1_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = true; Pic_DC1Runing.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = true; Pic_Station1_Run.Visible = false; Pic_Station1_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = false; Pic_Station1_Run.Visible = false; });
         }
         // Kết thúc Trạng thái động cơ Trạm 1
         private void DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = true; Pic_DC3Runing.Visible = false; Pic_DC3Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = true; Pic_Station3_Run.Visible = false; Pic_Station3_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = false; Pic_DC3Runing.Visible = false; Pic_DC3Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = false; Pic_Station3_Run.Visible = false; Pic_Station3_Stop.Visible = false; });
         }
         private void DC2_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = true; Pic_DC2Runing.Visible = false; Pic_DC2Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = true; Pic_Station2_Run.Visible = false; Pic_Station2_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = false; Pic_DC2Runing.Visible = false; Pic_DC2Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = false; Pic_Station2_Run.Visible = false; Pic_Station2_Stop.Visible = false; });
         }
         private void DC1_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = true; Pic_DC1Runing.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = true; Pic_Station1_Run.Visible = false; Pic_Station1_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Runing.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Run.Visible = false; Pic_Station1_Stop.Visible = false; });
         }
 
         /// <summary>
@@ -731,82 +738,82 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC3Runing.Visible = true; Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Run.Visible = true; Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = true; Pic_DC3Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = true; Pic_Station3_Run.Visible = false; });
         }
         private void S3_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC2Runing.Visible = true; Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Run.Visible = true; Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = true; Pic_DC2Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = true; Pic_Station2_Run.Visible = false; });
         }
         private void S3_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1Runing.Visible = true; Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Run.Visible = true; Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = true; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = true; Pic_Station1_Run.Visible = false; });
         }
         private void S2_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC3Runing.Visible = true; Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Run.Visible = true; Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC3_Over.Visible = false; Pic_DC3Stop.Visible = true; Pic_DC3Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station3_Alarm.Visible = false; Pic_Station3_Stop.Visible = true; Pic_Station3_Run.Visible = false; });
         }
         private void S2_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC2Runing.Visible = true; Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Run.Visible = true; Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC2_Over.Visible = false; Pic_DC2Stop.Visible = true; Pic_DC2Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station2_Alarm.Visible = false; Pic_Station2_Stop.Visible = true; Pic_Station2_Run.Visible = false; });
         }
         private void S2_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1Runing.Visible = true; Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Run.Visible = true; Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = true; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = true; Pic_Station1_Run.Visible = false; });
         }
         private void S1_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1Runing.Visible = true; Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Run.Visible = true; Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = true; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = true; Pic_Station1_Run.Visible = false; });
         }
         private void S1_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1Runing.Visible = true; Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Run.Visible = true; Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = true; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = true; Pic_Station1_Run.Visible = false; });
         }
         private void S1_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { Pic_DC1Runing.Visible = true; Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Run.Visible = true; Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = false; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { Pic_DC1_Over.Visible = false; Pic_DC1Stop.Visible = true; Pic_DC1Runing.Visible = false; });
+                this.Invoke((MethodInvoker)delegate { Pic_Station1_Alarm.Visible = false; Pic_Station1_Stop.Visible = true; Pic_Station1_Run.Visible = false; });
         }               
         //private void _btnGhiStatus_Click(object sender, EventArgs e)
         //{

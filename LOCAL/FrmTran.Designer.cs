@@ -108,6 +108,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.bntLoadT2 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.Pic_Doorlock2_2Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock2_2Open_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -527,7 +528,7 @@
             this.ahdLabel84 = new Ahd.Winforms.Controls.AhdLabel();
             this.label112 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.bntLoadT2 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT1)).BeginInit();
@@ -1564,7 +1565,7 @@
             this.groupBox3.Location = new System.Drawing.Point(7, 332);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(320, 183);
+            this.groupBox3.Size = new System.Drawing.Size(320, 211);
             this.groupBox3.TabIndex = 203;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bơm Dầu";
@@ -1955,6 +1956,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.bntLoadT2);
             this.tabPage2.Controls.Add(this.groupBox5);
             this.tabPage2.Controls.Add(this.groupBox10);
@@ -1993,6 +1995,16 @@
             this.tabPage2.TabIndex = 6;
             this.tabPage2.Text = "          TRÀN 2          ";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // bntLoadT2
+            // 
+            this.bntLoadT2.Location = new System.Drawing.Point(499, 700);
+            this.bntLoadT2.Name = "bntLoadT2";
+            this.bntLoadT2.Size = new System.Drawing.Size(75, 36);
+            this.bntLoadT2.TabIndex = 268;
+            this.bntLoadT2.Text = "Load";
+            this.bntLoadT2.UseVisualStyleBackColor = true;
+            this.bntLoadT2.Click += new System.EventHandler(this.bntLoadT2_Click);
             // 
             // groupBox5
             // 
@@ -7898,15 +7910,16 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(1745, 39);
             this.tableLayoutPanel12.TabIndex = 235;
             // 
-            // bntLoadT2
+            // label7
             // 
-            this.bntLoadT2.Location = new System.Drawing.Point(499, 700);
-            this.bntLoadT2.Name = "bntLoadT2";
-            this.bntLoadT2.Size = new System.Drawing.Size(75, 36);
-            this.bntLoadT2.TabIndex = 268;
-            this.bntLoadT2.Text = "Load";
-            this.bntLoadT2.UseVisualStyleBackColor = true;
-            this.bntLoadT2.Click += new System.EventHandler(this.bntLoadT2_Click);
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(543, 13);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(302, 31);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "KHOANG TRÀN 2";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FrmTran
             // 
@@ -8759,5 +8772,6 @@
         private System.Windows.Forms.Button bntLoad;
         private System.Windows.Forms.DataGridView dataGridViewT1;
         private System.Windows.Forms.Button bntLoadT2;
+        private System.Windows.Forms.Label label7;
     }
 }

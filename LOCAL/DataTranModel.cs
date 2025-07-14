@@ -107,5 +107,14 @@ namespace RegistrationForm1
             public string Doorlock6_1Close { get; set; }
             public string Doorlock6_2Open { get; set; }
             public string Doorlock6_2Close { get; set; }
-        }
+            public string S1_Station_Run { get; set; }
+        public string S2_Station_Run { get; set; }
+        public string S3_Station_Run { get; set; }
+        public string S1_Station_Stop { get; set; }
+        public string S2_Station_Stop { get; set; }
+        public string S3_Station_Stop { get; set; }
+        public string S1_Station_Alarm { get; set; }
+        public string S2_Station_Alarm { get; set; }
+        public string S3_Station_Alarm { get; set; }
+    }
     }
