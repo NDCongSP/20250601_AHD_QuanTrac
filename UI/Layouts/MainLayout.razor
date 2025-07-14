@@ -1,0 +1,134 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject UI.Services.LayoutStateService LayoutState
+@inject UI.Services.ThemeService ThemeService
+@inject ILogger<MainLayout> Logger
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="0" Class="rz-py-2 rz-px-4">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="1rem">
+                <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+                <RadzenStack Gap="0">
+                    @if (!string.IsNullOrEmpty(LayoutState.Subtitle))
+                    {
+                        <RadzenText Text="@LayoutState.Subtitle" TextStyle="TextStyle.Subtitle2" Class="rz-mb-0" Style="color: white; opacity: 0.8;" />
+                    }
+                    <RadzenText Text="@LayoutState.Title" TextStyle="TextStyle.H6" Class="rz-mb-0" Style="color: white;" />
+                </RadzenStack>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                <RadzenButton Icon="notifications" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
+                @if (GlobalVariable.UserAuthorizationInfo != null)
+                {
+                    <RadzenProfileMenu Style="background-color:transparent" Click="OnParentClicked">
+                        <Template>
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                                <RadzenIcon Icon="account_circle" />
+                                @if (sidebarExpanded)
+                                {
+                                    <span>@GlobalVariable.UserAuthorizationInfo.FullName</span>
+                                }  
+                            </RadzenStack>
+                        </Template>
+                        <ChildContent>
+                            <RadzenProfileMenuItem Text="Profile" Icon="person" Path="/profile" />
+                            <RadzenProfileMenuItem Text="Settings" Icon="settings" Path="/settings" />
+                            <RadzenProfileMenuItem Text="Change Password" Icon="password" Path="/change-password" />
+                            <RadzenProfileMenuItem Text="Logout" Icon="logout"/>
+                        </ChildContent>
+                    </RadzenProfileMenu>
+                }
+                else
+                {
+                    <RadzenButton Icon="account_circle" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" 
+                                 Title="Login" Click="@(() => _navigation.NavigateTo("/login"))" />
+                }
+                <RadzenButton Icon="settings" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
+                <RadzenAppearanceToggle />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar Responsive="false" Style="@(sidebarExpanded ? "width: 13vw" : "width: max-content")">
+        <RadzenPanelMenu DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
+            <RadzenPanelMenuItem Path="/" Text="Dashboard" Icon="dashboard" />
+            <RadzenPanelMenuItem Path="/waterlevel" Text="WaterLevel" Icon="water_drop" />
+            <RadzenPanelMenuItem Path="/operational-monitoring" Text="OperationalMonitoring" Icon="analytics" />
+            <RadzenPanelMenuItem Text="Quản lý trạm" Icon="home">
+                <RadzenPanelMenuItem Path="/gate-detail" Text="Trạm A" Icon="eject" />
+                <RadzenPanelMenuItem Path="/gate-detail-b" Text="Trạm B" Icon="eject" />
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Quản lý người dùng" Icon="account_box">
+                <RadzenPanelMenuItem Path="/users" Text="Danh sách" Icon="account_box" />
+                <RadzenPanelMenuItem Path="/roles" Text="Roles" Icon="lock_open" />
+                <RadzenPanelMenuItem Path="/permissions" Text="Permisions" Icon="gavel" />
+            </RadzenPanelMenuItem>
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="rz-p-4" style="background-color: var(--rz-grid-header-background-color);">
+            @Body
+        </div>
+    </RadzenBody>
+</RadzenLayout>
+
+@code {
+    bool sidebarExpanded = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ThemeService.InitializeAsync();
+        LayoutState.OnChange += StateHasChanged;
+        ThemeService.OnChange += StateHasChanged;
+        LayoutState.SetTitle(""); // Default title
+    }
+
+    public void Dispose()
+    {
+        LayoutState.OnChange -= StateHasChanged;
+        ThemeService.OnChange -= StateHasChanged;
+    }
+
+    async Task ToggleTheme()
+    {
+        await ThemeService.ToggleThemeAsync();
+    }
+    async Task OnParentClicked(RadzenProfileMenuItem args)
+    {
+        if (args.Text == "Logout")
+        {
+            GlobalVariable.AuthenticationStateTask = null;
+            GlobalVariable.UserAuthorizationInfo = null;
+            GlobalVariable.UserAuthorizationInfo = new UserAuthorizationInfo();
+            await _authStateProvider.ClearCacheAsync();
+            ((ApiAuthenticationStateProvider)_authStateProvider).MarkUserAsLoggedOut();
+            _navigation.NavigateTo("/login");
+        }
+    }
+
+    async void ChangePassword()
+    {
+        // var res = await _dialogService.OpenAsync<ChangePass>("Change Password",
+        //         new Dictionary<string, object>() { { "Id", GlobalVariable.UserAuthorizationInfo.UserId } },
+        //         new DialogOptions()
+        //             {
+        //                 Width = "600px",
+        //                 Height = "400px",
+        //                 Resizable = true,
+        //                 Draggable = true,
+        //                 ShowClose = false,
+        //                 CloseDialogOnOverlayClick = true
+        //             });
+
+        // if (res == "Success")
+        // {
+        //     _notificationService.Notify(new NotificationMessage
+        //         {
+        //             Severity = NotificationSeverity.Error,
+        //             Summary = "Change password",
+        //             Detail = "Successfull",
+        //             Duration = 5000
+        //         });
+        // }
+    }
+}

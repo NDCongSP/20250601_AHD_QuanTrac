@@ -1,0 +1,17 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+
+namespace Infrastructure.Data;
+
+public class DesignTimeApplicationDbContext : IDesignTimeDbContextFactory<ApplicationDbContext>
+{
+    public ApplicationDbContext CreateDbContext(string[] args)
+    {
+        var builder =new DbContextOptionsBuilder<ApplicationDbContext>();
+        builder.UseSqlServer(@"Server=phucthinhautomation.ddns.net;Initial Catalog=ahd;Persist Security Info=True;User ID=dev1;Password=Dev@12345;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30000;", b =>
+        {
+            b.MigrationsHistoryTable("__EFMigrationsHistory");
+        });
+        return new ApplicationDbContext(builder.Options);
+    }
+}

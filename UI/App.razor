@@ -1,0 +1,49 @@
+﻿@using Application.Services.Authen.UI
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.Extensions.Localization
+
+@inject IHttpInterceptorManager _interceptorManager
+@implements IDisposable
+
+@* phải có dòng này để thay dổi theme *@
+<RadzenTheme Theme="Material" />
+@* <RadzenTheme Theme="Standard" /> *@
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    @if (!context.User.Claims.Any())
+                    {
+                        <UI.Pages.Authentications.RedirectToLogin/>
+                    }
+                    else
+                    {
+                        <p role="alert">@_localizer["Sorry, You do not have authorization."]</p>
+                    }
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">@_localizer["Sorry, there's nothing at this address."]</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
+
+@code {
+    protected override void OnInitialized()
+    {
+        _interceptorManager.RegisterEvent();
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        _interceptorManager.DisposeEvent();
+    }
+}

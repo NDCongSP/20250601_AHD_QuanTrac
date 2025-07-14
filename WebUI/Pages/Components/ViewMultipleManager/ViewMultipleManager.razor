@@ -1,0 +1,12 @@
+﻿@* @typeparam TItem
+@using WebUI.Pages.Components.ViewMultipleManager
+
+@if (_showList)
+{
+    @ListView?.Invoke(_listContext)
+}
+@if (_showDetail && _currentDetailViewType != null && DetailViews?.ContainsKey(_currentDetailViewType) == true)
+{
+    @DetailViews[_currentDetailViewType.Value]?.Invoke(_detailContext)
+}
+ *@
