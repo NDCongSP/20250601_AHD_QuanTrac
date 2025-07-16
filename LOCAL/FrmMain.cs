@@ -244,9 +244,6 @@ private void Driver_Started(object sender, EventArgs e)
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop").ValueChanged += S3_Station_Stop_ValueChanged;//Su kien FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm").ValueChanged += S3_Station_Alarm_ValueChanged;//Su kien FrmTran
 
-
-
-
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Remote").ValueChanged += S1_Remote_ValueChanged;//Su kien FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Local").ValueChanged += S1_Local_ValueChanged;//Su kien FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Auto").ValueChanged += S1_Auto_ValueChanged;//Su kien FrmTran
@@ -286,7 +283,6 @@ private void Driver_Started(object sender, EventArgs e)
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door6_Opening").ValueChanged += Door6_Opening_ValueChanged;//Su kien FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door6_Closing").ValueChanged += Door6_Closing_ValueChanged;//Su kien FrmTran
 
-
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/DC1_Over").ValueChanged += S1_DC1_Over_ValueChanged;//Su kien Alarm FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/DC2_Over").ValueChanged += S1_DC2_Over_ValueChanged;//Su kien Alarm FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/DC3_Over").ValueChanged += S1_DC3_Over_ValueChanged;//Su kien Alarm FrmTran
@@ -309,7 +305,6 @@ private void Driver_Started(object sender, EventArgs e)
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_PressureLow").ValueChanged += Door5_PressureLow_ValueChanged;//Su kien Alarm FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door6_PressureHigh").ValueChanged += Door6_PressureHigh_ValueChanged;//Su kien Alarm FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door6_PressureLow").ValueChanged += Door6_PressureLow_ValueChanged;//Su kien Alarm FrmTran
-
 
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_Opening").ValueChanged += Doorlock1_Opening_ValueChanged;//Su kien FrmHome
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_Closing").ValueChanged += Doorlock1_Closing_ValueChanged;//Su kien FrmHome
@@ -363,8 +358,8 @@ private void Driver_Started(object sender, EventArgs e)
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_1Close").ValueChanged += Doorlock6_1Close_ValueChanged;//Su kien áp cửa 1 cao
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_2Open").ValueChanged += Doorlock6_2Open_ValueChanged;//Su kien áp cửa 1 cao
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_2Close").ValueChanged += Doorlock6_2Close_ValueChanged;//Su kien áp cửa 1 cao
-                                                                                                                                        // End Tag dự phòng
-                                                                                                                                        // Gọi lần đầu khi load form để publish trạng thái hiện tại
+                                                                                                                                 
+           // Gọi lần đầu khi load form để publish trạng thái hiện tại
             PublishInitialValues();
         }
         private void PublishInitialValues()
@@ -387,8 +382,6 @@ private void Driver_Started(object sender, EventArgs e)
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop"), "", GetS3_Station_StopValue()));
             S3_Station_Alarm_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm"), "", GetS3_Station_AlarmValue()));
-
-
 
             Door1_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_PressureHigh"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_PressureHigh"), "", GetDoor1_PressureHighValue()));
@@ -433,8 +426,7 @@ private void Driver_Started(object sender, EventArgs e)
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC2_Over"), "", GetS3_DC2_OverValue()));
             S3_DC3_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC3_Over"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC3_Over"), "", GetS3_DC3_OverValue()));
-
-            
+           
             Doorlock1_1Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_1Open"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_1Open"), "", GetDoorlock1_1OpenValue()));
             Doorlock1_1Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_1Close"),
@@ -534,7 +526,6 @@ private void Driver_Started(object sender, EventArgs e)
             Doorlock6_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_Closing"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_Closing"), "", GetDoorlock6_ClosingValue()));
 
-
             Door1_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_Opening"), "", GetDoor1_OpeningValue()));
             Door1_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_Closing"),
@@ -542,8 +533,7 @@ private void Driver_Started(object sender, EventArgs e)
             Door2_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Opening"), "", GetDoor2_OpeningValue()));
             Door2_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Closing"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Closing"), "", GetDoor2_ClosingValue()));
-           
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Closing"), "", GetDoor2_ClosingValue()));           
             Door3_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door3_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door3_Opening"), "", GetDoor3_OpeningValue()));
             Door3_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door3_Closing"),
@@ -551,8 +541,7 @@ private void Driver_Started(object sender, EventArgs e)
             Door4_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Opening"), "", GetDoor4_OpeningValue()));
             Door4_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Closing"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Closing"), "", GetDoor4_ClosingValue()));
-           
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Closing"), "", GetDoor4_ClosingValue()));         
             Door5_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Opening"), "", GetDoor5_OpeningValue()));
             Door5_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Closing"),
@@ -567,15 +556,13 @@ private void Driver_Started(object sender, EventArgs e)
             S3_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC2_Running"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC2_Running"), "", GetS3_DC2_RunningValue()));
             S3_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC1_Running"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC1_Running"), "", GetS3_DC1_RunningValue()));
-           
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC1_Running"), "", GetS3_DC1_RunningValue()));          
             S2_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC3_Running"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC3_Running"), "", GetS2_DC3_RunningValue()));
             S2_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC2_Running"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC2_Running"), "", GetS2_DC2_RunningValue()));
             S2_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC1_Running"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC1_Running"), "", GetS2_DC1_RunningValue()));
-
             S1_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/DC3_Running"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/DC3_Running"), "", GetS1_DC3_RunningValue()));
             S1_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/DC2_Running"),
@@ -666,10 +653,7 @@ private void Driver_Started(object sender, EventArgs e)
         private string prevS1_Station_Stop = "0", prevS2_Station_Stop = "0", prevS3_Station_Stop = "0"; // biến lưu trạng thái trước đó
         private string prevS3_Station_Alarm = "0", prevS2_Station_Alarm = "0", prevS1_Station_Alarm = "0"; // biến lưu trạng thái trước đó
 
-
-
-        // S1_Station_Run_ValueChanged
-
+    
         private void S1_Station_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             // 🔔 Raise event để form khác nhận
@@ -684,7 +668,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S1_Station_Run = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS1_Station_Run = e.NewValue;
@@ -702,7 +686,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S2_Station_Run = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS2_Station_Run = e.NewValue;
@@ -720,7 +704,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S3_Station_Run = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS3_Station_Run = e.NewValue;
@@ -738,7 +722,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S1_Station_Stop = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS1_Station_Stop = e.NewValue;
@@ -756,7 +740,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S2_Station_Stop = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS2_Station_Stop = e.NewValue;
@@ -774,7 +758,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S3_Station_Stop = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS3_Station_Stop = e.NewValue;
@@ -787,12 +771,12 @@ private void Driver_Started(object sender, EventArgs e)
             if (prevS1_Station_Alarm == "0" && e.NewValue == "1")
             {
                 // Tạo object DataTranModel mới
-                var model = new DataTranModel
+                var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
                     S1_Station_Alarm = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginAlarm.InsertAlarm(model);
             }
             // Cập nhật trạng thái trước
             prevS1_Station_Alarm = e.NewValue;
@@ -805,12 +789,12 @@ private void Driver_Started(object sender, EventArgs e)
             if (prevS2_Station_Alarm == "0" && e.NewValue == "1")
             {
                 // Tạo object DataTranModel mới
-                var model = new DataTranModel
+                var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
                     S2_Station_Alarm = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginAlarm.InsertAlarm(model);
             }
             // Cập nhật trạng thái trước
             prevS2_Station_Alarm = e.NewValue;
@@ -823,12 +807,12 @@ private void Driver_Started(object sender, EventArgs e)
             if (prevS3_Station_Alarm == "0" && e.NewValue == "1")
             {
                 // Tạo object DataTranModel mới
-                var model = new DataTranModel
+                var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
                     S3_Station_Alarm = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginAlarm.InsertAlarm(model);
             }
             // Cập nhật trạng thái trước
             prevS3_Station_Alarm = e.NewValue;
@@ -1207,7 +1191,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock1_1Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock1_1Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1223,7 +1207,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock1_1Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock1_1Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1239,7 +1223,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock1_2Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock1_2Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1255,7 +1239,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock1_2Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock1_2Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1271,7 +1255,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock2_1Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock2_1Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1287,7 +1271,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock2_1Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock2_1Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1303,7 +1287,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock2_2Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock2_2Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1319,7 +1303,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock2_2Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock2_2Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1335,7 +1319,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock3_1Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock3_1Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1351,7 +1335,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock3_1Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock3_1Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1367,7 +1351,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock3_2Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock3_2Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1383,7 +1367,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock3_2Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock3_2Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1399,7 +1383,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock4_1Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock4_1Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1415,7 +1399,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock4_1Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock4_1Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1431,7 +1415,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock4_2Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock4_2Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1447,7 +1431,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock4_2Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock4_2Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1463,7 +1447,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock5_1Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock5_1Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1479,7 +1463,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock5_1Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock5_1Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1495,7 +1479,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock5_2Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock5_2Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1511,7 +1495,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock5_2Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock5_2Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1527,7 +1511,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock6_1Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock6_1Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1543,7 +1527,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock6_1Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock6_1Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1559,7 +1543,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock6_2Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock6_2Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1575,7 +1559,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock6_2Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock6_2Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1593,7 +1577,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door1_Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor1_Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1609,7 +1593,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door1_Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor1_Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1625,7 +1609,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door2_Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor2_Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1641,7 +1625,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door2_Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor2_Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1657,7 +1641,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door3_Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor3_Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1673,7 +1657,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door3_Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor3_Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1689,7 +1673,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door4_Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor4_Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1705,7 +1689,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door4_Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor4_Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1721,7 +1705,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door5_Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor5_Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1737,7 +1721,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door5_Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor5_Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1753,7 +1737,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door6_Open = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor6_Open = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1769,7 +1753,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door6_Close = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor6_Close = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1786,7 +1770,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock1_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock1_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1802,7 +1786,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock1_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock1_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1818,7 +1802,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock2_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock2_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1834,7 +1818,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock2_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock2_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1850,7 +1834,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock3_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock3_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1866,7 +1850,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock3_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock3_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1882,7 +1866,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock4_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock4_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1898,7 +1882,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock4_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock4_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1914,7 +1898,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock5_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock5_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1930,7 +1914,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock5_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock5_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1946,7 +1930,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock6_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock6_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1962,7 +1946,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Doorlock6_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoorlock6_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1980,7 +1964,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door1_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor1_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -1996,7 +1980,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door1_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor1_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2012,7 +1996,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door2_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor2_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2028,7 +2012,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door2_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor2_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2044,7 +2028,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door3_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor3_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2060,7 +2044,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door3_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor3_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2076,7 +2060,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door4_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor4_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2092,7 +2076,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door4_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor4_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2108,7 +2092,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door5_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor5_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2124,7 +2108,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door5_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor5_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2140,7 +2124,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door6_Opening = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor6_Opening = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2156,7 +2140,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     Door6_Closing = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevDoor6_Closing = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2165,52 +2149,62 @@ private void Driver_Started(object sender, EventArgs e)
         
         private void S1_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            // 1. Cập nhật CurrentDataTran
-            SQLLogin.UpdateTagValue("S1_DC1_Running", e.NewValue);
-
-            // 2. Tạo event cho Form khác nếu cần
+            // 🔔 Raise event để form khác nhận
             S1_DC1_RunningChanged?.Invoke(this, e);
-
-            // 3. Nếu từ 0 -> 1 thì insert
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1_DC1_Running == "0" && e.NewValue == "1")
             {
-                SQLLogin.CurrentDataTran.CreateAt = DateTime.Now;
-                SQLLogin.InsertAllTagsToSQL(SQLLogin.CurrentDataTran);
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_DC1_Running = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLoginDataTran.InsertDataTran(model);
             }
+            // Cập nhật trạng thái trước
             prevS1_DC1_Running = e.NewValue;
 
-            // 4. Update DataGridView
-         //  UpdateDataGridViewRow("Bơm 1 Đang Chạy", e.NewValue);
         }
 
         private void S1_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            // 1. Cập nhật CurrentDataTran
-            SQLLogin.UpdateTagValue("S1_DC2_Running", e.NewValue);
-
-            // 2. Tạo event cho Form khác nếu cần
+            // 🔔 Raise event để form khác nhận
             S1_DC2_RunningChanged?.Invoke(this, e);
-
-            // 3. Nếu từ 0 -> 1 thì insert
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1_DC2_Running == "0" && e.NewValue == "1")
             {
-                SQLLogin.CurrentDataTran.CreateAt = DateTime.Now;
-                SQLLogin.InsertAllTagsToSQL(SQLLogin.CurrentDataTran);
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_DC2_Running = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLoginDataTran.InsertDataTran(model);
             }
+            // Cập nhật trạng thái trước
             prevS1_DC2_Running = e.NewValue;
 
         }
         private void S1_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            // 1. Luôn update CurrentDataTran
-            SQLLogin.UpdateTagValue("S1_DC3_Running", e.NewValue);
+            // 🔔 Raise event để form khác nhận
             S1_DC3_RunningChanged?.Invoke(this, e);
-            // 2. Chỉ insert khi rising edge (0 -> 1)
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1_DC3_Running == "0" && e.NewValue == "1")
             {
-                SQLLogin.CurrentDataTran.CreateAt = DateTime.Now;
-                SQLLogin.InsertAllTagsToSQL(SQLLogin.CurrentDataTran);
+                // Tạo object DataTranModel mới
+                var model = new DataTranModel
+                {
+                    CreateAt = DateTime.Now,
+                    S1_DC3_Running = e.NewValue,
+                    // TODO: set các property khác nếu cần
+                };
+                SQLLoginDataTran.InsertDataTran(model);
             }
+            // Cập nhật trạng thái trước
             prevS1_DC3_Running = e.NewValue;
         }
         private void S2_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
@@ -2225,7 +2219,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S2_DC1_Running = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevS2_DC1_Running = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2241,7 +2235,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S2_DC2_Running = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevS2_DC2_Running = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2257,7 +2251,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S2_DC3_Running = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevS2_DC3_Running = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2273,7 +2267,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S3_DC1_Running = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevS3_DC1_Running = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2289,7 +2283,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S3_DC2_Running = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevS3_DC2_Running = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2305,7 +2299,7 @@ private void Driver_Started(object sender, EventArgs e)
                     CreateAt = DateTime.Now,
                     S3_DC3_Running = e.NewValue,
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             prevS3_DC3_Running = e.NewValue; // Cập nhật trạng thái trước
         }
@@ -2327,7 +2321,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S1_Remote = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS1Remote = e.NewValue;
@@ -2350,7 +2344,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S1_Local = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS1Local = e.NewValue;
@@ -2373,7 +2367,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S1_Auto = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS1Auto = e.NewValue;
@@ -2396,7 +2390,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S1_Man = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS1Man = e.NewValue;
@@ -2419,7 +2413,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S1_Local_Stop = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS1LocalStop = e.NewValue;
@@ -2438,7 +2432,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S2_Remote = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS2Remote = e.NewValue;
@@ -2457,7 +2451,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S2_Local = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS2Local = e.NewValue;
@@ -2476,7 +2470,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S2_Auto = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS2Auto = e.NewValue;
@@ -2494,7 +2488,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S2_Man = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS2Man = e.NewValue;
@@ -2511,7 +2505,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S2_Local_Stop = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS2LocalStop = e.NewValue;
@@ -2529,7 +2523,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S3_Remote = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS3Remote = e.NewValue;
@@ -2547,7 +2541,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S3_Local = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS3Local = e.NewValue;
@@ -2565,7 +2559,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S3_Auto = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS3Auto = e.NewValue;
@@ -2582,7 +2576,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S3_Man = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS3Man = e.NewValue;
@@ -2599,7 +2593,7 @@ private void Driver_Started(object sender, EventArgs e)
                     S3_Local_Stop = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
-                SQLLogin.InsertAllTagsToSQL(model);
+                SQLLoginDataTran.InsertDataTran(model);
             }
             // Cập nhật trạng thái trước
             prevS3LocalStop = e.NewValue;
@@ -2944,7 +2938,7 @@ private void Driver_Started(object sender, EventArgs e)
                     Fllow_SonDai = GetValue("Local Station/Channel1/Device1/Fllow_SonDai")
                 };
 
-                SQLLoginDataTran.InsertDataTran(data);
+                SQLLoginDataVanHanh.InsertDataVanHanh(data);
                 Console.WriteLine($"✅ Đã ghi DataVanHanh lúc {data.CreateAt}");
             }
             catch (Exception ex)

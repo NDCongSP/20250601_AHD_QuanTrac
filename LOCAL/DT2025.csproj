@@ -265,6 +265,7 @@
     <Compile Include="FrmUserManager.Designer.cs">
       <DependentUpon>FrmUserManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalData.cs" />
     <Compile Include="ManualInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,6 +280,7 @@
     <Compile Include="SQLLogin.cs" />
     <Compile Include="SQLLoginAlarm.cs" />
     <Compile Include="SQLLoginDataTran.cs" />
+    <Compile Include="SQLLoginDataVanHanh.cs" />
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,6 +305,8 @@
     <Compile Include="DataTranModel.cs" />
     <Compile Include="Tran1Model.cs" />
     <Compile Include="Tran2Model.cs" />
+    <Compile Include="Tran3Model.cs" />
+    <Compile Include="Tran4Model.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="Vanhanh.cs" />
     <EmbeddedResource Include="FrmDangKyUser.resx">

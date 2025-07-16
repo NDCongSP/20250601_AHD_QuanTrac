@@ -12,28 +12,24 @@ namespace RegistrationForm1
        
             public int Id { get; set; }
             public DateTime CreateAt { get; set; }
-
             public string S1_Remote { get; set; }
             public string S1_Local { get; set; }
             public string S1_Auto { get; set; }
             public string S1_Man { get; set; }
             public string S1_Local_Stop { get; set; }
             public string S1_Stop_Remote { get; set; }
-
             public string S2_Remote { get; set; }
             public string S2_Local { get; set; }
             public string S2_Auto { get; set; }
             public string S2_Man { get; set; }
             public string S2_Local_Stop { get; set; }
             public string S2_Stop_Remote { get; set; }
-
             public string S3_Remote { get; set; }
             public string S3_Local { get; set; }
             public string S3_Auto { get; set; }
             public string S3_Man { get; set; }
             public string S3_Local_Stop { get; set; }
             public string S3_Stop_Remote { get; set; }
-
             public string S1_DC1_Running { get; set; }
             public string S1_DC2_Running { get; set; }
             public string S1_DC3_Running { get; set; }
@@ -43,7 +39,6 @@ namespace RegistrationForm1
             public string S3_DC1_Running { get; set; }
             public string S3_DC2_Running { get; set; }
             public string S3_DC3_Running { get; set; }
-
             public string Door1_Opening { get; set; }
             public string Door1_Closing { get; set; }
             public string Door2_Opening { get; set; }
@@ -56,7 +51,6 @@ namespace RegistrationForm1
             public string Door5_Closing { get; set; }
             public string Door6_Opening { get; set; }
             public string Door6_Closing { get; set; }
-
             public string Doorlock1_Opening { get; set; }
             public string Doorlock1_Closing { get; set; }
             public string Doorlock2_Opening { get; set; }
@@ -69,7 +63,6 @@ namespace RegistrationForm1
             public string Doorlock5_Closing { get; set; }
             public string Doorlock6_Opening { get; set; }
             public string Doorlock6_Closing { get; set; }
-
             public string Door1_Open { get; set; }
             public string Door1_Close { get; set; }
             public string Door2_Open { get; set; }
@@ -82,7 +75,6 @@ namespace RegistrationForm1
             public string Door5_Close { get; set; }
             public string Door6_Open { get; set; }
             public string Door6_Close { get; set; }
-
             public string Doorlock1_1Open { get; set; }
             public string Doorlock1_1Close { get; set; }
             public string Doorlock1_2Open { get; set; }
@@ -113,8 +105,6 @@ namespace RegistrationForm1
         public string S1_Station_Stop { get; set; }
         public string S2_Station_Stop { get; set; }
         public string S3_Station_Stop { get; set; }
-        public string S1_Station_Alarm { get; set; }
-        public string S2_Station_Alarm { get; set; }
-        public string S3_Station_Alarm { get; set; }
+       
     }
     }

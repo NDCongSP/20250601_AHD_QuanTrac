@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-public class Tran1Model : INotifyPropertyChanged
+public class Tran3Model : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
 

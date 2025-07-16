@@ -51,5 +51,10 @@ namespace RegistrationForm1
         [DisplayName("S3_DC1 Lỗi")] public string S3_DC1_Over { get; set; }
         [DisplayName("S3_DC2 Lỗi")] public string S3_DC2_Over { get; set; }
         [DisplayName("S3_DC3 Lỗi")] public string S3_DC3_Over { get; set; }
+        public string S1_Station_Alarm { get; set; }
+        public string S2_Station_Alarm { get; set; }
+        public string S3_Station_Alarm { get; set; }
+
+
     }
 }

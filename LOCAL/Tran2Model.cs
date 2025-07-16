@@ -1,27 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
-namespace RegistrationForm1
+public class Tran2Model : INotifyPropertyChanged
 {
-    public class Tran2Model
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private int id;
+    private string device;
+    private string status;
+    private DateTime createAt;
+
+    public int Id
     {
+        get => id;
+        set { id = value; OnPropertyChanged(); }
+    }
 
+    public string Device
+    {
+        get => device;
+        set { device = value; OnPropertyChanged(); }
+    }
 
-        [DisplayName("STT")]
-        public int Id { get; set; }
+    public string Status
+    {
+        get => status;
+        set { status = value; OnPropertyChanged(); }
+    }
 
-        [DisplayName("Tên Thiết Bị")]
-        public string Device { get; set; }
+    public DateTime CreateAt
+    {
+        get => createAt;
+        set { createAt = value; OnPropertyChanged(); }
+    }
 
-        [DisplayName("Trạng Thái")]
-        public string Status { get; set; }
-
-        [DisplayName("Thời Gian")]
-        public DateTime CreateAt { get; set; }
-
+    protected void OnPropertyChanged([CallerMemberName] string name = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

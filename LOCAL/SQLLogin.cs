@@ -8,43 +8,34 @@ namespace RegistrationForm1
     public class SQLLogin
     {
         private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
-        public static DataTranModel CurrentDataTran { get; set; }
-
-        /// <summary>
-        /// Khởi tạo CurrentDataTran từ DB khi app khởi động
-        /// </summary>
+        public static DataVanHanhModel CurrentDataVanHanh { get; set; }    
+        /// Khởi tạo CurrentDataTran từ DB khi app khởi động     
         public static void InitCurrentDataTran()
         {
-            CurrentDataTran = GetLatestDataTranModel();
-            if (CurrentDataTran == null)
-                CurrentDataTran = new DataTranModel { CreateAt = DateTime.Now };
+            CurrentDataVanHanh = GetLatestDataVanhHanhModel();
+            if (CurrentDataVanHanh == null)
+                CurrentDataVanHanh = new DataVanHanhModel { CreateAt = DateTime.Now };
 
-            Console.WriteLine("✅ InitCurrentDataTran thành công.");
-        }
-
-        /// <summary>
-        /// Lấy bản ghi mới nhất từ DataTran
-        /// </summary>
-        /// <returns></returns>
-        public static DataTranModel GetLatestDataTranModel()
+            Console.WriteLine("✅ InitCurrentDataVanhHanh thành công.");
+        } 
+        /// Lấy bản ghi mới nhất từ DataTran     
+        public static DataVanHanhModel GetLatestDataVanhHanhModel()
         {
-            DataTranModel model = null;
+            DataVanHanhModel model = null;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT TOP 1 * FROM DataTran ORDER BY CreateAt DESC";
+                    string query = "SELECT TOP 1 * FROM DataVanHanh ORDER BY CreateAt DESC";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            model = new DataTranModel();
-                            PropertyInfo[] props = typeof(DataTranModel).GetProperties();
-
+                            model = new DataVanHanhModel();
+                            PropertyInfo[] props = typeof(DataVanHanhModel).GetProperties();
                             foreach (var prop in props)
                             {
                                 if (!reader.HasColumn(prop.Name)) continue;
@@ -67,12 +58,9 @@ namespace RegistrationForm1
             }
             return model;
         }
-
-        /// <summary>
-        /// Insert CurrentDataTran xuống SQL bằng Stored Procedure
-        /// </summary>
-        /// <param name="data"></param>
-        public static void InsertAllTagsToSQL(DataTranModel data)
+     
+        /// Insert CurrentDataVanHanh xuống SQL bằng Stored Procedure       
+        public static void InsertAllTagsToSQL(DataVanHanhModel data)
         {
             try
             {
@@ -84,7 +72,7 @@ namespace RegistrationForm1
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        PropertyInfo[] properties = typeof(DataTranModel).GetProperties();
+                        PropertyInfo[] properties = typeof(DataVanHanhModel).GetProperties();
                         foreach (PropertyInfo prop in properties)
                         {
                             if (prop.Name == "Id") continue;
@@ -122,40 +110,36 @@ namespace RegistrationForm1
         {
             try
             {
-                PropertyInfo prop = typeof(DataTranModel).GetProperty(tagName);
+                PropertyInfo prop = typeof(DataVanHanhModel).GetProperty(tagName);
                 if (prop == null)
                 {
                     Console.WriteLine($"⚠️ Property {tagName} không tồn tại trong DataTranModel");
                     return;
                 }
 
-                prop.SetValue(CurrentDataTran, newValue);
+                prop.SetValue(CurrentDataVanHanh, newValue);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"❌ Lỗi UpdateTagValue: {ex.Message}");
             }
         }
-        /// <summary>
-        /// Hàm update value và insert
-        /// </summary>
-        /// <param name="tagName"></param>
-        /// <param name="newValue"></param>
+                  
         public static void GenericTag_ValueChanged(string tagName, string newValue)
         {
             try
             {
-                PropertyInfo prop = typeof(DataTranModel).GetProperty(tagName);
+                PropertyInfo prop = typeof(DataVanHanhModel).GetProperty(tagName);
                 if (prop == null)
                 {
                     Console.WriteLine($"⚠️ Property {tagName} không tồn tại trong DataTranModel");
                     return;
                 }
 
-                prop.SetValue(CurrentDataTran, newValue);
-                CurrentDataTran.CreateAt = DateTime.Now;
+                prop.SetValue(CurrentDataVanHanh, newValue);
+                CurrentDataVanHanh.CreateAt = DateTime.Now;
 
-                InsertAllTagsToSQL(CurrentDataTran);
+                InsertAllTagsToSQL(CurrentDataVanHanh);
             }
             catch (Exception ex)
             {
