@@ -19,349 +19,495 @@ namespace RegistrationForm1
     
     public partial class FrmCanhBao : Form
     {
-  //      private List<DataAlarmModel> alarmList = new List<DataAlarmModel>();
-     //   private DataAlarmModel lastAlarm = null;    
-    
-     
-        private readonly Dictionary<string, string> lastValues = new Dictionary<string, string>();
-        private readonly Dictionary<string, DataAlarmModel> activeAlarms = new Dictionary<string, DataAlarmModel>();
-        private List<DataAlarmModel> alarmList = new List<DataAlarmModel>();
-        private readonly string[] tagNames = new[]
-        {
-            "S1_DC1_Over", "S1_DC2_Over", "S1_DC3_Over",
-            "S2_DC1_Over", "S2_DC2_Over", "S2_DC3_Over",
-            "S3_DC1_Over", "S3_DC2_Over", "S3_DC3_Over",
-            "Door1_PressureHigh", "Door1_PressureLow",
-            "Door2_PressureHigh", "Door2_PressureLow",
-            "Door3_PressureHigh", "Door3_PressureLow",
-            "Door4_PressureHigh", "Door4_PressureLow",
-            "Door5_PressureHigh", "Door5_PressureLow",
-            "Door6_PressureHigh", "Door6_PressureLow"
-        };
+        private FrmMain _mainForm;
+       
+        private BindingList<AlarmModel> alarmList = new BindingList<AlarmModel>();
+     //   private Dictionary<string, string> lastValues = new Dictionary<string, string>();
 
-
-        public FrmCanhBao()
-        {         
-        InitializeComponent();
-            Load += FrmCanhBao_Load;
-        }        
-        IAhdDriverConnector driver;
-        private void FrmCanhBao_Load(object sender, EventArgs e)
+        public FrmCanhBao(FrmMain frmMain)
         {
-            driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
-            if (!driver.IsStarted)
-                driver.Started += Driver_Started;
+            InitializeComponent();
+            //      Load += FrmCanhBao_Load;
+            _mainForm = frmMain; // ✅ Gán trước khi sử dụng
+            if (_mainForm != null)
+            {
+                _mainForm.S1_DC1_OverChanged += S1_DC1_Over_ValueChanged;
+                _mainForm.S1_DC2_OverChanged += S1_DC2_Over_ValueChanged;
+                _mainForm.S1_DC3_OverChanged += S1_DC3_Over_ValueChanged;
+                _mainForm.S2_DC1_OverChanged += S2_DC1_Over_ValueChanged;
+                _mainForm.S2_DC2_OverChanged += S2_DC2_Over_ValueChanged;
+                _mainForm.S2_DC3_OverChanged += S2_DC3_Over_ValueChanged;
+                _mainForm.S3_DC1_OverChanged += S3_DC1_Over_ValueChanged;
+                _mainForm.S3_DC2_OverChanged += S3_DC2_Over_ValueChanged;
+                _mainForm.S3_DC3_OverChanged += S3_DC3_Over_ValueChanged;
+                _mainForm.Door1_PressureHighChanged += Door1_PressureHigh_ValueChanged;
+                _mainForm.Door1_PressureLowChanged += Door1_PressureLow_ValueChanged;
+                _mainForm.Door2_PressureHighChanged += Door2_PressureHigh_ValueChanged;
+                _mainForm.Door2_PressureLowChanged += Door2_PressureLow_ValueChanged;
+                _mainForm.Door3_PressureHighChanged += Door3_PressureHigh_ValueChanged;
+                _mainForm.Door3_PressureLowChanged += Door3_PressureLow_ValueChanged;
+                _mainForm.Door4_PressureHighChanged += Door4_PressureHigh_ValueChanged;
+                _mainForm.Door4_PressureLowChanged += Door4_PressureLow_ValueChanged;
+                _mainForm.Door5_PressureHighChanged += Door5_PressureHigh_ValueChanged;
+                _mainForm.Door5_PressureLowChanged += Door5_PressureLow_ValueChanged;
+                _mainForm.Door6_PressureHighChanged += Door6_PressureHigh_ValueChanged;
+                _mainForm.Door6_PressureLowChanged += Door6_PressureLow_ValueChanged;
+                _mainForm.S1_Station_AlarmChanged += S1_Station_Alarm_ValueChanged;
+                _mainForm.S2_Station_AlarmChanged += S2_Station_Alarm_ValueChanged;
+                _mainForm.S3_Station_AlarmChanged += S3_Station_Alarm_ValueChanged;
+                // Khởi tạo lastValues
+
+                LoadInitialAlarms();
+
+            }
             else
-                Driver_Started(driver, null);
-         
-        }
-        private void RemoveAlarmFromGrid(string tagName)
-        {
-            alarmList.RemoveAll(a => a.TagName == tagName);
-            LoadAllAlarmsToGrid();
-        }
-        private void AddAlarmToGrid(DataAlarmModel alarm, string tagName)
-        {
-            // Xóa alarm cũ theo TagName
-            alarmList.RemoveAll(a => a.TagName == tagName);
-            // Thêm mới
-            alarmList.Add(alarm);
-            LoadAllAlarmsToGrid();
-        }
-        private DataAlarmModel TaoAlarmTuTag(string tagName, string value)
-        {
-            var alarm = new DataAlarmModel
             {
-                CreateAt = DateTime.Now,
-                DeviceCode = "DVC-01",
-                Area = "Trạm số " + tagName.Substring(1, 1),
-                Severity = "Cao",
-                TagName = tagName // Gán vào TagName để so sánh
-            };
-
-            var prop = typeof(DataAlarmModel).GetProperty(tagName);
-            if (prop != null && prop.CanWrite)
-            {
-                prop.SetValue(alarm, value);
+                MessageBox.Show("FrmMain instance is null. Please check.");
             }
 
-            return alarm;
         }
-        private void LoadAllAlarmsToGrid()
+       
+        private void LoadInitialAlarms()
         {
-            // Tạo DataTable hiển thị cảnh báo
-            var table = new DataTable();
-            table.Columns.Add("STT", typeof(int));
-            table.Columns.Add("Tên Cảnh Báo", typeof(string));
-            table.Columns.Add("Vị Trí", typeof(string));
-            table.Columns.Add("Trạng Thái", typeof(string));
-            table.Columns.Add("Thời Gian", typeof(string));
+            alarmList = new BindingList<AlarmModel>();
+            dataGridViewAlarm.AutoGenerateColumns = true;
+            dataGridViewAlarm.DataSource = alarmList;
+            FormatGridAlarm();
 
-            int stt = 1;
+            // ✅ Đọc trạng thái ban đầu các tag
+            LoadInitialAlarmStatus();// Hàm này sẽ đọc trạng thái ban đầu từ PLC hoặc nguồn dữ liệu khác
 
-            // Duyệt danh sách alarm
-            foreach (var alarm in alarmList)
+        }
+        private void FormatDgvHistory()
+        {
+            var dgv = DgvHistory;
+
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgv.EnableHeadersVisualStyles = false;
+
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgv.AutoResizeColumns();
+
+            dgv.RowTemplate.Height = 30;
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.AliceBlue;
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgv.AllowUserToAddRows = false;
+            dgv.ReadOnly = true;
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Đổi tên cột hiển thị (nếu cần)
+            if (dgv.Columns["CreateAt"] != null) dgv.Columns["CreateAt"].HeaderText = "Thời Gian";
+            if (dgv.Columns["Position"] != null) dgv.Columns["Position"].HeaderText = "Vị Trí";
+            // Thêm các cột khác nếu cần đổi tên
+        }
+        private void LoadDataAlarm()
+        {
+            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+            string query = "SELECT * FROM DataAlarm ORDER BY CreateAt DESC"; // Hiển thị mới nhất lên trước
+
+            try
             {
-                var props = typeof(DataAlarmModel).GetProperties();
-                foreach (var prop in props)
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    // Bỏ qua các property không phải cảnh báo
-                    if (prop.Name == "Id" || prop.Name == "CreateAt" ||
-                        prop.Name == "DeviceCode" || prop.Name == "Area" ||
-                        prop.Name == "Severity" || prop.Name == "TagName")
-                        continue;
-
-                    var value = prop.GetValue(alarm)?.ToString()?.ToUpper().Trim();
-
-                    // Nếu có giá trị cảnh báo (CAO / THẤP / LỖI)
-                    if (!string.IsNullOrWhiteSpace(value) &&
-                        (value.Contains("CAO") || value.Contains("THẤP") || value.Contains("LỖI")))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        // Lấy DisplayName tiếng Việt nếu có
-                        var displayAttr = prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
-                                              .FirstOrDefault() as DisplayNameAttribute;
-                        string tenCanhBao = displayAttr != null ? displayAttr.DisplayName : prop.Name;
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
 
-                        // Lấy vị trí từ tên biến
-                        string viTri = LayViTriTuTenBien(prop.Name);
+                        DgvHistory.DataSource = dt;
 
-                        // Thêm dòng mới vào DataTable
-                        table.Rows.Add(stt++, tenCanhBao, viTri, value, alarm.CreateAt.ToString("dd/MM/yyyy HH:mm:ss"));
+                        FormatDgvHistory(); // Gọi hàm format nếu có
                     }
                 }
             }
-
-            // Gán dữ liệu cho DataGridView
-            dgvCanhBao.DataSource = table;
-
-            // === Cấu hình hiển thị DataGridView ===
-
-            // Auto size các cột
-            dgvCanhBao.Columns["STT"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvCanhBao.Columns["Tên Cảnh Báo"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvCanhBao.Columns["Vị Trí"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvCanhBao.Columns["Trạng Thái"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvCanhBao.Columns["Thời Gian"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            // ✅ Đổi màu hàng dữ liệu nếu có cảnh báo
-            if (table.Rows.Count > 0)
+            catch (Exception ex)
             {
-                foreach (DataGridViewRow row in dgvCanhBao.Rows)
-                {
-                    if (!row.IsNewRow)
-                    {
-                        row.DefaultCellStyle.ForeColor = Color.Red;
-                        row.DefaultCellStyle.BackColor = Color.LightYellow;
-                        row.DefaultCellStyle.Font = new Font("Arial", 12, FontStyle.Bold);
-                    }
-                }
-            }
-
-            // ✅ Tuỳ chỉnh header
-            dgvCanhBao.EnableHeadersVisualStyles = false; // Cho phép tuỳ chỉnh màu header
-            dgvCanhBao.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkBlue;
-            dgvCanhBao.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvCanhBao.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            dgvCanhBao.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        }
-
-        private void Driver_Started(object sender, EventArgs e)
-        {       // Gán sự kiện cho Tag ValueChanged của các tag cần theo dõi    
-            // Giả sử driver đã kết nối sẵn, nếu chưa thì cần bắt sự kiện Driver_Started
-            foreach (string tagName in tagNames)
-            {
-                var tag = ahdDriverConnector1.GetTag($"Local Station/Channel1/Device1/{tagName}");
-                if (tag == null) continue;
-
-                lastValues[tagName] = tag.Value?.ToString();
-
-                string tagNameCopy = tagName;
-
-                tag.ValueChanged += (s, ev) =>
-                {
-                    string newValue = ev.NewValue?.ToString();
-                    string oldValue = lastValues.ContainsKey(tagNameCopy) ? lastValues[tagNameCopy] : null;
-
-                    if (newValue == "1" && oldValue != "1")
-                    {
-                        lastValues[tagNameCopy] = newValue;
-
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            var alarm = TaoAlarmTuTag(tagNameCopy, $"LỖI {tagNameCopy.Split('_')[1]}");
-                            AddAlarmToGrid(alarm, tagNameCopy);
-                            SaveAlarmToSql(alarm);
-                        });
-                    }
-                    else if (newValue == "0" && oldValue == "1")
-                    {
-                        lastValues[tagNameCopy] = newValue;
-
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            RemoveAlarmFromGrid(tagNameCopy);
-                        });
-                    }
-                    else
-                    {
-                        lastValues[tagNameCopy] = newValue; // cập nhật giá trị dù không có thay đổi 0→1
-                    }
-                };
-
-                // Kiểm tra trạng thái hiện tại nếu đang là 1
-                if (tag.Value?.ToString() == "1")
-                {
-                    var alarm = TaoAlarmTuTag(tagName, $"LỖI {tagName.Split('_')[1]}");
-                    AddAlarmToGrid(alarm, tagName);
-                    SaveAlarmToSql(alarm);
-                }
+                MessageBox.Show($"LoadDataAlarm Error: {ex.Message}");
             }
         }
-
-        // ✅ Hàm lưu cảnh báo vào SQL Server
-        private void SaveAlarmToSql(DataAlarmModel alarm)
+        private void LoadInitialAlarmStatus()
         {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            if (_mainForm == null)
             {
-                conn.Open();
+                MessageBox.Show("_mainForm is null");
+                return;
+            }        
+            string status_S1_DC1 = _mainForm.GetS1_DC1_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S1_DC1, "Trạm 1");
+            string status_S1_DC2 = _mainForm.GetS1_DC2_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S1_DC1, "Trạm 1");
+            string status_S1_DC3 = _mainForm.GetS1_DC3_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S1_DC3, "Trạm 1");
+            // Trạng thái lổi Trạm 2
+            string status_S2_DC1 = _mainForm.GetS2_DC1_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S2_DC1, "Trạm 2");
+            string status_S2_DC2 = _mainForm.GetS2_DC2_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S2_DC2, "Trạm 2");
+            string status_S2_DC3 = _mainForm.GetS2_DC3_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S2_DC3, "Trạm 2");
+            string status_S3_DC1 = _mainForm.GetS3_DC1_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S3_DC1, "Trạm 3");
+            string status_S3_DC2 = _mainForm.GetS3_DC2_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S3_DC2, "Trạm 3");
+            string status_S3_DC3 = _mainForm.GetS3_DC3_OverValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S2_DC3, "Trạm 3");
+            string status_Door1_PressureHigh = _mainForm.GetDoor1_PressureHighValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 1 Cao", status_Door1_PressureHigh, "Trạm 1");
+            string status_Door1_PressureLow = _mainForm.GetDoor1_PressureLowValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 1 Thấp", status_Door1_PressureLow, "Trạm 1");
+            string status_Door2_PressureHigh = _mainForm.GetDoor2_PressureHighValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 2 Cao", status_Door2_PressureHigh, "Trạm 1");
+            string status_Door2_PressureLow = _mainForm.GetDoor2_PressureLowValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 2 Thấp", status_Door2_PressureLow, "Trạm 1");
+            string status_Door3_PressureHigh = _mainForm.GetDoor3_PressureHighValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 3 Cao", status_Door3_PressureHigh, "Trạm 2");
+            string status_Door3_PressureLow = _mainForm.GetDoor3_PressureLowValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 3 Thấp", status_Door3_PressureLow, "Trạm 2");
+            string status_Door4_PressureHigh = _mainForm.GetDoor4_PressureHighValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 4 Cao", status_Door4_PressureHigh, "Trạm 2");
+            string status_Door4_PressureLow = _mainForm.GetDoor4_PressureLowValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 4 Thấp", status_Door4_PressureLow, "Trạm 2");
+            string status_Door5_PressureHigh = _mainForm.GetDoor5_PressureHighValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 5 Cao", status_Door5_PressureHigh, "Trạm 3");
+            string status_Door5_PressureLow = _mainForm.GetDoor5_PressureLowValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 5 Thấp", status_Door5_PressureLow, "Trạm 3");
+            string status_Door6_PressureHigh = _mainForm.GetDoor6_PressureHighValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 6 Cao", status_Door6_PressureHigh, "Trạm 3");
+            string status_Door6_PressureLow = _mainForm.GetDoor6_PressureLowValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Áp Suất Cửa 6 Thấp", status_Door6_PressureLow, "Trạm 3");
+            string status_S1_Station_Alarm = _mainForm.GetS1_Station_AlarmValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Lỗi Trạm 1", status_S1_Station_Alarm, "Trạm 1");
+            string status_S2_Station_Alarm = _mainForm.GetS2_Station_AlarmValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Lỗi Trạm 2", status_S2_Station_Alarm, "Trạm 2");
+            string status_S3_Station_Alarm = _mainForm.GetS3_Station_AlarmValue(); // trả về "1" hoặc "0"
+            UpdateAlarmStatus("Lỗi Trạm 3", status_S3_Station_Alarm, "Trạm 3");
 
-                var props = typeof(DataAlarmModel).GetProperties();
-                foreach (var prop in props)
+
+            //// ➡️ Tiếp tục cho các tag khác
+        }
+        private void S1_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Lỗi Trạm 1", status, "Trạm 1");
+            });
+        }
+        private void S2_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Lỗi Trạm 2", status, "Trạm 2");
+            });
+        }
+        private void S3_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Lỗi Trạm 3", status, "Trạm 3");
+            });
+        }
+
+        private void DataGridViewAlarm_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridViewAlarm.Rows[e.RowIndex].DataBoundItem is AlarmModel item)
+            {
+                if (item.Status == "1")
                 {
-                    if (prop.Name == "Id" || prop.Name == "CreateAt" ||
-                        prop.Name == "DeviceCode" || prop.Name == "Area" ||
-                        prop.Name == "Severity" || prop.Name == "TagName")
-                        continue;
+                    dataGridViewAlarm.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightPink;
+                    dataGridViewAlarm.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                }
+                else
+                {
+                    dataGridViewAlarm.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    dataGridViewAlarm.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                }
+            }
+        }
+        private void UpdateAlarmStatus(string tagName, string status, string position)
+        {
+            var alarm = alarmList.FirstOrDefault(x => x.TagName == tagName && x.Position == position);
 
-                    var value = prop.GetValue(alarm)?.ToString();
-                    if (!string.IsNullOrWhiteSpace(value) &&
-                        (value.ToUpper().Contains("CAO") ||
-                         value.ToUpper().Contains("THẤP") ||
-                         value.ToUpper().Contains("LỖI")))
+            if (status == "1")
+            {
+                if (alarm == null)
+                {
+                    alarmList.Add(new AlarmModel
                     {
-                        var displayAttr = prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
-                                              .FirstOrDefault() as DisplayNameAttribute;
-
-                        string tenCanhBao = displayAttr != null ? displayAttr.DisplayName : prop.Name;
-
-                        string query = @"INSERT INTO AlarmLogs 
-                        (AlarmTime, DeviceCode, Area, AlarmName, AlarmStatus, Severity) 
-                        VALUES (@time, @device, @area, @name, @status, @severity)";
-
-                        using (SqlCommand cmd = new SqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@time", alarm.CreateAt);
-                            cmd.Parameters.AddWithValue("@device", alarm.DeviceCode ?? "Unknown");
-                            cmd.Parameters.AddWithValue("@area", alarm.Area ?? "Unknown");
-                            cmd.Parameters.AddWithValue("@name", tenCanhBao);
-                            cmd.Parameters.AddWithValue("@status", value);
-                            cmd.Parameters.AddWithValue("@severity", alarm.Severity ?? "Không xác định");
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
+                        Id = alarmList.Count + 1,
+                        TagName = tagName,
+                        Status = status,
+                        Position = position,
+                        CreateAt = DateTime.Now
+                    });
+                }
+                else
+                {
+                    alarm.Status = status;
+                    alarm.CreateAt = DateTime.Now;
+                }
+            }
+            else
+            {
+                // Nếu status == "0", remove alarm khỏi danh sách (nếu muốn)
+                if (alarm != null)
+                {
+                    alarmList.Remove(alarm);
                 }
             }
         }
 
-        
-        // ✅ Hàm tạo đối tượng DataAlarmModel từ 1 tag cụ thể
-        public static DataAlarmModel CreateAlarmFromTag(string tagName, string status)
+        private void FormatGridAlarm()
         {
-            var alarm = new DataAlarmModel
-            {
-                CreateAt = DateTime.Now,
-                DeviceCode = "DVC-01",
-                Area = GetLocationFromPropertyName(tagName),
-                Severity = "Cao"
-            };
+            var dgv = dataGridViewAlarm;
 
-            var prop = typeof(DataAlarmModel).GetProperty(tagName);
-            if (prop != null && prop.CanWrite)
-            {
-                prop.SetValue(alarm, status);
-            }
+            // ✅ Font và header style
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgv.EnableHeadersVisualStyles = false;
 
-            return alarm;
+            // ✅ Font cell
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // ✅ Auto size columns
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgv.AutoResizeColumns();
+
+            // ✅ Height dòng
+            dgv.RowTemplate.Height = 30;
+
+            // ✅ Màu alternating rows
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.AliceBlue;
+
+            // ✅ Border style
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            // ✅ Không cho user thêm hàng mới
+            dgv.AllowUserToAddRows = false;
+
+            // ✅ ReadOnly nếu chỉ hiển thị
+            dgv.ReadOnly = true;
+
+            // ✅ Full row select
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // ✅ Gán AutoGenerateColumns trước set header
+            dgv.AutoGenerateColumns = true;
+
+            // ✅ Đổi tên header cột nếu cột tồn tại
+            if (dgv.Columns["Id"] != null) dgv.Columns["Id"].HeaderText = "STT";
+            if (dgv.Columns["TagName"] != null) dgv.Columns["TagName"].HeaderText = "Tên Cảnh Báo";
+            if (dgv.Columns["Status"] != null) dgv.Columns["Status"].HeaderText = "Trạng Thái";
+            if (dgv.Columns["Position"] != null) dgv.Columns["Position"].HeaderText = "Vị Trí";
+            if (dgv.Columns["CreateAt"] != null) dgv.Columns["CreateAt"].HeaderText = "Thời Gian";
+
+            // ✅ Event format màu
+            dgv.CellFormatting += DataGridViewAlarm_CellFormatting;
         }
-        // ✅ Các hàm phụ trợ
-
-        //private static bool IsSystemProperty(string propName)
-        //{
-        //    return propName == "Id" || propName == "CreateAt" || propName == "DeviceCode" || propName == "Area" || propName == "Severity";
-        //}
-
-        private static string GetLocationFromPropertyName(string propName)
+        private void S3_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            if (propName.Contains("Door1") || propName.Contains("Door2") || propName.Contains("S1_")) return "Trạm số 1";
-            if (propName.Contains("Door3") || propName.Contains("Door4") || propName.Contains("S2_")) return "Trạm số 2";
-            if (propName.Contains("Door5") || propName.Contains("Door6") || propName.Contains("S3_")) return "Trạm số 3";
-            return "Không rõ";
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Quá Tải Động Cơ 3", status, "Trạm 3");
+            });
+        }
+        private void S3_DC2_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Quá Tải Động Cơ 2", status, "Trạm 3");
+            });
+        }
+        private void S3_DC1_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Quá Tải Động Cơ 1", status, "Trạm 3");
+            });
         }
 
-        private string LayViTriTuTenBien(string propName)
+
+        //// Trạng thái lổi Trạm 2
+        private void S2_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            if (propName.Contains("Door1") || propName.Contains("Door2")) return "Trạm số 1";
-            if (propName.Contains("Door3") || propName.Contains("Door4")) return "Trạm số 2";
-            if (propName.Contains("Door5") || propName.Contains("Door6")) return "Trạm số 3";
+            string status = e.NewValue == "1" ? "1" : "0";
 
-            if (propName.Contains("S1_")) return "Trạm số 1";
-            if (propName.Contains("S2_")) return "Trạm số 2";
-            if (propName.Contains("S3_")) return "Trạm số 3";
-
-            return "Không rõ";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Quá Tải Động Cơ 3", status, "Trạm 2");
+            });
         }
-        private void LoadAlarmLogsFromSql()
+        private void S2_DC2_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
-            //    string query = "SELECT Id, AlarmTime, DeviceCode, Area, AlarmName, AlarmStatus, Severity FROM AlarmLogs ORDER BY AlarmTime DESC";
-            string query = "SELECT Id, AlarmTime,  Area, AlarmName, AlarmStatus FROM AlarmLogs ORDER BY AlarmTime DESC";
-            DataTable table = new DataTable();
+            string status = e.NewValue == "1" ? "1" : "0";
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+            this.Invoke((MethodInvoker)delegate
             {
-                conn.Open();
-                adapter.Fill(table);
-            }
+                UpdateAlarmStatus("Quá Tải Động Cơ 2", status, "Trạm 2");
+            });
+        }
+        private void S2_DC1_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
 
-            DgvHistory.DataSource = table;
-
-            // Định dạng cột nếu cần
-            DgvHistory.Columns["Id"].Visible = false;
-            DgvHistory.Columns["AlarmTime"].HeaderText = "Thời Gian";
-        //    DgvHistory.Columns["DeviceCode"].HeaderText = "Thiết Bị";
-            DgvHistory.Columns["Area"].HeaderText = "Khu Vực";
-            DgvHistory.Columns["AlarmName"].HeaderText = "Cảnh Báo";
-            DgvHistory.Columns["AlarmStatus"].HeaderText = "Trạng Thái";
-       //     DgvHistory.Columns["Severity"].HeaderText = "Mức Độ";
-
-            DgvHistory.Columns["AlarmTime"].Width = 150;
-            DgvHistory.Columns["AlarmName"].Width = 250;
-            DgvHistory.Columns["AlarmStatus"].Width = 120;
-
-            // Tô màu nếu cần
-            foreach (DataGridViewRow row in DgvHistory.Rows)
+            this.Invoke((MethodInvoker)delegate
             {
-                if (!row.IsNewRow && row.Cells["AlarmStatus"].Value?.ToString().ToUpper().Contains("LỖI") == true)
-                {
-                   // row.DefaultCellStyle.ForeColor = Color.Red;
-                    row.DefaultCellStyle.BackColor = Color.LightYellow;
-                }
-            }
-            // ✅ Tùy chỉnh màu tiêu đề
-            DgvHistory.EnableHeadersVisualStyles = false; // Cho phép tùy chỉnh tiêu đề
-            DgvHistory.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkBlue;
-            DgvHistory.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            DgvHistory.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            DgvHistory.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                UpdateAlarmStatus("Quá Tải Động Cơ 1", status, "Trạm 2");
+            });
+        }
+       
+        private void S1_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Quá Tải Động Cơ 3", status, "Trạm 1");
+            });
+        }
+        private void S1_DC2_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Quá Tải Động Cơ 2", status, "Trạm 1");
+            });
+        }
+        private void S1_DC1_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Quá Tải Động Cơ 1", status, "Trạm 1");
+            });
+        }
+        private void Door6_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 6 Thấp", status, "Trạm 3");
+            });
+        }
+        private void Door6_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 6 Cao", status, "Trạm 3");
+            });
+        }
+        private void Door5_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 5 Thấp", status, "Trạm 3");
+            });
+        }
+        private void Door5_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 5 Cao", status, "Trạm 3");
+            });
+        }
+        private void Door4_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 4 Thấp", status, "Trạm 2");
+            });
+        }
+        private void Door4_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 4 Cao", status, "Trạm 2");
+            });
+        }
+        private void Door3_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 3 Thấp", status, "Trạm 2");
+            });
+        }
+        private void Door3_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 3 Cao", status, "Trạm 2");
+            });
+        }
+        private void Door2_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 2 Thấp", status, "Trạm 1");
+            });
+        }
+        private void Door2_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 2 Cao", status, "Trạm 1");
+            });
+        }
+        private void Door1_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 1 Thấp", status, "Trạm 1");
+            });
+        }
+        private void Door1_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string status = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                UpdateAlarmStatus("Áp Suất Cửa 1 Cao", status, "Trạm 1");
+            });
         }
 
         private void bntLoad_Click(object sender, EventArgs e)
         {
-            LoadAlarmLogsFromSql();
+            LoadDataAlarm();
         }
     }
 }
+
+
+

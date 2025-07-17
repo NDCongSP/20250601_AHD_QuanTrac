@@ -14,5 +14,7 @@ namespace RegistrationForm1
         public static BindingList<Tran2Model> Tran2List { get; set; } = new BindingList<Tran2Model>();
         public static BindingList<Tran3Model> Tran3List { get; set; } = new BindingList<Tran3Model>();
         public static BindingList<Tran4Model> Tran4List { get; set; } = new BindingList<Tran4Model>();
+        public static BindingList<Tran5Model> Tran5List { get; set; } = new BindingList<Tran5Model>();
+        public static BindingList<Tran6Model> Tran6List { get; set; } = new BindingList<Tran6Model>();
     }
 }

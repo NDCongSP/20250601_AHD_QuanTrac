@@ -28,6 +28,8 @@ namespace RegistrationForm1
         private BindingList<Tran2Model> tran2List = new BindingList<Tran2Model>();
         private BindingList<Tran3Model> tran3List = new BindingList<Tran3Model>();
         private BindingList<Tran4Model> tran4List = new BindingList<Tran4Model>();
+        private BindingList<Tran5Model> tran5List = new BindingList<Tran5Model>();
+        private BindingList<Tran6Model> tran6List = new BindingList<Tran6Model>();
         public FrmTran(FrmMain frmMain)
         {        
             InitializeComponent();
@@ -139,8 +141,8 @@ namespace RegistrationForm1
             dataGridViewT2.CellFormatting += dataGridViewT2_CellFormatting;
             dataGridViewT3.CellFormatting += dataGridViewT3_CellFormatting;
             dataGridViewT4.CellFormatting += dataGridViewT4_CellFormatting;
-
-
+            dataGridViewT5.CellFormatting += dataGridViewT5_CellFormatting;
+            dataGridViewT6.CellFormatting += dataGridViewT6_CellFormatting;
 
             LoadAllTags1();
             ReadAllTagStatus1();
@@ -150,13 +152,11 @@ namespace RegistrationForm1
             ReadAllTagStatus3();
             LoadAllTags4();
             ReadAllTagStatus4();
-
+            LoadAllTags5();
+            ReadAllTagStatus5();
+            LoadAllTags6();
+            ReadAllTagStatus6();
         }
-        
-        
-     
-       
-       
         
         private void FormatGridT6()
         {
@@ -188,27 +188,7 @@ namespace RegistrationForm1
             // ✅ Full row select
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             // ✅ Đổi màu theo Status
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                var statusCell = row.Cells["Status"]; // cột Status
-
-                if (statusCell != null && statusCell.Value != null)
-                {
-                    string status = statusCell.Value.ToString();
-                    if (status == "1")
-                    {
-                        row.DefaultCellStyle.BackColor = Color.LightGreen;
-                    }
-                    else if (status == "0")
-                    {
-                        row.DefaultCellStyle.BackColor = Color.LightGray;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = Color.White;
-                    }
-                }
-            }
+            
         }
         private void FormatGridT5()
         {
@@ -240,27 +220,7 @@ namespace RegistrationForm1
             // ✅ Full row select
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             // ✅ Đổi màu theo Status
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                var statusCell = row.Cells["Status"]; // cột Status
-
-                if (statusCell != null && statusCell.Value != null)
-                {
-                    string status = statusCell.Value.ToString();
-                    if (status == "1")
-                    {
-                        row.DefaultCellStyle.BackColor = Color.LightGreen;
-                    }
-                    else if (status == "0")
-                    {
-                        row.DefaultCellStyle.BackColor = Color.LightGray;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = Color.White;
-                    }
-                }
-            }
+            
         }
         private void FormatGridT4()
         {
@@ -740,42 +700,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door6_PressureHigh_Stop.Visible = true; Pic_Door6_PressureHigh.Visible = false; });
         }
-        private void Door6_Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Close.Visible = true; Pic_Door6_Close_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Close_Stop.Visible = true; Pic_Door6_Close.Visible = false; });
-        }
-        private void Door6_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Open.Visible = true; Pic_Door6_Open_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Open_Stop.Visible = true; Pic_Door6_Open.Visible = false; });
-        }
-        private void Door6_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Closing.Visible = true; Pic_Door6_Closing_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Closing_Stop.Visible = true; Pic_Door6_Closing.Visible = false; });
-        }
-        private void Door6_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Opening.Visible = true; Pic_Door6_Opening_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door6_Opening_Stop.Visible = true; Pic_Door6_Opening.Visible = false; });
-        }
+       
         //End Tràn 6
         // Tràn 5
         private void Door5_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
@@ -796,79 +721,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door5_PressureLow_Stop.Visible = true; Pic_Door5_PressureLow.Visible = false; });
         }
-        private void Door5_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Opening.Visible = true; Pic_Door5_Opening_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Opening_Stop.Visible = true; Pic_Door5_Opening.Visible = false; });
-        }
-        private void Door5_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Closing.Visible = true; Pic_Door5_Closing_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Closing_Stop.Visible = true; Pic_Door5_Closing.Visible = false; });
-        }
-        private void Door5_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Open.Visible = true; Pic_Door5_Open_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Open_Stop.Visible = true; Pic_Door5_Open.Visible = false; });
-        }
-        private void Door5_Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Close.Visible = true; Pic_Door5_Close_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Door5_Close_Stop.Visible = true; Pic_Door5_Close.Visible = false; });
-        }
-
-        private void Doorlock5_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_2Open.Visible = true; Pic_Doorlock5_2Open_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_2Open_Stop.Visible = true; Pic_Doorlock5_2Open.Visible = false; });
-        }
-        private void Doorlock5_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_2Close.Visible = true; Pic_Doorlock5_2Close_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_2Close_Stop.Visible = true; Pic_Doorlock5_2Close.Visible = false; });
-        }
-        private void Doorlock5_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_1Open.Visible = true; Pic_Doorlock5_1Open_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_1Open_Stop.Visible = true; Pic_Doorlock5_1Open.Visible = false; });
-        }
-        private void Doorlock5_1Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_1Close.Visible = true; Pic_Doorlock5_1Close_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_Doorlock5_1Close_Stop.Visible = true; Pic_Doorlock5_1Close.Visible = false; });
-        }
+       
         //End Tràn 5
         //Tràn 4
         private void Door4_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
@@ -952,7 +805,6 @@ namespace RegistrationForm1
                 this.Invoke((MethodInvoker)delegate { Pic_Door1_PressureHigh_Stop.Visible = true; Pic_Door1_PressureHigh.Visible = false; });
         }
         
-        
        
         // Trạng thái lổi Trạm 3
         private void S3_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
@@ -982,34 +834,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_S3_DC1_Over_Stop.Visible = true; PicT6_S3_DC1_Over_Stop.Visible = true; Pic_S3_DC1_Over.Visible = false; PicT6_S3_DC1_Over.Visible = false; });
         }
-
-        private void S3_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_S3_DC3_Running.Visible = true; PicT6_S3_DC3_Running.Visible = true; Pic_S3_DC3_Stop.Visible = false; PicT6_S3_DC3_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_S3_DC3_Stop.Visible = true; PicT6_S3_DC3_Stop.Visible = true; Pic_S3_DC3_Running.Visible = false; PicT6_S3_DC3_Running.Visible = false; });
-        }
-        private void S3_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_S3_DC2_Running.Visible = true; PicT6_S3_DC2_Running.Visible = true; Pic_S3_DC2_Stop.Visible = false; PicT6_S3_DC2_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_S3_DC2_Stop.Visible = true; PicT6_S3_DC2_Stop.Visible = true; Pic_S3_DC2_Running.Visible = false; PicT6_S3_DC2_Running.Visible = false; });
-        }
-        private void S3_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            if (e.NewValue == "1")
-            {
-                this.Invoke((MethodInvoker)delegate { Pic_S3_DC1_Running.Visible = true; PicT6_S3_DC1_Running.Visible = true; Pic_S3_DC1_Stop.Visible = false; PicT6_S3_DC1_Stop.Visible = false; });
-            }
-            else
-                this.Invoke((MethodInvoker)delegate { Pic_S3_DC1_Stop.Visible = true; PicT6_S3_DC1_Stop.Visible = true; Pic_S3_DC1_Running.Visible = false; PicT6_S3_DC1_Running.Visible = false; });
-        }
+    
         // Trạng thái lổi Trạm 2
         private void S2_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -1276,8 +1101,6 @@ namespace RegistrationForm1
                 GlobalData.Tran2List.Add(new Tran2Model { Id = stt++, Device = "Chốt 2_2 Mở Hết", Status = "0", CreateAt = DateTime.Now });
                 GlobalData.Tran2List.Add(new Tran2Model { Id = stt++, Device = "Chốt 2_2 Đóng Hết", Status = "0", CreateAt = DateTime.Now });
 
-
-
                 // Thêm các Tag khác
             }
             tran2List = GlobalData.Tran2List;
@@ -1287,7 +1110,6 @@ namespace RegistrationForm1
 
             FormatGridT2();
         }
-
         private void ReadAllTagStatus2()
         {
             if (_mainForm == null)
@@ -1942,6 +1764,424 @@ namespace RegistrationForm1
                 // ✅ Update hình ảnh
                 Pic_Doorlock4_1Close.Visible = (newValue == "1");
                 Pic_Doorlock4_1Close_Stop.Visible = (newValue != "1");
+            });
+        }
+        // Kết thúc Tràn 4
+        // Tràn 5
+        private void LoadAllTags5()
+        {
+            if (GlobalData.Tran5List.Count == 0)
+            {
+                int stt = 1;
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Bơm 1 Đang Chạy", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Bơm 2 Đang Chạy", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Bơm 3 Đang Chạy", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Cửa 5 Mở Hoàn Toàn", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Cửa 5 Đóng Hoàn Toàn", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Cửa 5 Đang Mở", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Cửa 5 Đang Đóng", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Chốt 5_1 Mở Hết", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Chốt 5_1 Đóng Hết", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Chốt 5_2 Mở Hết", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran5List.Add(new Tran5Model { Id = stt++, Device = "Chốt 5_2 Đóng Hết", Status = "0", CreateAt = DateTime.Now });
+
+
+
+                // Thêm các Tag khác
+            }
+            tran5List = GlobalData.Tran5List;
+
+            if (dataGridViewT5.DataSource == null)
+                dataGridViewT5.DataSource = tran5List;
+
+            FormatGridT5();
+        }
+
+        private void ReadAllTagStatus5()
+        {
+            if (_mainForm == null)
+            {
+                MessageBox.Show("_mainForm is null");
+                return;
+            }
+            string pump1 = _mainForm.GetS3_DC1_RunningValue();
+            string pump2 = _mainForm.GetS3_DC2_RunningValue();
+            string pump3 = _mainForm.GetS3_DC3_RunningValue();
+            string door5Open = _mainForm.GetDoor5_OpenValue();
+            string door5Close = _mainForm.GetDoor5_CloseValue();
+            string door5Opening = _mainForm.GetDoor5_OpeningValue();
+            string door5Closing = _mainForm.GetDoor5_ClosingValue();
+            string doorlock5_1Open = _mainForm.GetDoorlock5_1OpenValue();
+            string doorlock5_1Close = _mainForm.GetDoorlock5_1CloseValue();
+            string doorlock5_2Open = _mainForm.GetDoorlock5_2OpenValue();
+            string doorlock5_2Close = _mainForm.GetDoorlock5_2CloseValue();
+
+            UpdateTagValue5("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
+            UpdateTagValue5("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
+            UpdateTagValue5("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
+            UpdateTagValue5("Cửa 5 Mở Hoàn Toàn", door5Open == "1" ? "1" : "0");
+            UpdateTagValue5("Cửa 5 Đóng Hoàn Toàn", door5Close == "1" ? "1" : "0");
+            UpdateTagValue5("Cửa 5 Đang Mở", door5Opening == "1" ? "1" : "0");
+            UpdateTagValue5("Cửa 5 Đang Đóng", door5Closing == "1" ? "1" : "0");
+            UpdateTagValue5("Chốt 5_1 Mở Hết", doorlock5_1Open == "1" ? "1" : "0");
+            UpdateTagValue5("Chốt 5_1 Đóng Hết", doorlock5_1Close == "1" ? "1" : "0");
+            UpdateTagValue5("Chốt 5_2 Mở Hết", doorlock5_2Open == "1" ? "1" : "0");
+            UpdateTagValue5("Chốt 5_2 Đóng Hết", doorlock5_2Close == "1" ? "1" : "0");
+
+            // Thêm các tag khác tương tự
+        }
+        private void dataGridViewT5_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 &&
+                dataGridViewT5.Rows[e.RowIndex].DataBoundItem is Tran5Model item)
+            {
+                if (dataGridViewT5.Columns[e.ColumnIndex].DataPropertyName == "Status")
+                {
+                    if (item.Status == "1")
+                    {
+                        dataGridViewT5.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                        dataGridViewT5.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        dataGridViewT5.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                        dataGridViewT5.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                }
+                // ✅ Đặt header tiếng Việt
+                if (dataGridViewT5.Columns.Contains("Id"))
+                    dataGridViewT5.Columns["Id"].HeaderText = "STT";
+
+                if (dataGridViewT5.Columns.Contains("Device"))
+                    dataGridViewT5.Columns["Device"].HeaderText = "Thiết Bị";
+
+                if (dataGridViewT5.Columns.Contains("Status"))
+                    dataGridViewT5.Columns["Status"].HeaderText = "Trạng Thái";
+
+                if (dataGridViewT5.Columns.Contains("CreateAt"))
+                    dataGridViewT5.Columns["CreateAt"].HeaderText = "Thời Gian";
+            }
+        }
+        private void UpdateTagValue5(string device, string status)
+        {
+            if (dataGridViewT5.InvokeRequired)
+            {
+                dataGridViewT5.Invoke(new Action(() => { UpdateTagValue5(device, status); }));
+                return;
+            }
+
+            var item = tran5List.FirstOrDefault(x => x.Device == device);
+            if (item != null)
+            {
+                item.Status = status;
+                item.CreateAt = DateTime.Now;
+
+                int index = tran5List.IndexOf(item);
+                if (index >= 0)
+                {
+                    dataGridViewT5.InvalidateRow(index); // Force redraw row formatting
+                }
+            }
+        }
+        private void S3_DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Bơm 3 Đang Chạy", newValue);
+                UpdateTagValue6("Bơm 3 Đang Chạy", newValue);
+                // ✅ Update hình ảnh
+                Pic_S3_DC3_Running.Visible = (newValue == "1");
+                PicT6_S3_DC3_Running.Visible = (newValue == "1");
+                Pic_S3_DC3_Stop.Visible = (newValue != "1");
+                PicT6_S3_DC3_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void S3_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Bơm 2 Đang Chạy", newValue);
+                UpdateTagValue6("Bơm 2 Đang Chạy", newValue);
+                // ✅ Update hình ảnh
+                Pic_S3_DC2_Running.Visible = (newValue == "1");
+                PicT6_S3_DC2_Running.Visible = (newValue == "1");
+                Pic_S3_DC2_Stop.Visible = (newValue != "1");
+                PicT6_S3_DC2_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void S3_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Bơm 1 Đang Chạy", newValue);
+               UpdateTagValue6("Bơm 1 Đang Chạy", newValue);
+                // ✅ Update hình ảnh
+                Pic_S3_DC1_Running.Visible = (newValue == "1");
+                PicT6_S3_DC1_Running.Visible = (newValue == "1");
+                Pic_S3_DC1_Stop.Visible = (newValue != "1");
+                PicT6_S3_DC1_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Door5_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Cửa 5 Đang Mở", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door5_Opening.Visible = (newValue == "1");
+                Pic_Door5_Opening_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Door5_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Cửa 5 Đang Đóng", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door5_Closing.Visible = (newValue == "1");
+                Pic_Door5_Closing_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Door5_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Cửa 5 Mở Hoàn Toàn", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door5_Open.Visible = (newValue == "1");
+                Pic_Door5_Open_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Door5_Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Cửa 5 Đóng Hoàn Toàn", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door5_Close.Visible = (newValue == "1");
+                Pic_Door5_Close_Stop.Visible = (newValue != "1");
+            });
+        }
+
+        private void Doorlock5_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Chốt 5_2 Mở Hết", newValue);
+                // ✅ Update hình ảnh
+                Pic_Doorlock5_2Open.Visible = (newValue == "1");
+                Pic_Doorlock5_2Open_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Doorlock5_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Chốt 5_2 Đóng Hết", newValue);
+                // ✅ Update hình ảnh
+                Pic_Doorlock5_2Close.Visible = (newValue == "1");
+                Pic_Doorlock5_2Close_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Doorlock5_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Chốt 5_1 Mở Hết", newValue);
+                // ✅ Update hình ảnh
+                Pic_Doorlock5_1Open.Visible = (newValue == "1");
+                Pic_Doorlock5_1Open_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Doorlock5_1Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue5("Chốt 5_1 Đóng Hết", newValue);
+                // ✅ Update hình ảnh
+                Pic_Doorlock5_1Close.Visible = (newValue == "1");
+                Pic_Doorlock5_1Close_Stop.Visible = (newValue != "1");
+            });
+        }
+        // Kết thúc Tràn 5
+        // Tràn 6
+        private void LoadAllTags6()
+        {
+            if (GlobalData.Tran6List.Count == 0)
+            {
+                int stt = 1;
+                GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Bơm 1 Đang Chạy", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Bơm 2 Đang Chạy", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Bơm 3 Đang Chạy", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Cửa 6 Mở Hoàn Toàn", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Cửa 6 Đóng Hoàn Toàn", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Cửa 6 Đang Mở", Status = "0", CreateAt = DateTime.Now });
+                GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Cửa 6 Đang Đóng", Status = "0", CreateAt = DateTime.Now });
+                
+
+
+
+                // Thêm các Tag khác
+            }
+            tran6List = GlobalData.Tran6List;
+
+            if (dataGridViewT6.DataSource == null)
+                dataGridViewT6.DataSource = tran6List;
+
+            FormatGridT6();
+        }
+
+        private void ReadAllTagStatus6()
+        {
+            if (_mainForm == null)
+            {
+                MessageBox.Show("_mainForm is null");
+                return;
+            }
+            string pump1 = _mainForm.GetS3_DC1_RunningValue();
+            string pump2 = _mainForm.GetS3_DC2_RunningValue();
+            string pump3 = _mainForm.GetS3_DC3_RunningValue();
+            string door6Open = _mainForm.GetDoor6_OpenValue();
+            string door6Close = _mainForm.GetDoor6_CloseValue();
+            string door6Opening = _mainForm.GetDoor6_OpeningValue();
+            string door6Closing = _mainForm.GetDoor6_ClosingValue();
+            
+
+            UpdateTagValue6("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
+            UpdateTagValue6("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
+            UpdateTagValue6("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
+            UpdateTagValue6("Cửa 6 Mở Hoàn Toàn", door6Open == "1" ? "1" : "0");
+            UpdateTagValue6("Cửa 6 Đóng Hoàn Toàn", door6Close == "1" ? "1" : "0");
+            UpdateTagValue6("Cửa 6 Đang Mở", door6Opening == "1" ? "1" : "0");
+            UpdateTagValue6("Cửa 6 Đang Đóng", door6Closing == "1" ? "1" : "0");
+            
+
+            // Thêm các tag khác tương tự
+        }
+        private void dataGridViewT6_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 &&
+                dataGridViewT6.Rows[e.RowIndex].DataBoundItem is Tran6Model item)
+            {
+                if (dataGridViewT6.Columns[e.ColumnIndex].DataPropertyName == "Status")
+                {
+                    if (item.Status == "1")
+                    {
+                        dataGridViewT6.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                        dataGridViewT6.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        dataGridViewT6.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                        dataGridViewT6.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                }
+                // ✅ Đặt header tiếng Việt
+                if (dataGridViewT6.Columns.Contains("Id"))
+                    dataGridViewT6.Columns["Id"].HeaderText = "STT";
+
+                if (dataGridViewT6.Columns.Contains("Device"))
+                    dataGridViewT6.Columns["Device"].HeaderText = "Thiết Bị";
+
+                if (dataGridViewT6.Columns.Contains("Status"))
+                    dataGridViewT6.Columns["Status"].HeaderText = "Trạng Thái";
+
+                if (dataGridViewT6.Columns.Contains("CreateAt"))
+                    dataGridViewT6.Columns["CreateAt"].HeaderText = "Thời Gian";
+            }
+        }
+        private void UpdateTagValue6(string device, string status)
+        {
+            if (dataGridViewT6.InvokeRequired)
+            {
+                dataGridViewT6.Invoke(new Action(() => { UpdateTagValue6(device, status); }));
+                return;
+            }
+
+            var item = tran6List.FirstOrDefault(x => x.Device == device);
+            if (item != null)
+            {
+                item.Status = status;
+                item.CreateAt = DateTime.Now;
+
+                int index = tran6List.IndexOf(item);
+                if (index >= 0)
+                {
+                    dataGridViewT6.InvalidateRow(index); // Force redraw row formatting
+                }
+            }
+        }
+        private void Door6_Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue6("Cửa 6 Đóng Hoàn Toàn", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door6_Close.Visible = (newValue == "1");
+                Pic_Door6_Close_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Door6_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue6("Cửa 6 Mở Hoàn Toàn", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door6_Open.Visible = (newValue == "1");
+                Pic_Door6_Open_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Door6_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue6("Cửa 6 Đang Đóng", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door6_Closing.Visible = (newValue == "1");
+                Pic_Door6_Closing_Stop.Visible = (newValue != "1");
+            });
+        }
+        private void Door6_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            string newValue = e.NewValue == "1" ? "1" : "0";
+            this.Invoke((MethodInvoker)delegate
+            {
+                // ✅ Update giá trị BindingList
+                UpdateTagValue6("Cửa 6 Đang Mở", newValue);
+                // ✅ Update hình ảnh
+                Pic_Door6_Opening.Visible = (newValue == "1");
+                Pic_Door6_Opening_Stop.Visible = (newValue != "1");
             });
         }
     }

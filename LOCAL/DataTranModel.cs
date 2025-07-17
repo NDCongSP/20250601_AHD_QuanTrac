@@ -11,8 +11,9 @@ namespace RegistrationForm1
     {
        
             public int Id { get; set; }
-            public DateTime CreateAt { get; set; }
-            public string S1_Remote { get; set; }
+            public DateTime CreateAt { get; set; }       
+        public string Position { get; set; }
+        public string S1_Remote { get; set; }
             public string S1_Local { get; set; }
             public string S1_Auto { get; set; }
             public string S1_Man { get; set; }
@@ -105,6 +106,7 @@ namespace RegistrationForm1
         public string S1_Station_Stop { get; set; }
         public string S2_Station_Stop { get; set; }
         public string S3_Station_Stop { get; set; }
-       
+        public string TagName { get; set; }
+
     }
     }

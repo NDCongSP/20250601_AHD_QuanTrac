@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace RegistrationForm1
                     string query = @"
                         INSERT INTO DataTran
                         (
-                            CreateAt,
+                            CreateAt,Position,
                             S1_Remote, S1_Local, S1_Auto, S1_Man, S1_Local_Stop, S1_Stop_Remote,
                             S2_Remote, S2_Local, S2_Auto, S2_Man, S2_Local_Stop, S2_Stop_Remote,
                             S3_Remote, S3_Local, S3_Auto, S3_Man, S3_Local_Stop, S3_Stop_Remote,
@@ -46,12 +47,12 @@ namespace RegistrationForm1
                             Doorlock5_1Open, Doorlock5_1Close, Doorlock5_2Open, Doorlock5_2Close,
                             Doorlock6_1Open, Doorlock6_1Close, Doorlock6_2Open, Doorlock6_2Close,
                             S1_Station_Run, S2_Station_Run, S3_Station_Run,
-                            S1_Station_Stop, S2_Station_Stop, S3_Station_Stop
+                            S1_Station_Stop, S2_Station_Stop, S3_Station_Stop,
                            
-                        )
+                        TagName)
                         VALUES
                         (
-                            @CreateAt,
+                            @CreateAt,@Position,
                             @S1_Remote, @S1_Local, @S1_Auto, @S1_Man, @S1_Local_Stop, @S1_Stop_Remote,
                             @S2_Remote, @S2_Local, @S2_Auto, @S2_Man, @S2_Local_Stop, @S2_Stop_Remote,
                             @S3_Remote, @S3_Local, @S3_Auto, @S3_Man, @S3_Local_Stop, @S3_Stop_Remote,
@@ -73,13 +74,15 @@ namespace RegistrationForm1
                             @Doorlock5_1Open, @Doorlock5_1Close, @Doorlock5_2Open, @Doorlock5_2Close,
                             @Doorlock6_1Open, @Doorlock6_1Close, @Doorlock6_2Open, @Doorlock6_2Close,
                             @S1_Station_Run, @S2_Station_Run, @S3_Station_Run,
-                            @S1_Station_Stop, @S2_Station_Stop, @S3_Station_Stop
+                            @S1_Station_Stop, @S2_Station_Stop, @S3_Station_Stop,
                            
-                        )";
+                        @TagName)";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@CreateAt", data.CreateAt);
+                        cmd.Parameters.AddWithValue("@Position", string.IsNullOrEmpty(data.Position) ? "0" : data.Position);
+                        cmd.Parameters.AddWithValue("@TagName", string.IsNullOrEmpty(data.TagName) ? "" : data.TagName);
                         cmd.Parameters.AddWithValue("@S1_Remote", string.IsNullOrEmpty(data.S1_Remote) ? "0" : data.S1_Remote);
                         cmd.Parameters.AddWithValue("@S1_Local", string.IsNullOrEmpty(data.S1_Local) ? "0" : data.S1_Local);
                         cmd.Parameters.AddWithValue("@S1_Auto", string.IsNullOrEmpty(data.S1_Auto) ? "0" : data.S1_Auto);

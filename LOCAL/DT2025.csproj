@@ -191,6 +191,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlarmModel.cs" />
     <Compile Include="Chart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -307,6 +308,8 @@
     <Compile Include="Tran2Model.cs" />
     <Compile Include="Tran3Model.cs" />
     <Compile Include="Tran4Model.cs" />
+    <Compile Include="Tran5Model.cs" />
+    <Compile Include="Tran6Model.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="Vanhanh.cs" />
     <EmbeddedResource Include="FrmDangKyUser.resx">

@@ -373,7 +373,6 @@
         private System.Windows.Forms.Button bnt_BaoCao;
         private System.Windows.Forms.Button bnt_TrangChu;
         private System.Windows.Forms.Button bnt_User;
-        private Ahd.Winforms.Controls.AhdDriverConnector ahdDriverConnector1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer1;
@@ -382,5 +381,6 @@
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tm_login;
+        public Ahd.Winforms.Controls.AhdDriverConnector ahdDriverConnector1;
     }
 }

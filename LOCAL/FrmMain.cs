@@ -665,8 +665,10 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Trạm 1 Chạy", // ✅ Tên tag
                     S1_Station_Run = e.NewValue,
-                    // TODO: set các property khác nếu cần
+                   
                 };
                 SQLLoginDataTran.InsertDataTran(model);
             }
@@ -684,6 +686,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Trạm 2 Chạy", // ✅ Tên tag
                     S2_Station_Run = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -702,6 +706,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Trạm 3 Chạy", // ✅ Tên tag
                     S3_Station_Run = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -720,6 +726,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Trạm 1 Dừng", // ✅ Tên tag
                     S1_Station_Stop = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -738,6 +746,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Trạm 2 Dừng", // ✅ Tên tag
                     S2_Station_Stop = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -756,6 +766,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Trạm 3 Dừng", // ✅ Tên tag
                     S3_Station_Stop = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -774,6 +786,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Trạm 1 Lỗi", // ✅ Tên tag
                     S1_Station_Alarm = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -792,6 +806,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Trạm 2 Lỗi", // ✅ Tên tag
                     S2_Station_Alarm = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -810,6 +826,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Trạm 3 Lỗi", // ✅ Tên tag
                     S3_Station_Alarm = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -828,7 +846,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 1",
+                    Position = "Trạm 1",
+                    TagName = "Áp Suất Cửa 1 Cao", // ✅ Tên tag
                     Door1_PressureHigh = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -845,7 +864,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 1",
+                    Position = "Trạm 1",
+                    TagName = "Áp Suất Cửa 1 Thấp", // ✅ Tên tag
                     Door1_PressureLow = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -862,7 +882,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 1",
+                    Position = "Trạm 1",
+                    TagName = "Áp Suất Cửa 2 Cao", // ✅ Tên tag
                     Door2_PressureHigh = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -879,7 +900,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 1",
+                    Position = "Trạm 1",
+                    TagName = "Áp Suất Cửa 2 Thấp", // ✅ Tên tag
                     Door2_PressureLow = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -896,7 +918,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 2",
+                    Position = "Trạm 2",
+                    TagName = "Áp Suất Cửa 3 Cao", // ✅ Tên tag
                     Door3_PressureHigh = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -913,7 +936,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 2",
+                    Position = "Trạm 2",
+                    TagName = "Áp Suất Cửa 3 Thấp", // ✅ Tên tag
                     Door3_PressureLow = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -930,7 +954,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 2",
+                    Position = "Trạm 2",
+                    TagName = "Áp Suất Cửa 4 Cao", // ✅ Tên tag
                     Door4_PressureHigh = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -947,7 +972,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 2",
+                    Position = "Trạm 2",
+                    TagName = "Áp Suất Cửa 4 Thấp", // ✅ Tên tag
                     Door4_PressureLow = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -964,7 +990,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 3",
+                    Position = "Trạm 3",
+                    TagName ="Áp Suất Cửa 5 Cao", // ✅ Tên tag
                     Door5_PressureHigh = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -981,7 +1008,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 3",
+                    Position = "Trạm 3",
+                    TagName = "Áp Suất Cửa 5 Thấp", // ✅ Tên tag
                     Door5_PressureLow = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -998,7 +1026,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 3",
+                    Position = "Trạm 3",
+                    TagName = "Áp Suất Cửa 6 Cao", // ✅ Tên tag
                     Door6_PressureHigh = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1015,15 +1044,14 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 3",
+                    Position = "Trạm 3",
+                    TagName = "Áp Suất Cửa 6 Thấp", // ✅ Tên tag
                     Door6_PressureLow = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
             prevDoor6_PressureLow = e.NewValue; // Cập nhật trạng thái trước
         }
-
-
         private void S1_DC1_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             S1_DC1_OverChanged?.Invoke(this, e);
@@ -1034,13 +1062,15 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 1",
+                    Position = "Trạm 1",
+                    TagName = "Quá Tải Động Cơ 1", // ✅ Tên tag
                     S1_DC1_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
             prevS1_DC1_Overload = e.NewValue; // Cập nhật trạng thái trước
         }
+
         private void S1_DC2_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             S1_DC2_OverChanged?.Invoke(this, e);
@@ -1051,7 +1081,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 1",
+                    Position = "Trạm 1",
+                    TagName = "Quá Tải Động Cơ 2", // ✅ Tên tag
                     S1_DC2_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1068,7 +1099,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 1",
+                    Position = "Trạm 1",
+                    TagName = "Quá Tải Động Cơ 3", // ✅ Tên tag
                     S1_DC3_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1085,8 +1117,10 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 2",
+                    Position = "Trạm 2",
+                    TagName = "Quá Tải Động Cơ 1", // ✅ Tên tag
                     S2_DC1_Over = e.NewValue,
+                    
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
@@ -1102,7 +1136,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 2",
+                    Position = "Trạm 2",
+                    TagName = "Quá Tải Động Cơ 2", // ✅ Tên tag
                     S2_DC2_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1119,7 +1154,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 2",
+                    Position = "Trạm 2",
+                    TagName = "Quá Tải Động Cơ 3", // ✅ Tên tag
                     S2_DC3_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1136,7 +1172,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 3",
+                    Position = "Trạm 3",
+                    TagName = "Quá Tải Động Cơ 1", // ✅ Tên tag
                     S3_DC1_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1153,7 +1190,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 3",
+                    Position = "Trạm 3",
+                    TagName = "Quá Tải Động Cơ 2", // ✅ Tên tag
                     S3_DC2_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1170,15 +1208,14 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
-                    Area = "Trạm 3",
+                    Position = "Trạm 3",
+                    TagName = "Quá Tải Động Cơ 3", // ✅ Tên tag
                     S3_DC3_Over = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
             prevS3_DC3_Overload = e.NewValue; // Cập nhật trạng thái trước
         }
-
-
         private void Doorlock1_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             Doorlock1_1OpenChanged?.Invoke(this, e);
@@ -1189,6 +1226,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 1_1 Mở", // ✅ Tên tag
                     Doorlock1_1Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1205,6 +1244,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 1_1 Đóng", // ✅ Tên tag
                     Doorlock1_1Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1221,6 +1262,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 1_2 Mở", // ✅ Tên tag
                     Doorlock1_2Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1237,6 +1280,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 1_2 Đóng", // ✅ Tên tag
                     Doorlock1_2Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1253,6 +1298,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 2_1 Mở", // ✅ Tên tag
                     Doorlock2_1Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1269,6 +1316,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 2_1 Đóng", // ✅ Tên tag
                     Doorlock2_1Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1285,6 +1334,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 2_2 Mở", // ✅ Tên tag
                     Doorlock2_2Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1301,6 +1352,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 2_2 Đóng", // ✅ Tên tag
                     Doorlock2_2Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1317,6 +1370,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 3_1 Mở", // ✅ Tên tag
                     Doorlock3_1Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1333,6 +1388,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 3_1 Đóng", // ✅ Tên tag
                     Doorlock3_1Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1349,6 +1406,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position =" Trạm 2",
+                    TagName = "Chốt Cửa 3_2 Mở", // ✅ Tên tag
                     Doorlock3_2Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1365,6 +1424,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 3_2 Đóng", // ✅ Tên tag
                     Doorlock3_2Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1381,6 +1442,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 4_1 Mở", // ✅ Tên tag
                     Doorlock4_1Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1397,6 +1460,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 4_1 Đóng", // ✅ Tên tag
                     Doorlock4_1Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1413,6 +1478,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position =" Trạm 2",
+                    TagName = "Chốt Cửa 4_2 Mở", // ✅ Tên tag
                     Doorlock4_2Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1429,6 +1496,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 4_2 Đóng", // ✅ Tên tag
                     Doorlock4_2Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1445,6 +1514,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 5_1 Mở", // ✅ Tên tag
                     Doorlock5_1Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1461,6 +1532,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 5_1 Đóng", // ✅ Tên tag
                     Doorlock5_1Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1477,6 +1550,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 5_2 Mở", // ✅ Tên tag
                     Doorlock5_2Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1493,6 +1568,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 5_2 Đóng", // ✅ Tên tag
                     Doorlock5_2Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1509,6 +1586,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 6_1 Mở", // ✅ Tên tag
                     Doorlock6_1Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1525,6 +1604,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 6_1 Đóng", // ✅ Tên tag
                     Doorlock6_1Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1541,6 +1622,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 6_2 Mở", // ✅ Tên tag
                     Doorlock6_2Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1557,6 +1640,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 6_2 Đóng", // ✅ Tên tag
                     Doorlock6_2Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1575,6 +1660,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Cửa 1 Mở Hoàn Toàn", // ✅ Tên tag
                     Door1_Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1591,6 +1678,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Cửa 1 Đóng Hoàn Toàn", // ✅ Tên tag
                     Door1_Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1607,6 +1696,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Cửa 2 Mở Hoàn Toàn", // ✅ Tên tag
                     Door2_Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1623,6 +1714,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Cửa 2 Đóng Hoàn Toàn", // ✅ Tên tag
                     Door2_Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1639,6 +1732,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 3 Mở Hoàn Toàn", // ✅ Tên tag
                     Door3_Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1655,6 +1750,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 3 Đóng Hoàn Toàn", // ✅ Tên tag
                     Door3_Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1671,6 +1768,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 4 Mở Hoàn Toàn", // ✅ Tên tag
                     Door4_Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1687,6 +1786,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 4 Đóng Hoàn Toàn", // ✅ Tên tag
                     Door4_Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1703,6 +1804,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position =" Trạm 3",
+                    TagName = "Cửa 5 Mở Hoàn Toàn", // ✅ Tên tag
                     Door5_Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1719,6 +1822,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Cửa 5 Đóng Hoàn Toàn", // ✅ Tên tag
                     Door5_Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1735,6 +1840,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Cửa 6 Mở Hoàn Toàn", // ✅ Tên tag
                     Door6_Open = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1751,6 +1858,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Cửa 6 Đóng Hoàn Toàn", // ✅ Tên tag
                     Door6_Close = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1768,6 +1877,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 1 Đang Mở", // ✅ Tên tag
                     Doorlock1_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1784,6 +1895,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 1 Đang Đóng", // ✅ Tên tag
                     Doorlock1_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1800,6 +1913,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 2 Đang Mở", // ✅ Tên tag
                     Doorlock2_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1816,6 +1931,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chốt Cửa 2 Đang Đóng", // ✅ Tên tag
                     Doorlock2_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1832,6 +1949,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 3 Đang Mở", // ✅ Tên tag
                     Doorlock3_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1848,6 +1967,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 3 Đang Đóng", // ✅ Tên tag
                     Doorlock3_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1864,6 +1985,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 4 Đang Mở", // ✅ Tên tag
                     Doorlock4_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1880,6 +2003,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chốt Cửa 4 Đang Đóng", // ✅ Tên tag
                     Doorlock4_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1896,6 +2021,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 5 Đang Mở", // ✅ Tên tag
                     Doorlock5_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1912,6 +2039,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 5 Đang Đóng", // ✅ Tên tag
                     Doorlock5_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1928,6 +2057,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 6 Đang Mở", // ✅ Tên tag
                     Doorlock6_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1944,6 +2075,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chốt Cửa 6 Đang Đóng", // ✅ Tên tag
                     Doorlock6_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1962,6 +2095,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position =" Trạm 1",
+                    TagName = "Cửa 1 Đang Mở", // ✅ Tên tag
                     Door1_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1978,6 +2113,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Cửa 1 Đang Đóng", // ✅ Tên tag
                     Door1_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -1994,6 +2131,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Cửa 2 Đang Mở", // ✅ Tên tag
                     Door2_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2010,6 +2149,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Cửa 2 Đang Đóng", // ✅ Tên tag
                     Door2_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2026,6 +2167,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 3 Đang Mở", // ✅ Tên tag
                     Door3_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2042,6 +2185,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 3 Đang Đóng", // ✅ Tên tag
                     Door3_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2058,6 +2203,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 4 Đang Mở", // ✅ Tên tag
                     Door4_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2074,6 +2221,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Cửa 4 Đang Đóng", // ✅ Tên tag
                     Door4_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2090,6 +2239,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Cửa 5 Đang Mở", // ✅ Tên tag
                     Door5_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2106,6 +2257,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Cửa 5 Đang Đóng", // ✅ Tên tag
                     Door5_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2122,6 +2275,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Cửa 6 Đang Mở", // ✅ Tên tag
                     Door6_Opening = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2138,6 +2293,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Cửa 6 Đang Đóng", // ✅ Tên tag
                     Door6_Closing = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2158,8 +2315,9 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    S1_DC1_Running = e.NewValue,
-                    // TODO: set các property khác nếu cần
+                    Position = "Trạm 1",
+                    TagName = "Động Cơ 1 Đang Chạy", // ✅ Tên tag
+                    S1_DC1_Running = e.NewValue,                 
                 };
                 SQLLoginDataTran.InsertDataTran(model);
             }
@@ -2179,8 +2337,10 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Động Cơ 2 Đang Chạy", // ✅ Tên tag
                     S1_DC2_Running = e.NewValue,
-                    // TODO: set các property khác nếu cần
+     
                 };
                 SQLLoginDataTran.InsertDataTran(model);
             }
@@ -2199,8 +2359,10 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Động Cơ 3 Đang Chạy", // ✅ Tên tag
                     S1_DC3_Running = e.NewValue,
-                    // TODO: set các property khác nếu cần
+                   
                 };
                 SQLLoginDataTran.InsertDataTran(model);
             }
@@ -2217,6 +2379,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position =" Trạm 2",
+                    TagName = "Động Cơ 1 Đang Chạy", // ✅ Tên tag
                     S2_DC1_Running = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2233,6 +2397,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Động Cơ 2 Đang Chạy", // ✅ Tên tag
                     S2_DC2_Running = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2249,6 +2415,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Động Cơ 3 Đang Chạy", // ✅ Tên tag
                     S2_DC3_Running = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2265,6 +2433,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position =" Trạm 3",
+                    TagName = "Động Cơ 1 Đang Chạy", // ✅ Tên tag
                     S3_DC1_Running = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2281,6 +2451,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Động Cơ 2 Đang Chạy", // ✅ Tên tag
                     S3_DC2_Running = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2297,6 +2469,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Động Cơ 3 Đang Chạy", // ✅ Tên tag
                     S3_DC3_Running = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
@@ -2305,10 +2479,7 @@ private void Driver_Started(object sender, EventArgs e)
         }
         private void S1_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
         {  
-  //          this.Invoke((MethodInvoker)(() =>
-  //          {
-  ////              button1.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor; label1.Text = $"Đang Mở: {e.NewValue}";
-  //          }));
+  
             // 🔔 Raise event để form khác nhận
             S1RemoteChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
@@ -2318,6 +2489,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chế Độ Từ Xa", // ✅ Tên tag
                     S1_Remote = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2328,11 +2501,7 @@ private void Driver_Started(object sender, EventArgs e)
         }
         private void S1_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            //this.Invoke((MethodInvoker)(() =>
-            //{
-            //    //              button1.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor; label1.Text = $"Đang Mở: {e.NewValue}";
-            //}));
-            // 🔔 Raise event để form khác nhận
+            
             S1LocalChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1Local == "0" && e.NewValue == "1")
@@ -2341,6 +2510,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chế Độ Tại Chỗ", // ✅ Tên tag
                     S1_Local = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2351,11 +2522,7 @@ private void Driver_Started(object sender, EventArgs e)
         }
         private void S1_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            //this.Invoke((MethodInvoker)(() =>
-            //{
-            //    //              button1.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor; label1.Text = $"Đang Mở: {e.NewValue}";
-            //}));
-            // 🔔 Raise event để form khác nhận
+           
             S1AutoChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1Auto == "0" && e.NewValue == "1")
@@ -2364,6 +2531,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chế Độ Tự Động", // ✅ Tên tag
                     S1_Auto = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2373,12 +2542,7 @@ private void Driver_Started(object sender, EventArgs e)
             prevS1Auto = e.NewValue;
         }
         private void S1_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            //this.Invoke((MethodInvoker)(() =>
-            //{
-            ////    button4.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor;
-            //}));
-
+        {           
             S1ManChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1Man == "0" && e.NewValue == "1")
@@ -2387,6 +2551,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chế Độ Thủ Công", // ✅ Tên tag
                     S1_Man = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2396,12 +2562,7 @@ private void Driver_Started(object sender, EventArgs e)
             prevS1Man = e.NewValue;
         }
         private void S1_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            //this.Invoke((MethodInvoker)(() =>
-            //{
-            // //   button5.BackColor = e.NewValue == "1" ? Color.GreenYellow : DefaultBackColor;
-            //}));
-
+        {         
             S1LocalStopChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1LocalStop == "0" && e.NewValue == "1")
@@ -2410,6 +2571,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Chế Độ Dừng Tại Chỗ", // ✅ Tên tag
                     S1_Local_Stop = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2429,6 +2592,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chế Độ Từ Xa", // ✅ Tên tag
                     S2_Remote = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2448,6 +2613,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chế Độ Tại Chỗ", // ✅ Tên tag
                     S2_Local = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2467,6 +2634,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chế Độ Tự Động", // ✅ Tên tag
                     S2_Auto = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2485,6 +2654,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chế Độ Thủ Công", // ✅ Tên tag
                     S2_Man = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2502,6 +2673,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Chế Độ Dừng Tại Chỗ", // ✅ Tên tag
                     S2_Local_Stop = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2520,6 +2693,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position =" Trạm 3",
+                    TagName = "Chế Độ Từ Xa", // ✅ Tên tag
                     S3_Remote = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2538,6 +2713,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chế Độ Tại Chỗ", // ✅ Tên tag
                     S3_Local = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2556,6 +2733,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chế Độ Tự Động", // ✅ Tên tag
                     S3_Auto = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2573,6 +2752,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chế Độ Thủ Công", // ✅ Tên tag
                     S3_Man = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -2590,6 +2771,8 @@ private void Driver_Started(object sender, EventArgs e)
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Chế Độ Dừng Tại Chỗ", // ✅ Tên tag
                     S3_Local_Stop = e.NewValue,
                     // TODO: set các property khác nếu cần
                 };
@@ -3604,7 +3787,7 @@ private void Driver_Started(object sender, EventArgs e)
 
         private void bnt_CanhBao_Click(object sender, EventArgs e)
         {
-            FrmCanhBao canhBao = new FrmCanhBao();
+            FrmCanhBao canhBao = new FrmCanhBao(this);
             OpenFormInPanel(canhBao, " Thông Tin Cảnh Báo");
         }
 

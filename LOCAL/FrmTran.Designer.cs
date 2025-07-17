@@ -1552,7 +1552,7 @@
             this.groupBox3.Location = new System.Drawing.Point(7, 332);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(320, 239);
+            this.groupBox3.Size = new System.Drawing.Size(320, 267);
             this.groupBox3.TabIndex = 203;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bơm Dầu";
