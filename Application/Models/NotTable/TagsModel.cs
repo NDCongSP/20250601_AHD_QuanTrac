@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Commons
+namespace Application.Models
 {
-    public interface IDataKeyFilter
+    public class TagsModel
     {
-        string DataKey { get; set; }
+
     }
 }
