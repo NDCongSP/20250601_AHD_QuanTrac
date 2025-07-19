@@ -17,8 +17,8 @@ namespace RegistrationForm1
     {
         private readonly int _userId;
         private string _username;
-        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
+        //   private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        private string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmEditUser(int userId)
         {
             InitializeComponent();

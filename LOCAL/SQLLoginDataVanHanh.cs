@@ -10,8 +10,8 @@ namespace RegistrationForm1
    
     public class SQLLoginDataVanHanh
     {
-        private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
+        //  private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        public static string connectionString => ConfigurationHelper.GetConnectionString();
         public static void InsertDataVanHanh(DataVanHanhModel data)
         {
             try

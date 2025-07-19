@@ -95,7 +95,6 @@
             this.ahdLabel10 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this._btnGhiStatus = new System.Windows.Forms.Button();
             this.Temp_Oil3 = new Ahd.Winforms.Controls.AhdLabel();
             this.Temp_Oil2 = new Ahd.Winforms.Controls.AhdLabel();
             this.Temp_Oil1 = new Ahd.Winforms.Controls.AhdLabel();
@@ -1021,7 +1020,7 @@
             this.Fllow_BenSuc.Size = new System.Drawing.Size(85, 30);
             this.Fllow_BenSuc.StringFormat = null;
             this.Fllow_BenSuc.TabIndex = 221;
-            this.Fllow_BenSuc.TagPath = "Local Station/Channel1/Device1/Fllow_BenSuc";
+            this.Fllow_BenSuc.TagPath = "Local Station/DauTieng/S71500/API/Fllow_BenSuc";
             this.Fllow_BenSuc.Text = "0.0";
             this.Fllow_BenSuc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1053,7 +1052,7 @@
             this.Fllow_DauTieng.Size = new System.Drawing.Size(85, 30);
             this.Fllow_DauTieng.StringFormat = null;
             this.Fllow_DauTieng.TabIndex = 219;
-            this.Fllow_DauTieng.TagPath = "Local Station/Channel1/Device1/Fllow_DauTieng";
+            this.Fllow_DauTieng.TagPath = "Local Station/DauTieng/S71500/API/Fllow_DauTieng";
             this.Fllow_DauTieng.Text = "0.0";
             this.Fllow_DauTieng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1115,7 +1114,7 @@
             this.Fllow_SonDai.Size = new System.Drawing.Size(85, 30);
             this.Fllow_SonDai.StringFormat = null;
             this.Fllow_SonDai.TabIndex = 215;
-            this.Fllow_SonDai.TagPath = "Local Station/Channel1/Device1/Fllow_SonDai";
+            this.Fllow_SonDai.TagPath = "Local Station/DauTieng/S71500/API/Fllow_SonDai";
             this.Fllow_SonDai.Text = "0.0";
             this.Fllow_SonDai.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1199,15 +1198,6 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 200;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // _btnGhiStatus
-            // 
-            this._btnGhiStatus.Location = new System.Drawing.Point(623, 294);
-            this._btnGhiStatus.Name = "_btnGhiStatus";
-            this._btnGhiStatus.Size = new System.Drawing.Size(75, 23);
-            this._btnGhiStatus.TabIndex = 259;
-            this._btnGhiStatus.Text = "Ghi Status";
-            this._btnGhiStatus.UseVisualStyleBackColor = true;
             // 
             // Temp_Oil3
             // 
@@ -1719,7 +1709,6 @@
             this.Controls.Add(this.Temp_Oil3);
             this.Controls.Add(this.Temp_Oil2);
             this.Controls.Add(this.Temp_Oil1);
-            this.Controls.Add(this._btnGhiStatus);
             this.Controls.Add(this.Pic_Station3_Stop);
             this.Controls.Add(this.Pic_Station2_Stop);
             this.Controls.Add(this.Pic_Station1_Stop);
@@ -1935,7 +1924,6 @@
         private System.Windows.Forms.PictureBox Pic_Doorlock2_2Close;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Station1_Run;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button _btnGhiStatus;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil3;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil2;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil1;

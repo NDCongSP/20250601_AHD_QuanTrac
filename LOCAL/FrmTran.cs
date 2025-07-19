@@ -1,29 +1,16 @@
 ﻿using Ahd.Core;
-using Ahd.Winforms.Controls;
-using Dapper;
-using DocumentFormat.OpenXml.Office2019.Presentation;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace RegistrationForm1
 {
     public partial class FrmTran : Form
     {
-  
-        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
-        private FrmMain _mainForm;
-      //  private DataTranModel _lastData = new DataTranModel(); // giá trị lần trước
-         private readonly Dictionary<string, string> lastValues = new Dictionary<string, string>();
+      
+       private FrmMain _mainForm;   
+        
         private BindingList<Tran1Model> tran1List = new BindingList<Tran1Model>();
         private BindingList<Tran2Model> tran2List = new BindingList<Tran2Model>();
         private BindingList<Tran3Model> tran3List = new BindingList<Tran3Model>();
@@ -34,16 +21,21 @@ namespace RegistrationForm1
         {        
             InitializeComponent();
            
-            //  Load += FrmTran_Load;
+              Load += FrmTran_Load;
+
             _mainForm = frmMain; // ✅ Gán trước khi sử dụng
+           
+        }
+        private void FrmTran_Load(object sender, EventArgs e)
+        {
             if (_mainForm != null)
             {
                 // Subscribe to events
-                _mainForm.S1RemoteChanged += MainForm_S1RemoteChanged; 
-                _mainForm.S1LocalChanged += MainForm_S1LocalChanged;
-                _mainForm.S1AutoChanged += MainForm_S1AutoChanged;
-                _mainForm.S1ManChanged += MainForm_S1ManChanged;
-                _mainForm.S1LocalStopChanged += MainForm_S1LocalStopChanged;
+                _mainForm.S1RemoteChanged += S1_Remote_ValueChanged;
+                _mainForm.S1LocalChanged += S1_Local_ValueChanged;
+                _mainForm.S1AutoChanged += S1_Auto_ValueChanged;
+                _mainForm.S1ManChanged += S1_Man_ValueChanged;
+                _mainForm.S1LocalStopChanged += S1_Local_Stop_ValueChanged;
 
                 _mainForm.S2RemoteChanged += S2_Remote_ValueChanged;
                 _mainForm.S2LocalChanged += S2_Local_ValueChanged;
@@ -130,7 +122,7 @@ namespace RegistrationForm1
                 _mainForm.Door6_PressureLowChanged += Door6_PressureLow_ValueChanged;
 
 
-           }
+            }
             else
             {
                 MessageBox.Show("FrmMain instance is null. Please check.");
@@ -157,7 +149,6 @@ namespace RegistrationForm1
             LoadAllTags6();
             ReadAllTagStatus6();
         }
-        
         private void FormatGridT6()
         {
             var dgv = dataGridViewT6;
@@ -352,31 +343,36 @@ namespace RegistrationForm1
         {
 
             // Load trạng thái ban đầu từ FrmMain của các nút và nhãn
-          //  label1.Text = $"S1_Remote: {_mainForm.GetS1RemoteValue()}"; bnt_Remote_T1.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            //  label1.Text = $"S1_Remote: {_mainForm.GetS1RemoteValue()}"; bnt_Remote_T1.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Remote_T1.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Remote_T2.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Remote_T3.BackColor = _mainForm.GetS2RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Remote_T4.BackColor = _mainForm.GetS2RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Remote_T5.BackColor = _mainForm.GetS3RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Remote_T6.BackColor = _mainForm.GetS3RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;                  
-         //   label2.Text = $"S1_Local: {_mainForm.GetS1LocalValue()}"; bnt_Local_T1.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Remote_T6.BackColor = _mainForm.GetS3RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            //   label2.Text = $"S1_Local: {_mainForm.GetS1LocalValue()}"; bnt_Local_T1.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Local_T1.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Local_T2.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Local_T3.BackColor = _mainForm.GetS2LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Local_T4.BackColor = _mainForm.GetS2LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Local_T5.BackColor = _mainForm.GetS3LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Local_T6.BackColor = _mainForm.GetS3LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-         //   label3.Text = $"S1_Auto: {_mainForm.GetS1AutoValue()}"; bnt_Auto_T1.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            //   label3.Text = $"S1_Auto: {_mainForm.GetS1AutoValue()}"; bnt_Auto_T1.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Auto_T1.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Auto_T2.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Auto_T3.BackColor = _mainForm.GetS2AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Auto_T4.BackColor = _mainForm.GetS2AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Auto_T5.BackColor = _mainForm.GetS3AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Auto_T6.BackColor = _mainForm.GetS3AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-        //    label4.Text = $"S1_Man: {_mainForm.GetS1ManValue()}"; bnt_Hand_T1.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            //    label4.Text = $"S1_Man: {_mainForm.GetS1ManValue()}"; bnt_Hand_T1.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Hand_T1.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Hand_T2.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Hand_T3.BackColor = _mainForm.GetS2ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Hand_T4.BackColor = _mainForm.GetS2ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Hand_T5.BackColor = _mainForm.GetS3ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Hand_T6.BackColor = _mainForm.GetS3ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-     //       label5.Text = $"S1_Local_Stop: {_mainForm.GetS1LocalStopValue()}"; bnt_Estop_T1.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            //       label5.Text = $"S1_Local_Stop: {_mainForm.GetS1LocalStopValue()}"; bnt_Estop_T1.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
+            bnt_Estop_T1.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Estop_T2.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Estop_T3.BackColor = _mainForm.GetS2LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
             bnt_Estop_T4.BackColor = _mainForm.GetS2LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
@@ -633,7 +629,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Estop_T3.BackColor = DefaultBackColor; bnt_Estop_T4.BackColor = DefaultBackColor; });
         }       
-        private void MainForm_S1RemoteChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -642,7 +638,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Remote_T1.BackColor = DefaultBackColor;bnt_Remote_T2.BackColor = DefaultBackColor; });
         }
-        private void MainForm_S1LocalChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -651,7 +647,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Local_T1.BackColor = DefaultBackColor; bnt_Local_T2.BackColor = DefaultBackColor; });
         }
-        private void MainForm_S1AutoChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -660,7 +656,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Auto_T1.BackColor = DefaultBackColor; bnt_Auto_T2.BackColor = DefaultBackColor; });
         }
-        private void MainForm_S1ManChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -669,7 +665,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Hand_T1.BackColor = DefaultBackColor; bnt_Hand_T2.BackColor = DefaultBackColor; });
         }
-        private void MainForm_S1LocalStopChanged(object sender, TagValueChangedEventArgs e)
+        private void S1_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
@@ -2184,5 +2180,7 @@ namespace RegistrationForm1
                 Pic_Door6_Opening_Stop.Visible = (newValue != "1");
             });
         }
+
+        
     }
 }

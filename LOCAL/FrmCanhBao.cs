@@ -20,7 +20,7 @@ namespace RegistrationForm1
     public partial class FrmCanhBao : Form
     {
         private FrmMain _mainForm;
-       
+        private string connectionString => ConfigurationHelper.GetConnectionString();
         private BindingList<AlarmModel> alarmList = new BindingList<AlarmModel>();
      //   private Dictionary<string, string> lastValues = new Dictionary<string, string>();
 
@@ -81,7 +81,10 @@ namespace RegistrationForm1
         private void FormatDgvHistory()
         {
             var dgv = DgvHistory;
-
+            if (DgvHistory.Columns.Contains("CreateAt"))
+            {
+                DgvHistory.Columns["CreateAt"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
+            }
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
@@ -104,12 +107,25 @@ namespace RegistrationForm1
             // Đổi tên cột hiển thị (nếu cần)
             if (dgv.Columns["CreateAt"] != null) dgv.Columns["CreateAt"].HeaderText = "Thời Gian";
             if (dgv.Columns["Position"] != null) dgv.Columns["Position"].HeaderText = "Vị Trí";
+            if (dgv.Columns["TagName"] != null) dgv.Columns["TagName"].HeaderText = "Tên Cảnh Báo";
+            if (dgv.Columns["Door1_PressureHigh"] != null) dgv.Columns["Door1_PressureHigh"].HeaderText = "AS_H Cửa 1";
+            if (dgv.Columns["Door1_PressureLow"] != null) dgv.Columns["Door1_PressureLow"].HeaderText = "AS_L Cửa 1";
+            if (dgv.Columns["Door2_PressureHigh"] != null) dgv.Columns["Door2_PressureHigh"].HeaderText = "AS_H Cửa 2";
+            if (dgv.Columns["Door2_PressureLow"] != null) dgv.Columns["Door2_PressureLow"].HeaderText = "AS_L Cửa 2";
+
+
+            
+
             // Thêm các cột khác nếu cần đổi tên
+
         }
-        private void LoadDataAlarm()
+        private void LoadDataAlarm(DateTime startTime, DateTime endTime)
         {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-            string query = "SELECT * FROM DataAlarm ORDER BY CreateAt DESC"; // Hiển thị mới nhất lên trước
+     //       string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+            string query = @"
+        SELECT * FROM DataAlarm
+        WHERE CreateAt BETWEEN @startTime AND @endTime
+        ORDER BY CreateAt DESC"; // Hiển thị mới nhất lên trước
 
             try
             {
@@ -118,6 +134,9 @@ namespace RegistrationForm1
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@startTime", startTime);
+                        cmd.Parameters.AddWithValue("@endTime", endTime);
+
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);
@@ -143,7 +162,7 @@ namespace RegistrationForm1
             string status_S1_DC1 = _mainForm.GetS1_DC1_OverValue(); // trả về "1" hoặc "0"
             UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S1_DC1, "Trạm 1");
             string status_S1_DC2 = _mainForm.GetS1_DC2_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S1_DC1, "Trạm 1");
+            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S1_DC2, "Trạm 1");
             string status_S1_DC3 = _mainForm.GetS1_DC3_OverValue(); // trả về "1" hoặc "0"
             UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S1_DC3, "Trạm 1");
             // Trạng thái lổi Trạm 2
@@ -158,7 +177,7 @@ namespace RegistrationForm1
             string status_S3_DC2 = _mainForm.GetS3_DC2_OverValue(); // trả về "1" hoặc "0"
             UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S3_DC2, "Trạm 3");
             string status_S3_DC3 = _mainForm.GetS3_DC3_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S2_DC3, "Trạm 3");
+            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S3_DC3, "Trạm 3");
             string status_Door1_PressureHigh = _mainForm.GetDoor1_PressureHighValue(); // trả về "1" hoặc "0"
             UpdateAlarmStatus("Áp Suất Cửa 1 Cao", status_Door1_PressureHigh, "Trạm 1");
             string status_Door1_PressureLow = _mainForm.GetDoor1_PressureLowValue(); // trả về "1" hoặc "0"
@@ -504,7 +523,10 @@ namespace RegistrationForm1
 
         private void bntLoad_Click(object sender, EventArgs e)
         {
-            LoadDataAlarm();
+            DateTime start = dateTimePickerStart.Value;
+            DateTime end = dateTimePickerEnd.Value;
+
+            LoadDataAlarm(start, end);
         }
     }
 }

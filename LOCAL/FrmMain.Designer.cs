@@ -54,6 +54,7 @@
             this.lblDate = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.tm_login = new System.Windows.Forms.Timer(this.components);
+            this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -326,6 +327,10 @@
             // 
             this.tm_login.Tick += new System.EventHandler(this.tm_login_Tick);
             // 
+            // tm_loginMN
+            // 
+            this.tm_loginMN.Tick += new System.EventHandler(this.tm_loginMN_Tick);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,5 +387,6 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer tm_login;
         public Ahd.Winforms.Controls.AhdDriverConnector ahdDriverConnector1;
+        private System.Windows.Forms.Timer tm_loginMN;
     }
 }

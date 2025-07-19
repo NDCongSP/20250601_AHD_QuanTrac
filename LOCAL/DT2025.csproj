@@ -195,7 +195,7 @@
     <Compile Include="Chart.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Chartstatistics.cs" />
+    <Compile Include="ConfigurationHelper.cs" />
     <Compile Include="DataAlarmModel.cs" />
     <Compile Include="DataMucNuocModel.cs" />
     <Compile Include="DataTrangThaiModel.cs" />
@@ -267,12 +267,6 @@
       <DependentUpon>FrmUserManager.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalData.cs" />
-    <Compile Include="ManualInputDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ManualInputDialog.Designer.cs">
-      <DependentUpon>ManualInputDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -282,6 +276,7 @@
     <Compile Include="SQLLoginAlarm.cs" />
     <Compile Include="SQLLoginDataTran.cs" />
     <Compile Include="SQLLoginDataVanHanh.cs" />
+    <Compile Include="SQLLoginMucNuoc.cs" />
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -7,7 +7,8 @@ namespace RegistrationForm1
 {//private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
     public partial class FrmDangKyUser : Form
     {
-        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        //    private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        private string connectionString => ConfigurationHelper.GetConnectionString();
         private int? editingUserId = null;
         public FrmDangKyUser()
         {

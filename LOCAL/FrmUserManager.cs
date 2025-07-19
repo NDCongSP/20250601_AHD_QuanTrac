@@ -13,8 +13,8 @@ namespace RegistrationForm1
 {
     public partial class FrmUserManager : Form
     {
-        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
+     //   private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        private string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmUserManager()
         {
             InitializeComponent();

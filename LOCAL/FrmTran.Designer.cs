@@ -867,7 +867,6 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tabPage1.Controls.Add(this.dataGridViewT1);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.ahdPictureBox1);
@@ -902,7 +901,7 @@
             this.tabPage1.Controls.Add(this.ahdBarTran1);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabPage1.Font = new System.Drawing.Font("Times New Roman", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.ForeColor = System.Drawing.Color.Blue;
             this.tabPage1.Location = new System.Drawing.Point(4, 54);
             this.tabPage1.Name = "tabPage1";
@@ -911,6 +910,7 @@
             this.tabPage1.Size = new System.Drawing.Size(1716, 807);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "          TRÀN 1          ";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // dataGridViewT1
             // 
@@ -1552,7 +1552,7 @@
             this.groupBox3.Location = new System.Drawing.Point(7, 332);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(320, 267);
+            this.groupBox3.Size = new System.Drawing.Size(320, 294);
             this.groupBox3.TabIndex = 203;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bơm Dầu";
@@ -1977,6 +1977,7 @@
             this.tabPage2.Controls.Add(this.ahdPictureBox3);
             this.tabPage2.Location = new System.Drawing.Point(4, 54);
             this.tabPage2.Name = "tabPage2";
+            this.tabPage2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tabPage2.Size = new System.Drawing.Size(1716, 807);
             this.tabPage2.TabIndex = 6;
             this.tabPage2.Text = "          TRÀN 2          ";
@@ -2209,7 +2210,7 @@
             this.groupBox10.Location = new System.Drawing.Point(7, 347);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox10.Size = new System.Drawing.Size(320, 189);
+            this.groupBox10.Size = new System.Drawing.Size(320, 216);
             this.groupBox10.TabIndex = 266;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Bơm Dầu";
@@ -3230,7 +3231,7 @@
             this.groupBox15.Location = new System.Drawing.Point(6, 322);
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox15.Size = new System.Drawing.Size(320, 189);
+            this.groupBox15.Size = new System.Drawing.Size(320, 216);
             this.groupBox15.TabIndex = 266;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Bơm Dầu";
@@ -4463,7 +4464,7 @@
             this.groupBox20.Location = new System.Drawing.Point(6, 342);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox20.Size = new System.Drawing.Size(320, 189);
+            this.groupBox20.Size = new System.Drawing.Size(320, 216);
             this.groupBox20.TabIndex = 266;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Bơm Dầu";
@@ -5696,7 +5697,7 @@
             this.groupBox25.Location = new System.Drawing.Point(7, 347);
             this.groupBox25.Name = "groupBox25";
             this.groupBox25.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox25.Size = new System.Drawing.Size(320, 189);
+            this.groupBox25.Size = new System.Drawing.Size(320, 216);
             this.groupBox25.TabIndex = 266;
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Bơm Dầu";
@@ -6928,7 +6929,7 @@
             this.groupBox30.Location = new System.Drawing.Point(16, 351);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox30.Size = new System.Drawing.Size(320, 189);
+            this.groupBox30.Size = new System.Drawing.Size(320, 216);
             this.groupBox30.TabIndex = 266;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Bơm Dầu";

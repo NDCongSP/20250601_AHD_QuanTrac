@@ -130,7 +130,7 @@
             this.Fllow_BenSuc.Size = new System.Drawing.Size(192, 30);
             this.Fllow_BenSuc.StringFormat = null;
             this.Fllow_BenSuc.TabIndex = 237;
-            this.Fllow_BenSuc.TagPath = "";
+            this.Fllow_BenSuc.TagPath = "Local Station/DauTieng/S71500/API/Fllow_BenSuc";
             this.Fllow_BenSuc.Text = "0.0";
             this.Fllow_BenSuc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -162,7 +162,7 @@
             this.lbl_TVan.Size = new System.Drawing.Size(169, 30);
             this.lbl_TVan.StringFormat = null;
             this.lbl_TVan.TabIndex = 235;
-            this.lbl_TVan.TagPath = "";
+            this.lbl_TVan.TagPath = "Local Station/DauTieng/S71500/API/Fllow_DauTieng";
             this.lbl_TVan.Text = "0.0";
             this.lbl_TVan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -224,7 +224,7 @@
             this.Fllow_SonDai.Size = new System.Drawing.Size(165, 30);
             this.Fllow_SonDai.StringFormat = null;
             this.Fllow_SonDai.TabIndex = 231;
-            this.Fllow_SonDai.TagPath = "";
+            this.Fllow_SonDai.TagPath = "Local Station/DauTieng/S71500/API/Fllow_SonDai";
             this.Fllow_SonDai.Text = "0.0";
             this.Fllow_SonDai.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -264,7 +264,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmTramMN";
             this.Text = "FrmTramMN";
- //           this.Load += new System.EventHandler(this.FrmTramMN_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Fllow_Ho)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).EndInit();

@@ -27,7 +27,8 @@ namespace RegistrationForm1
         private Button btnRefresh;
         private Timer updateTimer;
         private DateTime lastUpdateTime;
-        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        //  private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        private string connectionString => ConfigurationHelper.GetConnectionString();
         private bool isFormLoaded = false;
         private bool isGoogleMap = true; // Biến để track loại bản đồ hiện tại
         private Form customMapForm;
@@ -391,50 +392,50 @@ namespace RegistrationForm1
 
         private void GMapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            if (item.Tag is WaterStationLocation station)
-            {
-                // Kiểm tra nếu là trạm thủ công (F01850 hoặc F01851)
-                if (station.StationId == "F01850" || station.StationId == "F01851")
-                {
-                    // Mở form nhập liệu
-                    var inputDialog = new ManualInputDialog(station.StationId, station.StationName);
-                    inputDialog.ValueSubmitted += (stationId, value) =>
-                    {
-                        // Cập nhật giá trị trong stationLocations
-                        var targetStation = stationLocations.FirstOrDefault(s => s.StationId == stationId);
-                        if (targetStation != null)
-                        {
-                            targetStation.WaterLevel = value;
-                            targetStation.LastUpdate = DateTime.Now;
-                            targetStation.Status = DetermineStationStatus(value, DateTime.Now);
-                        }
+   //         if (item.Tag is WaterStationLocation station)
+   //         {
+   //             // Kiểm tra nếu là trạm thủ công (F01850 hoặc F01851)
+   //             if (station.StationId == "F01850" || station.StationId == "F01851")
+   //             {
+   //                 // Mở form nhập liệu
+   ////                 var inputDialog = new ManualInputDialog(station.StationId, station.StationName);
+   //           //      inputDialog.ValueSubmitted += (stationId, value) =>
+   //                 {
+   //                     // Cập nhật giá trị trong stationLocations
+   //                     //var targetStation = stationLocations.FirstOrDefault(s => s.StationId == stationId);
+   //                     //if (targetStation != null)
+   //                     //{
+   //                     //    targetStation.WaterLevel = value;
+   //                     //    targetStation.LastUpdate = DateTime.Now;
+   //                     //    targetStation.Status = DetermineStationStatus(value, DateTime.Now);
+   //                     //}
 
-                        // Cập nhật markers
-                        AddStationMarkers();
+   //                     // Cập nhật markers
+   //                     AddStationMarkers();
 
-                        // Thông báo giá trị mới về MainHome
-                        ManualValueUpdated?.Invoke(stationId, value);
+   //                     // Thông báo giá trị mới về MainHome
+   //                     ManualValueUpdated?.Invoke(stationId, value);
 
-                        SafeUpdateUI(() =>
-                        {
-                            lblInfo.Text = $"✓ Đã cập nhật {station.StationName}: {value}m - {DateTime.Now:HH:mm:ss}";
-                        });
-                    };
-                    inputDialog.ShowDialog();
-                }
-                else
-                {
-                    // Hiển thị thông tin chi tiết cho các trạm khác
-                    string info = $"=== {station.StationName.ToUpper()} ===\n\n" +
-                                 $"🆔 Mã trạm: {station.StationId}\n" +
-                                 $"📍 Vị trí: {station.Description}\n" +
-                                 $"🌊 Mực nước hiện tại: {station.WaterLevel:F2}m\n" +
-                                 $"🕐 Lần cập nhật cuối: {station.LastUpdate:dd/MM/yyyy HH:mm:ss}\n\n" +
-                                 $"📍 Tọa độ: {station.Latitude:F6}, {station.Longitude:F6}";
+   //                     SafeUpdateUI(() =>
+   //                     {
+   //                         lblInfo.Text = $"✓ Đã cập nhật {station.StationName}: {value}m - {DateTime.Now:HH:mm:ss}";
+   //                     });
+   //                 };
+   //                 inputDialog.ShowDialog();
+   //             }
+   //             else
+   //             {
+   //                 // Hiển thị thông tin chi tiết cho các trạm khác
+   //                 string info = $"=== {station.StationName.ToUpper()} ===\n\n" +
+   //                              $"🆔 Mã trạm: {station.StationId}\n" +
+   //                              $"📍 Vị trí: {station.Description}\n" +
+   //                              $"🌊 Mực nước hiện tại: {station.WaterLevel:F2}m\n" +
+   //                              $"🕐 Lần cập nhật cuối: {station.LastUpdate:dd/MM/yyyy HH:mm:ss}\n\n" +
+   //                              $"📍 Tọa độ: {station.Latitude:F6}, {station.Longitude:F6}";
 
-                    MessageBox.Show(info, "Thông tin trạm quan trắc", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+   //                 MessageBox.Show(info, "Thông tin trạm quan trắc", MessageBoxButtons.OK, MessageBoxIcon.Information);
+   //             }
+   //         }
         }
 
         private void GMapControl1_OnPositionChanged(PointLatLng point)

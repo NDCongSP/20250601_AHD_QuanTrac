@@ -7,8 +7,9 @@ namespace RegistrationForm1
 {
     public class SQLLogin
     {
-        private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-        public static DataVanHanhModel CurrentDataVanHanh { get; set; }    
+        //  private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        public static string connectionString => ConfigurationHelper.GetConnectionString();
+        public static DataVanHanhModel CurrentDataVanHanh { get; set; }
         /// Khởi tạo CurrentDataTran từ DB khi app khởi động     
         public static void InitCurrentDataTran()
         {
@@ -17,7 +18,7 @@ namespace RegistrationForm1
                 CurrentDataVanHanh = new DataVanHanhModel { CreateAt = DateTime.Now };
 
             Console.WriteLine("✅ InitCurrentDataVanhHanh thành công.");
-        } 
+        }
         /// Lấy bản ghi mới nhất từ DataTran     
         public static DataVanHanhModel GetLatestDataVanhHanhModel()
         {
@@ -58,53 +59,53 @@ namespace RegistrationForm1
             }
             return model;
         }
-     
+
         /// Insert CurrentDataVanHanh xuống SQL bằng Stored Procedure       
-        public static void InsertAllTagsToSQL(DataVanHanhModel data)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
+        //public static void InsertAllTagsToSQL(DataVanHanhModel data)
+        //{
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("sp_InsertDataTran", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
+        //            using (SqlCommand cmd = new SqlCommand("sp_InsertDataTran", conn))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
 
-                        PropertyInfo[] properties = typeof(DataVanHanhModel).GetProperties();
-                        foreach (PropertyInfo prop in properties)
-                        {
-                            if (prop.Name == "Id") continue;
+        //                PropertyInfo[] properties = typeof(DataVanHanhModel).GetProperties();
+        //                foreach (PropertyInfo prop in properties)
+        //                {
+        //                    if (prop.Name == "Id") continue;
 
-                            string paramName = "@" + prop.Name;
-                            object value = prop.GetValue(data, null);
+        //                    string paramName = "@" + prop.Name;
+        //                    object value = prop.GetValue(data, null);
 
-                            if (prop.PropertyType == typeof(DateTime))
-                            {
-                                DateTime dt = (DateTime)value;
-                                if (dt == DateTime.MinValue)
-                                    value = DBNull.Value;
-                            }
-                            else
-                            {
-                                if (value == null)
-                                    value = "0"; // default 0 nếu null
-                            }
+        //                    if (prop.PropertyType == typeof(DateTime))
+        //                    {
+        //                        DateTime dt = (DateTime)value;
+        //                        if (dt == DateTime.MinValue)
+        //                            value = DBNull.Value;
+        //                    }
+        //                    else
+        //                    {
+        //                        if (value == null)
+        //                            value = "0"; // default 0 nếu null
+        //                    }
 
-                            cmd.Parameters.AddWithValue(paramName, value);
-                        }
+        //                    cmd.Parameters.AddWithValue(paramName, value);
+        //                }
 
-                        int rows = cmd.ExecuteNonQuery();
-                        Console.WriteLine($"✅ Insert SP thành công. Rows affected: {rows}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ Lỗi Insert SP: {ex.Message}");
-            }
-        }
+        //                int rows = cmd.ExecuteNonQuery();
+        //                Console.WriteLine($"✅ Insert SP thành công. Rows affected: {rows}");
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"❌ Lỗi Insert SP: {ex.Message}");
+        //    }
+        //}
 
         public static void UpdateTagValue(string tagName, string newValue)
         {
@@ -125,27 +126,27 @@ namespace RegistrationForm1
             }
         }
                   
-        public static void GenericTag_ValueChanged(string tagName, string newValue)
-        {
-            try
-            {
-                PropertyInfo prop = typeof(DataVanHanhModel).GetProperty(tagName);
-                if (prop == null)
-                {
-                    Console.WriteLine($"⚠️ Property {tagName} không tồn tại trong DataTranModel");
-                    return;
-                }
+        //public static void GenericTag_ValueChanged(string tagName, string newValue)
+        //{
+        //    try
+        //    {
+        //        PropertyInfo prop = typeof(DataVanHanhModel).GetProperty(tagName);
+        //        if (prop == null)
+        //        {
+        //            Console.WriteLine($"⚠️ Property {tagName} không tồn tại trong DataTranModel");
+        //            return;
+        //        }
 
-                prop.SetValue(CurrentDataVanHanh, newValue);
-                CurrentDataVanHanh.CreateAt = DateTime.Now;
+        //        prop.SetValue(CurrentDataVanHanh, newValue);
+        //        CurrentDataVanHanh.CreateAt = DateTime.Now;
 
-                InsertAllTagsToSQL(CurrentDataVanHanh);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ Lỗi GenericTag_ValueChanged: {ex.Message}");
-            }
-        }
+        //        InsertAllTagsToSQL(CurrentDataVanHanh);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"❌ Lỗi GenericTag_ValueChanged: {ex.Message}");
+        //    }
+        //}
     }
 
     /// <summary>

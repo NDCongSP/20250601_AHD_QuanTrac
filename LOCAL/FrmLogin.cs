@@ -10,7 +10,8 @@ namespace RegistrationForm1
     public partial class FrmLogin : Form
     {
         public static int currentLoginLogId = 0; // Share giữa 2 form (FrmLogin và FrmMain)
-        private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+                                                 //   private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+      public static string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmLogin()
         {
             InitializeComponent();
@@ -20,33 +21,30 @@ namespace RegistrationForm1
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text.Trim();
-
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            string password = txtPassword.Text;
 
             if (CheckLogin(username, password))
             {
-                this.DialogResult = DialogResult.OK; // trả kết quả OK
+                FrmMain main = new FrmMain();
+                this.Hide();
+                main.ShowDialog();
+                this.Close();
             }
             else
             {
-                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
 
         private bool CheckLogin(string username, string password)
         {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-            string query = "SELECT Password, Role FROM Users WHERE Username = @username";
+          
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                string query = "SELECT Password, Role FROM Users WHERE Username = @username";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@username", username);
 
@@ -117,7 +115,8 @@ namespace RegistrationForm1
 
             try
             {
-                using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                //  using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(query, conn);
@@ -135,8 +134,8 @@ namespace RegistrationForm1
         {
             string ip = GetLocalIPAddress();
             string query = "INSERT INTO LoginLogs (Username, LoginTime, IPAddress, IsSuccess) OUTPUT INSERTED.Id VALUES (@username, @time, @ip, @success)";
-
-            using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
+            using (SqlConnection conn = new SqlConnection(connectionString))
+         //   using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);

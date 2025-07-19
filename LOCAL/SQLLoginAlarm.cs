@@ -5,8 +5,8 @@ namespace RegistrationForm1
 {
     public class SQLLoginAlarm
     {
-        private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
+        //    private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        public static string connectionString => ConfigurationHelper.GetConnectionString();
         public static void InsertAlarm(DataAlarmModel alarm)
         {
             try
