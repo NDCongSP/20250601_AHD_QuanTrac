@@ -1552,7 +1552,7 @@
             this.groupBox3.Location = new System.Drawing.Point(7, 332);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(320, 294);
+            this.groupBox3.Size = new System.Drawing.Size(320, 183);
             this.groupBox3.TabIndex = 203;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bơm Dầu";
@@ -2207,10 +2207,10 @@
             this.groupBox10.Controls.Add(this.PicT2_S1_DC1_Running);
             this.groupBox10.Controls.Add(this.label123);
             this.groupBox10.Controls.Add(this.label124);
-            this.groupBox10.Location = new System.Drawing.Point(7, 347);
+            this.groupBox10.Location = new System.Drawing.Point(7, 333);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox10.Size = new System.Drawing.Size(320, 216);
+            this.groupBox10.Size = new System.Drawing.Size(320, 183);
             this.groupBox10.TabIndex = 266;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Bơm Dầu";
@@ -2476,7 +2476,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1297, 39);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1275, 39);
             this.tableLayoutPanel3.TabIndex = 265;
             // 
             // tableLayoutPanel4
@@ -3231,7 +3231,7 @@
             this.groupBox15.Location = new System.Drawing.Point(6, 322);
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox15.Size = new System.Drawing.Size(320, 216);
+            this.groupBox15.Size = new System.Drawing.Size(320, 183);
             this.groupBox15.TabIndex = 266;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Bơm Dầu";
@@ -3821,10 +3821,10 @@
             this.groupBox12.Controls.Add(this.Pic_Door3_PressureHigh);
             this.groupBox12.Controls.Add(this.label44);
             this.groupBox12.Controls.Add(this.label45);
-            this.groupBox12.Location = new System.Drawing.Point(400, 542);
+            this.groupBox12.Location = new System.Drawing.Point(400, 523);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox12.Size = new System.Drawing.Size(259, 115);
+            this.groupBox12.Size = new System.Drawing.Size(268, 115);
             this.groupBox12.TabIndex = 246;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Áp Dầu";
@@ -3927,7 +3927,7 @@
             this.groupBox13.Controls.Add(this.Pic_Doorlock3_1Open);
             this.groupBox13.Controls.Add(this.label46);
             this.groupBox13.Controls.Add(this.label47);
-            this.groupBox13.Location = new System.Drawing.Point(6, 508);
+            this.groupBox13.Location = new System.Drawing.Point(6, 523);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox13.Size = new System.Drawing.Size(320, 198);
@@ -4117,10 +4117,10 @@
             this.groupBox14.Controls.Add(this.label49);
             this.groupBox14.Controls.Add(this.label50);
             this.groupBox14.Controls.Add(this.label51);
-            this.groupBox14.Location = new System.Drawing.Point(400, 342);
+            this.groupBox14.Location = new System.Drawing.Point(400, 322);
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox14.Size = new System.Drawing.Size(289, 183);
+            this.groupBox14.Size = new System.Drawing.Size(268, 183);
             this.groupBox14.TabIndex = 244;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Trạng Thái Cửa";
@@ -4464,7 +4464,7 @@
             this.groupBox20.Location = new System.Drawing.Point(6, 342);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox20.Size = new System.Drawing.Size(320, 216);
+            this.groupBox20.Size = new System.Drawing.Size(320, 183);
             this.groupBox20.TabIndex = 266;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Bơm Dầu";
@@ -5054,7 +5054,7 @@
             this.groupBox17.Controls.Add(this.Pic_Door4_PressureHigh);
             this.groupBox17.Controls.Add(this.label63);
             this.groupBox17.Controls.Add(this.label64);
-            this.groupBox17.Location = new System.Drawing.Point(366, 568);
+            this.groupBox17.Location = new System.Drawing.Point(366, 539);
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox17.Size = new System.Drawing.Size(306, 115);
@@ -5160,7 +5160,7 @@
             this.groupBox18.Controls.Add(this.Pic_Doorlock4_1Open);
             this.groupBox18.Controls.Add(this.label65);
             this.groupBox18.Controls.Add(this.label66);
-            this.groupBox18.Location = new System.Drawing.Point(0, 510);
+            this.groupBox18.Location = new System.Drawing.Point(6, 539);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox18.Size = new System.Drawing.Size(320, 200);
@@ -5694,10 +5694,10 @@
             this.groupBox25.Controls.Add(this.Pic_S3_DC1_Running);
             this.groupBox25.Controls.Add(this.label135);
             this.groupBox25.Controls.Add(this.label136);
-            this.groupBox25.Location = new System.Drawing.Point(7, 347);
+            this.groupBox25.Location = new System.Drawing.Point(7, 336);
             this.groupBox25.Name = "groupBox25";
             this.groupBox25.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox25.Size = new System.Drawing.Size(320, 216);
+            this.groupBox25.Size = new System.Drawing.Size(320, 183);
             this.groupBox25.TabIndex = 266;
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Bơm Dầu";
@@ -6287,10 +6287,10 @@
             this.groupBox22.Controls.Add(this.Pic_Door5_PressureHigh);
             this.groupBox22.Controls.Add(this.label82);
             this.groupBox22.Controls.Add(this.label83);
-            this.groupBox22.Location = new System.Drawing.Point(369, 563);
+            this.groupBox22.Location = new System.Drawing.Point(369, 535);
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox22.Size = new System.Drawing.Size(320, 115);
+            this.groupBox22.Size = new System.Drawing.Size(305, 115);
             this.groupBox22.TabIndex = 246;
             this.groupBox22.TabStop = false;
             this.groupBox22.Text = "Áp Dầu";
@@ -6393,7 +6393,7 @@
             this.groupBox23.Controls.Add(this.Pic_Doorlock5_1Open);
             this.groupBox23.Controls.Add(this.label84);
             this.groupBox23.Controls.Add(this.label85);
-            this.groupBox23.Location = new System.Drawing.Point(7, 563);
+            this.groupBox23.Location = new System.Drawing.Point(7, 535);
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox23.Size = new System.Drawing.Size(320, 206);
@@ -6583,10 +6583,10 @@
             this.groupBox24.Controls.Add(this.label87);
             this.groupBox24.Controls.Add(this.label88);
             this.groupBox24.Controls.Add(this.label89);
-            this.groupBox24.Location = new System.Drawing.Point(369, 347);
+            this.groupBox24.Location = new System.Drawing.Point(369, 336);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox24.Size = new System.Drawing.Size(320, 183);
+            this.groupBox24.Size = new System.Drawing.Size(305, 183);
             this.groupBox24.TabIndex = 244;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Trạng Thái Cửa";
@@ -6929,7 +6929,7 @@
             this.groupBox30.Location = new System.Drawing.Point(16, 351);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox30.Size = new System.Drawing.Size(320, 216);
+            this.groupBox30.Size = new System.Drawing.Size(320, 183);
             this.groupBox30.TabIndex = 266;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Bơm Dầu";
@@ -7906,6 +7906,7 @@
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmTran";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Tràn";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

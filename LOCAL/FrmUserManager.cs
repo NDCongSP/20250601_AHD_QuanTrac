@@ -13,7 +13,6 @@ namespace RegistrationForm1
 {
     public partial class FrmUserManager : Form
     {
-     //   private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
         private string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmUserManager()
         {
@@ -29,6 +28,8 @@ namespace RegistrationForm1
             btnAdd.Enabled = PermissionManager.HasPermission("add_user");
             btnEdit.Enabled = PermissionManager.HasPermission("edit_user");
             btnDelete.Enabled = PermissionManager.HasPermission("delete_user");
+       //     edit_data.Enabled = PermissionManager.HasPermission("edit_data");
+
         }
         private void LoadUsers()
         {
@@ -45,7 +46,6 @@ namespace RegistrationForm1
                 dgvUsers.Columns["Username"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvUsers.Columns["Role"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                
-
                 dgvUsers.Columns["Id"].HeaderText = "STT";
                 dgvUsers.Columns["FullName"].HeaderText = "Họ Và Tên";
                 dgvUsers.Columns["Username"].HeaderText = "Tên Đăng Nhập";

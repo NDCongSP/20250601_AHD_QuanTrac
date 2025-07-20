@@ -4,37 +4,27 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace RegistrationForm1
-{//private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+{
     public partial class FrmDangKyUser : Form
     {
-        //    private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-        private string connectionString => ConfigurationHelper.GetConnectionString();
+         private string connectionString => ConfigurationHelper.GetConnectionString();
         private int? editingUserId = null;
         public FrmDangKyUser()
         {
             InitializeComponent();
-            cboRole.Items.AddRange(new string[] { "Quản Lý", "Vận Hành", "Cài Đặt", "Bảo Trì" });
+            cboRole.Items.AddRange(new string[] { "Quản Lý", "Vận Hành", "Bảo Trì" });
             cboRole.SelectedIndex = 0;
 
-        }
-        /// <summary>
-        /// Constructor nhận userId để chỉnh sửa
-        /// </summary>
-        /// <param name="userId">ID của user cần chỉnh sửa</param>
+        }  
         public FrmDangKyUser(int userId) : this()
         {
             editingUserId = userId;
             LoadUserData();
         }
-
-        /// <summary>
-        /// Load dữ liệu user khi chỉnh sửa
-        /// </summary>
         private void LoadUserData()
         {
             if (!editingUserId.HasValue)
                 return;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -56,9 +46,9 @@ namespace RegistrationForm1
                 }
             }
         }
-        /// <summary>
-        /// Lưu dữ liệu khi bấm Lưu
-        /// </summary>
+        // Tạo nút test sửa data
+        
+        //
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtFullName.Text))
@@ -79,9 +69,7 @@ namespace RegistrationForm1
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-        /// <summary>
-        /// Thêm mới user
-        /// </summary>
+  
         private void AddUser()
         {
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(txtPassword.Text.Trim());
@@ -101,9 +89,6 @@ namespace RegistrationForm1
             }
         }
 
-        /// <summary>
-        /// Cập nhật user
-        /// </summary>
         private void UpdateUser()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -119,9 +104,7 @@ namespace RegistrationForm1
                 cmd.ExecuteNonQuery();
             }
         }
-        /// <summary>
-        /// Đóng form
-        /// </summary>
+    
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -55,6 +55,7 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
+            this.edit_data = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -117,6 +118,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.MediumAquamarine;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.edit_data);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.bnt_User);
@@ -331,6 +333,15 @@
             // 
             this.tm_loginMN.Tick += new System.EventHandler(this.tm_loginMN_Tick);
             // 
+            // edit_data
+            // 
+            this.edit_data.Location = new System.Drawing.Point(11, 802);
+            this.edit_data.Name = "edit_data";
+            this.edit_data.Size = new System.Drawing.Size(143, 35);
+            this.edit_data.TabIndex = 16;
+            this.edit_data.Text = "TestData";
+            this.edit_data.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -388,5 +399,6 @@
         private System.Windows.Forms.Timer tm_login;
         public Ahd.Winforms.Controls.AhdDriverConnector ahdDriverConnector1;
         private System.Windows.Forms.Timer tm_loginMN;
+        private System.Windows.Forms.Button edit_data;
     }
 }

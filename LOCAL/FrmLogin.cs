@@ -10,7 +10,6 @@ namespace RegistrationForm1
     public partial class FrmLogin : Form
     {
         public static int currentLoginLogId = 0; // Share giữa 2 form (FrmLogin và FrmMain)
-                                                 //   private string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
       public static string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmLogin()
         {
@@ -38,9 +37,7 @@ namespace RegistrationForm1
 
 
         private bool CheckLogin(string username, string password)
-        {
-          
-
+        {          
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -116,7 +113,6 @@ namespace RegistrationForm1
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
-                //  using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(query, conn);
@@ -135,7 +131,6 @@ namespace RegistrationForm1
             string ip = GetLocalIPAddress();
             string query = "INSERT INTO LoginLogs (Username, LoginTime, IPAddress, IsSuccess) OUTPUT INSERTED.Id VALUES (@username, @time, @ip, @success)";
             using (SqlConnection conn = new SqlConnection(connectionString))
-         //   using (SqlConnection conn = new SqlConnection("Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True"))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);

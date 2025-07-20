@@ -39,16 +39,16 @@
             // dgvUsers
             // 
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsers.Location = new System.Drawing.Point(12, 12);
+            this.dgvUsers.Location = new System.Drawing.Point(267, 12);
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.Size = new System.Drawing.Size(892, 487);
             this.dgvUsers.TabIndex = 0;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(1215, 130);
+            this.btnAdd.Location = new System.Drawing.Point(1298, 30);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(285, 35);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Thêm";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -56,9 +56,9 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(1215, 233);
+            this.btnDelete.Location = new System.Drawing.Point(1298, 99);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Size = new System.Drawing.Size(285, 35);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Xoá";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -66,9 +66,9 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(1215, 313);
+            this.btnEdit.Location = new System.Drawing.Point(1298, 169);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit.Size = new System.Drawing.Size(285, 35);
             this.btnEdit.TabIndex = 3;
             this.btnEdit.Text = "Sửa";
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -76,9 +76,9 @@
             // 
             // btnReload
             // 
-            this.btnReload.Location = new System.Drawing.Point(1215, 387);
+            this.btnReload.Location = new System.Drawing.Point(1298, 245);
             this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(75, 23);
+            this.btnReload.Size = new System.Drawing.Size(285, 35);
             this.btnReload.TabIndex = 4;
             this.btnReload.Text = "Làm Mới";
             this.btnReload.UseVisualStyleBackColor = true;

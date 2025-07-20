@@ -7,10 +7,8 @@ using System.Windows.Forms;
 namespace RegistrationForm1
 {
     public partial class FrmTran : Form
-    {
-      
-       private FrmMain _mainForm;   
-        
+    {      
+       private FrmMain _mainForm;          
         private BindingList<Tran1Model> tran1List = new BindingList<Tran1Model>();
         private BindingList<Tran2Model> tran2List = new BindingList<Tran2Model>();
         private BindingList<Tran3Model> tran3List = new BindingList<Tran3Model>();
@@ -19,12 +17,9 @@ namespace RegistrationForm1
         private BindingList<Tran6Model> tran6List = new BindingList<Tran6Model>();
         public FrmTran(FrmMain frmMain)
         {        
-            InitializeComponent();
-           
+            InitializeComponent();          
               Load += FrmTran_Load;
-
-            _mainForm = frmMain; // ✅ Gán trước khi sử dụng
-           
+            _mainForm = frmMain; // ✅ Gán trước khi sử dụng           
         }
         private void FrmTran_Load(object sender, EventArgs e)
         {
@@ -120,8 +115,6 @@ namespace RegistrationForm1
                 _mainForm.Door5_PressureLowChanged += Door5_PressureLow_ValueChanged;
                 _mainForm.Door6_PressureHighChanged += Door6_PressureHigh_ValueChanged;
                 _mainForm.Door6_PressureLowChanged += Door6_PressureLow_ValueChanged;
-
-
             }
             else
             {

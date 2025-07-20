@@ -399,7 +399,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua6.Text = "Đang Đóng"; lblCua6.ForeColor = Color.Green; lblCua6.BackColor = Color.Red; });
+                this.Invoke((MethodInvoker)delegate { lblCua6.Text = "Đóng"; lblCua6.ForeColor = Color.Green; lblCua6.BackColor = Color.Red; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua6.Text = "Cửa 6"; lblCua6.ForeColor = DefaultForeColor; lblCua6.BackColor = DefaultBackColor; });
@@ -409,7 +409,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua6.Text = "Đang Mở"; lblCua6.ForeColor = Color.Green; lblCua6.BackColor = Color.YellowGreen; });
+                this.Invoke((MethodInvoker)delegate { lblCua6.Text = "Mở"; lblCua6.ForeColor = Color.Green; lblCua6.BackColor = Color.YellowGreen; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua6.Text = "Cửa 1"; lblCua6.ForeColor = DefaultForeColor; lblCua6.BackColor = DefaultBackColor; });
@@ -418,7 +418,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua5.Text = "Đang Đóng"; lblCua5.ForeColor = Color.Green; lblCua5.BackColor = Color.Red; });
+                this.Invoke((MethodInvoker)delegate { lblCua5.Text = "Đóng"; lblCua5.ForeColor = Color.Green; lblCua5.BackColor = Color.Red; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua5.Text = "Cửa 5"; lblCua5.ForeColor = DefaultForeColor; lblCua5.BackColor = DefaultBackColor; });
@@ -427,7 +427,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua5.Text = "Đang Mở"; lblCua5.ForeColor = Color.Green; lblCua5.BackColor = Color.YellowGreen; });
+                this.Invoke((MethodInvoker)delegate { lblCua5.Text = "Mở"; lblCua5.ForeColor = Color.Green; lblCua5.BackColor = Color.YellowGreen; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua5.Text = "Cửa 1"; lblCua5.ForeColor = DefaultForeColor; lblCua5.BackColor = DefaultBackColor; });
@@ -436,7 +436,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua4.Text = "Đang Đóng"; lblCua4.ForeColor = Color.Green; lblCua4.BackColor = Color.Red; });
+                this.Invoke((MethodInvoker)delegate { lblCua4.Text = "Đóng"; lblCua4.ForeColor = Color.Green; lblCua4.BackColor = Color.Red; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua4.Text = "Cửa 4"; lblCua4.ForeColor = DefaultForeColor; lblCua4.BackColor = DefaultBackColor; });
@@ -445,7 +445,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua4.Text = "Đang Mở"; lblCua4.ForeColor = Color.Green; lblCua4.BackColor = Color.YellowGreen; });
+                this.Invoke((MethodInvoker)delegate { lblCua4.Text = "Mở"; lblCua4.ForeColor = Color.Green; lblCua4.BackColor = Color.YellowGreen; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua4.Text = "Cửa 4"; lblCua4.ForeColor = DefaultForeColor; lblCua4.BackColor = DefaultBackColor; });
@@ -454,7 +454,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua3.Text = "Đang Đóng"; lblCua3.ForeColor = Color.Green; lblCua3.BackColor = Color.Red; });
+                this.Invoke((MethodInvoker)delegate { lblCua3.Text = "Đóng"; lblCua3.ForeColor = Color.Green; lblCua3.BackColor = Color.Red; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua3.Text = "Cửa 3"; lblCua3.ForeColor = DefaultForeColor; lblCua3.BackColor = DefaultBackColor; });
@@ -463,7 +463,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua3.Text = "Đang Mở"; lblCua3.ForeColor = Color.Green; lblCua3.BackColor = Color.YellowGreen; });
+                this.Invoke((MethodInvoker)delegate { lblCua3.Text = "Mở"; lblCua3.ForeColor = Color.Green; lblCua3.BackColor = Color.YellowGreen; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua3.Text = "Cửa 3"; lblCua3.ForeColor = DefaultForeColor; lblCua3.BackColor = DefaultBackColor; });
@@ -472,7 +472,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua2.Text = "Đang Đóng"; lblCua2.ForeColor = Color.Green; lblCua2.BackColor = Color.Red; });
+                this.Invoke((MethodInvoker)delegate { lblCua2.Text = "Đóng"; lblCua2.ForeColor = Color.Green; lblCua2.BackColor = Color.Red; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua2.Text = "Cửa 2"; lblCua2.ForeColor = DefaultForeColor; lblCua2.BackColor = DefaultBackColor; });
@@ -481,7 +481,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua2.Text = "Đang Mở"; lblCua2.ForeColor = Color.Green; lblCua2.BackColor = Color.YellowGreen; });
+                this.Invoke((MethodInvoker)delegate { lblCua2.Text = "Mở"; lblCua2.ForeColor = Color.Green; lblCua2.BackColor = Color.YellowGreen; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua2.Text = "Cửa 2"; lblCua2.ForeColor = DefaultForeColor; lblCua2.BackColor = DefaultBackColor; });
@@ -490,7 +490,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua1.Text = "Đang Đóng"; lblCua1.ForeColor = Color.Green; lblCua1.BackColor = Color.Red; });
+                this.Invoke((MethodInvoker)delegate { lblCua1.Text = "Đóng"; lblCua1.ForeColor = Color.Green; lblCua1.BackColor = Color.Red; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua1.Text = "Cửa 1"; lblCua1.ForeColor = DefaultForeColor; lblCua1.BackColor = DefaultBackColor; });
@@ -499,7 +499,7 @@ namespace RegistrationForm1
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { lblCua1.Text = "Đang Mở"; lblCua1.ForeColor = Color.Green; lblCua1.BackColor = Color.YellowGreen; });
+                this.Invoke((MethodInvoker)delegate { lblCua1.Text = "Mở"; lblCua1.ForeColor = Color.Green; lblCua1.BackColor = Color.YellowGreen; });
             }
             else
                 this.Invoke((MethodInvoker)delegate { lblCua1.Text = "Cửa 1"; lblCua1.ForeColor = DefaultForeColor; lblCua1.BackColor = DefaultBackColor; });

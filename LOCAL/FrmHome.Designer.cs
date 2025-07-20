@@ -1201,11 +1201,12 @@
             // 
             // Temp_Oil3
             // 
+            this.Temp_Oil3.BackColor = System.Drawing.Color.Transparent;
             this.Temp_Oil3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Temp_Oil3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.Temp_Oil3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Temp_Oil3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil3.Location = new System.Drawing.Point(471, 363);
+            this.Temp_Oil3.Location = new System.Drawing.Point(475, 411);
             this.Temp_Oil3.Name = "Temp_Oil3";
             this.Temp_Oil3.Size = new System.Drawing.Size(55, 35);
             this.Temp_Oil3.StringFormat = null;
@@ -1216,11 +1217,12 @@
             // 
             // Temp_Oil2
             // 
+            this.Temp_Oil2.BackColor = System.Drawing.Color.Transparent;
             this.Temp_Oil2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Temp_Oil2.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.Temp_Oil2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Temp_Oil2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil2.Location = new System.Drawing.Point(853, 363);
+            this.Temp_Oil2.Location = new System.Drawing.Point(854, 409);
             this.Temp_Oil2.Name = "Temp_Oil2";
             this.Temp_Oil2.Size = new System.Drawing.Size(55, 35);
             this.Temp_Oil2.StringFormat = null;
@@ -1231,11 +1233,12 @@
             // 
             // Temp_Oil1
             // 
+            this.Temp_Oil1.BackColor = System.Drawing.Color.Transparent;
             this.Temp_Oil1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Temp_Oil1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.Temp_Oil1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Temp_Oil1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Temp_Oil1.Location = new System.Drawing.Point(1230, 363);
+            this.Temp_Oil1.Location = new System.Drawing.Point(1233, 409);
             this.Temp_Oil1.Name = "Temp_Oil1";
             this.Temp_Oil1.Size = new System.Drawing.Size(55, 35);
             this.Temp_Oil1.StringFormat = null;
@@ -1243,7 +1246,6 @@
             this.Temp_Oil1.TagPath = "Local Station/Channel1/Device1/S1_Temp_Oil";
             this.Temp_Oil1.Text = "0.0";
             this.Temp_Oil1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Temp_Oil1.Visible = false;
             // 
             // Pic_Station3_Stop
             // 

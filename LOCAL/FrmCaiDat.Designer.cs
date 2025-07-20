@@ -50,7 +50,7 @@
             // btnExit
             // 
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnExit.Location = new System.Drawing.Point(651, 456);
+            this.btnExit.Location = new System.Drawing.Point(587, 498);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(80, 28);
             this.btnExit.TabIndex = 17;
@@ -60,7 +60,7 @@
             // 
             // btnBackup
             // 
-            this.btnBackup.Location = new System.Drawing.Point(548, 456);
+            this.btnBackup.Location = new System.Drawing.Point(484, 498);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(80, 28);
             this.btnBackup.TabIndex = 16;
@@ -70,7 +70,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(462, 456);
+            this.btnSave.Location = new System.Drawing.Point(398, 498);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 28);
             this.btnSave.TabIndex = 15;
@@ -80,7 +80,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(376, 456);
+            this.btnTest.Location = new System.Drawing.Point(312, 498);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(80, 28);
             this.btnTest.TabIndex = 14;
@@ -96,7 +96,7 @@
             this.grpAuth.Controls.Add(this.lblUsername);
             this.grpAuth.Controls.Add(this.rbSqlAuth);
             this.grpAuth.Controls.Add(this.rbWindowsAuth);
-            this.grpAuth.Location = new System.Drawing.Point(376, 310);
+            this.grpAuth.Location = new System.Drawing.Point(312, 352);
             this.grpAuth.Name = "grpAuth";
             this.grpAuth.Size = new System.Drawing.Size(355, 128);
             this.grpAuth.TabIndex = 13;
@@ -160,7 +160,7 @@
             // 
             // txtDatabase
             // 
-            this.txtDatabase.Location = new System.Drawing.Point(463, 270);
+            this.txtDatabase.Location = new System.Drawing.Point(399, 312);
             this.txtDatabase.Name = "txtDatabase";
             this.txtDatabase.Size = new System.Drawing.Size(268, 20);
             this.txtDatabase.TabIndex = 12;
@@ -168,7 +168,7 @@
             // lblDatabase
             // 
             this.lblDatabase.AutoSize = true;
-            this.lblDatabase.Location = new System.Drawing.Point(373, 273);
+            this.lblDatabase.Location = new System.Drawing.Point(309, 315);
             this.lblDatabase.Name = "lblDatabase";
             this.lblDatabase.Size = new System.Drawing.Size(87, 13);
             this.lblDatabase.TabIndex = 11;
@@ -176,7 +176,7 @@
             // 
             // txtServer
             // 
-            this.txtServer.Location = new System.Drawing.Point(463, 244);
+            this.txtServer.Location = new System.Drawing.Point(399, 286);
             this.txtServer.Name = "txtServer";
             this.txtServer.Size = new System.Drawing.Size(268, 20);
             this.txtServer.TabIndex = 10;
@@ -184,7 +184,7 @@
             // lblServer
             // 
             this.lblServer.AutoSize = true;
-            this.lblServer.Location = new System.Drawing.Point(373, 247);
+            this.lblServer.Location = new System.Drawing.Point(309, 289);
             this.lblServer.Name = "lblServer";
             this.lblServer.Size = new System.Drawing.Size(72, 13);
             this.lblServer.TabIndex = 9;

@@ -11,11 +11,12 @@ namespace RegistrationForm1
 
         // Danh sách quyền cho từng vai trò
         private static readonly Dictionary<string, List<string>> RolePermissions = new Dictionary<string, List<string>>()
-        {
-            { "Admin", new List<string> { "add_user", "delete_user", "edit_user", "view_data", "export_data" } },
-            { "User", new List<string> { "view_data", "export_data" } },
-            { "Viewer", new List<string> { "view_data" } }
-        };
+{
+    { "Admin", new List<string> { "add_user", "delete_user", "edit_user", "view_data", "edit_data" } },
+    { "Quản Lý", new List<string> { "add_user", "view_data", "export_data", "edit_data" } },
+    { "Vận Hành", new List<string> { "view_data", "export_data" } },
+    { "Bảo Trì", new List<string> { "view_data" } }
+};
 
         public static void SetUser(string username, string role)
         {
@@ -23,14 +24,17 @@ namespace RegistrationForm1
             CurrentUserRole = role;
         }
 
-        /// <summary>
-        /// Kiểm tra người dùng hiện tại có quyền thực hiện hành động không.
-        /// </summary>
+        
         public static bool HasPermission(string action)
         {
             if (string.IsNullOrEmpty(CurrentUserRole))
                 return false;
 
+            // Admin có tất cả quyền
+            if (CurrentUserRole == "Admin")
+                return true;
+
+            // Kiểm tra quyền trong RolePermissions
             if (RolePermissions.ContainsKey(CurrentUserRole))
             {
                 return RolePermissions[CurrentUserRole].Contains(action);
@@ -38,7 +42,6 @@ namespace RegistrationForm1
 
             return false;
         }
-
         /// <summary>
         /// Kiểm tra quyền và hiện cảnh báo nếu không có quyền.
         /// </summary>
@@ -46,15 +49,11 @@ namespace RegistrationForm1
         {
             if (!HasPermission(action))
             {
-                MessageBox.Show(
-                    $"Tài khoản \"{CurrentUsername}\" ({CurrentUserRole}) không có quyền thực hiện chức năng này.",
-                    "Không có quyền truy cập",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show("Bạn không có quyền thực hiện chức năng này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;
         }
+        
     }
 }
