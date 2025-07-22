@@ -1,4 +1,5 @@
-﻿using Application.Services.Authen;
+﻿using Application.Services;
+using Application.Services.Authen;
 using Application.Services.Authen.UI;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
@@ -85,7 +86,8 @@ builder.Services.AddHttpClient("UI")
 
     .UseWithRestEaseClient<IAccount>()
     .UseWithRestEaseClient<IPermissions>()
-    .UseWithRestEaseClient<IRoleToPermissions>();
+    .UseWithRestEaseClient<IRoleToPermissions>()
+    .UseWithRestEaseClient<IFT01>();
 
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));
 builder.Services.AddBlazoredLocalStorage();

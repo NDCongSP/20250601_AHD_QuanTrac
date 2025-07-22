@@ -324,8 +324,8 @@ namespace Infrastructure.Repositories
                 {
                     FullName = "Admin",
                     UserName = "Admin",
-                    Password = "admin@admin.comP1",
-                    Email = "admin@admin.com",
+                    Password = "admin@gmail.comP1",
+                    Email = "admin@gmail.com",
                     Roles = roles,
                     Status = EnumStatus.Activated
                 };

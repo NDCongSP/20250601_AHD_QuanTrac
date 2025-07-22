@@ -24,6 +24,12 @@ namespace Infrastructure.Data
         public DbSet<RoleToPermission> RoleToPermissions { get; set; }
         #endregion
 
+        public DbSet<FT01> FT01s { get; set; }
+        public DbSet<FT02> FT02s { get; set; }
+        public DbSet<FT03> FT03s { get; set; }
+        public DbSet<FT05> FT05s { get; set; }
+        public DbSet<FT06> FT06s { get; set; }            
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
