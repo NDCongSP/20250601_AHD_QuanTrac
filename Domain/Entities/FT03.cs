@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Formats.Asn1;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -14,7 +7,7 @@ namespace Domain.Entities
     /// Data Log.
     /// </summary>
     [Table("FT03")]
-    public class FT03
+    public class FT03 : TagsModel
     {
         [Key]
         public Guid Id { get; set; }
@@ -32,5 +25,6 @@ namespace Domain.Entities
         /// </summary>
         [Display(Name = "Station Name")]
         public string? StationName { get; set; }
+
     }
 }

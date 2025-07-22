@@ -26,7 +26,7 @@ namespace Domain.Entities
 
         /// <summary>
         /// Chứa các thông tin config cho từng trạm.
-        /// chính là class StationsInfo (List<StationInfoModel>).
+        /// chính là class LocationsModel (List<LocationInfoModel>).
         /// </summary>
         [Display(Name = "Stations config")]
         public string? C001 { get; set; }
