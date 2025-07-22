@@ -30,5 +30,10 @@ namespace Domain.Entities
         /// </summary>
         [Display(Name = "Stations config")]
         public string? C001 { get; set; }
+        public string? CreateOperatorId { get ; set ; }
+        public DateTime? CreateAt { get ; set ; }
+        public string? UpdateOperatorId { get ; set ; }
+        public DateTime? UpdateAt { get ; set ; }
+        public bool? IsDeleted { get ; set ; }
     }
 }

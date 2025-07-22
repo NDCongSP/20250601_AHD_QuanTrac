@@ -13,5 +13,10 @@ namespace Domain.Entities
         public string? PermisionName { get; set; }
         public string PermisionDescription { get; set; }
         public EnumStatus Status { get; set; } = EnumStatus.Activated;
+        public string? CreateOperatorId { get ; set ; }
+        public DateTime? CreateAt { get ; set ; }
+        public string? UpdateOperatorId { get ; set ; }
+        public DateTime? UpdateAt { get ; set ; }
+        public bool? IsDeleted { get ; set ; }
     }
 }

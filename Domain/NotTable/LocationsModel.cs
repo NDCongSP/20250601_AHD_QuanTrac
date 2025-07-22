@@ -16,17 +16,17 @@
         /// <summary>
         /// Id của vị trí.
         /// </summary>
-        public int Id { get; set; }
+        public int? Id { get; set; }
         /// <summary>
         /// Tên của vị trí.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
         /// <summary>
         /// Mô tả về vị trí.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public List<StationInfoModel> Stations { get; set; } = new List<StationInfoModel>();
+        public List<StationInfoModel>? Stations { get; set; } = new List<StationInfoModel>();
     }
 
     public class StationInfoModel
@@ -34,13 +34,13 @@
         /// <summary>
         /// Id cuar trạm.
         /// </summary>
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
-        public string Name { get; set; }
-        public TagsModel Tags { get; set; }
+        public string? Name { get; set; }
+        public TagsModel? Tags { get; set; }
         /// <summary>
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>
-        public string Path { get; set; }
+        public string? Path { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Domain.Entities
     /// Bảng lưu thông tin alarms.
     /// </summary>
     [Table("FT05")]
-    public class FT05
+    public class FT05 : GenericEntity
     {
         [Key]
         public Guid Id { get; set; }
@@ -41,5 +41,10 @@ namespace Domain.Entities
         /// RealtimeDisplayModel.
         /// </summary>
         public string Details { get; set; }
+        public string? CreateOperatorId { get ; set ; }
+        public DateTime? CreateAt { get ; set ; }
+        public string? UpdateOperatorId { get ; set ; }
+        public DateTime? UpdateAt { get ; set ; }
+        public bool? IsDeleted { get ; set ; }
     }
 }

@@ -69,5 +69,10 @@
         {
             public const string BasePath = "api/RoleToPermissionsTenant";
         }
+
+        public static class FT01
+        {
+            public const string BasePath = "api/FT01";
+        }
     }
 }

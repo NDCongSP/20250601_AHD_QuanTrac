@@ -12,7 +12,7 @@ namespace Domain.Entities
     /// Bảng chứa giá trị hiển thị web realtime Display.
     /// </summary>
     [Table("FT02")]
-    public class FT02: GenericEntity
+    public class FT02 : GenericEntity
 
     {
         [Key]
@@ -23,5 +23,10 @@ namespace Domain.Entities
         /// chính là class RealtimeDisplays (List<RealtimeDisplayModel>).
         /// </summary>
         public string? C000 { get; set; }
+        public string? CreateOperatorId { get ; set ; }
+        public DateTime? CreateAt { get ; set ; }
+        public string? UpdateOperatorId { get ; set ; }
+        public DateTime? UpdateAt { get ; set ; }
+        public bool? IsDeleted { get ; set ; }
     }
 }
