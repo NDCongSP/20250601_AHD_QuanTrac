@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "563d97cf-6204-4ef2-b411-5e3a397ab6db",
+		"name": "AHD_QuanTrac",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45475784",
+		"_collection_link": "https://wms555-3161.postman.co/workspace/WMS~fe0aef3c-d693-4caa-8bc2-4721bb475d74/collection/45475784-563d97cf-6204-4ef2-b411-5e3a397ab6db?action=share&source=collection_link&creator=45475784"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "LoginAccountAsync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"TOKEN\",pm.response.json().token)\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"emailAddress\": \"admin@gmail.com\",\r\n  \"password\": \"admin@gmail.comP1\",\r\n  \"remember\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH_URL}}",
+							"host": [
+								"{{AUTH_URL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateSuperAdminAsync",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/Account/identity/setting",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"Account",
+								"identity",
+								"setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRolesAsync",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/Account/GetRolesAsync",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"Account",
+								"GetRolesAsync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FT01_Config",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/FT01",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"FT01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": [\r\n        {\r\n            \"id\": \"aa6673be-b5b9-489d-9a1a-0597bd819952\",\r\n            \"c000\": \"{\\\"Smooth\\\":true,\\\"ShowDataLabels\\\":false,\\\"ShowMarkers\\\":true,\\\"TimeTempChange\\\":null,\\\"Gain\\\":1.0,\\\"DataLogInterval\\\":5000,\\\"DataLogWhenRunProfileInterval\\\":1000,\\\"DisplayRealtimeInterval\\\":1000,\\\"CountSecondStop\\\":5000,\\\"ToleranceTempForRampDown\\\":2.0,\\\"ToleranceTempOutForRampDown\\\":1.0,\\\"ToleranceTempForRampUp\\\":2.0,\\\"ToleranceTempOutForRampUp\\\":1.0,\\\"RefreshInterval\\\":null,\\\"ChartRefreshInterval\\\":null,\\\"ChartPointNum\\\":null,\\\"ChangePassUser\\\":false}\",\r\n            \"c001\": \"[{\\\"Id\\\":1,\\\"Name\\\":\\\"Local Station\\\",\\\"Description\\\":\\\"Local Station DauTieng\\\",\\\"Stations\\\":[{\\\"Id\\\":1,\\\"Name\\\":\\\"Group 1\\\",\\\"Tags\\\":null,\\\"Path\\\":\\\"Local Station/DauTieng/S71500/Group1\\\"},{\\\"Id\\\":2,\\\"Name\\\":\\\"Group 2\\\",\\\"Tags\\\":null,\\\"Path\\\":\\\"Local Station/DauTieng/S71500/Group2\\\"},{\\\"Id\\\":3,\\\"Name\\\":\\\"Group 3\\\",\\\"Tags\\\":null,\\\"Path\\\":\\\"Local Station/DauTieng/S71500/Group3\\\"},{\\\"Id\\\":4,\\\"Name\\\":\\\"Group 4\\\",\\\"Tags\\\":null,\\\"Path\\\":\\\"Local Station/DauTieng/S71500/Group4\\\"},{\\\"Id\\\":5,\\\"Name\\\":\\\"API\\\",\\\"Tags\\\":null,\\\"Path\\\":\\\"Local Station/DauTieng/S71500/API\\\"}]}]\",\r\n            \"createOperatorId\": \"admin\",\r\n            \"createAt\": \"2025-07-22T23:16:12.8009765\",\r\n            \"updateOperatorId\": \"admin\",\r\n            \"updateAt\": \"2025-07-22T23:20:12.8009765\",\r\n            \"isDeleted\": false\r\n        }\r\n    ],\r\n    \"messages\": [],\r\n    \"succeeded\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/FT01/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"FT01",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
