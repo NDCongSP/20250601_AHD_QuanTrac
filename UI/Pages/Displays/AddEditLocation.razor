@@ -1,0 +1,131 @@
+﻿@page "/add-edit-location/{Id?}"
+@using Domain
+@if (_location == null)
+{
+    <p><em>@_localizer["Loading"]...</em></p>
+}
+else
+{
+    <RadzenRow class="padding-body-content">
+        <RadzenColumn Size="12" SizeSM="12">
+            @* <RadzenLink Text="@_localizer["Trở về"]" Path="javascript:void(0)" @onclick="@(() => BackToList())" Icon="arrow_back_ios" Style="margin-bottom: 1rem;" /> *@
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow Gap="1rem" Class="padding-body-content">
+        <RadzenColumn Size="12" SizeSM="6">
+            <RadzenText TextStyle="TextStyle.Body1"><strong>@_localizer["Thông tin địa điểm"]</strong></RadzenText>
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeSM="6">
+            <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End" AlignItems="AlignItems.Center" Gap=" 5px">
+                <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark"
+                              Text="@_localizer["Xóa"]" Icon="cancel" ButtonStyle="ButtonStyle.Danger" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenTemplateForm Data="@_location">
+        <RadzenStack Gap="1rem">
+            <!-- Location Info -->
+            <RadzenCard>
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeSM="6">
+                            <RadzenFormField Text="@_localizer["Location Name"]" Variant="Variant.Outlined" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@_location.Name" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeSM="6">
+                            <RadzenFormField Text="@_localizer["Description"]" Variant="Variant.Outlined" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@_location.Description"
+                                               Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenStack>
+            </RadzenCard>
+
+            <!-- Stations Grid -->
+            <RadzenCard>
+                <RadzenStack Gap="1rem">
+                    <RadzenFieldset Text="@_localizer["Trạm"]">
+                        <RadzenColumn SizeXS="12" SizeSM="12" class="d-flex justify-content-end rz-mb-2">
+                            <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End" AlignItems="AlignItems.Center" Gap=" 5px">
+                                <RadzenButton ButtonStyle="ButtonStyle.Primary" Icon="add_circle" Click="@AddStation" />
+                            </RadzenStack>
+                        </RadzenColumn>
+                        <RadzenDataGrid Data="@_location.Stations" @ref="_stationsGrid"
+                                        TItem="StationInfoModel"
+                                        AllowPaging="true">
+                            <Columns>
+                                <RadzenDataGridColumn TItem="StationInfoModel"
+                                                      Title="Name"
+                                                      Property="Name"
+                                                      Width="40%">
+                                    <EditTemplate Context="station">
+                                        <RadzenTextBox @bind-Value="@station.Name"
+                                                       Style="width:100%" />
+                                    </EditTemplate>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="StationInfoModel"
+                                                      Title="Tags"
+                                                      Property="Tags"
+                                                      Width="40%">
+                                    <EditTemplate Context="station">
+                                        <RadzenTextBox @bind-Value="@station.Path"
+                                                       Style="width:100%" />
+                                    </EditTemplate>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="StationInfoModel"
+                                                      Title="Path"
+                                                      Property="Path"
+                                                      Width="40%">
+                                    <EditTemplate Context="station">
+                                        <RadzenTextBox @bind-Value="@station.Path"
+                                                       Style="width:100%" />
+                                    </EditTemplate>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="StationInfoModel"
+                                                      Title="Actions"
+                                                      Width="20%"
+                                                      TextAlign="TextAlign.Center">
+                                    <Template Context="station">
+                                        <RadzenButton Icon="delete"
+                                                      ButtonStyle="ButtonStyle.Danger"
+                                                      Size="ButtonSize.Small"
+                                                      Click="@(() => DeleteStation(station))" />
+                                    </Template>
+                                </RadzenDataGridColumn>
+                                <RadzenDataGridColumn Context="detail" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="120px" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
+                                    <Template Context="detail">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@( async args=> await EditRow(detail))">
+                                        </RadzenButton>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(detail))" @onclick:stopPropagation="true">
+                                        </RadzenButton>
+                                    </Template>
+                                    <EditTemplate Context="detail">
+                                        <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(detail))" aria-label="@_localizer["Save"]">
+                                        </RadzenButton>
+                                        <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(detail))" aria-label="@_localizer["Cancel"]">
+                                        </RadzenButton>
+                                    </EditTemplate>
+                                </RadzenDataGridColumn>
+                            </Columns>
+                        </RadzenDataGrid>
+                    </RadzenFieldset>
+                </RadzenStack>
+            </RadzenCard>
+
+            <!-- Action Buttons -->
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         JustifyContent="JustifyContent.End"
+                         Gap="1rem">
+                <RadzenButton Text="Cancel"
+                              Click="@OnCancel"
+                              ButtonStyle="ButtonStyle.Light" />
+                <RadzenButton Text="Save"
+                              Click="@OnSave"
+                              ButtonStyle="ButtonStyle.Primary"
+                              Disabled="@_isSaving" />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenTemplateForm>
+}
