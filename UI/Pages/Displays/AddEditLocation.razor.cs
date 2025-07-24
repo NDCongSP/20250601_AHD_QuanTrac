@@ -1,84 +1,140 @@
 using Domain;
+using Domain.Enums;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Localization;
-using Radzen;
-using Radzen.Blazor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 
 namespace UI.Pages.Displays;
 
 public partial class AddEditLocation : ComponentBase
 {
-    [Inject] public required IStringLocalizer<App> L { get; set; }
-    [Inject] public required NavigationManager NavigationManager { get; set; }
-    [Inject] public required DialogService DialogService { get; set; }
-    [Inject] public required NotificationService NotificationService { get; set; }
+    [Parameter]
+    public EnumMode Mode { get; set; }
 
-    [Parameter] public string? Id { get; set; }
+    [Parameter]
+    public string? Id { get; set; } // Id khi Edit, có thể null khi Create
 
-    private LocationInfoModel _location = new() { Stations = new List<StationInfoModel>() };
+    [Parameter]
+    public LocationInfoModel Model { get; set; } = new(); // Dữ liệu đang chỉnh sửa
+
+    [Parameter]
+    public EventCallback OnBack { get; set; } // Gọi khi bấm nút quay lại
+
+    [Parameter]
+    public EventCallback OnSaved { get; set; } // Gọi khi lưu thành công
+
+
+    #region Data grid Detail
     private bool _isSaving;
-    private bool _isEditMode => !string.IsNullOrEmpty(Id);
     private RadzenDataGrid<StationInfoModel>? _stationsGrid;
     private readonly List<StationInfoModel> _stationsToInsert = new();
 
-    protected override async Task OnInitializedAsync()
+    // Flags to manage the state of row editing/insertion
+    private bool _isInserting = false;
+    private bool _isEditing = false;
+    #endregion
+    protected override async Task OnParametersSetAsync()
     {
-        if (_isEditMode && !string.IsNullOrEmpty(Id))
+        if (Mode == EnumMode.Create)
         {
-            await LoadLocationAsync();
+            Model = new LocationInfoModel();
         }
     }
 
-    private async Task LoadLocationAsync()
+    private async Task HandleBackClick()
+    {
+        if (OnBack.HasDelegate)
+            await OnBack.InvokeAsync();
+    }
+
+    private async Task HandleSaveClick()
     {
         try
         {
-            _isSaving = true;
-            // TODO: Uncomment and implement actual API call
-            /*
-            var result = await _locationService.GetByIdAsync(Id);
-            if (result != null && result.Success)
+            var result = await _ft01Service.AddOrUpdateLocationAsync(Model);
+            if (result.Succeeded)
             {
-                _location = result.Data;
+                await OnCancel();
+                NotificationHelper.ShowNotification(_notificationService,
+                    NotificationSeverity.Success,
+                    "Thành công",
+                    $"{(Mode == EnumMode.Create ? "Đã thêm" : "Đã cập nhật")} trạm '{Model.Name}' thành công");
+
+                if (OnSaved.HasDelegate)
+                    await OnSaved.InvokeAsync();
             }
             else
             {
-                NotificationService.Notify(new NotificationMessage
-                {
-                    Severity = NotificationSeverity.Error,
-                    Summary = L["Error"],
-                    Detail = L["Failed to load location"],
-                    Duration = 4000
-                });
-                NavigationManager.NavigateTo("/location-management");
+                NotificationHelper.ShowNotification(_notificationService,
+                    NotificationSeverity.Error,
+                    "Lỗi",
+                    $"{(Mode == EnumMode.Create ? "Thêm" : "Cập nhật")} trạm không thành công: {string.Join(',', result.Messages)}");
             }
-            */
         }
         catch (Exception ex)
         {
-            NotificationService.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = L["Error"],
-                Detail = ex.Message,
-                Duration = 4000
-            });
+            NotificationHelper.ShowNotification(_notificationService,
+                NotificationSeverity.Error,
+                "Lỗi",
+                $"{(Mode == EnumMode.Create ? "Thêm" : "Cập nhật")} trạm không thành công: {ex.Message}");
         }
-        finally
+    }
+
+    private async Task DeleteItem(LocationInfoModel item)
+    {
+        if (item == null) return;
+
+        var confirmed = await _dialogService.Confirm(
+            $"Bạn có chắc chắn muốn xóa trạm '{item.Name}'?",
+            "Xác nhận xóa",
+            new ConfirmOptions()
+            {
+                OkButtonText = "Xóa",
+                CancelButtonText = "Hủy"
+            });
+
+        if (confirmed == true && item.Id != null)
         {
-            _isSaving = false;
-            StateHasChanged();
+            try
+            {
+                var result = await _ft01Service.DeleteLocationAsync(item.Id);
+                if (result.Succeeded)
+                {
+                    // TODO: Update the list of locations if this page displays a list
+                    NotificationHelper.ShowNotification(_notificationService,
+                        NotificationSeverity.Success,
+                        "Thành công",
+                        $"Đã xóa trạm '{item.Name}' thành công");
+                }
+                else
+                {
+                    NotificationHelper.ShowNotification(_notificationService,
+                        NotificationSeverity.Error,
+                        "Lỗi",
+                        $"Xóa trạm không thành công: {string.Join(',', result.Messages)}");
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationHelper.ShowNotification(_notificationService,
+                    NotificationSeverity.Error,
+                    "Lỗi",
+                    $"Xóa trạm không thành công: {ex.Message}");
+            }
         }
     }
 
     private void AddStation()
     {
-        _location.Stations ??= new List<StationInfoModel>();
-        _location.Stations.Add(new StationInfoModel());
+        Model.Stations ??= new List<StationInfoModel>();
+        var newStation = new StationInfoModel();
+        Model.Stations.Add(newStation);
+        // Mark as inserting
+        _isInserting = true;
+        // If the grid is initialized, insert the row for immediate editing
+        if (_stationsGrid != null)
+        {
+            _stationsGrid.InsertRow(newStation);
+        }
         StateHasChanged();
     }
 
@@ -86,52 +142,51 @@ public partial class AddEditLocation : ComponentBase
     {
 
         var confirmed = await _dialogService.Confirm(
-            L["Are you sure you want to delete this station?"],
-            L["Confirm Delete"] ?? "Confirm Delete",
+            "Bạn có chắc chắn muốn xóa trạm này?",
+            "Xác nhận xóa",
             new ConfirmOptions()
             {
-                OkButtonText = L["Yes"] ?? "Yes",
-                CancelButtonText = L["No"] ?? "No"
+                OkButtonText = "Có",
+                CancelButtonText = "Không"
             });
 
         if (confirmed == true)
         {
-            _location.Stations.Remove(station);
+            Model.Stations.Remove(station);
             _notificationService.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Success,
-                Summary = L["Success"] ?? "Success",
-                Detail = L["Station deleted successfully"] ?? "Station deleted successfully"
+                Summary = "Thành công",
+                Detail = "Đã xóa trạm thành công"
             });
         }
     }
 
-    // Station CRUD Operations
     private async Task EditRow(StationInfoModel station)
     {
+        // Mark as editing
+        _isEditing = true;
         if (_stationsGrid != null)
         {
             await _stationsGrid.EditRow(station);
         }
+        StateHasChanged();
     }
 
     private async Task OnUpdateRow(StationInfoModel station)
     {
-        if (_location.Stations != null && _location.Stations.Count > 0 && station == _location.Stations[^1])
-        {
-            await SaveRow(station);
-        }
+        await SaveRow(station);
     }
 
     private async Task SaveRow(StationInfoModel station)
     {
         if (string.IsNullOrWhiteSpace(station.Name))
         {
-            NotificationService.Notify(new NotificationMessage
+            _notificationService.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Error,
-                Summary = L["Error"],
-                Detail = L["Station name is required"] ?? "Station name is required",
+                Summary = "Lỗi",
+                Detail = "Tên trạm không được để trống",
                 Duration = 4000
             });
             return;
@@ -139,11 +194,11 @@ public partial class AddEditLocation : ComponentBase
 
         if (string.IsNullOrWhiteSpace(station.Path))
         {
-            NotificationService.Notify(new NotificationMessage
+            _notificationService.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Error,
-                Summary = L["Error"],
-                Detail = L["Station path is required"],
+                Summary = "Lỗi",
+                Detail = "Đường dẫn trạm không được để trống",
                 Duration = 4000
             });
             return;
@@ -151,33 +206,40 @@ public partial class AddEditLocation : ComponentBase
 
         if (CheckDuplicateStation(station))
         {
-            NotificationService.Notify(new NotificationMessage
+            _notificationService.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Error,
-                Summary = L["Error"],
-                Detail = L["A station with the same name already exists"],
+                Summary = "Lỗi",
+                Detail = "Đã tồn tại trạm có tên tương tự",
                 Duration = 4000
             });
             return;
         }
 
-        _location.Stations ??= new List<StationInfoModel>();
-
+        Model.Stations ??= new List<StationInfoModel>();
+        Model.Stations = Model.Stations.Where(x => x.Id > 0).ToList();  
         if (station.Id == null || station.Id == 0)
         {
             // New station
-            station.Id = _location.Stations.Any() ? _location.Stations.Max(s => s.Id) + 1 : 1;
-            _location.Stations.Add(station);
-            //_stationsGrid.De(station);
+            station.Id = Model.Stations.Any() ? Model.Stations.Max(s => s.Id) + 1 : 1;
+            if (!Model.Stations.Contains(station))
+            {
+                Model.Stations.Add(station);
+            }
         }
 
-        await _stationsGrid.UpdateRow(station);
+        if (_stationsGrid != null)
+        {
+            await _stationsGrid.UpdateRow(station);
+            _isEditing = false;
+            _isInserting = false;
+        }
         StateHasChanged();
     }
 
     private bool CheckDuplicateStation(StationInfoModel station)
     {
-        return _location.Stations?.Any(s =>
+        return Model.Stations?.Any(s =>
             s.Id != station.Id &&
             string.Equals(s.Name, station.Name, StringComparison.OrdinalIgnoreCase)) == true;
     }
@@ -189,35 +251,39 @@ public partial class AddEditLocation : ComponentBase
             _stationsToInsert.Remove(station);
         }
         _stationsGrid?.CancelEditRow(station);
+        _isEditing = false;
+        _isInserting = false;
         StateHasChanged();
     }
 
     private async Task DeleteRow(StationInfoModel station)
     {
-        var confirmed = await DialogService.Confirm(
-            L["Are you sure you want to delete this station?"],
-            L["Confirm Delete"] ?? "Confirm Delete",
+        var confirmed = await _dialogService.Confirm(
+            "Bạn có chắc chắn muốn xóa trạm này?",
+            "Xác nhận xóa",
             new ConfirmOptions
             {
-                OkButtonText = L["Yes"] ?? "Yes",
-                CancelButtonText = L["No"] ?? "No"
+                OkButtonText = "Có",
+                CancelButtonText = "Không"
             });
 
-        if (confirmed == true && _location.Stations != null)
+        if (confirmed == true && Model.Stations != null)
         {
-            if (_location.Stations.Contains(station))
+            if (Model.Stations.Contains(station))
             {
-                _location.Stations.Remove(station);
+                Model.Stations.Remove(station);
                 if (_stationsGrid != null)
                 {
                     await _stationsGrid.Reload();
+                    // Reset editing flag after delete
+                    _isEditing = false;
                 }
 
-                NotificationService.Notify(new NotificationMessage
+                _notificationService.Notify(new NotificationMessage
                 {
                     Severity = NotificationSeverity.Success,
-                    Summary = L["Success"] ?? "Success",
-                    Detail = L["Station deleted successfully"] ?? "Station deleted successfully",
+                    Summary = "Thành công",
+                    Detail = "Đã xóa trạm thành công",
                     Duration = 4000
                 });
             }
@@ -226,26 +292,29 @@ public partial class AddEditLocation : ComponentBase
 
     private async Task InsertRow()
     {
-        if (string.IsNullOrWhiteSpace(_location.Name?.Trim()))
+        if (string.IsNullOrWhiteSpace(Model.Name?.Trim()))
         {
-            NotificationService.Notify(new NotificationMessage
+            _notificationService.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Error,
-                Summary = L["Error"] ?? "Error",
-                Detail = L["Please save the location before adding stations"] ?? "Please save the location before adding stations",
+                Summary = "Lỗi",
+                Detail = "Vui lòng lưu thông tin trạm trước khi thêm trạm con",
                 Duration = 4000
             });
             return;
         }
 
-        _location.Stations ??= new List<StationInfoModel>();
+        Model.Stations ??= new List<StationInfoModel>();
         var newStation = new StationInfoModel();
         _stationsToInsert.Add(newStation);
+        // Mark as inserting
+        _isInserting = true;
         if (_stationsGrid != null)
         {
             await _stationsGrid.InsertRow(newStation);
         }
     }
+
     private async Task OnSave()
     {
         try
@@ -253,30 +322,29 @@ public partial class AddEditLocation : ComponentBase
             _isSaving = true;
 
             // Basic validation
-            if (string.IsNullOrWhiteSpace(_location.Name?.Trim()))
+            if (string.IsNullOrWhiteSpace(Model.Name?.Trim()))
             {
-                NotificationService.Notify(new NotificationMessage
+                _notificationService.Notify(new NotificationMessage
                 {
                     Severity = NotificationSeverity.Error,
-                    Summary = L["Validation Error"],
-                    Detail = L["Location name is required"],
+                    Summary = "Lỗi xác thực",
+                    Detail = "Tên địa điểm không được để trống",
                     Duration = 4000
                 });
                 return;
             }
 
-            // Validate stations
-            if (_location.Stations != null && _location.Stations.Any())
+            if (Model.Stations != null && Model.Stations.Any())
             {
-                foreach (var station in _location.Stations)
+                foreach (var station in Model.Stations)
                 {
                     if (string.IsNullOrWhiteSpace(station.Name) || string.IsNullOrWhiteSpace(station.Path))
                     {
-                        NotificationService.Notify(new NotificationMessage
+                        _notificationService.Notify(new NotificationMessage
                         {
                             Severity = NotificationSeverity.Error,
-                            Summary = L["Validation Error"],
-                            Detail = L["All stations must have both name and path"],
+                            Summary = "Lỗi xác thực",
+                            Detail = "Tất cả các trạm phải có cả tên và đường dẫn",
                             Duration = 4000
                         });
                         return;
@@ -284,66 +352,39 @@ public partial class AddEditLocation : ComponentBase
                 }
             }
 
-            // TODO: Uncomment and implement actual API call
-            /*
-            if (_isEditMode)
+            var updateResult = await _ft01Service.AddOrUpdateLocationAsync(Model);
+            if (updateResult.Succeeded)
             {
-                var updateResult = await _locationService.UpdateAsync(_location);
-                if (updateResult.Success)
+                _notificationService.Notify(new NotificationMessage
                 {
-                    NotificationService.Notify(new NotificationMessage
-                    {
-                        Severity = NotificationSeverity.Success,
-                        Summary = L["Success"],
-                        Detail = L["Location updated successfully"],
-                        Duration = 4000
-                    });
-                    NavigationManager.NavigateTo("/location-management");
-                }
-                else
-                {
-                    NotificationService.Notify(new NotificationMessage
-                    {
-                        Severity = NotificationSeverity.Error,
-                        Summary = L["Error"],
-                        Detail = updateResult.Message ?? L["Failed to update location"],
-                        Duration = 4000
-                    });
-                }
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Thành công",
+                    Detail = "Cập nhật địa điểm thành công",
+                    Duration = 4000
+                });
             }
             else
             {
-                var createResult = await _locationService.CreateAsync(_location);
-                if (createResult.Success)
+                _notificationService.Notify(new NotificationMessage
                 {
-                    NotificationService.Notify(new NotificationMessage
-                    {
-                        Severity = NotificationSeverity.Success,
-                        Summary = L["Success"],
-                        Detail = L["Location created successfully"],
-                        Duration = 4000
-                    });
-                    NavigationManager.NavigateTo("/location-management");
-                }
-                else
-                {
-                    NotificationService.Notify(new NotificationMessage
-                    {
-                        Severity = NotificationSeverity.Error,
-                        Summary = L["Error"],
-                        Detail = createResult.Message ?? L["Failed to create location"],
-                        Duration = 4000
-                    });
-                }
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = updateResult.Messages.Any() ? string.Join(',', updateResult.Messages) : "Cập nhật địa điểm thất bại",
+                    Duration = 4000
+                });
             }
-            */
+
+            if (OnSaved.HasDelegate)
+            {
+                await OnSaved.InvokeAsync();
+            }
         }
         catch (Exception ex)
         {
-            NotificationService.Notify(new NotificationMessage
+            _notificationService.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Error,
-                Summary = L["Error"],
+                Summary = "Lỗi",
                 Detail = ex.Message,
                 Duration = 4000
             });
@@ -355,37 +396,37 @@ public partial class AddEditLocation : ComponentBase
         }
     }
 
-        private async Task OnCancel()
+    private async Task OnCancel()
+    {
+        if (false)
         {
-            if (HasUnsavedChanges())
-            {
-                var confirmed = await _dialogService.Confirm(
-                    L["You have unsaved changes. Are you sure you want to leave?"] ?? "You have unsaved changes. Are you sure you want to leave?",
-                    L["Confirm"] ?? "Confirm",
-                    new ConfirmOptions()
-                    {
-                        OkButtonText = L["Yes"] ?? "Yes",
-                        CancelButtonText = L["No"] ?? "No"
-                    });
+            var confirmed = await _dialogService.Confirm(
+                "Bạn có thay đổi chưa được lưu. Bạn có chắc chắn muốn rời khỏi?",
+                "Xác nhận",
+                new ConfirmOptions()
+                {
+                    OkButtonText = "Có",
+                    CancelButtonText = "Không"
+                });
 
-                if (confirmed != true)
-                    return;
-            }
-
-            _navigation.NavigateTo("/location-management");
+            if (confirmed != true)
+                return;
         }
 
-        private bool HasUnsavedChanges()
-        {
-            // Check if we have any unsaved changes
-            if (_isEditMode)
-                return true;
-
-            // For new locations, check if we have any data entered
-            return !string.IsNullOrWhiteSpace(_location.Name) ||
-                   !string.IsNullOrWhiteSpace(_location.Description) ||
-                   _location.Stations?.Any(s =>
-                       !string.IsNullOrWhiteSpace(s.Name) ||
-                       !string.IsNullOrWhiteSpace(s.Path)) == true;
-        }
+        await OnBack.InvokeAsync();
     }
+
+    private bool HasUnsavedChanges()
+    {
+        // Check if we have any unsaved changes
+        if (Mode == EnumMode.Edit && string.IsNullOrEmpty(Id) == false)
+            return true; // Assume there are unsaved changes when in edit mode and an Id exists
+
+        // For new locations, check if we have any data entered
+        return !string.IsNullOrWhiteSpace(Model.Name) ||
+               !string.IsNullOrWhiteSpace(Model.Description) ||
+               Model.Stations?.Any(s =>
+                   !string.IsNullOrWhiteSpace(s.Name) ||
+                   !string.IsNullOrWhiteSpace(s.Path)) == true;
+    }
+}

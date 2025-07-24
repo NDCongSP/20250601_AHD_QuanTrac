@@ -1,0 +1,16 @@
+@implements IDisposable
+@typeparam TModel where TModel : new()
+
+<div style="display: @(IsShowDetail ? "block" : "none");">
+    @if (DetailTemplate != null)
+    {
+        @DetailTemplate(CurrentModel)
+    }
+</div>
+
+<div style="display: @(IsShowDetail ? "none" : "block");">
+    @if (ListTemplate != null)
+    {
+        @ListTemplate
+    }
+</div>

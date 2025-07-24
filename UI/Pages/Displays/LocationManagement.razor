@@ -1,91 +1,46 @@
-﻿@page "/location-management"
-@using Domain
-
 <RadzenRow Gap="1rem" Class="padding-body-content">
     <RadzenColumn SizeXS="12" SizeMD="12">
-        <RadzenStack>
-            <RadzenFieldset Text="@_localizer["Gate.Management"]">
-                <RadzenStack Orientation="Radzen.Orientation.Vertical" JustifyContent="Radzen.JustifyContent.Center" 
-                           AlignItems="AlignItems.Stretch" Gap="5px">
-                    <RadzenStack Orientation="Radzen.Orientation.Horizontal" 
-                               JustifyContent="Radzen.JustifyContent.End"
-                               AlignItems="AlignItems.Center" 
-                               Gap="1rem" 
-                               Wrap="Radzen.FlexWrap.Wrap">
-                        <RadzenButton Click="@AddNewItem" 
-                                    Variant="Variant.Flat" 
-                                    Shade="Shade.Dark"
-                                    Text="@_localizer["Create"]" 
-                                    Icon="add_circle" 
-                                    ButtonStyle="ButtonStyle.Success" />
-                    </RadzenStack>
+        <RadzenStack Orientation="Radzen.Orientation.Vertical" JustifyContent="Radzen.JustifyContent.Center"
+                     AlignItems="AlignItems.Stretch" Gap="5px">
+            <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End"
+                         AlignItems="AlignItems.Center" Gap="1rem" Wrap="Radzen.FlexWrap.Wrap">
+                <RadzenButton Click="@HandleCreateClick" Variant="Variant.Flat" Shade="Shade.Dark"
+                              Text="Thêm mới" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
+            </RadzenStack>
 
-                    <RadzenDataGrid Style="width: 100%;" 
-                                  Data="@Locations"
-                                  TItem="LocationInfoModel"
-                                  AllowFiltering="true"
-                                  FilterPopupRenderMode="PopupRenderMode.OnDemand" 
-                                  AllowPaging="true" 
-                                  PageSize="20" 
-                                  PageSizeText="@_localizer["items per page"]" 
-                                  AllowSorting="true"
-                                  AllowColumnResize="true" 
-                                  AllowColumnPicking="false"
-                                  AllowGrouping="false" 
-                                  EmptyText="@_localizer["No records to display."]"
-                                  GridLines="Radzen.DataGridGridLines.Both" 
-                                  AllowAlternatingRows="false">
-                        <Columns>
-                            <RadzenDataGridColumn TItem="LocationInfoModel"
-                                                  Width="100px" 
-                                                Title="#" 
-                                                TextAlign="TextAlign.Center">
-                                <Template Context="data">
-                                    @(Locations.IndexOf(data) + 1)
-                                </Template>
-                            </RadzenDataGridColumn>
+            <RadzenDataGrid Style="width: 100%;" Data="@locations" TItem="LocationInfoModel"
+                            AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" AllowPaging="true"
+                            PageSize="20" PageSizeText="Số dòng mỗi trang" AllowSorting="true" AllowColumnResize="true"
+                            AllowColumnPicking="false" AllowGrouping="false" EmptyText="Không có dữ liệu"
+                            GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
+                <Columns>
+                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="100px" Title="STT"
+                                          TextAlign="TextAlign.Center">
+                        <Template Context="data">
+                            @(locations.IndexOf(data) + 1)
+                        </Template>
+                    </RadzenDataGridColumn>
 
-                            <RadzenDataGridColumn TItem="LocationInfoModel"
-                                                  Width="300px" 
-                                                Property="Name" 
-                                                Title="@_localizer["Name"]" 
-                                                TextAlign="TextAlign.Left" />
+                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="300px" Property="Name"
+                                          Title="Tên trạm" TextAlign="TextAlign.Left" />
 
-                            <RadzenDataGridColumn TItem="LocationInfoModel"
-                                                  Width="400px" 
-                                                Property="Description" 
-                                                Title="@_localizer["Description"]" 
-                                                TextAlign="TextAlign.Left" />
-
-                            <RadzenDataGridColumn TItem="LocationInfoModel"
-                                                  Width="200px" 
-                                                Title="@_localizer["Actions"]" 
-                                                TextAlign="TextAlign.Center"
-                                                Filterable="false" 
-                                                Sortable="false">
-                                <Template Context="data">
-                                    <RadzenStack Orientation="Radzen.Orientation.Horizontal" 
-                                               JustifyContent="Radzen.JustifyContent.Center" 
-                                               Gap="0.5rem">
-                                        <RadzenButton ButtonStyle="ButtonStyle.Info" 
-                                                    Variant="Variant.Text"
-                                                    Icon="visibility" 
-                                                    Size="ButtonSize.Small"
-                                                    Click="@(args => ViewItem(data))" 
-                                                    Class="p-0" />
-                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" 
-                                                    Variant="Variant.Text"
-                                                    Icon="delete" 
-                                                    Size="ButtonSize.Small"
-                                                    Click="@(args => DeleteItem(data))" 
-                                                    Class="p-0" />
-                                    </RadzenStack>
-                                </Template>
-                            </RadzenDataGridColumn>
-                        </Columns>
-                    </RadzenDataGrid>
-                </RadzenStack>
-            </RadzenFieldset>
+                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="400px" Property="Description"
+                                          Title="Mô tả" TextAlign="TextAlign.Left" />
+                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="200px" Title="Thao tác"
+                                          TextAlign="TextAlign.Center" Filterable="false" Sortable="false">
+                        <Template Context="data">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat"
+                                          Size="ButtonSize.Medium"
+                                          Click="@(args => HandleEditClick(data.Id.ToString(), data))">
+                            </RadzenButton>
+                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                          Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1"
+                                          Click="@(args => DeleteItem(data))">
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
         </RadzenStack>
     </RadzenColumn>
 </RadzenRow>
