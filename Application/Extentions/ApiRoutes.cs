@@ -73,6 +73,8 @@
         public static class FT01
         {
             public const string BasePath = "api/FT01";
+            public const string DeleteLocation = "DeleteLocation/{locationId}";
+            public const string AddOrUpdateLocation = "AddOrUpdateLocation";
         }
     }
 }
