@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 using RestEase.HttpClientFactory;
+using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using UI;
 
@@ -18,11 +19,10 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 var jsInterop = builder.Build().Services.GetRequiredService<IJSRuntime>();
-//var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
-//var culture = result ?? "ja-JP";
-//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
-//CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
-
+var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
+var culture = result ?? "vi"; // Đặt ngôn ngữ mặc định là tiếng Việt
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<UI.Services.LayoutStateService>();
 builder.Services.AddBlazoredLocalStorage();

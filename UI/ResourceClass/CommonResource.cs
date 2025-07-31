@@ -1,5 +1,6 @@
-﻿namespace UI;
-
-public class CommonResource
+﻿namespace UI.ResourceClass
 {
+    public class CommonResource
+    {
+    }
 }

@@ -2,19 +2,19 @@
 @using Domain
 @if (Model == null)
 {
-    <p><em>Đang tải...</em></p>
+    <p><em>@_localizer["Loading"]</em></p>
 }
 else
 {
     <RadzenRow class="padding-body-content">
         <RadzenColumn Size="12" SizeSM="6">
-            <RadzenLink Text="Trở về" Path="javascript:void(0)" @onclick="@(async () => await OnCancel())"
+            <RadzenLink Text="@_localizer["Back"]" Path="javascript:void(0)" @onclick="@(async () => await OnCancel())"
                         Icon="arrow_back_ios" Style="margin-bottom: 1rem;" />
         </RadzenColumn>
         <RadzenColumn Size="12" SizeSM="6">
             <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End"
                          AlignItems="AlignItems.Center" Gap=" 5px">
-                <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Text="Xóa" Icon="cancel"
+                <RadzenButton Variant="Variant.Flat" Shade="Shade.Dark" Text="@_localizer["Delete"]" Icon="cancel"
                               ButtonStyle="ButtonStyle.Danger" />
             </RadzenStack>
         </RadzenColumn>
@@ -23,14 +23,14 @@ else
         <RadzenStack Gap="1rem">
             <!-- Location Info -->
             <RadzenCard>
-                <RadzenFieldset Text="Danh sách trạm">
+                <RadzenFieldset Text="@_localizer["LocationList"]">
                     <RadzenColumn Size="12" SizeSM="6">
-                        <RadzenFormField Text="Tên địa điểm" Variant="Variant.Outlined" Style="width:100%">
+                        <RadzenFormField Text="@_localizer["LocationName"]" Variant="Variant.Outlined" Style="width:100%">
                             <RadzenTextBox @bind-Value="@Model.Name" Style="width:100%" />
                         </RadzenFormField>
                     </RadzenColumn>
                     <RadzenColumn Size="12" SizeSM="6">
-                        <RadzenFormField Text="Mô tả" Variant="Variant.Outlined" Style="width:100%">
+                        <RadzenFormField Text="@_localizer["Description"]" Variant="Variant.Outlined" Style="width:100%">
                             <RadzenTextBox @bind-Value="@Model.Description" Style="width:100%" />
                         </RadzenFormField>
                     </RadzenColumn>
@@ -39,7 +39,7 @@ else
 
             <!-- Stations Grid -->
             <RadzenCard>
-                <RadzenFieldset Text="Danh sách trạm">
+                <RadzenFieldset Text="@_localizer["StationList"]">
                     <RadzenColumn SizeXS="12" SizeSM="12" class="d-flex justify-content-end rz-mb-2">
                         <RadzenStack Orientation="Radzen.Orientation.Horizontal"
                                      JustifyContent="Radzen.JustifyContent.End" AlignItems="AlignItems.Center" Gap=" 5px">
@@ -49,17 +49,17 @@ else
                     <RadzenDataGrid Data="@Model.Stations" @ref="_stationsGrid" TItem="StationInfoModel"
                                     AllowPaging="true">
                         <Columns>
-                            <RadzenDataGridColumn TItem="StationInfoModel" Title="Tên trạm" Property="Name" Width="40%">
+                            <RadzenDataGridColumn TItem="StationInfoModel" Title="@_localizer["StationName"]" Property="Name" Width="40%">
                                 <EditTemplate Context="station">
                                     <RadzenTextBox @bind-Value="@station.Name" Style="width:100%" />
                                 </EditTemplate>
                             </RadzenDataGridColumn>
-                            <RadzenDataGridColumn TItem="StationInfoModel" Title="Thẻ" Property="Tags" Width="40%">
+                            <RadzenDataGridColumn TItem="StationInfoModel" Title="@_localizer["Tag"]" Property="Tags" Width="40%">
                                 @*        <EditTemplate Context="station">
                             <RadzenTextBox @bind-Value="@station.Tags" Style="width:100%" />
                             </EditTemplate> *@
                             </RadzenDataGridColumn>
-                            <RadzenDataGridColumn TItem="StationInfoModel" Title="Đường dẫn" Property="Path"
+                            <RadzenDataGridColumn TItem="StationInfoModel" Title="@_localizer["Path"]" Property="Path"
                                                   Width="40%">
                                 <EditTemplate Context="station">
                                     <RadzenTextBox @bind-Value="@station.Path" Style="width:100%" />
@@ -79,11 +79,11 @@ else
                                 </Template>
                                 <EditTemplate Context="detail">
                                     <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat"
-                                                  Size="ButtonSize.Medium" Click="@((args) => SaveRow(detail))" aria-label="Lưu">
+                                                  Size="ButtonSize.Medium" Click="@((args) => SaveRow(detail))" aria-label="@_localizer["Save"]">
                                     </RadzenButton>
                                     <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat"
                                                   Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1"
-                                                  Click="@((args) => CancelEdit(detail))" aria-label="Hủy">
+                                                  Click="@((args) => CancelEdit(detail))" aria-label="@_localizer["Cancel"]">
                                     </RadzenButton>
                                 </EditTemplate>
                             </RadzenDataGridColumn>
@@ -94,8 +94,8 @@ else
 
             <!-- Action Buttons -->
             <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="1rem">
-                <RadzenButton Text="Hủy" Click="@OnCancel" ButtonStyle="ButtonStyle.Light" />
-                <RadzenButton Text="Lưu lại" Click="@OnSave" ButtonStyle="ButtonStyle.Primary" Disabled="@_isSaving" />
+                <RadzenButton Text="@_localizer["Cancel"]" Click="@OnCancel" ButtonStyle="ButtonStyle.Light" />
+                <RadzenButton Text="@_localizer["Save"]" Click="@OnSave" ButtonStyle="ButtonStyle.Primary" Disabled="@_isSaving" />
             </RadzenStack>
         </RadzenStack>
     </RadzenTemplateForm>

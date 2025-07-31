@@ -24,11 +24,8 @@
     private void OnReloadChanged(bool value)
     {
         ShouldReload = value;
-
-        // Nếu cần reset flag sau reload
         if (ShouldReload)
         {
-            // Optionally reset lại sau vài ms
             _ = Task.Delay(100).ContinueWith(_ =>
             {
                 ShouldReload = false;
