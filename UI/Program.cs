@@ -1,5 +1,4 @@
-﻿using Application.Services;
-using Application.Services.Authen;
+﻿using Application.Services.Authen;
 using Application.Services.Authen.UI;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
@@ -17,12 +16,22 @@ using UI;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+// Add localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-var jsInterop = builder.Build().Services.GetRequiredService<IJSRuntime>();
-var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
-var culture = result ?? "vi"; // Đặt ngôn ngữ mặc định là tiếng Việt
+
+// Build a temporary service provider to get the IJSRuntime
+var host = builder.Build();
+var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
+
+// Get the culture from localStorage or use default 'vi'
+var result = await jsInterop.InvokeAsync<string>("localStorage.getItem", "culture");
+var culture = result ?? "vi";
+
+// Set the culture for the application
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
 CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<UI.Services.LayoutStateService>();
 builder.Services.AddBlazoredLocalStorage();
