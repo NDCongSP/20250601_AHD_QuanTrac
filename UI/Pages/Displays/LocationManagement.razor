@@ -1,3 +1,5 @@
+@inject IStringLocalizer<CommonResource> _localizer
+
 <RadzenRow Gap="1rem" Class="padding-body-content">
     <RadzenColumn SizeXS="12" SizeMD="12">
         <RadzenStack Orientation="Radzen.Orientation.Vertical" JustifyContent="Radzen.JustifyContent.Center"
@@ -5,16 +7,16 @@
             <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End"
                          AlignItems="AlignItems.Center" Gap="1rem" Wrap="Radzen.FlexWrap.Wrap">
                 <RadzenButton Click="@HandleCreateClick" Variant="Variant.Flat" Shade="Shade.Dark"
-                              Text="Thêm mới" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
+                              Text="@_localizer["btn_AddNew"]" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
             </RadzenStack>
 
             <RadzenDataGrid Style="width: 100%;" Data="@locations" TItem="LocationInfoModel"
                             AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" AllowPaging="true"
-                            PageSize="20" PageSizeText="Số dòng mỗi trang" AllowSorting="true" AllowColumnResize="true"
-                            AllowColumnPicking="false" AllowGrouping="false" EmptyText="Không có dữ liệu"
+                            PageSize="20" PageSizeText="@_localizer["lbl_RowsPerPage"]" AllowSorting="true" AllowColumnResize="true"
+                            AllowColumnPicking="false" AllowGrouping="false" EmptyText="@_localizer["lbl_NoData"]"
                             GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
                 <Columns>
-                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="100px" Title="STT"
+                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="100px" Title="@_localizer["lbl_SerialNumber"]"
                                           TextAlign="TextAlign.Center">
                         <Template Context="data">
                             @(locations.IndexOf(data) + 1)
@@ -22,11 +24,11 @@
                     </RadzenDataGridColumn>
 
                     <RadzenDataGridColumn TItem="LocationInfoModel" Width="300px" Property="Name"
-                                          Title="Tên trạm" TextAlign="TextAlign.Left" />
+                                          Title="@_localizer["lbl_StationName"]" TextAlign="TextAlign.Left" />
 
                     <RadzenDataGridColumn TItem="LocationInfoModel" Width="400px" Property="Description"
-                                          Title="Mô tả" TextAlign="TextAlign.Left" />
-                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="200px" Title="Thao tác"
+                                          Title="@_localizer["lbl_Description"]" TextAlign="TextAlign.Left" />
+                    <RadzenDataGridColumn TItem="LocationInfoModel" Width="200px" Title="@_localizer["lbl_Actions"]"
                                           TextAlign="TextAlign.Center" Filterable="false" Sortable="false">
                         <Template Context="data">
                             <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat"

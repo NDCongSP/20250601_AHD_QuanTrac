@@ -49,6 +49,27 @@
   <data name="Back" xml:space="preserve">
     <value>Trở về</value>
   </data>
+  <data name="btn_AddNew" xml:space="preserve">
+    <value>Thêm mới</value>
+  </data>
+  <data name="lbl_RowsPerPage" xml:space="preserve">
+    <value>Số dòng mỗi trang</value>
+  </data>
+  <data name="lbl_NoData" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="lbl_SerialNumber" xml:space="preserve">
+    <value>STT</value>
+  </data>
+  <data name="lbl_StationName" xml:space="preserve">
+    <value>Tên trạm</value>
+  </data>
+  <data name="lbl_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="lbl_Actions" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Xóa</value>
   </data>
@@ -78,5 +99,29 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Hủy</value>
+  </data>
+  <data name="lbl_LocationManagement" xml:space="preserve">
+    <value>QUẢN LÝ TRẠM</value>
+  </data>
+  <data name="msg_DeleteConfirmation" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn xóa trạm '{0}'?</value>
+  </data>
+  <data name="lbl_DeleteConfirmation" xml:space="preserve">
+    <value>Xác nhận xóa</value>
+  </data>
+  <data name="btn_Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="lbl_Success" xml:space="preserve">
+    <value>Thành công</value>
+  </data>
+  <data name="msg_DeleteSuccess" xml:space="preserve">
+    <value>Đã xóa trạm '{0}' thành công</value>
+  </data>
+  <data name="lbl_Error" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="msg_DeleteError" xml:space="preserve">
+    <value>Xóa trạm không thành công: {0}</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -97,6 +97,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btn_AddNew" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="lbl_RowsPerPage" xml:space="preserve">
+    <value>Rows per page</value>
+  </data>
+  <data name="lbl_NoData" xml:space="preserve">
+    <value>No data available</value>
+  </data>
+  <data name="lbl_SerialNumber" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="lbl_StationName" xml:space="preserve">
+    <value>Station Name</value>
+  </data>
+  <data name="lbl_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="lbl_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
   </data>
@@ -128,7 +149,31 @@
     <value>Tags</value>
   </data>
   <data name="Path" xml:space="preserve">
-    <value>URL</value>
+    <value>Path</value>
+  </data>
+  <data name="lbl_LocationManagement" xml:space="preserve">
+    <value>STATION MANAGEMENT</value>
+  </data>
+  <data name="msg_DeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete station '{0}'?</value>
+  </data>
+  <data name="lbl_DeleteConfirmation" xml:space="preserve">
+    <value>Confirm Deletion</value>
+  </data>
+  <data name="btn_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="lbl_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="msg_DeleteSuccess" xml:space="preserve">
+    <value>Successfully deleted station '{0}'</value>
+  </data>
+  <data name="lbl_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="msg_DeleteError" xml:space="preserve">
+    <value>Failed to delete station: {0}</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save button</value>

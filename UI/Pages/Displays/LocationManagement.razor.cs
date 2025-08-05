@@ -1,5 +1,6 @@
 using Domain;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using RestEase;
 
@@ -7,6 +8,8 @@ namespace UI.Pages.Displays;
 
 public partial class LocationManagement
 {
+    [Inject]
+    private IStringLocalizer<LocationManagement> Localizer { get; set; } = null!;
     private List<LocationInfoModel> locations { get; set; } = new();
 
     [Parameter]
@@ -30,7 +33,7 @@ public partial class LocationManagement
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        LayoutState.SetTitle("QUẢN LÝ TRẠM");
+        LayoutState.SetTitle(Localizer["lbl_LocationManagement"].Value);
     }
 
     async Task RefreshDataAsync()
@@ -82,12 +85,12 @@ public partial class LocationManagement
         if (item == null) return;
 
         var confirmed = await _dialogService.Confirm(
-            $"Bạn có chắc chắn muốn xóa trạm '{item.Name}'?",
-            "Xác nhận xóa",
+            string.Format(Localizer["msg_DeleteConfirmation"], item.Name),
+            Localizer["lbl_DeleteConfirmation"].Value,
             new ConfirmOptions()
             {
-                OkButtonText = "Xóa",
-                CancelButtonText = "Hủy"
+                OkButtonText = Localizer["btn_Delete"].Value,
+                CancelButtonText = Localizer["Cancel"].Value
             });
 
         if (confirmed == true && item.Id != null)
@@ -100,23 +103,23 @@ public partial class LocationManagement
                     await RefreshDataAsync();
                     NotificationHelper.ShowNotification(_notificationService,
                         NotificationSeverity.Success,
-                        "Thành công",
-                        $"Đã xóa trạm '{item.Name}' thành công");
+                        Localizer["lbl_Success"].Value,
+                        string.Format(Localizer["msg_DeleteSuccess"], item.Name));
                 }
                 else
                 {
                     NotificationHelper.ShowNotification(_notificationService,
                         NotificationSeverity.Error,
-                        "Lỗi",
-                        $"Xóa trạm không thành công: {string.Join(',', result.Messages)}");
+                        Localizer["lbl_Error"].Value,
+                        string.Format(Localizer["msg_DeleteError"], string.Join(',', result.Messages)));
                 }
             }
             catch (Exception ex)
             {
                 NotificationHelper.ShowNotification(_notificationService,
                     NotificationSeverity.Error,
-                    "Lỗi",
-                    $"Xóa trạm không thành công: {ex.Message}");
+                    Localizer["lbl_Error"].Value,
+                    string.Format(Localizer["msg_DeleteError"], ex.Message));
             }
         }
     }

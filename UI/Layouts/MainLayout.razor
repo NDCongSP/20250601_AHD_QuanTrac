@@ -23,12 +23,33 @@
                 </RadzenStack>
             </RadzenStack>
             <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
-                <div class="language-switcher" style="display: flex; align-items: center; margin-right: 0.5rem;">
-                    <select @onchange="HandleLanguageChange" style="padding: 0.25rem; border-radius: 4px; border: 1px solid #ccc;">
-                        <option value="vi">VI</option>
-                        <option value="en">EN</option>
-                    </select>
-                </div>
+                @*     <div class="language-switcher" style="display: flex; align-items: center; margin-right: 0.5rem;">
+                <select @onchange="HandleLanguageChange" style="padding: 0.25rem; border-radius: 4px; border: 1px solid #ccc;">
+                <option value="vi">VI</option>
+                <option value="en">EN</option>
+                </select>
+                </div> *@
+                <RadzenProfileMenu Style="background-color:transparent" Click="OnLanguageMenuClick">
+                    <Template>
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                            <img src="@(currentCulture == "vi" ? "images/flags/vi.png" : "images/flags/en.png")" style="width: 40px; height: 30px;" />
+                        </RadzenStack>
+                    </Template>
+                    <ChildContent>
+                        <RadzenProfileMenuItem Text="@_localizer["Vietnamese"]" Value="vi">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                                <img src="images/flags/vi.png" style="width: 40px; height: 30px;" />
+                                <span>@_localizer["Vietnamese"]</span>
+                            </RadzenStack>
+                        </RadzenProfileMenuItem>
+                        <RadzenProfileMenuItem Text="@_localizer["English"]" Value="en">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                                <img src="images/flags/en.png" style="width: 40px; height: 30px;" />
+                                <span>@_localizer["English"]</span>
+                            </RadzenStack>
+                        </RadzenProfileMenuItem>
+                    </ChildContent>
+                </RadzenProfileMenu>
                 <RadzenButton Icon="notifications" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
                 @if (GlobalVariable.UserAuthorizationInfo != null)
                 {
@@ -39,21 +60,21 @@
                                 @if (sidebarExpanded)
                                 {
                                     <span>@GlobalVariable.UserAuthorizationInfo.FullName</span>
-                                }  
+                                }
                             </RadzenStack>
                         </Template>
                         <ChildContent>
                             <RadzenProfileMenuItem Text="Profile" Icon="person" Path="/profile" />
                             <RadzenProfileMenuItem Text="Settings" Icon="settings" Path="/settings" />
                             <RadzenProfileMenuItem Text="Change Password" Icon="password" Path="/change-password" />
-                            <RadzenProfileMenuItem Text="Logout" Icon="logout"/>
+                            <RadzenProfileMenuItem Text="Logout" Icon="logout" />
                         </ChildContent>
                     </RadzenProfileMenu>
                 }
                 else
                 {
-                    <RadzenButton Icon="account_circle" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" 
-                                 Title="Login" Click="@(() => _navigation.NavigateTo("/login"))" />
+                    <RadzenButton Icon="account_circle" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                                  Title="Login" Click="@(() => _navigation.NavigateTo("/login"))" />
                 }
                 <RadzenButton Icon="settings" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
                 <RadzenAppearanceToggle />
@@ -66,7 +87,7 @@
             <RadzenPanelMenuItem Path="/waterlevel" Text="WaterLevel" Icon="water_drop" />
             <RadzenPanelMenuItem Path="/operational-monitoring" Text="OperationalMonitoring" Icon="analytics" />
             <RadzenPanelMenuItem Text="Quản lý trạm" Icon="home" Path="/location-management">
-         @*        <RadzenPanelMenuItem Path="/gate-detail" Text="Trạm A" Icon="eject" />
+                @*        <RadzenPanelMenuItem Path="/gate-detail" Text="Trạm A" Icon="eject" />
                 <RadzenPanelMenuItem Path="/gate-detail-b" Text="Trạm B" Icon="eject" /> *@
             </RadzenPanelMenuItem>
             <RadzenPanelMenuItem Text="Quản lý người dùng" Icon="account_box">
@@ -93,7 +114,7 @@
         LayoutState.OnChange += StateHasChanged;
         ThemeService.OnChange += StateHasChanged;
         LayoutState.SetTitle("");
-        
+
         // Get current culture from localStorage
         var culture = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "culture");
         if (!string.IsNullOrEmpty(culture))
@@ -103,16 +124,20 @@
         }
     }
 
-    private async Task HandleLanguageChange()
+    private async Task OnLanguageMenuClick(RadzenProfileMenuItem item)
     {
-        // Save to localStorage
-        await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "culture", currentCulture);
-        
-        // Apply the culture
-        await _jsRuntime.InvokeVoidAsync("setCulture", currentCulture);
-        
-        // Reload the page to apply culture changes
-        _navigation.NavigateTo(_navigation.Uri, forceLoad: true);
+        if (item != null && !string.IsNullOrEmpty(item.Value))
+        {
+            currentCulture = item.Value;
+            // Save to localStorage
+            await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "culture", currentCulture);
+
+            // Apply the culture
+            await _jsRuntime.InvokeVoidAsync("setCulture", currentCulture);
+
+            // Reload the page to apply culture changes
+            _navigation.NavigateTo(_navigation.Uri, forceLoad: true);
+        }
     }
 
     public void Dispose()
