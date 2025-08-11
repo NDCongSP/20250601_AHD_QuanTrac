@@ -31,6 +31,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBaoCao));
             this.label1 = new System.Windows.Forms.Label();
             this.dtTo = new System.Windows.Forms.DateTimePicker();
             this.dtFrom = new System.Windows.Forms.DateTimePicker();
@@ -62,7 +63,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 43);
             this.label1.TabIndex = 22;
-            this.label1.Text = "Tần Suất:";
+            this.label1.Text = "Tần suất:";
             // 
             // dtTo
             // 
@@ -72,19 +73,21 @@
             this.dtTo.Location = new System.Drawing.Point(367, 108);
             this.dtTo.Name = "dtTo";
             this.dtTo.ShowUpDown = true;
-            this.dtTo.Size = new System.Drawing.Size(280, 44);
+            this.dtTo.Size = new System.Drawing.Size(310, 44);
             this.dtTo.TabIndex = 16;
+            this.dtTo.Value = new System.DateTime(2025, 7, 25, 23, 59, 0, 0);
             // 
             // dtFrom
             // 
             this.dtFrom.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtFrom.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtFrom.Location = new System.Drawing.Point(28, 108);
+            this.dtFrom.Location = new System.Drawing.Point(12, 108);
             this.dtFrom.Name = "dtFrom";
             this.dtFrom.ShowUpDown = true;
-            this.dtFrom.Size = new System.Drawing.Size(280, 44);
+            this.dtFrom.Size = new System.Drawing.Size(310, 44);
             this.dtFrom.TabIndex = 15;
+            this.dtFrom.Value = new System.DateTime(2025, 7, 25, 0, 0, 0, 0);
             // 
             // lblToDate
             // 
@@ -93,7 +96,7 @@
             this.lblToDate.Name = "lblToDate";
             this.lblToDate.Size = new System.Drawing.Size(228, 42);
             this.lblToDate.TabIndex = 14;
-            this.lblToDate.Text = "Ngày Kết Thúc:";
+            this.lblToDate.Text = "Ngày kết thúc:";
             // 
             // lblFromDate
             // 
@@ -102,7 +105,7 @@
             this.lblFromDate.Name = "lblFromDate";
             this.lblFromDate.Size = new System.Drawing.Size(204, 42);
             this.lblFromDate.TabIndex = 13;
-            this.lblFromDate.Text = "Ngày Bắt Đầu:";
+            this.lblFromDate.Text = "Ngày bắt đầu:";
             // 
             // bntDataVanHanh
             // 
@@ -111,7 +114,7 @@
             this.bntDataVanHanh.Name = "bntDataVanHanh";
             this.bntDataVanHanh.Size = new System.Drawing.Size(180, 45);
             this.bntDataVanHanh.TabIndex = 25;
-            this.bntDataVanHanh.Text = "Dữ liệu Vận Hành";
+            this.bntDataVanHanh.Text = "Dữ liệu vận hành";
             this.bntDataVanHanh.UseVisualStyleBackColor = true;
             this.bntDataVanHanh.Click += new System.EventHandler(this.bntDataVanHanh_Click);
             // 
@@ -122,7 +125,7 @@
             this.bntDataMucNuoc.Name = "bntDataMucNuoc";
             this.bntDataMucNuoc.Size = new System.Drawing.Size(180, 45);
             this.bntDataMucNuoc.TabIndex = 24;
-            this.bntDataMucNuoc.Text = "Dữ liệu Mức Nước";
+            this.bntDataMucNuoc.Text = "Dữ liệu mức nước";
             this.bntDataMucNuoc.UseVisualStyleBackColor = true;
             this.bntDataMucNuoc.Click += new System.EventHandler(this.bntDataMucNuoc_Click);
             // 
@@ -161,10 +164,10 @@
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1792, 629);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Dữ Liệu";
+            this.tabPage1.Text = "Dữ liệu";
             // 
             // tabPage2
             // 
@@ -172,16 +175,15 @@
             this.tabPage2.Controls.Add(this.chart1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(1792, 629);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Biểu Đồ ";
+            this.tabPage2.Text = "Biểu đồ ";
             // 
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.LightSalmon;
             this.chart1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            this.chart1.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.BackwardDiagonal;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
@@ -212,7 +214,7 @@
             this.bntExportExcelOrPdf.Name = "bntExportExcelOrPdf";
             this.bntExportExcelOrPdf.Size = new System.Drawing.Size(140, 45);
             this.bntExportExcelOrPdf.TabIndex = 33;
-            this.bntExportExcelOrPdf.Text = "Xuất Báo Cáo";
+            this.bntExportExcelOrPdf.Text = "Xuất báo cáo";
             this.bntExportExcelOrPdf.UseVisualStyleBackColor = true;
             this.bntExportExcelOrPdf.Click += new System.EventHandler(this.bntExportExcelOrPdf_Click);
             // 
@@ -223,7 +225,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(201, 42);
             this.label2.TabIndex = 35;
-            this.label2.Text = "Kiểu Dữ Liệu";
+            this.label2.Text = "Kiểu dữ liệu";
             // 
             // bntExportBieuDo
             // 
@@ -232,7 +234,7 @@
             this.bntExportBieuDo.Name = "bntExportBieuDo";
             this.bntExportBieuDo.Size = new System.Drawing.Size(140, 45);
             this.bntExportBieuDo.TabIndex = 36;
-            this.bntExportBieuDo.Text = "Xuất Biểu Đồ";
+            this.bntExportBieuDo.Text = "Xuất biểu đồ";
             this.bntExportBieuDo.UseVisualStyleBackColor = true;
             this.bntExportBieuDo.Click += new System.EventHandler(this.bntExportBieuDo_Click);
             // 
@@ -255,8 +257,9 @@
             this.Controls.Add(this.dtFrom);
             this.Controls.Add(this.lblToDate);
             this.Controls.Add(this.lblFromDate);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmBaoCao";
-            this.Text = "FrmBaoCao";
+            this.Text = "Báo cáo";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

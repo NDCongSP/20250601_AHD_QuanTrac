@@ -63,6 +63,16 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ARROW1 {
+            get {
+                object obj = ResourceManager.GetObject("ARROW1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CHAY {
             get {
                 object obj = ResourceManager.GetObject("CHAY", resourceCulture);
@@ -103,6 +113,16 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Home {
+            get {
+                object obj = ResourceManager.GetObject("Home", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap len {
             get {
                 object obj = ResourceManager.GetObject("len", resourceCulture);
@@ -123,6 +143,16 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap logo_removebg_preview1 {
+            get {
+                object obj = ResourceManager.GetObject("logo-removebg-preview1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LOI {
             get {
                 object obj = ResourceManager.GetObject("LOI", resourceCulture);
@@ -133,9 +163,9 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap M {
+        internal static System.Drawing.Bitmap M3 {
             get {
-                object obj = ResourceManager.GetObject("M", resourceCulture);
+                object obj = ResourceManager.GetObject("M3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +173,9 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap M1 {
+        internal static System.Drawing.Bitmap Main {
             get {
-                object obj = ResourceManager.GetObject("M1", resourceCulture);
+                object obj = ResourceManager.GetObject("Main", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +183,9 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap M2 {
+        internal static System.Drawing.Bitmap MNGG {
             get {
-                object obj = ResourceManager.GetObject("M2", resourceCulture);
+                object obj = ResourceManager.GetObject("MNGG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +193,9 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MN {
+        internal static System.Drawing.Bitmap note {
             get {
-                object obj = ResourceManager.GetObject("MN", resourceCulture);
+                object obj = ResourceManager.GetObject("note", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +203,9 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MN2BMP {
+        internal static System.Drawing.Bitmap TRAN6 {
             get {
-                object obj = ResourceManager.GetObject("MN2BMP", resourceCulture);
+                object obj = ResourceManager.GetObject("TRAN6", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,39 +213,9 @@ namespace RegistrationForm1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MNDT {
+        internal static System.Drawing.Bitmap tranc {
             get {
-                object obj = ResourceManager.GetObject("MNDT", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MNEW {
-            get {
-                object obj = ResourceManager.GetObject("MNEW", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MNEW1 {
-            get {
-                object obj = ResourceManager.GetObject("MNEW1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap tran {
-            get {
-                object obj = ResourceManager.GetObject("tran", resourceCulture);
+                object obj = ResourceManager.GetObject("tranc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -77,7 +77,8 @@ namespace RegistrationForm1
                 FrmLogin login = new FrmLogin();
                 if (login.ShowDialog() == DialogResult.OK)
                 {
-                    Application.Run(new FrmMain());
+                     Application.Run(new FrmMain());
+                   
                 }
             }
 

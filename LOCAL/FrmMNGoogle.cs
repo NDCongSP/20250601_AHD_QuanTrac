@@ -321,7 +321,7 @@ namespace RegistrationForm1
                 }
 
                 // Tạo form mới
-                customMapForm = new FrmTramMN();
+ //               customMapForm = new FrmTramMN();
 
                 // Cấu hình form để hiển thị trong panel
                 customMapForm.TopLevel = false;

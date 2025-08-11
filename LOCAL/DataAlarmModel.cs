@@ -41,9 +41,14 @@ namespace RegistrationForm1
         [DisplayName("S3_DC2 Lỗi")] public string S3_DC2_Over { get; set; }
         [DisplayName("S3_DC3 Lỗi")] public string S3_DC3_Over { get; set; }
 
-        [DisplayName("Cảnh Báo Trạm 1")] public string S1_Station_Alarm { get; set; }
-        [DisplayName("Cảnh Báo Trạm 2")] public string S2_Station_Alarm { get; set; }
-        [DisplayName("Cảnh Báo Trạm 3")] public string S3_Station_Alarm { get; set; }
+        [DisplayName("Lệch cửa 1")] public string Al_Door1 { get; set; }
+        [DisplayName("Lệch cửa 2")] public string Al_Door2 { get; set; }
+        [DisplayName("Lệch cửa 3")] public string Al_Door3 { get; set; }
+        [DisplayName("Lệch cửa 4")] public string Al_Door4 { get; set; }
+        [DisplayName("Lệch cửa 5")] public string Al_Door5 { get; set; }
+        [DisplayName("Lệch cửa 6")] public string Al_Door6 { get; set; }
+
+
         public string TagName { get; set; }
     }
 }

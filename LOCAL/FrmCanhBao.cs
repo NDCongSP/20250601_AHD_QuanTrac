@@ -52,9 +52,9 @@ namespace RegistrationForm1
                 _mainForm.Door5_PressureLowChanged += Door5_PressureLow_ValueChanged;
                 _mainForm.Door6_PressureHighChanged += Door6_PressureHigh_ValueChanged;
                 _mainForm.Door6_PressureLowChanged += Door6_PressureLow_ValueChanged;
-                _mainForm.S1_Station_AlarmChanged += S1_Station_Alarm_ValueChanged;
-                _mainForm.S2_Station_AlarmChanged += S2_Station_Alarm_ValueChanged;
-                _mainForm.S3_Station_AlarmChanged += S3_Station_Alarm_ValueChanged;
+                //_mainForm.S1_Station_AlarmChanged += S1_Station_Alarm_ValueChanged;
+                //_mainForm.S2_Station_AlarmChanged += S2_Station_Alarm_ValueChanged;
+                //_mainForm.S3_Station_AlarmChanged += S3_Station_Alarm_ValueChanged;
                 // Khởi tạo lastValues
 
                 LoadInitialAlarms();
@@ -202,43 +202,43 @@ namespace RegistrationForm1
             UpdateAlarmStatus("Áp Suất Cửa 6 Cao", status_Door6_PressureHigh, "Trạm 3");
             string status_Door6_PressureLow = _mainForm.GetDoor6_PressureLowValue(); // trả về "1" hoặc "0"
             UpdateAlarmStatus("Áp Suất Cửa 6 Thấp", status_Door6_PressureLow, "Trạm 3");
-            string status_S1_Station_Alarm = _mainForm.GetS1_Station_AlarmValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Lỗi Trạm 1", status_S1_Station_Alarm, "Trạm 1");
-            string status_S2_Station_Alarm = _mainForm.GetS2_Station_AlarmValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Lỗi Trạm 2", status_S2_Station_Alarm, "Trạm 2");
-            string status_S3_Station_Alarm = _mainForm.GetS3_Station_AlarmValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Lỗi Trạm 3", status_S3_Station_Alarm, "Trạm 3");
+            //string status_S1_Station_Alarm = _mainForm.GetS1_Station_AlarmValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Lỗi Trạm 1", status_S1_Station_Alarm, "Trạm 1");
+            //string status_S2_Station_Alarm = _mainForm.GetS2_Station_AlarmValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Lỗi Trạm 2", status_S2_Station_Alarm, "Trạm 2");
+            //string status_S3_Station_Alarm = _mainForm.GetS3_Station_AlarmValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Lỗi Trạm 3", status_S3_Station_Alarm, "Trạm 3");
 
 
             //// ➡️ Tiếp tục cho các tag khác
         }
-        private void S1_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            string status = e.NewValue == "1" ? "1" : "0";
+        //private void S1_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    string status = e.NewValue == "1" ? "1" : "0";
 
-            this.Invoke((MethodInvoker)delegate
-            {
-                UpdateAlarmStatus("Lỗi Trạm 1", status, "Trạm 1");
-            });
-        }
-        private void S2_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            string status = e.NewValue == "1" ? "1" : "0";
+        //    this.Invoke((MethodInvoker)delegate
+        //    {
+        //        UpdateAlarmStatus("Lỗi Trạm 1", status, "Trạm 1");
+        //    });
+        //}
+        //private void S2_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    string status = e.NewValue == "1" ? "1" : "0";
 
-            this.Invoke((MethodInvoker)delegate
-            {
-                UpdateAlarmStatus("Lỗi Trạm 2", status, "Trạm 2");
-            });
-        }
-        private void S3_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            string status = e.NewValue == "1" ? "1" : "0";
+        //    this.Invoke((MethodInvoker)delegate
+        //    {
+        //        UpdateAlarmStatus("Lỗi Trạm 2", status, "Trạm 2");
+        //    });
+        //}
+        //private void S3_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    string status = e.NewValue == "1" ? "1" : "0";
 
-            this.Invoke((MethodInvoker)delegate
-            {
-                UpdateAlarmStatus("Lỗi Trạm 3", status, "Trạm 3");
-            });
-        }
+        //    this.Invoke((MethodInvoker)delegate
+        //    {
+        //        UpdateAlarmStatus("Lỗi Trạm 3", status, "Trạm 3");
+        //    });
+        //}
 
         private void DataGridViewAlarm_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {

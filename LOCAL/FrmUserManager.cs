@@ -13,7 +13,7 @@ namespace RegistrationForm1
 {
     public partial class FrmUserManager : Form
     {
-        private string connectionString => ConfigurationHelper.GetConnectionString();
+        public static string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmUserManager()
         {
             InitializeComponent();
@@ -130,5 +130,12 @@ namespace RegistrationForm1
         {
             LoadUsers();
         }
+
+        private void btnChangePassword_Click(object sender, EventArgs e)
+        {
+            var frm = new FrmDoipassword();
+            frm.ShowDialog();
+        }
+    
     }
 }

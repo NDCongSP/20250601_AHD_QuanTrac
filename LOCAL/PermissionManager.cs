@@ -54,6 +54,26 @@ namespace RegistrationForm1
             }
             return true;
         }
-        
+        /// <summary>
+        /// Tự động phân quyền cho control (Button, MenuItem, ToolStripItem,...)
+        /// </summary>
+        public static void ApplyPermission(Control control, string action)
+        {
+            if (!HasPermission(action))
+            {
+                control.Enabled = false;  // hoặc control.Visible = false;
+              //  control.Visible = false; // Ẩn control nếu không có quyền
+            }
+        }
+
+        /// Overload cho ToolStripItem (menu, toolbar...)
+        public static void ApplyPermission(ToolStripItem item, string action)
+        {
+            if (!HasPermission(action))
+            {
+                item.Enabled = false;  // hoặc item.Visible = false;
+            }
+        }
+
     }
 }

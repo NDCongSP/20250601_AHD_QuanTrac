@@ -42,22 +42,20 @@
             this.label8 = new System.Windows.Forms.Label();
             this.dtpDOB = new System.Windows.Forms.DateTimePicker();
             this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtPosition = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // cboRole
             // 
             this.cboRole.FormattingEnabled = true;
-            this.cboRole.Location = new System.Drawing.Point(151, 334);
+            this.cboRole.Location = new System.Drawing.Point(149, 286);
             this.cboRole.Name = "cboRole";
             this.cboRole.Size = new System.Drawing.Size(344, 23);
             this.cboRole.TabIndex = 25;
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(151, 310);
+            this.label6.Location = new System.Drawing.Point(149, 262);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 22);
             this.label6.TabIndex = 23;
@@ -65,7 +63,7 @@
             // 
             // btnRegister
             // 
-            this.btnRegister.Location = new System.Drawing.Point(189, 383);
+            this.btnRegister.Location = new System.Drawing.Point(187, 335);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(224, 43);
             this.btnRegister.TabIndex = 22;
@@ -160,21 +158,6 @@
             this.ahdPictureBox1.TagPath = null;
             this.ahdPictureBox1.Text = "ahdPictureBox1";
             // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(151, 257);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 22);
-            this.label5.TabIndex = 33;
-            this.label5.Text = "Vị Trí";
-            // 
-            // txtPosition
-            // 
-            this.txtPosition.Location = new System.Drawing.Point(151, 280);
-            this.txtPosition.Name = "txtPosition";
-            this.txtPosition.Size = new System.Drawing.Size(344, 22);
-            this.txtPosition.TabIndex = 34;
-            // 
             // FrmDangKyUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -182,8 +165,6 @@
             this.BackColor = System.Drawing.Color.Moccasin;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(561, 454);
-            this.Controls.Add(this.txtPosition);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.dtpDOB);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label8);
@@ -227,8 +208,6 @@
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DateTimePicker dtpDOB;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtPosition;
     }
 }
 

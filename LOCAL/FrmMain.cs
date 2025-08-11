@@ -1,10 +1,13 @@
 ﻿using Ahd.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using System.Linq;
 
 
 namespace RegistrationForm1
@@ -119,22 +122,22 @@ namespace RegistrationForm1
         public event EventHandler<TagValueChangedEventArgs> Door5_PressureLowChanged;
         public event EventHandler<TagValueChangedEventArgs> Door6_PressureHighChanged;
         public event EventHandler<TagValueChangedEventArgs> Door6_PressureLowChanged;
-        public event EventHandler<TagValueChangedEventArgs> S1_Station_RunChanged;
-        public event EventHandler<TagValueChangedEventArgs> S1_Station_StopChanged;
-        public event EventHandler<TagValueChangedEventArgs> S1_Station_AlarmChanged;
-        public event EventHandler<TagValueChangedEventArgs> S2_Station_RunChanged;
-        public event EventHandler<TagValueChangedEventArgs> S2_Station_StopChanged;
-        public event EventHandler<TagValueChangedEventArgs> S2_Station_AlarmChanged;
-        public event EventHandler<TagValueChangedEventArgs> S3_Station_RunChanged;
-        public event EventHandler<TagValueChangedEventArgs> S3_Station_StopChanged;
-        public event EventHandler<TagValueChangedEventArgs> S3_Station_AlarmChanged;
+        public event EventHandler<TagValueChangedEventArgs> Al_Door1Changed;
+        public event EventHandler<TagValueChangedEventArgs> Al_Door2Changed;
+        public event EventHandler<TagValueChangedEventArgs> Al_Door3Changed;
+        public event EventHandler<TagValueChangedEventArgs> Al_Door4Changed;
+        public event EventHandler<TagValueChangedEventArgs> Al_Door5Changed;
+        public event EventHandler<TagValueChangedEventArgs> Al_Door6Changed;
+        //public event EventHandler<TagValueChangedEventArgs> S3_Station_RunChanged;
+        //public event EventHandler<TagValueChangedEventArgs> S3_Station_StopChanged;
+        //public event EventHandler<TagValueChangedEventArgs> S3_Station_AlarmChanged;
 
         public static DataTranModel CurrentDataTran = null;
         private Form currentChildForm = null;
-     //   List<string> stations = new List<string> { "F01877", "F01203", "F01849" };
-        private Timer _timer;
-       
 
+        private Timer _timer;
+        private Timer apiTimer;
+        private Timer api_CDDTimer;
         public FrmMain()
         {
             InitializeComponent();
@@ -146,13 +149,147 @@ namespace RegistrationForm1
         private void InitializeTimer()
         {
             _timer = new Timer();
-            _timer.Interval = 5000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
+            _timer.Interval = 60000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
             _timer.Tick += async (s, e) => await Timer_Tick();
             _timer.Start();
-            
+            // Timer API Bình Nhâm
+            apiTimer = new Timer();
+            apiTimer.Interval = 60000; // mỗi 60 giây
+            apiTimer.Tick += async (s, ev) => await ApiTimer_Tick(s, ev);
+            apiTimer.Start();
+            // Timer API CDD
+            api_CDDTimer = new Timer();
+            api_CDDTimer.Tick += async (s, ev) => await api_CDDTimer_Tick(s, ev); // Gán đúng hàm xử lý
+            api_CDDTimer.Interval = 60000; // 60 giây
+            api_CDDTimer.Start();
+
+        }
+        public class SoLieuAPICDDModel
+        {
+            public string ThoiGian { get; set; }
+            public int MaQuanTrac { get; set; }
+            public double GiaTri { get; set; }
+        }
+        public class SoLieuAPIBinhNhamModel      
+        {
+            public long ts { get; set; }
+            public long c { get; set; }
+            public double water_proof_1 { get; set; }
+            public double water_proof_2 { get; set; }
+
+            public DateTime Timestamp => DateTimeOffset.FromUnixTimeSeconds(ts).ToLocalTime().DateTime;
+            public DateTime CreatedAt => DateTimeOffset.FromUnixTimeSeconds(c).ToLocalTime().DateTime;
         }
         
-        private async Task Timer_Tick()
+
+        private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
+        {
+            string url = "https://apiv2.thuyloivietnam.vn/Api/getSoLieuQuanTrac?Key=apiktdlqtDauTieng&MaQuanTrac=7001";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    try
+                    {
+                        var response = await client.GetAsync(url);
+                        response.EnsureSuccessStatusCode();
+
+                        string json = await response.Content.ReadAsStringAsync();
+                        var dataList = JsonConvert.DeserializeObject<List<SoLieuAPICDDModel>>(json);
+
+                        if (dataList != null && dataList.Count > 0)
+                        {
+                            var latest = dataList.OrderByDescending(x => x.ThoiGian).First();
+
+                            // Ghi async xuống PLC
+                            await WriteAPI_CDDsync(latest.GiaTri);                            
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Lỗi đọc API: " + ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
+            }
+        }
+        private async Task WriteAPI_CDDsync(double GT)
+        {
+            try
+            {
+                if (ahdDriverConnector1 == null)
+                {
+                    MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
+                    return;
+                }
+
+                await ahdDriverConnector1.WriteTagAsync(
+                    $"Local Station/DauTieng/S71500/API/Fllow_TL_CDD",
+                    GT.ToString("0.00"),
+                    WritePiority.High);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi ghi PLC async: " + ex.Message);
+            }
+        }
+
+        private async Task ApiTimer_Tick(object sender, EventArgs e)
+        {
+            string url = "https://input.dulieuthuyloivietnam.vn/latest?device_id=CR300-21411";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    var response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+
+                    string json = await response.Content.ReadAsStringAsync();
+                    var dataList = JsonConvert.DeserializeObject<List<SoLieuAPIBinhNhamModel>>(json);
+
+                    if (dataList != null && dataList.Count > 0)
+                    {
+                        var latest = dataList.OrderByDescending(x => x.ts).First();
+
+                        // Ghi async xuống PLC
+                        await WriteToPLCAsync(latest.water_proof_1, latest.water_proof_2);
+
+                        // (Tuỳ chọn) hiển thị ra textbox
+                        //txtTime.Text = latest.Timestamp.ToString("dd/MM/yyyy HH:mm:ss");
+                        //txtWP1.Text = latest.water_proof_1.ToString("0.000");
+                        //txtWP2.Text = latest.water_proof_2.ToString("0.000");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi đọc API: " + ex.Message);
+                }
+            }
+        }
+        private async Task WriteToPLCAsync(double wp1, double wp2)
+        {
+            try
+            {
+                await ahdDriverConnector1.WriteTagAsync(
+                    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham",
+                    wp1.ToString("0.00"),
+                    WritePiority.High);
+
+                await ahdDriverConnector1.WriteTagAsync(
+                    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham2",
+                    wp2.ToString("0.00"),
+                    WritePiority.High);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi ghi PLC async: " + ex.Message);
+            }
+        }
+        public async Task Timer_Tick()
         {
             string apiUrl = "http://dautiengphuochoa.com/api/getmn.aspx?key=dauhoaphuongtien%3b";
 
@@ -168,44 +305,70 @@ namespace RegistrationForm1
                     // Gọi hàm parse
                     var stationValues = ParseMultipleStationsFromAPI(apiData, stations);
 
+                    // Hàm trợ giúp để chuyển đổi và xử lý giá trị decimal
+                    Func<string, decimal> processFlowValue = (valueString) =>
+                    {
+                        decimal parsedValue;
+                        if (decimal.TryParse(valueString, out parsedValue))
+                        {
+                            // Làm tròn đến 2 chữ số thập phân và sau đó chia cho 100
+                            return Math.Round(parsedValue, 2) / 100m;
+                        }
+                        else
+                        {
+                            // Xử lý trường hợp không thể chuyển đổi, ví dụ: log lỗi và trả về 0
+                            AppendLog($"Cảnh báo: Không thể chuyển đổi giá trị '{valueString}' từ API sang Decimal. Sử dụng giá trị 0.");
+                            return 0m;
+                        }
+                    };
+
                     // Ghi từng trạm xuống PLC
                     foreach (var entry in stationValues)
                     {
                         string stationCode = entry.Key;
-                        string value = entry.Value;
+                        string rawValue = entry.Value; // Giá trị thô từ API
 
-                        // Mapping stationCode to actual PLC tag name
                         string tagName = "";
+                        decimal processedDecimalValue = 0m; // Biến để lưu giá trị đã xử lý
+
                         switch (stationCode)
                         {
-                            case "F01877":
+                            case "F01877": // Fllow_SonDai
                                 tagName = "Fllow_SonDai";
+                                processedDecimalValue = processFlowValue(rawValue);
                                 break;
-                            case "F01203":
+                            case "F01203": // Fllow_BenSuc
                                 tagName = "Fllow_BenSuc";
+                                processedDecimalValue = processFlowValue(rawValue);
                                 break;
-                            case "F01849":
+                            case "F01849": // Fllow_DauTieng
                                 tagName = "Fllow_DauTieng";
+                                processedDecimalValue = processFlowValue(rawValue);
                                 break;
+                            // Thêm các case khác nếu có các stationCode khác cần xử lý
+                            default:
+                                AppendLog($"Thông tin: Station Code '{stationCode}' không được mapping, bỏ qua xử lý.");
+                                continue; // Bỏ qua entry này nếu không có mapping
                         }
 
                         if (!string.IsNullOrEmpty(tagName))
                         {
-                            // Ghi xuống PLC
+                            // Ghi xuống PLC. Convert decimal thành string lại vì WriteTagAsync có lẽ mong đợi string.
                             await ahdDriverConnector1.WriteTagAsync(
                                 $"Local Station/DauTieng/S71500/API/{tagName}",
-                                value,
+                                processedDecimalValue.ToString(), // Chuyển đổi decimal đã xử lý thành string
                                 WritePiority.High
                             );
 
-                            AppendLog($"✅ Ghi PLC: {tagName} = {value}");
-                        }
-                        else
-                        {
-                            AppendLog($"❌ Không tìm thấy tag mapping cho station {stationCode}");
+                            AppendLog($"✅ Ghi PLC: {tagName} = {processedDecimalValue} (Từ API: {rawValue})");
                         }
                     }
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Bắt lỗi cụ thể khi có vấn đề về HTTP (ví dụ: không kết nối được API)
+                AppendLog($"❌ Lỗi đọc API: An error occurred while sending the request. {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -247,6 +410,8 @@ namespace RegistrationForm1
         }
         private void FrmMain_Load(object sender, EventArgs e)
         {
+
+            PermissionManager.ApplyPermission(bntNhaplieu, "edit_data");// test nút nhấn nhập liệu
             SQLLogin.InitCurrentDataTran();
             lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
             //      btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
@@ -257,7 +422,7 @@ namespace RegistrationForm1
                 Driver_Started(driver, null);
       
             timer1.Enabled = true;
-            tm_login.Interval = 10000;
+            tm_login.Interval = 60000;
             tm_login.Enabled = true;
             tm_login.Tick += (s, o) =>
             {
@@ -266,7 +431,7 @@ namespace RegistrationForm1
                 this.Invoke((MethodInvoker)delegate { tm_login.Start(); });
                 t.Enabled = true;
             };
-            tm_loginMN.Interval = 10000;
+            tm_loginMN.Interval = 60000;
             tm_loginMN.Enabled = true;
             tm_loginMN.Tick += (s, o) =>
             {
@@ -298,16 +463,16 @@ namespace RegistrationForm1
 
         private void Driver_Started(object sender, EventArgs e)
         {
-            // Alarm các tag cần thiết
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Run").ValueChanged += S1_Station_Run_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Stop").ValueChanged += S1_Station_Stop_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Alarm").ValueChanged += S1_Station_Alarm_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Run").ValueChanged += S2_Station_Run_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Stop").ValueChanged += S2_Station_Stop_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Alarm").ValueChanged += S2_Station_Alarm_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Run").ValueChanged += S3_Station_Run_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop").ValueChanged += S3_Station_Stop_ValueChanged;//Su kien FrmTran
-            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm").ValueChanged += S3_Station_Alarm_ValueChanged;//Su kien FrmTran
+            // Alarm lệch cửa
+            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door1").ValueChanged += Al_Door1_ValueChanged;//Su kien FrmTran
+            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door2").ValueChanged += Al_Door2_ValueChanged;//Su kien FrmTran
+            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door3").ValueChanged += Al_Door3_ValueChanged;//Su kien FrmTran
+            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door4").ValueChanged += Al_Door4_ValueChanged;//Su kien FrmTran
+            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door5").ValueChanged += Al_Door5_ValueChanged;//Su kien FrmTran
+            ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door6").ValueChanged += Al_Door6_ValueChanged;//Su kien FrmTran
+            //ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Run").ValueChanged += S3_Station_Run_ValueChanged;//Su kien FrmTran
+            //ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop").ValueChanged += S3_Station_Stop_ValueChanged;//Su kien FrmTran
+            //ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm").ValueChanged += S3_Station_Alarm_ValueChanged;//Su kien FrmTran
 
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Remote").ValueChanged += S1_Remote_ValueChanged;//Su kien FrmTran
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Local").ValueChanged += S1_Local_ValueChanged;//Su kien FrmTran
@@ -429,24 +594,24 @@ namespace RegistrationForm1
         }
         private void PublishInitialValues()
         {
-            S1_Station_Run_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Run"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Run"), "", GetS1_Station_RunValue()));
-            S1_Station_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Stop"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Stop"), "", GetS1_Station_StopValue()));
-            S1_Station_Alarm_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Alarm"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Alarm"), "", GetS1_Station_AlarmValue()));
-            S2_Station_Run_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Run"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Run"), "", GetS2_Station_RunValue()));
-            S2_Station_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Stop"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Stop"), "", GetS2_Station_StopValue()));
-            S2_Station_Alarm_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Alarm"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Alarm"), "", GetS2_Station_AlarmValue()));
-            S3_Station_Run_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Run"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Run"), "", GetS3_Station_RunValue()));
-            S3_Station_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop"), "", GetS3_Station_StopValue()));
-            S3_Station_Alarm_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm"), "", GetS3_Station_AlarmValue()));
+            Al_Door1_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door1"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door1"), "", GetAl_Door1Value()));
+            Al_Door2_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door2"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door2"), "", GetAl_Door2Value()));
+            Al_Door3_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door3"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door3"), "", GetAl_Door3Value()));
+            Al_Door4_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door4"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door4"), "", GetAl_Door4Value()));
+            Al_Door5_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door5"),
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door5"), "", GetAl_Door5Value()));
+            Al_Door6_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door6"),
+               new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door6"), "", GetAl_Door6Value()));
+            //S3_Station_Run_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Run"),
+            //    new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Run"), "", GetS3_Station_RunValue()));
+            //S3_Station_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop"),
+            //    new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop"), "", GetS3_Station_StopValue()));
+            //S3_Station_Alarm_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm"),
+            //    new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm"), "", GetS3_Station_AlarmValue()));
 
             Door1_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_PressureHigh"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_PressureHigh"), "", GetDoor1_PressureHighValue()));
@@ -713,193 +878,185 @@ namespace RegistrationForm1
         private string prevDoor3_PressureHigh = "0", prevDoor3_PressureLow = "0"; // biến lưu trạng thái trước đó
         private string prevDoor4_PressureHigh = "0", prevDoor4_PressureLow = "0"; // biến lưu trạng thái trước đó
         private string prevDoor5_PressureHigh = "0", prevDoor5_PressureLow = "0"; // biến lưu trạng thái trước đó
-        private string prevDoor6_PressureHigh = "0", prevDoor6_PressureLow = "0"; // biến lưu trạng thái trước đó
-        private string prevS1_Station_Run = "0", prevS2_Station_Run = "0", prevS3_Station_Run = "0"; // biến lưu trạng thái trước đó
-        private string prevS1_Station_Stop = "0", prevS2_Station_Stop = "0", prevS3_Station_Stop = "0"; // biến lưu trạng thái trước đó
-        private string prevS3_Station_Alarm = "0", prevS2_Station_Alarm = "0", prevS1_Station_Alarm = "0"; // biến lưu trạng thái trước đó
+        private string prevDoor6_PressureHigh = "0", prevDoor6_PressureLow = "0"; // biến lưu trạng thái trước đó                                                                        
+        private string prevAl_Door1 = "0", prevAl_Door2 = "0", prevAl_Door3 = "0",prevAl_Door4 = "0", prevAl_Door5 = "0", prevAl_Door6 = "0"; // biến lưu trạng                                                                        
+        //private string prevS1_Station_Stop = "0", prevS2_Station_Stop = "0", prevS3_Station_Stop = "0"; // biến lưu trạng thái trước đó
+        //private string prevS3_Station_Alarm = "0", prevS2_Station_Alarm = "0", prevS1_Station_Alarm = "0"; // biến lưu trạng thái trước đó
 
-    
-        private void S1_Station_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
+
+        private void Al_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            // 🔔 Raise event để form khác nhận
-            S1_Station_RunChanged?.Invoke(this, e);
+            Al_Door1Changed?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS1_Station_Run == "0" && e.NewValue == "1")
+            if (prevAl_Door1 == "0" && e.NewValue == "1")
             {
-                // Tạo object DataTranModel mới
-                var model = new DataTranModel
-                {
-                    CreateAt = DateTime.Now,
-                    Position = "Trạm 1",
-                    TagName = "Trạm 1 Chạy", // ✅ Tên tag
-                    S1_Station_Run = e.NewValue,
-                   
-                };
-                SQLLoginDataTran.InsertDataTran(model);
-            }
-            // Cập nhật trạng thái trước
-            prevS1_Station_Run = e.NewValue;
-        }
-        private void S2_Station_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            // 🔔 Raise event để form khác nhận
-            S2_Station_RunChanged?.Invoke(this, e);
-            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS2_Station_Run == "0" && e.NewValue == "1")
-            {
-                // Tạo object DataTranModel mới
-                var model = new DataTranModel
-                {
-                    CreateAt = DateTime.Now,
-                    Position = "Trạm 2",
-                    TagName = "Trạm 2 Chạy", // ✅ Tên tag
-                    S2_Station_Run = e.NewValue,
-                };
-                SQLLoginDataTran.InsertDataTran(model);
-            }
-            // Cập nhật trạng thái trước
-            prevS2_Station_Run = e.NewValue;
-        }
-        private void S3_Station_Run_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            // 🔔 Raise event để form khác nhận
-            S3_Station_RunChanged?.Invoke(this, e);
-            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS3_Station_Run == "0" && e.NewValue == "1")
-            {
-                // Tạo object DataTranModel mới
-                var model = new DataTranModel
-                {
-                    CreateAt = DateTime.Now,
-                    Position = "Trạm 3",
-                    TagName = "Trạm 3 Chạy", // ✅ Tên tag
-                    S3_Station_Run = e.NewValue,
-                };
-                SQLLoginDataTran.InsertDataTran(model);
-            }
-            // Cập nhật trạng thái trước
-            prevS3_Station_Run = e.NewValue;
-        }
-        private void S1_Station_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            // 🔔 Raise event để form khác nhận
-            S1_Station_StopChanged?.Invoke(this, e);
-            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS1_Station_Stop == "0" && e.NewValue == "1")
-            {
-                // Tạo object DataTranModel mới
-                var model = new DataTranModel
-                {
-                    CreateAt = DateTime.Now,
-                    Position = "Trạm 1",
-                    TagName = "Trạm 1 Dừng", // ✅ Tên tag
-                    S1_Station_Stop = e.NewValue,
-                };
-                SQLLoginDataTran.InsertDataTran(model);
-            }
-            // Cập nhật trạng thái trước
-            prevS1_Station_Stop = e.NewValue;
-        }
-        private void S2_Station_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            // 🔔 Raise event để form khác nhận
-            S2_Station_StopChanged?.Invoke(this, e);
-            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS2_Station_Stop == "0" && e.NewValue == "1")
-            {
-                // Tạo object DataTranModel mới
-                var model = new DataTranModel
-                {
-                    CreateAt = DateTime.Now,
-                    Position = "Trạm 2",
-                    TagName = "Trạm 2 Dừng", // ✅ Tên tag
-                    S2_Station_Stop = e.NewValue,
-                };
-                SQLLoginDataTran.InsertDataTran(model);
-            }
-            // Cập nhật trạng thái trước
-            prevS2_Station_Stop = e.NewValue;
-        }
-        private void S3_Station_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            // 🔔 Raise event để form khác nhận
-            S3_Station_StopChanged?.Invoke(this, e);
-            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS3_Station_Stop == "0" && e.NewValue == "1")
-            {
-                // Tạo object DataTranModel mới
-                var model = new DataTranModel
-                {
-                    CreateAt = DateTime.Now,
-                    Position = "Trạm 3",
-                    TagName = "Trạm 3 Dừng", // ✅ Tên tag
-                    S3_Station_Stop = e.NewValue,
-                };
-                SQLLoginDataTran.InsertDataTran(model);
-            }
-            // Cập nhật trạng thái trước
-            prevS3_Station_Stop = e.NewValue;
-        }
-        private void S1_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            // 🔔 Raise event để form khác nhận
-            S1_Station_AlarmChanged?.Invoke(this, e);
-            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS1_Station_Alarm == "0" && e.NewValue == "1")
-            {
-                // Tạo object DataTranModel mới
+                // Tạo object DataAlarmModel mới
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
                     Position = "Trạm 1",
-                    TagName = "Trạm 1 Lỗi", // ✅ Tên tag
-                    S1_Station_Alarm = e.NewValue,
+                    TagName = "Lệch cửa 1", // ✅ Tên tag
+                    Al_Door1 = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
-            // Cập nhật trạng thái trước
-            prevS1_Station_Alarm = e.NewValue;
+            prevAl_Door1 = e.NewValue; // Cập nhật trạng thái trước
         }
-        private void S2_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void Al_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            // 🔔 Raise event để form khác nhận
-            S2_Station_AlarmChanged?.Invoke(this, e);
+            Al_Door2Changed?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS2_Station_Alarm == "0" && e.NewValue == "1")
+            if (prevAl_Door2 == "0" && e.NewValue == "1")
             {
-                // Tạo object DataTranModel mới
+                // Tạo object DataAlarmModel mới
+                var model = new DataAlarmModel
+                {
+                    CreateAt = DateTime.Now,
+                    Position = "Trạm 1",
+                    TagName = "Lệch cửa 2", // ✅ Tên tag
+                    Al_Door2 = e.NewValue,
+                };
+                SQLLoginAlarm.InsertAlarm(model);
+            }
+            prevAl_Door2 = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Al_Door3_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Al_Door3Changed?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevAl_Door3 == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataAlarmModel mới
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
                     Position = "Trạm 2",
-                    TagName = "Trạm 2 Lỗi", // ✅ Tên tag
-                    S2_Station_Alarm = e.NewValue,
+                    TagName = "Lệch cửa 3", // ✅ Tên tag
+                    Al_Door3 = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
-            // Cập nhật trạng thái trước
-            prevS2_Station_Alarm = e.NewValue;
+            prevAl_Door3 = e.NewValue; // Cập nhật trạng thái trước
         }
-        private void S3_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void Al_Door4_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            // 🔔 Raise event để form khác nhận
-            S3_Station_AlarmChanged?.Invoke(this, e);
+            Al_Door4Changed?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-            if (prevS3_Station_Alarm == "0" && e.NewValue == "1")
+            if (prevAl_Door4 == "0" && e.NewValue == "1")
             {
-                // Tạo object DataTranModel mới
+                // Tạo object DataAlarmModel mới
+                var model = new DataAlarmModel
+                {
+                    CreateAt = DateTime.Now,
+                    Position = "Trạm 2",
+                    TagName = "Lệch cửa 4", // ✅ Tên tag
+                    Al_Door4 = e.NewValue,
+                };
+                SQLLoginAlarm.InsertAlarm(model);
+            }
+            prevAl_Door4 = e.NewValue; // Cập nhật trạng thái trước
+        }
+        private void Al_Door5_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Al_Door5Changed?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevAl_Door5 == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataAlarmModel mới
                 var model = new DataAlarmModel
                 {
                     CreateAt = DateTime.Now,
                     Position = "Trạm 3",
-                    TagName = "Trạm 3 Lỗi", // ✅ Tên tag
-                    S3_Station_Alarm = e.NewValue,
+                    TagName = "Lệch cửa 5", // ✅ Tên tag
+                    Al_Door5 = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
-            // Cập nhật trạng thái trước
-            prevS3_Station_Alarm = e.NewValue;
+            prevAl_Door5 = e.NewValue; // Cập nhật trạng thái trước
         }
+        private void Al_Door6_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            Al_Door6Changed?.Invoke(this, e);
+            // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+            if (prevAl_Door6 == "0" && e.NewValue == "1")
+            {
+                // Tạo object DataAlarmModel mới
+                var model = new DataAlarmModel
+                {
+                    CreateAt = DateTime.Now,
+                    Position = "Trạm 3",
+                    TagName = "Lệch cửa 6", // ✅ Tên tag
+                    Al_Door6 = e.NewValue,
+                };
+                SQLLoginAlarm.InsertAlarm(model);
+            }
+            prevAl_Door6 = e.NewValue; // Cập nhật trạng thái trước
+        }
+
+
+
+
+
+        //private void S1_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    // 🔔 Raise event để form khác nhận
+        //    S1_Station_AlarmChanged?.Invoke(this, e);
+        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+        //    if (prevS1_Station_Alarm == "0" && e.NewValue == "1")
+        //    {
+        //        // Tạo object DataTranModel mới
+        //        var model = new DataAlarmModel
+        //        {
+        //            CreateAt = DateTime.Now,
+        //            Position = "Trạm 1",
+        //            TagName = "Trạm 1 Lỗi", // ✅ Tên tag
+        //            S1_Station_Alarm = e.NewValue,
+        //        };
+        //        SQLLoginAlarm.InsertAlarm(model);
+        //    }
+        //    // Cập nhật trạng thái trước
+        //    prevS1_Station_Alarm = e.NewValue;
+        //}
+        //private void S2_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    // 🔔 Raise event để form khác nhận
+        //    S2_Station_AlarmChanged?.Invoke(this, e);
+        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+        //    if (prevS2_Station_Alarm == "0" && e.NewValue == "1")
+        //    {
+        //        // Tạo object DataTranModel mới
+        //        var model = new DataAlarmModel
+        //        {
+        //            CreateAt = DateTime.Now,
+        //            Position = "Trạm 2",
+        //            TagName = "Trạm 2 Lỗi", // ✅ Tên tag
+        //            S2_Station_Alarm = e.NewValue,
+        //        };
+        //        SQLLoginAlarm.InsertAlarm(model);
+        //    }
+        //    // Cập nhật trạng thái trước
+        //    prevS2_Station_Alarm = e.NewValue;
+        //}
+        //private void S3_Station_Alarm_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    // 🔔 Raise event để form khác nhận
+        //    S3_Station_AlarmChanged?.Invoke(this, e);
+        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
+        //    if (prevS3_Station_Alarm == "0" && e.NewValue == "1")
+        //    {
+        //        // Tạo object DataTranModel mới
+        //        var model = new DataAlarmModel
+        //        {
+        //            CreateAt = DateTime.Now,
+        //            Position = "Trạm 3",
+        //            TagName = "Trạm 3 Lỗi", // ✅ Tên tag
+        //            S3_Station_Alarm = e.NewValue,
+        //        };
+        //        SQLLoginAlarm.InsertAlarm(model);
+        //    }
+        //    // Cập nhật trạng thái trước
+        //    prevS3_Station_Alarm = e.NewValue;
+        //}
 
         private void Door1_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -2849,42 +3006,42 @@ namespace RegistrationForm1
 
 
         #region GetCurrentValue
-        public string GetS1_Station_RunValue()
+        public string GetAl_Door1Value()
         {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Run").Value;
+            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door1").Value;
         }
-        public string GetS2_Station_RunValue()
+        public string GetAl_Door2Value()
         {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Run").Value;
+            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Al_Door2").Value;
         }
-        public string GetS3_Station_RunValue()
+        public string GetAl_Door3Value()
         {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Run").Value;
+            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door3").Value;
         }
-        public string GetS1_Station_StopValue()
+        public string GetAl_Door4Value()
         {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Stop").Value;
+            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Al_Door4").Value;
         }
-        public string GetS2_Station_StopValue()
+        public string GetAl_Door5Value()
         {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Stop").Value;
+            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door5").Value;
         }
-        public string GetS3_Station_StopValue()
+        public string GetAl_Door6Value()
         {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Stop").Value;
+            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Al_Door6").Value;
         }
-        public string GetS1_Station_AlarmValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Alarm").Value;
-        }
-        public string GetS2_Station_AlarmValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Alarm").Value;
-        }
-        public string GetS3_Station_AlarmValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm").Value;
-        }
+        //public string GetS1_Station_AlarmValue()
+        //{
+        //    return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Station_Alarm").Value;
+        //}
+        //public string GetS2_Station_AlarmValue()
+        //{
+        //    return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Station_Alarm").Value;
+        //}
+        //public string GetS3_Station_AlarmValue()
+        //{
+        //    return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Station_Alarm").Value;
+        //}
         public string GetDoor1_PressureHighValue()
         {
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door1_PressureHigh").Value;
@@ -3107,6 +3264,9 @@ namespace RegistrationForm1
                     Fllow_DauTieng = GetValue("Local Station/DauTieng/S71500/API/Fllow_DauTieng"),
                     Fllow_BenSuc = GetValue("Local Station/DauTieng/S71500/API/Fllow_BenSuc"),
                     Fllow_SonDai = GetValue("Local Station/DauTieng/S71500/API/Fllow_SonDai"),
+                    Fllow_BinhNham = GetValue("Local Station/DauTieng/S71500/API/Fllow_BinhNham"),
+                    Fllow_TL_CDD = GetValue("Local Station/DauTieng/S71500/API/Fllow_TL_CDD"),
+
 
 
                 };
@@ -3118,6 +3278,15 @@ namespace RegistrationForm1
             {
                 Console.WriteLine($"❌ Lỗi ghi DataMucNuoc: {ex.Message}");
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmHochua mn = new FrmHochua();
+            OpenFormInPanel(mn, "Hồ chứa");
+        
+           
+            mn.Show();
         }
 
         public string GetDoor4_CloseValue()
@@ -3135,6 +3304,12 @@ namespace RegistrationForm1
         {
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Close").Value;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+          
+        }
+
         public string GetDoor6_OpenValue()
         {
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door6_Open").Value;
@@ -3148,6 +3323,36 @@ namespace RegistrationForm1
         {
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_Opening").Value;
         }
+
+        private void bntNhaplieu_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nếu chưa đăng nhập
+            if (string.IsNullOrEmpty(PermissionManager.CurrentUsername))
+            {
+                // Hiện form đăng nhập
+                FrmLogin frmLogin = new FrmLogin();
+                if (frmLogin.ShowDialog() != DialogResult.OK)
+                {
+                    MessageBox.Show("Bạn cần đăng nhập để sử dụng chức năng này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            // Sau khi đăng nhập xong, kiểm tra quyền
+            if (!PermissionManager.CheckPermissionWithMessage("edit_data"))
+                return;
+
+            // Nếu đủ quyền, mở form nhập liệu
+            FrmNhaplieu frm = new FrmNhaplieu();
+            frm.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrmEditdata frm = new FrmEditdata();
+            OpenFormInPanel(frm, "Chỉnh sửa dữ liệu");
+        }
+
         public string GetDoorlock1_ClosingValue()
         {
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_Closing").Value;
@@ -3173,46 +3378,65 @@ namespace RegistrationForm1
         {
             try
             {
+                // Hàm trợ giúp để chuyển đổi và xử lý giá trị
+                Func<string, decimal> processFlowValue = (valueString) =>
+                {
+                    decimal parsedValue;
+                    if (decimal.TryParse(valueString, out parsedValue))
+                    {
+                        return Math.Round(parsedValue, 2) / 100m;
+                    }
+                    else
+                    {
+                        // Xử lý trường hợp không thể chuyển đổi, ví dụ: log lỗi và trả về 0
+                        Console.Error.WriteLine($"Cảnh báo: Không thể chuyển đổi giá trị '{valueString}' sang Decimal. Sử dụng giá trị 0.");
+                        return 0m;
+                    }
+                };
+
                 var data = new DataVanHanhModel
                 {
                     CreateAt = DateTime.Now,
 
-                    HT_Cylinder1_1 = GetValue("Local Station/Channel1/Device1/HT_Cylinder1_1"),
-                    HT_Cylinder1_2 = GetValue("Local Station/Channel1/Device1/HT_Cylinder1_2"),
-                    HT_Cylinder2_1 = GetValue("Local Station/Channel1/Device1/HT_Cylinder2_1"),
-                    HT_Cylinder2_2 = GetValue("Local Station/Channel1/Device1/HT_Cylinder2_2"),
-                    HT_Cylinder3_1 = GetValue("Local Station/Channel1/Device1/HT_Cylinder3_1"),
-                    HT_Cylinder3_2 = GetValue("Local Station/Channel1/Device1/HT_Cylinder3_2"),
-                    HT_Cylinder4_1 = GetValue("Local Station/Channel1/Device1/HT_Cylinder4_1"),
-                    HT_Cylinder4_2 = GetValue("Local Station/Channel1/Device1/HT_Cylinder4_2"),
-                    HT_Cylinder5_1 = GetValue("Local Station/Channel1/Device1/HT_Cylinder5_1"),
-                    HT_Cylinder5_2 = GetValue("Local Station/Channel1/Device1/HT_Cylinder5_2"),
-                    HT_Cylinder6_1 = GetValue("Local Station/Channel1/Device1/HT_Cylinder6_1"),
-                    HT_Cylinder6_2 = GetValue("Local Station/Channel1/Device1/HT_Cylinder6_2"),
+                    HT_Cylinder1_1 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder1_1"),
+                    HT_Cylinder1_2 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder1_2"),
+                    HT_Cylinder2_1 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder2_1"),
+                    HT_Cylinder2_2 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder2_2"),
+                    HT_Cylinder3_1 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder3_1"),
+                    HT_Cylinder3_2 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder3_2"),
+                    HT_Cylinder4_1 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder4_1"),
+                    HT_Cylinder4_2 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder4_2"),
+                    HT_Cylinder5_1 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder5_1"),
+                    HT_Cylinder5_2 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder5_2"),
+                    HT_Cylinder6_1 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder6_1"),
+                    HT_Cylinder6_2 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder6_2"),
 
-                    Door1_Aperture = GetValue("Local Station/Channel1/Device1/Door1_Aperture"),
-                    Door2_Aperture = GetValue("Local Station/Channel1/Device1/Door2_Aperture"),
-                    Door3_Aperture = GetValue("Local Station/Channel1/Device1/Door3_Aperture"),
-                    Door4_Aperture = GetValue("Local Station/Channel1/Device1/Door4_Aperture"),
-                    Door5_Aperture = GetValue("Local Station/Channel1/Device1/Door5_Aperture"),
-                    Door6_Aperture = GetValue("Local Station/Channel1/Device1/Door6_Aperture"),
+                    Door1_Aperture = GetValue("Local Station/DauTieng/S71500/Group1/Door1_Aperture"),
+                    Door2_Aperture = GetValue("Local Station/DauTieng/S71500/Group1/Door2_Aperture"),
+                    Door3_Aperture = GetValue("Local Station/DauTieng/S71500/Group2/Door3_Aperture"),
+                    Door4_Aperture = GetValue("Local Station/DauTieng/S71500/Group2/Door4_Aperture"),
+                    Door5_Aperture = GetValue("Local Station/DauTieng/S71500/Group3/Door5_Aperture"),
+                    Door6_Aperture = GetValue("Local Station/DauTieng/S71500/Group3/Door6_Aperture"),
 
-                    Temp_Oil1 = GetValue("Local Station/Channel1/Device1/Temp_Oil1"),
-                    Temp_Oil2 = GetValue("Local Station/Channel1/Device1/Temp_Oil2"),
-                    Temp_Oil3 = GetValue("Local Station/Channel1/Device1/Temp_Oil3"),
+                    Temp_Oil1 = GetValue("Local Station/DauTieng/S71500/Group1/Temp_Oil1"),
+                    Temp_Oil2 = GetValue("Local Station/DauTieng/S71500/Group2/Temp_Oil2"),
+                    Temp_Oil3 = GetValue("Local Station/DauTieng/S71500/Group3/Temp_Oil3"),
 
-                    Fllow_Door1 = GetValue("Local Station/Channel1/Device1/Fllow_Door1"),
-                    Fllow_Door2 = GetValue("Local Station/Channel1/Device1/Fllow_Door2"),
-                    Fllow_Door3 = GetValue("Local Station/Channel1/Device1/Fllow_Door3"),
-                    Fllow_Door4 = GetValue("Local Station/Channel1/Device1/Fllow_Door4"),
-                    Fllow_Door5 = GetValue("Local Station/Channel1/Device1/Fllow_Door5"),
-                    Fllow_Door6 = GetValue("Local Station/Channel1/Device1/Fllow_Door6"),
+                    Fllow_Door1 = GetValue("Local Station/DauTieng/S71500/Group1/Fllow_Door1"),
+                    Fllow_Door2 = GetValue("Local Station/DauTieng/S71500/Group1/Fllow_Door2"),
+                    Fllow_Door3 = GetValue("Local Station/DauTieng/S71500/Group2/Fllow_Door3"),
+                    Fllow_Door4 = GetValue("Local Station/DauTieng/S71500/Group2/Fllow_Door4"),
+                    Fllow_Door5 = GetValue("Local Station/DauTieng/S71500/Group3/Fllow_Door5"),
+                    Fllow_Door6 = GetValue("Local Station/DauTieng/S71500/Group3/Fllow_Door6"),
 
-                    Total_Fllow = GetValue("Local Station/Channel1/Device1/Total_Fllow"),
-                    Fllow_Ho = GetValue("Local Station/Channel1/Device1/Fllow_Ho"),
-                    Fllow_DauTieng = GetValue("Local Station/Channel1/Device1/Fllow_DauTieng"),
-                    Fllow_BenSuc = GetValue("Local Station/Channel1/Device1/Fllow_BenSuc"),
-                    Fllow_SonDai = GetValue("Local Station/Channel1/Device1/Fllow_SonDai")
+                    Total_Fllow = GetValue("Local Station/DauTieng/S71500/Group1/Total_Fllow"),
+                    Fllow_Ho = GetValue("Local Station/DauTieng/S71500/Group4/Fllow_Ho"),
+                    // Áp dụng hàm trợ giúp cho các trường cần xử lý
+                    Fllow_DauTieng = processFlowValue(GetValue("Local Station/DauTieng/S71500/API/Fllow_DauTieng")),
+                    Fllow_BenSuc = processFlowValue(GetValue("Local Station/DauTieng/S71500/API/Fllow_BenSuc")),
+                    Fllow_SonDai = processFlowValue(GetValue("Local Station/DauTieng/S71500/API/Fllow_SonDai")),
+                    Fllow_BinhNham = GetValue("Local Station/DauTieng/S71500/API/Fllow_BinhNham"),
+                    Fllow_TL_CDD = GetValue("Local Station/DauTieng/S71500/API/Fllow_TL_CDD")
                 };
 
                 SQLLoginDataVanHanh.InsertDataVanHanh(data);
@@ -3396,8 +3620,6 @@ namespace RegistrationForm1
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Local_Stop").Value;
         }
         #endregion
-
-
        
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -3455,7 +3677,7 @@ namespace RegistrationForm1
 
         private void bnt_TramMN_Click(object sender, EventArgs e)
         {
-            FrmTramMN mn = new FrmTramMN();
+            FrmMucnuoc mn = new FrmMucnuoc();
             OpenFormInPanel(mn, "Mức Nước");
         }
 
@@ -3488,14 +3710,24 @@ namespace RegistrationForm1
         }        
         private void bnt_LogIn_Click(object sender, EventArgs e)
         {
+            // Kiểm tra nếu đã đăng nhập thì không cần đăng nhập lại
+            //if (!string.IsNullOrEmpty(PermissionManager.CurrentUsername))
+            //{
+            //    MessageBox.Show("Bạn đã đăng nhập rồi!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+           this.Hide();
+            // Hiện form đăng nhập
             FrmLogin login = new FrmLogin();
            
             if (login.ShowDialog() == DialogResult.OK)
             {
                 // Đăng nhập thành công, cập nhật lại thông tin người dùng
                 lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
-            //    btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
+                //   btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
+                bntEditdata.Enabled = PermissionManager.CurrentUserRole == "Admin";
             }
+            
         }
 
         private void bnt_User_Click(object sender, EventArgs e)

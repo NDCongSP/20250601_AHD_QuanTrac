@@ -41,7 +41,7 @@ namespace RegistrationForm1
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Password, Role FROM Users WHERE Username = @username";
+                string query = "SELECT PasswordHash, Role FROM Users WHERE Username = @username";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@username", username);
 
@@ -87,7 +87,7 @@ namespace RegistrationForm1
                 if (count > 0) return;
 
                 string hashed = BCrypt.Net.BCrypt.HashPassword("123456");
-                string query = "INSERT INTO Users (Username, Password, Role) VALUES ('admin', @p, 'Admin')";
+                string query = "INSERT INTO Users (Username, PasswordHash, Role) VALUES ('admin', @p, 'Admin')";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@p", hashed);
                 cmd.ExecuteNonQuery();
@@ -175,6 +175,11 @@ namespace RegistrationForm1
             {
                 txtPassword.UseSystemPasswordChar = false;
             }
+        }
+
+        private void bntRegister_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

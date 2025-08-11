@@ -26,7 +26,7 @@ namespace RegistrationForm1
 {       
     public partial class FrmBaoCao : Form
     {
-        private string connectionString => ConfigurationHelper.GetConnectionString();
+        public static string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmBaoCao()
         {
             InitializeComponent();
@@ -36,29 +36,27 @@ namespace RegistrationForm1
         private void FrmBaoCao_Load(object sender, EventArgs e)
         { // Thiết lập chế độ báo cáo mặc định
 
-            cbxExportType.Items.Add("Excel");
-            cbxExportType.Items.Add("PDF");
-            cbxExportType.SelectedIndex = 0; // mặc định
+            cbxExportType.Items.AddRange(new string[] { "Excel", "PDF" });
+            cbxExportType.SelectedIndex = 1;
 
-            cbTimeRange.Items.AddRange(new string[] { "5 phút", "10 phút", "30 phút", "60 phút", "Tất cả" });
-            cbTimeRange.SelectedIndex = 0;
+            cbTimeRange.Items.AddRange(new string[] { "10 phút", "15 phút", "30 phút", "60 phút", "1 Ngày", "Tất cả" });
+            cbTimeRange.SelectedIndex = 1;
 
             dtFrom.Format = DateTimePickerFormat.Custom;
             dtFrom.CustomFormat = "dd/MM/yyyy HH:mm:ss";
-
             dtTo.Format = DateTimePickerFormat.Custom;
             dtTo.CustomFormat = "dd/MM/yyyy HH:mm:ss";
 
             dtTo.Value = DateTime.Now;
-            dtFrom.Value = DateTime.Now.AddMinutes(-5);
+            dtFrom.Value = DateTime.Now.AddMinutes(-120);
 
         }
         
         private void bntDataVanHanh_Click(object sender, EventArgs e)
         {
-          //  string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
-         
-        string selected = cbTimeRange.SelectedItem?.ToString() ?? "Tất cả";
+            //  string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
+
+            string selected = cbTimeRange.SelectedItem?.ToString() ?? "Tất cả";
             DateTime fromPicker = dtFrom.Value;
             DateTime toPicker = dtTo.Value;
 
@@ -71,19 +69,18 @@ namespace RegistrationForm1
             DateTime fromTime = fromPicker;
             DateTime toTime = toPicker;
 
-            // Xử lý nếu user chọn preset
             if (selected != "Tất cả")
             {
-                int minutes = 0;
-                if (selected.Contains("5")) minutes = 5;
-                else if (selected.Contains("10")) minutes = 10;
-                else if (selected.Contains("30")) minutes = 30;
-                else if (selected.Contains("60")) minutes = 60;
+                int minutes = selected.Contains("1 Ngày") ? 1440 :
+                              selected.Contains("60") ? 60 :
+                              selected.Contains("30") ? 30 :
+                              selected.Contains("15") ? 15 :
+                              selected.Contains("10") ? 10 : 0;
 
                 DateTime recentFrom = DateTime.Now.AddMinutes(-minutes);
                 DateTime recentTo = DateTime.Now;
 
-                // Giới hạn trong khoảng dtFrom - dtTo
+                // Giới hạn từ recentFrom - recentTo nhưng không vượt ngoài fromPicker - toPicker
                 fromTime = recentFrom < fromPicker ? fromPicker : recentFrom;
                 toTime = recentTo > toPicker ? toPicker : recentTo;
 
@@ -101,13 +98,12 @@ namespace RegistrationForm1
                     conn.Open();
 
                     string query = @"
-                SELECT Id, CreateAt, Fllow_Ho, Door1_Aperture, Door2_Aperture, Door3_Aperture, 
-                       Door4_Aperture, Door5_Aperture, Door6_Aperture, Total_Fllow
+                SELECT Id, CreateAt, Fllow_Ho,Fllow_DauTieng, Door1_Aperture, Door2_Aperture, Door3_Aperture, Door4_Aperture, Door5_Aperture,
+                        Door6_Aperture,Fllow_Door1,Fllow_Door2,Fllow_Door3,Fllow_Door4,Fllow_Door5,Fllow_Door6, Total_Fllow
                 FROM DataVanHanh
                 WHERE CreateAt BETWEEN @FromTime AND @ToTime
                 ORDER BY CreateAt DESC";
 
-                    // 🔑 Sử dụng Dapper nếu đã import
                     var data = conn.Query<Vanhanh>(query, new
                     {
                         FromTime = fromTime,
@@ -123,8 +119,7 @@ namespace RegistrationForm1
                     }
                     else
                     {
-                        // Vẽ biểu đồ từ dữ liệu vận hành
-                       DrawChartFromVanHanhData();
+                        DrawChartFromVanHanhData();
                     }
                 }
             }
@@ -402,20 +397,22 @@ namespace RegistrationForm1
             Dictionary<string, string> seriesLabels = new Dictionary<string, string>
             {
                 { "Fllow_Ho", "Mực nước hồ" },
-                { "Total_Fllow", "Tổng lưu lượng" },
-                { "Door1_Aperture", "Cửa 1" },
-                { "Door2_Aperture", "Cửa 2" },
-                { "Door3_Aperture", "Cửa 3" },
-                { "Door4_Aperture", "Cửa 4" },
-                { "Door5_Aperture", "Cửa 5" },
-                { "Door6_Aperture", "Cửa 6" }
+                { "Fllow_DauTieng", "Mực nước TV dầu tiếng" },               
+                { "Door1_Aperture", "Độ mở cửa 1" },
+                { "Door2_Aperture", "Độ mở cửa 2" },
+                { "Door3_Aperture", "Độ mở cửa 3" },
+                { "Door4_Aperture", "Độ mở cửa 4" },
+                { "Door5_Aperture", "Độ mở cửa 5" },
+                { "Door6_Aperture", "Độ mở cửa 6" },
+                { "Total_Fllow", "Tổng lưu lượng" }
+
             };
 
                     string[] seriesNames = {
-                "Fllow_Ho", "Total_Fllow",
+                "Fllow_Ho", "Fllow_DauTieng",
                 "Door1_Aperture", "Door2_Aperture",
                 "Door3_Aperture", "Door4_Aperture",
-                "Door5_Aperture", "Door6_Aperture"
+                "Door5_Aperture", "Door6_Aperture","Total_Fllow"
              };
 
             foreach (string seriesName in seriesNames)
@@ -477,13 +474,14 @@ namespace RegistrationForm1
             Dictionary<string, string> seriesLabels = new Dictionary<string, string>
             {
                 { "Fllow_Ho", "Mực nước hồ" },
-                { "Fllow_DauTieng", "Mực Nước Dầu Tiếng" },
+                { "Fllow_DauTieng", "Mực Nước TV Dầu Tiếng" },
                 { "Fllow_BenSuc", "Mực Nước Bến Súc" },
-                { "Fllow_SonDai", "Mực Nước Sơn Đài" },               
+                { "Fllow_SonDai", "Mực Nước Sơn Đài" },
+                 { "Fllow_BinhNham", "Mực Nước Bình Nhâm " }
             };
                   string[] seriesNames = {
                     "Fllow_Ho", "Fllow_DauTieng",
-                    "Fllow_BenSuc", "Fllow_SonDai"
+                    "Fllow_BenSuc", "Fllow_SonDai","Fllow_BinhNham"
               };
             
 
@@ -529,7 +527,7 @@ namespace RegistrationForm1
 
         private void bntDataMucNuoc_Click(object sender, EventArgs e)
         {
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
+       //     string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
 
             string selected = cbTimeRange.SelectedItem?.ToString() ?? "Tất cả";
             DateTime fromPicker = dtFrom.Value;
@@ -548,10 +546,11 @@ namespace RegistrationForm1
             if (selected != "Tất cả")
             {
                 int minutes = 0;
-                if (selected.Contains("5")) minutes = 5;
-                else if (selected.Contains("10")) minutes = 10;
+                if (selected.Contains("10")) minutes = 10;
+                else if (selected.Contains("15")) minutes = 15;
                 else if (selected.Contains("30")) minutes = 30;
                 else if (selected.Contains("60")) minutes = 60;
+                else if (selected.Contains("1 Ngày")) minutes = 1440; // 1 ngày = 1440 phút
 
                 DateTime recentFrom = DateTime.Now.AddMinutes(-minutes);
                 DateTime recentTo = DateTime.Now;

@@ -38,27 +38,26 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label5
             // 
-            this.label5.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label5.BackColor = System.Drawing.SystemColors.Highlight;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Blue;
-            this.label5.Location = new System.Drawing.Point(176, 9);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(101, 9);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(510, 73);
+            this.label5.Size = new System.Drawing.Size(575, 73);
             this.label5.TabIndex = 183;
-            this.label5.Text = "CÔNG TY TNHH MỘT THÀNH VIÊN KHAI THÁC THỦY LỢI MIỀN NAM";
+            this.label5.Text = "CÔNG TY TNHH MTV KHAI THÁC THỦY LỢI MIỀN NAM";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chkShowPassword
             // 
             this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.ForeColor = System.Drawing.Color.White;
             this.chkShowPassword.Location = new System.Drawing.Point(288, 288);
             this.chkShowPassword.Margin = new System.Windows.Forms.Padding(4);
             this.chkShowPassword.Name = "chkShowPassword";
@@ -75,8 +74,9 @@
             this.bntRegister.Name = "bntRegister";
             this.bntRegister.Size = new System.Drawing.Size(147, 50);
             this.bntRegister.TabIndex = 180;
-            this.bntRegister.Text = "Đăng Ký";
+            this.bntRegister.Text = "Thoát";
             this.bntRegister.UseVisualStyleBackColor = true;
+            this.bntRegister.Click += new System.EventHandler(this.bntRegister_Click);
             // 
             // btnLogin
             // 
@@ -117,6 +117,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(288, 185);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
@@ -127,6 +128,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(288, 94);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -140,33 +142,22 @@
             this.ahdPictureBox1.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox1.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox1.Image = global::RegistrationForm1.Properties.Resources.logo_removebg_preview;
-            this.ahdPictureBox1.Location = new System.Drawing.Point(18, 5);
+            this.ahdPictureBox1.Location = new System.Drawing.Point(29, 107);
             this.ahdPictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.ahdPictureBox1.Name = "ahdPictureBox1";
             this.ahdPictureBox1.RotateAngle = 0;
             this.ahdPictureBox1.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox1.Size = new System.Drawing.Size(140, 140);
+            this.ahdPictureBox1.Size = new System.Drawing.Size(185, 186);
             this.ahdPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox1.TabIndex = 182;
             this.ahdPictureBox1.TagPath = null;
             this.ahdPictureBox1.Text = "ahdPictureBox1";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 157);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(170, 174);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 174;
-            this.pictureBox1.TabStop = false;
-            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.SystemColors.Highlight;
             this.ClientSize = new System.Drawing.Size(679, 393);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.ahdPictureBox1);
@@ -177,7 +168,6 @@
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -187,7 +177,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đăng Nhập";
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,6 +193,5 @@
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

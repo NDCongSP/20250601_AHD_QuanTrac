@@ -36,7 +36,7 @@ namespace RegistrationForm1
                 {
                     txtFullName.Text = reader["FullName"].ToString();
                     txtUsername.Text = reader["Username"].ToString();
-                    txtPosition.Text = reader["Position"].ToString();
+             //       txtPosition.Text = reader["Position"].ToString();
                     cboRole.SelectedItem = reader["Role"].ToString();
 
                     if (reader["DateOfBirth"] != DBNull.Value)
@@ -83,7 +83,7 @@ namespace RegistrationForm1
                 cmd.Parameters.AddWithValue("@u", txtUsername.Text);
                 cmd.Parameters.AddWithValue("@p", hashedPassword);
                 cmd.Parameters.AddWithValue("@dob", dtpDOB.Value);
-                cmd.Parameters.AddWithValue("@pos", txtPosition.Text);
+         //       cmd.Parameters.AddWithValue("@pos", txtPosition.Text);
                 cmd.Parameters.AddWithValue("@r", cboRole.SelectedItem?.ToString() ?? "");
                 cmd.ExecuteNonQuery();
             }
@@ -98,7 +98,7 @@ namespace RegistrationForm1
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@f", txtFullName.Text);
                 cmd.Parameters.AddWithValue("@dob", dtpDOB.Value);
-                cmd.Parameters.AddWithValue("@p", txtPosition.Text);
+      //          cmd.Parameters.AddWithValue("@p", txtPosition.Text);
                 cmd.Parameters.AddWithValue("@r", cboRole.SelectedItem?.ToString() ?? "");
                 cmd.Parameters.AddWithValue("@id", editingUserId.Value);
                 cmd.ExecuteNonQuery();
@@ -130,7 +130,7 @@ namespace RegistrationForm1
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
             DateTime dob = dtpDOB.Value.Date;
-            string position = txtPosition.Text.Trim();
+   //         string position = txtPosition.Text.Trim();
             string role = cboRole.SelectedItem?.ToString();
 
             if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(username) ||
@@ -159,14 +159,14 @@ namespace RegistrationForm1
                     return;
                 }
 
-                string query = @"INSERT INTO Users (FullName, Username, Password, DateOfBirth, Position, Role)
-                                 VALUES (@FullName, @Username, @Password, @DateOfBirth, @Position, @Role)";
+                string query = @"INSERT INTO Users (FullName, Username, PasswordHash, DateOfBirth,  Role)
+                                 VALUES (@FullName, @Username, @PasswordHash, @DateOfBirth,  @Role)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@FullName", fullName);
                 cmd.Parameters.AddWithValue("@Username", username);
-                cmd.Parameters.AddWithValue("@Password", hashedPassword);
+                cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword);
                 cmd.Parameters.AddWithValue("@DateOfBirth", dob);
-                cmd.Parameters.AddWithValue("@Position", position);
+   //             cmd.Parameters.AddWithValue("@Position", position);
                 cmd.Parameters.AddWithValue("@Role", role);
 
                 int result = cmd.ExecuteNonQuery();

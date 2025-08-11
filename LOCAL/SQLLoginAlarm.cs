@@ -28,7 +28,7 @@ namespace RegistrationForm1
                             S1_DC1_Over, S1_DC2_Over, S1_DC3_Over,
                             S2_DC1_Over, S2_DC2_Over, S2_DC3_Over,
                             S3_DC1_Over, S3_DC2_Over, S3_DC3_Over,
-                            S1_Station_Alarm, S2_Station_Alarm, S3_Station_Alarm,
+                            Al_Door1, Al_Door2, Al_Door3,Al_Door4, Al_Door5, Al_Door6,
                         TagName)
                         VALUES
                         (
@@ -42,7 +42,7 @@ namespace RegistrationForm1
                             @S1_DC1_Over, @S1_DC2_Over, @S1_DC3_Over,
                             @S2_DC1_Over, @S2_DC2_Over, @S2_DC3_Over,
                             @S3_DC1_Over, @S3_DC2_Over, @S3_DC3_Over,
-                            @S1_Station_Alarm, @S2_Station_Alarm, @S3_Station_Alarm,
+                            @Al_Door1, @Al_Door2, @Al_Door3, @Al_Door4, @Al_Door5, @Al_Door6,
                         @TagName)";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -75,10 +75,13 @@ namespace RegistrationForm1
                         cmd.Parameters.AddWithValue("@S3_DC2_Over", alarm.S3_DC2_Over ?? "0");
                         cmd.Parameters.AddWithValue("@S3_DC3_Over", alarm.S3_DC3_Over ?? "0");
 
-                        cmd.Parameters.AddWithValue("@S1_Station_Alarm", alarm.S1_Station_Alarm ?? "0");
-                        cmd.Parameters.AddWithValue("@S2_Station_Alarm", alarm.S2_Station_Alarm ?? "0");
-                        cmd.Parameters.AddWithValue("@S3_Station_Alarm", alarm.S3_Station_Alarm ?? "0");
-                        
+                        cmd.Parameters.AddWithValue("@Al_Door1", alarm.Al_Door1 ?? "0");
+                        cmd.Parameters.AddWithValue("@Al_Door2", alarm.Al_Door2 ?? "0");
+                        cmd.Parameters.AddWithValue("@Al_Door3", alarm.Al_Door3 ?? "0");
+                        cmd.Parameters.AddWithValue("@Al_Door4", alarm.Al_Door4 ?? "0");
+                        cmd.Parameters.AddWithValue("@Al_Door5", alarm.Al_Door5 ?? "0");
+                        cmd.Parameters.AddWithValue("@Al_Door6", alarm.Al_Door6 ?? "0");
+
 
                         cmd.ExecuteNonQuery();
                     }

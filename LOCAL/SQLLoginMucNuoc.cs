@@ -1,57 +1,104 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data; // Required for SqlDbType
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RegistrationForm1
 {
-
     public class SQLLoginMucNuoc
     {
-        //   private static readonly string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-        public static string connectionString => ConfigurationHelper.GetConnectionString();
+        
+        private static readonly string connectionString = ConfigurationHelper.GetConnectionString();
         public static void InsertDataMucNuoc(DataMucNuocModel data)
-        {
-            try
+        {         
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                const string query = @"
+                    INSERT INTO DataMucNuoc
+                    (
+                        CreateAt, Fllow_Ho, Fllow_DauTieng,
+                        Fllow_BenSuc, Fllow_SonDai, Fllow_BinhNham, Fllow_TL_CDD
+                    )
+                    VALUES
+                    (
+                        @CreateAt, @Fllow_Ho, @Fllow_DauTieng,
+                        @Fllow_BenSuc, @Fllow_SonDai, @Fllow_BinhNham, @Fllow_TL_CDD
+                    )";
+
+                try
                 {
+                    // Mở kết nối cơ sở dữ liệu.
                     conn.Open();
-
-                    string query = @"
-                        INSERT INTO DataMucNuoc
-                        (
-                            CreateAt,
-                            Fllow_Ho, Fllow_DauTieng,
-                            Fllow_BenSuc, Fllow_SonDai                                                                              
-                        )
-                        VALUES
-                        (
-                            @CreateAt,                        
-                            @Fllow_Ho, @Fllow_DauTieng,
-                            @Fllow_BenSuc, @Fllow_SonDai
-                           
-                        )";
-
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@CreateAt", data.CreateAt);
-                      
-                        cmd.Parameters.AddWithValue("@Fllow_Ho", data.Fllow_Ho);
-                        cmd.Parameters.AddWithValue("@Fllow_DauTieng", data.Fllow_DauTieng);
-                        cmd.Parameters.AddWithValue("@Fllow_BenSuc", data.Fllow_BenSuc);
-                        cmd.Parameters.AddWithValue("@Fllow_SonDai", data.Fllow_SonDai);
+                        cmd.Parameters.Add("@CreateAt", SqlDbType.DateTime).Value = data.CreateAt;
+                        cmd.Parameters.Add("@Fllow_Ho", SqlDbType.Decimal).Value = data.Fllow_Ho;
 
+                        // Làm tròn Fllow_DauTieng đến 2 chữ số thập phân và sau đó chia cho 100.
+                        // Sử dụng decimal.TryParse để chuyển đổi an toàn từ string sang decimal.
+                        decimal fllowDauTiengValue;
+                        if (decimal.TryParse(data.Fllow_DauTieng, out fllowDauTiengValue))
+                        {
+                            cmd.Parameters.Add("@Fllow_DauTieng", SqlDbType.Decimal).Value = Math.Round(fllowDauTiengValue, 2) / 100m;
+                        }
+                        else
+                        {
+                            // Xử lý trường hợp không thể chuyển đổi (ví dụ: log lỗi và gán giá trị mặc định).
+                            Console.Error.WriteLine($"Cảnh báo: Không thể chuyển đổi Fllow_DauTieng '{data.Fllow_DauTieng}' sang Decimal. Sử dụng giá trị 0.");
+                            cmd.Parameters.Add("@Fllow_DauTieng", SqlDbType.Decimal).Value = 0m; // Gán giá trị mặc định
+                        }
+
+                        // Làm tròn Fllow_BenSuc đến 2 chữ số thập phân và sau đó chia cho 100.
+                        decimal fllowBenSucValue;
+                        if (decimal.TryParse(data.Fllow_BenSuc, out fllowBenSucValue))
+                        {
+                            cmd.Parameters.Add("@Fllow_BenSuc", SqlDbType.Decimal).Value = Math.Round(fllowBenSucValue, 2) / 100m;
+                        }
+                        else
+                        {
+                            Console.Error.WriteLine($"Cảnh báo: Không thể chuyển đổi Fllow_BenSuc '{data.Fllow_BenSuc}' sang Decimal. Sử dụng giá trị 0.");
+                            cmd.Parameters.Add("@Fllow_BenSuc", SqlDbType.Decimal).Value = 0m;
+                        }
+
+                        // Làm tròn Fllow_SonDai đến 2 chữ số thập phân và sau đó chia cho 100.
+                        decimal fllowSonDaiValue;
+                        if (decimal.TryParse(data.Fllow_SonDai, out fllowSonDaiValue))
+                        {
+                            cmd.Parameters.Add("@Fllow_SonDai", SqlDbType.Decimal).Value = Math.Round(fllowSonDaiValue, 2) / 100m;
+                        }
+                        else
+                        {
+                            Console.Error.WriteLine($"Cảnh báo: Không thể chuyển đổi Fllow_SonDai '{data.Fllow_SonDai}' sang Decimal. Sử dụng giá trị 0.");
+                            cmd.Parameters.Add("@Fllow_SonDai", SqlDbType.Decimal).Value = 0m;
+                        }
+
+                        cmd.Parameters.Add("@Fllow_BinhNham", SqlDbType.Decimal).Value = data.Fllow_BinhNham;
+                        cmd.Parameters.Add("@Fllow_TL_CDD", SqlDbType.Decimal).Value = data.Fllow_TL_CDD;
+
+                        // Thực thi lệnh không truy vấn (INSERT, UPDATE, DELETE).
                         cmd.ExecuteNonQuery();
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"InsertMuc Nuoc Error: {ex.Message}");
+                catch (SqlException ex)
+                {
+                    // Bắt SqlException cụ thể cho các lỗi liên quan đến cơ sở dữ liệu.
+                    // Ghi lại toàn bộ thông báo ngoại lệ và dấu vết ngăn xếp để gỡ lỗi chi tiết.
+                    Console.Error.WriteLine($"Lỗi chèn SQL: {ex.Message}");
+                    Console.Error.WriteLine($"Dấu vết ngăn xếp: {ex.StackTrace}");
+                    // Ném lại ngoại lệ để đảm bảo mã gọi biết về lỗi.
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    // Bắt bất kỳ ngoại lệ không mong muốn nào khác.
+                    Console.Error.WriteLine($"Đã xảy ra lỗi không mong muốn trong quá trình chèn dữ liệu: {ex.Message}");
+                    Console.Error.WriteLine($"Dấu vết ngăn xếp: {ex.StackTrace}");
+                    // Ném lại ngoại lệ.
+                    throw;
+                }
             }
         }
     }
+
+
+    
 }

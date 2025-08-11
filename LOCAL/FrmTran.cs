@@ -115,6 +115,12 @@ namespace RegistrationForm1
                 _mainForm.Door5_PressureLowChanged += Door5_PressureLow_ValueChanged;
                 _mainForm.Door6_PressureHighChanged += Door6_PressureHigh_ValueChanged;
                 _mainForm.Door6_PressureLowChanged += Door6_PressureLow_ValueChanged;
+                _mainForm.Al_Door1Changed += Al_Door1_ValueChanged;
+                _mainForm.Al_Door2Changed += Al_Door2_ValueChanged;
+                _mainForm.Al_Door3Changed += Al_Door3_ValueChanged;
+                _mainForm.Al_Door4Changed += Al_Door4_ValueChanged;
+                _mainForm.Al_Door5Changed += Al_Door5_ValueChanged;
+                _mainForm.Al_Door6Changed += Al_Door6_ValueChanged;
             }
             else
             {
@@ -516,6 +522,8 @@ namespace RegistrationForm1
             Pic_Door6_PressureHigh_Stop.Visible = _mainForm.GetDoor6_PressureHighValue() == "0";
             Pic_Door6_PressureLow.Visible = _mainForm.GetDoor6_PressureLowValue() == "1";
             Pic_Door6_PressureLow_Stop.Visible = _mainForm.GetDoor6_PressureLowValue() == "0";
+            // Load trạng thái các Alarm lệch cửa
+
 
 
 
@@ -792,9 +800,7 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door1_PressureHigh_Stop.Visible = true; Pic_Door1_PressureHigh.Visible = false; });
-        }
-        
-       
+        }              
         // Trạng thái lổi Trạm 3
         private void S3_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -822,8 +828,7 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { Pic_S3_DC1_Over_Stop.Visible = true; PicT6_S3_DC1_Over_Stop.Visible = true; Pic_S3_DC1_Over.Visible = false; PicT6_S3_DC1_Over.Visible = false; });
-        }
-    
+        }   
         // Trạng thái lổi Trạm 2
         private void S2_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -852,8 +857,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_S2_DC1_Over_Stop.Visible = true; PicT4_S2_DC1_Over_Stop.Visible = true; Pic_S2_DC1_Over.Visible = false; PicT4_S2_DC1_Over.Visible = false; });
         }      
-        // Running Trạm 2
-       
+        // Running Trạm 2      
         private void S1_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
@@ -881,6 +885,70 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_S1_DC1_Over_Stop.Visible = true; PicT2_S1_DC1_Over_Stop.Visible = true; Pic_S1_DC1_Over.Visible = false; PicT2_S1_DC1_Over.Visible = false; });
         }
+        // Alam lệch cửa 1
+        private void Al_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            if (e.NewValue == "1")
+            {
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door1.Visible = true; Pic_Al_Door1Stop.Visible = false; });
+            }
+            else
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door1Stop.Visible = true; Pic_Al_Door1.Visible = false; });
+        }
+        // Alam lệch cửa 2
+        private void Al_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            if (e.NewValue == "1")
+            {
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door2.Visible = true; Pic_Al_Door2Stop.Visible = false; });
+            }
+            else
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door2Stop.Visible = true; Pic_Al_Door2.Visible = false; });
+        }
+        // Alam lệch cửa 3
+        private void Al_Door3_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            if (e.NewValue == "1")
+            {
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door3.Visible = true; Pic_Al_Door3Stop.Visible = false; });
+            }
+            else
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door3Stop.Visible = true; Pic_Al_Door3.Visible = false; });
+        }
+        // Alam lệch cửa 4
+        private void Al_Door4_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            if (e.NewValue == "1")
+            {
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door4.Visible = true; Pic_Al_Door4Stop.Visible = false; });
+            }
+            else
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door4Stop.Visible = true; Pic_Al_Door4.Visible = false; });
+        }
+        // Alam lệch cửa 5
+        private void Al_Door5_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            if (e.NewValue == "1")
+            {
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door5.Visible = true; Pic_Al_Door5Stop.Visible = false; });
+            }
+            else
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door5Stop.Visible = true; Pic_Al_Door5.Visible = false; });
+        }
+        // Alam lệch cửa 6
+        private void Al_Door6_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            if (e.NewValue == "1")
+            {
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door6.Visible = true; Pic_Al_Door6Stop.Visible = false; });
+            }
+            else
+                this.Invoke((MethodInvoker)delegate { Pic_Al_Door6Stop.Visible = true; Pic_Al_Door6.Visible = false; });
+        }
+
+
+
+
         // Khu vực Tràn 1
         private void Door1_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
         {

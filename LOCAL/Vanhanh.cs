@@ -16,6 +16,8 @@ namespace RegistrationForm1
 
         [DisplayName("Mực Nước Hồ (m)")] // Chú thích tiếng việt ra Dvg
         public string Fllow_Ho { get; set; }
+        [DisplayName("Mực Nước TV Dầu Tiếng (m)")]
+        public string Fllow_DauTieng { get; set; }
 
         [DisplayName("Độ Mở Tràn 1 (m)")] // Chú thích tiếng việt ra Dvg
         public string Door1_Aperture { get; set; }
@@ -32,5 +34,6 @@ namespace RegistrationForm1
         public string Door6_Aperture { get; set; }
         [DisplayName("Lưu Lượng Tổng (m3/s)")] // Chú thích tiếng việt ra Dvg
         public string Total_Fllow { get; set; }
+        
     }
 }
