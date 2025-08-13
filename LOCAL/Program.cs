@@ -27,11 +27,21 @@ namespace RegistrationForm1
             bool isConfigValid = !string.IsNullOrEmpty(connectionString) &&
                                 TestConnectionSilently(connectionString);
 
+            Globalvariable.ConfigSystem = Globalvariable.ConfigSystem ?? new ConfigSystemModel("DefaultConfig", "DefaultValue", "DefaultDescription"); // Khởi tạo ConfigSystem nếu chưa có
+            Globalvariable.TagsValues.Add(new TagsValueModel()
+                                            {
+                                                TagName = "A",
+                                                Value = "0"
+                                            }
+            ); // Khởi tạo TagsValues nếu chưa có
+
+            isConfigValid = true; // Bỏ qua kiểm tra kết nối, giả sử cấu hình luôn hợp lệ
+
             if (isConfigValid)
             {
                 // Nếu cấu hình đã hợp lệ, chạy ứng dụng chính
                 // Thay YourMainForm bằng form chính của bạn
-                Application.Run(new FrmLogin());
+                Application.Run(new Form2());
             }
             else
             {
@@ -77,8 +87,8 @@ namespace RegistrationForm1
                 FrmLogin login = new FrmLogin();
                 if (login.ShowDialog() == DialogResult.OK)
                 {
-                     Application.Run(new FrmMain());
-                   
+                    Application.Run(new FrmMain());
+
                 }
             }
 

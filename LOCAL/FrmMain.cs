@@ -16,9 +16,9 @@ using System.Windows.Forms;
 
 namespace RegistrationForm1
 {
-   // private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+    // private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
 
-  //  public static string ConnectionString => ConfigurationHelper.GetConnectionString();
+    //  public static string ConnectionString => ConfigurationHelper.GetConnectionString();
     public partial class FrmMain : Form
     {
         // ✅ Event phải đặt bên trong class
@@ -151,11 +151,11 @@ namespace RegistrationForm1
         private static readonly HttpClient client = new HttpClient();
         private const string API_STATIONS_URL = "https://kttv-open.vrain.vn/v1/stations";
         private const string API_STATS_URL = "https://kttv-open.vrain.vn/v1/stations/stats";
-        private const string API_KEY = "4c81eccdb524441ba52c390d5b96e233";     
-         public FrmMain()
+        private const string API_KEY = "4c81eccdb524441ba52c390d5b96e233";
+        public FrmMain()
         {
             InitializeComponent();
-             Load += FrmMain_Load; // Đăng ký sự kiện Load của Form
+            Load += FrmMain_Load; // Đăng ký sự kiện Load của Form
             InitializeTimer();
 
         }
@@ -177,23 +177,23 @@ namespace RegistrationForm1
             api_CDDTimer.Interval = 60000; // 60 giây
             api_CDDTimer.Start();
             // Timer để lấy dữ liệu Quan trắc mưa
-            _refreshTimer =new Timer();
+            _refreshTimer = new Timer();
             _refreshTimer.Tick += async (s, e) => await _refreshTimer_Tick(s, e);
             _refreshTimer.Interval = 10 * 60 * 1000; // 10 phút
             _refreshTimer.Start();
 
             client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
-            
-            
+
+
         }
-        
+
         private async Task _refreshTimer_Tick(object sender, EventArgs e)
-        {        
+        {
             await LoadRainfallStatsData();
         }
         private async Task LoadStationsData()
         {
-           
+
             lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Đang tải...)";
 
             try
@@ -346,7 +346,7 @@ namespace RegistrationForm1
                     try
                     {
                         await WriteQTM(latestDataPointsByStationFetched);
-                       
+
                         saveStatusMessage = $"Đã lưu {realTimeDataToSave.Count} bản ghi tức thời mới nhất vào SQL.";
                         realtimeSaveSuccess = true;
                     }
@@ -387,7 +387,7 @@ namespace RegistrationForm1
             }
         }
 
-     
+
 
         // Khu vực tạo Class Quan trắc mưa 
         // Định nghĩa lớp Station để ánh xạ dữ liệu JSON từ API /v1/station
@@ -519,7 +519,7 @@ namespace RegistrationForm1
             public int MaQuanTrac { get; set; }
             public double GiaTri { get; set; }
         }
-        public class SoLieuAPIBinhNhamModel      
+        public class SoLieuAPIBinhNhamModel
         {
             public long ts { get; set; }
             public long c { get; set; }
@@ -529,7 +529,7 @@ namespace RegistrationForm1
             public DateTime Timestamp => DateTimeOffset.FromUnixTimeSeconds(ts).ToLocalTime().DateTime;
             public DateTime CreatedAt => DateTimeOffset.FromUnixTimeSeconds(c).ToLocalTime().DateTime;
         }
-        
+
 
         private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
         {
@@ -549,7 +549,7 @@ namespace RegistrationForm1
                             var latest = dataList.OrderByDescending(x => x.ThoiGian).First();
 
                             // Ghi async xuống PLC
-                            await WriteAPI_CDDsync(latest.GiaTri);                            
+                            await WriteAPI_CDDsync(latest.GiaTri);
                         }
                     }
                     catch (Exception ex)
@@ -626,7 +626,7 @@ namespace RegistrationForm1
                     wp2.ToString("0.00"),
                     WritePiority.High);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine("Lỗi ghi PLC async: " + ex.Message);
             }
@@ -636,8 +636,8 @@ namespace RegistrationForm1
             try
             {
                 // Xác định các ID trạm (hoặc các phần cuối của tag ID) mà bạn muốn ghi
-               
-                string[] stationIdsToProcess = { "610001", "610002", "610003", "610004","610005", "610006", "610007", "610008" , "610009", "610010", "610011", "610012", "610013" };
+
+                string[] stationIdsToProcess = { "610001", "610002", "610003", "610004", "610005", "610006", "610007", "610008", "610009", "610010", "610011", "610012", "610013" };
 
                 // Lặp qua từng StationId mong muốn
                 foreach (string stationId in stationIdsToProcess)
@@ -782,7 +782,7 @@ namespace RegistrationForm1
 
             return results;
         }
-        
+
         // Hàm ghi log xuống TextBox
         private void AppendLog(string message)
         {
@@ -803,7 +803,7 @@ namespace RegistrationForm1
                 driver.Started += Driver_Started;
             else
                 Driver_Started(driver, null);
-      
+
             timer1.Enabled = true;
             tm_login.Interval = 60000;
             tm_login.Enabled = true;
@@ -825,9 +825,9 @@ namespace RegistrationForm1
             };
 
             await LoadRainfallStatsData();
-          await LoadStationsData();
-           
-           
+            await LoadStationsData();
+
+
         }
         // Hàm Lấy giá trị cho Timer ghi xuống SQL
         private string GetValue(string tagName)
@@ -976,8 +976,8 @@ namespace RegistrationForm1
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_1Close").ValueChanged += Doorlock6_1Close_ValueChanged;//Su kien áp cửa 1 cao
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_2Open").ValueChanged += Doorlock6_2Open_ValueChanged;//Su kien áp cửa 1 cao
             ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Doorlock6_2Close").ValueChanged += Doorlock6_2Close_ValueChanged;//Su kien áp cửa 1 cao
-                                                                                                                                 
-           // Gọi lần đầu khi load form để publish trạng thái hiện tại
+
+            // Gọi lần đầu khi load form để publish trạng thái hiện tại
             PublishInitialValues();
         }
         private void PublishInitialValues()
@@ -1044,7 +1044,7 @@ namespace RegistrationForm1
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC2_Over"), "", GetS3_DC2_OverValue()));
             S3_DC3_Over_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC3_Over"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC3_Over"), "", GetS3_DC3_OverValue()));
-           
+
             Doorlock1_1Open_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_1Open"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_1Open"), "", GetDoorlock1_1OpenValue()));
             Doorlock1_1Close_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_1Close"),
@@ -1151,7 +1151,7 @@ namespace RegistrationForm1
             Door2_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Opening"), "", GetDoor2_OpeningValue()));
             Door2_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Closing"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Closing"), "", GetDoor2_ClosingValue()));           
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Door2_Closing"), "", GetDoor2_ClosingValue()));
             Door3_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door3_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door3_Opening"), "", GetDoor3_OpeningValue()));
             Door3_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door3_Closing"),
@@ -1159,7 +1159,7 @@ namespace RegistrationForm1
             Door4_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Opening"), "", GetDoor4_OpeningValue()));
             Door4_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Closing"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Closing"), "", GetDoor4_ClosingValue()));         
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Closing"), "", GetDoor4_ClosingValue()));
             Door5_Opening_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Opening"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Opening"), "", GetDoor5_OpeningValue()));
             Door5_Closing_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Closing"),
@@ -1174,7 +1174,7 @@ namespace RegistrationForm1
             S3_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC2_Running"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC2_Running"), "", GetS3_DC2_RunningValue()));
             S3_DC1_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC1_Running"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC1_Running"), "", GetS3_DC1_RunningValue()));          
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/DC1_Running"), "", GetS3_DC1_RunningValue()));
             S2_DC3_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC3_Running"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC3_Running"), "", GetS2_DC3_RunningValue()));
             S2_DC2_Running_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/DC2_Running"),
@@ -1211,9 +1211,9 @@ namespace RegistrationForm1
             S2_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Local_Stop"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Local_Stop"), "", GetS2LocalStopValue()));
             S1_Remote_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Remote"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Remote") , "", GetS1RemoteValue()));                
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Remote"), "", GetS1RemoteValue()));
             S1_Local_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Local"),
-                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Local"), "", GetS1LocalValue()));               
+                new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Local"), "", GetS1LocalValue()));
             S1_Auto_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Auto"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Auto"), "", GetS1AutoValue()));
             S1_Man_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Man"),
@@ -1221,7 +1221,7 @@ namespace RegistrationForm1
             S1_Local_Stop_ValueChanged(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Local_Stop"),
                 new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Local_Stop"), "", GetS1LocalStopValue()));
         }
-        
+
         private string prevS1Remote = "0", prevS1Local = "0", prevS1Auto = "0", prevS1Man = "0", prevS1LocalStop = "0"; // biến lưu trạng thái trước đó
         private string prevS2Remote = "0", prevS2Local = "0", prevS2Auto = "0", prevS2Man = "0", prevS2LocalStop = "0"; // biến lưu trạng thái trước đó
         private string prevS3Remote = "0", prevS3Local = "0", prevS3Auto = "0", prevS3Man = "0", prevS3LocalStop = "0"; // biến lưu trạng thái trước đó
@@ -1267,13 +1267,22 @@ namespace RegistrationForm1
         private string prevDoor4_PressureHigh = "0", prevDoor4_PressureLow = "0"; // biến lưu trạng thái trước đó
         private string prevDoor5_PressureHigh = "0", prevDoor5_PressureLow = "0"; // biến lưu trạng thái trước đó
         private string prevDoor6_PressureHigh = "0", prevDoor6_PressureLow = "0"; // biến lưu trạng thái trước đó                                                                        
-        private string prevAl_Door1 = "0", prevAl_Door2 = "0", prevAl_Door3 = "0",prevAl_Door4 = "0", prevAl_Door5 = "0", prevAl_Door6 = "0"; // biến lưu trạng                                                                        
+        private string prevAl_Door1 = "0", prevAl_Door2 = "0", prevAl_Door3 = "0", prevAl_Door4 = "0", prevAl_Door5 = "0", prevAl_Door6 = "0"; // biến lưu trạng                                                                        
         //private string prevS1_Station_Stop = "0", prevS2_Station_Stop = "0", prevS3_Station_Stop = "0"; // biến lưu trạng thái trước đó
         //private string prevS3_Station_Alarm = "0", prevS2_Station_Alarm = "0", prevS1_Station_Alarm = "0"; // biến lưu trạng thái trước đó
 
 
         private void Al_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
+            var tagPath = e.Tag.Path; // Lấy đường dẫn tag
+
+            Globalvariable.TagsValues.FirstOrDefault(x => x.TagName == $"{tagPath}/A").Value = e.NewValue; // Cập nhật giá trị mới vào danh sách TagsValues
+
+            //update BD
+            //updte realtime table
+            //dataLog
+            //alarm
+
             Al_Door1Changed?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevAl_Door1 == "0" && e.NewValue == "1")
@@ -1601,7 +1610,7 @@ namespace RegistrationForm1
                 {
                     CreateAt = DateTime.Now,
                     Position = "Trạm 3",
-                    TagName ="Áp Suất Cửa 5 Cao", // ✅ Tên tag
+                    TagName = "Áp Suất Cửa 5 Cao", // ✅ Tên tag
                     Door5_PressureHigh = e.NewValue,
                 };
                 SQLLoginAlarm.InsertAlarm(model);
@@ -1730,7 +1739,7 @@ namespace RegistrationForm1
                     Position = "Trạm 2",
                     TagName = "Quá Tải Động Cơ 1", // ✅ Tên tag
                     S2_DC1_Over = e.NewValue,
-                    
+
                 };
                 SQLLoginAlarm.InsertAlarm(model);
             }
@@ -2016,7 +2025,7 @@ namespace RegistrationForm1
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    Position =" Trạm 2",
+                    Position = " Trạm 2",
                     TagName = "Chốt Cửa 3_2 Mở", // ✅ Tên tag
                     Doorlock3_2Open = e.NewValue,
                 };
@@ -2088,7 +2097,7 @@ namespace RegistrationForm1
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    Position =" Trạm 2",
+                    Position = " Trạm 2",
                     TagName = "Chốt Cửa 4_2 Mở", // ✅ Tên tag
                     Doorlock4_2Open = e.NewValue,
                 };
@@ -2412,7 +2421,7 @@ namespace RegistrationForm1
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    Position =" Trạm 3",
+                    Position = " Trạm 3",
                     TagName = "Cửa 5 Mở Hoàn Toàn", // ✅ Tên tag
                     Door5_Open = e.NewValue,
                 };
@@ -2703,7 +2712,7 @@ namespace RegistrationForm1
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    Position =" Trạm 1",
+                    Position = " Trạm 1",
                     TagName = "Cửa 1 Đang Mở", // ✅ Tên tag
                     Door1_Opening = e.NewValue,
                 };
@@ -2911,7 +2920,7 @@ namespace RegistrationForm1
         }
 
 
-        
+
         private void S1_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             // 🔔 Raise event để form khác nhận
@@ -2925,7 +2934,7 @@ namespace RegistrationForm1
                     CreateAt = DateTime.Now,
                     Position = "Trạm 1",
                     TagName = "Động Cơ 1 Đang Chạy", // ✅ Tên tag
-                    S1_DC1_Running = e.NewValue,                 
+                    S1_DC1_Running = e.NewValue,
                 };
                 SQLLoginDataTran.InsertDataTran(model);
             }
@@ -2948,7 +2957,7 @@ namespace RegistrationForm1
                     Position = "Trạm 1",
                     TagName = "Động Cơ 2 Đang Chạy", // ✅ Tên tag
                     S1_DC2_Running = e.NewValue,
-     
+
                 };
                 SQLLoginDataTran.InsertDataTran(model);
             }
@@ -2970,7 +2979,7 @@ namespace RegistrationForm1
                     Position = "Trạm 1",
                     TagName = "Động Cơ 3 Đang Chạy", // ✅ Tên tag
                     S1_DC3_Running = e.NewValue,
-                   
+
                 };
                 SQLLoginDataTran.InsertDataTran(model);
             }
@@ -2987,7 +2996,7 @@ namespace RegistrationForm1
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    Position =" Trạm 2",
+                    Position = " Trạm 2",
                     TagName = "Động Cơ 1 Đang Chạy", // ✅ Tên tag
                     S2_DC1_Running = e.NewValue,
                 };
@@ -3041,7 +3050,7 @@ namespace RegistrationForm1
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    Position =" Trạm 3",
+                    Position = " Trạm 3",
                     TagName = "Động Cơ 1 Đang Chạy", // ✅ Tên tag
                     S3_DC1_Running = e.NewValue,
                 };
@@ -3086,8 +3095,8 @@ namespace RegistrationForm1
             prevS3_DC3_Running = e.NewValue; // Cập nhật trạng thái trước
         }
         private void S1_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {  
-  
+        {
+
             // 🔔 Raise event để form khác nhận
             S1RemoteChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
@@ -3109,7 +3118,7 @@ namespace RegistrationForm1
         }
         private void S1_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            
+
             S1LocalChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1Local == "0" && e.NewValue == "1")
@@ -3130,7 +3139,7 @@ namespace RegistrationForm1
         }
         private void S1_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-           
+
             S1AutoChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1Auto == "0" && e.NewValue == "1")
@@ -3150,7 +3159,7 @@ namespace RegistrationForm1
             prevS1Auto = e.NewValue;
         }
         private void S1_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {           
+        {
             S1ManChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1Man == "0" && e.NewValue == "1")
@@ -3170,7 +3179,7 @@ namespace RegistrationForm1
             prevS1Man = e.NewValue;
         }
         private void S1_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {         
+        {
             S1LocalStopChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS1LocalStop == "0" && e.NewValue == "1")
@@ -3190,7 +3199,7 @@ namespace RegistrationForm1
             prevS1LocalStop = e.NewValue;
         }
         private void S2_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {        
+        {
             // 🔔 Raise event để form khác nhận
             S2RemoteChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
@@ -3211,7 +3220,7 @@ namespace RegistrationForm1
             prevS2Remote = e.NewValue;
         }
         private void S2_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {         
+        {
             // 🔔 Raise event để form khác nhận
             S2LocalChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
@@ -3232,7 +3241,7 @@ namespace RegistrationForm1
             prevS2Local = e.NewValue;
         }
         private void S2_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {         
+        {
             // 🔔 Raise event để form khác nhận
             S2AutoChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
@@ -3253,7 +3262,7 @@ namespace RegistrationForm1
             prevS2Auto = e.NewValue;
         }
         private void S2_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {         
+        {
             S2ManChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS2Man == "0" && e.NewValue == "1")
@@ -3273,7 +3282,7 @@ namespace RegistrationForm1
             prevS2Man = e.NewValue;
         }
         private void S2_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {          
+        {
             S2LocalStopChanged?.Invoke(this, e);
             if (prevS2LocalStop == "0" && e.NewValue == "1")
             {
@@ -3292,7 +3301,7 @@ namespace RegistrationForm1
             prevS2LocalStop = e.NewValue;
         }
         private void S3_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {       
+        {
             S3RemoteChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS3Remote == "0" && e.NewValue == "1")
@@ -3301,7 +3310,7 @@ namespace RegistrationForm1
                 var model = new DataTranModel
                 {
                     CreateAt = DateTime.Now,
-                    Position =" Trạm 3",
+                    Position = " Trạm 3",
                     TagName = "Chế Độ Từ Xa", // ✅ Tên tag
                     S3_Remote = e.NewValue,
                     // TODO: set các property khác nếu cần
@@ -3312,7 +3321,7 @@ namespace RegistrationForm1
             prevS3Remote = e.NewValue;
         }
         private void S3_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {         
+        {
             S3LocalChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS3Local == "0" && e.NewValue == "1")
@@ -3332,7 +3341,7 @@ namespace RegistrationForm1
             prevS3Local = e.NewValue;
         }
         private void S3_Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {        
+        {
             S3AutoChanged?.Invoke(this, e);
             // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
             if (prevS3Auto == "0" && e.NewValue == "1")
@@ -3352,7 +3361,7 @@ namespace RegistrationForm1
             prevS3Auto = e.NewValue;
         }
         private void S3_Man_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {           
+        {
             S3ManChanged?.Invoke(this, e);
             if (prevS3Man == "0" && e.NewValue == "1")
             {
@@ -3371,7 +3380,7 @@ namespace RegistrationForm1
             prevS3Man = e.NewValue;
         }
         private void S3_Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {         
+        {
             S3LocalStopChanged?.Invoke(this, e);
             if (prevS3LocalStop == "0" && e.NewValue == "1")
             {
@@ -3677,7 +3686,7 @@ namespace RegistrationForm1
             //FrmHochua mn = new FrmHochua();
             //OpenFormInPanel(mn, "Hồ chứa");
             ////   FrmHochua   frm = new FrmHochua();
-          //  mn.UrlToLoad = "https://simc.id.vn/simc_esp/zdautieng.html";
+            //  mn.UrlToLoad = "https://simc.id.vn/simc_esp/zdautieng.html";
             //mn.Show();
 
 
@@ -3690,7 +3699,7 @@ namespace RegistrationForm1
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Close").Value;
         }
 
-        
+
 
         public string GetDoor5_OpenValue()
         {
@@ -3703,7 +3712,7 @@ namespace RegistrationForm1
 
         private void button3_Click(object sender, EventArgs e)
         {
-          
+
         }
 
         private async void button4_Click(object sender, EventArgs e)
@@ -3848,7 +3857,7 @@ namespace RegistrationForm1
                 Console.WriteLine($"❌ Lỗi ghi DataVanHanh: {ex.Message}");
             }
         }
-        
+
 
 
         public string GetDoorlock4_OpeningValue()
@@ -4021,7 +4030,7 @@ namespace RegistrationForm1
             return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Local_Stop").Value;
         }
         #endregion
-       
+
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (FrmLogin.currentLoginLogId > 0)
@@ -4029,8 +4038,8 @@ namespace RegistrationForm1
                 FrmLogin.SaveLogoutTime(FrmLogin.currentLoginLogId);
             }
         }
-      
-      
+
+
 
         private void OpenFormInPanel(Form childForm, string title)
         {
@@ -4069,7 +4078,7 @@ namespace RegistrationForm1
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         private void bnt_Tran_Click(object sender, EventArgs e)
         {
             FrmTran data = new FrmTran(this);
@@ -4084,7 +4093,7 @@ namespace RegistrationForm1
 
         private void bnt_TrangChu_Click(object sender, EventArgs e)
         {
-          FrmHome H = new FrmHome(this);
+            FrmHome H = new FrmHome(this);
             OpenFormInPanel(H, " GIÁM SÁT CỦA TRÀN HỒ DẦU TIẾNG");
         }
 
@@ -4098,17 +4107,17 @@ namespace RegistrationForm1
         {
             FrmBaoCao baocao = new FrmBaoCao();
             OpenFormInPanel(baocao, "Báo Cáo");
-        }  
+        }
 
         private void bnt_Exit_Click(object sender, EventArgs e)
         {
             this.Close();
-        }              
+        }
         private void bnt_CaiDat_Click(object sender, EventArgs e)
         {
             FrmCaiDat caiDat = new FrmCaiDat();
             OpenFormInPanel(caiDat, " CÀI ĐẶT");
-        }        
+        }
         private void bnt_LogIn_Click(object sender, EventArgs e)
         {
             // Kiểm tra nếu đã đăng nhập thì không cần đăng nhập lại
@@ -4117,10 +4126,10 @@ namespace RegistrationForm1
             //    MessageBox.Show("Bạn đã đăng nhập rồi!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //    return;
             //}
-           this.Hide();
+            this.Hide();
             // Hiện form đăng nhập
             FrmLogin login = new FrmLogin();
-           
+
             if (login.ShowDialog() == DialogResult.OK)
             {
                 // Đăng nhập thành công, cập nhật lại thông tin người dùng
@@ -4128,13 +4137,13 @@ namespace RegistrationForm1
                 //   btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
                 bntEditdata.Enabled = PermissionManager.CurrentUserRole == "Admin";
             }
-            
+
         }
 
         private void bnt_User_Click(object sender, EventArgs e)
         {
             FrmUserManager U = new FrmUserManager();
-                   OpenFormInPanel(U, "Hệ thống quản lý tài khoản");
+            OpenFormInPanel(U, "Hệ thống quản lý tài khoản");
         }
 
         private void timer1_Tick(object sender, EventArgs e)
