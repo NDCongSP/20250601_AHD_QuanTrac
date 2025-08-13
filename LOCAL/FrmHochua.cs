@@ -7,6 +7,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Data.SqlClient; // Thêm thư viện này để làm việc với SQL Server
 using System.Globalization; // Để sử dụng CultureInfo.InvariantCulture cho double.Parse
 using System.Diagnostics; // Vẫn giữ để nếu có Debug.Assert hay Debug.Fail thì vẫn dùng được, nhưng sẽ dùng Console.WriteLine cho log
+using Microsoft.Web.WebView2.WinForms;
+
+
 
 namespace RegistrationForm1
 {
@@ -18,10 +21,10 @@ namespace RegistrationForm1
         private ChartArea ca;
         private Label lblZ; // Label để hiển thị thông tin Z (mực nước) và W (dung tích) cố định
         private Label lblToaDo; // Label mới để hiển thị tọa độ X (Thời gian) và Y (Mực nước) khi rê chuột
+        public string UrlToLoad { get; set; }
+
 
         // Bảng nội suy Z (Mực nước) và W (Giá trị tương ứng) được tải từ CSV
-        // Key: Phần nguyên của Z (e.g., 13, 14, ...)
-        // Value: List các giá trị W cho các phần thập phân từ .00 đến .99
         private Dictionary<int, List<double>> interpolationLookupTable;
 
         // Dictionary để lưu trữ các Series theo tên của chúng, giúp dễ dàng truy cập
@@ -65,7 +68,7 @@ namespace RegistrationForm1
             if (chart != null && lblZ != null && lblToaDo != null)
             {
                 // Cập nhật vị trí của lblZ (trên cùng), đảm bảo nó luôn được căn giữa theo chiều ngang của form
-                lblZ.Location = new Point((this.ClientSize.Width - lblZ.Width) / 2, 80);
+                lblZ.Location = new Point((this.ClientSize.Width - lblZ.Width) / 2, 380);
                 lblZ.BringToFront();
 
                 // Cập nhật vị trí của lblToaDo (ngay dưới lblZ), cũng được căn giữa
@@ -130,21 +133,24 @@ namespace RegistrationForm1
         }
         private void LoadChart()
         {
-            chart = new Chart(); // Khởi tạo đối tượng chart
+              chart = new Chart(); // Khởi tạo đối tượng chart
             // DockFill sẽ giúp biểu đồ lấp đầy không gian còn lại sau khi các Labels đã được đặt
-            chart.Dock = DockStyle.Fill;
-            this.Controls.Add(chart);
+            //     chart.Dock = DockStyle.Bottom;
+            chart.Dock = DockStyle.Bottom; // Đặt biểu đồ lấp đầy không gian còn lại của form
+            chart.Height = this.ClientSize.Height - 350; // Đặt chiều cao biểu đồ để tránh che khuất các nhãn
+            chart.Width = this.ClientSize.Width; // Đặt chiều rộng biểu đồ bằng chiều rộng của form
+            chart.BackColor = Color.White; // Đặt màu nền của biểu đồ
+            chart.BorderlineColor = Color.Black; // Đặt màu viền của biểu đồ
+            chart.BorderlineDashStyle = ChartDashStyle.Solid; // Đặt kiểu đường viền là đường liền
+            chart.BorderlineWidth = 2; // Đặt độ dày viền của biểu đồ
+            chart.Palette = ChartColorPalette.BrightPastel; // Đặt bảng màu cho biểu đồ
 
+
+
+            this.Controls.Add(chart);
+            
             ca = new ChartArea(); // Khởi tạo đối tượng chart area
             chart.ChartAreas.Add(ca);
-
-            // Cấu hình InnerPlotPosition để đảm bảo vùng vẽ dữ liệu có đủ không gian
-            // Giá trị là % của ChartArea (Left, Top, Right, Bottom)
-            ca.InnerPlotPosition.Auto = false;
-            ca.InnerPlotPosition.Width = 85;  // 85% chiều rộng của ChartArea cho plotting area
-            ca.InnerPlotPosition.Height = 85; // 85% chiều cao của ChartArea cho plotting area
-            ca.InnerPlotPosition.X = 10;     // Bắt đầu từ 10% từ lề trái
-            ca.InnerPlotPosition.Y = 5;      // Bắt đầu từ 5% từ lề trên
 
 
             // KHỞI TẠO VÀ CẤU HÌNH LABEL lblZ
@@ -345,8 +351,8 @@ namespace RegistrationForm1
             chart.Legends.Add(new Legend());
 
             // Thêm tiêu đề biểu đồ
-            Title mainTitle = new Title("BIỂU ĐỒ ĐIỀU PHỐI HỒ CHỨA NƯỚC DẦU TIẾNG\r\nKHI CÓ BỔ SUNG NƯỚC TỪ ĐẬP DÂNG PHƯỚC HÒA\r\n");
-            mainTitle.Font = new Font("Verdana", 16, FontStyle.Bold); // Đổi font và kích thước
+            Title mainTitle = new Title("BIỂU ĐỒ ĐIỀU PHỐI HỒ CHỨA NƯỚC DẦU TIẾNG");
+            mainTitle.Font = new Font("Verdana", 12, FontStyle.Bold); // Đổi font và kích thước
             mainTitle.ForeColor = Color.DarkBlue; // Đổi màu chữ
             chart.Titles.Add(mainTitle);
 
@@ -763,6 +769,12 @@ namespace RegistrationForm1
                 i++;
             }
             return series;
+        }
+
+        private async void FrmHochua_Load(object sender, EventArgs e)
+        {
+            await webView21.EnsureCoreWebView2Async();
+            webView21.CoreWebView2.Navigate(UrlToLoad);
         }
     }
 }

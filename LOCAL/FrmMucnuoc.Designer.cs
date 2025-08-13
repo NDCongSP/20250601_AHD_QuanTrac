@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnLoadExcel = new System.Windows.Forms.Button();
-            this.comboBoxQ = new System.Windows.Forms.ComboBox();
-            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ahdLabel5 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel6 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ahdPictureBox2 = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.ahdPictureBox12 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.ahdPictureBox10 = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.ahdPictureBox11 = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.ahdPictureBox3 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.ahdPictureBox9 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -55,15 +57,14 @@
             this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Fllow_DauTieng = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel30 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdPictureBox3 = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.ahdPictureBox11 = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.ahdPictureBox10 = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.ahdPictureBox12 = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.ahdPictureBox2 = new Ahd.Winforms.Controls.AhdPictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel6)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).BeginInit();
@@ -81,54 +82,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Fllow_DauTieng)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox2)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnLoadExcel
-            // 
-            this.btnLoadExcel.Location = new System.Drawing.Point(11, 435);
-            this.btnLoadExcel.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLoadExcel.Name = "btnLoadExcel";
-            this.btnLoadExcel.Size = new System.Drawing.Size(114, 20);
-            this.btnLoadExcel.TabIndex = 4;
-            this.btnLoadExcel.Text = "Tải file Excel";
-            this.btnLoadExcel.UseVisualStyleBackColor = true;
-            this.btnLoadExcel.Click += new System.EventHandler(this.btnLoadExcel_Click);
-            // 
-            // comboBoxQ
-            // 
-            this.comboBoxQ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxQ.FormattingEnabled = true;
-            this.comboBoxQ.Items.AddRange(new object[] {
-            "Qxa 2800",
-            "Qxa 1000",
-            "Qxa 600",
-            "Qxa 400",
-            "Qxa 300",
-            "Qxa 200"});
-            this.comboBoxQ.Location = new System.Drawing.Point(11, 459);
-            this.comboBoxQ.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxQ.Name = "comboBoxQ";
-            this.comboBoxQ.Size = new System.Drawing.Size(114, 21);
-            this.comboBoxQ.TabIndex = 3;
-            this.comboBoxQ.SelectedIndexChanged += new System.EventHandler(this.comboBoxQ_SelectedIndexChanged);
-            // 
-            // chart
-            // 
-            this.chart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chart.Location = new System.Drawing.Point(6, 366);
-            this.chart.Margin = new System.Windows.Forms.Padding(2);
-            this.chart.Name = "chart";
-            this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            this.chart.Size = new System.Drawing.Size(1699, 410);
-            this.chart.TabIndex = 5;
-            this.chart.Text = "chart1";
             // 
             // ahdLabel5
             // 
@@ -198,6 +152,38 @@
             this.groupBox1.TabIndex = 305;
             this.groupBox1.TabStop = false;
             // 
+            // ahdPictureBox2
+            // 
+            this.ahdPictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.ahdPictureBox2.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.ahdPictureBox2.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.Both;
+            this.ahdPictureBox2.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
+            this.ahdPictureBox2.Location = new System.Drawing.Point(194, 148);
+            this.ahdPictureBox2.Name = "ahdPictureBox2";
+            this.ahdPictureBox2.RotateAngle = 0;
+            this.ahdPictureBox2.ShadedColor = System.Drawing.Color.Gray;
+            this.ahdPictureBox2.Size = new System.Drawing.Size(24, 132);
+            this.ahdPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.ahdPictureBox2.TabIndex = 324;
+            this.ahdPictureBox2.TagPath = null;
+            this.ahdPictureBox2.Text = "ahdPictureBox2";
+            // 
+            // ahdPictureBox12
+            // 
+            this.ahdPictureBox12.BackColor = System.Drawing.Color.Transparent;
+            this.ahdPictureBox12.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.ahdPictureBox12.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.ahdPictureBox12.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
+            this.ahdPictureBox12.Location = new System.Drawing.Point(173, 74);
+            this.ahdPictureBox12.Name = "ahdPictureBox12";
+            this.ahdPictureBox12.RotateAngle = 0;
+            this.ahdPictureBox12.ShadedColor = System.Drawing.Color.Gray;
+            this.ahdPictureBox12.Size = new System.Drawing.Size(24, 69);
+            this.ahdPictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.ahdPictureBox12.TabIndex = 323;
+            this.ahdPictureBox12.TagPath = null;
+            this.ahdPictureBox12.Text = "ahdPictureBox12";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -208,6 +194,54 @@
             this.label4.Size = new System.Drawing.Size(51, 13);
             this.label4.TabIndex = 319;
             this.label4.Text = "K97+500";
+            // 
+            // ahdPictureBox10
+            // 
+            this.ahdPictureBox10.BackColor = System.Drawing.Color.Transparent;
+            this.ahdPictureBox10.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.ahdPictureBox10.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.ahdPictureBox10.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
+            this.ahdPictureBox10.Location = new System.Drawing.Point(1612, 78);
+            this.ahdPictureBox10.Name = "ahdPictureBox10";
+            this.ahdPictureBox10.RotateAngle = 0;
+            this.ahdPictureBox10.ShadedColor = System.Drawing.Color.Gray;
+            this.ahdPictureBox10.Size = new System.Drawing.Size(24, 69);
+            this.ahdPictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.ahdPictureBox10.TabIndex = 322;
+            this.ahdPictureBox10.TagPath = null;
+            this.ahdPictureBox10.Text = "ahdPictureBox10";
+            // 
+            // ahdPictureBox11
+            // 
+            this.ahdPictureBox11.BackColor = System.Drawing.Color.Transparent;
+            this.ahdPictureBox11.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.ahdPictureBox11.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.ahdPictureBox11.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
+            this.ahdPictureBox11.Location = new System.Drawing.Point(724, 74);
+            this.ahdPictureBox11.Name = "ahdPictureBox11";
+            this.ahdPictureBox11.RotateAngle = 0;
+            this.ahdPictureBox11.ShadedColor = System.Drawing.Color.Gray;
+            this.ahdPictureBox11.Size = new System.Drawing.Size(24, 74);
+            this.ahdPictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.ahdPictureBox11.TabIndex = 321;
+            this.ahdPictureBox11.TagPath = null;
+            this.ahdPictureBox11.Text = "ahdPictureBox11";
+            // 
+            // ahdPictureBox3
+            // 
+            this.ahdPictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.ahdPictureBox3.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.ahdPictureBox3.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.ahdPictureBox3.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
+            this.ahdPictureBox3.Location = new System.Drawing.Point(281, 74);
+            this.ahdPictureBox3.Name = "ahdPictureBox3";
+            this.ahdPictureBox3.RotateAngle = 0;
+            this.ahdPictureBox3.ShadedColor = System.Drawing.Color.Gray;
+            this.ahdPictureBox3.Size = new System.Drawing.Size(24, 80);
+            this.ahdPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.ahdPictureBox3.TabIndex = 320;
+            this.ahdPictureBox3.TagPath = null;
+            this.ahdPictureBox3.Text = "ahdPictureBox3";
             // 
             // ahdPictureBox9
             // 
@@ -509,105 +543,25 @@
             this.ahdLabel30.Text = "MN HỒ(TL_TXL) (m)";
             this.ahdLabel30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdPictureBox3
-            // 
-            this.ahdPictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.ahdPictureBox3.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.ahdPictureBox3.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.ahdPictureBox3.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
-            this.ahdPictureBox3.Location = new System.Drawing.Point(281, 74);
-            this.ahdPictureBox3.Name = "ahdPictureBox3";
-            this.ahdPictureBox3.RotateAngle = 0;
-            this.ahdPictureBox3.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox3.Size = new System.Drawing.Size(24, 80);
-            this.ahdPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.ahdPictureBox3.TabIndex = 320;
-            this.ahdPictureBox3.TagPath = null;
-            this.ahdPictureBox3.Text = "ahdPictureBox3";
-            // 
-            // ahdPictureBox11
-            // 
-            this.ahdPictureBox11.BackColor = System.Drawing.Color.Transparent;
-            this.ahdPictureBox11.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.ahdPictureBox11.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.ahdPictureBox11.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
-            this.ahdPictureBox11.Location = new System.Drawing.Point(724, 74);
-            this.ahdPictureBox11.Name = "ahdPictureBox11";
-            this.ahdPictureBox11.RotateAngle = 0;
-            this.ahdPictureBox11.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox11.Size = new System.Drawing.Size(24, 74);
-            this.ahdPictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.ahdPictureBox11.TabIndex = 321;
-            this.ahdPictureBox11.TagPath = null;
-            this.ahdPictureBox11.Text = "ahdPictureBox11";
-            // 
-            // ahdPictureBox10
-            // 
-            this.ahdPictureBox10.BackColor = System.Drawing.Color.Transparent;
-            this.ahdPictureBox10.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.ahdPictureBox10.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.ahdPictureBox10.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
-            this.ahdPictureBox10.Location = new System.Drawing.Point(1612, 78);
-            this.ahdPictureBox10.Name = "ahdPictureBox10";
-            this.ahdPictureBox10.RotateAngle = 0;
-            this.ahdPictureBox10.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox10.Size = new System.Drawing.Size(24, 69);
-            this.ahdPictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.ahdPictureBox10.TabIndex = 322;
-            this.ahdPictureBox10.TagPath = null;
-            this.ahdPictureBox10.Text = "ahdPictureBox10";
-            // 
-            // ahdPictureBox12
-            // 
-            this.ahdPictureBox12.BackColor = System.Drawing.Color.Transparent;
-            this.ahdPictureBox12.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.ahdPictureBox12.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.ahdPictureBox12.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
-            this.ahdPictureBox12.Location = new System.Drawing.Point(173, 74);
-            this.ahdPictureBox12.Name = "ahdPictureBox12";
-            this.ahdPictureBox12.RotateAngle = 0;
-            this.ahdPictureBox12.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox12.Size = new System.Drawing.Size(24, 69);
-            this.ahdPictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.ahdPictureBox12.TabIndex = 323;
-            this.ahdPictureBox12.TagPath = null;
-            this.ahdPictureBox12.Text = "ahdPictureBox12";
-            // 
-            // ahdPictureBox2
-            // 
-            this.ahdPictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.ahdPictureBox2.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.ahdPictureBox2.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.Both;
-            this.ahdPictureBox2.Image = global::RegistrationForm1.Properties.Resources.ARROW1;
-            this.ahdPictureBox2.Location = new System.Drawing.Point(194, 148);
-            this.ahdPictureBox2.Name = "ahdPictureBox2";
-            this.ahdPictureBox2.RotateAngle = 0;
-            this.ahdPictureBox2.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox2.Size = new System.Drawing.Size(24, 132);
-            this.ahdPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.ahdPictureBox2.TabIndex = 324;
-            this.ahdPictureBox2.TagPath = null;
-            this.ahdPictureBox2.Text = "ahdPictureBox2";
-            // 
             // FrmMucnuoc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1710, 799);
+            this.ClientSize = new System.Drawing.Size(1710, 848);
             this.Controls.Add(this.ahdLabel5);
             this.Controls.Add(this.ahdLabel6);
-            this.Controls.Add(this.btnLoadExcel);
-            this.Controls.Add(this.comboBoxQ);
-            this.Controls.Add(this.chart);
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmMucnuoc";
             this.Text = "FrmMucnuoc";
-            this.Load += new System.EventHandler(this.FrmMucnuoc_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel6)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).EndInit();
@@ -625,19 +579,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Fllow_DauTieng)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnLoadExcel;
-        private System.Windows.Forms.ComboBox comboBoxQ;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel1;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel2;
         private Ahd.Winforms.Controls.AhdLabel Fllow_BenSuc;

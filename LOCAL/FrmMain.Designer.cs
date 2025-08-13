@@ -58,10 +58,18 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this.lblStatusMessage = new System.Windows.Forms.Label();
+            this.dgvStats = new System.Windows.Forms.DataGridView();
+            this.dgvStations = new System.Windows.Forms.DataGridView();
+            this.lblStationsTitle = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
+            this.panelDesktop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -370,10 +378,59 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this.button4);
+            this.panelDesktop.Controls.Add(this.lblStationsTitle);
+            this.panelDesktop.Controls.Add(this.dgvStations);
+            this.panelDesktop.Controls.Add(this.dgvStats);
+            this.panelDesktop.Controls.Add(this.lblStatusMessage);
             this.panelDesktop.Location = new System.Drawing.Point(192, 154);
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
+            // 
+            // lblStatusMessage
+            // 
+            this.lblStatusMessage.AutoSize = true;
+            this.lblStatusMessage.Location = new System.Drawing.Point(208, 233);
+            this.lblStatusMessage.Name = "lblStatusMessage";
+            this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
+            this.lblStatusMessage.TabIndex = 173;
+            this.lblStatusMessage.Text = "label2";
+            // 
+            // dgvStats
+            // 
+            this.dgvStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStats.Location = new System.Drawing.Point(745, 5);
+            this.dgvStats.Name = "dgvStats";
+            this.dgvStats.Size = new System.Drawing.Size(536, 308);
+            this.dgvStats.TabIndex = 176;
+            // 
+            // dgvStations
+            // 
+            this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStations.Location = new System.Drawing.Point(143, 30);
+            this.dgvStations.Name = "dgvStations";
+            this.dgvStations.Size = new System.Drawing.Size(536, 150);
+            this.dgvStations.TabIndex = 177;
+            // 
+            // lblStationsTitle
+            // 
+            this.lblStationsTitle.AutoSize = true;
+            this.lblStationsTitle.Location = new System.Drawing.Point(459, 233);
+            this.lblStationsTitle.Name = "lblStationsTitle";
+            this.lblStationsTitle.Size = new System.Drawing.Size(35, 13);
+            this.lblStationsTitle.TabIndex = 178;
+            this.lblStationsTitle.Text = "label2";
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(585, 244);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 179;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FrmMain
             // 
@@ -401,6 +458,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
+            this.panelDesktop.ResumeLayout(false);
+            this.panelDesktop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -435,5 +496,10 @@
         private System.Windows.Forms.Button bntEditdata;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label lblStatusMessage;
+        private System.Windows.Forms.DataGridView dgvStats;
+        private System.Windows.Forms.DataGridView dgvStations;
+        private System.Windows.Forms.Label lblStationsTitle;
+        private System.Windows.Forms.Button button4;
     }
 }

@@ -474,6 +474,18 @@
   <ItemGroup>
     <None Include="PIC\Home.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\P2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\P1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\P4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\P3.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\HarfBuzzSharp.NativeAssets.macOS.7.3.0.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets" Condition="Exists('packages\HarfBuzzSharp.NativeAssets.macOS.7.3.0.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
