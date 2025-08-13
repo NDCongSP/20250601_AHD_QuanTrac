@@ -1,5 +1,5 @@
 {
-  "ProjectPath": "D:\\AHD\\PROJECT SCADA\\TRANDAUTIENG\\20250601_AHD_QuanTrac\\tag_Test.json",
+  "ProjectPath": "D:\\MyCompany\\8.SourceCode\\3.Projects\\20250601_AHD_QuanTrac\\tag_Test.json",
   "Username": null,
   "Password": null,
   "ParameterContainer": null,
@@ -11,7 +11,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-05-25T19:38:36.6996706+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -31,7 +31,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:32.2616927+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -46,12 +46,12 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:42.5030547+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
   "Parameters": {
-    "IpAddress": "192.168.1.254",
+    "IpAddress": "192.168.1.100",
     "Timeout": "1000",
     "TryReadWriteTimes": "3",
     "DelayBetweenPool": "10",
@@ -70,7 +70,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:50.1039733+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -5744,7 +5744,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:43:18.7539884+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -11112,7 +11112,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:43:21.6185789+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -16480,7 +16480,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T10:07:27.1946693+07:00",
-  "ModifiedDate": "2025-07-18T16:39:59.0824144+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -16495,7 +16495,10 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "Retain",
+    "IsValid": "False"
+  }
 },
   "Address": "Retain",
   "DataTypeName": "String",
@@ -16522,7 +16525,10 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "Retain",
+    "IsValid": "False"
+  }
 },
   "Address": "Retain",
   "DataTypeName": "String",
@@ -16549,7 +16555,10 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "Retain",
+    "IsValid": "False"
+  }
 },
   "Address": "Retain",
   "DataTypeName": "String",
@@ -16574,7 +16583,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T14:17:56.2715898+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -23179,7 +23188,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:52.4399526+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -23203,7 +23212,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:57.3368646+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -28845,7 +28854,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4093945+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -28865,7 +28874,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4103919+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -28885,7 +28894,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4103919+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -28900,7 +28909,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4103919+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -28915,7 +28924,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4103919+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -34268,7 +34277,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4103919+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -39621,7 +39630,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4113884+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -44974,7 +44983,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4123858+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -50327,7 +50336,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:22:59.4123858+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -55690,7 +55699,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6828044+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -55710,7 +55719,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6828044+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -55730,7 +55739,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6828044+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -55745,7 +55754,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6828044+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -55760,7 +55769,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6828044+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -61113,7 +61122,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6838019+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -66466,7 +66475,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6847987+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -71819,7 +71828,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6847987+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -77172,7 +77181,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-06-15T10:23:27.6913539+07:00",
-  "ModifiedDate": "2025-07-18T07:45:06.4825852+07:00",
+  "ModifiedDate": "2025-08-13T19:38:36.7706312+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
