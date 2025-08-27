@@ -26,10 +26,8 @@ namespace RegistrationForm1
 
         // Bảng nội suy Z (Mực nước) và W (Giá trị tương ứng) được tải từ CSV
         private Dictionary<int, List<double>> interpolationLookupTable;
-
         // Dictionary để lưu trữ các Series theo tên của chúng, giúp dễ dàng truy cập
         private Dictionary<string, Series> chartSeries;
-
         // ContextMenuStrip cho menu popup
         private ContextMenuStrip contextMenuStripSeriesVisibility;
 
@@ -745,7 +743,8 @@ namespace RegistrationForm1
                 Color = color,
                 MarkerStyle = marker,
                 MarkerSize = 5,
-                ToolTip = "Mực nước: #VALY{F2} m"
+                ToolTip = "Mực nước: #VALY{F2} m "
+               
             };
 
             // Cấu hình Label hiển thị giá trị cho series DPPH

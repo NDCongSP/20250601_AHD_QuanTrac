@@ -38,7 +38,8 @@ namespace RegistrationForm1
                         decimal fllowDauTiengValue;
                         if (decimal.TryParse(data.Fllow_DauTieng, out fllowDauTiengValue))
                         {
-                            cmd.Parameters.Add("@Fllow_DauTieng", SqlDbType.Decimal).Value = Math.Round(fllowDauTiengValue, 2) / 100m;
+                         //   cmd.Parameters.Add("@Fllow_DauTieng", SqlDbType.Decimal).Value = Math.Round(fllowDauTiengValue, 2) / 100m;
+                            cmd.Parameters.Add("@Fllow_DauTieng", SqlDbType.Decimal).Value = Math.Round(fllowDauTiengValue, 2);
                         }
                         else
                         {
@@ -51,7 +52,7 @@ namespace RegistrationForm1
                         decimal fllowBenSucValue;
                         if (decimal.TryParse(data.Fllow_BenSuc, out fllowBenSucValue))
                         {
-                            cmd.Parameters.Add("@Fllow_BenSuc", SqlDbType.Decimal).Value = Math.Round(fllowBenSucValue, 2) / 100m;
+                            cmd.Parameters.Add("@Fllow_BenSuc", SqlDbType.Decimal).Value = Math.Round(fllowBenSucValue, 2);
                         }
                         else
                         {
@@ -63,7 +64,7 @@ namespace RegistrationForm1
                         decimal fllowSonDaiValue;
                         if (decimal.TryParse(data.Fllow_SonDai, out fllowSonDaiValue))
                         {
-                            cmd.Parameters.Add("@Fllow_SonDai", SqlDbType.Decimal).Value = Math.Round(fllowSonDaiValue, 2) / 100m;
+                            cmd.Parameters.Add("@Fllow_SonDai", SqlDbType.Decimal).Value = Math.Round(fllowSonDaiValue, 2);
                         }
                         else
                         {

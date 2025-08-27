@@ -828,6 +828,7 @@ namespace RegistrationForm1
             await LoadStationsData();
 
 
+
         }
         // Hàm Lấy giá trị cho Timer ghi xuống SQL
         private string GetValue(string tagName)
@@ -1274,9 +1275,9 @@ namespace RegistrationForm1
 
         private void Al_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-            var tagPath = e.Tag.Path; // Lấy đường dẫn tag
+     //       var tagPath = e.Tag.Path; // Lấy đường dẫn tag
 
-            Globalvariable.TagsValues.FirstOrDefault(x => x.TagName == $"{tagPath}/A").Value = e.NewValue; // Cập nhật giá trị mới vào danh sách TagsValues
+    //        Globalvariable.TagsValues.FirstOrDefault(x => x.TagName == $"{tagPath}/A").Value = e.NewValue; // Cập nhật giá trị mới vào danh sách TagsValues
 
             //update BD
             //updte realtime table

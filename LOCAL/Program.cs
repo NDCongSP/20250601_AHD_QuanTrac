@@ -41,7 +41,8 @@ namespace RegistrationForm1
             {
                 // Nếu cấu hình đã hợp lệ, chạy ứng dụng chính
                 // Thay YourMainForm bằng form chính của bạn
-                Application.Run(new Form2());
+              //         Application.Run(new Form2());
+                Application.Run(new FrmLogin());
             }
             else
             {

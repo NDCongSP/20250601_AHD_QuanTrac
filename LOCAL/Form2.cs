@@ -25,7 +25,9 @@ namespace RegistrationForm1
 
             button1.Click+=(s, args) =>
             {
-                Globalvariable.TagsValues.FirstOrDefault(x=>x.TagName=="A").Value = "100"; // Cập nhật giá trị của TagName "A" thành "1"
+                  Globalvariable.TagsValues.FirstOrDefault(x=>x.TagName=="A").Value = "101"; // Cập nhật giá trị của TagName "A" thành "1"
+               
+
                 using (var form3 = new Form3())
                 {
                     form3.ShowDialog();
