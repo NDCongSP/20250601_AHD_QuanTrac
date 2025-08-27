@@ -23,7 +23,7 @@ namespace RegistrationForm1
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            textBox1.Text = Globalvariable.TagsValues.FirstOrDefault(x => x.TagName == "A")?.Value ?? "0"; // Hiển thị giá trị của TagName "A" trong TextBox
+            //textBox1.Text = Globalvariable.TagsValues.FirstOrDefault(x => x.TagName == "A")?.Value ?? "0"; // Hiển thị giá trị của TagName "A" trong TextBox
         }
     }
 }

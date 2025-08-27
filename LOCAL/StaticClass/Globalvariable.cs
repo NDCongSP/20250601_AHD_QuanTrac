@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,10 @@ namespace RegistrationForm1
 {
     public static class Globalvariable
     {
-        public static ConfigSystemModel ConfigSystem { get; set; } 
+        public static ConfigModel ConfigSystem { get; set; } = new ConfigModel();
 
-        public static string ConnectionString { get; set; }
+        public static LocationsModel LocationsInfo { get; set; } = new LocationsModel();
 
-        public static List<TagsValueModel> TagsValues { get; set; } = new List<TagsValueModel>();
-
-        public static int On_Off { get; set; }
+        public static RealtimeDisplayModel DisplaysInfo { get; set; } = new RealtimeDisplayModel();
     }
 }
