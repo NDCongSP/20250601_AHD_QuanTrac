@@ -94,9 +94,9 @@
             this.ahdLabel5.Location = new System.Drawing.Point(146, 331);
             this.ahdLabel5.Name = "ahdLabel5";
             this.ahdLabel5.Size = new System.Drawing.Size(125, 30);
-            this.ahdLabel5.StringFormat = null;
+            this.ahdLabel5.StringFormat = "0.00";
             this.ahdLabel5.TabIndex = 301;
-            this.ahdLabel5.TagPath = "Local Station/DauTieng/S71500/API/Fllow_DauTieng";
+            this.ahdLabel5.TagPath = "Local Station/DauTieng/S71500/API/Fllow_TL_CDD";
             this.ahdLabel5.Text = "0.00";
             this.ahdLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -318,7 +318,7 @@
             this.ahdLabel3.Location = new System.Drawing.Point(343, 45);
             this.ahdLabel3.Name = "ahdLabel3";
             this.ahdLabel3.Size = new System.Drawing.Size(123, 30);
-            this.ahdLabel3.StringFormat = null;
+            this.ahdLabel3.StringFormat = "0.00";
             this.ahdLabel3.TabIndex = 298;
             this.ahdLabel3.TagPath = "Local Station/DauTieng/S71500/API/Fllow_DauTieng";
             this.ahdLabel3.Text = "0.00";
@@ -349,7 +349,7 @@
             this.Fllow_BenSuc.Location = new System.Drawing.Point(681, 45);
             this.Fllow_BenSuc.Name = "Fllow_BenSuc";
             this.Fllow_BenSuc.Size = new System.Drawing.Size(123, 30);
-            this.Fllow_BenSuc.StringFormat = null;
+            this.Fllow_BenSuc.StringFormat = "0.00";
             this.Fllow_BenSuc.TabIndex = 294;
             this.Fllow_BenSuc.TagPath = "Local Station/DauTieng/S71500/API/Fllow_BenSuc";
             this.Fllow_BenSuc.Text = "0.00";
@@ -475,7 +475,7 @@
             this.Fllow_SonDai.Location = new System.Drawing.Point(216, 45);
             this.Fllow_SonDai.Name = "Fllow_SonDai";
             this.Fllow_SonDai.Size = new System.Drawing.Size(123, 30);
-            this.Fllow_SonDai.StringFormat = null;
+            this.Fllow_SonDai.StringFormat = "0.00";
             this.Fllow_SonDai.TabIndex = 290;
             this.Fllow_SonDai.TagPath = "Local Station/DauTieng/S71500/API/Fllow_SonDai";
             this.Fllow_SonDai.Text = "0.00";
@@ -522,9 +522,9 @@
             this.Fllow_DauTieng.Location = new System.Drawing.Point(89, 45);
             this.Fllow_DauTieng.Name = "Fllow_DauTieng";
             this.Fllow_DauTieng.Size = new System.Drawing.Size(123, 30);
-            this.Fllow_DauTieng.StringFormat = null;
+            this.Fllow_DauTieng.StringFormat = "0.00";
             this.Fllow_DauTieng.TabIndex = 293;
-            this.Fllow_DauTieng.TagPath = "Local Station/DauTieng/S71500/API/Fllow_DauTieng";
+            this.Fllow_DauTieng.TagPath = "Local Station/DauTieng/S71500/API/Fllow_TL_CDD";
             this.Fllow_DauTieng.Text = "0.00";
             this.Fllow_DauTieng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 

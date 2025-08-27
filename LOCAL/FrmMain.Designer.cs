@@ -58,18 +58,18 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
-            this.lblStatusMessage = new System.Windows.Forms.Label();
-            this.dgvStats = new System.Windows.Forms.DataGridView();
-            this.dgvStations = new System.Windows.Forms.DataGridView();
-            this.lblStationsTitle = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
+            this.lblStationsTitle = new System.Windows.Forms.Label();
+            this.dgvStations = new System.Windows.Forms.DataGridView();
+            this.dgvStats = new System.Windows.Forms.DataGridView();
+            this.lblStatusMessage = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
             this.panelDesktop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -143,7 +143,7 @@
             this.panel2.Controls.Add(this.bnt_TramMN);
             this.panel2.Controls.Add(this.bnt_CanhBao);
             this.panel2.Controls.Add(this.bnt_Tran);
-            this.panel2.Location = new System.Drawing.Point(-1, 154);
+            this.panel2.Location = new System.Drawing.Point(-10, 151);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(200, 887);
             this.panel2.TabIndex = 6;
@@ -293,7 +293,7 @@
             // bnt_Tran
             // 
             this.bnt_Tran.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Tran.Location = new System.Drawing.Point(-1, 117);
+            this.bnt_Tran.Location = new System.Drawing.Point(-1, 116);
             this.bnt_Tran.Name = "bnt_Tran";
             this.bnt_Tran.Size = new System.Drawing.Size(196, 50);
             this.bnt_Tran.TabIndex = 0;
@@ -383,44 +383,10 @@
             this.panelDesktop.Controls.Add(this.dgvStations);
             this.panelDesktop.Controls.Add(this.dgvStats);
             this.panelDesktop.Controls.Add(this.lblStatusMessage);
-            this.panelDesktop.Location = new System.Drawing.Point(192, 154);
+            this.panelDesktop.Location = new System.Drawing.Point(192, 151);
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
-            // 
-            // lblStatusMessage
-            // 
-            this.lblStatusMessage.AutoSize = true;
-            this.lblStatusMessage.Location = new System.Drawing.Point(208, 233);
-            this.lblStatusMessage.Name = "lblStatusMessage";
-            this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
-            this.lblStatusMessage.TabIndex = 173;
-            this.lblStatusMessage.Text = "label2";
-            // 
-            // dgvStats
-            // 
-            this.dgvStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStats.Location = new System.Drawing.Point(745, 5);
-            this.dgvStats.Name = "dgvStats";
-            this.dgvStats.Size = new System.Drawing.Size(536, 308);
-            this.dgvStats.TabIndex = 176;
-            // 
-            // dgvStations
-            // 
-            this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStations.Location = new System.Drawing.Point(143, 30);
-            this.dgvStations.Name = "dgvStations";
-            this.dgvStations.Size = new System.Drawing.Size(536, 150);
-            this.dgvStations.TabIndex = 177;
-            // 
-            // lblStationsTitle
-            // 
-            this.lblStationsTitle.AutoSize = true;
-            this.lblStationsTitle.Location = new System.Drawing.Point(459, 233);
-            this.lblStationsTitle.Name = "lblStationsTitle";
-            this.lblStationsTitle.Size = new System.Drawing.Size(35, 13);
-            this.lblStationsTitle.TabIndex = 178;
-            this.lblStationsTitle.Text = "label2";
             // 
             // button4
             // 
@@ -431,6 +397,40 @@
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // lblStationsTitle
+            // 
+            this.lblStationsTitle.AutoSize = true;
+            this.lblStationsTitle.Location = new System.Drawing.Point(459, 233);
+            this.lblStationsTitle.Name = "lblStationsTitle";
+            this.lblStationsTitle.Size = new System.Drawing.Size(35, 13);
+            this.lblStationsTitle.TabIndex = 178;
+            this.lblStationsTitle.Text = "label2";
+            // 
+            // dgvStations
+            // 
+            this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStations.Location = new System.Drawing.Point(143, 30);
+            this.dgvStations.Name = "dgvStations";
+            this.dgvStations.Size = new System.Drawing.Size(536, 150);
+            this.dgvStations.TabIndex = 177;
+            // 
+            // dgvStats
+            // 
+            this.dgvStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStats.Location = new System.Drawing.Point(745, 5);
+            this.dgvStats.Name = "dgvStats";
+            this.dgvStats.Size = new System.Drawing.Size(536, 308);
+            this.dgvStats.TabIndex = 176;
+            // 
+            // lblStatusMessage
+            // 
+            this.lblStatusMessage.AutoSize = true;
+            this.lblStatusMessage.Location = new System.Drawing.Point(208, 233);
+            this.lblStatusMessage.Name = "lblStatusMessage";
+            this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
+            this.lblStatusMessage.TabIndex = 173;
+            this.lblStatusMessage.Text = "label2";
             // 
             // FrmMain
             // 
@@ -460,8 +460,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
             this.panelDesktop.ResumeLayout(false);
             this.panelDesktop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
