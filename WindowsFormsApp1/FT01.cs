@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistrationForm1
+namespace WindowsFormsApp1
 {
     /// <summary>
     /// Bảng chứa các thông tin cấu hình về lò của hệ thống, số lượng lò và tên lò.
@@ -22,18 +22,18 @@ namespace RegistrationForm1
         /// Chính là ConfigModel.
         /// </summary>
         [Display(Name = "Systems config")]
-        public string? C000 { get; set; }
+        public string C000 { get; set; }
 
         /// <summary>
         /// Chứa các thông tin config cho từng trạm.
         /// chính là class LocationsModel (List<LocationInfoModel>).
         /// </summary>
         [Display(Name = "Stations config")]
-        public string? C001 { get; set; }
-        public string CreateOperatorId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime? CreateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string UpdateOperatorId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime? UpdateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool? IsDeleted { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string C001 { get; set; }
+        public string CreateOperatorId { get;set; }
+        public DateTime? CreateAt { get;set; }
+        public string? UpdateOperatorId { get;set; }
+        public DateTime? UpdateAt { get;set; }
+        public bool? IsDeleted { get;set; }
     }
 }

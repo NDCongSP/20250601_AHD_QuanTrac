@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Domain;
+using Newtonsoft.Json;
+using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Domain;
-using Newtonsoft.Json;
-using OfficeOpenXml;
 //using System.Globalization;
 //using System.Threading;
 
@@ -83,8 +84,27 @@ namespace RegistrationForm1
             //}
             //}
 
+            //var cs = "Server=phucthihautomation.ddns.net,1433;Database=ahd;User Id=dev1;Password=Dev@12345;Encrypt=False;TrustServerCertificate=True;Connect Timeout=15;";
+            //try
+            //{
+            //    using (var conn = new SqlConnection(cs))
+            //    {
+            //        conn.Open();
+            //        Console.WriteLine("Connected!");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Error: " + ex.Message);
+            //}
+
             using (var dbContext = new ApplicationDbContext())
             {
+                dbContext.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
+                //var query = dbContext.Database.SqlQuery<FT01>("SELECT TOP 1 * FROM FT01");
+                //var configTable = query.FirstOrDefault();
+
                 var configTable = dbContext.FT01s.FirstOrDefault();
 
                 if (configTable == null)
@@ -97,6 +117,7 @@ namespace RegistrationForm1
                 Globalvariable.ConfigSystem = JsonConvert.DeserializeObject<ConfigModel>(configTable.C000);
                 Globalvariable.LocationsInfo = JsonConvert.DeserializeObject<LocationsModel>(configTable.C001);
             }
+
 
             Application.Run(new FrmMain());
         }

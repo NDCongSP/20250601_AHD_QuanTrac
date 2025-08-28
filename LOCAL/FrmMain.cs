@@ -1,4 +1,5 @@
 ﻿using Ahd.Core;
+using Domain;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -793,7 +794,6 @@ namespace RegistrationForm1
         }
         private async void FrmMain_Load(object sender, EventArgs e)
         {
-
             PermissionManager.ApplyPermission(bntNhaplieu, "edit_data");// test nút nhấn nhập liệu
             SQLLogin.InitCurrentDataTran();
             lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
