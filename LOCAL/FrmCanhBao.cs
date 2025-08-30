@@ -139,49 +139,49 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }        
-            string status_S1_DC1 = _mainForm.GetS1_DC1_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S1_DC1, "Trạm 1");
-            string status_S1_DC2 = _mainForm.GetS1_DC2_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S1_DC2, "Trạm 1");
-            string status_S1_DC3 = _mainForm.GetS1_DC3_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S1_DC3, "Trạm 1");
-            // Trạng thái lổi Trạm 2
-            string status_S2_DC1 = _mainForm.GetS2_DC1_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S2_DC1, "Trạm 2");
-            string status_S2_DC2 = _mainForm.GetS2_DC2_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S2_DC2, "Trạm 2");
-            string status_S2_DC3 = _mainForm.GetS2_DC3_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S2_DC3, "Trạm 2");
-            string status_S3_DC1 = _mainForm.GetS3_DC1_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S3_DC1, "Trạm 3");
-            string status_S3_DC2 = _mainForm.GetS3_DC2_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S3_DC2, "Trạm 3");
-            string status_S3_DC3 = _mainForm.GetS3_DC3_OverValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S3_DC3, "Trạm 3");
-            string status_Door1_PressureHigh = _mainForm.GetDoor1_PressureHighValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 1 Cao", status_Door1_PressureHigh, "Trạm 1");
-            string status_Door1_PressureLow = _mainForm.GetDoor1_PressureLowValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 1 Thấp", status_Door1_PressureLow, "Trạm 1");
-            string status_Door2_PressureHigh = _mainForm.GetDoor2_PressureHighValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 2 Cao", status_Door2_PressureHigh, "Trạm 1");
-            string status_Door2_PressureLow = _mainForm.GetDoor2_PressureLowValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 2 Thấp", status_Door2_PressureLow, "Trạm 1");
-            string status_Door3_PressureHigh = _mainForm.GetDoor3_PressureHighValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 3 Cao", status_Door3_PressureHigh, "Trạm 2");
-            string status_Door3_PressureLow = _mainForm.GetDoor3_PressureLowValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 3 Thấp", status_Door3_PressureLow, "Trạm 2");
-            string status_Door4_PressureHigh = _mainForm.GetDoor4_PressureHighValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 4 Cao", status_Door4_PressureHigh, "Trạm 2");
-            string status_Door4_PressureLow = _mainForm.GetDoor4_PressureLowValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 4 Thấp", status_Door4_PressureLow, "Trạm 2");
-            string status_Door5_PressureHigh = _mainForm.GetDoor5_PressureHighValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 5 Cao", status_Door5_PressureHigh, "Trạm 3");
-            string status_Door5_PressureLow = _mainForm.GetDoor5_PressureLowValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 5 Thấp", status_Door5_PressureLow, "Trạm 3");
-            string status_Door6_PressureHigh = _mainForm.GetDoor6_PressureHighValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 6 Cao", status_Door6_PressureHigh, "Trạm 3");
-            string status_Door6_PressureLow = _mainForm.GetDoor6_PressureLowValue(); // trả về "1" hoặc "0"
-            UpdateAlarmStatus("Áp Suất Cửa 6 Thấp", status_Door6_PressureLow, "Trạm 3");
+            //string status_S1_DC1 = _mainForm.GetS1_DC1_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S1_DC1, "Trạm 1");
+            //string status_S1_DC2 = _mainForm.GetS1_DC2_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S1_DC2, "Trạm 1");
+            //string status_S1_DC3 = _mainForm.GetS1_DC3_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S1_DC3, "Trạm 1");
+            //// Trạng thái lổi Trạm 2
+            //string status_S2_DC1 = _mainForm.GetS2_DC1_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S2_DC1, "Trạm 2");
+            //string status_S2_DC2 = _mainForm.GetS2_DC2_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S2_DC2, "Trạm 2");
+            //string status_S2_DC3 = _mainForm.GetS2_DC3_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S2_DC3, "Trạm 2");
+            //string status_S3_DC1 = _mainForm.GetS3_DC1_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 1", status_S3_DC1, "Trạm 3");
+            //string status_S3_DC2 = _mainForm.GetS3_DC2_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 2", status_S3_DC2, "Trạm 3");
+            //string status_S3_DC3 = _mainForm.GetS3_DC3_OverValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Quá Tải Động Cơ 3", status_S3_DC3, "Trạm 3");
+            //string status_Door1_PressureHigh = _mainForm.GetDoor1_PressureHighValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 1 Cao", status_Door1_PressureHigh, "Trạm 1");
+            //string status_Door1_PressureLow = _mainForm.GetDoor1_PressureLowValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 1 Thấp", status_Door1_PressureLow, "Trạm 1");
+            //string status_Door2_PressureHigh = _mainForm.GetDoor2_PressureHighValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 2 Cao", status_Door2_PressureHigh, "Trạm 1");
+            //string status_Door2_PressureLow = _mainForm.GetDoor2_PressureLowValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 2 Thấp", status_Door2_PressureLow, "Trạm 1");
+            //string status_Door3_PressureHigh = _mainForm.GetDoor3_PressureHighValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 3 Cao", status_Door3_PressureHigh, "Trạm 2");
+            //string status_Door3_PressureLow = _mainForm.GetDoor3_PressureLowValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 3 Thấp", status_Door3_PressureLow, "Trạm 2");
+            //string status_Door4_PressureHigh = _mainForm.GetDoor4_PressureHighValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 4 Cao", status_Door4_PressureHigh, "Trạm 2");
+            //string status_Door4_PressureLow = _mainForm.GetDoor4_PressureLowValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 4 Thấp", status_Door4_PressureLow, "Trạm 2");
+            //string status_Door5_PressureHigh = _mainForm.GetDoor5_PressureHighValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 5 Cao", status_Door5_PressureHigh, "Trạm 3");
+            //string status_Door5_PressureLow = _mainForm.GetDoor5_PressureLowValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 5 Thấp", status_Door5_PressureLow, "Trạm 3");
+            //string status_Door6_PressureHigh = _mainForm.GetDoor6_PressureHighValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 6 Cao", status_Door6_PressureHigh, "Trạm 3");
+            //string status_Door6_PressureLow = _mainForm.GetDoor6_PressureLowValue(); // trả về "1" hoặc "0"
+            //UpdateAlarmStatus("Áp Suất Cửa 6 Thấp", status_Door6_PressureLow, "Trạm 3");
             //string status_S1_Station_Alarm = _mainForm.GetS1_Station_AlarmValue(); // trả về "1" hoặc "0"
             //UpdateAlarmStatus("Lỗi Trạm 1", status_S1_Station_Alarm, "Trạm 1");
             //string status_S2_Station_Alarm = _mainForm.GetS2_Station_AlarmValue(); // trả về "1" hoặc "0"

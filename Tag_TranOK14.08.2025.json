@@ -51,7 +51,7 @@
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
   "Parameters": {
-    "IpAddress": "192.168.1.56",
+    "IpAddress": "192.168.0.188",
     "Timeout": "1000",
     "TryReadWriteTimes": "3",
     "DelayBetweenPool": "10",
@@ -1762,8 +1762,8 @@
     "DBNumber": "0"
   }
 },
-  "Address": "M1020.3",
-  "DataTypeName": "Bool",
+  "Address": "DB3.DBW26",
+  "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -1799,7 +1799,7 @@
     "DBNumber": "0"
   }
 },
-  "Address": "MW1020",
+  "Address": "DB3.DBW28",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1822,8 +1822,8 @@
   "CreatedDate": "2025-06-02T11:01:02.649581+07:00",
   "ModifiedDate": "2025-06-02T11:01:02.649581+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
     "Address": "MW1020",
@@ -1836,7 +1836,7 @@
     "DBNumber": "0"
   }
 },
-  "Address": "MW1020",
+  "Address": "DB3.DBW30",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2564,7 +2564,10 @@
   "ParameterContainer": {
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
-  "Parameters": {}
+  "Parameters": {
+    "DataType": "Int",
+    "Address": "DB5.DBW1"
+  }
 },
   "Address": "DB5.DBW1",
   "DataTypeName": "Int",
@@ -4230,8 +4233,8 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "M1000",
     "AddressType": "Marker",
@@ -4244,8 +4247,8 @@
     "Address": "M1000"
   }
 },
-  "Address": "M1000",
-  "DataTypeName": "Bool",
+  "Address": "DB3.DBW24",
+  "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -4267,8 +4270,8 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "M1020.3",
     "AddressType": "Marker",
@@ -4281,8 +4284,8 @@
     "Address": "M1020.3"
   }
 },
-  "Address": "M1020.3",
-  "DataTypeName": "Bool",
+  "Address": "DB3.DBW26",
+  "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -4304,8 +4307,8 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "MW1020",
     "AddressType": "Marker",
@@ -4318,7 +4321,7 @@
     "Address": "MW1020"
   }
 },
-  "Address": "MW1020",
+  "Address": "DB3.DBW28",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4341,8 +4344,8 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "MW1020",
     "AddressType": "Marker",
@@ -4355,7 +4358,7 @@
     "Address": "MW1020"
   }
 },
-  "Address": "MW1020",
+  "Address": "DB3.DBW30",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6019,8 +6022,8 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "M1000",
     "AddressType": "Marker",
@@ -6033,8 +6036,8 @@
     "Address": "M1000"
   }
 },
-  "Address": "M1000",
-  "DataTypeName": "Bool",
+  "Address": "DB4.DBW24",
+  "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -6056,8 +6059,8 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "M1020.3",
     "AddressType": "Marker",
@@ -6070,8 +6073,8 @@
     "Address": "M1020.3"
   }
 },
-  "Address": "M1020.3",
-  "DataTypeName": "Bool",
+  "Address": "DB4.DBW26",
+  "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -6093,8 +6096,8 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "MW1020",
     "AddressType": "Marker",
@@ -6107,7 +6110,7 @@
     "Address": "MW1020"
   }
 },
-  "Address": "MW1020",
+  "Address": "DB4.DBW28",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6130,8 +6133,8 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "MW1020",
     "AddressType": "Marker",
@@ -6144,7 +6147,7 @@
     "Address": "MW1020"
   }
 },
-  "Address": "MW1020",
+  "Address": "DB4.DBW30",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,

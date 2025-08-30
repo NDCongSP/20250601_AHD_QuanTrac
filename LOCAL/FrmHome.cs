@@ -100,34 +100,34 @@ namespace RegistrationForm1
             //Pic_Station3_Stop.Visible = _mainForm.GetS3_Station_StopValue() == "1";
             //Pic_Station3_Alarm.Visible = _mainForm.GetS3_Station_AlarmValue() == "1";
 
-            Pic_Doorlock2_1Open.Visible = _mainForm.GetDoorlock2_1OpenValue() == "1";
-            Pic_Doorlock2_1Close.Visible = _mainForm.GetDoorlock2_1CloseValue() == "1";
-            Pic_Doorlock2_2Open.Visible = _mainForm.GetDoorlock2_2OpenValue() == "1";
-            Pic_Doorlock2_2Close.Visible = _mainForm.GetDoorlock2_2CloseValue() == "1";
-            Pic_Doorlock3_1Open.Visible = _mainForm.GetDoorlock3_1OpenValue() == "1";
-            Pic_Doorlock3_1Close.Visible = _mainForm.GetDoorlock3_1CloseValue() == "1";
-            Pic_Doorlock3_2Open.Visible = _mainForm.GetDoorlock3_2OpenValue() == "1";
-            Pic_Doorlock3_2Close.Visible = _mainForm.GetDoorlock3_2CloseValue() == "1";
-            Pic_Doorlock4_1Open.Visible = _mainForm.GetDoorlock4_1OpenValue() == "1";
-            Pic_Doorlock4_1Close.Visible = _mainForm.GetDoorlock4_1CloseValue() == "1";
-            Pic_Doorlock4_2Open.Visible = _mainForm.GetDoorlock4_2OpenValue() == "1";
-            Pic_Doorlock4_2Close.Visible = _mainForm.GetDoorlock4_2CloseValue() == "1";
-            Pic_Doorlock5_1Open.Visible = _mainForm.GetDoorlock5_1OpenValue() == "1";
-            Pic_Doorlock5_1Close.Visible = _mainForm.GetDoorlock5_1CloseValue() == "1";
-            Pic_Doorlock5_2Open.Visible = _mainForm.GetDoorlock5_2OpenValue() == "1";
-            Pic_Doorlock5_2Close.Visible = _mainForm.GetDoorlock5_2CloseValue() == "1";
-            Pic_Door1_Opening.Visible = _mainForm.GetDoor1_OpeningValue() == "1";
-            Pic_Door1_Closing.Visible = _mainForm.GetDoor1_ClosingValue() == "1";
-            Pic_Door2_Opening.Visible = _mainForm.GetDoor2_OpeningValue() == "1";
-            Pic_Door2_Closing.Visible = _mainForm.GetDoor2_ClosingValue() == "1";
-            Pic_Door3_Opening.Visible = _mainForm.GetDoor3_OpeningValue() == "1";
-            Pic_Door3_Closing.Visible = _mainForm.GetDoor3_ClosingValue() == "1";
-            Pic_Door4_Opening.Visible = _mainForm.GetDoor4_OpeningValue() == "1";
-            Pic_Door4_Closing.Visible = _mainForm.GetDoor4_ClosingValue() == "1";
-            Pic_Door5_Opening.Visible = _mainForm.GetDoor5_OpeningValue() == "1";
-            Pic_Door5_Closing.Visible = _mainForm.GetDoor5_ClosingValue() == "1";
-            Pic_Door6_Opening.Visible = _mainForm.GetDoor6_OpeningValue() == "1";
-            Pic_Door6_Closing.Visible = _mainForm.GetDoor6_ClosingValue() == "1";
+            //Pic_Doorlock2_1Open.Visible = _mainForm.GetDoorlock2_1OpenValue() == "1";
+            //Pic_Doorlock2_1Close.Visible = _mainForm.GetDoorlock2_1CloseValue() == "1";
+            //Pic_Doorlock2_2Open.Visible = _mainForm.GetDoorlock2_2OpenValue() == "1";
+            //Pic_Doorlock2_2Close.Visible = _mainForm.GetDoorlock2_2CloseValue() == "1";
+            //Pic_Doorlock3_1Open.Visible = _mainForm.GetDoorlock3_1OpenValue() == "1";
+            //Pic_Doorlock3_1Close.Visible = _mainForm.GetDoorlock3_1CloseValue() == "1";
+            //Pic_Doorlock3_2Open.Visible = _mainForm.GetDoorlock3_2OpenValue() == "1";
+            //Pic_Doorlock3_2Close.Visible = _mainForm.GetDoorlock3_2CloseValue() == "1";
+            //Pic_Doorlock4_1Open.Visible = _mainForm.GetDoorlock4_1OpenValue() == "1";
+            //Pic_Doorlock4_1Close.Visible = _mainForm.GetDoorlock4_1CloseValue() == "1";
+            //Pic_Doorlock4_2Open.Visible = _mainForm.GetDoorlock4_2OpenValue() == "1";
+            //Pic_Doorlock4_2Close.Visible = _mainForm.GetDoorlock4_2CloseValue() == "1";
+            //Pic_Doorlock5_1Open.Visible = _mainForm.GetDoorlock5_1OpenValue() == "1";
+            //Pic_Doorlock5_1Close.Visible = _mainForm.GetDoorlock5_1CloseValue() == "1";
+            //Pic_Doorlock5_2Open.Visible = _mainForm.GetDoorlock5_2OpenValue() == "1";
+            //Pic_Doorlock5_2Close.Visible = _mainForm.GetDoorlock5_2CloseValue() == "1";
+            //Pic_Door1_Opening.Visible = _mainForm.GetDoor1_OpeningValue() == "1";
+            //Pic_Door1_Closing.Visible = _mainForm.GetDoor1_ClosingValue() == "1";
+            //Pic_Door2_Opening.Visible = _mainForm.GetDoor2_OpeningValue() == "1";
+            //Pic_Door2_Closing.Visible = _mainForm.GetDoor2_ClosingValue() == "1";
+            //Pic_Door3_Opening.Visible = _mainForm.GetDoor3_OpeningValue() == "1";
+            //Pic_Door3_Closing.Visible = _mainForm.GetDoor3_ClosingValue() == "1";
+            //Pic_Door4_Opening.Visible = _mainForm.GetDoor4_OpeningValue() == "1";
+            //Pic_Door4_Closing.Visible = _mainForm.GetDoor4_ClosingValue() == "1";
+            //Pic_Door5_Opening.Visible = _mainForm.GetDoor5_OpeningValue() == "1";
+            //Pic_Door5_Closing.Visible = _mainForm.GetDoor5_ClosingValue() == "1";
+            //Pic_Door6_Opening.Visible = _mainForm.GetDoor6_OpeningValue() == "1";
+            //Pic_Door6_Closing.Visible = _mainForm.GetDoor6_ClosingValue() == "1";
          
       //      UpdateDoorlockStatus(lblASCua1, _mainForm.GetDoorlock1_OpeningValue(), _mainForm.GetDoorlock1_ClosingValue(), "Chốt 1");
        //     UpdateDoorlockStatus(lblASCua2, _mainForm.GetDoorlock2_OpeningValue(), _mainForm.GetDoorlock2_ClosingValue(), "Chốt 2");
@@ -136,12 +136,12 @@ namespace RegistrationForm1
        //     UpdateDoorlockStatus(lblASCua5, _mainForm.GetDoorlock5_OpeningValue(), _mainForm.GetDoorlock5_ClosingValue(), "Chốt 5");
        //     UpdateDoorlockStatus(lblASCua6, _mainForm.GetDoorlock6_OpeningValue(), _mainForm.GetDoorlock6_ClosingValue(), "Chốt 6");
 
-            UpdateDoorlockStatus(lblCua1, _mainForm.GetDoor1_OpenValue(), _mainForm.GetDoor1_CloseValue(), "Cửa 1");
-            UpdateDoorlockStatus(lblCua2, _mainForm.GetDoor2_OpenValue(), _mainForm.GetDoor2_CloseValue(), "Cửa 2");
-            UpdateDoorlockStatus(lblCua3, _mainForm.GetDoor3_OpenValue(), _mainForm.GetDoor3_CloseValue(), "Cửa 3");
-            UpdateDoorlockStatus(lblCua4, _mainForm.GetDoor4_OpenValue(), _mainForm.GetDoor4_CloseValue(), "Cửa 4");
-            UpdateDoorlockStatus(lblCua5, _mainForm.GetDoor5_OpenValue(), _mainForm.GetDoor5_CloseValue(), "Cửa 5");
-            UpdateDoorlockStatus(lblCua6, _mainForm.GetDoor6_OpenValue(), _mainForm.GetDoor6_CloseValue(), "Cửa 6");
+            //UpdateDoorlockStatus(lblCua1, _mainForm.GetDoor1_OpenValue(), _mainForm.GetDoor1_CloseValue(), "Cửa 1");
+            //UpdateDoorlockStatus(lblCua2, _mainForm.GetDoor2_OpenValue(), _mainForm.GetDoor2_CloseValue(), "Cửa 2");
+            //UpdateDoorlockStatus(lblCua3, _mainForm.GetDoor3_OpenValue(), _mainForm.GetDoor3_CloseValue(), "Cửa 3");
+            //UpdateDoorlockStatus(lblCua4, _mainForm.GetDoor4_OpenValue(), _mainForm.GetDoor4_CloseValue(), "Cửa 4");
+            //UpdateDoorlockStatus(lblCua5, _mainForm.GetDoor5_OpenValue(), _mainForm.GetDoor5_CloseValue(), "Cửa 5");
+            //UpdateDoorlockStatus(lblCua6, _mainForm.GetDoor6_OpenValue(), _mainForm.GetDoor6_CloseValue(), "Cửa 6");
 
         }
 
