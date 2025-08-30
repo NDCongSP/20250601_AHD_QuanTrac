@@ -8,7 +8,7 @@ namespace Domain
 {
     public class ParamettersModel
     {
-        public double HeSoLuuToc_Phi { get; set; } = 0;
+        public double HeSoLuuToc_Phi { get; set; } = 0.5;
         public double GiaToc_G { get; set; } = 0;
         public double CaoTrinhNguongTran_Zn { get; set; } = 0;
         public double DoMoCuaTran_h { get; set; } = 0;

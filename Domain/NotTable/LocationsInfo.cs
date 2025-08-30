@@ -16,11 +16,11 @@
         /// <summary>
         /// Id của vị trí.
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Tên của vị trí.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Mô tả về vị trí.
         /// </summary>
