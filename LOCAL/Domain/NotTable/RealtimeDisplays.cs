@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Domain
+﻿namespace Domain
 {
-    public class RealtimeDisplays:List<RealtimeDisplayModel>
+    public class RealtimeDisplays : List<RealtimeDisplayModel>
     {
     }
 }

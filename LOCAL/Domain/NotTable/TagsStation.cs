@@ -1,7 +1,9 @@
 ﻿namespace Domain
 {
-    public class TagsModel
+    public class TagsStation : TagsLocation_Info
     {
+        public string Path { get; set; }
+
         public bool? Remote { get; set; } = false;
         public bool? Local { get; set; } = false;
         public bool? Auto { get; set; } = false;
@@ -50,26 +52,27 @@
         public bool? Al_Door2 { get; set; } = false;
         public int? Fllow_Door1 { get; set; } = 0;
         public int? Fllow_Door2 { get; set; } = 0;
-        public int? Total_Fllow { get; set; } = 0;
+    }
+
+    public class TagsLocation_Info
+    {
         public int? Fllow_Ho { get; set; } = 0;
-
-        //Tinh toan
-        public int Calculate { get; set; } = 0;
     }
 
-    public class TagGroupAPI
+    public class CalculatorValueModel : ICalculatorValue
     {
-        public string? Flow_DauTieng { get; set; } = "0";
-        public string? Flow_BenSuc { get; set; } = "0";
-        public string? Fllow_SonDai { get; set; } = "0";
-        public string? Fllow_BinhNham { get; set; } = "0";
-        public string? Fllow_BinhNham2 { get; set; } = "0";
-        public string? Fllow_TL_CDD { get; set; } = "0";
-        public string? Fllow_HL_TXL { get; set; } = "0";
-    }
-
-    public class TagGroupSpecial
-    {
-        public int? Fllow_Ho { get; set; }
+        public double? Flow_DauTieng { get; set; } = 0;
+        public double? Flow_BenSuc { get; set; } = 0;
+        public double? Fllow_SonDai { get; set; } = 0;
+        public double? Fllow_BinhNham { get; set; } = 0;
+        public double? Fllow_BinhNham2 { get; set; } = 0;
+        public double? Fllow_TL_CDD { get; set; } = 0;
+        public double? Fllow_HL_TXL { get; set; } = 0;
+        public double? Total_Fllow { get; set; } = 0;
+        public double Q_Den { get; set; } = 0;
+        public double Q_Di { get; set; } = 0;
+        public double W_Ho { get; set; } = 0;
+        public double LuuLuong { get; set; } = 0;
+        public double LuuLuongTong { get; set; } = 0;
     }
 }

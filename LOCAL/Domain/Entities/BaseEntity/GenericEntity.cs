@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RegistrationForm1
+﻿namespace Domain.Entities
 {
     public interface GenericEntity
     {

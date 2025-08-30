@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistrationForm1
+namespace Domain.Entities
 {
     /// <summary>
     /// Bảng chứa giá trị hiển thị web realtime Display.

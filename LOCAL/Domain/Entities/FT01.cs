@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistrationForm1
+namespace Domain.Entities
 {
     /// <summary>
     /// Bảng chứa các thông tin cấu hình về lò của hệ thống, số lượng lò và tên lò.
@@ -30,10 +30,10 @@ namespace RegistrationForm1
         /// </summary>
         [Display(Name = "Stations config")]
         public string? C001 { get; set; }
-        public string? CreateOperatorId { get; set; }
-        public DateTime? CreateAt { get; set; }
-        public string? UpdateOperatorId { get; set; }
-        public DateTime? UpdateAt { get; set; }
-        public bool? IsDeleted { get; set; }
+        public string? CreateOperatorId { get ; set ; }
+        public DateTime? CreateAt { get ; set ; }
+        public string? UpdateOperatorId { get ; set ; }
+        public DateTime? UpdateAt { get ; set ; }
+        public bool? IsDeleted { get ; set ; }
     }
 }

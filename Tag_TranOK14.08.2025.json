@@ -1,5 +1,5 @@
 {
-  "ProjectPath": "D:\\AHD\\PROJECT SCADA\\TRANDAUTIENG\\20250601_AHD_QuanTrac\\Tag_TranOK14.08.2025.json",
+  "ProjectPath": "D:\\MyCompany\\8.SourceCode\\3.Projects\\20250601_AHD_QuanTrac\\Tag_TranOK14.08.2025.json",
   "Username": null,
   "Password": null,
   "ParameterContainer": null,
@@ -11,7 +11,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-05-25T19:38:36.6996706+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -31,7 +31,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:32.2616927+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -46,7 +46,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:42.5030547+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T16:49:42.2523527+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -64,13 +64,13 @@
   "ByteOrder": "ABCD",
   "Childs": [
     {
-  "Name": "Group1",
+  "Name": "Station_1",
   "Description": null,
   "ItemType": "Group",
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:50.1039733+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -1714,19 +1714,19 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Bool",
-    "Address": "M1000",
-    "LastAddress": "M1000",
-    "AddressType": "Marker",
-    "ByteOffset": "1000",
+    "DataType": "Int",
+    "Address": "DB3.DBW24",
+    "LastAddress": "DB3.DBW24",
+    "AddressType": "Datablock",
+    "ByteOffset": "24",
     "BitOffset": "0",
     "IsValid": "True",
     "IsBitAddress": "False",
-    "DBNumber": "0"
+    "DBNumber": "3"
   }
 },
-  "Address": "M1000",
-  "DataTypeName": "Bool",
+  "Address": "DB3.DBW24",
+  "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -1849,675 +1849,17 @@
   "Childs": [],
   "HaveTags": true,
   "Tags": []
-},
-    {
-  "Name": "Total_Fllow",
-  "Description": "",
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-06-02T11:01:02.649581+07:00",
-  "ModifiedDate": "2025-06-02T11:01:02.649581+07:00",
-  "ParameterContainer": {
-  "DisplayName": "Tag Parameters",
-  "DisplayParameters": "Tag Parameters",
-  "Parameters": {
-    "DataType": "Int",
-    "Address": "MW1030",
-    "LastAddress": "MW1030",
-    "AddressType": "Marker",
-    "ByteOffset": "1030",
-    "BitOffset": "0",
-    "IsValid": "True",
-    "IsBitAddress": "False",
-    "DBNumber": "0"
-  }
-},
-  "Address": "MW1030",
-  "DataTypeName": "Int",
-  "RefreshRate": 100,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": false,
-  "GUID": null,
-  "Retain": false,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_Ho",
-  "Description": "",
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-06-02T11:01:02.649581+07:00",
-  "ModifiedDate": "2025-06-02T11:01:02.649581+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "DataType": "Int",
-    "Address": "MW1000",
-    "LastAddress": "MW1000",
-    "AddressType": "Marker",
-    "ByteOffset": "1000",
-    "BitOffset": "0",
-    "IsValid": "True",
-    "IsBitAddress": "False",
-    "DBNumber": "0"
-  }
-},
-  "Address": "MW1000",
-  "DataTypeName": "Int",
-  "RefreshRate": 100,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": false,
-  "GUID": null,
-  "Retain": false,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
 }
   ]
 },
     {
-  "Name": "API",
-  "Description": null,
-  "ItemType": "Group",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-05-26T10:07:27.1946693+07:00",
-  "ModifiedDate": "2025-08-14T15:36:14.4676841+07:00",
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": [
-    {
-  "Name": "Fllow_DauTieng",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-07-18T16:38:19.2726084+07:00",
-  "ModifiedDate": "2025-07-18T16:38:19.2726084+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "LastAddress": "Retain",
-    "IsValid": "False",
-    "DataType": "String",
-    "Address": "Retain"
-  }
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "81adc2a8-7a98-4d09-b2c0-0784567f259f",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_BenSuc",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-07-18T16:38:50.0230134+07:00",
-  "ModifiedDate": "2025-07-18T16:38:50.0230134+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "LastAddress": "Retain",
-    "IsValid": "False",
-    "DataType": "String",
-    "Address": "Retain"
-  }
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "50a186a2-9060-4bcb-87ab-81368760a6d5",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_SonDai",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-07-18T16:39:23.4628129+07:00",
-  "ModifiedDate": "2025-07-18T16:39:23.4628129+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "LastAddress": "Retain",
-    "IsValid": "False",
-    "DataType": "String",
-    "Address": "Retain"
-  }
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "da73d514-3f55-4e14-b5f3-81e659233de1",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_BinhNham",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-07-25T20:27:50.9934725+07:00",
-  "ModifiedDate": "2025-07-25T20:27:50.9934725+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "LastAddress": "Retain",
-    "IsValid": "False",
-    "DataType": "String",
-    "Address": "Retain"
-  }
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "767abbf0-ca9c-4605-aabf-115019c18424",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_BinhNham2",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-04T19:52:48.6094163+07:00",
-  "ModifiedDate": "2025-08-04T19:52:48.6094163+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "DataType": "String",
-    "Address": "Retain",
-    "LastAddress": "Retain",
-    "IsValid": "False"
-  }
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "b8dee3e3-ddee-444e-aac1-67d15cc355bf",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_TL_CDD",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-06T08:13:27.538569+07:00",
-  "ModifiedDate": "2025-08-06T08:13:27.538569+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "LastAddress": "Retain",
-    "IsValid": "False"
-  }
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "17c194e1-3552-4cd8-a721-638a8cc09bd7",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_HL_TXL",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-06T08:16:23.1541227+07:00",
-  "ModifiedDate": "2025-08-06T08:16:23.1541227+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {
-    "LastAddress": "Retain",
-    "IsValid": "False"
-  }
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "35ce5292-40eb-4b9a-9bee-db7f2f220b48",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610001",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:34:43.3499647+07:00",
-  "ModifiedDate": "2025-08-14T15:34:43.3499647+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "e35ce2f3-19f5-4150-a1ff-2a75a5d9f1dd",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610002",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:34:52.9433827+07:00",
-  "ModifiedDate": "2025-08-14T15:34:52.9433827+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "801769a1-8bc5-4767-9c80-adedbf428670",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610003",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:34:59.4591728+07:00",
-  "ModifiedDate": "2025-08-14T15:34:59.4591728+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "fbcf4287-6cd4-4753-a735-bf836bbffbfe",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610004",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:06.1393278+07:00",
-  "ModifiedDate": "2025-08-14T15:35:06.1393278+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "5dab105d-d49f-4860-8634-04a1a663fb0c",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610005",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:12.94396+07:00",
-  "ModifiedDate": "2025-08-14T15:35:12.94396+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "2e718696-04e2-4443-8e7f-e0d7cfcf3ad6",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610006",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:19.4332618+07:00",
-  "ModifiedDate": "2025-08-14T15:35:19.4332618+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "3a4c7a2a-dde1-44e9-9c03-a757c80886bb",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610007",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:26.1624892+07:00",
-  "ModifiedDate": "2025-08-14T15:35:26.1624892+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "f269ecc7-ba5d-4013-b33b-90203305fab4",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610008",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:31.6879146+07:00",
-  "ModifiedDate": "2025-08-14T15:35:31.6879146+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Non-Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "b40d8b46-3b62-4729-874b-3a068110c67e",
-  "Retain": false,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610009",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:38.7722211+07:00",
-  "ModifiedDate": "2025-08-14T15:35:38.7722211+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "8052a892-8258-4d8d-b9eb-cf45a20d9804",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610010",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:51.7201983+07:00",
-  "ModifiedDate": "2025-08-14T15:35:51.7201983+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "ff2dcf0c-d4c6-4ebd-9cf7-0926a0398efe",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610011",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:35:58.9151727+07:00",
-  "ModifiedDate": "2025-08-14T15:35:58.9151727+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "775c5839-ebdc-472f-b8da-d94b2fa45952",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610012",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:36:05.1947564+07:00",
-  "ModifiedDate": "2025-08-14T15:36:05.1947564+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "fdc69cba-af12-4d0c-81c6-ac9ff559437d",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "610013",
-  "Description": null,
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T15:36:12.1467742+07:00",
-  "ModifiedDate": "2025-08-14T15:36:12.1467742+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "Retain",
-  "DataTypeName": "String",
-  "RefreshRate": 0,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": true,
-  "GUID": "87ebe829-3c4d-44ae-a1b1-71e9864ada12",
-  "Retain": true,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-}
-  ]
-},
-    {
-  "Name": "Group4",
+  "Name": "Location_Info",
   "Description": null,
   "ItemType": "Group",
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T14:17:56.2715898+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T16:49:42.2523527+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -2550,7 +1892,7 @@
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
   "Offset": 0.0,
-  "Gain": 1.0,
+  "Gain": 0.1,
   "IsInternalTag": false,
   "GUID": null,
   "Retain": false,
@@ -2561,13 +1903,13 @@
   ]
 },
     {
-  "Name": "Group2",
+  "Name": "Station_2",
   "Description": null,
   "ItemType": "Group",
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:29.0051643+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -2580,11 +1922,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.0"
+  }
 },
-  "Address": "DB2.DBX0.0",
+  "Address": "DB3.DBX0.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2607,11 +1959,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.1"
+  }
 },
-  "Address": "DB2.DBX0.1",
+  "Address": "DB3.DBX0.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2634,11 +1996,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.2"
+  }
 },
-  "Address": "DB2.DBX0.2",
+  "Address": "DB3.DBX0.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2661,11 +2033,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.3"
+  }
 },
-  "Address": "DB2.DBX0.3",
+  "Address": "DB3.DBX0.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2688,11 +2070,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.4"
+  }
 },
-  "Address": "DB2.DBX0.4",
+  "Address": "DB3.DBX0.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2715,11 +2107,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.5"
+  }
 },
-  "Address": "DB2.DBX0.5",
+  "Address": "DB3.DBX0.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2742,11 +2144,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.6"
+  }
 },
-  "Address": "DB2.DBX0.6",
+  "Address": "DB3.DBX0.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2769,11 +2181,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX0.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX0.7"
+  }
 },
-  "Address": "DB2.DBX0.7",
+  "Address": "DB3.DBX0.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2796,11 +2218,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.0"
+  }
 },
-  "Address": "DB2.DBX1.0",
+  "Address": "DB3.DBX1.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2823,11 +2255,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.1"
+  }
 },
-  "Address": "DB2.DBX1.1",
+  "Address": "DB3.DBX1.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2850,11 +2292,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.2"
+  }
 },
-  "Address": "DB2.DBX1.2",
+  "Address": "DB3.DBX1.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2877,11 +2329,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.3"
+  }
 },
-  "Address": "DB2.DBX1.3",
+  "Address": "DB3.DBX1.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2904,11 +2366,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.4"
+  }
 },
-  "Address": "M102.7",
+  "Address": "DB3.DBX1.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2931,11 +2403,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.5"
+  }
 },
-  "Address": "M103",
+  "Address": "DB3.DBX1.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2958,11 +2440,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.6"
+  }
 },
-  "Address": "DB2.DBX1.6",
+  "Address": "DB3.DBX1.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2985,11 +2477,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX1.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX1.7"
+  }
 },
-  "Address": "DB2.DBX1.7",
+  "Address": "DB3.DBX1.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3012,11 +2514,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.0"
+  }
 },
-  "Address": "DB2.DBX2.0",
+  "Address": "DB3.DBX2.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3039,11 +2551,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.1"
+  }
 },
-  "Address": "DB2.DBX2.1",
+  "Address": "DB3.DBX2.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3066,11 +2588,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.2"
+  }
 },
-  "Address": "DB2.DBX2.2",
+  "Address": "DB3.DBX2.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3093,11 +2625,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.3"
+  }
 },
-  "Address": "DB2.DBX2.3",
+  "Address": "DB3.DBX2.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3120,11 +2662,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.4"
+  }
 },
-  "Address": "M105.7",
+  "Address": "DB3.DBX2.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3147,11 +2699,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.5"
+  }
 },
-  "Address": "M106",
+  "Address": "DB3.DBX2.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3174,11 +2736,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.6"
+  }
 },
-  "Address": "M106.1",
+  "Address": "DB3.DBX2.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3201,11 +2773,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX2.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX2.7"
+  }
 },
-  "Address": "M106.2",
+  "Address": "DB3.DBX2.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3228,11 +2810,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.0"
+  }
 },
-  "Address": "DB2.DBX3.0",
+  "Address": "DB3.DBX3.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3255,11 +2847,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.1"
+  }
 },
-  "Address": "DB2.DBX3.1",
+  "Address": "DB3.DBX3.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3282,11 +2884,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9365064+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.2"
+  }
 },
-  "Address": "DB2.DBX3.2",
+  "Address": "DB3.DBX3.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3309,11 +2921,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.3"
+  }
 },
-  "Address": "DB2.DBX3.3",
+  "Address": "DB3.DBX3.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3336,11 +2958,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.4"
+  }
 },
-  "Address": "DB2.DBX3.4",
+  "Address": "DB3.DBX3.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3363,11 +2995,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.5"
+  }
 },
-  "Address": "DB2.DBX3.5",
+  "Address": "DB3.DBX3.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3390,11 +3032,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.6"
+  }
 },
-  "Address": "DB2.DBX3.6",
+  "Address": "DB3.DBX3.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3417,11 +3069,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX3.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX3.7"
+  }
 },
-  "Address": "DB2.DBX3.7",
+  "Address": "DB3.DBX3.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3444,11 +3106,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX4.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX4.0"
+  }
 },
-  "Address": "DB2.DBX4.0",
+  "Address": "DB3.DBX4.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3471,11 +3143,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX4.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX4.1"
+  }
 },
-  "Address": "DB2.DBX4.1",
+  "Address": "DB3.DBX4.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3498,11 +3180,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX4.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3",
+    "DataType": "Bool",
+    "Address": "DB3.DBX4.2"
+  }
 },
-  "Address": "DB2.DBX4.2",
+  "Address": "DB3.DBX4.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3525,11 +3217,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBW6",
+    "AddressType": "Datablock",
+    "ByteOffset": "6",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "3",
+    "DataType": "Int",
+    "Address": "DB3.DBW6"
+  }
 },
-  "Address": "DB2.DBW6",
+  "Address": "DB3.DBW6",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3552,11 +3254,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBW8",
+    "AddressType": "Datablock",
+    "ByteOffset": "8",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "3",
+    "DataType": "Int",
+    "Address": "DB3.DBW8"
+  }
 },
-  "Address": "DB2.DBW8",
+  "Address": "DB3.DBW8",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3579,11 +3291,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBW10",
+    "AddressType": "Datablock",
+    "ByteOffset": "10",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "3",
+    "DataType": "Int",
+    "Address": "DB3.DBW10"
+  }
 },
-  "Address": "DB2.DBW10",
+  "Address": "DB3.DBW10",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3606,11 +3328,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBW12",
+    "AddressType": "Datablock",
+    "ByteOffset": "12",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "3",
+    "DataType": "Int",
+    "Address": "DB3.DBW12"
+  }
 },
-  "Address": "DB2.DBW12",
+  "Address": "DB3.DBW12",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3635,7 +3367,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "DB2.DBW14",
+    "AddressType": "Datablock",
+    "ByteOffset": "14",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "2",
+    "DataType": "Int",
+    "Address": "DB2.DBW14"
+  }
 },
   "Address": "DB2.DBW14",
   "DataTypeName": "Int",
@@ -3662,7 +3404,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "DB2.DBW16",
+    "AddressType": "Datablock",
+    "ByteOffset": "16",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "2",
+    "DataType": "Int",
+    "Address": "DB2.DBW16"
+  }
 },
   "Address": "DB2.DBW16",
   "DataTypeName": "Int",
@@ -3689,7 +3441,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "DB2.DBW18",
+    "AddressType": "Datablock",
+    "ByteOffset": "18",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "2",
+    "DataType": "Int",
+    "Address": "DB2.DBW18"
+  }
 },
   "Address": "DB2.DBW18",
   "DataTypeName": "Int",
@@ -3714,11 +3476,21 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBW20",
+    "AddressType": "Datablock",
+    "ByteOffset": "20",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "3",
+    "DataType": "Int",
+    "Address": "DB3.DBW20"
+  }
 },
-  "Address": "DB2.DBW20",
+  "Address": "DB3.DBW20",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3741,9 +3513,19 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBW22",
+    "AddressType": "Datablock",
+    "ByteOffset": "22",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "3",
+    "DataType": "Int",
+    "Address": "DB3.DBW22"
+  }
 },
   "Address": "DB3.DBW22",
   "DataTypeName": "Int",
@@ -3770,7 +3552,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "M1000",
+    "AddressType": "Marker",
+    "ByteOffset": "1000",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "0",
+    "DataType": "Bool",
+    "Address": "M1000"
+  }
 },
   "Address": "M1000",
   "DataTypeName": "Bool",
@@ -3797,7 +3589,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "M1020.3",
+    "AddressType": "Marker",
+    "ByteOffset": "1020",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "0",
+    "DataType": "Bool",
+    "Address": "M1020.3"
+  }
 },
   "Address": "M1020.3",
   "DataTypeName": "Bool",
@@ -3824,7 +3626,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "MW1020",
+    "AddressType": "Marker",
+    "ByteOffset": "1020",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "0",
+    "DataType": "Int",
+    "Address": "MW1020"
+  }
 },
   "Address": "MW1020",
   "DataTypeName": "Int",
@@ -3851,63 +3663,19 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "MW1020",
+    "AddressType": "Marker",
+    "ByteOffset": "1020",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "0",
+    "DataType": "Int",
+    "Address": "MW1020"
+  }
 },
   "Address": "MW1020",
-  "DataTypeName": "Int",
-  "RefreshRate": 100,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": false,
-  "GUID": null,
-  "Retain": false,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Total_Fllow",
-  "Description": "",
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
-  "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "MW1030",
-  "DataTypeName": "Int",
-  "RefreshRate": 100,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": false,
-  "GUID": null,
-  "Retain": false,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_Ho",
-  "Description": "",
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
-  "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "MW1000",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3924,13 +3692,13 @@
   ]
 },
     {
-  "Name": "Group3",
+  "Name": "Station_3",
   "Description": null,
   "ItemType": "Group",
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:54.9668898+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -3943,11 +3711,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.0"
+  }
 },
-  "Address": "DB2.DBX0.0",
+  "Address": "DB4.DBX0.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3970,11 +3748,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.1"
+  }
 },
-  "Address": "DB2.DBX0.1",
+  "Address": "DB4.DBX0.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3997,11 +3785,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.2"
+  }
 },
-  "Address": "DB2.DBX0.2",
+  "Address": "DB4.DBX0.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4024,11 +3822,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.3"
+  }
 },
-  "Address": "DB2.DBX0.3",
+  "Address": "DB4.DBX0.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4051,11 +3859,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.4"
+  }
 },
-  "Address": "DB2.DBX0.4",
+  "Address": "DB4.DBX0.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4078,11 +3896,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.5"
+  }
 },
-  "Address": "DB2.DBX0.5",
+  "Address": "DB4.DBX0.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4105,11 +3933,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.6"
+  }
 },
-  "Address": "DB2.DBX0.6",
+  "Address": "DB4.DBX0.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4132,11 +3970,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX0.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "0",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX0.7"
+  }
 },
-  "Address": "DB2.DBX0.7",
+  "Address": "DB4.DBX0.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4159,11 +4007,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.0"
+  }
 },
-  "Address": "DB2.DBX1.0",
+  "Address": "DB4.DBX1.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4186,11 +4044,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.1"
+  }
 },
-  "Address": "DB2.DBX1.1",
+  "Address": "DB4.DBX1.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4213,11 +4081,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.2"
+  }
 },
-  "Address": "DB2.DBX1.2",
+  "Address": "DB4.DBX1.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4240,11 +4118,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.3"
+  }
 },
-  "Address": "DB2.DBX1.3",
+  "Address": "DB4.DBX1.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4267,11 +4155,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.4"
+  }
 },
-  "Address": "M102.7",
+  "Address": "DB4.DBX1.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4294,11 +4192,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.5"
+  }
 },
-  "Address": "M103",
+  "Address": "DB4.DBX1.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4321,11 +4229,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.6"
+  }
 },
-  "Address": "DB2.DBX1.6",
+  "Address": "DB4.DBX1.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4348,11 +4266,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX1.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "1",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX1.7"
+  }
 },
-  "Address": "DB2.DBX1.7",
+  "Address": "DB4.DBX1.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4375,11 +4303,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.0"
+  }
 },
-  "Address": "DB2.DBX2.0",
+  "Address": "DB4.DBX2.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4402,11 +4340,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.1"
+  }
 },
-  "Address": "DB2.DBX2.1",
+  "Address": "DB4.DBX2.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4429,11 +4377,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.2"
+  }
 },
-  "Address": "DB2.DBX2.2",
+  "Address": "DB4.DBX2.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4456,11 +4414,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.3"
+  }
 },
-  "Address": "DB2.DBX2.3",
+  "Address": "DB4.DBX2.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4483,11 +4451,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.4"
+  }
 },
-  "Address": "M105.7",
+  "Address": "DB4.DBX2.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4510,11 +4488,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.5"
+  }
 },
-  "Address": "M106",
+  "Address": "DB4.DBX2.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4537,11 +4525,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.6"
+  }
 },
-  "Address": "M106.1",
+  "Address": "DB4.DBX2.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4564,11 +4562,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX2.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "2",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX2.7"
+  }
 },
-  "Address": "M106.2",
+  "Address": "DB4.DBX2.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4591,11 +4599,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.0"
+  }
 },
-  "Address": "DB2.DBX3.0",
+  "Address": "DB4.DBX3.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4618,11 +4636,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.1"
+  }
 },
-  "Address": "DB2.DBX3.1",
+  "Address": "DB4.DBX3.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4645,11 +4673,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.2"
+  }
 },
-  "Address": "DB2.DBX3.2",
+  "Address": "DB4.DBX3.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4672,11 +4710,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.3"
+  }
 },
-  "Address": "DB2.DBX3.3",
+  "Address": "DB4.DBX3.3",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4699,11 +4747,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.4"
+  }
 },
-  "Address": "DB2.DBX3.4",
+  "Address": "DB4.DBX3.4",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4726,11 +4784,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.5",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "5",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.5"
+  }
 },
-  "Address": "DB2.DBX3.5",
+  "Address": "DB4.DBX3.5",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4753,11 +4821,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.6",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "6",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.6"
+  }
 },
-  "Address": "DB2.DBX3.6",
+  "Address": "DB4.DBX3.6",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4780,11 +4858,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX3.7",
+    "AddressType": "Datablock",
+    "ByteOffset": "3",
+    "BitOffset": "7",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX3.7"
+  }
 },
-  "Address": "DB2.DBX3.7",
+  "Address": "DB4.DBX3.7",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4807,11 +4895,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX4.0",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX4.0"
+  }
 },
-  "Address": "DB2.DBX4.0",
+  "Address": "DB4.DBX4.0",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4834,11 +4932,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX4.1",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "1",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX4.1"
+  }
 },
-  "Address": "DB2.DBX4.1",
+  "Address": "DB4.DBX4.1",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4861,11 +4969,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX4.2",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "2",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4",
+    "DataType": "Bool",
+    "Address": "DB4.DBX4.2"
+  }
 },
-  "Address": "DB2.DBX4.2",
+  "Address": "DB4.DBX4.2",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4888,11 +5006,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW6",
+    "AddressType": "Datablock",
+    "ByteOffset": "6",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW6"
+  }
 },
-  "Address": "DB2.DBW6",
+  "Address": "DB4.DBW6",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4915,11 +5043,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW8",
+    "AddressType": "Datablock",
+    "ByteOffset": "8",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW8"
+  }
 },
-  "Address": "DB2.DBW8",
+  "Address": "DB4.DBW8",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4942,11 +5080,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW10",
+    "AddressType": "Datablock",
+    "ByteOffset": "10",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW10"
+  }
 },
-  "Address": "DB2.DBW10",
+  "Address": "DB4.DBW10",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4969,11 +5117,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW12",
+    "AddressType": "Datablock",
+    "ByteOffset": "12",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW12"
+  }
 },
-  "Address": "DB2.DBW12",
+  "Address": "DB4.DBW12",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4996,11 +5154,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW14",
+    "AddressType": "Datablock",
+    "ByteOffset": "14",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW14"
+  }
 },
-  "Address": "DB2.DBW14",
+  "Address": "DB4.DBW14",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -5023,11 +5191,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW16",
+    "AddressType": "Datablock",
+    "ByteOffset": "16",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW16"
+  }
 },
-  "Address": "DB2.DBW16",
+  "Address": "DB4.DBW16",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -5050,11 +5228,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW18",
+    "AddressType": "Datablock",
+    "ByteOffset": "18",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW18"
+  }
 },
-  "Address": "DB2.DBW18",
+  "Address": "DB4.DBW18",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -5077,11 +5265,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW20",
+    "AddressType": "Datablock",
+    "ByteOffset": "20",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW20"
+  }
 },
-  "Address": "DB2.DBW20",
+  "Address": "DB4.DBW20",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -5104,11 +5302,21 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBW22",
+    "AddressType": "Datablock",
+    "ByteOffset": "22",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "4",
+    "DataType": "Int",
+    "Address": "DB4.DBW22"
+  }
 },
-  "Address": "DB3.DBW22",
+  "Address": "DB4.DBW22",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -5133,7 +5341,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "M1000",
+    "AddressType": "Marker",
+    "ByteOffset": "1000",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "0",
+    "DataType": "Bool",
+    "Address": "M1000"
+  }
 },
   "Address": "M1000",
   "DataTypeName": "Bool",
@@ -5160,7 +5378,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "M1020.3",
+    "AddressType": "Marker",
+    "ByteOffset": "1020",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "0",
+    "DataType": "Bool",
+    "Address": "M1020.3"
+  }
 },
   "Address": "M1020.3",
   "DataTypeName": "Bool",
@@ -5187,7 +5415,17 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "MW1020",
+    "AddressType": "Marker",
+    "ByteOffset": "1020",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "0",
+    "DataType": "Int",
+    "Address": "MW1020"
+  }
 },
   "Address": "MW1020",
   "DataTypeName": "Int",
@@ -5214,63 +5452,19 @@
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
-  "Parameters": {}
+  "Parameters": {
+    "LastAddress": "MW1020",
+    "AddressType": "Marker",
+    "ByteOffset": "1020",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "0",
+    "DataType": "Int",
+    "Address": "MW1020"
+  }
 },
   "Address": "MW1020",
-  "DataTypeName": "Int",
-  "RefreshRate": 100,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": false,
-  "GUID": null,
-  "Retain": false,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Total_Fllow",
-  "Description": "",
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
-  "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "MW1030",
-  "DataTypeName": "Int",
-  "RefreshRate": 100,
-  "ByteOrder": 0,
-  "AccessPermission": "ReadAndWrite",
-  "Offset": 0.0,
-  "Gain": 1.0,
-  "IsInternalTag": false,
-  "GUID": null,
-  "Retain": false,
-  "Childs": [],
-  "HaveTags": true,
-  "Tags": []
-},
-    {
-  "Name": "Fllow_Ho",
-  "Description": "",
-  "ItemType": "Tag",
-  "IsReadOnly": false,
-  "Enabled": true,
-  "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
-  "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
-  "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
-  "Parameters": {}
-},
-  "Address": "MW1000",
   "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -5297,7 +5491,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:30:42.2373006+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -5329,7 +5523,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW24"
+    "Address": "DB1.DBW24",
+    "LastAddress": "DB1.DBW24",
+    "AddressType": "Datablock",
+    "ByteOffset": "24",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW24",
@@ -5359,7 +5560,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW26"
+    "Address": "DB1.DBW26",
+    "LastAddress": "DB1.DBW26",
+    "AddressType": "Datablock",
+    "ByteOffset": "26",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW26",
@@ -5389,7 +5597,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW28"
+    "Address": "DB1.DBW28",
+    "LastAddress": "DB1.DBW28",
+    "AddressType": "Datablock",
+    "ByteOffset": "28",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW28",
@@ -5415,7 +5630,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:33:51.0917673+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -5447,7 +5662,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW28"
+    "Address": "DB1.DBW28",
+    "LastAddress": "DB1.DBW28",
+    "AddressType": "Datablock",
+    "ByteOffset": "28",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW28",
@@ -5477,7 +5699,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW26"
+    "Address": "DB1.DBW26",
+    "LastAddress": "DB1.DBW26",
+    "AddressType": "Datablock",
+    "ByteOffset": "26",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW26",
@@ -5507,7 +5736,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW24"
+    "Address": "DB1.DBW24",
+    "LastAddress": "DB1.DBW24",
+    "AddressType": "Datablock",
+    "ByteOffset": "24",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW24",
@@ -5533,7 +5769,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:34:40.351872+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -5565,7 +5801,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW28"
+    "Address": "DB1.DBW28",
+    "LastAddress": "DB1.DBW28",
+    "AddressType": "Datablock",
+    "ByteOffset": "28",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW28",
@@ -5595,7 +5838,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW26"
+    "Address": "DB1.DBW26",
+    "LastAddress": "DB1.DBW26",
+    "AddressType": "Datablock",
+    "ByteOffset": "26",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW26",
@@ -5625,7 +5875,14 @@
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "DataType": "Int",
-    "Address": "DB1.DBW24"
+    "Address": "DB1.DBW24",
+    "LastAddress": "DB1.DBW24",
+    "AddressType": "Datablock",
+    "ByteOffset": "24",
+    "BitOffset": "0",
+    "IsValid": "True",
+    "IsBitAddress": "False",
+    "DBNumber": "1"
   }
 },
   "Address": "DB1.DBW24",
@@ -5653,7 +5910,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:52.4399526+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -5677,7 +5934,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:57.3368646+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -11315,7 +11572,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-14T09:08:00.1886863+07:00",
-  "ModifiedDate": "2025-08-14T15:33:43.7786228+07:00",
+  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
