@@ -3,6 +3,8 @@
     public class TagsStation : TagsLocation_Info
     {
         public string Path { get; set; }
+        public int StationId { get; set; }
+        public string StationName { get; set; } = string.Empty;
 
         public bool? Remote { get; set; } = false;
         public bool? Local { get; set; } = false;
@@ -45,18 +47,18 @@
         public bool? HT_Cylinder2_2 { get; set; } = false;
         public bool? Door1_Aperture { get; set; } = false;
         public bool? Door2_Aperture { get; set; } = false;
-        public int? S1_Temp_Oil { get; set; } = 0;
-        public int? Pressure_Oil_Door1 { get; set; } = 0;
-        public int? Pressure_Oil_Door2 { get; set; } = 0;
+        public double? S1_Temp_Oil { get; set; } = 0;
+        public double? Pressure_Oil_Door1 { get; set; } = 0;
+        public double? Pressure_Oil_Door2 { get; set; } = 0;
         public bool? Al_Door1 { get; set; } = false;
         public bool? Al_Door2 { get; set; } = false;
-        public int? Fllow_Door1 { get; set; } = 0;
-        public int? Fllow_Door2 { get; set; } = 0;
+        public double? Fllow_Door1 { get; set; } = 0;
+        public double? Fllow_Door2 { get; set; } = 0;
     }
 
     public class TagsLocation_Info
     {
-        public int? Fllow_Ho { get; set; } = 0;
+        public double? Fllow_Ho { get; set; } = 0;
     }
 
     public class CalculatorValueModel : ICalculatorValue

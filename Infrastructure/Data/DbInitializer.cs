@@ -103,13 +103,16 @@ namespace Infrastructure.Data
                 {
                     stations.Add(new TagsStation()
                     {
-                        Path = item.Path
+                        Path = item.Path,
+                        StationId = item.Id ?? 0,
+                        StationName = item.Name ?? string.Empty,
                     });
                 }
 
                 sm.Add(new RealtimeDisplayModel()
                 {
-                    LocationId = 1,
+                    LocationId = (int)d.Id,
+                    LocationName = d.Name,
                     Stations = stations
                 });
 
@@ -230,7 +233,7 @@ namespace Infrastructure.Data
 
             if (!context.ScadaUsers.Any())
             {
-                var newuser=new List<ScadaUser>()
+                var newuser = new List<ScadaUser>()
                 {
                     new ScadaUser()
                     {
@@ -242,7 +245,7 @@ namespace Infrastructure.Data
                         CreateAt=DateTime.Now,
                         CreateOperatorId="system",
                         IsDeleted=false,
-                    } 
+                    }
                 };
 
                 await context.ScadaUsers.AddRangeAsync(newuser);
