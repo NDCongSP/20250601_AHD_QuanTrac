@@ -31,27 +31,7 @@ namespace RegistrationForm1
             _mainForm = frmMain; // ✅ Gán trước khi sử dụng
             if (_mainForm != null)
             {
-                _mainForm.S1_DC1_OverChanged += S1_DC1_Over_ValueChanged;
-                _mainForm.S1_DC2_OverChanged += S1_DC2_Over_ValueChanged;
-                _mainForm.S1_DC3_OverChanged += S1_DC3_Over_ValueChanged;
-                _mainForm.S2_DC1_OverChanged += S2_DC1_Over_ValueChanged;
-                _mainForm.S2_DC2_OverChanged += S2_DC2_Over_ValueChanged;
-                _mainForm.S2_DC3_OverChanged += S2_DC3_Over_ValueChanged;
-                _mainForm.S3_DC1_OverChanged += S3_DC1_Over_ValueChanged;
-                _mainForm.S3_DC2_OverChanged += S3_DC2_Over_ValueChanged;
-                _mainForm.S3_DC3_OverChanged += S3_DC3_Over_ValueChanged;
-                _mainForm.Door1_PressureHighChanged += Door1_PressureHigh_ValueChanged;
-                _mainForm.Door1_PressureLowChanged += Door1_PressureLow_ValueChanged;
-                _mainForm.Door2_PressureHighChanged += Door2_PressureHigh_ValueChanged;
-                _mainForm.Door2_PressureLowChanged += Door2_PressureLow_ValueChanged;
-                _mainForm.Door3_PressureHighChanged += Door3_PressureHigh_ValueChanged;
-                _mainForm.Door3_PressureLowChanged += Door3_PressureLow_ValueChanged;
-                _mainForm.Door4_PressureHighChanged += Door4_PressureHigh_ValueChanged;
-                _mainForm.Door4_PressureLowChanged += Door4_PressureLow_ValueChanged;
-                _mainForm.Door5_PressureHighChanged += Door5_PressureHigh_ValueChanged;
-                _mainForm.Door5_PressureLowChanged += Door5_PressureLow_ValueChanged;
-                _mainForm.Door6_PressureHighChanged += Door6_PressureHigh_ValueChanged;
-                _mainForm.Door6_PressureLowChanged += Door6_PressureLow_ValueChanged;
+                
                 //_mainForm.S1_Station_AlarmChanged += S1_Station_Alarm_ValueChanged;
                 //_mainForm.S2_Station_AlarmChanged += S2_Station_Alarm_ValueChanged;
                 //_mainForm.S3_Station_AlarmChanged += S3_Station_Alarm_ValueChanged;

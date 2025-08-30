@@ -52,6 +52,9 @@
         public int? Fllow_Door2 { get; set; } = 0;
         public int? Total_Fllow { get; set; } = 0;
         public int? Fllow_Ho { get; set; } = 0;
+
+        //Tinh toan
+        public int Calculate { get; set; } = 0;
     }
 
     public class TagGroupAPI
