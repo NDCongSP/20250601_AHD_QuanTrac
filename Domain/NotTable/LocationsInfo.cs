@@ -3,7 +3,7 @@
     /// <summary>
     /// nhiều vị trí ở các khu vực địa lý khác nhau.
     /// </summary>
-    public class LocationsModel : List<LocationInfoModel>
+    public class LocationsInfo : List<LocationInfoModel>
     {
 
     }
@@ -37,7 +37,7 @@
         public int? Id { get; set; }
 
         public string? Name { get; set; }
-        public TagsModel? Tags { get; set; }
+        public TagsStation? Tags { get; set; }
         /// <summary>
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>

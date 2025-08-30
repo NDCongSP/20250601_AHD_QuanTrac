@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250830090750_AddTableFt07_ParamettersForCalcular")]
+    partial class AddTableFt07_ParamettersForCalcular
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,11 +277,11 @@ namespace Infrastructure.Migrations
                     b.Property<bool?>("Doorlock2_Opening")
                         .HasColumnType("bit");
 
-                    b.Property<double?>("Fllow_BinhNham")
-                        .HasColumnType("float");
+                    b.Property<string>("Fllow_BinhNham")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Fllow_BinhNham2")
-                        .HasColumnType("float");
+                    b.Property<string>("Fllow_BinhNham2")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Fllow_Door1")
                         .HasColumnType("int");
@@ -286,23 +289,23 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("Fllow_Door2")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Fllow_HL_TXL")
-                        .HasColumnType("float");
+                    b.Property<string>("Fllow_HL_TXL")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Fllow_Ho")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Fllow_SonDai")
-                        .HasColumnType("float");
+                    b.Property<string>("Fllow_SonDai")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Fllow_TL_CDD")
-                        .HasColumnType("float");
+                    b.Property<string>("Fllow_TL_CDD")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Flow_BenSuc")
-                        .HasColumnType("float");
+                    b.Property<string>("Flow_BenSuc")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Flow_DauTieng")
-                        .HasColumnType("float");
+                    b.Property<string>("Flow_DauTieng")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("HT_Cylinder1_1")
                         .HasColumnType("bit");
@@ -372,8 +375,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("StationName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Total_Fllow")
-                        .HasColumnType("float");
+                    b.Property<int?>("Total_Fllow")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -389,11 +392,20 @@ namespace Infrastructure.Migrations
                     b.ToTable("FT03");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FT04", b =>
+            modelBuilder.Entity("Domain.Entities.FT05", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ACK")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ACKDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Actived")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreateAt")
                         .HasColumnType("datetime2");
@@ -401,29 +413,54 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CreateOperatorId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Hours")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<int>("Minutes")
                         .HasColumnType("int");
 
-                    b.Property<string>("LocationName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("StationId")
+                    b.Property<int>("OvenId")
                         .HasColumnType("int");
 
-                    b.Property<string>("StationName")
+                    b.Property<string>("OvenName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TagName")
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProfileName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Seconds")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Setpoint")
+                        .HasColumnType("float");
+
+                    b.Property<int>("StepId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StepName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Temperature")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -431,15 +468,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("UpdateOperatorId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Value")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
-                    b.ToTable("FT04");
+                    b.ToTable("FT05");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FT05", b =>
+            modelBuilder.Entity("Domain.Entities.FT06", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -466,7 +500,36 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FT05");
+                    b.ToTable("FT06");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FT07", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("C000")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateOperatorId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateOperatorId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FT07");
                 });
 
             modelBuilder.Entity("Domain.Entities.MstUserSetting", b =>
@@ -592,46 +655,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RoleToPermission");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ScadaUser", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateOperatorId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PermissionScada")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdateOperatorId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ScadaUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
