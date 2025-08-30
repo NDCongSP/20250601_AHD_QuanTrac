@@ -100,10 +100,7 @@ namespace RegistrationForm1
 
             using (var dbContext = new ApplicationDbContext())
             {
-                dbContext.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
-
-                //var query = dbContext.Database.SqlQuery<FT01>("SELECT TOP 1 * FROM FT01");
-                //var configTable = query.FirstOrDefault();
+                //dbContext.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
 
                 var configTable = dbContext.FT01s.FirstOrDefault();
 

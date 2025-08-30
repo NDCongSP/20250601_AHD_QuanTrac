@@ -30,10 +30,10 @@ namespace RegistrationForm1
         /// </summary>
         [Display(Name = "Stations config")]
         public string? C001 { get; set; }
-        public string CreateOperatorId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime? CreateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string UpdateOperatorId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime? UpdateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool? IsDeleted { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? CreateOperatorId { get; set; }
+        public DateTime? CreateAt { get; set; }
+        public string? UpdateOperatorId { get; set; }
+        public DateTime? UpdateAt { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }
