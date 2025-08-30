@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250830142803_updateFT03")]
+    partial class updateFT03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,12 +202,6 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("Door1_Aperture")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Door1_Aperture_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Door1_Aperture_Offset")
-                        .HasColumnType("float");
-
                     b.Property<bool?>("Door1_Close")
                         .HasColumnType("bit");
 
@@ -224,12 +221,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<double?>("Door2_Aperture")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Door2_Aperture_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Door2_Aperture_Offset")
                         .HasColumnType("float");
 
                     b.Property<bool?>("Door2_Close")
@@ -301,31 +292,13 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("Fllow_Door1")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Fllow_Door1_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_Door1_Offset")
-                        .HasColumnType("float");
-
                     b.Property<double?>("Fllow_Door2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_Door2_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_Door2_Offset")
                         .HasColumnType("float");
 
                     b.Property<double?>("Fllow_HL_TXL")
                         .HasColumnType("float");
 
                     b.Property<double?>("Fllow_Ho")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_Ho_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_Ho_Offset")
                         .HasColumnType("float");
 
                     b.Property<double?>("Fllow_SonDai")
@@ -337,37 +310,13 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("HT_Cylinder1_1")
                         .HasColumnType("float");
 
-                    b.Property<double?>("HT_Cylinder1_1_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("HT_Cylinder1_1_Offset")
-                        .HasColumnType("float");
-
                     b.Property<double?>("HT_Cylinder1_2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("HT_Cylinder1_2_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("HT_Cylinder1_2_Offset")
                         .HasColumnType("float");
 
                     b.Property<double?>("HT_Cylinder2_1")
                         .HasColumnType("float");
 
-                    b.Property<double?>("HT_Cylinder2_1_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("HT_Cylinder2_1_Offset")
-                        .HasColumnType("float");
-
                     b.Property<double?>("HT_Cylinder2_2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("HT_Cylinder2_2_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("HT_Cylinder2_2_Offset")
                         .HasColumnType("float");
 
                     b.Property<bool?>("IsDeleted")
@@ -405,19 +354,7 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("Pressure_Oil_Door1")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Pressure_Oil_Door1_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Pressure_Oil_Door1_Offset")
-                        .HasColumnType("float");
-
                     b.Property<double?>("Pressure_Oil_Door2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Pressure_Oil_Door2_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Pressure_Oil_Door2_Offset")
                         .HasColumnType("float");
 
                     b.Property<double>("Q_Den")
@@ -430,12 +367,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<double?>("S1_Temp_Oil")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("S1_Temp_Oil_Final")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("S1_Temp_Oil_Offset")
                         .HasColumnType("float");
 
                     b.Property<int>("StationId")

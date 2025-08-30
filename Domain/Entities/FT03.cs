@@ -43,8 +43,8 @@ namespace Domain.Entities
         public bool? IsDeleted { get; set; }
 
         //cac gia tri tinh toan
-        public double? Flow_DauTieng { get; set; } = 0;
-        public double? Flow_BenSuc { get; set; } = 0;
+        public double? Fllow_DauTieng { get; set; } = 0;
+        public double? Fllow_BenSuc { get; set; } = 0;
         public double? Fllow_SonDai { get; set; } = 0;
         public double? Fllow_BinhNham { get; set; } = 0;
         public double? Fllow_BinhNham2 { get; set; } = 0;

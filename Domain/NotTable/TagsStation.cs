@@ -1,10 +1,13 @@
-﻿namespace Domain
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain
 {
     public class TagsStation : TagsLocation_Info
     {
         public string Path { get; set; }
         public int StationId { get; set; }
         public string StationName { get; set; } = string.Empty;
+
 
         public bool? Remote { get; set; } = false;
         public bool? Local { get; set; } = false;
@@ -41,30 +44,59 @@
         public bool? Door1_PressureLow { get; set; } = false;
         public bool? Door2_PressureHigh { get; set; } = false;
         public bool? Door2_PressureLow { get; set; } = false;
-        public bool? HT_Cylinder1_1 { get; set; } = false;
-        public bool? HT_Cylinder1_2 { get; set; } = false;
-        public bool? HT_Cylinder2_1 { get; set; } = false;
-        public bool? HT_Cylinder2_2 { get; set; } = false;
-        public bool? Door1_Aperture { get; set; } = false;
-        public bool? Door2_Aperture { get; set; } = false;
+        public bool? Al_Door1 { get; set; } = false;
+        public bool? Al_Door2 { get; set; } = false;
+
+        public double? HT_Cylinder1_1 { get; set; } = 0;
+        public double? HT_Cylinder1_2 { get; set; } = 0;
+        public double? HT_Cylinder2_1 { get; set; } = 0;
+        public double? HT_Cylinder2_2 { get; set; } = 0;
+        public double? Door1_Aperture { get; set; } = 0;
+        public double? Door2_Aperture { get; set; } = 0;
         public double? S1_Temp_Oil { get; set; } = 0;
         public double? Pressure_Oil_Door1 { get; set; } = 0;
         public double? Pressure_Oil_Door2 { get; set; } = 0;
-        public bool? Al_Door1 { get; set; } = false;
-        public bool? Al_Door2 { get; set; } = false;
         public double? Fllow_Door1 { get; set; } = 0;
         public double? Fllow_Door2 { get; set; } = 0;
+
+        //gia tri offset
+        public double? HT_Cylinder1_1_Offset { get; set; } = 0;
+        public double? HT_Cylinder1_2_Offset { get; set; } = 0;
+        public double? HT_Cylinder2_1_Offset { get; set; } = 0;
+        public double? HT_Cylinder2_2_Offset { get; set; } = 0;
+        public double? Door1_Aperture_Offset { get; set; } = 0;
+        public double? Door2_Aperture_Offset { get; set; } = 0;
+        public double? S1_Temp_Oil_Offset { get; set; } = 0;
+        public double? Pressure_Oil_Door1_Offset { get; set; } = 0;
+        public double? Pressure_Oil_Door2_Offset { get; set; } = 0;
+        public double? Fllow_Door1_Offset { get; set; } = 0;
+        public double? Fllow_Door2_Offset { get; set; } = 0;
+        
+        //gia tri sau cung = origin + Offset
+        public double? HT_Cylinder1_1_Final { get; set; } = 0;
+        public double? HT_Cylinder1_2_Final { get; set; } = 0;
+        public double? HT_Cylinder2_1_Final { get; set; } = 0;
+        public double? HT_Cylinder2_2_Final { get; set; } = 0;
+        public double? Door1_Aperture_Final { get; set; } = 0;
+        public double? Door2_Aperture_Final { get; set; } = 0;
+        public double? S1_Temp_Oil_Final { get; set; } = 0;
+        public double? Pressure_Oil_Door1_Final { get; set; } = 0;
+        public double? Pressure_Oil_Door2_Final { get; set; } = 0;
+        public double? Fllow_Door1_Final { get; set; } = 0;
+        public double? Fllow_Door2_Final { get; set; } = 0;
     }
 
     public class TagsLocation_Info
     {
         public double? Fllow_Ho { get; set; } = 0;
+        public double? Fllow_Ho_Offset { get; set; } = 0;
+        public double? Fllow_Ho_Final { get; set; } = 0;
     }
 
     public class CalculatorValueModel : ICalculatorValue
     {
-        public double? Flow_DauTieng { get; set; } = 0;
-        public double? Flow_BenSuc { get; set; } = 0;
+        public double? Fllow_DauTieng { get; set; } = 0;
+        public double? Fllow_BenSuc { get; set; } = 0;
         public double? Fllow_SonDai { get; set; } = 0;
         public double? Fllow_BinhNham { get; set; } = 0;
         public double? Fllow_BinhNham2 { get; set; } = 0;
