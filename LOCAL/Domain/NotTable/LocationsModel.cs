@@ -47,5 +47,7 @@ namespace Domain
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>
         public string? Path { get; set; }
+
+        public int LocationId { get; set; }
     }
 }

@@ -23,104 +23,27 @@ namespace RegistrationForm1
         }
         private void FrmTran_Load(object sender, EventArgs e)
         {
+            Globalvariable.InvokeIfRequired(this, () =>
+            {
+                foreach (var item in Globalvariable.RealtimeDisplays)
+                {
+                    if (item.Path == "Local Station/DauTieng/S71500/Group1")
+                    {
+                        var s1 = item.Al_Door1;
+                    }
+                    else if (item.Path == "Local Station/DauTieng/S71500/Group2")
+                    {
+                        var s1 = item.Al_Door1;
+                    }
+                    else// (item.Path == "Local Station/DauTieng/S71500/Group1")
+                    {
+                        var s1 = item.Al_Door1;
+                    }
+                }
+            });
+
             if (_mainForm != null)
             {
-                // Subscribe to events
-                _mainForm.S1RemoteChanged += S1_Remote_ValueChanged;
-                _mainForm.S1LocalChanged += S1_Local_ValueChanged;
-                _mainForm.S1AutoChanged += S1_Auto_ValueChanged;
-                _mainForm.S1ManChanged += S1_Man_ValueChanged;
-                _mainForm.S1LocalStopChanged += S1_Local_Stop_ValueChanged;
-
-                _mainForm.S2RemoteChanged += S2_Remote_ValueChanged;
-                _mainForm.S2LocalChanged += S2_Local_ValueChanged;
-                _mainForm.S2AutoChanged += S2_Auto_ValueChanged;
-                _mainForm.S2ManChanged += S2_Man_ValueChanged;
-                _mainForm.S2LocalStopChanged += S2_Local_Stop_ValueChanged;
-
-                _mainForm.S3RemoteChanged += S3_Remote_ValueChanged;
-                _mainForm.S3LocalChanged += S3_Local_ValueChanged;
-                _mainForm.S3AutoChanged += S3_Auto_ValueChanged;
-                _mainForm.S3ManChanged += S3_Man_ValueChanged;
-                _mainForm.S3LocalStopChanged += S3_Local_Stop_ValueChanged;
-                // Subscribe to DC Running events
-                _mainForm.S1_DC1_RunningChanged += S1_DC1_Running_ValueChanged;
-                _mainForm.S1_DC2_RunningChanged += S1_DC2_Running_ValueChanged;
-                _mainForm.S1_DC3_RunningChanged += S1_DC3_Running_ValueChanged;
-                _mainForm.S2_DC1_RunningChanged += S2_DC1_Running_ValueChanged;
-                _mainForm.S2_DC2_RunningChanged += S2_DC2_Running_ValueChanged;
-                _mainForm.S2_DC3_RunningChanged += S2_DC3_Running_ValueChanged;
-                _mainForm.S3_DC1_RunningChanged += S3_DC1_Running_ValueChanged;
-                _mainForm.S3_DC2_RunningChanged += S3_DC2_Running_ValueChanged;
-                _mainForm.S3_DC3_RunningChanged += S3_DC3_Running_ValueChanged;
-                // Subscribe to Door events
-                _mainForm.Door1_OpeningChanged += Door1_Opening_ValueChanged;
-                _mainForm.Door1_ClosingChanged += Door1_Closing_ValueChanged;
-                _mainForm.Door2_OpeningChanged += Door2_Opening_ValueChanged;
-                _mainForm.Door2_ClosingChanged += Door2_Closing_ValueChanged;
-                _mainForm.Door3_OpeningChanged += Door3_Opening_ValueChanged;
-                _mainForm.Door3_ClosingChanged += Door3_Closing_ValueChanged;
-                _mainForm.Door4_OpeningChanged += Door4_Opening_ValueChanged;
-                _mainForm.Door4_ClosingChanged += Door4_Closing_ValueChanged;
-                _mainForm.Door5_OpeningChanged += Door5_Opening_ValueChanged;
-                _mainForm.Door5_ClosingChanged += Door5_Closing_ValueChanged;
-                _mainForm.Door6_OpeningChanged += Door6_Opening_ValueChanged;
-                _mainForm.Door6_ClosingChanged += Door6_Closing_ValueChanged;
-                _mainForm.Door1_OpenChanged += Door1_Open_ValueChanged;
-                _mainForm.Door1_CloseChanged += Door1_Close_ValueChanged;
-                _mainForm.Door2_OpenChanged += Door2_Open_ValueChanged;
-                _mainForm.Door2_CloseChanged += Door2_Close_ValueChanged;
-                _mainForm.Door3_OpenChanged += Door3_Open_ValueChanged;
-                _mainForm.Door3_CloseChanged += Door3_Close_ValueChanged;
-                _mainForm.Door4_OpenChanged += Door4_Open_ValueChanged;
-                _mainForm.Door4_CloseChanged += Door4_Close_ValueChanged;
-                _mainForm.Door5_OpenChanged += Door5_Open_ValueChanged;
-                _mainForm.Door5_CloseChanged += Door5_Close_ValueChanged;
-                _mainForm.Door6_OpenChanged += Door6_Open_ValueChanged;
-                _mainForm.Door6_CloseChanged += Door6_Close_ValueChanged;
-                _mainForm.Doorlock2_1OpenChanged += Doorlock2_1Open_ValueChanged;
-                _mainForm.Doorlock2_1CloseChanged += Doorlock2_1Close_ValueChanged;
-                _mainForm.Doorlock2_2OpenChanged += Doorlock2_2Open_ValueChanged;
-                _mainForm.Doorlock2_2CloseChanged += Doorlock2_2Close_ValueChanged;
-                _mainForm.Doorlock3_1OpenChanged += Doorlock3_1Open_ValueChanged;
-                _mainForm.Doorlock3_1CloseChanged += Doorlock3_1Close_ValueChanged;
-                _mainForm.Doorlock3_2OpenChanged += Doorlock3_2Open_ValueChanged;
-                _mainForm.Doorlock3_2CloseChanged += Doorlock3_2Close_ValueChanged;
-                _mainForm.Doorlock4_1OpenChanged += Doorlock4_1Open_ValueChanged;
-                _mainForm.Doorlock4_1CloseChanged += Doorlock4_1Close_ValueChanged;
-                _mainForm.Doorlock4_2OpenChanged += Doorlock4_2Open_ValueChanged;
-                _mainForm.Doorlock4_2CloseChanged += Doorlock4_2Close_ValueChanged;
-                _mainForm.Doorlock5_1OpenChanged += Doorlock5_1Open_ValueChanged;
-                _mainForm.Doorlock5_1CloseChanged += Doorlock5_1Close_ValueChanged;
-                _mainForm.Doorlock5_2OpenChanged += Doorlock5_2Open_ValueChanged;
-                _mainForm.Doorlock5_2CloseChanged += Doorlock5_2Close_ValueChanged;
-                _mainForm.S1_DC1_OverChanged += S1_DC1_Over_ValueChanged;
-                _mainForm.S1_DC2_OverChanged += S1_DC2_Over_ValueChanged;
-                _mainForm.S1_DC3_OverChanged += S1_DC3_Over_ValueChanged;
-                _mainForm.S2_DC1_OverChanged += S2_DC1_Over_ValueChanged;
-                _mainForm.S2_DC2_OverChanged += S2_DC2_Over_ValueChanged;
-                _mainForm.S2_DC3_OverChanged += S2_DC3_Over_ValueChanged;
-                _mainForm.S3_DC1_OverChanged += S3_DC1_Over_ValueChanged;
-                _mainForm.S3_DC2_OverChanged += S3_DC2_Over_ValueChanged;
-                _mainForm.S3_DC3_OverChanged += S3_DC3_Over_ValueChanged;
-                _mainForm.Door1_PressureHighChanged += Door1_PressureHigh_ValueChanged;
-                _mainForm.Door1_PressureLowChanged += Door1_PressureLow_ValueChanged;
-                _mainForm.Door2_PressureHighChanged += Door2_PressureHigh_ValueChanged;
-                _mainForm.Door2_PressureLowChanged += Door2_PressureLow_ValueChanged;
-                _mainForm.Door3_PressureHighChanged += Door3_PressureHigh_ValueChanged;
-                _mainForm.Door3_PressureLowChanged += Door3_PressureLow_ValueChanged;
-                _mainForm.Door4_PressureHighChanged += Door4_PressureHigh_ValueChanged;
-                _mainForm.Door4_PressureLowChanged += Door4_PressureLow_ValueChanged;
-                _mainForm.Door5_PressureHighChanged += Door5_PressureHigh_ValueChanged;
-                _mainForm.Door5_PressureLowChanged += Door5_PressureLow_ValueChanged;
-                _mainForm.Door6_PressureHighChanged += Door6_PressureHigh_ValueChanged;
-                _mainForm.Door6_PressureLowChanged += Door6_PressureLow_ValueChanged;
-                _mainForm.Al_Door1Changed += Al_Door1_ValueChanged;
-                _mainForm.Al_Door2Changed += Al_Door2_ValueChanged;
-                _mainForm.Al_Door3Changed += Al_Door3_ValueChanged;
-                _mainForm.Al_Door4Changed += Al_Door4_ValueChanged;
-                _mainForm.Al_Door5Changed += Al_Door5_ValueChanged;
-                _mainForm.Al_Door6Changed += Al_Door6_ValueChanged;
             }
             else
             {
@@ -341,198 +264,7 @@ namespace RegistrationForm1
         private void LoadInitialValues() // Load giá trị ban đầu từ FrmMain (được gọi trong constructor)
         {
 
-            // Load trạng thái ban đầu từ FrmMain của các nút và nhãn
-            //  label1.Text = $"S1_Remote: {_mainForm.GetS1RemoteValue()}"; bnt_Remote_T1.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Remote_T1.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Remote_T2.BackColor = _mainForm.GetS1RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Remote_T3.BackColor = _mainForm.GetS2RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Remote_T4.BackColor = _mainForm.GetS2RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Remote_T5.BackColor = _mainForm.GetS3RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Remote_T6.BackColor = _mainForm.GetS3RemoteValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            //   label2.Text = $"S1_Local: {_mainForm.GetS1LocalValue()}"; bnt_Local_T1.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Local_T1.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Local_T2.BackColor = _mainForm.GetS1LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Local_T3.BackColor = _mainForm.GetS2LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Local_T4.BackColor = _mainForm.GetS2LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Local_T5.BackColor = _mainForm.GetS3LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Local_T6.BackColor = _mainForm.GetS3LocalValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            //   label3.Text = $"S1_Auto: {_mainForm.GetS1AutoValue()}"; bnt_Auto_T1.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Auto_T1.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Auto_T2.BackColor = _mainForm.GetS1AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Auto_T3.BackColor = _mainForm.GetS2AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Auto_T4.BackColor = _mainForm.GetS2AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Auto_T5.BackColor = _mainForm.GetS3AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Auto_T6.BackColor = _mainForm.GetS3AutoValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            //    label4.Text = $"S1_Man: {_mainForm.GetS1ManValue()}"; bnt_Hand_T1.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Hand_T1.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Hand_T2.BackColor = _mainForm.GetS1ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Hand_T3.BackColor = _mainForm.GetS2ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Hand_T4.BackColor = _mainForm.GetS2ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Hand_T5.BackColor = _mainForm.GetS3ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Hand_T6.BackColor = _mainForm.GetS3ManValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            //       label5.Text = $"S1_Local_Stop: {_mainForm.GetS1LocalStopValue()}"; bnt_Estop_T1.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Estop_T1.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Estop_T2.BackColor = _mainForm.GetS1LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Estop_T3.BackColor = _mainForm.GetS2LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Estop_T4.BackColor = _mainForm.GetS2LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Estop_T5.BackColor = _mainForm.GetS3LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            bnt_Estop_T6.BackColor = _mainForm.GetS3LocalStopValue() == "1" ? Color.GreenYellow : DefaultBackColor;
-            // Load trạng thái của các nút DC Running
-            Pic_S1_DC1_Running.Visible = _mainForm.GetS1_DC1_RunningValue() == "1";
-            PicT2_S1_DC1_Running.Visible = _mainForm.GetS1_DC1_RunningValue() == "1";
-            Pic_S1_DC2_Running.Visible = _mainForm.GetS1_DC2_RunningValue() == "1";
-            PicT2_S1_DC2_Running.Visible = _mainForm.GetS1_DC2_RunningValue() == "1";
-            Pic_S1_DC3_Running.Visible = _mainForm.GetS1_DC3_RunningValue() == "1";
-            PicT2_S1_DC3_Running.Visible = _mainForm.GetS1_DC3_RunningValue() == "1";
-            Pic_S2_DC1_Running.Visible = _mainForm.GetS2_DC1_RunningValue() == "1";
-            PicT4_S2_DC1_Running.Visible = _mainForm.GetS2_DC1_RunningValue() == "1";
-            Pic_S2_DC2_Running.Visible = _mainForm.GetS2_DC2_RunningValue() == "1";
-            PicT4_S2_DC2_Running.Visible = _mainForm.GetS2_DC2_RunningValue() == "1";
-            Pic_S2_DC3_Running.Visible = _mainForm.GetS2_DC3_RunningValue() == "1";
-            PicT4_S2_DC3_Running.Visible = _mainForm.GetS2_DC3_RunningValue() == "1";
-            Pic_S3_DC1_Running.Visible = _mainForm.GetS3_DC1_RunningValue() == "1";
-            PicT6_S3_DC1_Running.Visible = _mainForm.GetS3_DC1_RunningValue() == "1";
-            Pic_S3_DC2_Running.Visible = _mainForm.GetS3_DC2_RunningValue() == "1";
-            PicT6_S3_DC2_Running.Visible = _mainForm.GetS3_DC2_RunningValue() == "1";
-            Pic_S3_DC3_Running.Visible = _mainForm.GetS3_DC3_RunningValue() == "1";
-            PicT6_S3_DC3_Running.Visible = _mainForm.GetS3_DC3_RunningValue() == "1";
-            // Load trạng thái của các cửa
-            Pic_Door1_Opening.Visible = _mainForm.GetDoor1_OpeningValue() == "1";
-            Pic_Door1_Opening_Stop.Visible = _mainForm.GetDoor1_OpeningValue() == "0";
-            Pic_Door1_Closing.Visible = _mainForm.GetDoor1_ClosingValue() == "1";
-            Pic_Door1_Closing_Stop.Visible = _mainForm.GetDoor1_ClosingValue() == "0";
-            Pic_Door2_Opening.Visible = _mainForm.GetDoor2_OpeningValue() == "1";
-            Pic_Door2_Opening_Stop.Visible = _mainForm.GetDoor2_OpeningValue() == "0";
-            Pic_Door2_Closing.Visible = _mainForm.GetDoor2_ClosingValue() == "1";
-            Pic_Door2_Closing_Stop.Visible = _mainForm.GetDoor2_ClosingValue() == "0";
-            Pic_Door3_Opening.Visible = _mainForm.GetDoor3_OpeningValue() == "1";
-            Pic_Door3_Opening_Stop.Visible = _mainForm.GetDoor3_OpeningValue() == "0";
-            Pic_Door3_Closing.Visible = _mainForm.GetDoor3_ClosingValue() == "1";
-            Pic_Door3_Closing_Stop.Visible = _mainForm.GetDoor3_ClosingValue() == "0";
-            Pic_Door4_Opening.Visible = _mainForm.GetDoor4_OpeningValue() == "1";
-            Pic_Door4_Opening_Stop.Visible = _mainForm.GetDoor4_OpeningValue() == "0";
-            Pic_Door4_Closing.Visible = _mainForm.GetDoor4_ClosingValue() == "1";
-            Pic_Door4_Closing_Stop.Visible = _mainForm.GetDoor4_ClosingValue() == "0";
-            Pic_Door5_Opening.Visible = _mainForm.GetDoor5_OpeningValue() == "1";
-            Pic_Door5_Opening_Stop.Visible = _mainForm.GetDoor5_OpeningValue() == "0";
-            Pic_Door5_Closing.Visible = _mainForm.GetDoor5_ClosingValue() == "1";
-            Pic_Door5_Closing_Stop.Visible = _mainForm.GetDoor5_ClosingValue() == "0";
-            Pic_Door6_Opening.Visible = _mainForm.GetDoor6_OpeningValue() == "1";
-            Pic_Door6_Opening_Stop.Visible = _mainForm.GetDoor6_OpeningValue() == "0";
-            Pic_Door6_Closing.Visible = _mainForm.GetDoor6_ClosingValue() == "1";
-            Pic_Door6_Closing_Stop.Visible = _mainForm.GetDoor6_ClosingValue() == "0";
-            Pic_Door1_Open.Visible = _mainForm.GetDoor1_OpenValue() == "1";
-            Pic_Door1_Open_Stop.Visible = _mainForm.GetDoor1_OpenValue() == "0";
-            Pic_Door1_Close.Visible = _mainForm.GetDoor1_CloseValue() == "1";
-            Pic_Door1_Close_Stop.Visible = _mainForm.GetDoor1_CloseValue() == "0";
-            Pic_Door2_Open.Visible = _mainForm.GetDoor2_OpenValue() == "1";
-            Pic_Door2_Open_Stop.Visible = _mainForm.GetDoor2_OpenValue() == "0";
-            Pic_Door2_Close.Visible = _mainForm.GetDoor2_CloseValue() == "1";
-            Pic_Door2_Close_Stop.Visible = _mainForm.GetDoor2_CloseValue() == "0";
-            Pic_Door3_Open.Visible = _mainForm.GetDoor3_OpenValue() == "1";
-            Pic_Door3_Open_Stop.Visible = _mainForm.GetDoor3_OpenValue() == "0";
-            Pic_Door3_Close.Visible = _mainForm.GetDoor3_CloseValue() == "1";
-            Pic_Door3_Close_Stop.Visible = _mainForm.GetDoor3_CloseValue() == "0";
-            Pic_Door4_Open.Visible = _mainForm.GetDoor4_OpenValue() == "1";
-            Pic_Door4_Open_Stop.Visible = _mainForm.GetDoor4_OpenValue() == "0";
-            Pic_Door4_Close.Visible = _mainForm.GetDoor4_CloseValue() == "1";
-            Pic_Door4_Close_Stop.Visible = _mainForm.GetDoor4_CloseValue() == "0";
-            Pic_Door5_Open.Visible = _mainForm.GetDoor5_OpenValue() == "1";
-            Pic_Door5_Open_Stop.Visible = _mainForm.GetDoor5_OpenValue() == "0";
-            Pic_Door5_Close.Visible = _mainForm.GetDoor5_CloseValue() == "1";
-            Pic_Door5_Close_Stop.Visible = _mainForm.GetDoor5_CloseValue() == "0";
-            Pic_Door6_Open.Visible = _mainForm.GetDoor6_OpenValue() == "1";
-            Pic_Door6_Open_Stop.Visible = _mainForm.GetDoor6_OpenValue() == "0";
-            Pic_Door6_Close.Visible = _mainForm.GetDoor6_CloseValue() == "1";
-            Pic_Door6_Close_Stop.Visible = _mainForm.GetDoor6_CloseValue() == "0";
-            Pic_Doorlock2_1Open.Visible = _mainForm.GetDoorlock2_1OpenValue() == "1";
-            Pic_Doorlock2_1Open_Stop.Visible = _mainForm.GetDoorlock2_1OpenValue() == "0";
-            Pic_Doorlock2_1Close.Visible = _mainForm.GetDoorlock2_1CloseValue() == "1";
-            Pic_Doorlock2_1Close_Stop.Visible = _mainForm.GetDoorlock2_1CloseValue() == "0";
-            Pic_Doorlock2_2Open.Visible = _mainForm.GetDoorlock2_2OpenValue() == "1";
-            Pic_Doorlock2_2Open_Stop.Visible = _mainForm.GetDoorlock2_2OpenValue() == "0";
-            Pic_Doorlock2_2Close.Visible = _mainForm.GetDoorlock2_2CloseValue() == "1";
-            Pic_Doorlock2_2Close_Stop.Visible = _mainForm.GetDoorlock2_2CloseValue() == "0";
-            Pic_Doorlock3_1Open.Visible = _mainForm.GetDoorlock3_1OpenValue() == "1";
-            Pic_Doorlock3_1Open_Stop.Visible = _mainForm.GetDoorlock3_1OpenValue() == "0";
-            Pic_Doorlock3_1Close.Visible = _mainForm.GetDoorlock3_1CloseValue() == "1";
-            Pic_Doorlock3_1Close_Stop.Visible = _mainForm.GetDoorlock3_1CloseValue() == "0";
-            Pic_Doorlock3_2Open.Visible = _mainForm.GetDoorlock3_2OpenValue() == "1";
-            Pic_Doorlock3_2Open_Stop.Visible = _mainForm.GetDoorlock3_2OpenValue() == "0";
-            Pic_Doorlock3_2Close.Visible = _mainForm.GetDoorlock3_2CloseValue() == "1";
-            Pic_Doorlock3_2Close_Stop.Visible = _mainForm.GetDoorlock3_2CloseValue() == "0";
-            Pic_Doorlock4_1Open.Visible = _mainForm.GetDoorlock4_1OpenValue() == "1";
-            Pic_Doorlock4_1Open_Stop.Visible = _mainForm.GetDoorlock4_1OpenValue() == "0";
-            Pic_Doorlock4_1Close.Visible = _mainForm.GetDoorlock4_1CloseValue() == "1";
-            Pic_Doorlock4_1Close_Stop.Visible = _mainForm.GetDoorlock4_1CloseValue() == "0";
-            Pic_Doorlock4_2Open.Visible = _mainForm.GetDoorlock4_2OpenValue() == "1";
-            Pic_Doorlock4_2Open_Stop.Visible = _mainForm.GetDoorlock4_2OpenValue() == "0";
-            Pic_Doorlock4_2Close.Visible = _mainForm.GetDoorlock4_2CloseValue() == "1";
-            Pic_Doorlock4_2Close_Stop.Visible = _mainForm.GetDoorlock4_2CloseValue() == "0";
-            Pic_Doorlock5_1Open.Visible = _mainForm.GetDoorlock5_1OpenValue() == "1";
-            Pic_Doorlock5_1Open_Stop.Visible = _mainForm.GetDoorlock5_1OpenValue() == "0";
-            Pic_Doorlock5_1Close.Visible = _mainForm.GetDoorlock5_1CloseValue() == "1";
-            Pic_Doorlock5_1Close_Stop.Visible = _mainForm.GetDoorlock5_1CloseValue() == "0";
-            Pic_Doorlock5_2Open.Visible = _mainForm.GetDoorlock5_2OpenValue() == "1";
-            Pic_Doorlock5_2Open_Stop.Visible = _mainForm.GetDoorlock5_2OpenValue() == "0";
-            Pic_Doorlock5_2Close.Visible = _mainForm.GetDoorlock5_2CloseValue() == "1";
-            Pic_Doorlock5_2Close_Stop.Visible = _mainForm.GetDoorlock5_2CloseValue() == "0";
-            Pic_S1_DC1_Over.Visible = _mainForm.GetS1_DC1_OverValue() == "1";PicT2_S1_DC1_Over.Visible = _mainForm.GetS1_DC1_OverValue() == "1";
-            Pic_S1_DC1_Over_Stop.Visible = _mainForm.GetS1_DC1_OverValue() == "0";PicT2_S1_DC1_Over_Stop.Visible = _mainForm.GetS1_DC1_OverValue() == "0";
-            Pic_S1_DC2_Over.Visible = _mainForm.GetS1_DC2_OverValue() == "1";PicT2_S1_DC2_Over.Visible = _mainForm.GetS1_DC2_OverValue() == "1";
-            Pic_S1_DC2_Over_Stop.Visible = _mainForm.GetS1_DC2_OverValue() == "0";PicT2_S1_DC2_Over_Stop.Visible = _mainForm.GetS1_DC2_OverValue() == "0";
-            Pic_S1_DC3_Over.Visible = _mainForm.GetS1_DC3_OverValue() == "1";PicT2_S1_DC3_Over.Visible = _mainForm.GetS1_DC3_OverValue() == "1";
-            Pic_S1_DC3_Over_Stop.Visible = _mainForm.GetS1_DC3_OverValue() == "0";PicT2_S1_DC3_Over_Stop.Visible = _mainForm.GetS1_DC3_OverValue() == "0";
-
-            Pic_S2_DC1_Over.Visible = _mainForm.GetS2_DC1_OverValue() == "1";PicT4_S2_DC1_Over.Visible = _mainForm.GetS2_DC1_OverValue() == "1";
-            Pic_S2_DC1_Over_Stop.Visible = _mainForm.GetS2_DC1_OverValue() == "0";PicT4_S2_DC1_Over_Stop.Visible = _mainForm.GetS2_DC1_OverValue() == "0";
-            Pic_S2_DC2_Over.Visible = _mainForm.GetS2_DC2_OverValue() == "1";PicT4_S2_DC2_Over.Visible = _mainForm.GetS2_DC2_OverValue() == "1";
-            Pic_S2_DC2_Over_Stop.Visible = _mainForm.GetS2_DC2_OverValue() == "0";PicT4_S2_DC2_Over_Stop.Visible = _mainForm.GetS2_DC2_OverValue() == "0";
-            Pic_S2_DC3_Over.Visible = _mainForm.GetS2_DC3_OverValue() == "1";PicT4_S2_DC3_Over.Visible = _mainForm.GetS2_DC3_OverValue() == "1";
-            Pic_S2_DC3_Over_Stop.Visible = _mainForm.GetS2_DC3_OverValue() == "0";Pic_S2_DC3_Over_Stop.Visible = _mainForm.GetS2_DC3_OverValue() == "0";
-
-            Pic_S3_DC1_Over.Visible = _mainForm.GetS3_DC1_OverValue() == "1";PicT6_S3_DC1_Over.Visible = _mainForm.GetS3_DC1_OverValue() == "1";
-            Pic_S3_DC1_Over_Stop.Visible = _mainForm.GetS3_DC1_OverValue() == "0";PicT6_S3_DC1_Over_Stop.Visible = _mainForm.GetS3_DC1_OverValue() == "0";
-            Pic_S3_DC2_Over.Visible = _mainForm.GetS3_DC2_OverValue() == "1";PicT6_S3_DC2_Over.Visible = _mainForm.GetS3_DC2_OverValue() == "1";
-            Pic_S3_DC2_Over_Stop.Visible = _mainForm.GetS3_DC2_OverValue() == "0";PicT6_S3_DC2_Over_Stop.Visible = _mainForm.GetS3_DC2_OverValue() == "0";
-            Pic_S3_DC3_Over.Visible = _mainForm.GetS3_DC3_OverValue() == "1";PicT6_S3_DC3_Over.Visible = _mainForm.GetS3_DC3_OverValue() == "1";
-            Pic_S3_DC3_Over_Stop.Visible = _mainForm.GetS3_DC3_OverValue() == "0";PicT6_S3_DC3_Over_Stop.Visible = _mainForm.GetS3_DC3_OverValue() == "0";
-
-            Pic_Door1_PressureHigh.Visible = _mainForm.GetDoor1_PressureHighValue() == "1";
-            Pic_Door1_PressureHigh_Stop.Visible = _mainForm.GetDoor1_PressureHighValue() == "0";
-            Pic_Door1_PressureLow.Visible = _mainForm.GetDoor1_PressureLowValue() == "1";
-            Pic_Door1_PressureLow_Stop.Visible = _mainForm.GetDoor1_PressureLowValue() == "0";
-            Pic_Door2_PressureHigh.Visible = _mainForm.GetDoor2_PressureHighValue() == "1";
-            Pic_Door2_PressureHigh_Stop.Visible = _mainForm.GetDoor2_PressureHighValue() == "0";
-            Pic_Door2_PressureLow.Visible = _mainForm.GetDoor2_PressureLowValue() == "1";
-            Pic_Door2_PressureLow_Stop.Visible = _mainForm.GetDoor2_PressureLowValue() == "0";
-            Pic_Door3_PressureHigh.Visible = _mainForm.GetDoor3_PressureHighValue() == "1";
-            Pic_Door3_PressureHigh_Stop.Visible = _mainForm.GetDoor3_PressureHighValue() == "0";
-            Pic_Door3_PressureLow.Visible = _mainForm.GetDoor3_PressureLowValue() == "1";
-            Pic_Door3_PressureLow_Stop.Visible = _mainForm.GetDoor3_PressureLowValue() == "0";
-            Pic_Door4_PressureHigh.Visible = _mainForm.GetDoor4_PressureHighValue() == "1";
-            Pic_Door4_PressureHigh_Stop.Visible = _mainForm.GetDoor4_PressureHighValue() == "0";
-            Pic_Door4_PressureLow.Visible = _mainForm.GetDoor4_PressureLowValue() == "1";
-            Pic_Door4_PressureLow_Stop.Visible = _mainForm.GetDoor4_PressureLowValue() == "0";
-            Pic_Door5_PressureHigh.Visible = _mainForm.GetDoor5_PressureHighValue() == "1";
-            Pic_Door5_PressureHigh_Stop.Visible = _mainForm.GetDoor5_PressureHighValue() == "0";
-            Pic_Door5_PressureLow.Visible = _mainForm.GetDoor5_PressureLowValue() == "1";
-            Pic_Door5_PressureLow_Stop.Visible = _mainForm.GetDoor5_PressureLowValue() == "0";
-            Pic_Door6_PressureHigh.Visible = _mainForm.GetDoor6_PressureHighValue() == "1";
-            Pic_Door6_PressureHigh_Stop.Visible = _mainForm.GetDoor6_PressureHighValue() == "0";
-            Pic_Door6_PressureLow.Visible = _mainForm.GetDoor6_PressureLowValue() == "1";
-            Pic_Door6_PressureLow_Stop.Visible = _mainForm.GetDoor6_PressureLowValue() == "0";
-            // Load trạng thái các Alarm lệch cửa
-
-
-
-
-
-
-
-
-
-
+        
 
         }
 
@@ -1050,21 +782,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-            string pump1 = _mainForm.GetS1_DC1_RunningValue();
-            string pump2 = _mainForm.GetS1_DC2_RunningValue();
-            string pump3 = _mainForm.GetS1_DC3_RunningValue();
-            string door1Open = _mainForm.GetDoor1_OpenValue();
-            string door1Close = _mainForm.GetDoor1_CloseValue();
-            string door1Opening = _mainForm.GetDoor1_OpeningValue();
-            string door1Closing = _mainForm.GetDoor1_ClosingValue();
-
-            UpdateTagValue1("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
-            UpdateTagValue1("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
-            UpdateTagValue1("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
-            UpdateTagValue1("Cửa 1 Mở Hoàn Toàn", door1Open == "1" ? "1" : "0");
-            UpdateTagValue1("Cửa 1 Đóng Hoàn Toàn", door1Close == "1" ? "1" : "0");
-            UpdateTagValue1("Cửa 1 Đang Mở", door1Opening == "1" ? "1" : "0");
-            UpdateTagValue1("Cửa 1 Đang Đóng", door1Closing == "1" ? "1" : "0");
+   
         }
         private void LoadAllTags1()
         {
@@ -1174,29 +892,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-            string pump1 = _mainForm.GetS1_DC1_RunningValue();
-            string pump2 = _mainForm.GetS1_DC2_RunningValue();
-            string pump3 = _mainForm.GetS1_DC3_RunningValue();
-            string door2Open = _mainForm.GetDoor2_OpenValue();
-            string door2Close = _mainForm.GetDoor2_CloseValue();
-            string door2Opening = _mainForm.GetDoor2_OpeningValue();
-            string door2Closing = _mainForm.GetDoor2_ClosingValue();
-            string doorlock2_1Open = _mainForm.GetDoorlock2_1OpenValue();
-            string doorlock2_1Close = _mainForm.GetDoorlock2_1CloseValue();
-            string doorlock2_2Open = _mainForm.GetDoorlock2_2OpenValue();
-            string doorlock2_2Close = _mainForm.GetDoorlock2_2CloseValue();
-
-            UpdateTagValue2("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
-            UpdateTagValue2("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
-            UpdateTagValue2("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
-            UpdateTagValue2("Cửa 2 Mở Hoàn Toàn", door2Open == "1" ? "1" : "0");
-            UpdateTagValue2("Cửa 2 Đóng Hoàn Toàn", door2Close == "1" ? "1" : "0");
-            UpdateTagValue2("Cửa 2 Đang Mở", door2Opening == "1" ? "1" : "0");
-            UpdateTagValue2("Cửa 2 Đang Đóng", door2Closing == "1" ? "1" : "0");
-            UpdateTagValue2("Chốt 2_1 Mở Hết", doorlock2_1Open == "1" ? "1" : "0");
-            UpdateTagValue2("Chốt 2_1 Đóng Hết", doorlock2_1Close == "1" ? "1" : "0");
-            UpdateTagValue2("Chốt 2_2 Mở Hết", doorlock2_2Open == "1" ? "1" : "0");
-            UpdateTagValue2("Chốt 2_2 Đóng Hết", doorlock2_2Close == "1" ? "1" : "0");
+       
 
             // Thêm các tag khác tương tự
         }
@@ -1388,29 +1084,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-            string pump1 = _mainForm.GetS2_DC1_RunningValue();
-            string pump2 = _mainForm.GetS2_DC2_RunningValue();
-            string pump3 = _mainForm.GetS2_DC3_RunningValue();
-            string door3Open = _mainForm.GetDoor3_OpenValue();
-            string door3Close = _mainForm.GetDoor3_CloseValue();
-            string door3Opening = _mainForm.GetDoor3_OpeningValue();
-            string door3Closing = _mainForm.GetDoor3_ClosingValue();
-            string doorlock3_1Open = _mainForm.GetDoorlock3_1OpenValue();
-            string doorlock3_1Close = _mainForm.GetDoorlock3_1CloseValue();
-            string doorlock3_2Open = _mainForm.GetDoorlock3_2OpenValue();
-            string doorlock3_2Close = _mainForm.GetDoorlock3_2CloseValue();
-
-            UpdateTagValue3("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
-            UpdateTagValue3("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
-            UpdateTagValue3("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
-            UpdateTagValue3("Cửa 3 Mở Hoàn Toàn", door3Open == "1" ? "1" : "0");
-            UpdateTagValue3("Cửa 3 Đóng Hoàn Toàn", door3Close == "1" ? "1" : "0");
-            UpdateTagValue3("Cửa 3 Đang Mở", door3Opening == "1" ? "1" : "0");
-            UpdateTagValue3("Cửa 3 Đang Đóng", door3Closing == "1" ? "1" : "0");
-            UpdateTagValue3("Chốt 3_1 Mở Hết", doorlock3_1Open == "1" ? "1" : "0");
-            UpdateTagValue3("Chốt 3_1 Đóng Hết", doorlock3_1Close == "1" ? "1" : "0");
-            UpdateTagValue3("Chốt 3_2 Mở Hết", doorlock3_2Open == "1" ? "1" : "0");
-            UpdateTagValue3("Chốt 3_2 Đóng Hết", doorlock3_2Close == "1" ? "1" : "0");
+        
 
             // Thêm các tag khác tương tự
         }
@@ -1647,29 +1321,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-            string pump1 = _mainForm.GetS2_DC1_RunningValue();
-            string pump2 = _mainForm.GetS2_DC2_RunningValue();
-            string pump3 = _mainForm.GetS2_DC3_RunningValue();
-            string door4Open = _mainForm.GetDoor4_OpenValue();
-            string door4Close = _mainForm.GetDoor4_CloseValue();
-            string door4Opening = _mainForm.GetDoor4_OpeningValue();
-            string door4Closing = _mainForm.GetDoor4_ClosingValue();
-            string doorlock4_1Open = _mainForm.GetDoorlock4_1OpenValue();
-            string doorlock4_1Close = _mainForm.GetDoorlock4_1CloseValue();
-            string doorlock4_2Open = _mainForm.GetDoorlock4_2OpenValue();
-            string doorlock4_2Close = _mainForm.GetDoorlock4_2CloseValue();
-
-            UpdateTagValue4("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
-            UpdateTagValue4("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
-            UpdateTagValue4("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
-            UpdateTagValue4("Cửa 4 Mở Hoàn Toàn", door4Open == "1" ? "1" : "0");
-            UpdateTagValue4("Cửa 4 Đóng Hoàn Toàn", door4Close == "1" ? "1" : "0");
-            UpdateTagValue4("Cửa 4 Đang Mở", door4Opening == "1" ? "1" : "0");
-            UpdateTagValue4("Cửa 4 Đang Đóng", door4Closing == "1" ? "1" : "0");
-            UpdateTagValue4("Chốt 4_1 Mở Hết", doorlock4_1Open == "1" ? "1" : "0");
-            UpdateTagValue4("Chốt 4_1 Đóng Hết", doorlock4_1Close == "1" ? "1" : "0");
-            UpdateTagValue4("Chốt 4_2 Mở Hết", doorlock4_2Open == "1" ? "1" : "0");
-            UpdateTagValue4("Chốt 4_2 Đóng Hết", doorlock4_2Close == "1" ? "1" : "0");
+           
 
             // Thêm các tag khác tương tự
         }
@@ -1861,29 +1513,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-            string pump1 = _mainForm.GetS3_DC1_RunningValue();
-            string pump2 = _mainForm.GetS3_DC2_RunningValue();
-            string pump3 = _mainForm.GetS3_DC3_RunningValue();
-            string door5Open = _mainForm.GetDoor5_OpenValue();
-            string door5Close = _mainForm.GetDoor5_CloseValue();
-            string door5Opening = _mainForm.GetDoor5_OpeningValue();
-            string door5Closing = _mainForm.GetDoor5_ClosingValue();
-            string doorlock5_1Open = _mainForm.GetDoorlock5_1OpenValue();
-            string doorlock5_1Close = _mainForm.GetDoorlock5_1CloseValue();
-            string doorlock5_2Open = _mainForm.GetDoorlock5_2OpenValue();
-            string doorlock5_2Close = _mainForm.GetDoorlock5_2CloseValue();
-
-            UpdateTagValue5("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
-            UpdateTagValue5("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
-            UpdateTagValue5("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
-            UpdateTagValue5("Cửa 5 Mở Hoàn Toàn", door5Open == "1" ? "1" : "0");
-            UpdateTagValue5("Cửa 5 Đóng Hoàn Toàn", door5Close == "1" ? "1" : "0");
-            UpdateTagValue5("Cửa 5 Đang Mở", door5Opening == "1" ? "1" : "0");
-            UpdateTagValue5("Cửa 5 Đang Đóng", door5Closing == "1" ? "1" : "0");
-            UpdateTagValue5("Chốt 5_1 Mở Hết", doorlock5_1Open == "1" ? "1" : "0");
-            UpdateTagValue5("Chốt 5_1 Đóng Hết", doorlock5_1Close == "1" ? "1" : "0");
-            UpdateTagValue5("Chốt 5_2 Mở Hết", doorlock5_2Open == "1" ? "1" : "0");
-            UpdateTagValue5("Chốt 5_2 Đóng Hết", doorlock5_2Close == "1" ? "1" : "0");
+       
 
             // Thêm các tag khác tương tự
         }
@@ -2120,22 +1750,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-            string pump1 = _mainForm.GetS3_DC1_RunningValue();
-            string pump2 = _mainForm.GetS3_DC2_RunningValue();
-            string pump3 = _mainForm.GetS3_DC3_RunningValue();
-            string door6Open = _mainForm.GetDoor6_OpenValue();
-            string door6Close = _mainForm.GetDoor6_CloseValue();
-            string door6Opening = _mainForm.GetDoor6_OpeningValue();
-            string door6Closing = _mainForm.GetDoor6_ClosingValue();
-            
-
-            UpdateTagValue6("Bơm 1 Đang Chạy", pump1 == "1" ? "1" : "0");
-            UpdateTagValue6("Bơm 2 Đang Chạy", pump2 == "1" ? "1" : "0");
-            UpdateTagValue6("Bơm 3 Đang Chạy", pump3 == "1" ? "1" : "0");
-            UpdateTagValue6("Cửa 6 Mở Hoàn Toàn", door6Open == "1" ? "1" : "0");
-            UpdateTagValue6("Cửa 6 Đóng Hoàn Toàn", door6Close == "1" ? "1" : "0");
-            UpdateTagValue6("Cửa 6 Đang Mở", door6Opening == "1" ? "1" : "0");
-            UpdateTagValue6("Cửa 6 Đang Đóng", door6Closing == "1" ? "1" : "0");
+          
             
 
             // Thêm các tag khác tương tự

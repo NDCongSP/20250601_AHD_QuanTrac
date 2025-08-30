@@ -58,11 +58,15 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labALDoor1_Station3 = new System.Windows.Forms.Label();
+            this._labALDoor1_Station2 = new System.Windows.Forms.Label();
+            this._labALDoor1_Station1 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.dgvStations = new System.Windows.Forms.DataGridView();
             this.dgvStats = new System.Windows.Forms.DataGridView();
             this.lblStatusMessage = new System.Windows.Forms.Label();
+            this._labCalcular1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -157,7 +161,6 @@
             this.button3.TabIndex = 18;
             this.button3.Text = "Cống số 2";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -178,7 +181,6 @@
             this.bntEditdata.TabIndex = 16;
             this.bntEditdata.Text = "Edit data";
             this.bntEditdata.UseVisualStyleBackColor = true;
-            this.bntEditdata.Click += new System.EventHandler(this.button2_Click);
             // 
             // bntNhaplieu
             // 
@@ -189,7 +191,6 @@
             this.bntNhaplieu.TabIndex = 15;
             this.bntNhaplieu.Text = "NL";
             this.bntNhaplieu.UseVisualStyleBackColor = true;
-            this.bntNhaplieu.Click += new System.EventHandler(this.bntNhaplieu_Click);
             // 
             // button1
             // 
@@ -200,7 +201,6 @@
             this.button1.TabIndex = 14;
             this.button1.Text = "Hồ chứa";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // bnt_User
             // 
@@ -211,7 +211,6 @@
             this.bnt_User.TabIndex = 13;
             this.bnt_User.Text = "Người dùng";
             this.bnt_User.UseVisualStyleBackColor = true;
-            this.bnt_User.Click += new System.EventHandler(this.bnt_User_Click);
             // 
             // bnt_TrangChu
             // 
@@ -222,7 +221,6 @@
             this.bnt_TrangChu.TabIndex = 12;
             this.bnt_TrangChu.Text = "Trang chủ";
             this.bnt_TrangChu.UseVisualStyleBackColor = true;
-            this.bnt_TrangChu.Click += new System.EventHandler(this.bnt_TrangChu_Click);
             // 
             // bnt_BaoCao
             // 
@@ -233,7 +231,6 @@
             this.bnt_BaoCao.TabIndex = 11;
             this.bnt_BaoCao.Text = "Báo cáo";
             this.bnt_BaoCao.UseVisualStyleBackColor = true;
-            this.bnt_BaoCao.Click += new System.EventHandler(this.bnt_BaoCao_Click);
             // 
             // bnt_CaiDat
             // 
@@ -244,7 +241,6 @@
             this.bnt_CaiDat.TabIndex = 10;
             this.bnt_CaiDat.Text = "Cài đặt";
             this.bnt_CaiDat.UseVisualStyleBackColor = true;
-            this.bnt_CaiDat.Click += new System.EventHandler(this.bnt_CaiDat_Click);
             // 
             // bnt_Exit
             // 
@@ -255,7 +251,6 @@
             this.bnt_Exit.TabIndex = 9;
             this.bnt_Exit.Text = "Thoát";
             this.bnt_Exit.UseVisualStyleBackColor = true;
-            this.bnt_Exit.Click += new System.EventHandler(this.bnt_Exit_Click);
             // 
             // bnt_LogIn
             // 
@@ -266,7 +261,6 @@
             this.bnt_LogIn.TabIndex = 8;
             this.bnt_LogIn.Text = "Đăng nhập";
             this.bnt_LogIn.UseVisualStyleBackColor = true;
-            this.bnt_LogIn.Click += new System.EventHandler(this.bnt_LogIn_Click);
             // 
             // bnt_TramMN
             // 
@@ -277,7 +271,6 @@
             this.bnt_TramMN.TabIndex = 7;
             this.bnt_TramMN.Text = "Mực nước HL SSG";
             this.bnt_TramMN.UseVisualStyleBackColor = true;
-            this.bnt_TramMN.Click += new System.EventHandler(this.bnt_TramMN_Click);
             // 
             // bnt_CanhBao
             // 
@@ -288,7 +281,6 @@
             this.bnt_CanhBao.TabIndex = 6;
             this.bnt_CanhBao.Text = "Cảnh báo";
             this.bnt_CanhBao.UseVisualStyleBackColor = true;
-            this.bnt_CanhBao.Click += new System.EventHandler(this.bnt_CanhBao_Click);
             // 
             // bnt_Tran
             // 
@@ -299,7 +291,6 @@
             this.bnt_Tran.TabIndex = 0;
             this.bnt_Tran.Text = "Tràn xả lũ";
             this.bnt_Tran.UseVisualStyleBackColor = true;
-            this.bnt_Tran.Click += new System.EventHandler(this.bnt_Tran_Click);
             // 
             // ahdDriverConnector1
             // 
@@ -317,7 +308,6 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // lblWelcome
             // 
@@ -366,18 +356,14 @@
             this.lblTime.TabIndex = 268;
             this.lblTime.Text = "Time";
             // 
-            // tm_login
-            // 
-            this.tm_login.Tick += new System.EventHandler(this.tm_login_Tick);
-            // 
-            // tm_loginMN
-            // 
-            this.tm_loginMN.Tick += new System.EventHandler(this.tm_loginMN_Tick);
-            // 
             // panelDesktop
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labCalcular1);
+            this.panelDesktop.Controls.Add(this._labALDoor1_Station3);
+            this.panelDesktop.Controls.Add(this._labALDoor1_Station2);
+            this.panelDesktop.Controls.Add(this._labALDoor1_Station1);
             this.panelDesktop.Controls.Add(this.button4);
             this.panelDesktop.Controls.Add(this.lblStationsTitle);
             this.panelDesktop.Controls.Add(this.dgvStations);
@@ -388,6 +374,34 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
+            // _labALDoor1_Station3
+            // 
+            this._labALDoor1_Station3.AutoSize = true;
+            this._labALDoor1_Station3.Location = new System.Drawing.Point(200, 358);
+            this._labALDoor1_Station3.Name = "_labALDoor1_Station3";
+            this._labALDoor1_Station3.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor1_Station3.TabIndex = 182;
+            this._labALDoor1_Station3.Text = "label2";
+            this._labALDoor1_Station3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // _labALDoor1_Station2
+            // 
+            this._labALDoor1_Station2.AutoSize = true;
+            this._labALDoor1_Station2.Location = new System.Drawing.Point(200, 327);
+            this._labALDoor1_Station2.Name = "_labALDoor1_Station2";
+            this._labALDoor1_Station2.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor1_Station2.TabIndex = 181;
+            this._labALDoor1_Station2.Text = "label2";
+            // 
+            // _labALDoor1_Station1
+            // 
+            this._labALDoor1_Station1.AutoSize = true;
+            this._labALDoor1_Station1.Location = new System.Drawing.Point(200, 300);
+            this._labALDoor1_Station1.Name = "_labALDoor1_Station1";
+            this._labALDoor1_Station1.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor1_Station1.TabIndex = 180;
+            this._labALDoor1_Station1.Text = "label2";
+            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(585, 244);
@@ -396,7 +410,6 @@
             this.button4.TabIndex = 179;
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // lblStationsTitle
             // 
@@ -426,11 +439,20 @@
             // lblStatusMessage
             // 
             this.lblStatusMessage.AutoSize = true;
-            this.lblStatusMessage.Location = new System.Drawing.Point(208, 233);
+            this.lblStatusMessage.Location = new System.Drawing.Point(74, 244);
             this.lblStatusMessage.Name = "lblStatusMessage";
             this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
+            // 
+            // _labCalcular1
+            // 
+            this._labCalcular1.AutoSize = true;
+            this._labCalcular1.Location = new System.Drawing.Point(351, 300);
+            this._labCalcular1.Name = "_labCalcular1";
+            this._labCalcular1.Size = new System.Drawing.Size(35, 13);
+            this._labCalcular1.TabIndex = 183;
+            this._labCalcular1.Text = "label2";
             // 
             // FrmMain
             // 
@@ -501,5 +523,9 @@
         private System.Windows.Forms.DataGridView dgvStations;
         private System.Windows.Forms.Label lblStationsTitle;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label _labALDoor1_Station1;
+        private System.Windows.Forms.Label _labALDoor1_Station3;
+        private System.Windows.Forms.Label _labALDoor1_Station2;
+        private System.Windows.Forms.Label _labCalcular1;
     }
 }
