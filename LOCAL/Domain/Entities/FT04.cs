@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
@@ -26,5 +27,7 @@ namespace Domain.Entities
         public string? UpdateOperatorId { get; set; }
         public DateTime? UpdateAt { get; set; }
         public bool? IsDeleted { get; set; }
+        DateTime? GenericEntity.CreateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        DateTime? GenericEntity.UpdateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

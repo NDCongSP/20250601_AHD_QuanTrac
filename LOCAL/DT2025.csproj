@@ -233,6 +233,7 @@
     <Compile Include="Domain\NotTable\ConfigModel.cs" />
     <Compile Include="Domain\NotTable\interfaces\ICalculatorValue.cs" />
     <Compile Include="Domain\NotTable\LocationsInfo.cs" />
+    <Compile Include="Domain\NotTable\OffsetConfigModel.cs" />
     <Compile Include="Domain\NotTable\ParamettersModel.cs" />
     <Compile Include="Domain\NotTable\RealtimeDisplayModel.cs" />
     <Compile Include="Domain\NotTable\RealtimeDisplays.cs" />

@@ -911,12 +911,13 @@
             this.tabControl1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.HotTrack = true;
             this.tabControl1.ItemSize = new System.Drawing.Size(250, 50);
-            this.tabControl1.Location = new System.Drawing.Point(-6, 2);
+            this.tabControl1.Location = new System.Drawing.Point(-12, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.ShowToolTips = true;
-            this.tabControl1.Size = new System.Drawing.Size(1724, 865);
+            this.tabControl1.Size = new System.Drawing.Size(3448, 1663);
             this.tabControl1.TabIndex = 89;
             // 
             // tabPage1
@@ -960,10 +961,11 @@
             this.tabPage1.Font = new System.Drawing.Font("Times New Roman", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.ForeColor = System.Drawing.Color.Blue;
             this.tabPage1.Location = new System.Drawing.Point(4, 54);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPage1.Size = new System.Drawing.Size(1716, 807);
+            this.tabPage1.Size = new System.Drawing.Size(3440, 1605);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "          CỬA 1          ";
             // 
@@ -973,10 +975,12 @@
             this.groupBox8.Controls.Add(this.Pic_Al_Door1Stop);
             this.groupBox8.Controls.Add(this.label103);
             this.groupBox8.Controls.Add(this.Pic_Al_Door1);
-            this.groupBox8.Location = new System.Drawing.Point(356, 545);
+            this.groupBox8.Location = new System.Drawing.Point(712, 1048);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox8.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox8.Size = new System.Drawing.Size(307, 115);
+            this.groupBox8.Size = new System.Drawing.Size(614, 221);
             this.groupBox8.TabIndex = 248;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Cửa";
@@ -987,11 +991,12 @@
             this.Pic_Al_Door1Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door1Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door1Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Al_Door1Stop.Location = new System.Drawing.Point(36, 49);
+            this.Pic_Al_Door1Stop.Location = new System.Drawing.Point(72, 94);
+            this.Pic_Al_Door1Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door1Stop.Name = "Pic_Al_Door1Stop";
             this.Pic_Al_Door1Stop.RotateAngle = 0;
             this.Pic_Al_Door1Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door1Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door1Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door1Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door1Stop.TabIndex = 246;
             this.Pic_Al_Door1Stop.TagPath = null;
@@ -1001,9 +1006,10 @@
             // 
             this.label103.AutoSize = true;
             this.label103.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label103.Location = new System.Drawing.Point(96, 55);
+            this.label103.Location = new System.Drawing.Point(192, 106);
+            this.label103.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label103.Name = "label103";
-            this.label103.Size = new System.Drawing.Size(96, 19);
+            this.label103.Size = new System.Drawing.Size(196, 36);
             this.label103.TabIndex = 235;
             this.label103.Text = "Lỗi lệch cửa 1";
             // 
@@ -1013,11 +1019,12 @@
             this.Pic_Al_Door1.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door1.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door1.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Al_Door1.Location = new System.Drawing.Point(36, 49);
+            this.Pic_Al_Door1.Location = new System.Drawing.Point(72, 94);
+            this.Pic_Al_Door1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door1.Name = "Pic_Al_Door1";
             this.Pic_Al_Door1.RotateAngle = 0;
             this.Pic_Al_Door1.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door1.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door1.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door1.TabIndex = 242;
             this.Pic_Al_Door1.TagPath = null;
@@ -1026,11 +1033,12 @@
             // dataGridViewT1
             // 
             this.dataGridViewT1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewT1.Location = new System.Drawing.Point(681, 348);
+            this.dataGridViewT1.Location = new System.Drawing.Point(1362, 669);
+            this.dataGridViewT1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridViewT1.Name = "dataGridViewT1";
             this.dataGridViewT1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dataGridViewT1.RowHeadersWidth = 82;
-            this.dataGridViewT1.Size = new System.Drawing.Size(605, 432);
+            this.dataGridViewT1.Size = new System.Drawing.Size(1210, 831);
             this.dataGridViewT1.TabIndex = 234;
             // 
             // groupBox2
@@ -1041,10 +1049,12 @@
             this.groupBox2.Controls.Add(this.bnt_Auto_T1);
             this.groupBox2.Controls.Add(this.bnt_Remote_T1);
             this.groupBox2.Controls.Add(this.bnt_Local_T1);
-            this.groupBox2.Location = new System.Drawing.Point(1285, 46);
+            this.groupBox2.Location = new System.Drawing.Point(2570, 88);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox2.Size = new System.Drawing.Size(428, 225);
+            this.groupBox2.Size = new System.Drawing.Size(856, 433);
             this.groupBox2.TabIndex = 202;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Vận Hành";
@@ -1052,9 +1062,10 @@
             // bnt_Hand_T1
             // 
             this.bnt_Hand_T1.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Hand_T1.Location = new System.Drawing.Point(51, 28);
+            this.bnt_Hand_T1.Location = new System.Drawing.Point(102, 54);
+            this.bnt_Hand_T1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Hand_T1.Name = "bnt_Hand_T1";
-            this.bnt_Hand_T1.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Hand_T1.Size = new System.Drawing.Size(280, 106);
             this.bnt_Hand_T1.TabIndex = 205;
             this.bnt_Hand_T1.Text = "Tay";
             this.bnt_Hand_T1.UseVisualStyleBackColor = true;
@@ -1062,9 +1073,10 @@
             // bnt_Estop_T1
             // 
             this.bnt_Estop_T1.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Estop_T1.Location = new System.Drawing.Point(162, 163);
+            this.bnt_Estop_T1.Location = new System.Drawing.Point(324, 313);
+            this.bnt_Estop_T1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Estop_T1.Name = "bnt_Estop_T1";
-            this.bnt_Estop_T1.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Estop_T1.Size = new System.Drawing.Size(280, 106);
             this.bnt_Estop_T1.TabIndex = 207;
             this.bnt_Estop_T1.Text = "Dừng khẩn";
             this.bnt_Estop_T1.UseVisualStyleBackColor = true;
@@ -1072,9 +1084,10 @@
             // bnt_Auto_T1
             // 
             this.bnt_Auto_T1.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Auto_T1.Location = new System.Drawing.Point(271, 28);
+            this.bnt_Auto_T1.Location = new System.Drawing.Point(542, 54);
+            this.bnt_Auto_T1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Auto_T1.Name = "bnt_Auto_T1";
-            this.bnt_Auto_T1.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Auto_T1.Size = new System.Drawing.Size(280, 106);
             this.bnt_Auto_T1.TabIndex = 206;
             this.bnt_Auto_T1.Text = "Tự động";
             this.bnt_Auto_T1.UseVisualStyleBackColor = true;
@@ -1082,9 +1095,10 @@
             // bnt_Remote_T1
             // 
             this.bnt_Remote_T1.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T1.Location = new System.Drawing.Point(51, 94);
+            this.bnt_Remote_T1.Location = new System.Drawing.Point(102, 181);
+            this.bnt_Remote_T1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Remote_T1.Name = "bnt_Remote_T1";
-            this.bnt_Remote_T1.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Remote_T1.Size = new System.Drawing.Size(280, 106);
             this.bnt_Remote_T1.TabIndex = 203;
             this.bnt_Remote_T1.Text = "Từ xa";
             this.bnt_Remote_T1.UseVisualStyleBackColor = true;
@@ -1092,9 +1106,10 @@
             // bnt_Local_T1
             // 
             this.bnt_Local_T1.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T1.Location = new System.Drawing.Point(271, 94);
+            this.bnt_Local_T1.Location = new System.Drawing.Point(542, 181);
+            this.bnt_Local_T1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Local_T1.Name = "bnt_Local_T1";
-            this.bnt_Local_T1.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Local_T1.Size = new System.Drawing.Size(280, 106);
             this.bnt_Local_T1.TabIndex = 204;
             this.bnt_Local_T1.Text = "Tại chổ";
             this.bnt_Local_T1.UseVisualStyleBackColor = true;
@@ -1105,11 +1120,12 @@
             this.ahdPictureBox1.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox1.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox1.Image = global::RegistrationForm1.Properties.Resources.tranc;
-            this.ahdPictureBox1.Location = new System.Drawing.Point(1284, 348);
+            this.ahdPictureBox1.Location = new System.Drawing.Point(2568, 669);
+            this.ahdPictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox1.Name = "ahdPictureBox1";
             this.ahdPictureBox1.RotateAngle = 0;
             this.ahdPictureBox1.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox1.Size = new System.Drawing.Size(423, 432);
+            this.ahdPictureBox1.Size = new System.Drawing.Size(846, 831);
             this.ahdPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox1.TabIndex = 90;
             this.ahdPictureBox1.TagPath = null;
@@ -1121,11 +1137,12 @@
             this.ahdBar2.Direction = Ahd.Winforms.Controls.BarDirection.TopToBottom;
             this.ahdBar2.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Percent;
             this.ahdBar2.FillColor = System.Drawing.Color.Green;
-            this.ahdBar2.Location = new System.Drawing.Point(404, 53);
+            this.ahdBar2.Location = new System.Drawing.Point(808, 102);
+            this.ahdBar2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdBar2.MaxValue = "510";
             this.ahdBar2.MinValue = "0";
             this.ahdBar2.Name = "ahdBar2";
-            this.ahdBar2.Size = new System.Drawing.Size(289, 218);
+            this.ahdBar2.Size = new System.Drawing.Size(578, 419);
             this.ahdBar2.TabIndex = 231;
             this.ahdBar2.TagPath = "Local Station/DauTieng/S71500/Group1/Door1_Aperture";
             this.ahdBar2.ValueStringFormat = null;
@@ -1133,10 +1150,11 @@
             // label27
             // 
             this.label27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label27.Location = new System.Drawing.Point(32, 217);
+            this.label27.Location = new System.Drawing.Point(64, 417);
+            this.label27.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label27.Name = "label27";
             this.label27.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label27.Size = new System.Drawing.Size(216, 50);
+            this.label27.Size = new System.Drawing.Size(430, 94);
             this.label27.TabIndex = 230;
             this.label27.Text = "Hành trình xy lanh 1_2";
             this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1146,9 +1164,10 @@
             this.ahdLabel42.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel42.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel42.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel42.Location = new System.Drawing.Point(326, 229);
+            this.ahdLabel42.Location = new System.Drawing.Point(652, 440);
+            this.ahdLabel42.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel42.Name = "ahdLabel42";
-            this.ahdLabel42.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel42.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel42.StringFormat = null;
             this.ahdLabel42.TabIndex = 229;
             this.ahdLabel42.TagPath = null;
@@ -1160,9 +1179,10 @@
             this.ahdLabel43.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel43.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel43.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel43.Location = new System.Drawing.Point(254, 228);
+            this.ahdLabel43.Location = new System.Drawing.Point(508, 438);
+            this.ahdLabel43.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel43.Name = "ahdLabel43";
-            this.ahdLabel43.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel43.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel43.StringFormat = null;
             this.ahdLabel43.TabIndex = 228;
             this.ahdLabel43.TagPath = "Local Station/DauTieng/S71500/Group1/HT_Cylinder1_2";
@@ -1172,10 +1192,11 @@
             // label26
             // 
             this.label26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label26.Location = new System.Drawing.Point(32, 163);
+            this.label26.Location = new System.Drawing.Point(64, 313);
+            this.label26.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label26.Name = "label26";
             this.label26.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label26.Size = new System.Drawing.Size(216, 50);
+            this.label26.Size = new System.Drawing.Size(430, 94);
             this.label26.TabIndex = 227;
             this.label26.Text = "Hành trình xy lanh 1_1";
             this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1185,9 +1206,10 @@
             this.ahdLabel40.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel40.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel40.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel40.Location = new System.Drawing.Point(326, 175);
+            this.ahdLabel40.Location = new System.Drawing.Point(652, 337);
+            this.ahdLabel40.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel40.Name = "ahdLabel40";
-            this.ahdLabel40.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel40.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel40.StringFormat = null;
             this.ahdLabel40.TabIndex = 226;
             this.ahdLabel40.TagPath = null;
@@ -1199,9 +1221,10 @@
             this.ahdLabel41.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel41.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel41.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel41.Location = new System.Drawing.Point(254, 174);
+            this.ahdLabel41.Location = new System.Drawing.Point(508, 335);
+            this.ahdLabel41.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel41.Name = "ahdLabel41";
-            this.ahdLabel41.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel41.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel41.StringFormat = null;
             this.ahdLabel41.TabIndex = 225;
             this.ahdLabel41.TagPath = "Local Station/DauTieng/S71500/Group1/HT_Cylinder1_1";
@@ -1211,10 +1234,11 @@
             // label24
             // 
             this.label24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label24.Location = new System.Drawing.Point(756, 184);
+            this.label24.Location = new System.Drawing.Point(1512, 354);
+            this.label24.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label24.Name = "label24";
             this.label24.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label24.Size = new System.Drawing.Size(185, 50);
+            this.label24.Size = new System.Drawing.Size(368, 94);
             this.label24.TabIndex = 223;
             this.label24.Text = "Lưu lượng tổng (Qc)";
             this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1222,10 +1246,11 @@
             // label19
             // 
             this.label19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label19.Location = new System.Drawing.Point(756, 129);
+            this.label19.Location = new System.Drawing.Point(1512, 248);
+            this.label19.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label19.Name = "label19";
             this.label19.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label19.Size = new System.Drawing.Size(185, 50);
+            this.label19.Size = new System.Drawing.Size(368, 94);
             this.label19.TabIndex = 222;
             this.label19.Text = "Lưu lượng cửa 1 (Qi)";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1233,10 +1258,11 @@
             // label3
             // 
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.Location = new System.Drawing.Point(756, 74);
+            this.label3.Location = new System.Drawing.Point(1512, 142);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label3.Size = new System.Drawing.Size(185, 50);
+            this.label3.Size = new System.Drawing.Size(368, 94);
             this.label3.TabIndex = 221;
             this.label3.Text = "Độ mở cửa (a):";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1244,10 +1270,11 @@
             // label18
             // 
             this.label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label18.Location = new System.Drawing.Point(32, 55);
+            this.label18.Location = new System.Drawing.Point(64, 106);
+            this.label18.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label18.Name = "label18";
             this.label18.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label18.Size = new System.Drawing.Size(216, 50);
+            this.label18.Size = new System.Drawing.Size(430, 94);
             this.label18.TabIndex = 220;
             this.label18.Text = "Mực nước hồ (MN hồ) :";
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1255,10 +1282,11 @@
             // label4
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.Location = new System.Drawing.Point(32, 109);
+            this.label4.Location = new System.Drawing.Point(64, 210);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label4.Size = new System.Drawing.Size(216, 50);
+            this.label4.Size = new System.Drawing.Size(430, 94);
             this.label4.TabIndex = 219;
             this.label4.Text = "Nhiệt độ dầu : ";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1268,9 +1296,10 @@
             this.ahdLabel26.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel26.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel26.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel26.Location = new System.Drawing.Point(1042, 196);
+            this.ahdLabel26.Location = new System.Drawing.Point(2084, 377);
+            this.ahdLabel26.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel26.Name = "ahdLabel26";
-            this.ahdLabel26.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel26.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel26.StringFormat = null;
             this.ahdLabel26.TabIndex = 218;
             this.ahdLabel26.TagPath = null;
@@ -1282,9 +1311,10 @@
             this.ahdLabel27.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel27.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel27.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel27.Location = new System.Drawing.Point(970, 195);
+            this.ahdLabel27.Location = new System.Drawing.Point(1940, 375);
+            this.ahdLabel27.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel27.Name = "ahdLabel27";
-            this.ahdLabel27.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel27.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel27.StringFormat = null;
             this.ahdLabel27.TabIndex = 217;
             this.ahdLabel27.TagPath = "Local Station/DauTieng/S71500/Group1/Total_Fllow";
@@ -1296,9 +1326,10 @@
             this.ahdLabel6.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel6.Location = new System.Drawing.Point(1042, 141);
+            this.ahdLabel6.Location = new System.Drawing.Point(2084, 271);
+            this.ahdLabel6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel6.Name = "ahdLabel6";
-            this.ahdLabel6.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel6.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel6.StringFormat = null;
             this.ahdLabel6.TabIndex = 213;
             this.ahdLabel6.TagPath = null;
@@ -1310,9 +1341,10 @@
             this.ahdLabel23.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel23.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel23.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel23.Location = new System.Drawing.Point(970, 140);
+            this.ahdLabel23.Location = new System.Drawing.Point(1940, 269);
+            this.ahdLabel23.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel23.Name = "ahdLabel23";
-            this.ahdLabel23.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel23.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel23.StringFormat = null;
             this.ahdLabel23.TabIndex = 212;
             this.ahdLabel23.TagPath = "Local Station/DauTieng/S71500/Group1/Fllow_Door1";
@@ -1324,9 +1356,10 @@
             this.ahdLabel4.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel4.Location = new System.Drawing.Point(326, 67);
+            this.ahdLabel4.Location = new System.Drawing.Point(652, 129);
+            this.ahdLabel4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel4.Name = "ahdLabel4";
-            this.ahdLabel4.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel4.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel4.StringFormat = null;
             this.ahdLabel4.TabIndex = 209;
             this.ahdLabel4.TagPath = null;
@@ -1338,9 +1371,10 @@
             this.ahdLabel5.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel5.Location = new System.Drawing.Point(254, 66);
+            this.ahdLabel5.Location = new System.Drawing.Point(508, 127);
+            this.ahdLabel5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel5.Name = "ahdLabel5";
-            this.ahdLabel5.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel5.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel5.StringFormat = null;
             this.ahdLabel5.TabIndex = 208;
             this.ahdLabel5.TagPath = "Local Station/DauTieng/S71500/Group4/Fllow_Ho";
@@ -1356,10 +1390,12 @@
             this.groupBox6.Controls.Add(this.Pic_Door1_PressureHigh);
             this.groupBox6.Controls.Add(this.label16);
             this.groupBox6.Controls.Add(this.label17);
-            this.groupBox6.Location = new System.Drawing.Point(7, 545);
+            this.groupBox6.Location = new System.Drawing.Point(14, 1048);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox6.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox6.Size = new System.Drawing.Size(320, 115);
+            this.groupBox6.Size = new System.Drawing.Size(640, 221);
             this.groupBox6.TabIndex = 206;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Áp dầu";
@@ -1370,11 +1406,12 @@
             this.Pic_Door1_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door1_PressureLow_Stop.Location = new System.Drawing.Point(25, 73);
+            this.Pic_Door1_PressureLow_Stop.Location = new System.Drawing.Point(50, 140);
+            this.Pic_Door1_PressureLow_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_PressureLow_Stop.Name = "Pic_Door1_PressureLow_Stop";
             this.Pic_Door1_PressureLow_Stop.RotateAngle = 0;
             this.Pic_Door1_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_PressureLow_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_PressureLow_Stop.TabIndex = 247;
             this.Pic_Door1_PressureLow_Stop.TagPath = null;
@@ -1386,11 +1423,12 @@
             this.Pic_Door1_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door1_PressureHigh_Stop.Location = new System.Drawing.Point(25, 28);
+            this.Pic_Door1_PressureHigh_Stop.Location = new System.Drawing.Point(50, 54);
+            this.Pic_Door1_PressureHigh_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_PressureHigh_Stop.Name = "Pic_Door1_PressureHigh_Stop";
             this.Pic_Door1_PressureHigh_Stop.RotateAngle = 0;
             this.Pic_Door1_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_PressureHigh_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_PressureHigh_Stop.TabIndex = 246;
             this.Pic_Door1_PressureHigh_Stop.TagPath = null;
@@ -1402,11 +1440,12 @@
             this.Pic_Door1_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_Door1_PressureLow.Location = new System.Drawing.Point(25, 73);
+            this.Pic_Door1_PressureLow.Location = new System.Drawing.Point(50, 140);
+            this.Pic_Door1_PressureLow.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_PressureLow.Name = "Pic_Door1_PressureLow";
             this.Pic_Door1_PressureLow.RotateAngle = 0;
             this.Pic_Door1_PressureLow.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_PressureLow.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_PressureLow.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_PressureLow.TabIndex = 243;
             this.Pic_Door1_PressureLow.TagPath = null;
@@ -1418,11 +1457,12 @@
             this.Pic_Door1_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door1_PressureHigh.Location = new System.Drawing.Point(25, 28);
+            this.Pic_Door1_PressureHigh.Location = new System.Drawing.Point(50, 54);
+            this.Pic_Door1_PressureHigh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_PressureHigh.Name = "Pic_Door1_PressureHigh";
             this.Pic_Door1_PressureHigh.RotateAngle = 0;
             this.Pic_Door1_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_PressureHigh.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_PressureHigh.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_PressureHigh.TabIndex = 242;
             this.Pic_Door1_PressureHigh.TagPath = null;
@@ -1432,9 +1472,10 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(73, 79);
+            this.label16.Location = new System.Drawing.Point(146, 152);
+            this.label16.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(123, 19);
+            this.label16.Size = new System.Drawing.Size(245, 36);
             this.label16.TabIndex = 8;
             this.label16.Text = "Áp dầu cửa 1 thấp";
             // 
@@ -1442,9 +1483,10 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(73, 34);
+            this.label17.Location = new System.Drawing.Point(146, 65);
+            this.label17.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(119, 19);
+            this.label17.Size = new System.Drawing.Size(235, 36);
             this.label17.TabIndex = 5;
             this.label17.Text = "Áp dầu cửa 1 cao";
             // 
@@ -1463,10 +1505,12 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.label12);
             this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Location = new System.Drawing.Point(356, 332);
+            this.groupBox4.Location = new System.Drawing.Point(712, 638);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox4.Size = new System.Drawing.Size(307, 183);
+            this.groupBox4.Size = new System.Drawing.Size(614, 352);
             this.groupBox4.TabIndex = 204;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Trạng thái cửa";
@@ -1477,11 +1521,12 @@
             this.Pic_Door1_Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door1_Close.Location = new System.Drawing.Point(36, 141);
+            this.Pic_Door1_Close.Location = new System.Drawing.Point(72, 271);
+            this.Pic_Door1_Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Close.Name = "Pic_Door1_Close";
             this.Pic_Door1_Close.RotateAngle = 0;
             this.Pic_Door1_Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Close.TabIndex = 241;
             this.Pic_Door1_Close.TagPath = null;
@@ -1493,11 +1538,12 @@
             this.Pic_Door1_Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door1_Open.Location = new System.Drawing.Point(36, 102);
+            this.Pic_Door1_Open.Location = new System.Drawing.Point(72, 196);
+            this.Pic_Door1_Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Open.Name = "Pic_Door1_Open";
             this.Pic_Door1_Open.RotateAngle = 0;
             this.Pic_Door1_Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Open.TabIndex = 240;
             this.Pic_Door1_Open.TagPath = null;
@@ -1509,11 +1555,12 @@
             this.Pic_Door1_Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door1_Close_Stop.Location = new System.Drawing.Point(36, 141);
+            this.Pic_Door1_Close_Stop.Location = new System.Drawing.Point(72, 271);
+            this.Pic_Door1_Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Close_Stop.Name = "Pic_Door1_Close_Stop";
             this.Pic_Door1_Close_Stop.RotateAngle = 0;
             this.Pic_Door1_Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Close_Stop.TabIndex = 245;
             this.Pic_Door1_Close_Stop.TagPath = null;
@@ -1525,11 +1572,12 @@
             this.Pic_Door1_Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door1_Open_Stop.Location = new System.Drawing.Point(36, 102);
+            this.Pic_Door1_Open_Stop.Location = new System.Drawing.Point(72, 196);
+            this.Pic_Door1_Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Open_Stop.Name = "Pic_Door1_Open_Stop";
             this.Pic_Door1_Open_Stop.RotateAngle = 0;
             this.Pic_Door1_Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Open_Stop.TabIndex = 244;
             this.Pic_Door1_Open_Stop.TagPath = null;
@@ -1541,11 +1589,12 @@
             this.Pic_Door1_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door1_Closing.Location = new System.Drawing.Point(36, 63);
+            this.Pic_Door1_Closing.Location = new System.Drawing.Point(72, 121);
+            this.Pic_Door1_Closing.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Closing.Name = "Pic_Door1_Closing";
             this.Pic_Door1_Closing.RotateAngle = 0;
             this.Pic_Door1_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Closing.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Closing.TabIndex = 239;
             this.Pic_Door1_Closing.TagPath = null;
@@ -1557,11 +1606,12 @@
             this.Pic_Door1_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door1_Closing_Stop.Location = new System.Drawing.Point(36, 63);
+            this.Pic_Door1_Closing_Stop.Location = new System.Drawing.Point(72, 121);
+            this.Pic_Door1_Closing_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Closing_Stop.Name = "Pic_Door1_Closing_Stop";
             this.Pic_Door1_Closing_Stop.RotateAngle = 0;
             this.Pic_Door1_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Closing_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Closing_Stop.TabIndex = 243;
             this.Pic_Door1_Closing_Stop.TagPath = null;
@@ -1573,11 +1623,12 @@
             this.Pic_Door1_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door1_Opening.Location = new System.Drawing.Point(36, 24);
+            this.Pic_Door1_Opening.Location = new System.Drawing.Point(72, 46);
+            this.Pic_Door1_Opening.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Opening.Name = "Pic_Door1_Opening";
             this.Pic_Door1_Opening.RotateAngle = 0;
             this.Pic_Door1_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Opening.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Opening.TabIndex = 238;
             this.Pic_Door1_Opening.TagPath = null;
@@ -1589,11 +1640,12 @@
             this.Pic_Door1_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door1_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door1_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door1_Opening_Stop.Location = new System.Drawing.Point(36, 24);
+            this.Pic_Door1_Opening_Stop.Location = new System.Drawing.Point(72, 46);
+            this.Pic_Door1_Opening_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door1_Opening_Stop.Name = "Pic_Door1_Opening_Stop";
             this.Pic_Door1_Opening_Stop.RotateAngle = 0;
             this.Pic_Door1_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door1_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door1_Opening_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door1_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door1_Opening_Stop.TabIndex = 242;
             this.Pic_Door1_Opening_Stop.TagPath = null;
@@ -1603,9 +1655,10 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(96, 147);
+            this.label23.Location = new System.Drawing.Point(192, 283);
+            this.label23.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(145, 19);
+            this.label23.Size = new System.Drawing.Size(291, 36);
             this.label23.TabIndex = 7;
             this.label23.Text = "Cửa 1 đóng hoàn toàn";
             // 
@@ -1613,9 +1666,10 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(96, 108);
+            this.label10.Location = new System.Drawing.Point(192, 208);
+            this.label10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(134, 19);
+            this.label10.Size = new System.Drawing.Size(269, 36);
             this.label10.TabIndex = 4;
             this.label10.Text = "Cửa 1 mở hoàn toàn";
             // 
@@ -1623,9 +1677,10 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(96, 68);
+            this.label12.Location = new System.Drawing.Point(192, 131);
+            this.label12.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(115, 19);
+            this.label12.Size = new System.Drawing.Size(229, 36);
             this.label12.TabIndex = 2;
             this.label12.Text = "Cửa 1 đang đóng";
             // 
@@ -1633,9 +1688,10 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(96, 30);
+            this.label13.Location = new System.Drawing.Point(192, 58);
+            this.label13.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(104, 19);
+            this.label13.Size = new System.Drawing.Size(207, 36);
             this.label13.TabIndex = 0;
             this.label13.Text = "Cửa 1 đang mở";
             // 
@@ -1663,10 +1719,12 @@
             this.groupBox3.Controls.Add(this.Pic_S1_DC1_Running);
             this.groupBox3.Controls.Add(this.label20);
             this.groupBox3.Controls.Add(this.lbl_Bom1T1);
-            this.groupBox3.Location = new System.Drawing.Point(7, 332);
+            this.groupBox3.Location = new System.Drawing.Point(14, 638);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(320, 183);
+            this.groupBox3.Size = new System.Drawing.Size(640, 352);
             this.groupBox3.TabIndex = 203;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bơm dầu";
@@ -1677,11 +1735,12 @@
             this.Pic_S1_DC3_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC3_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC3_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S1_DC3_Over_Stop.Location = new System.Drawing.Point(166, 115);
+            this.Pic_S1_DC3_Over_Stop.Location = new System.Drawing.Point(332, 221);
+            this.Pic_S1_DC3_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC3_Over_Stop.Name = "Pic_S1_DC3_Over_Stop";
             this.Pic_S1_DC3_Over_Stop.RotateAngle = 0;
             this.Pic_S1_DC3_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC3_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC3_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC3_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC3_Over_Stop.TabIndex = 249;
             this.Pic_S1_DC3_Over_Stop.TagPath = null;
@@ -1693,11 +1752,12 @@
             this.Pic_S1_DC2_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC2_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC2_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S1_DC2_Over_Stop.Location = new System.Drawing.Point(166, 76);
+            this.Pic_S1_DC2_Over_Stop.Location = new System.Drawing.Point(332, 146);
+            this.Pic_S1_DC2_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC2_Over_Stop.Name = "Pic_S1_DC2_Over_Stop";
             this.Pic_S1_DC2_Over_Stop.RotateAngle = 0;
             this.Pic_S1_DC2_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC2_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC2_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC2_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC2_Over_Stop.TabIndex = 248;
             this.Pic_S1_DC2_Over_Stop.TagPath = null;
@@ -1709,11 +1769,12 @@
             this.Pic_S1_DC1_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC1_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC1_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S1_DC1_Over_Stop.Location = new System.Drawing.Point(166, 33);
+            this.Pic_S1_DC1_Over_Stop.Location = new System.Drawing.Point(332, 63);
+            this.Pic_S1_DC1_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC1_Over_Stop.Name = "Pic_S1_DC1_Over_Stop";
             this.Pic_S1_DC1_Over_Stop.RotateAngle = 0;
             this.Pic_S1_DC1_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC1_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC1_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC1_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC1_Over_Stop.TabIndex = 247;
             this.Pic_S1_DC1_Over_Stop.TagPath = null;
@@ -1725,11 +1786,12 @@
             this.Pic_S1_DC3_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC3_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC3_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S1_DC3_Stop.Location = new System.Drawing.Point(25, 116);
+            this.Pic_S1_DC3_Stop.Location = new System.Drawing.Point(50, 223);
+            this.Pic_S1_DC3_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC3_Stop.Name = "Pic_S1_DC3_Stop";
             this.Pic_S1_DC3_Stop.RotateAngle = 0;
             this.Pic_S1_DC3_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC3_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC3_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC3_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC3_Stop.TabIndex = 246;
             this.Pic_S1_DC3_Stop.TagPath = null;
@@ -1741,11 +1803,12 @@
             this.Pic_S1_DC2_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC2_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC2_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S1_DC2_Stop.Location = new System.Drawing.Point(25, 76);
+            this.Pic_S1_DC2_Stop.Location = new System.Drawing.Point(50, 146);
+            this.Pic_S1_DC2_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC2_Stop.Name = "Pic_S1_DC2_Stop";
             this.Pic_S1_DC2_Stop.RotateAngle = 0;
             this.Pic_S1_DC2_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC2_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC2_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC2_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC2_Stop.TabIndex = 245;
             this.Pic_S1_DC2_Stop.TagPath = null;
@@ -1757,11 +1820,12 @@
             this.Pic_S1_DC1_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC1_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC1_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S1_DC1_Stop.Location = new System.Drawing.Point(25, 34);
+            this.Pic_S1_DC1_Stop.Location = new System.Drawing.Point(50, 65);
+            this.Pic_S1_DC1_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC1_Stop.Name = "Pic_S1_DC1_Stop";
             this.Pic_S1_DC1_Stop.RotateAngle = 0;
             this.Pic_S1_DC1_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC1_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC1_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC1_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC1_Stop.TabIndex = 244;
             this.Pic_S1_DC1_Stop.TagPath = null;
@@ -1773,11 +1837,12 @@
             this.Pic_S1_DC3_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC3_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC3_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S1_DC3_Over.Location = new System.Drawing.Point(166, 115);
+            this.Pic_S1_DC3_Over.Location = new System.Drawing.Point(332, 221);
+            this.Pic_S1_DC3_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC3_Over.Name = "Pic_S1_DC3_Over";
             this.Pic_S1_DC3_Over.RotateAngle = 0;
             this.Pic_S1_DC3_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC3_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC3_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC3_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC3_Over.TabIndex = 243;
             this.Pic_S1_DC3_Over.TagPath = null;
@@ -1789,11 +1854,12 @@
             this.Pic_S1_DC3_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC3_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC3_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S1_DC3_Running.Location = new System.Drawing.Point(25, 116);
+            this.Pic_S1_DC3_Running.Location = new System.Drawing.Point(50, 223);
+            this.Pic_S1_DC3_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC3_Running.Name = "Pic_S1_DC3_Running";
             this.Pic_S1_DC3_Running.RotateAngle = 0;
             this.Pic_S1_DC3_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC3_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC3_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC3_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC3_Running.TabIndex = 242;
             this.Pic_S1_DC3_Running.TagPath = null;
@@ -1803,9 +1869,10 @@
             // 
             this.label119.AutoSize = true;
             this.label119.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label119.Location = new System.Drawing.Point(216, 121);
+            this.label119.Location = new System.Drawing.Point(432, 233);
+            this.label119.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label119.Name = "label119";
-            this.label119.Size = new System.Drawing.Size(90, 19);
+            this.label119.Size = new System.Drawing.Size(185, 36);
             this.label119.TabIndex = 241;
             this.label119.Text = "Lỗi bơm chốt";
             // 
@@ -1813,9 +1880,10 @@
             // 
             this.label120.AutoSize = true;
             this.label120.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label120.Location = new System.Drawing.Point(73, 121);
+            this.label120.Location = new System.Drawing.Point(146, 233);
+            this.label120.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label120.Name = "label120";
-            this.label120.Size = new System.Drawing.Size(68, 19);
+            this.label120.Size = new System.Drawing.Size(138, 36);
             this.label120.TabIndex = 240;
             this.label120.Text = "Bơm chốt";
             // 
@@ -1825,11 +1893,12 @@
             this.Pic_S1_DC2_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC2_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC2_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S1_DC2_Over.Location = new System.Drawing.Point(166, 75);
+            this.Pic_S1_DC2_Over.Location = new System.Drawing.Point(332, 144);
+            this.Pic_S1_DC2_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC2_Over.Name = "Pic_S1_DC2_Over";
             this.Pic_S1_DC2_Over.RotateAngle = 0;
             this.Pic_S1_DC2_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC2_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC2_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC2_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC2_Over.TabIndex = 239;
             this.Pic_S1_DC2_Over.TagPath = null;
@@ -1841,11 +1910,12 @@
             this.Pic_S1_DC2_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC2_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC2_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S1_DC2_Running.Location = new System.Drawing.Point(25, 76);
+            this.Pic_S1_DC2_Running.Location = new System.Drawing.Point(50, 146);
+            this.Pic_S1_DC2_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC2_Running.Name = "Pic_S1_DC2_Running";
             this.Pic_S1_DC2_Running.RotateAngle = 0;
             this.Pic_S1_DC2_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC2_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC2_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC2_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC2_Running.TabIndex = 238;
             this.Pic_S1_DC2_Running.TagPath = null;
@@ -1855,9 +1925,10 @@
             // 
             this.label117.AutoSize = true;
             this.label117.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label117.Location = new System.Drawing.Point(216, 81);
+            this.label117.Location = new System.Drawing.Point(432, 156);
+            this.label117.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(72, 19);
+            this.label117.Size = new System.Drawing.Size(147, 36);
             this.label117.TabIndex = 237;
             this.label117.Text = "Lỗi bơm 2";
             // 
@@ -1865,9 +1936,10 @@
             // 
             this.label118.AutoSize = true;
             this.label118.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label118.Location = new System.Drawing.Point(73, 81);
+            this.label118.Location = new System.Drawing.Point(146, 156);
+            this.label118.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label118.Name = "label118";
-            this.label118.Size = new System.Drawing.Size(50, 19);
+            this.label118.Size = new System.Drawing.Size(100, 36);
             this.label118.TabIndex = 236;
             this.label118.Text = "Bơm 2";
             // 
@@ -1877,11 +1949,12 @@
             this.Pic_S1_DC1_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC1_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC1_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S1_DC1_Over.Location = new System.Drawing.Point(166, 33);
+            this.Pic_S1_DC1_Over.Location = new System.Drawing.Point(332, 63);
+            this.Pic_S1_DC1_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC1_Over.Name = "Pic_S1_DC1_Over";
             this.Pic_S1_DC1_Over.RotateAngle = 0;
             this.Pic_S1_DC1_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC1_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC1_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC1_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC1_Over.TabIndex = 235;
             this.Pic_S1_DC1_Over.TagPath = null;
@@ -1893,11 +1966,12 @@
             this.Pic_S1_DC1_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S1_DC1_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S1_DC1_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S1_DC1_Running.Location = new System.Drawing.Point(25, 34);
+            this.Pic_S1_DC1_Running.Location = new System.Drawing.Point(50, 65);
+            this.Pic_S1_DC1_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S1_DC1_Running.Name = "Pic_S1_DC1_Running";
             this.Pic_S1_DC1_Running.RotateAngle = 0;
             this.Pic_S1_DC1_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S1_DC1_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S1_DC1_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S1_DC1_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S1_DC1_Running.TabIndex = 232;
             this.Pic_S1_DC1_Running.TagPath = null;
@@ -1907,9 +1981,10 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(216, 39);
+            this.label20.Location = new System.Drawing.Point(432, 75);
+            this.label20.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(72, 19);
+            this.label20.Size = new System.Drawing.Size(147, 36);
             this.label20.TabIndex = 8;
             this.label20.Text = "Lỗi bơm 1";
             // 
@@ -1917,9 +1992,10 @@
             // 
             this.lbl_Bom1T1.AutoSize = true;
             this.lbl_Bom1T1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Bom1T1.Location = new System.Drawing.Point(73, 39);
+            this.lbl_Bom1T1.Location = new System.Drawing.Point(146, 75);
+            this.lbl_Bom1T1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbl_Bom1T1.Name = "lbl_Bom1T1";
-            this.lbl_Bom1T1.Size = new System.Drawing.Size(50, 19);
+            this.lbl_Bom1T1.Size = new System.Drawing.Size(100, 36);
             this.lbl_Bom1T1.TabIndex = 0;
             this.lbl_Bom1T1.Text = "Bơm 1";
             // 
@@ -1929,11 +2005,12 @@
             this.ahdPictureBox2.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox2.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox2.Image = null;
-            this.ahdPictureBox2.Location = new System.Drawing.Point(368, 41);
+            this.ahdPictureBox2.Location = new System.Drawing.Point(736, 79);
+            this.ahdPictureBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox2.Name = "ahdPictureBox2";
             this.ahdPictureBox2.RotateAngle = 0;
             this.ahdPictureBox2.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox2.Size = new System.Drawing.Size(382, 238);
+            this.ahdPictureBox2.Size = new System.Drawing.Size(764, 458);
             this.ahdPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox2.TabIndex = 201;
             this.ahdPictureBox2.TagPath = "";
@@ -1942,9 +2019,10 @@
             // label2
             // 
             this.label2.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label2.Location = new System.Drawing.Point(465, 282);
+            this.label2.Location = new System.Drawing.Point(930, 542);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(396, 31);
+            this.label2.Size = new System.Drawing.Size(792, 60);
             this.label2.TabIndex = 125;
             this.label2.Text = "THÔNG TIN VẬN HÀNH CỬA 1";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1954,11 +2032,12 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(-11, 277);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(-22, 533);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1727, 39);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(3454, 75);
             this.tableLayoutPanel2.TabIndex = 200;
             // 
             // ahdLabel20
@@ -1966,9 +2045,10 @@
             this.ahdLabel20.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel20.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel20.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel20.Location = new System.Drawing.Point(326, 121);
+            this.ahdLabel20.Location = new System.Drawing.Point(652, 233);
+            this.ahdLabel20.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel20.Name = "ahdLabel20";
-            this.ahdLabel20.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel20.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel20.StringFormat = null;
             this.ahdLabel20.TabIndex = 199;
             this.ahdLabel20.TagPath = null;
@@ -1980,9 +2060,10 @@
             this.ahdLabel22.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel22.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel22.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel22.Location = new System.Drawing.Point(254, 120);
+            this.ahdLabel22.Location = new System.Drawing.Point(508, 231);
+            this.ahdLabel22.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel22.Name = "ahdLabel22";
-            this.ahdLabel22.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel22.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel22.StringFormat = null;
             this.ahdLabel22.TabIndex = 198;
             this.ahdLabel22.TagPath = "Local Station/DauTieng/S71500/Group1/S1_Temp_Oil";
@@ -1994,9 +2075,10 @@
             this.ahdLabel21.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel21.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel21.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel21.Location = new System.Drawing.Point(1042, 86);
+            this.ahdLabel21.Location = new System.Drawing.Point(2084, 165);
+            this.ahdLabel21.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel21.Name = "ahdLabel21";
-            this.ahdLabel21.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel21.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel21.StringFormat = null;
             this.ahdLabel21.TabIndex = 196;
             this.ahdLabel21.TagPath = null;
@@ -2008,9 +2090,10 @@
             this.ahdLabel19.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel19.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel19.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel19.Location = new System.Drawing.Point(970, 85);
+            this.ahdLabel19.Location = new System.Drawing.Point(1940, 163);
+            this.ahdLabel19.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel19.Name = "ahdLabel19";
-            this.ahdLabel19.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel19.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel19.StringFormat = null;
             this.ahdLabel19.TabIndex = 194;
             this.ahdLabel19.TagPath = "Local Station/DauTieng/S71500/Group1/Door1_Aperture";
@@ -2023,11 +2106,12 @@
             this.ahdBarTran1.Direction = Ahd.Winforms.Controls.BarDirection.TopToBottom;
             this.ahdBarTran1.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Value;
             this.ahdBarTran1.FillColor = System.Drawing.Color.Green;
-            this.ahdBarTran1.Location = new System.Drawing.Point(404, 49);
+            this.ahdBarTran1.Location = new System.Drawing.Point(808, 94);
+            this.ahdBarTran1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdBarTran1.MaxValue = "100";
             this.ahdBarTran1.MinValue = "0";
             this.ahdBarTran1.Name = "ahdBarTran1";
-            this.ahdBarTran1.Size = new System.Drawing.Size(289, 230);
+            this.ahdBarTran1.Size = new System.Drawing.Size(578, 442);
             this.ahdBarTran1.TabIndex = 192;
             this.ahdBarTran1.TagPath = "Local Station/Channel1/Device1/Cylinder1";
             this.ahdBarTran1.ValueStringFormat = null;
@@ -2036,9 +2120,10 @@
             // 
             this.label1.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label1.ForeColor = System.Drawing.Color.Blue;
-            this.label1.Location = new System.Drawing.Point(487, 10);
+            this.label1.Location = new System.Drawing.Point(974, 19);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(302, 31);
+            this.label1.Size = new System.Drawing.Size(604, 60);
             this.label1.TabIndex = 0;
             this.label1.Text = "CỬA 1";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2048,11 +2133,12 @@
             this.tableLayoutPanel13.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel13.ColumnCount = 1;
             this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(6, 5);
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(12, 10);
+            this.tableLayoutPanel13.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 1;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(1710, 39);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(3420, 75);
             this.tableLayoutPanel13.TabIndex = 201;
             // 
             // tabPage2
@@ -2092,8 +2178,9 @@
             this.tabPage2.Controls.Add(this.ahdLabel17);
             this.tabPage2.Controls.Add(this.ahdPictureBox3);
             this.tabPage2.Location = new System.Drawing.Point(4, 54);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1716, 807);
+            this.tabPage2.Size = new System.Drawing.Size(3440, 1605);
             this.tabPage2.TabIndex = 6;
             this.tabPage2.Text = "       CỬA 2       ";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -2102,9 +2189,10 @@
             // 
             this.label145.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label145.ForeColor = System.Drawing.Color.Black;
-            this.label145.Location = new System.Drawing.Point(518, 286);
+            this.label145.Location = new System.Drawing.Point(1036, 550);
+            this.label145.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label145.Name = "label145";
-            this.label145.Size = new System.Drawing.Size(302, 31);
+            this.label145.Size = new System.Drawing.Size(604, 60);
             this.label145.TabIndex = 269;
             this.label145.Text = "THÔNG TIN VẬN HÀNH CỬA 2";
             this.label145.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2114,10 +2202,12 @@
             this.groupBox28.Controls.Add(this.Pic_Al_Door2Stop);
             this.groupBox28.Controls.Add(this.label104);
             this.groupBox28.Controls.Add(this.Pic_Al_Door2);
-            this.groupBox28.Location = new System.Drawing.Point(368, 657);
+            this.groupBox28.Location = new System.Drawing.Point(736, 1263);
+            this.groupBox28.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox28.Name = "groupBox28";
+            this.groupBox28.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox28.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox28.Size = new System.Drawing.Size(292, 105);
+            this.groupBox28.Size = new System.Drawing.Size(584, 202);
             this.groupBox28.TabIndex = 268;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Cửa";
@@ -2128,11 +2218,12 @@
             this.Pic_Al_Door2Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door2Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door2Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Al_Door2Stop.Location = new System.Drawing.Point(6, 37);
+            this.Pic_Al_Door2Stop.Location = new System.Drawing.Point(12, 71);
+            this.Pic_Al_Door2Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door2Stop.Name = "Pic_Al_Door2Stop";
             this.Pic_Al_Door2Stop.RotateAngle = 0;
             this.Pic_Al_Door2Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door2Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door2Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door2Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door2Stop.TabIndex = 246;
             this.Pic_Al_Door2Stop.TagPath = null;
@@ -2143,9 +2234,10 @@
             this.label104.AutoSize = true;
             this.label104.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label104.ForeColor = System.Drawing.Color.Blue;
-            this.label104.Location = new System.Drawing.Point(71, 43);
+            this.label104.Location = new System.Drawing.Point(142, 83);
+            this.label104.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label104.Name = "label104";
-            this.label104.Size = new System.Drawing.Size(96, 19);
+            this.label104.Size = new System.Drawing.Size(196, 36);
             this.label104.TabIndex = 235;
             this.label104.Text = "Lỗi lệch cửa 2";
             // 
@@ -2155,11 +2247,12 @@
             this.Pic_Al_Door2.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door2.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door2.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Al_Door2.Location = new System.Drawing.Point(6, 37);
+            this.Pic_Al_Door2.Location = new System.Drawing.Point(12, 71);
+            this.Pic_Al_Door2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door2.Name = "Pic_Al_Door2";
             this.Pic_Al_Door2.RotateAngle = 0;
             this.Pic_Al_Door2.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door2.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door2.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door2.TabIndex = 242;
             this.Pic_Al_Door2.TagPath = null;
@@ -2169,9 +2262,10 @@
             // 
             this.label7.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(543, 13);
+            this.label7.Location = new System.Drawing.Point(1086, 25);
+            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(302, 31);
+            this.label7.Size = new System.Drawing.Size(604, 60);
             this.label7.TabIndex = 1;
             this.label7.Text = "CỬA 2";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2190,10 +2284,12 @@
             this.groupBox5.Controls.Add(this.Pic_Doorlock2_1Open);
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.label15);
-            this.groupBox5.Location = new System.Drawing.Point(7, 533);
+            this.groupBox5.Location = new System.Drawing.Point(14, 1025);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox5.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox5.Size = new System.Drawing.Size(320, 197);
+            this.groupBox5.Size = new System.Drawing.Size(640, 379);
             this.groupBox5.TabIndex = 267;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Chốt cửa";
@@ -2204,11 +2300,12 @@
             this.Pic_Doorlock2_2Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_2Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_2Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock2_2Close_Stop.Location = new System.Drawing.Point(13, 161);
+            this.Pic_Doorlock2_2Close_Stop.Location = new System.Drawing.Point(26, 310);
+            this.Pic_Doorlock2_2Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_2Close_Stop.Name = "Pic_Doorlock2_2Close_Stop";
             this.Pic_Doorlock2_2Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock2_2Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_2Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_2Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_2Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_2Close_Stop.TabIndex = 251;
             this.Pic_Doorlock2_2Close_Stop.TagPath = null;
@@ -2220,11 +2317,12 @@
             this.Pic_Doorlock2_2Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_2Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_2Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock2_2Open_Stop.Location = new System.Drawing.Point(13, 118);
+            this.Pic_Doorlock2_2Open_Stop.Location = new System.Drawing.Point(26, 227);
+            this.Pic_Doorlock2_2Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_2Open_Stop.Name = "Pic_Doorlock2_2Open_Stop";
             this.Pic_Doorlock2_2Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock2_2Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_2Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_2Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_2Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_2Open_Stop.TabIndex = 250;
             this.Pic_Doorlock2_2Open_Stop.TagPath = null;
@@ -2236,11 +2334,12 @@
             this.Pic_Doorlock2_2Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_2Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_2Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock2_2Close.Location = new System.Drawing.Point(13, 161);
+            this.Pic_Doorlock2_2Close.Location = new System.Drawing.Point(26, 310);
+            this.Pic_Doorlock2_2Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_2Close.Name = "Pic_Doorlock2_2Close";
             this.Pic_Doorlock2_2Close.RotateAngle = 0;
             this.Pic_Doorlock2_2Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_2Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_2Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_2Close.TabIndex = 249;
             this.Pic_Doorlock2_2Close.TagPath = null;
@@ -2252,11 +2351,12 @@
             this.Pic_Doorlock2_2Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_2Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_2Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock2_2Open.Location = new System.Drawing.Point(13, 118);
+            this.Pic_Doorlock2_2Open.Location = new System.Drawing.Point(26, 227);
+            this.Pic_Doorlock2_2Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_2Open.Name = "Pic_Doorlock2_2Open";
             this.Pic_Doorlock2_2Open.RotateAngle = 0;
             this.Pic_Doorlock2_2Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_2Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_2Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_2Open.TabIndex = 248;
             this.Pic_Doorlock2_2Open.TagPath = null;
@@ -2267,9 +2367,10 @@
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.ForeColor = System.Drawing.Color.Blue;
-            this.label29.Location = new System.Drawing.Point(84, 167);
+            this.label29.Location = new System.Drawing.Point(168, 321);
+            this.label29.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(123, 19);
+            this.label29.Size = new System.Drawing.Size(248, 36);
             this.label29.TabIndex = 247;
             this.label29.Text = "Chốt 2_2 đóng hết";
             // 
@@ -2278,9 +2379,10 @@
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.ForeColor = System.Drawing.Color.Blue;
-            this.label30.Location = new System.Drawing.Point(84, 124);
+            this.label30.Location = new System.Drawing.Point(168, 238);
+            this.label30.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(112, 19);
+            this.label30.Size = new System.Drawing.Size(226, 36);
             this.label30.TabIndex = 246;
             this.label30.Text = "Chốt 2_2 mở hết";
             // 
@@ -2290,11 +2392,12 @@
             this.Pic_Doorlock2_1Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_1Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_1Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock2_1Close_Stop.Location = new System.Drawing.Point(13, 71);
+            this.Pic_Doorlock2_1Close_Stop.Location = new System.Drawing.Point(26, 137);
+            this.Pic_Doorlock2_1Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_1Close_Stop.Name = "Pic_Doorlock2_1Close_Stop";
             this.Pic_Doorlock2_1Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock2_1Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_1Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_1Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_1Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_1Close_Stop.TabIndex = 245;
             this.Pic_Doorlock2_1Close_Stop.TagPath = null;
@@ -2306,11 +2409,12 @@
             this.Pic_Doorlock2_1Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_1Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_1Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock2_1Open_Stop.Location = new System.Drawing.Point(13, 26);
+            this.Pic_Doorlock2_1Open_Stop.Location = new System.Drawing.Point(26, 50);
+            this.Pic_Doorlock2_1Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_1Open_Stop.Name = "Pic_Doorlock2_1Open_Stop";
             this.Pic_Doorlock2_1Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock2_1Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_1Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_1Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_1Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_1Open_Stop.TabIndex = 244;
             this.Pic_Doorlock2_1Open_Stop.TagPath = null;
@@ -2322,11 +2426,12 @@
             this.Pic_Doorlock2_1Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_1Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_1Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock2_1Close.Location = new System.Drawing.Point(13, 71);
+            this.Pic_Doorlock2_1Close.Location = new System.Drawing.Point(26, 137);
+            this.Pic_Doorlock2_1Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_1Close.Name = "Pic_Doorlock2_1Close";
             this.Pic_Doorlock2_1Close.RotateAngle = 0;
             this.Pic_Doorlock2_1Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_1Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_1Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_1Close.TabIndex = 243;
             this.Pic_Doorlock2_1Close.TagPath = null;
@@ -2338,11 +2443,12 @@
             this.Pic_Doorlock2_1Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock2_1Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock2_1Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock2_1Open.Location = new System.Drawing.Point(13, 26);
+            this.Pic_Doorlock2_1Open.Location = new System.Drawing.Point(26, 50);
+            this.Pic_Doorlock2_1Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock2_1Open.Name = "Pic_Doorlock2_1Open";
             this.Pic_Doorlock2_1Open.RotateAngle = 0;
             this.Pic_Doorlock2_1Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_1Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_1Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock2_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock2_1Open.TabIndex = 242;
             this.Pic_Doorlock2_1Open.TagPath = null;
@@ -2353,9 +2459,10 @@
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.Blue;
-            this.label14.Location = new System.Drawing.Point(84, 77);
+            this.label14.Location = new System.Drawing.Point(168, 148);
+            this.label14.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(123, 19);
+            this.label14.Size = new System.Drawing.Size(248, 36);
             this.label14.TabIndex = 8;
             this.label14.Text = "Chốt 2_1 đóng hết";
             // 
@@ -2364,9 +2471,10 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.Blue;
-            this.label15.Location = new System.Drawing.Point(84, 32);
+            this.label15.Location = new System.Drawing.Point(168, 62);
+            this.label15.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(112, 19);
+            this.label15.Size = new System.Drawing.Size(226, 36);
             this.label15.TabIndex = 5;
             this.label15.Text = "Chốt 2_1 mở hết";
             // 
@@ -2393,10 +2501,12 @@
             this.groupBox10.Controls.Add(this.PicT2_S1_DC1_Running);
             this.groupBox10.Controls.Add(this.label123);
             this.groupBox10.Controls.Add(this.label124);
-            this.groupBox10.Location = new System.Drawing.Point(7, 333);
+            this.groupBox10.Location = new System.Drawing.Point(14, 640);
+            this.groupBox10.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox10.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox10.Size = new System.Drawing.Size(320, 183);
+            this.groupBox10.Size = new System.Drawing.Size(640, 352);
             this.groupBox10.TabIndex = 266;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Bơm dầu";
@@ -2407,11 +2517,12 @@
             this.PicT2_S1_DC3_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC3_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC3_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT2_S1_DC3_Over_Stop.Location = new System.Drawing.Point(165, 115);
+            this.PicT2_S1_DC3_Over_Stop.Location = new System.Drawing.Point(330, 221);
+            this.PicT2_S1_DC3_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC3_Over_Stop.Name = "PicT2_S1_DC3_Over_Stop";
             this.PicT2_S1_DC3_Over_Stop.RotateAngle = 0;
             this.PicT2_S1_DC3_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC3_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC3_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC3_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC3_Over_Stop.TabIndex = 249;
             this.PicT2_S1_DC3_Over_Stop.TagPath = null;
@@ -2423,11 +2534,12 @@
             this.PicT2_S1_DC2_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC2_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC2_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT2_S1_DC2_Over_Stop.Location = new System.Drawing.Point(165, 75);
+            this.PicT2_S1_DC2_Over_Stop.Location = new System.Drawing.Point(330, 144);
+            this.PicT2_S1_DC2_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC2_Over_Stop.Name = "PicT2_S1_DC2_Over_Stop";
             this.PicT2_S1_DC2_Over_Stop.RotateAngle = 0;
             this.PicT2_S1_DC2_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC2_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC2_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC2_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC2_Over_Stop.TabIndex = 248;
             this.PicT2_S1_DC2_Over_Stop.TagPath = null;
@@ -2439,11 +2551,12 @@
             this.PicT2_S1_DC1_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC1_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC1_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT2_S1_DC1_Over_Stop.Location = new System.Drawing.Point(165, 33);
+            this.PicT2_S1_DC1_Over_Stop.Location = new System.Drawing.Point(330, 63);
+            this.PicT2_S1_DC1_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC1_Over_Stop.Name = "PicT2_S1_DC1_Over_Stop";
             this.PicT2_S1_DC1_Over_Stop.RotateAngle = 0;
             this.PicT2_S1_DC1_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC1_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC1_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC1_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC1_Over_Stop.TabIndex = 247;
             this.PicT2_S1_DC1_Over_Stop.TagPath = null;
@@ -2455,11 +2568,12 @@
             this.PicT2_S1_DC3_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC3_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC3_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT2_S1_DC3_Stop.Location = new System.Drawing.Point(13, 115);
+            this.PicT2_S1_DC3_Stop.Location = new System.Drawing.Point(26, 221);
+            this.PicT2_S1_DC3_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC3_Stop.Name = "PicT2_S1_DC3_Stop";
             this.PicT2_S1_DC3_Stop.RotateAngle = 0;
             this.PicT2_S1_DC3_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC3_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC3_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC3_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC3_Stop.TabIndex = 246;
             this.PicT2_S1_DC3_Stop.TagPath = null;
@@ -2471,11 +2585,12 @@
             this.PicT2_S1_DC2_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC2_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC2_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT2_S1_DC2_Stop.Location = new System.Drawing.Point(13, 75);
+            this.PicT2_S1_DC2_Stop.Location = new System.Drawing.Point(26, 144);
+            this.PicT2_S1_DC2_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC2_Stop.Name = "PicT2_S1_DC2_Stop";
             this.PicT2_S1_DC2_Stop.RotateAngle = 0;
             this.PicT2_S1_DC2_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC2_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC2_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC2_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC2_Stop.TabIndex = 245;
             this.PicT2_S1_DC2_Stop.TagPath = null;
@@ -2487,11 +2602,12 @@
             this.PicT2_S1_DC1_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC1_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC1_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT2_S1_DC1_Stop.Location = new System.Drawing.Point(13, 33);
+            this.PicT2_S1_DC1_Stop.Location = new System.Drawing.Point(26, 63);
+            this.PicT2_S1_DC1_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC1_Stop.Name = "PicT2_S1_DC1_Stop";
             this.PicT2_S1_DC1_Stop.RotateAngle = 0;
             this.PicT2_S1_DC1_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC1_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC1_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC1_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC1_Stop.TabIndex = 244;
             this.PicT2_S1_DC1_Stop.TagPath = null;
@@ -2503,11 +2619,12 @@
             this.PicT2_S1_DC3_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC3_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC3_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT2_S1_DC3_Over.Location = new System.Drawing.Point(165, 115);
+            this.PicT2_S1_DC3_Over.Location = new System.Drawing.Point(330, 221);
+            this.PicT2_S1_DC3_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC3_Over.Name = "PicT2_S1_DC3_Over";
             this.PicT2_S1_DC3_Over.RotateAngle = 0;
             this.PicT2_S1_DC3_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC3_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC3_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC3_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC3_Over.TabIndex = 243;
             this.PicT2_S1_DC3_Over.TagPath = null;
@@ -2519,11 +2636,12 @@
             this.PicT2_S1_DC3_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC3_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC3_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT2_S1_DC3_Running.Location = new System.Drawing.Point(13, 115);
+            this.PicT2_S1_DC3_Running.Location = new System.Drawing.Point(26, 221);
+            this.PicT2_S1_DC3_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC3_Running.Name = "PicT2_S1_DC3_Running";
             this.PicT2_S1_DC3_Running.RotateAngle = 0;
             this.PicT2_S1_DC3_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC3_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC3_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC3_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC3_Running.TabIndex = 242;
             this.PicT2_S1_DC3_Running.TagPath = null;
@@ -2534,9 +2652,10 @@
             this.label35.AutoSize = true;
             this.label35.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label35.ForeColor = System.Drawing.Color.Blue;
-            this.label35.Location = new System.Drawing.Point(216, 121);
+            this.label35.Location = new System.Drawing.Point(432, 233);
+            this.label35.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(90, 19);
+            this.label35.Size = new System.Drawing.Size(185, 36);
             this.label35.TabIndex = 241;
             this.label35.Text = "Lỗi bơm chốt";
             // 
@@ -2545,9 +2664,10 @@
             this.label36.AutoSize = true;
             this.label36.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label36.ForeColor = System.Drawing.Color.Blue;
-            this.label36.Location = new System.Drawing.Point(60, 121);
+            this.label36.Location = new System.Drawing.Point(120, 233);
+            this.label36.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(68, 19);
+            this.label36.Size = new System.Drawing.Size(138, 36);
             this.label36.TabIndex = 240;
             this.label36.Text = "Bơm chốt";
             // 
@@ -2557,11 +2677,12 @@
             this.PicT2_S1_DC2_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC2_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC2_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT2_S1_DC2_Over.Location = new System.Drawing.Point(165, 75);
+            this.PicT2_S1_DC2_Over.Location = new System.Drawing.Point(330, 144);
+            this.PicT2_S1_DC2_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC2_Over.Name = "PicT2_S1_DC2_Over";
             this.PicT2_S1_DC2_Over.RotateAngle = 0;
             this.PicT2_S1_DC2_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC2_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC2_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC2_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC2_Over.TabIndex = 239;
             this.PicT2_S1_DC2_Over.TagPath = null;
@@ -2573,11 +2694,12 @@
             this.PicT2_S1_DC2_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC2_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC2_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT2_S1_DC2_Running.Location = new System.Drawing.Point(13, 75);
+            this.PicT2_S1_DC2_Running.Location = new System.Drawing.Point(26, 144);
+            this.PicT2_S1_DC2_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC2_Running.Name = "PicT2_S1_DC2_Running";
             this.PicT2_S1_DC2_Running.RotateAngle = 0;
             this.PicT2_S1_DC2_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC2_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC2_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC2_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC2_Running.TabIndex = 238;
             this.PicT2_S1_DC2_Running.TagPath = null;
@@ -2588,9 +2710,10 @@
             this.label121.AutoSize = true;
             this.label121.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label121.ForeColor = System.Drawing.Color.Blue;
-            this.label121.Location = new System.Drawing.Point(216, 81);
+            this.label121.Location = new System.Drawing.Point(432, 156);
+            this.label121.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label121.Name = "label121";
-            this.label121.Size = new System.Drawing.Size(72, 19);
+            this.label121.Size = new System.Drawing.Size(147, 36);
             this.label121.TabIndex = 237;
             this.label121.Text = "Lỗi bơm 2";
             // 
@@ -2599,9 +2722,10 @@
             this.label122.AutoSize = true;
             this.label122.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label122.ForeColor = System.Drawing.Color.Blue;
-            this.label122.Location = new System.Drawing.Point(60, 81);
+            this.label122.Location = new System.Drawing.Point(120, 156);
+            this.label122.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label122.Name = "label122";
-            this.label122.Size = new System.Drawing.Size(50, 19);
+            this.label122.Size = new System.Drawing.Size(100, 36);
             this.label122.TabIndex = 236;
             this.label122.Text = "Bơm 2";
             // 
@@ -2611,11 +2735,12 @@
             this.PicT2_S1_DC1_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC1_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC1_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT2_S1_DC1_Over.Location = new System.Drawing.Point(165, 33);
+            this.PicT2_S1_DC1_Over.Location = new System.Drawing.Point(330, 63);
+            this.PicT2_S1_DC1_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC1_Over.Name = "PicT2_S1_DC1_Over";
             this.PicT2_S1_DC1_Over.RotateAngle = 0;
             this.PicT2_S1_DC1_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC1_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC1_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC1_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC1_Over.TabIndex = 235;
             this.PicT2_S1_DC1_Over.TagPath = null;
@@ -2627,11 +2752,12 @@
             this.PicT2_S1_DC1_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT2_S1_DC1_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT2_S1_DC1_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT2_S1_DC1_Running.Location = new System.Drawing.Point(13, 33);
+            this.PicT2_S1_DC1_Running.Location = new System.Drawing.Point(26, 63);
+            this.PicT2_S1_DC1_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT2_S1_DC1_Running.Name = "PicT2_S1_DC1_Running";
             this.PicT2_S1_DC1_Running.RotateAngle = 0;
             this.PicT2_S1_DC1_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT2_S1_DC1_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT2_S1_DC1_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT2_S1_DC1_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT2_S1_DC1_Running.TabIndex = 232;
             this.PicT2_S1_DC1_Running.TagPath = null;
@@ -2642,9 +2768,10 @@
             this.label123.AutoSize = true;
             this.label123.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label123.ForeColor = System.Drawing.Color.Blue;
-            this.label123.Location = new System.Drawing.Point(216, 39);
+            this.label123.Location = new System.Drawing.Point(432, 75);
+            this.label123.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label123.Name = "label123";
-            this.label123.Size = new System.Drawing.Size(72, 19);
+            this.label123.Size = new System.Drawing.Size(147, 36);
             this.label123.TabIndex = 8;
             this.label123.Text = "Lỗi bơm 1";
             // 
@@ -2653,9 +2780,10 @@
             this.label124.AutoSize = true;
             this.label124.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label124.ForeColor = System.Drawing.Color.Blue;
-            this.label124.Location = new System.Drawing.Point(60, 39);
+            this.label124.Location = new System.Drawing.Point(120, 75);
+            this.label124.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label124.Name = "label124";
-            this.label124.Size = new System.Drawing.Size(50, 19);
+            this.label124.Size = new System.Drawing.Size(100, 36);
             this.label124.TabIndex = 0;
             this.label124.Text = "Bơm 1";
             // 
@@ -2664,11 +2792,12 @@
             this.tableLayoutPanel3.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(-2, 282);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(-4, 542);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1275, 39);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(2550, 75);
             this.tableLayoutPanel3.TabIndex = 265;
             // 
             // tableLayoutPanel4
@@ -2676,21 +2805,23 @@
             this.tableLayoutPanel4.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 9);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 17);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1745, 39);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(3490, 75);
             this.tableLayoutPanel4.TabIndex = 264;
             // 
             // dataGridViewT2
             // 
             this.dataGridViewT2.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridViewT2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewT2.Location = new System.Drawing.Point(695, 347);
+            this.dataGridViewT2.Location = new System.Drawing.Point(1390, 667);
+            this.dataGridViewT2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridViewT2.Name = "dataGridViewT2";
             this.dataGridViewT2.RowHeadersWidth = 82;
-            this.dataGridViewT2.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT2.Size = new System.Drawing.Size(1156, 875);
             this.dataGridViewT2.TabIndex = 263;
             // 
             // groupBox1
@@ -2701,10 +2832,12 @@
             this.groupBox1.Controls.Add(this.bnt_Auto_T2);
             this.groupBox1.Controls.Add(this.bnt_Remote_T2);
             this.groupBox1.Controls.Add(this.bnt_Local_T2);
-            this.groupBox1.Location = new System.Drawing.Point(1280, 47);
+            this.groupBox1.Location = new System.Drawing.Point(2560, 90);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(428, 233);
+            this.groupBox1.Size = new System.Drawing.Size(856, 448);
             this.groupBox1.TabIndex = 240;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Vận Hành";
@@ -2712,9 +2845,10 @@
             // bnt_Hand_T2
             // 
             this.bnt_Hand_T2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Hand_T2.Location = new System.Drawing.Point(51, 28);
+            this.bnt_Hand_T2.Location = new System.Drawing.Point(102, 54);
+            this.bnt_Hand_T2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Hand_T2.Name = "bnt_Hand_T2";
-            this.bnt_Hand_T2.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Hand_T2.Size = new System.Drawing.Size(280, 106);
             this.bnt_Hand_T2.TabIndex = 205;
             this.bnt_Hand_T2.Text = "Tay";
             this.bnt_Hand_T2.UseVisualStyleBackColor = true;
@@ -2722,9 +2856,10 @@
             // bnt_Estop_T2
             // 
             this.bnt_Estop_T2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Estop_T2.Location = new System.Drawing.Point(162, 172);
+            this.bnt_Estop_T2.Location = new System.Drawing.Point(324, 331);
+            this.bnt_Estop_T2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Estop_T2.Name = "bnt_Estop_T2";
-            this.bnt_Estop_T2.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Estop_T2.Size = new System.Drawing.Size(280, 106);
             this.bnt_Estop_T2.TabIndex = 207;
             this.bnt_Estop_T2.Text = "Dừng khẩn";
             this.bnt_Estop_T2.UseVisualStyleBackColor = true;
@@ -2732,9 +2867,10 @@
             // bnt_Auto_T2
             // 
             this.bnt_Auto_T2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Auto_T2.Location = new System.Drawing.Point(271, 28);
+            this.bnt_Auto_T2.Location = new System.Drawing.Point(542, 54);
+            this.bnt_Auto_T2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Auto_T2.Name = "bnt_Auto_T2";
-            this.bnt_Auto_T2.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Auto_T2.Size = new System.Drawing.Size(280, 106);
             this.bnt_Auto_T2.TabIndex = 206;
             this.bnt_Auto_T2.Text = "Tự động";
             this.bnt_Auto_T2.UseVisualStyleBackColor = true;
@@ -2742,9 +2878,10 @@
             // bnt_Remote_T2
             // 
             this.bnt_Remote_T2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T2.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T2.Location = new System.Drawing.Point(102, 194);
+            this.bnt_Remote_T2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Remote_T2.Name = "bnt_Remote_T2";
-            this.bnt_Remote_T2.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Remote_T2.Size = new System.Drawing.Size(280, 106);
             this.bnt_Remote_T2.TabIndex = 203;
             this.bnt_Remote_T2.Text = "Từ xa";
             this.bnt_Remote_T2.UseVisualStyleBackColor = true;
@@ -2752,9 +2889,10 @@
             // bnt_Local_T2
             // 
             this.bnt_Local_T2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T2.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T2.Location = new System.Drawing.Point(542, 194);
+            this.bnt_Local_T2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Local_T2.Name = "bnt_Local_T2";
-            this.bnt_Local_T2.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Local_T2.Size = new System.Drawing.Size(280, 106);
             this.bnt_Local_T2.TabIndex = 204;
             this.bnt_Local_T2.Text = "Tại chổ";
             this.bnt_Local_T2.UseVisualStyleBackColor = true;
@@ -2765,11 +2903,12 @@
             this.ahdBar1.Direction = Ahd.Winforms.Controls.BarDirection.TopToBottom;
             this.ahdBar1.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Percent;
             this.ahdBar1.FillColor = System.Drawing.Color.Green;
-            this.ahdBar1.Location = new System.Drawing.Point(399, 54);
+            this.ahdBar1.Location = new System.Drawing.Point(798, 104);
+            this.ahdBar1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdBar1.MaxValue = "100";
             this.ahdBar1.MinValue = "0";
             this.ahdBar1.Name = "ahdBar1";
-            this.ahdBar1.Size = new System.Drawing.Size(289, 218);
+            this.ahdBar1.Size = new System.Drawing.Size(578, 419);
             this.ahdBar1.TabIndex = 262;
             this.ahdBar1.TagPath = "Local Station/DauTieng/S71500/Group1/Door2_Aperture";
             this.ahdBar1.ValueStringFormat = null;
@@ -2779,10 +2918,11 @@
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Blue;
-            this.label5.Location = new System.Drawing.Point(27, 218);
+            this.label5.Location = new System.Drawing.Point(54, 419);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
             this.label5.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label5.Size = new System.Drawing.Size(216, 50);
+            this.label5.Size = new System.Drawing.Size(430, 94);
             this.label5.TabIndex = 261;
             this.label5.Text = "Hành trình xy lanh 2_2";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2792,9 +2932,10 @@
             this.ahdLabel1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel1.Location = new System.Drawing.Point(325, 230);
+            this.ahdLabel1.Location = new System.Drawing.Point(650, 442);
+            this.ahdLabel1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel1.Name = "ahdLabel1";
-            this.ahdLabel1.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel1.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel1.StringFormat = null;
             this.ahdLabel1.TabIndex = 260;
             this.ahdLabel1.TagPath = null;
@@ -2806,9 +2947,10 @@
             this.ahdLabel2.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel2.Location = new System.Drawing.Point(251, 229);
+            this.ahdLabel2.Location = new System.Drawing.Point(502, 440);
+            this.ahdLabel2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel2.Name = "ahdLabel2";
-            this.ahdLabel2.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel2.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel2.StringFormat = null;
             this.ahdLabel2.TabIndex = 259;
             this.ahdLabel2.TagPath = "Local Station/DauTieng/S71500/Group1/HT_Cylinder2_2";
@@ -2820,10 +2962,11 @@
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Blue;
-            this.label6.Location = new System.Drawing.Point(27, 164);
+            this.label6.Location = new System.Drawing.Point(54, 315);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
             this.label6.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label6.Size = new System.Drawing.Size(216, 50);
+            this.label6.Size = new System.Drawing.Size(430, 94);
             this.label6.TabIndex = 258;
             this.label6.Text = "Hành trình xy lanh 2_1";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2833,9 +2976,10 @@
             this.ahdLabel3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel3.Location = new System.Drawing.Point(325, 176);
+            this.ahdLabel3.Location = new System.Drawing.Point(650, 338);
+            this.ahdLabel3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel3.Name = "ahdLabel3";
-            this.ahdLabel3.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel3.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel3.StringFormat = null;
             this.ahdLabel3.TabIndex = 257;
             this.ahdLabel3.TagPath = null;
@@ -2847,9 +2991,10 @@
             this.ahdLabel7.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel7.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel7.Location = new System.Drawing.Point(251, 175);
+            this.ahdLabel7.Location = new System.Drawing.Point(502, 337);
+            this.ahdLabel7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel7.Name = "ahdLabel7";
-            this.ahdLabel7.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel7.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel7.StringFormat = null;
             this.ahdLabel7.TabIndex = 256;
             this.ahdLabel7.TagPath = "Local Station/DauTieng/S71500/Group1/HT_Cylinder2_1";
@@ -2861,10 +3006,11 @@
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Blue;
-            this.label8.Location = new System.Drawing.Point(751, 185);
+            this.label8.Location = new System.Drawing.Point(1502, 356);
+            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label8.Name = "label8";
             this.label8.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label8.Size = new System.Drawing.Size(185, 50);
+            this.label8.Size = new System.Drawing.Size(368, 94);
             this.label8.TabIndex = 255;
             this.label8.Text = "Lưu lượng tổng (Qc)";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2874,10 +3020,11 @@
             this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label9.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Blue;
-            this.label9.Location = new System.Drawing.Point(751, 130);
+            this.label9.Location = new System.Drawing.Point(1502, 250);
+            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label9.Name = "label9";
             this.label9.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label9.Size = new System.Drawing.Size(185, 50);
+            this.label9.Size = new System.Drawing.Size(368, 94);
             this.label9.TabIndex = 254;
             this.label9.Text = "Lưu lượng cửa 2 (Qi)";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2887,10 +3034,11 @@
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Blue;
-            this.label11.Location = new System.Drawing.Point(751, 75);
+            this.label11.Location = new System.Drawing.Point(1502, 144);
+            this.label11.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label11.Name = "label11";
             this.label11.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label11.Size = new System.Drawing.Size(185, 50);
+            this.label11.Size = new System.Drawing.Size(368, 94);
             this.label11.TabIndex = 253;
             this.label11.Text = "Độ mở cửa (a):";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2900,10 +3048,11 @@
             this.label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label21.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.Blue;
-            this.label21.Location = new System.Drawing.Point(27, 56);
+            this.label21.Location = new System.Drawing.Point(54, 108);
+            this.label21.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label21.Name = "label21";
             this.label21.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label21.Size = new System.Drawing.Size(216, 50);
+            this.label21.Size = new System.Drawing.Size(430, 94);
             this.label21.TabIndex = 252;
             this.label21.Text = "Mực nước hồ (MN hồ) :";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2913,10 +3062,11 @@
             this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label22.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.ForeColor = System.Drawing.Color.Blue;
-            this.label22.Location = new System.Drawing.Point(27, 110);
+            this.label22.Location = new System.Drawing.Point(54, 212);
+            this.label22.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label22.Name = "label22";
             this.label22.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label22.Size = new System.Drawing.Size(216, 50);
+            this.label22.Size = new System.Drawing.Size(430, 94);
             this.label22.TabIndex = 251;
             this.label22.Text = "Nhiệt độ dầu : ";
             this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2926,9 +3076,10 @@
             this.ahdLabel8.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel8.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel8.Location = new System.Drawing.Point(1037, 197);
+            this.ahdLabel8.Location = new System.Drawing.Point(2074, 379);
+            this.ahdLabel8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel8.Name = "ahdLabel8";
-            this.ahdLabel8.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel8.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel8.StringFormat = null;
             this.ahdLabel8.TabIndex = 250;
             this.ahdLabel8.TagPath = null;
@@ -2940,9 +3091,10 @@
             this.ahdLabel9.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel9.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel9.Location = new System.Drawing.Point(965, 196);
+            this.ahdLabel9.Location = new System.Drawing.Point(1930, 377);
+            this.ahdLabel9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel9.Name = "ahdLabel9";
-            this.ahdLabel9.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel9.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel9.StringFormat = null;
             this.ahdLabel9.TabIndex = 249;
             this.ahdLabel9.TagPath = "Local Station/DauTieng/S71500/Group1/Total_Fllow";
@@ -2954,9 +3106,10 @@
             this.ahdLabel10.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel10.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel10.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel10.Location = new System.Drawing.Point(1037, 142);
+            this.ahdLabel10.Location = new System.Drawing.Point(2074, 273);
+            this.ahdLabel10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel10.Name = "ahdLabel10";
-            this.ahdLabel10.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel10.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel10.StringFormat = null;
             this.ahdLabel10.TabIndex = 248;
             this.ahdLabel10.TagPath = null;
@@ -2968,9 +3121,10 @@
             this.ahdLabel11.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel11.Location = new System.Drawing.Point(965, 141);
+            this.ahdLabel11.Location = new System.Drawing.Point(1930, 271);
+            this.ahdLabel11.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel11.Name = "ahdLabel11";
-            this.ahdLabel11.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel11.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel11.StringFormat = null;
             this.ahdLabel11.TabIndex = 247;
             this.ahdLabel11.TagPath = "Local Station/DauTieng/S71500/Group1/Fllow_Door2";
@@ -2982,9 +3136,10 @@
             this.ahdLabel12.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel12.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel12.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel12.Location = new System.Drawing.Point(323, 68);
+            this.ahdLabel12.Location = new System.Drawing.Point(646, 131);
+            this.ahdLabel12.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel12.Name = "ahdLabel12";
-            this.ahdLabel12.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel12.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel12.StringFormat = null;
             this.ahdLabel12.TabIndex = 246;
             this.ahdLabel12.TagPath = null;
@@ -2996,9 +3151,10 @@
             this.ahdLabel13.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel13.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel13.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel13.Location = new System.Drawing.Point(251, 67);
+            this.ahdLabel13.Location = new System.Drawing.Point(502, 129);
+            this.ahdLabel13.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel13.Name = "ahdLabel13";
-            this.ahdLabel13.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel13.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel13.StringFormat = null;
             this.ahdLabel13.TabIndex = 245;
             this.ahdLabel13.TagPath = "Local Station/DauTieng/S71500/Group1/Fllow_Ho";
@@ -3013,10 +3169,12 @@
             this.groupBox7.Controls.Add(this.Pic_Door2_PressureHigh);
             this.groupBox7.Controls.Add(this.label25);
             this.groupBox7.Controls.Add(this.label28);
-            this.groupBox7.Location = new System.Drawing.Point(368, 533);
+            this.groupBox7.Location = new System.Drawing.Point(736, 1025);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox7.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox7.Size = new System.Drawing.Size(292, 115);
+            this.groupBox7.Size = new System.Drawing.Size(584, 221);
             this.groupBox7.TabIndex = 244;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Áp Dầu";
@@ -3027,11 +3185,12 @@
             this.Pic_Door2_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door2_PressureLow_Stop.Location = new System.Drawing.Point(6, 75);
+            this.Pic_Door2_PressureLow_Stop.Location = new System.Drawing.Point(12, 144);
+            this.Pic_Door2_PressureLow_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_PressureLow_Stop.Name = "Pic_Door2_PressureLow_Stop";
             this.Pic_Door2_PressureLow_Stop.RotateAngle = 0;
             this.Pic_Door2_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_PressureLow_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_PressureLow_Stop.TabIndex = 245;
             this.Pic_Door2_PressureLow_Stop.TagPath = null;
@@ -3043,11 +3202,12 @@
             this.Pic_Door2_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door2_PressureHigh_Stop.Location = new System.Drawing.Point(6, 31);
+            this.Pic_Door2_PressureHigh_Stop.Location = new System.Drawing.Point(12, 60);
+            this.Pic_Door2_PressureHigh_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_PressureHigh_Stop.Name = "Pic_Door2_PressureHigh_Stop";
             this.Pic_Door2_PressureHigh_Stop.RotateAngle = 0;
             this.Pic_Door2_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_PressureHigh_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_PressureHigh_Stop.TabIndex = 244;
             this.Pic_Door2_PressureHigh_Stop.TagPath = null;
@@ -3059,11 +3219,12 @@
             this.Pic_Door2_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_Door2_PressureLow.Location = new System.Drawing.Point(6, 75);
+            this.Pic_Door2_PressureLow.Location = new System.Drawing.Point(12, 144);
+            this.Pic_Door2_PressureLow.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_PressureLow.Name = "Pic_Door2_PressureLow";
             this.Pic_Door2_PressureLow.RotateAngle = 0;
             this.Pic_Door2_PressureLow.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_PressureLow.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_PressureLow.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_PressureLow.TabIndex = 243;
             this.Pic_Door2_PressureLow.TagPath = null;
@@ -3075,11 +3236,12 @@
             this.Pic_Door2_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door2_PressureHigh.Location = new System.Drawing.Point(6, 31);
+            this.Pic_Door2_PressureHigh.Location = new System.Drawing.Point(12, 60);
+            this.Pic_Door2_PressureHigh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_PressureHigh.Name = "Pic_Door2_PressureHigh";
             this.Pic_Door2_PressureHigh.RotateAngle = 0;
             this.Pic_Door2_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_PressureHigh.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_PressureHigh.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_PressureHigh.TabIndex = 242;
             this.Pic_Door2_PressureHigh.TagPath = null;
@@ -3090,9 +3252,10 @@
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.ForeColor = System.Drawing.Color.Blue;
-            this.label25.Location = new System.Drawing.Point(71, 81);
+            this.label25.Location = new System.Drawing.Point(142, 156);
+            this.label25.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(123, 19);
+            this.label25.Size = new System.Drawing.Size(245, 36);
             this.label25.TabIndex = 8;
             this.label25.Text = "Áp dầu cửa 2 thấp";
             // 
@@ -3101,9 +3264,10 @@
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.ForeColor = System.Drawing.Color.Blue;
-            this.label28.Location = new System.Drawing.Point(71, 37);
+            this.label28.Location = new System.Drawing.Point(142, 71);
+            this.label28.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(119, 19);
+            this.label28.Size = new System.Drawing.Size(235, 36);
             this.label28.TabIndex = 5;
             this.label28.Text = "Áp dầu cửa 2 cao";
             // 
@@ -3121,10 +3285,12 @@
             this.groupBox9.Controls.Add(this.label32);
             this.groupBox9.Controls.Add(this.label33);
             this.groupBox9.Controls.Add(this.label34);
-            this.groupBox9.Location = new System.Drawing.Point(370, 333);
+            this.groupBox9.Location = new System.Drawing.Point(740, 640);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox9.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox9.Size = new System.Drawing.Size(290, 183);
+            this.groupBox9.Size = new System.Drawing.Size(580, 352);
             this.groupBox9.TabIndex = 242;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Trạng thái cửa";
@@ -3135,11 +3301,12 @@
             this.Pic_Door2_Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door2_Close_Stop.Location = new System.Drawing.Point(6, 139);
+            this.Pic_Door2_Close_Stop.Location = new System.Drawing.Point(12, 267);
+            this.Pic_Door2_Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Close_Stop.Name = "Pic_Door2_Close_Stop";
             this.Pic_Door2_Close_Stop.RotateAngle = 0;
             this.Pic_Door2_Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Close_Stop.TabIndex = 245;
             this.Pic_Door2_Close_Stop.TagPath = null;
@@ -3151,11 +3318,12 @@
             this.Pic_Door2_Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door2_Open_Stop.Location = new System.Drawing.Point(6, 100);
+            this.Pic_Door2_Open_Stop.Location = new System.Drawing.Point(12, 192);
+            this.Pic_Door2_Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Open_Stop.Name = "Pic_Door2_Open_Stop";
             this.Pic_Door2_Open_Stop.RotateAngle = 0;
             this.Pic_Door2_Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Open_Stop.TabIndex = 244;
             this.Pic_Door2_Open_Stop.TagPath = null;
@@ -3167,11 +3335,12 @@
             this.Pic_Door2_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door2_Closing_Stop.Location = new System.Drawing.Point(6, 61);
+            this.Pic_Door2_Closing_Stop.Location = new System.Drawing.Point(12, 117);
+            this.Pic_Door2_Closing_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Closing_Stop.Name = "Pic_Door2_Closing_Stop";
             this.Pic_Door2_Closing_Stop.RotateAngle = 0;
             this.Pic_Door2_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Closing_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Closing_Stop.TabIndex = 243;
             this.Pic_Door2_Closing_Stop.TagPath = null;
@@ -3183,11 +3352,12 @@
             this.Pic_Door2_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door2_Opening_Stop.Location = new System.Drawing.Point(6, 22);
+            this.Pic_Door2_Opening_Stop.Location = new System.Drawing.Point(12, 42);
+            this.Pic_Door2_Opening_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Opening_Stop.Name = "Pic_Door2_Opening_Stop";
             this.Pic_Door2_Opening_Stop.RotateAngle = 0;
             this.Pic_Door2_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Opening_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Opening_Stop.TabIndex = 242;
             this.Pic_Door2_Opening_Stop.TagPath = null;
@@ -3199,11 +3369,12 @@
             this.Pic_Door2_Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door2_Close.Location = new System.Drawing.Point(6, 139);
+            this.Pic_Door2_Close.Location = new System.Drawing.Point(12, 267);
+            this.Pic_Door2_Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Close.Name = "Pic_Door2_Close";
             this.Pic_Door2_Close.RotateAngle = 0;
             this.Pic_Door2_Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Close.TabIndex = 241;
             this.Pic_Door2_Close.TagPath = null;
@@ -3215,11 +3386,12 @@
             this.Pic_Door2_Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door2_Open.Location = new System.Drawing.Point(6, 100);
+            this.Pic_Door2_Open.Location = new System.Drawing.Point(12, 192);
+            this.Pic_Door2_Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Open.Name = "Pic_Door2_Open";
             this.Pic_Door2_Open.RotateAngle = 0;
             this.Pic_Door2_Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Open.TabIndex = 240;
             this.Pic_Door2_Open.TagPath = null;
@@ -3231,11 +3403,12 @@
             this.Pic_Door2_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door2_Closing.Location = new System.Drawing.Point(6, 61);
+            this.Pic_Door2_Closing.Location = new System.Drawing.Point(12, 117);
+            this.Pic_Door2_Closing.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Closing.Name = "Pic_Door2_Closing";
             this.Pic_Door2_Closing.RotateAngle = 0;
             this.Pic_Door2_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Closing.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Closing.TabIndex = 239;
             this.Pic_Door2_Closing.TagPath = null;
@@ -3247,11 +3420,12 @@
             this.Pic_Door2_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door2_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door2_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door2_Opening.Location = new System.Drawing.Point(6, 22);
+            this.Pic_Door2_Opening.Location = new System.Drawing.Point(12, 42);
+            this.Pic_Door2_Opening.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door2_Opening.Name = "Pic_Door2_Opening";
             this.Pic_Door2_Opening.RotateAngle = 0;
             this.Pic_Door2_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door2_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door2_Opening.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door2_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door2_Opening.TabIndex = 238;
             this.Pic_Door2_Opening.TagPath = null;
@@ -3262,9 +3436,10 @@
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label31.ForeColor = System.Drawing.Color.Blue;
-            this.label31.Location = new System.Drawing.Point(63, 145);
+            this.label31.Location = new System.Drawing.Point(126, 279);
+            this.label31.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(145, 19);
+            this.label31.Size = new System.Drawing.Size(291, 36);
             this.label31.TabIndex = 7;
             this.label31.Text = "Cửa 2 đóng hoàn toàn";
             // 
@@ -3273,9 +3448,10 @@
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label32.ForeColor = System.Drawing.Color.Blue;
-            this.label32.Location = new System.Drawing.Point(63, 106);
+            this.label32.Location = new System.Drawing.Point(126, 204);
+            this.label32.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(134, 19);
+            this.label32.Size = new System.Drawing.Size(269, 36);
             this.label32.TabIndex = 4;
             this.label32.Text = "Cửa 2 mở hoàn toàn";
             // 
@@ -3284,9 +3460,10 @@
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label33.ForeColor = System.Drawing.Color.Blue;
-            this.label33.Location = new System.Drawing.Point(63, 67);
+            this.label33.Location = new System.Drawing.Point(126, 129);
+            this.label33.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(115, 19);
+            this.label33.Size = new System.Drawing.Size(229, 36);
             this.label33.TabIndex = 2;
             this.label33.Text = "Cửa 2 đang đóng";
             // 
@@ -3295,9 +3472,10 @@
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label34.ForeColor = System.Drawing.Color.Blue;
-            this.label34.Location = new System.Drawing.Point(63, 28);
+            this.label34.Location = new System.Drawing.Point(126, 54);
+            this.label34.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(104, 19);
+            this.label34.Size = new System.Drawing.Size(207, 36);
             this.label34.TabIndex = 0;
             this.label34.Text = "Cửa 2 đang mở";
             // 
@@ -3306,9 +3484,10 @@
             this.ahdLabel14.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel14.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel14.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel14.Location = new System.Drawing.Point(322, 122);
+            this.ahdLabel14.Location = new System.Drawing.Point(644, 235);
+            this.ahdLabel14.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel14.Name = "ahdLabel14";
-            this.ahdLabel14.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel14.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel14.StringFormat = null;
             this.ahdLabel14.TabIndex = 239;
             this.ahdLabel14.TagPath = null;
@@ -3320,9 +3499,10 @@
             this.ahdLabel15.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel15.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel15.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel15.Location = new System.Drawing.Point(251, 121);
+            this.ahdLabel15.Location = new System.Drawing.Point(502, 233);
+            this.ahdLabel15.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel15.Name = "ahdLabel15";
-            this.ahdLabel15.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel15.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel15.StringFormat = null;
             this.ahdLabel15.TabIndex = 238;
             this.ahdLabel15.TagPath = "Local Station/DauTieng/S71500/Group1/S1_Temp_Oil";
@@ -3334,9 +3514,10 @@
             this.ahdLabel16.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel16.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel16.Location = new System.Drawing.Point(1037, 87);
+            this.ahdLabel16.Location = new System.Drawing.Point(2074, 167);
+            this.ahdLabel16.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel16.Name = "ahdLabel16";
-            this.ahdLabel16.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel16.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel16.StringFormat = null;
             this.ahdLabel16.TabIndex = 237;
             this.ahdLabel16.TagPath = null;
@@ -3348,9 +3529,10 @@
             this.ahdLabel17.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel17.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel17.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel17.Location = new System.Drawing.Point(965, 86);
+            this.ahdLabel17.Location = new System.Drawing.Point(1930, 165);
+            this.ahdLabel17.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel17.Name = "ahdLabel17";
-            this.ahdLabel17.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel17.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel17.StringFormat = null;
             this.ahdLabel17.TabIndex = 236;
             this.ahdLabel17.TagPath = "Local Station/DauTieng/S71500/Group1/Door2_Aperture";
@@ -3363,11 +3545,12 @@
             this.ahdPictureBox3.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox3.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox3.Image = global::RegistrationForm1.Properties.Resources.tranc;
-            this.ahdPictureBox3.Location = new System.Drawing.Point(1279, 278);
+            this.ahdPictureBox3.Location = new System.Drawing.Point(2558, 535);
+            this.ahdPictureBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox3.Name = "ahdPictureBox3";
             this.ahdPictureBox3.RotateAngle = 0;
             this.ahdPictureBox3.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox3.Size = new System.Drawing.Size(412, 510);
+            this.ahdPictureBox3.Size = new System.Drawing.Size(824, 981);
             this.ahdPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox3.TabIndex = 233;
             this.ahdPictureBox3.TagPath = null;
@@ -3411,10 +3594,11 @@
             this.tabPage3.Controls.Add(this.label55);
             this.tabPage3.Controls.Add(this.tableLayoutPanel6);
             this.tabPage3.Location = new System.Drawing.Point(4, 54);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPage3.Size = new System.Drawing.Size(1716, 807);
+            this.tabPage3.Size = new System.Drawing.Size(3440, 1605);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "       CỬA 3       ";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -3424,10 +3608,12 @@
             this.groupBox31.Controls.Add(this.Pic_Al_Door3Stop);
             this.groupBox31.Controls.Add(this.label143);
             this.groupBox31.Controls.Add(this.Pic_Al_Door3);
-            this.groupBox31.Location = new System.Drawing.Point(397, 675);
+            this.groupBox31.Location = new System.Drawing.Point(794, 1298);
+            this.groupBox31.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox31.Name = "groupBox31";
+            this.groupBox31.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox31.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox31.Size = new System.Drawing.Size(271, 105);
+            this.groupBox31.Size = new System.Drawing.Size(542, 202);
             this.groupBox31.TabIndex = 269;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Cửa";
@@ -3438,11 +3624,12 @@
             this.Pic_Al_Door3Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door3Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door3Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Al_Door3Stop.Location = new System.Drawing.Point(14, 37);
+            this.Pic_Al_Door3Stop.Location = new System.Drawing.Point(28, 71);
+            this.Pic_Al_Door3Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door3Stop.Name = "Pic_Al_Door3Stop";
             this.Pic_Al_Door3Stop.RotateAngle = 0;
             this.Pic_Al_Door3Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door3Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door3Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door3Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door3Stop.TabIndex = 246;
             this.Pic_Al_Door3Stop.TagPath = null;
@@ -3453,9 +3640,10 @@
             this.label143.AutoSize = true;
             this.label143.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label143.ForeColor = System.Drawing.Color.Blue;
-            this.label143.Location = new System.Drawing.Point(71, 43);
+            this.label143.Location = new System.Drawing.Point(142, 83);
+            this.label143.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label143.Name = "label143";
-            this.label143.Size = new System.Drawing.Size(96, 19);
+            this.label143.Size = new System.Drawing.Size(196, 36);
             this.label143.TabIndex = 235;
             this.label143.Text = "Lỗi lệch cửa 3";
             // 
@@ -3465,11 +3653,12 @@
             this.Pic_Al_Door3.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door3.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door3.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Al_Door3.Location = new System.Drawing.Point(14, 37);
+            this.Pic_Al_Door3.Location = new System.Drawing.Point(28, 71);
+            this.Pic_Al_Door3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door3.Name = "Pic_Al_Door3";
             this.Pic_Al_Door3.RotateAngle = 0;
             this.Pic_Al_Door3.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door3.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door3.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door3.TabIndex = 242;
             this.Pic_Al_Door3.TagPath = null;
@@ -3498,10 +3687,12 @@
             this.groupBox15.Controls.Add(this.Pic_S2_DC1_Running);
             this.groupBox15.Controls.Add(this.label127);
             this.groupBox15.Controls.Add(this.label128);
-            this.groupBox15.Location = new System.Drawing.Point(6, 336);
+            this.groupBox15.Location = new System.Drawing.Point(12, 646);
+            this.groupBox15.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox15.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox15.Size = new System.Drawing.Size(320, 183);
+            this.groupBox15.Size = new System.Drawing.Size(640, 352);
             this.groupBox15.TabIndex = 266;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Bơm dầu";
@@ -3512,11 +3703,12 @@
             this.Pic_S2_DC3_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC3_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC3_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S2_DC3_Over_Stop.Location = new System.Drawing.Point(166, 115);
+            this.Pic_S2_DC3_Over_Stop.Location = new System.Drawing.Point(332, 221);
+            this.Pic_S2_DC3_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC3_Over_Stop.Name = "Pic_S2_DC3_Over_Stop";
             this.Pic_S2_DC3_Over_Stop.RotateAngle = 0;
             this.Pic_S2_DC3_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC3_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC3_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC3_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC3_Over_Stop.TabIndex = 249;
             this.Pic_S2_DC3_Over_Stop.TagPath = null;
@@ -3528,11 +3720,12 @@
             this.Pic_S2_DC2_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC2_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC2_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S2_DC2_Over_Stop.Location = new System.Drawing.Point(166, 75);
+            this.Pic_S2_DC2_Over_Stop.Location = new System.Drawing.Point(332, 144);
+            this.Pic_S2_DC2_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC2_Over_Stop.Name = "Pic_S2_DC2_Over_Stop";
             this.Pic_S2_DC2_Over_Stop.RotateAngle = 0;
             this.Pic_S2_DC2_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC2_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC2_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC2_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC2_Over_Stop.TabIndex = 248;
             this.Pic_S2_DC2_Over_Stop.TagPath = null;
@@ -3544,11 +3737,12 @@
             this.Pic_S2_DC1_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC1_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC1_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S2_DC1_Over_Stop.Location = new System.Drawing.Point(166, 33);
+            this.Pic_S2_DC1_Over_Stop.Location = new System.Drawing.Point(332, 63);
+            this.Pic_S2_DC1_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC1_Over_Stop.Name = "Pic_S2_DC1_Over_Stop";
             this.Pic_S2_DC1_Over_Stop.RotateAngle = 0;
             this.Pic_S2_DC1_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC1_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC1_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC1_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC1_Over_Stop.TabIndex = 247;
             this.Pic_S2_DC1_Over_Stop.TagPath = null;
@@ -3560,11 +3754,12 @@
             this.Pic_S2_DC3_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC3_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC3_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S2_DC3_Stop.Location = new System.Drawing.Point(13, 115);
+            this.Pic_S2_DC3_Stop.Location = new System.Drawing.Point(26, 221);
+            this.Pic_S2_DC3_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC3_Stop.Name = "Pic_S2_DC3_Stop";
             this.Pic_S2_DC3_Stop.RotateAngle = 0;
             this.Pic_S2_DC3_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC3_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC3_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC3_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC3_Stop.TabIndex = 246;
             this.Pic_S2_DC3_Stop.TagPath = null;
@@ -3576,11 +3771,12 @@
             this.Pic_S2_DC2_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC2_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC2_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S2_DC2_Stop.Location = new System.Drawing.Point(13, 75);
+            this.Pic_S2_DC2_Stop.Location = new System.Drawing.Point(26, 144);
+            this.Pic_S2_DC2_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC2_Stop.Name = "Pic_S2_DC2_Stop";
             this.Pic_S2_DC2_Stop.RotateAngle = 0;
             this.Pic_S2_DC2_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC2_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC2_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC2_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC2_Stop.TabIndex = 245;
             this.Pic_S2_DC2_Stop.TagPath = null;
@@ -3592,11 +3788,12 @@
             this.Pic_S2_DC1_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC1_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC1_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S2_DC1_Stop.Location = new System.Drawing.Point(13, 33);
+            this.Pic_S2_DC1_Stop.Location = new System.Drawing.Point(26, 63);
+            this.Pic_S2_DC1_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC1_Stop.Name = "Pic_S2_DC1_Stop";
             this.Pic_S2_DC1_Stop.RotateAngle = 0;
             this.Pic_S2_DC1_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC1_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC1_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC1_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC1_Stop.TabIndex = 244;
             this.Pic_S2_DC1_Stop.TagPath = null;
@@ -3608,11 +3805,12 @@
             this.Pic_S2_DC3_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC3_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC3_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S2_DC3_Over.Location = new System.Drawing.Point(166, 115);
+            this.Pic_S2_DC3_Over.Location = new System.Drawing.Point(332, 221);
+            this.Pic_S2_DC3_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC3_Over.Name = "Pic_S2_DC3_Over";
             this.Pic_S2_DC3_Over.RotateAngle = 0;
             this.Pic_S2_DC3_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC3_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC3_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC3_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC3_Over.TabIndex = 243;
             this.Pic_S2_DC3_Over.TagPath = null;
@@ -3624,11 +3822,12 @@
             this.Pic_S2_DC3_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC3_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC3_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S2_DC3_Running.Location = new System.Drawing.Point(13, 115);
+            this.Pic_S2_DC3_Running.Location = new System.Drawing.Point(26, 221);
+            this.Pic_S2_DC3_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC3_Running.Name = "Pic_S2_DC3_Running";
             this.Pic_S2_DC3_Running.RotateAngle = 0;
             this.Pic_S2_DC3_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC3_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC3_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC3_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC3_Running.TabIndex = 242;
             this.Pic_S2_DC3_Running.TagPath = null;
@@ -3638,9 +3837,10 @@
             // 
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(216, 121);
+            this.label52.Location = new System.Drawing.Point(432, 233);
+            this.label52.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(72, 19);
+            this.label52.Size = new System.Drawing.Size(147, 36);
             this.label52.TabIndex = 241;
             this.label52.Text = "Lỗi bơm 3";
             // 
@@ -3649,9 +3849,10 @@
             this.label53.AutoSize = true;
             this.label53.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label53.ForeColor = System.Drawing.Color.Blue;
-            this.label53.Location = new System.Drawing.Point(60, 121);
+            this.label53.Location = new System.Drawing.Point(120, 233);
+            this.label53.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(68, 19);
+            this.label53.Size = new System.Drawing.Size(138, 36);
             this.label53.TabIndex = 240;
             this.label53.Text = "Bơm chốt";
             // 
@@ -3661,11 +3862,12 @@
             this.Pic_S2_DC2_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC2_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC2_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S2_DC2_Over.Location = new System.Drawing.Point(166, 75);
+            this.Pic_S2_DC2_Over.Location = new System.Drawing.Point(332, 144);
+            this.Pic_S2_DC2_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC2_Over.Name = "Pic_S2_DC2_Over";
             this.Pic_S2_DC2_Over.RotateAngle = 0;
             this.Pic_S2_DC2_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC2_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC2_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC2_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC2_Over.TabIndex = 239;
             this.Pic_S2_DC2_Over.TagPath = null;
@@ -3677,11 +3879,12 @@
             this.Pic_S2_DC2_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC2_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC2_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S2_DC2_Running.Location = new System.Drawing.Point(13, 75);
+            this.Pic_S2_DC2_Running.Location = new System.Drawing.Point(26, 144);
+            this.Pic_S2_DC2_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC2_Running.Name = "Pic_S2_DC2_Running";
             this.Pic_S2_DC2_Running.RotateAngle = 0;
             this.Pic_S2_DC2_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC2_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC2_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC2_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC2_Running.TabIndex = 238;
             this.Pic_S2_DC2_Running.TagPath = null;
@@ -3691,9 +3894,10 @@
             // 
             this.label125.AutoSize = true;
             this.label125.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label125.Location = new System.Drawing.Point(216, 81);
+            this.label125.Location = new System.Drawing.Point(432, 156);
+            this.label125.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label125.Name = "label125";
-            this.label125.Size = new System.Drawing.Size(72, 19);
+            this.label125.Size = new System.Drawing.Size(147, 36);
             this.label125.TabIndex = 237;
             this.label125.Text = "Lỗi bơm 2";
             // 
@@ -3702,9 +3906,10 @@
             this.label126.AutoSize = true;
             this.label126.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label126.ForeColor = System.Drawing.Color.Blue;
-            this.label126.Location = new System.Drawing.Point(60, 81);
+            this.label126.Location = new System.Drawing.Point(120, 156);
+            this.label126.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label126.Name = "label126";
-            this.label126.Size = new System.Drawing.Size(50, 19);
+            this.label126.Size = new System.Drawing.Size(100, 36);
             this.label126.TabIndex = 236;
             this.label126.Text = "Bơm 2";
             // 
@@ -3714,11 +3919,12 @@
             this.Pic_S2_DC1_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC1_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC1_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S2_DC1_Over.Location = new System.Drawing.Point(166, 33);
+            this.Pic_S2_DC1_Over.Location = new System.Drawing.Point(332, 63);
+            this.Pic_S2_DC1_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC1_Over.Name = "Pic_S2_DC1_Over";
             this.Pic_S2_DC1_Over.RotateAngle = 0;
             this.Pic_S2_DC1_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC1_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC1_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC1_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC1_Over.TabIndex = 235;
             this.Pic_S2_DC1_Over.TagPath = null;
@@ -3730,11 +3936,12 @@
             this.Pic_S2_DC1_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S2_DC1_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S2_DC1_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S2_DC1_Running.Location = new System.Drawing.Point(13, 33);
+            this.Pic_S2_DC1_Running.Location = new System.Drawing.Point(26, 63);
+            this.Pic_S2_DC1_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S2_DC1_Running.Name = "Pic_S2_DC1_Running";
             this.Pic_S2_DC1_Running.RotateAngle = 0;
             this.Pic_S2_DC1_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S2_DC1_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S2_DC1_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S2_DC1_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S2_DC1_Running.TabIndex = 232;
             this.Pic_S2_DC1_Running.TagPath = null;
@@ -3744,9 +3951,10 @@
             // 
             this.label127.AutoSize = true;
             this.label127.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label127.Location = new System.Drawing.Point(216, 39);
+            this.label127.Location = new System.Drawing.Point(432, 75);
+            this.label127.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label127.Name = "label127";
-            this.label127.Size = new System.Drawing.Size(72, 19);
+            this.label127.Size = new System.Drawing.Size(147, 36);
             this.label127.TabIndex = 8;
             this.label127.Text = "Lỗi bơm 1";
             // 
@@ -3755,9 +3963,10 @@
             this.label128.AutoSize = true;
             this.label128.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label128.ForeColor = System.Drawing.Color.Blue;
-            this.label128.Location = new System.Drawing.Point(60, 39);
+            this.label128.Location = new System.Drawing.Point(120, 75);
+            this.label128.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label128.Name = "label128";
-            this.label128.Size = new System.Drawing.Size(50, 19);
+            this.label128.Size = new System.Drawing.Size(100, 36);
             this.label128.TabIndex = 0;
             this.label128.Text = "Bơm 1";
             // 
@@ -3765,11 +3974,12 @@
             // 
             this.dataGridViewT3.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridViewT3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewT3.Location = new System.Drawing.Point(696, 347);
+            this.dataGridViewT3.Location = new System.Drawing.Point(1392, 667);
+            this.dataGridViewT3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridViewT3.Name = "dataGridViewT3";
             this.dataGridViewT3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dataGridViewT3.RowHeadersWidth = 82;
-            this.dataGridViewT3.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT3.Size = new System.Drawing.Size(1156, 875);
             this.dataGridViewT3.TabIndex = 265;
             // 
             // groupBox11
@@ -3780,10 +3990,12 @@
             this.groupBox11.Controls.Add(this.bnt_Auto_T3);
             this.groupBox11.Controls.Add(this.bnt_Remote_T3);
             this.groupBox11.Controls.Add(this.bnt_Local_T3);
-            this.groupBox11.Location = new System.Drawing.Point(1281, 47);
+            this.groupBox11.Location = new System.Drawing.Point(2562, 90);
+            this.groupBox11.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox11.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox11.Size = new System.Drawing.Size(428, 233);
+            this.groupBox11.Size = new System.Drawing.Size(856, 448);
             this.groupBox11.TabIndex = 242;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Vận Hành";
@@ -3791,9 +4003,10 @@
             // bnt_Hand_T3
             // 
             this.bnt_Hand_T3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Hand_T3.Location = new System.Drawing.Point(51, 28);
+            this.bnt_Hand_T3.Location = new System.Drawing.Point(102, 54);
+            this.bnt_Hand_T3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Hand_T3.Name = "bnt_Hand_T3";
-            this.bnt_Hand_T3.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Hand_T3.Size = new System.Drawing.Size(280, 106);
             this.bnt_Hand_T3.TabIndex = 205;
             this.bnt_Hand_T3.Text = "Tay";
             this.bnt_Hand_T3.UseVisualStyleBackColor = true;
@@ -3801,9 +4014,10 @@
             // bnt_Estop_T3
             // 
             this.bnt_Estop_T3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Estop_T3.Location = new System.Drawing.Point(162, 172);
+            this.bnt_Estop_T3.Location = new System.Drawing.Point(324, 331);
+            this.bnt_Estop_T3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Estop_T3.Name = "bnt_Estop_T3";
-            this.bnt_Estop_T3.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Estop_T3.Size = new System.Drawing.Size(280, 106);
             this.bnt_Estop_T3.TabIndex = 207;
             this.bnt_Estop_T3.Text = "Dừng Khẩn";
             this.bnt_Estop_T3.UseVisualStyleBackColor = true;
@@ -3811,9 +4025,10 @@
             // bnt_Auto_T3
             // 
             this.bnt_Auto_T3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Auto_T3.Location = new System.Drawing.Point(271, 28);
+            this.bnt_Auto_T3.Location = new System.Drawing.Point(542, 54);
+            this.bnt_Auto_T3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Auto_T3.Name = "bnt_Auto_T3";
-            this.bnt_Auto_T3.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Auto_T3.Size = new System.Drawing.Size(280, 106);
             this.bnt_Auto_T3.TabIndex = 206;
             this.bnt_Auto_T3.Text = "Tự động";
             this.bnt_Auto_T3.UseVisualStyleBackColor = true;
@@ -3821,9 +4036,10 @@
             // bnt_Remote_T3
             // 
             this.bnt_Remote_T3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T3.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T3.Location = new System.Drawing.Point(102, 194);
+            this.bnt_Remote_T3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Remote_T3.Name = "bnt_Remote_T3";
-            this.bnt_Remote_T3.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Remote_T3.Size = new System.Drawing.Size(280, 106);
             this.bnt_Remote_T3.TabIndex = 203;
             this.bnt_Remote_T3.Text = "Từ xa";
             this.bnt_Remote_T3.UseVisualStyleBackColor = true;
@@ -3831,9 +4047,10 @@
             // bnt_Local_T3
             // 
             this.bnt_Local_T3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T3.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T3.Location = new System.Drawing.Point(542, 194);
+            this.bnt_Local_T3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Local_T3.Name = "bnt_Local_T3";
-            this.bnt_Local_T3.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Local_T3.Size = new System.Drawing.Size(280, 106);
             this.bnt_Local_T3.TabIndex = 204;
             this.bnt_Local_T3.Text = "Tại chổ";
             this.bnt_Local_T3.UseVisualStyleBackColor = true;
@@ -3844,11 +4061,12 @@
             this.ahdPictureBox14.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox14.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox14.Image = global::RegistrationForm1.Properties.Resources.tranc;
-            this.ahdPictureBox14.Location = new System.Drawing.Point(1280, 278);
+            this.ahdPictureBox14.Location = new System.Drawing.Point(2560, 535);
+            this.ahdPictureBox14.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox14.Name = "ahdPictureBox14";
             this.ahdPictureBox14.RotateAngle = 0;
             this.ahdPictureBox14.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox14.Size = new System.Drawing.Size(412, 510);
+            this.ahdPictureBox14.Size = new System.Drawing.Size(824, 981);
             this.ahdPictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox14.TabIndex = 234;
             this.ahdPictureBox14.TagPath = null;
@@ -3860,11 +4078,12 @@
             this.ahdBar3.Direction = Ahd.Winforms.Controls.BarDirection.TopToBottom;
             this.ahdBar3.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Percent;
             this.ahdBar3.FillColor = System.Drawing.Color.Green;
-            this.ahdBar3.Location = new System.Drawing.Point(400, 54);
+            this.ahdBar3.Location = new System.Drawing.Point(800, 104);
+            this.ahdBar3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdBar3.MaxValue = "100";
             this.ahdBar3.MinValue = "0";
             this.ahdBar3.Name = "ahdBar3";
-            this.ahdBar3.Size = new System.Drawing.Size(289, 218);
+            this.ahdBar3.Size = new System.Drawing.Size(578, 419);
             this.ahdBar3.TabIndex = 264;
             this.ahdBar3.TagPath = "Local Station/DauTieng/S71500/Group2/Door3_Aperture";
             this.ahdBar3.ValueStringFormat = null;
@@ -3874,10 +4093,11 @@
             this.label37.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label37.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label37.ForeColor = System.Drawing.Color.Blue;
-            this.label37.Location = new System.Drawing.Point(28, 218);
+            this.label37.Location = new System.Drawing.Point(56, 419);
+            this.label37.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label37.Name = "label37";
             this.label37.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label37.Size = new System.Drawing.Size(216, 50);
+            this.label37.Size = new System.Drawing.Size(430, 94);
             this.label37.TabIndex = 263;
             this.label37.Text = "Hành trình xy lanh 3_2";
             this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3887,9 +4107,10 @@
             this.ahdLabel18.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel18.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel18.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel18.Location = new System.Drawing.Point(324, 230);
+            this.ahdLabel18.Location = new System.Drawing.Point(648, 442);
+            this.ahdLabel18.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel18.Name = "ahdLabel18";
-            this.ahdLabel18.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel18.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel18.StringFormat = null;
             this.ahdLabel18.TabIndex = 262;
             this.ahdLabel18.TagPath = null;
@@ -3901,9 +4122,10 @@
             this.ahdLabel24.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel24.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel24.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel24.Location = new System.Drawing.Point(250, 229);
+            this.ahdLabel24.Location = new System.Drawing.Point(500, 440);
+            this.ahdLabel24.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel24.Name = "ahdLabel24";
-            this.ahdLabel24.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel24.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel24.StringFormat = null;
             this.ahdLabel24.TabIndex = 261;
             this.ahdLabel24.TagPath = "Local Station/DauTieng/S71500/Group2/HT_Cylinder3_2";
@@ -3915,10 +4137,11 @@
             this.label38.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label38.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label38.ForeColor = System.Drawing.Color.Blue;
-            this.label38.Location = new System.Drawing.Point(28, 164);
+            this.label38.Location = new System.Drawing.Point(56, 315);
+            this.label38.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label38.Name = "label38";
             this.label38.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label38.Size = new System.Drawing.Size(216, 50);
+            this.label38.Size = new System.Drawing.Size(430, 94);
             this.label38.TabIndex = 260;
             this.label38.Text = "Hành trình xy lanh 3_1";
             this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3928,9 +4151,10 @@
             this.ahdLabel25.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel25.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel25.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel25.Location = new System.Drawing.Point(324, 176);
+            this.ahdLabel25.Location = new System.Drawing.Point(648, 338);
+            this.ahdLabel25.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel25.Name = "ahdLabel25";
-            this.ahdLabel25.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel25.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel25.StringFormat = null;
             this.ahdLabel25.TabIndex = 259;
             this.ahdLabel25.TagPath = null;
@@ -3942,9 +4166,10 @@
             this.ahdLabel28.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel28.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel28.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel28.Location = new System.Drawing.Point(250, 175);
+            this.ahdLabel28.Location = new System.Drawing.Point(500, 337);
+            this.ahdLabel28.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel28.Name = "ahdLabel28";
-            this.ahdLabel28.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel28.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel28.StringFormat = null;
             this.ahdLabel28.TabIndex = 258;
             this.ahdLabel28.TagPath = "Local Station/DauTieng/S71500/Group2/HT_Cylinder3_1";
@@ -3956,10 +4181,11 @@
             this.label39.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label39.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label39.ForeColor = System.Drawing.Color.Blue;
-            this.label39.Location = new System.Drawing.Point(752, 185);
+            this.label39.Location = new System.Drawing.Point(1504, 356);
+            this.label39.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label39.Name = "label39";
             this.label39.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label39.Size = new System.Drawing.Size(185, 50);
+            this.label39.Size = new System.Drawing.Size(368, 94);
             this.label39.TabIndex = 257;
             this.label39.Text = "Lưu lượng tổng (Qc)";
             this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3969,10 +4195,11 @@
             this.label40.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label40.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label40.ForeColor = System.Drawing.Color.Blue;
-            this.label40.Location = new System.Drawing.Point(752, 130);
+            this.label40.Location = new System.Drawing.Point(1504, 250);
+            this.label40.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label40.Name = "label40";
             this.label40.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label40.Size = new System.Drawing.Size(185, 50);
+            this.label40.Size = new System.Drawing.Size(368, 94);
             this.label40.TabIndex = 256;
             this.label40.Text = "Lưu lượng cửa 3 (Qi)";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3982,10 +4209,11 @@
             this.label41.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label41.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label41.ForeColor = System.Drawing.Color.Blue;
-            this.label41.Location = new System.Drawing.Point(752, 75);
+            this.label41.Location = new System.Drawing.Point(1504, 144);
+            this.label41.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label41.Name = "label41";
             this.label41.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label41.Size = new System.Drawing.Size(185, 50);
+            this.label41.Size = new System.Drawing.Size(368, 94);
             this.label41.TabIndex = 255;
             this.label41.Text = "Độ mở cửa (a):";
             this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3995,10 +4223,11 @@
             this.label42.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label42.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label42.ForeColor = System.Drawing.Color.Blue;
-            this.label42.Location = new System.Drawing.Point(28, 56);
+            this.label42.Location = new System.Drawing.Point(56, 108);
+            this.label42.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label42.Name = "label42";
             this.label42.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label42.Size = new System.Drawing.Size(216, 50);
+            this.label42.Size = new System.Drawing.Size(430, 94);
             this.label42.TabIndex = 254;
             this.label42.Text = "Mực nước :";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4008,10 +4237,11 @@
             this.label43.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label43.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label43.ForeColor = System.Drawing.Color.Blue;
-            this.label43.Location = new System.Drawing.Point(28, 110);
+            this.label43.Location = new System.Drawing.Point(56, 212);
+            this.label43.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label43.Name = "label43";
             this.label43.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label43.Size = new System.Drawing.Size(216, 50);
+            this.label43.Size = new System.Drawing.Size(430, 94);
             this.label43.TabIndex = 253;
             this.label43.Text = "Nhiệt độ dầu : ";
             this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4021,9 +4251,10 @@
             this.ahdLabel29.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel29.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel29.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel29.Location = new System.Drawing.Point(1038, 197);
+            this.ahdLabel29.Location = new System.Drawing.Point(2076, 379);
+            this.ahdLabel29.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel29.Name = "ahdLabel29";
-            this.ahdLabel29.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel29.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel29.StringFormat = null;
             this.ahdLabel29.TabIndex = 252;
             this.ahdLabel29.TagPath = null;
@@ -4035,9 +4266,10 @@
             this.ahdLabel30.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel30.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel30.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel30.Location = new System.Drawing.Point(966, 196);
+            this.ahdLabel30.Location = new System.Drawing.Point(1932, 377);
+            this.ahdLabel30.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel30.Name = "ahdLabel30";
-            this.ahdLabel30.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel30.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel30.StringFormat = null;
             this.ahdLabel30.TabIndex = 251;
             this.ahdLabel30.TagPath = "Local Station/DauTieng/S71500/Group2/Total_Fllow";
@@ -4049,9 +4281,10 @@
             this.ahdLabel31.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel31.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel31.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel31.Location = new System.Drawing.Point(1038, 142);
+            this.ahdLabel31.Location = new System.Drawing.Point(2076, 273);
+            this.ahdLabel31.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel31.Name = "ahdLabel31";
-            this.ahdLabel31.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel31.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel31.StringFormat = null;
             this.ahdLabel31.TabIndex = 250;
             this.ahdLabel31.TagPath = null;
@@ -4063,9 +4296,10 @@
             this.ahdLabel32.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel32.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel32.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel32.Location = new System.Drawing.Point(966, 141);
+            this.ahdLabel32.Location = new System.Drawing.Point(1932, 271);
+            this.ahdLabel32.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel32.Name = "ahdLabel32";
-            this.ahdLabel32.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel32.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel32.StringFormat = null;
             this.ahdLabel32.TabIndex = 249;
             this.ahdLabel32.TagPath = "Local Station/DauTieng/S71500/Group2/Fllow_Door3";
@@ -4077,9 +4311,10 @@
             this.ahdLabel33.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel33.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel33.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel33.Location = new System.Drawing.Point(322, 68);
+            this.ahdLabel33.Location = new System.Drawing.Point(644, 131);
+            this.ahdLabel33.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel33.Name = "ahdLabel33";
-            this.ahdLabel33.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel33.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel33.StringFormat = null;
             this.ahdLabel33.TabIndex = 248;
             this.ahdLabel33.TagPath = null;
@@ -4091,9 +4326,10 @@
             this.ahdLabel34.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel34.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel34.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel34.Location = new System.Drawing.Point(250, 67);
+            this.ahdLabel34.Location = new System.Drawing.Point(500, 129);
+            this.ahdLabel34.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel34.Name = "ahdLabel34";
-            this.ahdLabel34.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel34.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel34.StringFormat = null;
             this.ahdLabel34.TabIndex = 247;
             this.ahdLabel34.TagPath = "Local Station/DauTieng/S71500/Group4/Remote";
@@ -4109,10 +4345,12 @@
             this.groupBox35.Controls.Add(this.ahdPictureBox20);
             this.groupBox35.Controls.Add(this.label148);
             this.groupBox35.Controls.Add(this.label149);
-            this.groupBox35.Location = new System.Drawing.Point(400, 537);
+            this.groupBox35.Location = new System.Drawing.Point(800, 1033);
+            this.groupBox35.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox35.Name = "groupBox35";
+            this.groupBox35.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox35.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox35.Size = new System.Drawing.Size(268, 115);
+            this.groupBox35.Size = new System.Drawing.Size(536, 221);
             this.groupBox35.TabIndex = 246;
             this.groupBox35.TabStop = false;
             this.groupBox35.Text = "Áp dầu";
@@ -4123,11 +4361,12 @@
             this.ahdPictureBox17.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox17.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox17.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.ahdPictureBox17.Location = new System.Drawing.Point(15, 74);
+            this.ahdPictureBox17.Location = new System.Drawing.Point(30, 142);
+            this.ahdPictureBox17.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox17.Name = "ahdPictureBox17";
             this.ahdPictureBox17.RotateAngle = 0;
             this.ahdPictureBox17.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox17.Size = new System.Drawing.Size(35, 31);
+            this.ahdPictureBox17.Size = new System.Drawing.Size(70, 60);
             this.ahdPictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox17.TabIndex = 245;
             this.ahdPictureBox17.TagPath = null;
@@ -4139,11 +4378,12 @@
             this.ahdPictureBox18.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox18.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox18.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.ahdPictureBox18.Location = new System.Drawing.Point(15, 31);
+            this.ahdPictureBox18.Location = new System.Drawing.Point(30, 60);
+            this.ahdPictureBox18.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox18.Name = "ahdPictureBox18";
             this.ahdPictureBox18.RotateAngle = 0;
             this.ahdPictureBox18.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox18.Size = new System.Drawing.Size(35, 31);
+            this.ahdPictureBox18.Size = new System.Drawing.Size(70, 60);
             this.ahdPictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox18.TabIndex = 244;
             this.ahdPictureBox18.TagPath = null;
@@ -4155,11 +4395,12 @@
             this.ahdPictureBox19.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox19.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox19.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.ahdPictureBox19.Location = new System.Drawing.Point(15, 74);
+            this.ahdPictureBox19.Location = new System.Drawing.Point(30, 142);
+            this.ahdPictureBox19.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox19.Name = "ahdPictureBox19";
             this.ahdPictureBox19.RotateAngle = 0;
             this.ahdPictureBox19.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox19.Size = new System.Drawing.Size(35, 31);
+            this.ahdPictureBox19.Size = new System.Drawing.Size(70, 60);
             this.ahdPictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox19.TabIndex = 243;
             this.ahdPictureBox19.TagPath = null;
@@ -4171,11 +4412,12 @@
             this.ahdPictureBox20.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox20.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox20.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.ahdPictureBox20.Location = new System.Drawing.Point(15, 31);
+            this.ahdPictureBox20.Location = new System.Drawing.Point(30, 60);
+            this.ahdPictureBox20.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox20.Name = "ahdPictureBox20";
             this.ahdPictureBox20.RotateAngle = 0;
             this.ahdPictureBox20.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox20.Size = new System.Drawing.Size(35, 31);
+            this.ahdPictureBox20.Size = new System.Drawing.Size(70, 60);
             this.ahdPictureBox20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox20.TabIndex = 242;
             this.ahdPictureBox20.TagPath = null;
@@ -4186,9 +4428,10 @@
             this.label148.AutoSize = true;
             this.label148.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label148.ForeColor = System.Drawing.Color.Blue;
-            this.label148.Location = new System.Drawing.Point(65, 80);
+            this.label148.Location = new System.Drawing.Point(130, 154);
+            this.label148.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label148.Name = "label148";
-            this.label148.Size = new System.Drawing.Size(123, 19);
+            this.label148.Size = new System.Drawing.Size(245, 36);
             this.label148.TabIndex = 8;
             this.label148.Text = "Áp dầu cửa 3 thấp";
             // 
@@ -4197,9 +4440,10 @@
             this.label149.AutoSize = true;
             this.label149.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label149.ForeColor = System.Drawing.Color.Blue;
-            this.label149.Location = new System.Drawing.Point(65, 37);
+            this.label149.Location = new System.Drawing.Point(130, 71);
+            this.label149.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label149.Name = "label149";
-            this.label149.Size = new System.Drawing.Size(119, 19);
+            this.label149.Size = new System.Drawing.Size(235, 36);
             this.label149.TabIndex = 5;
             this.label149.Text = "Áp dầu cửa 3 cao";
             // 
@@ -4212,10 +4456,12 @@
             this.groupBox12.Controls.Add(this.Pic_Door3_PressureHigh);
             this.groupBox12.Controls.Add(this.label44);
             this.groupBox12.Controls.Add(this.label45);
-            this.groupBox12.Location = new System.Drawing.Point(400, 537);
+            this.groupBox12.Location = new System.Drawing.Point(800, 1033);
+            this.groupBox12.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox12.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox12.Size = new System.Drawing.Size(268, 115);
+            this.groupBox12.Size = new System.Drawing.Size(536, 221);
             this.groupBox12.TabIndex = 246;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Áp dầu";
@@ -4226,11 +4472,12 @@
             this.Pic_Door3_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_PressureLow_Stop.Location = new System.Drawing.Point(14, 74);
+            this.Pic_Door3_PressureLow_Stop.Location = new System.Drawing.Point(28, 142);
+            this.Pic_Door3_PressureLow_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_PressureLow_Stop.Name = "Pic_Door3_PressureLow_Stop";
             this.Pic_Door3_PressureLow_Stop.RotateAngle = 0;
             this.Pic_Door3_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureLow_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_PressureLow_Stop.TabIndex = 245;
             this.Pic_Door3_PressureLow_Stop.TagPath = null;
@@ -4242,11 +4489,12 @@
             this.Pic_Door3_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_PressureHigh_Stop.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door3_PressureHigh_Stop.Location = new System.Drawing.Point(28, 60);
+            this.Pic_Door3_PressureHigh_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_PressureHigh_Stop.Name = "Pic_Door3_PressureHigh_Stop";
             this.Pic_Door3_PressureHigh_Stop.RotateAngle = 0;
             this.Pic_Door3_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureHigh_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_PressureHigh_Stop.TabIndex = 244;
             this.Pic_Door3_PressureHigh_Stop.TagPath = null;
@@ -4258,11 +4506,12 @@
             this.Pic_Door3_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_Door3_PressureLow.Location = new System.Drawing.Point(14, 74);
+            this.Pic_Door3_PressureLow.Location = new System.Drawing.Point(28, 142);
+            this.Pic_Door3_PressureLow.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_PressureLow.Name = "Pic_Door3_PressureLow";
             this.Pic_Door3_PressureLow.RotateAngle = 0;
             this.Pic_Door3_PressureLow.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureLow.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureLow.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_PressureLow.TabIndex = 243;
             this.Pic_Door3_PressureLow.TagPath = null;
@@ -4274,11 +4523,12 @@
             this.Pic_Door3_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door3_PressureHigh.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door3_PressureHigh.Location = new System.Drawing.Point(28, 60);
+            this.Pic_Door3_PressureHigh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_PressureHigh.Name = "Pic_Door3_PressureHigh";
             this.Pic_Door3_PressureHigh.RotateAngle = 0;
             this.Pic_Door3_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureHigh.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureHigh.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_PressureHigh.TabIndex = 242;
             this.Pic_Door3_PressureHigh.TagPath = null;
@@ -4288,9 +4538,10 @@
             // 
             this.label44.AutoSize = true;
             this.label44.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label44.Location = new System.Drawing.Point(64, 80);
+            this.label44.Location = new System.Drawing.Point(128, 154);
+            this.label44.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(123, 19);
+            this.label44.Size = new System.Drawing.Size(245, 36);
             this.label44.TabIndex = 8;
             this.label44.Text = "Áp dầu cửa 3 thấp";
             // 
@@ -4298,9 +4549,10 @@
             // 
             this.label45.AutoSize = true;
             this.label45.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.Location = new System.Drawing.Point(64, 37);
+            this.label45.Location = new System.Drawing.Point(128, 71);
+            this.label45.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(119, 19);
+            this.label45.Size = new System.Drawing.Size(235, 36);
             this.label45.TabIndex = 5;
             this.label45.Text = "Áp dầu cửa 3 cao";
             // 
@@ -4318,10 +4570,12 @@
             this.groupBox13.Controls.Add(this.Pic_Doorlock3_1Open);
             this.groupBox13.Controls.Add(this.label46);
             this.groupBox13.Controls.Add(this.label47);
-            this.groupBox13.Location = new System.Drawing.Point(6, 537);
+            this.groupBox13.Location = new System.Drawing.Point(12, 1033);
+            this.groupBox13.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox13.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox13.Size = new System.Drawing.Size(320, 198);
+            this.groupBox13.Size = new System.Drawing.Size(640, 381);
             this.groupBox13.TabIndex = 245;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Chốt cửa";
@@ -4332,11 +4586,12 @@
             this.Pic_Doorlock3_2Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_2Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_2Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock3_2Close_Stop.Location = new System.Drawing.Point(13, 158);
+            this.Pic_Doorlock3_2Close_Stop.Location = new System.Drawing.Point(26, 304);
+            this.Pic_Doorlock3_2Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_2Close_Stop.Name = "Pic_Doorlock3_2Close_Stop";
             this.Pic_Doorlock3_2Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock3_2Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_2Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_2Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_2Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_2Close_Stop.TabIndex = 251;
             this.Pic_Doorlock3_2Close_Stop.TagPath = null;
@@ -4348,11 +4603,12 @@
             this.Pic_Doorlock3_2Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_2Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_2Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock3_2Open_Stop.Location = new System.Drawing.Point(13, 114);
+            this.Pic_Doorlock3_2Open_Stop.Location = new System.Drawing.Point(26, 219);
+            this.Pic_Doorlock3_2Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_2Open_Stop.Name = "Pic_Doorlock3_2Open_Stop";
             this.Pic_Doorlock3_2Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock3_2Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_2Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_2Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_2Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_2Open_Stop.TabIndex = 250;
             this.Pic_Doorlock3_2Open_Stop.TagPath = null;
@@ -4364,11 +4620,12 @@
             this.Pic_Doorlock3_1Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_1Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_1Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock3_1Close_Stop.Location = new System.Drawing.Point(13, 70);
+            this.Pic_Doorlock3_1Close_Stop.Location = new System.Drawing.Point(26, 135);
+            this.Pic_Doorlock3_1Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_1Close_Stop.Name = "Pic_Doorlock3_1Close_Stop";
             this.Pic_Doorlock3_1Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock3_1Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_1Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_1Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_1Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_1Close_Stop.TabIndex = 249;
             this.Pic_Doorlock3_1Close_Stop.TagPath = null;
@@ -4380,11 +4637,12 @@
             this.Pic_Doorlock3_1Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_1Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_1Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock3_1Open_Stop.Location = new System.Drawing.Point(13, 26);
+            this.Pic_Doorlock3_1Open_Stop.Location = new System.Drawing.Point(26, 50);
+            this.Pic_Doorlock3_1Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_1Open_Stop.Name = "Pic_Doorlock3_1Open_Stop";
             this.Pic_Doorlock3_1Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock3_1Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_1Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_1Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_1Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_1Open_Stop.TabIndex = 248;
             this.Pic_Doorlock3_1Open_Stop.TagPath = null;
@@ -4396,11 +4654,12 @@
             this.Pic_Doorlock3_2Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_2Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_2Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock3_2Close.Location = new System.Drawing.Point(13, 158);
+            this.Pic_Doorlock3_2Close.Location = new System.Drawing.Point(26, 304);
+            this.Pic_Doorlock3_2Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_2Close.Name = "Pic_Doorlock3_2Close";
             this.Pic_Doorlock3_2Close.RotateAngle = 0;
             this.Pic_Doorlock3_2Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_2Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_2Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_2Close.TabIndex = 247;
             this.Pic_Doorlock3_2Close.TagPath = null;
@@ -4411,9 +4670,10 @@
             this.label114.AutoSize = true;
             this.label114.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label114.ForeColor = System.Drawing.Color.Blue;
-            this.label114.Location = new System.Drawing.Point(71, 164);
+            this.label114.Location = new System.Drawing.Point(142, 315);
+            this.label114.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label114.Name = "label114";
-            this.label114.Size = new System.Drawing.Size(123, 19);
+            this.label114.Size = new System.Drawing.Size(248, 36);
             this.label114.TabIndex = 246;
             this.label114.Text = "Chốt 3_2 đóng hết";
             // 
@@ -4423,11 +4683,12 @@
             this.Pic_Doorlock3_2Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_2Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_2Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock3_2Open.Location = new System.Drawing.Point(13, 114);
+            this.Pic_Doorlock3_2Open.Location = new System.Drawing.Point(26, 219);
+            this.Pic_Doorlock3_2Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_2Open.Name = "Pic_Doorlock3_2Open";
             this.Pic_Doorlock3_2Open.RotateAngle = 0;
             this.Pic_Doorlock3_2Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_2Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_2Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_2Open.TabIndex = 245;
             this.Pic_Doorlock3_2Open.TagPath = null;
@@ -4438,9 +4699,10 @@
             this.label113.AutoSize = true;
             this.label113.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label113.ForeColor = System.Drawing.Color.Blue;
-            this.label113.Location = new System.Drawing.Point(71, 120);
+            this.label113.Location = new System.Drawing.Point(142, 231);
+            this.label113.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label113.Name = "label113";
-            this.label113.Size = new System.Drawing.Size(112, 19);
+            this.label113.Size = new System.Drawing.Size(226, 36);
             this.label113.TabIndex = 244;
             this.label113.Text = "Chốt 3_2 mở hết";
             // 
@@ -4450,11 +4712,12 @@
             this.Pic_Doorlock3_1Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_1Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_1Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock3_1Close.Location = new System.Drawing.Point(13, 70);
+            this.Pic_Doorlock3_1Close.Location = new System.Drawing.Point(26, 135);
+            this.Pic_Doorlock3_1Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_1Close.Name = "Pic_Doorlock3_1Close";
             this.Pic_Doorlock3_1Close.RotateAngle = 0;
             this.Pic_Doorlock3_1Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_1Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_1Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_1Close.TabIndex = 243;
             this.Pic_Doorlock3_1Close.TagPath = null;
@@ -4466,11 +4729,12 @@
             this.Pic_Doorlock3_1Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock3_1Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock3_1Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock3_1Open.Location = new System.Drawing.Point(13, 26);
+            this.Pic_Doorlock3_1Open.Location = new System.Drawing.Point(26, 50);
+            this.Pic_Doorlock3_1Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock3_1Open.Name = "Pic_Doorlock3_1Open";
             this.Pic_Doorlock3_1Open.RotateAngle = 0;
             this.Pic_Doorlock3_1Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_1Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_1Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock3_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock3_1Open.TabIndex = 242;
             this.Pic_Doorlock3_1Open.TagPath = null;
@@ -4481,9 +4745,10 @@
             this.label46.AutoSize = true;
             this.label46.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label46.ForeColor = System.Drawing.Color.Blue;
-            this.label46.Location = new System.Drawing.Point(71, 76);
+            this.label46.Location = new System.Drawing.Point(142, 146);
+            this.label46.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(123, 19);
+            this.label46.Size = new System.Drawing.Size(248, 36);
             this.label46.TabIndex = 8;
             this.label46.Text = "Chốt 3_1 đóng hết";
             // 
@@ -4492,9 +4757,10 @@
             this.label47.AutoSize = true;
             this.label47.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label47.ForeColor = System.Drawing.Color.Blue;
-            this.label47.Location = new System.Drawing.Point(71, 32);
+            this.label47.Location = new System.Drawing.Point(142, 62);
+            this.label47.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(112, 19);
+            this.label47.Size = new System.Drawing.Size(226, 36);
             this.label47.TabIndex = 5;
             this.label47.Text = "Chốt 3_1 mở hết";
             // 
@@ -4512,10 +4778,12 @@
             this.groupBox14.Controls.Add(this.label49);
             this.groupBox14.Controls.Add(this.label50);
             this.groupBox14.Controls.Add(this.label51);
-            this.groupBox14.Location = new System.Drawing.Point(400, 336);
+            this.groupBox14.Location = new System.Drawing.Point(800, 646);
+            this.groupBox14.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox14.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox14.Size = new System.Drawing.Size(268, 183);
+            this.groupBox14.Size = new System.Drawing.Size(536, 352);
             this.groupBox14.TabIndex = 244;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Trạng thái cửa";
@@ -4526,11 +4794,12 @@
             this.Pic_Door3_Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_Close_Stop.Location = new System.Drawing.Point(17, 139);
+            this.Pic_Door3_Close_Stop.Location = new System.Drawing.Point(34, 267);
+            this.Pic_Door3_Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Close_Stop.Name = "Pic_Door3_Close_Stop";
             this.Pic_Door3_Close_Stop.RotateAngle = 0;
             this.Pic_Door3_Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Close_Stop.TabIndex = 245;
             this.Pic_Door3_Close_Stop.TagPath = null;
@@ -4542,11 +4811,12 @@
             this.Pic_Door3_Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_Open_Stop.Location = new System.Drawing.Point(17, 100);
+            this.Pic_Door3_Open_Stop.Location = new System.Drawing.Point(34, 192);
+            this.Pic_Door3_Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Open_Stop.Name = "Pic_Door3_Open_Stop";
             this.Pic_Door3_Open_Stop.RotateAngle = 0;
             this.Pic_Door3_Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Open_Stop.TabIndex = 244;
             this.Pic_Door3_Open_Stop.TagPath = null;
@@ -4558,11 +4828,12 @@
             this.Pic_Door3_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_Closing_Stop.Location = new System.Drawing.Point(17, 61);
+            this.Pic_Door3_Closing_Stop.Location = new System.Drawing.Point(34, 117);
+            this.Pic_Door3_Closing_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Closing_Stop.Name = "Pic_Door3_Closing_Stop";
             this.Pic_Door3_Closing_Stop.RotateAngle = 0;
             this.Pic_Door3_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Closing_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Closing_Stop.TabIndex = 243;
             this.Pic_Door3_Closing_Stop.TagPath = null;
@@ -4574,11 +4845,12 @@
             this.Pic_Door3_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_Opening_Stop.Location = new System.Drawing.Point(17, 22);
+            this.Pic_Door3_Opening_Stop.Location = new System.Drawing.Point(34, 42);
+            this.Pic_Door3_Opening_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Opening_Stop.Name = "Pic_Door3_Opening_Stop";
             this.Pic_Door3_Opening_Stop.RotateAngle = 0;
             this.Pic_Door3_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Opening_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Opening_Stop.TabIndex = 242;
             this.Pic_Door3_Opening_Stop.TagPath = null;
@@ -4590,11 +4862,12 @@
             this.Pic_Door3_Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door3_Close.Location = new System.Drawing.Point(17, 139);
+            this.Pic_Door3_Close.Location = new System.Drawing.Point(34, 267);
+            this.Pic_Door3_Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Close.Name = "Pic_Door3_Close";
             this.Pic_Door3_Close.RotateAngle = 0;
             this.Pic_Door3_Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Close.TabIndex = 241;
             this.Pic_Door3_Close.TagPath = null;
@@ -4606,11 +4879,12 @@
             this.Pic_Door3_Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door3_Open.Location = new System.Drawing.Point(17, 100);
+            this.Pic_Door3_Open.Location = new System.Drawing.Point(34, 192);
+            this.Pic_Door3_Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Open.Name = "Pic_Door3_Open";
             this.Pic_Door3_Open.RotateAngle = 0;
             this.Pic_Door3_Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Open.TabIndex = 240;
             this.Pic_Door3_Open.TagPath = null;
@@ -4622,11 +4896,12 @@
             this.Pic_Door3_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door3_Closing.Location = new System.Drawing.Point(17, 61);
+            this.Pic_Door3_Closing.Location = new System.Drawing.Point(34, 117);
+            this.Pic_Door3_Closing.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Closing.Name = "Pic_Door3_Closing";
             this.Pic_Door3_Closing.RotateAngle = 0;
             this.Pic_Door3_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Closing.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Closing.TabIndex = 239;
             this.Pic_Door3_Closing.TagPath = null;
@@ -4638,11 +4913,12 @@
             this.Pic_Door3_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door3_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door3_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door3_Opening.Location = new System.Drawing.Point(17, 22);
+            this.Pic_Door3_Opening.Location = new System.Drawing.Point(34, 42);
+            this.Pic_Door3_Opening.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door3_Opening.Name = "Pic_Door3_Opening";
             this.Pic_Door3_Opening.RotateAngle = 0;
             this.Pic_Door3_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_Opening.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door3_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door3_Opening.TabIndex = 238;
             this.Pic_Door3_Opening.TagPath = null;
@@ -4653,9 +4929,10 @@
             this.label48.AutoSize = true;
             this.label48.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label48.ForeColor = System.Drawing.Color.Blue;
-            this.label48.Location = new System.Drawing.Point(74, 145);
+            this.label48.Location = new System.Drawing.Point(148, 279);
+            this.label48.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(145, 19);
+            this.label48.Size = new System.Drawing.Size(291, 36);
             this.label48.TabIndex = 7;
             this.label48.Text = "Cửa 3 đóng hoàn toàn";
             // 
@@ -4664,9 +4941,10 @@
             this.label49.AutoSize = true;
             this.label49.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label49.ForeColor = System.Drawing.Color.Blue;
-            this.label49.Location = new System.Drawing.Point(74, 106);
+            this.label49.Location = new System.Drawing.Point(148, 204);
+            this.label49.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(134, 19);
+            this.label49.Size = new System.Drawing.Size(269, 36);
             this.label49.TabIndex = 4;
             this.label49.Text = "Cửa 3 mở hoàn toàn";
             // 
@@ -4675,9 +4953,10 @@
             this.label50.AutoSize = true;
             this.label50.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label50.ForeColor = System.Drawing.Color.Blue;
-            this.label50.Location = new System.Drawing.Point(74, 67);
+            this.label50.Location = new System.Drawing.Point(148, 129);
+            this.label50.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(115, 19);
+            this.label50.Size = new System.Drawing.Size(229, 36);
             this.label50.TabIndex = 2;
             this.label50.Text = "Cửa 3 đang đóng";
             // 
@@ -4686,18 +4965,20 @@
             this.label51.AutoSize = true;
             this.label51.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label51.ForeColor = System.Drawing.Color.Blue;
-            this.label51.Location = new System.Drawing.Point(74, 28);
+            this.label51.Location = new System.Drawing.Point(148, 54);
+            this.label51.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(104, 19);
+            this.label51.Size = new System.Drawing.Size(207, 36);
             this.label51.TabIndex = 0;
             this.label51.Text = "Cửa 3 đang mở";
             // 
             // label54
             // 
             this.label54.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label54.Location = new System.Drawing.Point(461, 283);
+            this.label54.Location = new System.Drawing.Point(922, 544);
+            this.label54.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(396, 31);
+            this.label54.Size = new System.Drawing.Size(792, 60);
             this.label54.TabIndex = 236;
             this.label54.Text = "THÔNG TIN VẬN HÀNH CỬA  3";
             this.label54.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4707,11 +4988,12 @@
             this.tableLayoutPanel5.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(-15, 278);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(-30, 535);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1297, 39);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(2594, 75);
             this.tableLayoutPanel5.TabIndex = 241;
             // 
             // ahdLabel35
@@ -4719,9 +5001,10 @@
             this.ahdLabel35.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel35.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel35.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel35.Location = new System.Drawing.Point(321, 122);
+            this.ahdLabel35.Location = new System.Drawing.Point(642, 235);
+            this.ahdLabel35.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel35.Name = "ahdLabel35";
-            this.ahdLabel35.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel35.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel35.StringFormat = null;
             this.ahdLabel35.TabIndex = 240;
             this.ahdLabel35.TagPath = null;
@@ -4733,9 +5016,10 @@
             this.ahdLabel36.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel36.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel36.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel36.Location = new System.Drawing.Point(250, 121);
+            this.ahdLabel36.Location = new System.Drawing.Point(500, 233);
+            this.ahdLabel36.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel36.Name = "ahdLabel36";
-            this.ahdLabel36.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel36.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel36.StringFormat = null;
             this.ahdLabel36.TabIndex = 239;
             this.ahdLabel36.TagPath = "Local Station/DauTieng/S71500/Group2/S2_Temp_Oil";
@@ -4747,9 +5031,10 @@
             this.ahdLabel37.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel37.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel37.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel37.Location = new System.Drawing.Point(1038, 87);
+            this.ahdLabel37.Location = new System.Drawing.Point(2076, 167);
+            this.ahdLabel37.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel37.Name = "ahdLabel37";
-            this.ahdLabel37.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel37.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel37.StringFormat = null;
             this.ahdLabel37.TabIndex = 238;
             this.ahdLabel37.TagPath = null;
@@ -4761,9 +5046,10 @@
             this.ahdLabel38.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel38.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel38.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel38.Location = new System.Drawing.Point(966, 86);
+            this.ahdLabel38.Location = new System.Drawing.Point(1932, 165);
+            this.ahdLabel38.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel38.Name = "ahdLabel38";
-            this.ahdLabel38.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel38.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel38.StringFormat = null;
             this.ahdLabel38.TabIndex = 237;
             this.ahdLabel38.TagPath = "Local Station/DauTieng/S71500/Group2/Door3_Aperture";
@@ -4774,9 +5060,10 @@
             // 
             this.label55.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label55.ForeColor = System.Drawing.Color.Black;
-            this.label55.Location = new System.Drawing.Point(483, 8);
+            this.label55.Location = new System.Drawing.Point(966, 15);
+            this.label55.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(302, 31);
+            this.label55.Size = new System.Drawing.Size(604, 60);
             this.label55.TabIndex = 233;
             this.label55.Text = "CỬA 3";
             this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4786,11 +5073,12 @@
             this.tableLayoutPanel6.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel6.ColumnCount = 1;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(-13, 5);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(-26, 10);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1745, 39);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(3490, 75);
             this.tableLayoutPanel6.TabIndex = 235;
             // 
             // tabPage4
@@ -4830,10 +5118,11 @@
             this.tabPage4.Controls.Add(this.label74);
             this.tabPage4.Controls.Add(this.tableLayoutPanel8);
             this.tabPage4.Location = new System.Drawing.Point(4, 54);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPage4.Size = new System.Drawing.Size(1716, 807);
+            this.tabPage4.Size = new System.Drawing.Size(3440, 1605);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "       CỬA 4       ";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -4843,10 +5132,12 @@
             this.groupBox32.Controls.Add(this.Pic_Al_Door4Stop);
             this.groupBox32.Controls.Add(this.label144);
             this.groupBox32.Controls.Add(this.Pic_Al_Door4);
-            this.groupBox32.Location = new System.Drawing.Point(366, 675);
+            this.groupBox32.Location = new System.Drawing.Point(732, 1298);
+            this.groupBox32.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox32.Name = "groupBox32";
+            this.groupBox32.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox32.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox32.Size = new System.Drawing.Size(306, 105);
+            this.groupBox32.Size = new System.Drawing.Size(612, 202);
             this.groupBox32.TabIndex = 270;
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "Cửa";
@@ -4857,11 +5148,12 @@
             this.Pic_Al_Door4Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door4Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door4Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Al_Door4Stop.Location = new System.Drawing.Point(14, 37);
+            this.Pic_Al_Door4Stop.Location = new System.Drawing.Point(28, 71);
+            this.Pic_Al_Door4Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door4Stop.Name = "Pic_Al_Door4Stop";
             this.Pic_Al_Door4Stop.RotateAngle = 0;
             this.Pic_Al_Door4Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door4Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door4Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door4Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door4Stop.TabIndex = 246;
             this.Pic_Al_Door4Stop.TagPath = null;
@@ -4872,9 +5164,10 @@
             this.label144.AutoSize = true;
             this.label144.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label144.ForeColor = System.Drawing.Color.Blue;
-            this.label144.Location = new System.Drawing.Point(71, 43);
+            this.label144.Location = new System.Drawing.Point(142, 83);
+            this.label144.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label144.Name = "label144";
-            this.label144.Size = new System.Drawing.Size(96, 19);
+            this.label144.Size = new System.Drawing.Size(196, 36);
             this.label144.TabIndex = 235;
             this.label144.Text = "Lỗi lệch cửa 4";
             // 
@@ -4884,11 +5177,12 @@
             this.Pic_Al_Door4.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door4.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door4.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Al_Door4.Location = new System.Drawing.Point(14, 37);
+            this.Pic_Al_Door4.Location = new System.Drawing.Point(28, 71);
+            this.Pic_Al_Door4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door4.Name = "Pic_Al_Door4";
             this.Pic_Al_Door4.RotateAngle = 0;
             this.Pic_Al_Door4.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door4.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door4.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door4.TabIndex = 242;
             this.Pic_Al_Door4.TagPath = null;
@@ -4917,10 +5211,12 @@
             this.groupBox20.Controls.Add(this.PicT4_S2_DC1_Running);
             this.groupBox20.Controls.Add(this.label131);
             this.groupBox20.Controls.Add(this.label132);
-            this.groupBox20.Location = new System.Drawing.Point(6, 342);
+            this.groupBox20.Location = new System.Drawing.Point(12, 658);
+            this.groupBox20.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox20.Name = "groupBox20";
+            this.groupBox20.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox20.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox20.Size = new System.Drawing.Size(320, 183);
+            this.groupBox20.Size = new System.Drawing.Size(640, 352);
             this.groupBox20.TabIndex = 266;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Bơm dầu";
@@ -4931,11 +5227,12 @@
             this.PicT4_S2_DC3_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC3_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC3_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT4_S2_DC3_Over_Stop.Location = new System.Drawing.Point(166, 115);
+            this.PicT4_S2_DC3_Over_Stop.Location = new System.Drawing.Point(332, 221);
+            this.PicT4_S2_DC3_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC3_Over_Stop.Name = "PicT4_S2_DC3_Over_Stop";
             this.PicT4_S2_DC3_Over_Stop.RotateAngle = 0;
             this.PicT4_S2_DC3_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC3_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC3_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC3_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC3_Over_Stop.TabIndex = 249;
             this.PicT4_S2_DC3_Over_Stop.TagPath = null;
@@ -4947,11 +5244,12 @@
             this.PicT4_S2_DC2_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC2_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC2_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT4_S2_DC2_Over_Stop.Location = new System.Drawing.Point(166, 75);
+            this.PicT4_S2_DC2_Over_Stop.Location = new System.Drawing.Point(332, 144);
+            this.PicT4_S2_DC2_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC2_Over_Stop.Name = "PicT4_S2_DC2_Over_Stop";
             this.PicT4_S2_DC2_Over_Stop.RotateAngle = 0;
             this.PicT4_S2_DC2_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC2_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC2_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC2_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC2_Over_Stop.TabIndex = 248;
             this.PicT4_S2_DC2_Over_Stop.TagPath = null;
@@ -4963,11 +5261,12 @@
             this.PicT4_S2_DC1_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC1_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC1_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT4_S2_DC1_Over_Stop.Location = new System.Drawing.Point(166, 33);
+            this.PicT4_S2_DC1_Over_Stop.Location = new System.Drawing.Point(332, 63);
+            this.PicT4_S2_DC1_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC1_Over_Stop.Name = "PicT4_S2_DC1_Over_Stop";
             this.PicT4_S2_DC1_Over_Stop.RotateAngle = 0;
             this.PicT4_S2_DC1_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC1_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC1_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC1_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC1_Over_Stop.TabIndex = 247;
             this.PicT4_S2_DC1_Over_Stop.TagPath = null;
@@ -4979,11 +5278,12 @@
             this.PicT4_S2_DC3_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC3_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC3_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT4_S2_DC3_Stop.Location = new System.Drawing.Point(13, 115);
+            this.PicT4_S2_DC3_Stop.Location = new System.Drawing.Point(26, 221);
+            this.PicT4_S2_DC3_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC3_Stop.Name = "PicT4_S2_DC3_Stop";
             this.PicT4_S2_DC3_Stop.RotateAngle = 0;
             this.PicT4_S2_DC3_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC3_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC3_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC3_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC3_Stop.TabIndex = 246;
             this.PicT4_S2_DC3_Stop.TagPath = null;
@@ -4995,11 +5295,12 @@
             this.PicT4_S2_DC2_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC2_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC2_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT4_S2_DC2_Stop.Location = new System.Drawing.Point(13, 75);
+            this.PicT4_S2_DC2_Stop.Location = new System.Drawing.Point(26, 144);
+            this.PicT4_S2_DC2_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC2_Stop.Name = "PicT4_S2_DC2_Stop";
             this.PicT4_S2_DC2_Stop.RotateAngle = 0;
             this.PicT4_S2_DC2_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC2_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC2_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC2_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC2_Stop.TabIndex = 245;
             this.PicT4_S2_DC2_Stop.TagPath = null;
@@ -5011,11 +5312,12 @@
             this.PicT4_S2_DC1_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC1_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC1_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT4_S2_DC1_Stop.Location = new System.Drawing.Point(13, 33);
+            this.PicT4_S2_DC1_Stop.Location = new System.Drawing.Point(26, 63);
+            this.PicT4_S2_DC1_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC1_Stop.Name = "PicT4_S2_DC1_Stop";
             this.PicT4_S2_DC1_Stop.RotateAngle = 0;
             this.PicT4_S2_DC1_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC1_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC1_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC1_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC1_Stop.TabIndex = 244;
             this.PicT4_S2_DC1_Stop.TagPath = null;
@@ -5027,11 +5329,12 @@
             this.PicT4_S2_DC3_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC3_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC3_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT4_S2_DC3_Over.Location = new System.Drawing.Point(166, 115);
+            this.PicT4_S2_DC3_Over.Location = new System.Drawing.Point(332, 221);
+            this.PicT4_S2_DC3_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC3_Over.Name = "PicT4_S2_DC3_Over";
             this.PicT4_S2_DC3_Over.RotateAngle = 0;
             this.PicT4_S2_DC3_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC3_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC3_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC3_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC3_Over.TabIndex = 243;
             this.PicT4_S2_DC3_Over.TagPath = null;
@@ -5043,11 +5346,12 @@
             this.PicT4_S2_DC3_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC3_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC3_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT4_S2_DC3_Running.Location = new System.Drawing.Point(13, 115);
+            this.PicT4_S2_DC3_Running.Location = new System.Drawing.Point(26, 221);
+            this.PicT4_S2_DC3_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC3_Running.Name = "PicT4_S2_DC3_Running";
             this.PicT4_S2_DC3_Running.RotateAngle = 0;
             this.PicT4_S2_DC3_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC3_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC3_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC3_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC3_Running.TabIndex = 242;
             this.PicT4_S2_DC3_Running.TagPath = null;
@@ -5058,9 +5362,10 @@
             this.label71.AutoSize = true;
             this.label71.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label71.ForeColor = System.Drawing.Color.Blue;
-            this.label71.Location = new System.Drawing.Point(216, 121);
+            this.label71.Location = new System.Drawing.Point(432, 233);
+            this.label71.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(90, 19);
+            this.label71.Size = new System.Drawing.Size(185, 36);
             this.label71.TabIndex = 241;
             this.label71.Text = "Lỗi bơm chốt";
             // 
@@ -5069,9 +5374,10 @@
             this.label72.AutoSize = true;
             this.label72.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label72.ForeColor = System.Drawing.Color.Blue;
-            this.label72.Location = new System.Drawing.Point(60, 121);
+            this.label72.Location = new System.Drawing.Point(120, 233);
+            this.label72.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(68, 19);
+            this.label72.Size = new System.Drawing.Size(138, 36);
             this.label72.TabIndex = 240;
             this.label72.Text = "Bơm chốt";
             // 
@@ -5081,11 +5387,12 @@
             this.PicT4_S2_DC2_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC2_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC2_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT4_S2_DC2_Over.Location = new System.Drawing.Point(166, 75);
+            this.PicT4_S2_DC2_Over.Location = new System.Drawing.Point(332, 144);
+            this.PicT4_S2_DC2_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC2_Over.Name = "PicT4_S2_DC2_Over";
             this.PicT4_S2_DC2_Over.RotateAngle = 0;
             this.PicT4_S2_DC2_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC2_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC2_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC2_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC2_Over.TabIndex = 239;
             this.PicT4_S2_DC2_Over.TagPath = null;
@@ -5097,11 +5404,12 @@
             this.PicT4_S2_DC2_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC2_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC2_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT4_S2_DC2_Running.Location = new System.Drawing.Point(13, 75);
+            this.PicT4_S2_DC2_Running.Location = new System.Drawing.Point(26, 144);
+            this.PicT4_S2_DC2_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC2_Running.Name = "PicT4_S2_DC2_Running";
             this.PicT4_S2_DC2_Running.RotateAngle = 0;
             this.PicT4_S2_DC2_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC2_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC2_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC2_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC2_Running.TabIndex = 238;
             this.PicT4_S2_DC2_Running.TagPath = null;
@@ -5112,9 +5420,10 @@
             this.label129.AutoSize = true;
             this.label129.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label129.ForeColor = System.Drawing.Color.Blue;
-            this.label129.Location = new System.Drawing.Point(216, 81);
+            this.label129.Location = new System.Drawing.Point(432, 156);
+            this.label129.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label129.Name = "label129";
-            this.label129.Size = new System.Drawing.Size(72, 19);
+            this.label129.Size = new System.Drawing.Size(147, 36);
             this.label129.TabIndex = 237;
             this.label129.Text = "Lỗi bơm 2";
             // 
@@ -5123,9 +5432,10 @@
             this.label130.AutoSize = true;
             this.label130.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label130.ForeColor = System.Drawing.Color.Blue;
-            this.label130.Location = new System.Drawing.Point(60, 81);
+            this.label130.Location = new System.Drawing.Point(120, 156);
+            this.label130.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label130.Name = "label130";
-            this.label130.Size = new System.Drawing.Size(50, 19);
+            this.label130.Size = new System.Drawing.Size(100, 36);
             this.label130.TabIndex = 236;
             this.label130.Text = "Bơm 2";
             // 
@@ -5135,11 +5445,12 @@
             this.PicT4_S2_DC1_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC1_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC1_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT4_S2_DC1_Over.Location = new System.Drawing.Point(166, 33);
+            this.PicT4_S2_DC1_Over.Location = new System.Drawing.Point(332, 63);
+            this.PicT4_S2_DC1_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC1_Over.Name = "PicT4_S2_DC1_Over";
             this.PicT4_S2_DC1_Over.RotateAngle = 0;
             this.PicT4_S2_DC1_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC1_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC1_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC1_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC1_Over.TabIndex = 235;
             this.PicT4_S2_DC1_Over.TagPath = null;
@@ -5151,11 +5462,12 @@
             this.PicT4_S2_DC1_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT4_S2_DC1_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT4_S2_DC1_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT4_S2_DC1_Running.Location = new System.Drawing.Point(13, 33);
+            this.PicT4_S2_DC1_Running.Location = new System.Drawing.Point(26, 63);
+            this.PicT4_S2_DC1_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT4_S2_DC1_Running.Name = "PicT4_S2_DC1_Running";
             this.PicT4_S2_DC1_Running.RotateAngle = 0;
             this.PicT4_S2_DC1_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT4_S2_DC1_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT4_S2_DC1_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT4_S2_DC1_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT4_S2_DC1_Running.TabIndex = 232;
             this.PicT4_S2_DC1_Running.TagPath = null;
@@ -5166,9 +5478,10 @@
             this.label131.AutoSize = true;
             this.label131.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label131.ForeColor = System.Drawing.Color.Blue;
-            this.label131.Location = new System.Drawing.Point(216, 39);
+            this.label131.Location = new System.Drawing.Point(432, 75);
+            this.label131.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label131.Name = "label131";
-            this.label131.Size = new System.Drawing.Size(72, 19);
+            this.label131.Size = new System.Drawing.Size(147, 36);
             this.label131.TabIndex = 8;
             this.label131.Text = "Lỗi bơm 1";
             // 
@@ -5177,9 +5490,10 @@
             this.label132.AutoSize = true;
             this.label132.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label132.ForeColor = System.Drawing.Color.Blue;
-            this.label132.Location = new System.Drawing.Point(60, 39);
+            this.label132.Location = new System.Drawing.Point(120, 75);
+            this.label132.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label132.Name = "label132";
-            this.label132.Size = new System.Drawing.Size(50, 19);
+            this.label132.Size = new System.Drawing.Size(100, 36);
             this.label132.TabIndex = 0;
             this.label132.Text = "Bơm 1";
             // 
@@ -5187,11 +5501,12 @@
             // 
             this.dataGridViewT4.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridViewT4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewT4.Location = new System.Drawing.Point(696, 353);
+            this.dataGridViewT4.Location = new System.Drawing.Point(1392, 679);
+            this.dataGridViewT4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridViewT4.Name = "dataGridViewT4";
             this.dataGridViewT4.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dataGridViewT4.RowHeadersWidth = 82;
-            this.dataGridViewT4.Size = new System.Drawing.Size(578, 449);
+            this.dataGridViewT4.Size = new System.Drawing.Size(1156, 863);
             this.dataGridViewT4.TabIndex = 265;
             // 
             // groupBox16
@@ -5202,10 +5517,12 @@
             this.groupBox16.Controls.Add(this.bnt_Auto_T4);
             this.groupBox16.Controls.Add(this.bnt_Remote_T4);
             this.groupBox16.Controls.Add(this.bnt_Local_T4);
-            this.groupBox16.Location = new System.Drawing.Point(1281, 47);
+            this.groupBox16.Location = new System.Drawing.Point(2562, 90);
+            this.groupBox16.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox16.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox16.Size = new System.Drawing.Size(428, 233);
+            this.groupBox16.Size = new System.Drawing.Size(856, 448);
             this.groupBox16.TabIndex = 242;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Vận Hành";
@@ -5213,9 +5530,10 @@
             // bnt_Hand_T4
             // 
             this.bnt_Hand_T4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Hand_T4.Location = new System.Drawing.Point(51, 28);
+            this.bnt_Hand_T4.Location = new System.Drawing.Point(102, 54);
+            this.bnt_Hand_T4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Hand_T4.Name = "bnt_Hand_T4";
-            this.bnt_Hand_T4.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Hand_T4.Size = new System.Drawing.Size(280, 106);
             this.bnt_Hand_T4.TabIndex = 205;
             this.bnt_Hand_T4.Text = "Tay";
             this.bnt_Hand_T4.UseVisualStyleBackColor = true;
@@ -5223,9 +5541,10 @@
             // bnt_Estop_T4
             // 
             this.bnt_Estop_T4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Estop_T4.Location = new System.Drawing.Point(162, 172);
+            this.bnt_Estop_T4.Location = new System.Drawing.Point(324, 331);
+            this.bnt_Estop_T4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Estop_T4.Name = "bnt_Estop_T4";
-            this.bnt_Estop_T4.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Estop_T4.Size = new System.Drawing.Size(280, 106);
             this.bnt_Estop_T4.TabIndex = 207;
             this.bnt_Estop_T4.Text = "Dừng khẩn";
             this.bnt_Estop_T4.UseVisualStyleBackColor = true;
@@ -5233,9 +5552,10 @@
             // bnt_Auto_T4
             // 
             this.bnt_Auto_T4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Auto_T4.Location = new System.Drawing.Point(271, 28);
+            this.bnt_Auto_T4.Location = new System.Drawing.Point(542, 54);
+            this.bnt_Auto_T4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Auto_T4.Name = "bnt_Auto_T4";
-            this.bnt_Auto_T4.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Auto_T4.Size = new System.Drawing.Size(280, 106);
             this.bnt_Auto_T4.TabIndex = 206;
             this.bnt_Auto_T4.Text = "Tự động";
             this.bnt_Auto_T4.UseVisualStyleBackColor = true;
@@ -5243,9 +5563,10 @@
             // bnt_Remote_T4
             // 
             this.bnt_Remote_T4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T4.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T4.Location = new System.Drawing.Point(102, 194);
+            this.bnt_Remote_T4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Remote_T4.Name = "bnt_Remote_T4";
-            this.bnt_Remote_T4.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Remote_T4.Size = new System.Drawing.Size(280, 106);
             this.bnt_Remote_T4.TabIndex = 203;
             this.bnt_Remote_T4.Text = "Từ xa";
             this.bnt_Remote_T4.UseVisualStyleBackColor = true;
@@ -5253,9 +5574,10 @@
             // bnt_Local_T4
             // 
             this.bnt_Local_T4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T4.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T4.Location = new System.Drawing.Point(542, 194);
+            this.bnt_Local_T4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Local_T4.Name = "bnt_Local_T4";
-            this.bnt_Local_T4.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Local_T4.Size = new System.Drawing.Size(280, 106);
             this.bnt_Local_T4.TabIndex = 204;
             this.bnt_Local_T4.Text = "Tại chổ";
             this.bnt_Local_T4.UseVisualStyleBackColor = true;
@@ -5266,11 +5588,12 @@
             this.ahdPictureBox25.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox25.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox25.Image = global::RegistrationForm1.Properties.Resources.tranc;
-            this.ahdPictureBox25.Location = new System.Drawing.Point(1280, 278);
+            this.ahdPictureBox25.Location = new System.Drawing.Point(2560, 535);
+            this.ahdPictureBox25.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox25.Name = "ahdPictureBox25";
             this.ahdPictureBox25.RotateAngle = 0;
             this.ahdPictureBox25.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox25.Size = new System.Drawing.Size(412, 510);
+            this.ahdPictureBox25.Size = new System.Drawing.Size(824, 981);
             this.ahdPictureBox25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox25.TabIndex = 234;
             this.ahdPictureBox25.TagPath = null;
@@ -5282,11 +5605,12 @@
             this.ahdBar4.Direction = Ahd.Winforms.Controls.BarDirection.TopToBottom;
             this.ahdBar4.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Percent;
             this.ahdBar4.FillColor = System.Drawing.Color.Green;
-            this.ahdBar4.Location = new System.Drawing.Point(400, 54);
+            this.ahdBar4.Location = new System.Drawing.Point(800, 104);
+            this.ahdBar4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdBar4.MaxValue = "100";
             this.ahdBar4.MinValue = "0";
             this.ahdBar4.Name = "ahdBar4";
-            this.ahdBar4.Size = new System.Drawing.Size(289, 218);
+            this.ahdBar4.Size = new System.Drawing.Size(578, 419);
             this.ahdBar4.TabIndex = 264;
             this.ahdBar4.TagPath = "Local Station/DauTieng/S71500/Group2/Door4_Aperture";
             this.ahdBar4.ValueStringFormat = null;
@@ -5296,10 +5620,11 @@
             this.label56.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label56.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label56.ForeColor = System.Drawing.Color.Blue;
-            this.label56.Location = new System.Drawing.Point(28, 218);
+            this.label56.Location = new System.Drawing.Point(56, 419);
+            this.label56.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label56.Name = "label56";
             this.label56.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label56.Size = new System.Drawing.Size(216, 50);
+            this.label56.Size = new System.Drawing.Size(430, 94);
             this.label56.TabIndex = 263;
             this.label56.Text = "Hành trình xy lanh 4_2";
             this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5309,9 +5634,10 @@
             this.ahdLabel39.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel39.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel39.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel39.Location = new System.Drawing.Point(326, 230);
+            this.ahdLabel39.Location = new System.Drawing.Point(652, 442);
+            this.ahdLabel39.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel39.Name = "ahdLabel39";
-            this.ahdLabel39.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel39.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel39.StringFormat = null;
             this.ahdLabel39.TabIndex = 262;
             this.ahdLabel39.TagPath = null;
@@ -5323,9 +5649,10 @@
             this.ahdLabel44.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel44.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel44.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel44.Location = new System.Drawing.Point(252, 229);
+            this.ahdLabel44.Location = new System.Drawing.Point(504, 440);
+            this.ahdLabel44.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel44.Name = "ahdLabel44";
-            this.ahdLabel44.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel44.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel44.StringFormat = null;
             this.ahdLabel44.TabIndex = 261;
             this.ahdLabel44.TagPath = "Local Station/DauTieng/S71500/Group2/HT_Cylinder4_2";
@@ -5337,10 +5664,11 @@
             this.label57.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label57.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label57.ForeColor = System.Drawing.Color.Blue;
-            this.label57.Location = new System.Drawing.Point(28, 164);
+            this.label57.Location = new System.Drawing.Point(56, 315);
+            this.label57.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label57.Name = "label57";
             this.label57.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label57.Size = new System.Drawing.Size(216, 50);
+            this.label57.Size = new System.Drawing.Size(430, 94);
             this.label57.TabIndex = 260;
             this.label57.Text = "Hành trình xy lanh 4_1";
             this.label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5350,9 +5678,10 @@
             this.ahdLabel45.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel45.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel45.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel45.Location = new System.Drawing.Point(326, 176);
+            this.ahdLabel45.Location = new System.Drawing.Point(652, 338);
+            this.ahdLabel45.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel45.Name = "ahdLabel45";
-            this.ahdLabel45.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel45.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel45.StringFormat = null;
             this.ahdLabel45.TabIndex = 259;
             this.ahdLabel45.TagPath = null;
@@ -5364,9 +5693,10 @@
             this.ahdLabel46.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel46.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel46.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel46.Location = new System.Drawing.Point(252, 175);
+            this.ahdLabel46.Location = new System.Drawing.Point(504, 337);
+            this.ahdLabel46.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel46.Name = "ahdLabel46";
-            this.ahdLabel46.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel46.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel46.StringFormat = null;
             this.ahdLabel46.TabIndex = 258;
             this.ahdLabel46.TagPath = "Local Station/DauTieng/S71500/Group2/HT_Cylinder4_1";
@@ -5378,10 +5708,11 @@
             this.label58.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label58.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label58.ForeColor = System.Drawing.Color.Blue;
-            this.label58.Location = new System.Drawing.Point(752, 185);
+            this.label58.Location = new System.Drawing.Point(1504, 356);
+            this.label58.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label58.Name = "label58";
             this.label58.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label58.Size = new System.Drawing.Size(185, 50);
+            this.label58.Size = new System.Drawing.Size(368, 94);
             this.label58.TabIndex = 257;
             this.label58.Text = "Lưu lượng tổng (Qc)";
             this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5391,10 +5722,11 @@
             this.label59.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label59.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label59.ForeColor = System.Drawing.Color.Blue;
-            this.label59.Location = new System.Drawing.Point(752, 130);
+            this.label59.Location = new System.Drawing.Point(1504, 250);
+            this.label59.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label59.Name = "label59";
             this.label59.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label59.Size = new System.Drawing.Size(185, 50);
+            this.label59.Size = new System.Drawing.Size(368, 94);
             this.label59.TabIndex = 256;
             this.label59.Text = "Lưu lượng cửa 4 (Qi)";
             this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5404,10 +5736,11 @@
             this.label60.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label60.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label60.ForeColor = System.Drawing.Color.Blue;
-            this.label60.Location = new System.Drawing.Point(752, 75);
+            this.label60.Location = new System.Drawing.Point(1504, 144);
+            this.label60.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label60.Name = "label60";
             this.label60.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label60.Size = new System.Drawing.Size(185, 50);
+            this.label60.Size = new System.Drawing.Size(368, 94);
             this.label60.TabIndex = 255;
             this.label60.Text = "Độ mở cửa (a):";
             this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5417,10 +5750,11 @@
             this.label61.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label61.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label61.ForeColor = System.Drawing.Color.Blue;
-            this.label61.Location = new System.Drawing.Point(28, 56);
+            this.label61.Location = new System.Drawing.Point(56, 108);
+            this.label61.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label61.Name = "label61";
             this.label61.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label61.Size = new System.Drawing.Size(216, 50);
+            this.label61.Size = new System.Drawing.Size(430, 94);
             this.label61.TabIndex = 254;
             this.label61.Text = "Mực nước :";
             this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5430,10 +5764,11 @@
             this.label62.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label62.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label62.ForeColor = System.Drawing.Color.Blue;
-            this.label62.Location = new System.Drawing.Point(28, 110);
+            this.label62.Location = new System.Drawing.Point(56, 212);
+            this.label62.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label62.Name = "label62";
             this.label62.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label62.Size = new System.Drawing.Size(216, 50);
+            this.label62.Size = new System.Drawing.Size(430, 94);
             this.label62.TabIndex = 253;
             this.label62.Text = "Nhiệt độ dầu : ";
             this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5443,9 +5778,10 @@
             this.ahdLabel47.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel47.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel47.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel47.Location = new System.Drawing.Point(1038, 197);
+            this.ahdLabel47.Location = new System.Drawing.Point(2076, 379);
+            this.ahdLabel47.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel47.Name = "ahdLabel47";
-            this.ahdLabel47.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel47.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel47.StringFormat = null;
             this.ahdLabel47.TabIndex = 252;
             this.ahdLabel47.TagPath = null;
@@ -5457,9 +5793,10 @@
             this.ahdLabel48.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel48.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel48.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel48.Location = new System.Drawing.Point(966, 196);
+            this.ahdLabel48.Location = new System.Drawing.Point(1932, 377);
+            this.ahdLabel48.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel48.Name = "ahdLabel48";
-            this.ahdLabel48.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel48.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel48.StringFormat = null;
             this.ahdLabel48.TabIndex = 251;
             this.ahdLabel48.TagPath = "Local Station/DauTieng/S71500/Group2/Total_Fllow";
@@ -5471,9 +5808,10 @@
             this.ahdLabel49.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel49.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel49.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel49.Location = new System.Drawing.Point(1038, 142);
+            this.ahdLabel49.Location = new System.Drawing.Point(2076, 273);
+            this.ahdLabel49.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel49.Name = "ahdLabel49";
-            this.ahdLabel49.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel49.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel49.StringFormat = null;
             this.ahdLabel49.TabIndex = 250;
             this.ahdLabel49.TagPath = null;
@@ -5485,9 +5823,10 @@
             this.ahdLabel50.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel50.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel50.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel50.Location = new System.Drawing.Point(966, 141);
+            this.ahdLabel50.Location = new System.Drawing.Point(1932, 271);
+            this.ahdLabel50.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel50.Name = "ahdLabel50";
-            this.ahdLabel50.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel50.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel50.StringFormat = null;
             this.ahdLabel50.TabIndex = 249;
             this.ahdLabel50.TagPath = "Local Station/DauTieng/S71500/Group2/Fllow_Door4";
@@ -5499,9 +5838,10 @@
             this.ahdLabel51.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel51.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel51.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel51.Location = new System.Drawing.Point(324, 68);
+            this.ahdLabel51.Location = new System.Drawing.Point(648, 131);
+            this.ahdLabel51.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel51.Name = "ahdLabel51";
-            this.ahdLabel51.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel51.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel51.StringFormat = null;
             this.ahdLabel51.TabIndex = 248;
             this.ahdLabel51.TagPath = null;
@@ -5513,9 +5853,10 @@
             this.ahdLabel52.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel52.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel52.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel52.Location = new System.Drawing.Point(252, 67);
+            this.ahdLabel52.Location = new System.Drawing.Point(504, 129);
+            this.ahdLabel52.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel52.Name = "ahdLabel52";
-            this.ahdLabel52.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel52.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel52.StringFormat = null;
             this.ahdLabel52.TabIndex = 247;
             this.ahdLabel52.TagPath = "Local Station/DauTieng/S71500/Group4/Fllow_Ho";
@@ -5530,10 +5871,12 @@
             this.groupBox17.Controls.Add(this.Pic_Door4_PressureHigh);
             this.groupBox17.Controls.Add(this.label63);
             this.groupBox17.Controls.Add(this.label64);
-            this.groupBox17.Location = new System.Drawing.Point(366, 539);
+            this.groupBox17.Location = new System.Drawing.Point(732, 1037);
+            this.groupBox17.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox17.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox17.Size = new System.Drawing.Size(306, 115);
+            this.groupBox17.Size = new System.Drawing.Size(612, 221);
             this.groupBox17.TabIndex = 246;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "Áp dầu";
@@ -5544,11 +5887,12 @@
             this.Pic_Door4_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door4_PressureLow_Stop.Location = new System.Drawing.Point(14, 78);
+            this.Pic_Door4_PressureLow_Stop.Location = new System.Drawing.Point(28, 150);
+            this.Pic_Door4_PressureLow_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_PressureLow_Stop.Name = "Pic_Door4_PressureLow_Stop";
             this.Pic_Door4_PressureLow_Stop.RotateAngle = 0;
             this.Pic_Door4_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_PressureLow_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_PressureLow_Stop.TabIndex = 245;
             this.Pic_Door4_PressureLow_Stop.TagPath = null;
@@ -5560,11 +5904,12 @@
             this.Pic_Door4_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door4_PressureHigh_Stop.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door4_PressureHigh_Stop.Location = new System.Drawing.Point(28, 60);
+            this.Pic_Door4_PressureHigh_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_PressureHigh_Stop.Name = "Pic_Door4_PressureHigh_Stop";
             this.Pic_Door4_PressureHigh_Stop.RotateAngle = 0;
             this.Pic_Door4_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_PressureHigh_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_PressureHigh_Stop.TabIndex = 244;
             this.Pic_Door4_PressureHigh_Stop.TagPath = null;
@@ -5576,11 +5921,12 @@
             this.Pic_Door4_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_Door4_PressureLow.Location = new System.Drawing.Point(14, 78);
+            this.Pic_Door4_PressureLow.Location = new System.Drawing.Point(28, 150);
+            this.Pic_Door4_PressureLow.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_PressureLow.Name = "Pic_Door4_PressureLow";
             this.Pic_Door4_PressureLow.RotateAngle = 0;
             this.Pic_Door4_PressureLow.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_PressureLow.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_PressureLow.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_PressureLow.TabIndex = 243;
             this.Pic_Door4_PressureLow.TagPath = null;
@@ -5592,11 +5938,12 @@
             this.Pic_Door4_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door4_PressureHigh.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door4_PressureHigh.Location = new System.Drawing.Point(28, 60);
+            this.Pic_Door4_PressureHigh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_PressureHigh.Name = "Pic_Door4_PressureHigh";
             this.Pic_Door4_PressureHigh.RotateAngle = 0;
             this.Pic_Door4_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_PressureHigh.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_PressureHigh.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_PressureHigh.TabIndex = 242;
             this.Pic_Door4_PressureHigh.TagPath = null;
@@ -5607,9 +5954,10 @@
             this.label63.AutoSize = true;
             this.label63.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label63.ForeColor = System.Drawing.Color.Blue;
-            this.label63.Location = new System.Drawing.Point(71, 84);
+            this.label63.Location = new System.Drawing.Point(142, 162);
+            this.label63.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(123, 19);
+            this.label63.Size = new System.Drawing.Size(245, 36);
             this.label63.TabIndex = 8;
             this.label63.Text = "Áp dầu cửa 4 thấp";
             // 
@@ -5618,9 +5966,10 @@
             this.label64.AutoSize = true;
             this.label64.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label64.ForeColor = System.Drawing.Color.Blue;
-            this.label64.Location = new System.Drawing.Point(71, 37);
+            this.label64.Location = new System.Drawing.Point(142, 71);
+            this.label64.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(119, 19);
+            this.label64.Size = new System.Drawing.Size(235, 36);
             this.label64.TabIndex = 5;
             this.label64.Text = "Áp dầu cửa 4 cao";
             // 
@@ -5638,10 +5987,12 @@
             this.groupBox18.Controls.Add(this.Pic_Doorlock4_1Open);
             this.groupBox18.Controls.Add(this.label65);
             this.groupBox18.Controls.Add(this.label66);
-            this.groupBox18.Location = new System.Drawing.Point(6, 539);
+            this.groupBox18.Location = new System.Drawing.Point(12, 1037);
+            this.groupBox18.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox18.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox18.Size = new System.Drawing.Size(320, 200);
+            this.groupBox18.Size = new System.Drawing.Size(640, 385);
             this.groupBox18.TabIndex = 245;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Chốt cửa";
@@ -5652,11 +6003,12 @@
             this.Pic_Doorlock4_2Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_2Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_2Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock4_2Close_Stop.Location = new System.Drawing.Point(14, 158);
+            this.Pic_Doorlock4_2Close_Stop.Location = new System.Drawing.Point(28, 304);
+            this.Pic_Doorlock4_2Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_2Close_Stop.Name = "Pic_Doorlock4_2Close_Stop";
             this.Pic_Doorlock4_2Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock4_2Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_2Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_2Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_2Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_2Close_Stop.TabIndex = 251;
             this.Pic_Doorlock4_2Close_Stop.TagPath = null;
@@ -5668,11 +6020,12 @@
             this.Pic_Doorlock4_2Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_2Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_2Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock4_2Open_Stop.Location = new System.Drawing.Point(14, 114);
+            this.Pic_Doorlock4_2Open_Stop.Location = new System.Drawing.Point(28, 219);
+            this.Pic_Doorlock4_2Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_2Open_Stop.Name = "Pic_Doorlock4_2Open_Stop";
             this.Pic_Doorlock4_2Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock4_2Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_2Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_2Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_2Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_2Open_Stop.TabIndex = 250;
             this.Pic_Doorlock4_2Open_Stop.TagPath = null;
@@ -5684,11 +6037,12 @@
             this.Pic_Doorlock4_1Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_1Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_1Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock4_1Close_Stop.Location = new System.Drawing.Point(14, 70);
+            this.Pic_Doorlock4_1Close_Stop.Location = new System.Drawing.Point(28, 135);
+            this.Pic_Doorlock4_1Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_1Close_Stop.Name = "Pic_Doorlock4_1Close_Stop";
             this.Pic_Doorlock4_1Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock4_1Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_1Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_1Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_1Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_1Close_Stop.TabIndex = 249;
             this.Pic_Doorlock4_1Close_Stop.TagPath = null;
@@ -5700,11 +6054,12 @@
             this.Pic_Doorlock4_1Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_1Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_1Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock4_1Open_Stop.Location = new System.Drawing.Point(14, 26);
+            this.Pic_Doorlock4_1Open_Stop.Location = new System.Drawing.Point(28, 50);
+            this.Pic_Doorlock4_1Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_1Open_Stop.Name = "Pic_Doorlock4_1Open_Stop";
             this.Pic_Doorlock4_1Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock4_1Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_1Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_1Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_1Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_1Open_Stop.TabIndex = 248;
             this.Pic_Doorlock4_1Open_Stop.TagPath = null;
@@ -5716,11 +6071,12 @@
             this.Pic_Doorlock4_2Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_2Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_2Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock4_2Close.Location = new System.Drawing.Point(14, 158);
+            this.Pic_Doorlock4_2Close.Location = new System.Drawing.Point(28, 304);
+            this.Pic_Doorlock4_2Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_2Close.Name = "Pic_Doorlock4_2Close";
             this.Pic_Doorlock4_2Close.RotateAngle = 0;
             this.Pic_Doorlock4_2Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_2Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_2Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_2Close.TabIndex = 247;
             this.Pic_Doorlock4_2Close.TagPath = null;
@@ -5732,11 +6088,12 @@
             this.Pic_Doorlock4_2Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_2Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_2Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock4_2Open.Location = new System.Drawing.Point(14, 114);
+            this.Pic_Doorlock4_2Open.Location = new System.Drawing.Point(28, 219);
+            this.Pic_Doorlock4_2Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_2Open.Name = "Pic_Doorlock4_2Open";
             this.Pic_Doorlock4_2Open.RotateAngle = 0;
             this.Pic_Doorlock4_2Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_2Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_2Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_2Open.TabIndex = 246;
             this.Pic_Doorlock4_2Open.TagPath = null;
@@ -5747,9 +6104,10 @@
             this.label115.AutoSize = true;
             this.label115.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label115.ForeColor = System.Drawing.Color.Blue;
-            this.label115.Location = new System.Drawing.Point(72, 164);
+            this.label115.Location = new System.Drawing.Point(144, 315);
+            this.label115.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label115.Name = "label115";
-            this.label115.Size = new System.Drawing.Size(123, 19);
+            this.label115.Size = new System.Drawing.Size(248, 36);
             this.label115.TabIndex = 245;
             this.label115.Text = "Chốt 4_2 đóng hết";
             // 
@@ -5758,9 +6116,10 @@
             this.label116.AutoSize = true;
             this.label116.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label116.ForeColor = System.Drawing.Color.Blue;
-            this.label116.Location = new System.Drawing.Point(72, 120);
+            this.label116.Location = new System.Drawing.Point(144, 231);
+            this.label116.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label116.Name = "label116";
-            this.label116.Size = new System.Drawing.Size(112, 19);
+            this.label116.Size = new System.Drawing.Size(226, 36);
             this.label116.TabIndex = 244;
             this.label116.Text = "Chốt 4_2 mở hết";
             // 
@@ -5770,11 +6129,12 @@
             this.Pic_Doorlock4_1Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_1Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_1Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock4_1Close.Location = new System.Drawing.Point(14, 70);
+            this.Pic_Doorlock4_1Close.Location = new System.Drawing.Point(28, 135);
+            this.Pic_Doorlock4_1Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_1Close.Name = "Pic_Doorlock4_1Close";
             this.Pic_Doorlock4_1Close.RotateAngle = 0;
             this.Pic_Doorlock4_1Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_1Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_1Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_1Close.TabIndex = 243;
             this.Pic_Doorlock4_1Close.TagPath = null;
@@ -5786,11 +6146,12 @@
             this.Pic_Doorlock4_1Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock4_1Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock4_1Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock4_1Open.Location = new System.Drawing.Point(14, 26);
+            this.Pic_Doorlock4_1Open.Location = new System.Drawing.Point(28, 50);
+            this.Pic_Doorlock4_1Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock4_1Open.Name = "Pic_Doorlock4_1Open";
             this.Pic_Doorlock4_1Open.RotateAngle = 0;
             this.Pic_Doorlock4_1Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_1Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_1Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock4_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock4_1Open.TabIndex = 242;
             this.Pic_Doorlock4_1Open.TagPath = null;
@@ -5801,9 +6162,10 @@
             this.label65.AutoSize = true;
             this.label65.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label65.ForeColor = System.Drawing.Color.Blue;
-            this.label65.Location = new System.Drawing.Point(71, 76);
+            this.label65.Location = new System.Drawing.Point(142, 146);
+            this.label65.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(123, 19);
+            this.label65.Size = new System.Drawing.Size(248, 36);
             this.label65.TabIndex = 8;
             this.label65.Text = "Chốt 4_1 đóng hết";
             // 
@@ -5812,9 +6174,10 @@
             this.label66.AutoSize = true;
             this.label66.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label66.ForeColor = System.Drawing.Color.Blue;
-            this.label66.Location = new System.Drawing.Point(71, 32);
+            this.label66.Location = new System.Drawing.Point(142, 62);
+            this.label66.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(112, 19);
+            this.label66.Size = new System.Drawing.Size(226, 36);
             this.label66.TabIndex = 5;
             this.label66.Text = "Chốt 4_1 mở hết";
             // 
@@ -5832,10 +6195,12 @@
             this.groupBox19.Controls.Add(this.label68);
             this.groupBox19.Controls.Add(this.label69);
             this.groupBox19.Controls.Add(this.label70);
-            this.groupBox19.Location = new System.Drawing.Point(366, 342);
+            this.groupBox19.Location = new System.Drawing.Point(732, 658);
+            this.groupBox19.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox19.Name = "groupBox19";
+            this.groupBox19.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox19.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox19.Size = new System.Drawing.Size(306, 183);
+            this.groupBox19.Size = new System.Drawing.Size(612, 352);
             this.groupBox19.TabIndex = 244;
             this.groupBox19.TabStop = false;
             this.groupBox19.Text = "Trạng thái cửa";
@@ -5846,11 +6211,12 @@
             this.Pic_Door4_Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door4_Close_Stop.Location = new System.Drawing.Point(17, 139);
+            this.Pic_Door4_Close_Stop.Location = new System.Drawing.Point(34, 267);
+            this.Pic_Door4_Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Close_Stop.Name = "Pic_Door4_Close_Stop";
             this.Pic_Door4_Close_Stop.RotateAngle = 0;
             this.Pic_Door4_Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Close_Stop.TabIndex = 245;
             this.Pic_Door4_Close_Stop.TagPath = null;
@@ -5862,11 +6228,12 @@
             this.Pic_Door4_Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door4_Open_Stop.Location = new System.Drawing.Point(17, 100);
+            this.Pic_Door4_Open_Stop.Location = new System.Drawing.Point(34, 192);
+            this.Pic_Door4_Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Open_Stop.Name = "Pic_Door4_Open_Stop";
             this.Pic_Door4_Open_Stop.RotateAngle = 0;
             this.Pic_Door4_Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Open_Stop.TabIndex = 244;
             this.Pic_Door4_Open_Stop.TagPath = null;
@@ -5878,11 +6245,12 @@
             this.Pic_Door4_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door4_Closing_Stop.Location = new System.Drawing.Point(17, 61);
+            this.Pic_Door4_Closing_Stop.Location = new System.Drawing.Point(34, 117);
+            this.Pic_Door4_Closing_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Closing_Stop.Name = "Pic_Door4_Closing_Stop";
             this.Pic_Door4_Closing_Stop.RotateAngle = 0;
             this.Pic_Door4_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Closing_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Closing_Stop.TabIndex = 243;
             this.Pic_Door4_Closing_Stop.TagPath = null;
@@ -5894,11 +6262,12 @@
             this.Pic_Door4_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door4_Opening_Stop.Location = new System.Drawing.Point(17, 22);
+            this.Pic_Door4_Opening_Stop.Location = new System.Drawing.Point(34, 42);
+            this.Pic_Door4_Opening_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Opening_Stop.Name = "Pic_Door4_Opening_Stop";
             this.Pic_Door4_Opening_Stop.RotateAngle = 0;
             this.Pic_Door4_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Opening_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Opening_Stop.TabIndex = 242;
             this.Pic_Door4_Opening_Stop.TagPath = null;
@@ -5910,11 +6279,12 @@
             this.Pic_Door4_Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door4_Close.Location = new System.Drawing.Point(17, 139);
+            this.Pic_Door4_Close.Location = new System.Drawing.Point(34, 267);
+            this.Pic_Door4_Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Close.Name = "Pic_Door4_Close";
             this.Pic_Door4_Close.RotateAngle = 0;
             this.Pic_Door4_Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Close.TabIndex = 241;
             this.Pic_Door4_Close.TagPath = null;
@@ -5926,11 +6296,12 @@
             this.Pic_Door4_Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Open.Image = global::RegistrationForm1.Properties.Resources.xanh;
-            this.Pic_Door4_Open.Location = new System.Drawing.Point(17, 100);
+            this.Pic_Door4_Open.Location = new System.Drawing.Point(34, 192);
+            this.Pic_Door4_Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Open.Name = "Pic_Door4_Open";
             this.Pic_Door4_Open.RotateAngle = 0;
             this.Pic_Door4_Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Open.TabIndex = 240;
             this.Pic_Door4_Open.TagPath = null;
@@ -5942,11 +6313,12 @@
             this.Pic_Door4_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door4_Closing.Location = new System.Drawing.Point(17, 61);
+            this.Pic_Door4_Closing.Location = new System.Drawing.Point(34, 117);
+            this.Pic_Door4_Closing.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Closing.Name = "Pic_Door4_Closing";
             this.Pic_Door4_Closing.RotateAngle = 0;
             this.Pic_Door4_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Closing.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Closing.TabIndex = 239;
             this.Pic_Door4_Closing.TagPath = null;
@@ -5958,11 +6330,12 @@
             this.Pic_Door4_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door4_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door4_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door4_Opening.Location = new System.Drawing.Point(17, 22);
+            this.Pic_Door4_Opening.Location = new System.Drawing.Point(34, 42);
+            this.Pic_Door4_Opening.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door4_Opening.Name = "Pic_Door4_Opening";
             this.Pic_Door4_Opening.RotateAngle = 0;
             this.Pic_Door4_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door4_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door4_Opening.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door4_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door4_Opening.TabIndex = 238;
             this.Pic_Door4_Opening.TagPath = null;
@@ -5973,9 +6346,10 @@
             this.label67.AutoSize = true;
             this.label67.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label67.ForeColor = System.Drawing.Color.Blue;
-            this.label67.Location = new System.Drawing.Point(74, 145);
+            this.label67.Location = new System.Drawing.Point(148, 279);
+            this.label67.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(145, 19);
+            this.label67.Size = new System.Drawing.Size(291, 36);
             this.label67.TabIndex = 7;
             this.label67.Text = "Cửa 4 đóng hoàn toàn";
             // 
@@ -5984,9 +6358,10 @@
             this.label68.AutoSize = true;
             this.label68.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label68.ForeColor = System.Drawing.Color.Blue;
-            this.label68.Location = new System.Drawing.Point(74, 106);
+            this.label68.Location = new System.Drawing.Point(148, 204);
+            this.label68.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(134, 19);
+            this.label68.Size = new System.Drawing.Size(269, 36);
             this.label68.TabIndex = 4;
             this.label68.Text = "Cửa 4 mở hoàn toàn";
             // 
@@ -5995,9 +6370,10 @@
             this.label69.AutoSize = true;
             this.label69.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label69.ForeColor = System.Drawing.Color.Blue;
-            this.label69.Location = new System.Drawing.Point(74, 67);
+            this.label69.Location = new System.Drawing.Point(148, 129);
+            this.label69.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(115, 19);
+            this.label69.Size = new System.Drawing.Size(229, 36);
             this.label69.TabIndex = 2;
             this.label69.Text = "Cửa 4 đang đóng";
             // 
@@ -6006,18 +6382,20 @@
             this.label70.AutoSize = true;
             this.label70.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label70.ForeColor = System.Drawing.Color.Blue;
-            this.label70.Location = new System.Drawing.Point(74, 28);
+            this.label70.Location = new System.Drawing.Point(148, 54);
+            this.label70.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(104, 19);
+            this.label70.Size = new System.Drawing.Size(207, 36);
             this.label70.TabIndex = 0;
             this.label70.Text = "Cửa 4 đang mở";
             // 
             // label73
             // 
             this.label73.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label73.Location = new System.Drawing.Point(461, 283);
+            this.label73.Location = new System.Drawing.Point(922, 544);
+            this.label73.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(396, 31);
+            this.label73.Size = new System.Drawing.Size(792, 60);
             this.label73.TabIndex = 236;
             this.label73.Text = "THÔNG TIN VẬN HÀNH CỬA 4";
             this.label73.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -6027,11 +6405,12 @@
             this.tableLayoutPanel7.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel7.ColumnCount = 1;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(-15, 278);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(-30, 535);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1297, 39);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(2594, 75);
             this.tableLayoutPanel7.TabIndex = 241;
             // 
             // ahdLabel53
@@ -6039,9 +6418,10 @@
             this.ahdLabel53.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel53.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel53.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel53.Location = new System.Drawing.Point(323, 122);
+            this.ahdLabel53.Location = new System.Drawing.Point(646, 235);
+            this.ahdLabel53.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel53.Name = "ahdLabel53";
-            this.ahdLabel53.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel53.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel53.StringFormat = null;
             this.ahdLabel53.TabIndex = 240;
             this.ahdLabel53.TagPath = null;
@@ -6053,9 +6433,10 @@
             this.ahdLabel54.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel54.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel54.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel54.Location = new System.Drawing.Point(252, 121);
+            this.ahdLabel54.Location = new System.Drawing.Point(504, 233);
+            this.ahdLabel54.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel54.Name = "ahdLabel54";
-            this.ahdLabel54.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel54.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel54.StringFormat = null;
             this.ahdLabel54.TabIndex = 239;
             this.ahdLabel54.TagPath = "Local Station/DauTieng/S71500/Group2/S2_Temp_Oil";
@@ -6067,9 +6448,10 @@
             this.ahdLabel55.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel55.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel55.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel55.Location = new System.Drawing.Point(1038, 87);
+            this.ahdLabel55.Location = new System.Drawing.Point(2076, 167);
+            this.ahdLabel55.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel55.Name = "ahdLabel55";
-            this.ahdLabel55.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel55.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel55.StringFormat = null;
             this.ahdLabel55.TabIndex = 238;
             this.ahdLabel55.TagPath = null;
@@ -6081,9 +6463,10 @@
             this.ahdLabel56.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel56.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel56.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel56.Location = new System.Drawing.Point(966, 86);
+            this.ahdLabel56.Location = new System.Drawing.Point(1932, 165);
+            this.ahdLabel56.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel56.Name = "ahdLabel56";
-            this.ahdLabel56.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel56.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel56.StringFormat = null;
             this.ahdLabel56.TabIndex = 237;
             this.ahdLabel56.TagPath = "Local Station/DauTieng/S71500/Group2/Door4_Aperture";
@@ -6094,9 +6477,10 @@
             // 
             this.label74.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label74.ForeColor = System.Drawing.Color.Black;
-            this.label74.Location = new System.Drawing.Point(483, 8);
+            this.label74.Location = new System.Drawing.Point(966, 15);
+            this.label74.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(302, 31);
+            this.label74.Size = new System.Drawing.Size(604, 60);
             this.label74.TabIndex = 233;
             this.label74.Text = "CỬA 4";
             this.label74.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -6106,11 +6490,12 @@
             this.tableLayoutPanel8.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel8.ColumnCount = 1;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(-13, 5);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(-26, 10);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1745, 39);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(3490, 75);
             this.tableLayoutPanel8.TabIndex = 235;
             // 
             // tabPage5
@@ -6150,10 +6535,11 @@
             this.tabPage5.Controls.Add(this.label93);
             this.tabPage5.Controls.Add(this.tableLayoutPanel10);
             this.tabPage5.Location = new System.Drawing.Point(4, 54);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPage5.Size = new System.Drawing.Size(1716, 807);
+            this.tabPage5.Size = new System.Drawing.Size(3440, 1605);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "       CỬA 5       ";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -6163,10 +6549,12 @@
             this.groupBox33.Controls.Add(this.Pic_Al_Door5Stop);
             this.groupBox33.Controls.Add(this.label146);
             this.groupBox33.Controls.Add(this.Pic_Al_Door5);
-            this.groupBox33.Location = new System.Drawing.Point(368, 675);
+            this.groupBox33.Location = new System.Drawing.Point(736, 1298);
+            this.groupBox33.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox33.Name = "groupBox33";
+            this.groupBox33.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox33.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox33.Size = new System.Drawing.Size(306, 105);
+            this.groupBox33.Size = new System.Drawing.Size(612, 202);
             this.groupBox33.TabIndex = 271;
             this.groupBox33.TabStop = false;
             this.groupBox33.Text = "Cửa";
@@ -6177,11 +6565,12 @@
             this.Pic_Al_Door5Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door5Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door5Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Al_Door5Stop.Location = new System.Drawing.Point(14, 37);
+            this.Pic_Al_Door5Stop.Location = new System.Drawing.Point(28, 71);
+            this.Pic_Al_Door5Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door5Stop.Name = "Pic_Al_Door5Stop";
             this.Pic_Al_Door5Stop.RotateAngle = 0;
             this.Pic_Al_Door5Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door5Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door5Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door5Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door5Stop.TabIndex = 246;
             this.Pic_Al_Door5Stop.TagPath = null;
@@ -6192,9 +6581,10 @@
             this.label146.AutoSize = true;
             this.label146.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label146.ForeColor = System.Drawing.Color.Blue;
-            this.label146.Location = new System.Drawing.Point(71, 43);
+            this.label146.Location = new System.Drawing.Point(142, 83);
+            this.label146.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label146.Name = "label146";
-            this.label146.Size = new System.Drawing.Size(96, 19);
+            this.label146.Size = new System.Drawing.Size(196, 36);
             this.label146.TabIndex = 235;
             this.label146.Text = "Lỗi lệch cửa 5";
             // 
@@ -6204,11 +6594,12 @@
             this.Pic_Al_Door5.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door5.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door5.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Al_Door5.Location = new System.Drawing.Point(14, 37);
+            this.Pic_Al_Door5.Location = new System.Drawing.Point(28, 71);
+            this.Pic_Al_Door5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door5.Name = "Pic_Al_Door5";
             this.Pic_Al_Door5.RotateAngle = 0;
             this.Pic_Al_Door5.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door5.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door5.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door5.TabIndex = 242;
             this.Pic_Al_Door5.TagPath = null;
@@ -6237,10 +6628,12 @@
             this.groupBox25.Controls.Add(this.Pic_S3_DC1_Running);
             this.groupBox25.Controls.Add(this.label135);
             this.groupBox25.Controls.Add(this.label136);
-            this.groupBox25.Location = new System.Drawing.Point(7, 336);
+            this.groupBox25.Location = new System.Drawing.Point(14, 646);
+            this.groupBox25.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox25.Name = "groupBox25";
+            this.groupBox25.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox25.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox25.Size = new System.Drawing.Size(320, 183);
+            this.groupBox25.Size = new System.Drawing.Size(640, 352);
             this.groupBox25.TabIndex = 266;
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Bơm dầu";
@@ -6251,11 +6644,12 @@
             this.Pic_S3_DC3_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC3_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC3_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S3_DC3_Over_Stop.Location = new System.Drawing.Point(166, 115);
+            this.Pic_S3_DC3_Over_Stop.Location = new System.Drawing.Point(332, 221);
+            this.Pic_S3_DC3_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC3_Over_Stop.Name = "Pic_S3_DC3_Over_Stop";
             this.Pic_S3_DC3_Over_Stop.RotateAngle = 0;
             this.Pic_S3_DC3_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC3_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC3_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC3_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC3_Over_Stop.TabIndex = 249;
             this.Pic_S3_DC3_Over_Stop.TagPath = null;
@@ -6267,11 +6661,12 @@
             this.Pic_S3_DC2_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC2_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC2_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S3_DC2_Over_Stop.Location = new System.Drawing.Point(166, 75);
+            this.Pic_S3_DC2_Over_Stop.Location = new System.Drawing.Point(332, 144);
+            this.Pic_S3_DC2_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC2_Over_Stop.Name = "Pic_S3_DC2_Over_Stop";
             this.Pic_S3_DC2_Over_Stop.RotateAngle = 0;
             this.Pic_S3_DC2_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC2_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC2_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC2_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC2_Over_Stop.TabIndex = 248;
             this.Pic_S3_DC2_Over_Stop.TagPath = null;
@@ -6283,11 +6678,12 @@
             this.Pic_S3_DC1_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC1_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC1_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S3_DC1_Over_Stop.Location = new System.Drawing.Point(166, 33);
+            this.Pic_S3_DC1_Over_Stop.Location = new System.Drawing.Point(332, 63);
+            this.Pic_S3_DC1_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC1_Over_Stop.Name = "Pic_S3_DC1_Over_Stop";
             this.Pic_S3_DC1_Over_Stop.RotateAngle = 0;
             this.Pic_S3_DC1_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC1_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC1_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC1_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC1_Over_Stop.TabIndex = 247;
             this.Pic_S3_DC1_Over_Stop.TagPath = null;
@@ -6299,11 +6695,12 @@
             this.Pic_S3_DC3_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC3_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC3_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S3_DC3_Stop.Location = new System.Drawing.Point(13, 115);
+            this.Pic_S3_DC3_Stop.Location = new System.Drawing.Point(26, 221);
+            this.Pic_S3_DC3_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC3_Stop.Name = "Pic_S3_DC3_Stop";
             this.Pic_S3_DC3_Stop.RotateAngle = 0;
             this.Pic_S3_DC3_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC3_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC3_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC3_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC3_Stop.TabIndex = 246;
             this.Pic_S3_DC3_Stop.TagPath = null;
@@ -6315,11 +6712,12 @@
             this.Pic_S3_DC2_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC2_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC2_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S3_DC2_Stop.Location = new System.Drawing.Point(13, 75);
+            this.Pic_S3_DC2_Stop.Location = new System.Drawing.Point(26, 144);
+            this.Pic_S3_DC2_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC2_Stop.Name = "Pic_S3_DC2_Stop";
             this.Pic_S3_DC2_Stop.RotateAngle = 0;
             this.Pic_S3_DC2_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC2_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC2_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC2_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC2_Stop.TabIndex = 245;
             this.Pic_S3_DC2_Stop.TagPath = null;
@@ -6331,11 +6729,12 @@
             this.Pic_S3_DC1_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC1_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC1_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_S3_DC1_Stop.Location = new System.Drawing.Point(13, 33);
+            this.Pic_S3_DC1_Stop.Location = new System.Drawing.Point(26, 63);
+            this.Pic_S3_DC1_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC1_Stop.Name = "Pic_S3_DC1_Stop";
             this.Pic_S3_DC1_Stop.RotateAngle = 0;
             this.Pic_S3_DC1_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC1_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC1_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC1_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC1_Stop.TabIndex = 244;
             this.Pic_S3_DC1_Stop.TagPath = null;
@@ -6347,11 +6746,12 @@
             this.Pic_S3_DC3_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC3_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC3_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S3_DC3_Over.Location = new System.Drawing.Point(166, 115);
+            this.Pic_S3_DC3_Over.Location = new System.Drawing.Point(332, 221);
+            this.Pic_S3_DC3_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC3_Over.Name = "Pic_S3_DC3_Over";
             this.Pic_S3_DC3_Over.RotateAngle = 0;
             this.Pic_S3_DC3_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC3_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC3_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC3_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC3_Over.TabIndex = 243;
             this.Pic_S3_DC3_Over.TagPath = null;
@@ -6363,11 +6763,12 @@
             this.Pic_S3_DC3_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC3_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC3_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S3_DC3_Running.Location = new System.Drawing.Point(13, 115);
+            this.Pic_S3_DC3_Running.Location = new System.Drawing.Point(26, 221);
+            this.Pic_S3_DC3_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC3_Running.Name = "Pic_S3_DC3_Running";
             this.Pic_S3_DC3_Running.RotateAngle = 0;
             this.Pic_S3_DC3_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC3_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC3_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC3_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC3_Running.TabIndex = 242;
             this.Pic_S3_DC3_Running.TagPath = null;
@@ -6378,9 +6779,10 @@
             this.label90.AutoSize = true;
             this.label90.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label90.ForeColor = System.Drawing.Color.Blue;
-            this.label90.Location = new System.Drawing.Point(216, 121);
+            this.label90.Location = new System.Drawing.Point(432, 233);
+            this.label90.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label90.Name = "label90";
-            this.label90.Size = new System.Drawing.Size(90, 19);
+            this.label90.Size = new System.Drawing.Size(185, 36);
             this.label90.TabIndex = 241;
             this.label90.Text = "Lỗi bơm chốt";
             // 
@@ -6389,9 +6791,10 @@
             this.label91.AutoSize = true;
             this.label91.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label91.ForeColor = System.Drawing.Color.Blue;
-            this.label91.Location = new System.Drawing.Point(60, 121);
+            this.label91.Location = new System.Drawing.Point(120, 233);
+            this.label91.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label91.Name = "label91";
-            this.label91.Size = new System.Drawing.Size(68, 19);
+            this.label91.Size = new System.Drawing.Size(138, 36);
             this.label91.TabIndex = 240;
             this.label91.Text = "Bơm chốt";
             // 
@@ -6401,11 +6804,12 @@
             this.Pic_S3_DC2_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC2_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC2_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S3_DC2_Over.Location = new System.Drawing.Point(166, 75);
+            this.Pic_S3_DC2_Over.Location = new System.Drawing.Point(332, 144);
+            this.Pic_S3_DC2_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC2_Over.Name = "Pic_S3_DC2_Over";
             this.Pic_S3_DC2_Over.RotateAngle = 0;
             this.Pic_S3_DC2_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC2_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC2_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC2_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC2_Over.TabIndex = 239;
             this.Pic_S3_DC2_Over.TagPath = null;
@@ -6417,11 +6821,12 @@
             this.Pic_S3_DC2_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC2_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC2_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S3_DC2_Running.Location = new System.Drawing.Point(13, 75);
+            this.Pic_S3_DC2_Running.Location = new System.Drawing.Point(26, 144);
+            this.Pic_S3_DC2_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC2_Running.Name = "Pic_S3_DC2_Running";
             this.Pic_S3_DC2_Running.RotateAngle = 0;
             this.Pic_S3_DC2_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC2_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC2_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC2_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC2_Running.TabIndex = 238;
             this.Pic_S3_DC2_Running.TagPath = null;
@@ -6432,9 +6837,10 @@
             this.label133.AutoSize = true;
             this.label133.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label133.ForeColor = System.Drawing.Color.Blue;
-            this.label133.Location = new System.Drawing.Point(216, 81);
+            this.label133.Location = new System.Drawing.Point(432, 156);
+            this.label133.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label133.Name = "label133";
-            this.label133.Size = new System.Drawing.Size(72, 19);
+            this.label133.Size = new System.Drawing.Size(147, 36);
             this.label133.TabIndex = 237;
             this.label133.Text = "Lỗi bơm 2";
             // 
@@ -6443,9 +6849,10 @@
             this.label134.AutoSize = true;
             this.label134.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label134.ForeColor = System.Drawing.Color.Blue;
-            this.label134.Location = new System.Drawing.Point(60, 81);
+            this.label134.Location = new System.Drawing.Point(120, 156);
+            this.label134.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label134.Name = "label134";
-            this.label134.Size = new System.Drawing.Size(50, 19);
+            this.label134.Size = new System.Drawing.Size(100, 36);
             this.label134.TabIndex = 236;
             this.label134.Text = "Bơm 2";
             // 
@@ -6455,11 +6862,12 @@
             this.Pic_S3_DC1_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC1_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC1_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_S3_DC1_Over.Location = new System.Drawing.Point(166, 33);
+            this.Pic_S3_DC1_Over.Location = new System.Drawing.Point(332, 63);
+            this.Pic_S3_DC1_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC1_Over.Name = "Pic_S3_DC1_Over";
             this.Pic_S3_DC1_Over.RotateAngle = 0;
             this.Pic_S3_DC1_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC1_Over.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC1_Over.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC1_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC1_Over.TabIndex = 235;
             this.Pic_S3_DC1_Over.TagPath = null;
@@ -6471,11 +6879,12 @@
             this.Pic_S3_DC1_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_S3_DC1_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_S3_DC1_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_S3_DC1_Running.Location = new System.Drawing.Point(13, 33);
+            this.Pic_S3_DC1_Running.Location = new System.Drawing.Point(26, 63);
+            this.Pic_S3_DC1_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_S3_DC1_Running.Name = "Pic_S3_DC1_Running";
             this.Pic_S3_DC1_Running.RotateAngle = 0;
             this.Pic_S3_DC1_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_S3_DC1_Running.Size = new System.Drawing.Size(35, 31);
+            this.Pic_S3_DC1_Running.Size = new System.Drawing.Size(70, 60);
             this.Pic_S3_DC1_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_S3_DC1_Running.TabIndex = 232;
             this.Pic_S3_DC1_Running.TagPath = null;
@@ -6486,9 +6895,10 @@
             this.label135.AutoSize = true;
             this.label135.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label135.ForeColor = System.Drawing.Color.Blue;
-            this.label135.Location = new System.Drawing.Point(216, 39);
+            this.label135.Location = new System.Drawing.Point(432, 75);
+            this.label135.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label135.Name = "label135";
-            this.label135.Size = new System.Drawing.Size(72, 19);
+            this.label135.Size = new System.Drawing.Size(147, 36);
             this.label135.TabIndex = 8;
             this.label135.Text = "Lỗi bơm 1";
             // 
@@ -6497,9 +6907,10 @@
             this.label136.AutoSize = true;
             this.label136.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label136.ForeColor = System.Drawing.Color.Blue;
-            this.label136.Location = new System.Drawing.Point(60, 39);
+            this.label136.Location = new System.Drawing.Point(120, 75);
+            this.label136.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label136.Name = "label136";
-            this.label136.Size = new System.Drawing.Size(50, 19);
+            this.label136.Size = new System.Drawing.Size(100, 36);
             this.label136.TabIndex = 0;
             this.label136.Text = "Bơm 1";
             // 
@@ -6507,11 +6918,12 @@
             // 
             this.dataGridViewT5.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridViewT5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewT5.Location = new System.Drawing.Point(696, 347);
+            this.dataGridViewT5.Location = new System.Drawing.Point(1392, 667);
+            this.dataGridViewT5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridViewT5.Name = "dataGridViewT5";
             this.dataGridViewT5.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dataGridViewT5.RowHeadersWidth = 82;
-            this.dataGridViewT5.Size = new System.Drawing.Size(578, 455);
+            this.dataGridViewT5.Size = new System.Drawing.Size(1156, 875);
             this.dataGridViewT5.TabIndex = 265;
             // 
             // groupBox21
@@ -6522,10 +6934,12 @@
             this.groupBox21.Controls.Add(this.bnt_Auto_T5);
             this.groupBox21.Controls.Add(this.bnt_Remote_T5);
             this.groupBox21.Controls.Add(this.bnt_Local_T5);
-            this.groupBox21.Location = new System.Drawing.Point(1281, 47);
+            this.groupBox21.Location = new System.Drawing.Point(2562, 90);
+            this.groupBox21.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox21.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox21.Size = new System.Drawing.Size(428, 233);
+            this.groupBox21.Size = new System.Drawing.Size(856, 448);
             this.groupBox21.TabIndex = 242;
             this.groupBox21.TabStop = false;
             this.groupBox21.Text = "Vận Hành";
@@ -6533,9 +6947,10 @@
             // bnt_Hand_T5
             // 
             this.bnt_Hand_T5.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Hand_T5.Location = new System.Drawing.Point(51, 28);
+            this.bnt_Hand_T5.Location = new System.Drawing.Point(102, 54);
+            this.bnt_Hand_T5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Hand_T5.Name = "bnt_Hand_T5";
-            this.bnt_Hand_T5.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Hand_T5.Size = new System.Drawing.Size(280, 106);
             this.bnt_Hand_T5.TabIndex = 205;
             this.bnt_Hand_T5.Text = "Tay";
             this.bnt_Hand_T5.UseVisualStyleBackColor = true;
@@ -6543,9 +6958,10 @@
             // bnt_Estop_T5
             // 
             this.bnt_Estop_T5.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Estop_T5.Location = new System.Drawing.Point(162, 172);
+            this.bnt_Estop_T5.Location = new System.Drawing.Point(324, 331);
+            this.bnt_Estop_T5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Estop_T5.Name = "bnt_Estop_T5";
-            this.bnt_Estop_T5.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Estop_T5.Size = new System.Drawing.Size(280, 106);
             this.bnt_Estop_T5.TabIndex = 207;
             this.bnt_Estop_T5.Text = "Dừng khẩn";
             this.bnt_Estop_T5.UseVisualStyleBackColor = true;
@@ -6553,9 +6969,10 @@
             // bnt_Auto_T5
             // 
             this.bnt_Auto_T5.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Auto_T5.Location = new System.Drawing.Point(271, 28);
+            this.bnt_Auto_T5.Location = new System.Drawing.Point(542, 54);
+            this.bnt_Auto_T5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Auto_T5.Name = "bnt_Auto_T5";
-            this.bnt_Auto_T5.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Auto_T5.Size = new System.Drawing.Size(280, 106);
             this.bnt_Auto_T5.TabIndex = 206;
             this.bnt_Auto_T5.Text = "Tự động";
             this.bnt_Auto_T5.UseVisualStyleBackColor = true;
@@ -6563,9 +6980,10 @@
             // bnt_Remote_T5
             // 
             this.bnt_Remote_T5.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T5.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T5.Location = new System.Drawing.Point(102, 194);
+            this.bnt_Remote_T5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Remote_T5.Name = "bnt_Remote_T5";
-            this.bnt_Remote_T5.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Remote_T5.Size = new System.Drawing.Size(280, 106);
             this.bnt_Remote_T5.TabIndex = 203;
             this.bnt_Remote_T5.Text = "Từ xa";
             this.bnt_Remote_T5.UseVisualStyleBackColor = true;
@@ -6573,9 +6991,10 @@
             // bnt_Local_T5
             // 
             this.bnt_Local_T5.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T5.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T5.Location = new System.Drawing.Point(542, 194);
+            this.bnt_Local_T5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Local_T5.Name = "bnt_Local_T5";
-            this.bnt_Local_T5.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Local_T5.Size = new System.Drawing.Size(280, 106);
             this.bnt_Local_T5.TabIndex = 204;
             this.bnt_Local_T5.Text = "Tại chổ";
             this.bnt_Local_T5.UseVisualStyleBackColor = true;
@@ -6586,11 +7005,12 @@
             this.ahdPictureBox36.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox36.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox36.Image = global::RegistrationForm1.Properties.Resources.tranc;
-            this.ahdPictureBox36.Location = new System.Drawing.Point(1280, 278);
+            this.ahdPictureBox36.Location = new System.Drawing.Point(2560, 535);
+            this.ahdPictureBox36.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox36.Name = "ahdPictureBox36";
             this.ahdPictureBox36.RotateAngle = 0;
             this.ahdPictureBox36.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox36.Size = new System.Drawing.Size(412, 510);
+            this.ahdPictureBox36.Size = new System.Drawing.Size(824, 981);
             this.ahdPictureBox36.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox36.TabIndex = 234;
             this.ahdPictureBox36.TagPath = null;
@@ -6602,11 +7022,12 @@
             this.ahdBar5.Direction = Ahd.Winforms.Controls.BarDirection.TopToBottom;
             this.ahdBar5.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Percent;
             this.ahdBar5.FillColor = System.Drawing.Color.Green;
-            this.ahdBar5.Location = new System.Drawing.Point(400, 54);
+            this.ahdBar5.Location = new System.Drawing.Point(800, 104);
+            this.ahdBar5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdBar5.MaxValue = "100";
             this.ahdBar5.MinValue = "0";
             this.ahdBar5.Name = "ahdBar5";
-            this.ahdBar5.Size = new System.Drawing.Size(289, 218);
+            this.ahdBar5.Size = new System.Drawing.Size(578, 419);
             this.ahdBar5.TabIndex = 264;
             this.ahdBar5.TagPath = "Local Station/DauTieng/S71500/Group3/Door5_Aperture";
             this.ahdBar5.ValueStringFormat = null;
@@ -6616,10 +7037,11 @@
             this.label75.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label75.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label75.ForeColor = System.Drawing.Color.Blue;
-            this.label75.Location = new System.Drawing.Point(28, 218);
+            this.label75.Location = new System.Drawing.Point(56, 419);
+            this.label75.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label75.Name = "label75";
             this.label75.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label75.Size = new System.Drawing.Size(216, 50);
+            this.label75.Size = new System.Drawing.Size(430, 94);
             this.label75.TabIndex = 263;
             this.label75.Text = "Hành trình xy lanh 5_2";
             this.label75.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6629,9 +7051,10 @@
             this.ahdLabel57.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel57.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel57.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel57.Location = new System.Drawing.Point(325, 230);
+            this.ahdLabel57.Location = new System.Drawing.Point(650, 442);
+            this.ahdLabel57.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel57.Name = "ahdLabel57";
-            this.ahdLabel57.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel57.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel57.StringFormat = null;
             this.ahdLabel57.TabIndex = 262;
             this.ahdLabel57.TagPath = null;
@@ -6643,9 +7066,10 @@
             this.ahdLabel58.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel58.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel58.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel58.Location = new System.Drawing.Point(251, 229);
+            this.ahdLabel58.Location = new System.Drawing.Point(502, 440);
+            this.ahdLabel58.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel58.Name = "ahdLabel58";
-            this.ahdLabel58.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel58.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel58.StringFormat = null;
             this.ahdLabel58.TabIndex = 261;
             this.ahdLabel58.TagPath = "Local Station/DauTieng/S71500/Group3/HT_Cylinder5_2";
@@ -6657,10 +7081,11 @@
             this.label76.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label76.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label76.ForeColor = System.Drawing.Color.Blue;
-            this.label76.Location = new System.Drawing.Point(28, 164);
+            this.label76.Location = new System.Drawing.Point(56, 315);
+            this.label76.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label76.Name = "label76";
             this.label76.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label76.Size = new System.Drawing.Size(216, 50);
+            this.label76.Size = new System.Drawing.Size(430, 94);
             this.label76.TabIndex = 260;
             this.label76.Text = "Hành trình xy lanh 5_1";
             this.label76.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6670,9 +7095,10 @@
             this.ahdLabel59.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel59.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel59.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel59.Location = new System.Drawing.Point(325, 176);
+            this.ahdLabel59.Location = new System.Drawing.Point(650, 338);
+            this.ahdLabel59.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel59.Name = "ahdLabel59";
-            this.ahdLabel59.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel59.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel59.StringFormat = null;
             this.ahdLabel59.TabIndex = 259;
             this.ahdLabel59.TagPath = null;
@@ -6684,9 +7110,10 @@
             this.ahdLabel60.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel60.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel60.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel60.Location = new System.Drawing.Point(251, 175);
+            this.ahdLabel60.Location = new System.Drawing.Point(502, 337);
+            this.ahdLabel60.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel60.Name = "ahdLabel60";
-            this.ahdLabel60.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel60.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel60.StringFormat = null;
             this.ahdLabel60.TabIndex = 258;
             this.ahdLabel60.TagPath = "Local Station/DauTieng/S71500/Group3/HT_Cylinder5_1";
@@ -6698,10 +7125,11 @@
             this.label77.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label77.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label77.ForeColor = System.Drawing.Color.Blue;
-            this.label77.Location = new System.Drawing.Point(752, 185);
+            this.label77.Location = new System.Drawing.Point(1504, 356);
+            this.label77.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label77.Name = "label77";
             this.label77.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label77.Size = new System.Drawing.Size(185, 50);
+            this.label77.Size = new System.Drawing.Size(368, 94);
             this.label77.TabIndex = 257;
             this.label77.Text = "Lưu lượng tổng (Qc)";
             this.label77.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6711,10 +7139,11 @@
             this.label78.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label78.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label78.ForeColor = System.Drawing.Color.Blue;
-            this.label78.Location = new System.Drawing.Point(752, 130);
+            this.label78.Location = new System.Drawing.Point(1504, 250);
+            this.label78.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label78.Name = "label78";
             this.label78.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label78.Size = new System.Drawing.Size(185, 50);
+            this.label78.Size = new System.Drawing.Size(368, 94);
             this.label78.TabIndex = 256;
             this.label78.Text = "Lưu lượng cửa 5 (Qi)";
             this.label78.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6724,10 +7153,11 @@
             this.label79.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label79.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label79.ForeColor = System.Drawing.Color.Blue;
-            this.label79.Location = new System.Drawing.Point(752, 75);
+            this.label79.Location = new System.Drawing.Point(1504, 144);
+            this.label79.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label79.Name = "label79";
             this.label79.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label79.Size = new System.Drawing.Size(185, 50);
+            this.label79.Size = new System.Drawing.Size(368, 94);
             this.label79.TabIndex = 255;
             this.label79.Text = "Độ mở cửa  (a):";
             this.label79.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6737,10 +7167,11 @@
             this.label80.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label80.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label80.ForeColor = System.Drawing.Color.Blue;
-            this.label80.Location = new System.Drawing.Point(28, 56);
+            this.label80.Location = new System.Drawing.Point(56, 108);
+            this.label80.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label80.Name = "label80";
             this.label80.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label80.Size = new System.Drawing.Size(216, 50);
+            this.label80.Size = new System.Drawing.Size(430, 94);
             this.label80.TabIndex = 254;
             this.label80.Text = "Mực nước :";
             this.label80.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6750,10 +7181,11 @@
             this.label81.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label81.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label81.ForeColor = System.Drawing.Color.Blue;
-            this.label81.Location = new System.Drawing.Point(28, 110);
+            this.label81.Location = new System.Drawing.Point(56, 212);
+            this.label81.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label81.Name = "label81";
             this.label81.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label81.Size = new System.Drawing.Size(216, 50);
+            this.label81.Size = new System.Drawing.Size(430, 94);
             this.label81.TabIndex = 253;
             this.label81.Text = "Nhiệt độ dầu : ";
             this.label81.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6763,9 +7195,10 @@
             this.ahdLabel61.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel61.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel61.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel61.Location = new System.Drawing.Point(1038, 197);
+            this.ahdLabel61.Location = new System.Drawing.Point(2076, 379);
+            this.ahdLabel61.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel61.Name = "ahdLabel61";
-            this.ahdLabel61.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel61.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel61.StringFormat = null;
             this.ahdLabel61.TabIndex = 252;
             this.ahdLabel61.TagPath = null;
@@ -6777,9 +7210,10 @@
             this.ahdLabel62.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel62.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel62.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel62.Location = new System.Drawing.Point(966, 196);
+            this.ahdLabel62.Location = new System.Drawing.Point(1932, 377);
+            this.ahdLabel62.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel62.Name = "ahdLabel62";
-            this.ahdLabel62.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel62.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel62.StringFormat = null;
             this.ahdLabel62.TabIndex = 251;
             this.ahdLabel62.TagPath = "Local Station/DauTieng/S71500/Group3/Total_Fllow";
@@ -6791,9 +7225,10 @@
             this.ahdLabel63.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel63.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel63.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel63.Location = new System.Drawing.Point(1038, 142);
+            this.ahdLabel63.Location = new System.Drawing.Point(2076, 273);
+            this.ahdLabel63.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel63.Name = "ahdLabel63";
-            this.ahdLabel63.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel63.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel63.StringFormat = null;
             this.ahdLabel63.TabIndex = 250;
             this.ahdLabel63.TagPath = null;
@@ -6805,9 +7240,10 @@
             this.ahdLabel64.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel64.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel64.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel64.Location = new System.Drawing.Point(966, 141);
+            this.ahdLabel64.Location = new System.Drawing.Point(1932, 271);
+            this.ahdLabel64.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel64.Name = "ahdLabel64";
-            this.ahdLabel64.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel64.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel64.StringFormat = null;
             this.ahdLabel64.TabIndex = 249;
             this.ahdLabel64.TagPath = "Local Station/DauTieng/S71500/Group3/Fllow_Door5";
@@ -6819,9 +7255,10 @@
             this.ahdLabel65.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel65.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel65.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel65.Location = new System.Drawing.Point(323, 68);
+            this.ahdLabel65.Location = new System.Drawing.Point(646, 131);
+            this.ahdLabel65.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel65.Name = "ahdLabel65";
-            this.ahdLabel65.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel65.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel65.StringFormat = null;
             this.ahdLabel65.TabIndex = 248;
             this.ahdLabel65.TagPath = null;
@@ -6833,9 +7270,10 @@
             this.ahdLabel66.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel66.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel66.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel66.Location = new System.Drawing.Point(251, 67);
+            this.ahdLabel66.Location = new System.Drawing.Point(502, 129);
+            this.ahdLabel66.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel66.Name = "ahdLabel66";
-            this.ahdLabel66.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel66.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel66.StringFormat = null;
             this.ahdLabel66.TabIndex = 247;
             this.ahdLabel66.TagPath = "Local Station/DauTieng/S71500/Group4/Fllow_Ho";
@@ -6850,10 +7288,12 @@
             this.groupBox22.Controls.Add(this.Pic_Door5_PressureHigh);
             this.groupBox22.Controls.Add(this.label82);
             this.groupBox22.Controls.Add(this.label83);
-            this.groupBox22.Location = new System.Drawing.Point(369, 535);
+            this.groupBox22.Location = new System.Drawing.Point(738, 1029);
+            this.groupBox22.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox22.Name = "groupBox22";
+            this.groupBox22.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox22.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox22.Size = new System.Drawing.Size(305, 115);
+            this.groupBox22.Size = new System.Drawing.Size(610, 221);
             this.groupBox22.TabIndex = 246;
             this.groupBox22.TabStop = false;
             this.groupBox22.Text = "Áp dầu";
@@ -6864,11 +7304,12 @@
             this.Pic_Door5_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door5_PressureLow_Stop.Location = new System.Drawing.Point(14, 73);
+            this.Pic_Door5_PressureLow_Stop.Location = new System.Drawing.Point(28, 140);
+            this.Pic_Door5_PressureLow_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_PressureLow_Stop.Name = "Pic_Door5_PressureLow_Stop";
             this.Pic_Door5_PressureLow_Stop.RotateAngle = 0;
             this.Pic_Door5_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_PressureLow_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_PressureLow_Stop.TabIndex = 245;
             this.Pic_Door5_PressureLow_Stop.TagPath = null;
@@ -6880,11 +7321,12 @@
             this.Pic_Door5_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door5_PressureHigh_Stop.Location = new System.Drawing.Point(14, 30);
+            this.Pic_Door5_PressureHigh_Stop.Location = new System.Drawing.Point(28, 58);
+            this.Pic_Door5_PressureHigh_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_PressureHigh_Stop.Name = "Pic_Door5_PressureHigh_Stop";
             this.Pic_Door5_PressureHigh_Stop.RotateAngle = 0;
             this.Pic_Door5_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_PressureHigh_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_PressureHigh_Stop.TabIndex = 244;
             this.Pic_Door5_PressureHigh_Stop.TagPath = null;
@@ -6896,11 +7338,12 @@
             this.Pic_Door5_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_Door5_PressureLow.Location = new System.Drawing.Point(14, 74);
+            this.Pic_Door5_PressureLow.Location = new System.Drawing.Point(28, 142);
+            this.Pic_Door5_PressureLow.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_PressureLow.Name = "Pic_Door5_PressureLow";
             this.Pic_Door5_PressureLow.RotateAngle = 0;
             this.Pic_Door5_PressureLow.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_PressureLow.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_PressureLow.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_PressureLow.TabIndex = 243;
             this.Pic_Door5_PressureLow.TagPath = null;
@@ -6912,11 +7355,12 @@
             this.Pic_Door5_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door5_PressureHigh.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door5_PressureHigh.Location = new System.Drawing.Point(28, 60);
+            this.Pic_Door5_PressureHigh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_PressureHigh.Name = "Pic_Door5_PressureHigh";
             this.Pic_Door5_PressureHigh.RotateAngle = 0;
             this.Pic_Door5_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_PressureHigh.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_PressureHigh.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_PressureHigh.TabIndex = 242;
             this.Pic_Door5_PressureHigh.TagPath = null;
@@ -6927,9 +7371,10 @@
             this.label82.AutoSize = true;
             this.label82.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label82.ForeColor = System.Drawing.Color.Blue;
-            this.label82.Location = new System.Drawing.Point(71, 80);
+            this.label82.Location = new System.Drawing.Point(142, 154);
+            this.label82.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label82.Name = "label82";
-            this.label82.Size = new System.Drawing.Size(123, 19);
+            this.label82.Size = new System.Drawing.Size(245, 36);
             this.label82.TabIndex = 8;
             this.label82.Text = "Áp dầu cửa 5 thấp";
             // 
@@ -6938,9 +7383,10 @@
             this.label83.AutoSize = true;
             this.label83.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label83.ForeColor = System.Drawing.Color.Blue;
-            this.label83.Location = new System.Drawing.Point(71, 37);
+            this.label83.Location = new System.Drawing.Point(142, 71);
+            this.label83.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(119, 19);
+            this.label83.Size = new System.Drawing.Size(235, 36);
             this.label83.TabIndex = 5;
             this.label83.Text = "Áp dầu cửa 5 cao";
             // 
@@ -6958,10 +7404,12 @@
             this.groupBox23.Controls.Add(this.Pic_Doorlock5_1Open);
             this.groupBox23.Controls.Add(this.label84);
             this.groupBox23.Controls.Add(this.label85);
-            this.groupBox23.Location = new System.Drawing.Point(7, 535);
+            this.groupBox23.Location = new System.Drawing.Point(14, 1029);
+            this.groupBox23.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox23.Name = "groupBox23";
+            this.groupBox23.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox23.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox23.Size = new System.Drawing.Size(320, 206);
+            this.groupBox23.Size = new System.Drawing.Size(640, 396);
             this.groupBox23.TabIndex = 245;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Chốt cửa";
@@ -6972,11 +7420,12 @@
             this.Pic_Doorlock5_2Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_2Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_2Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock5_2Close_Stop.Location = new System.Drawing.Point(13, 162);
+            this.Pic_Doorlock5_2Close_Stop.Location = new System.Drawing.Point(26, 312);
+            this.Pic_Doorlock5_2Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_2Close_Stop.Name = "Pic_Doorlock5_2Close_Stop";
             this.Pic_Doorlock5_2Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock5_2Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_2Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_2Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_2Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_2Close_Stop.TabIndex = 251;
             this.Pic_Doorlock5_2Close_Stop.TagPath = null;
@@ -6988,11 +7437,12 @@
             this.Pic_Doorlock5_2Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_2Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_2Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock5_2Open_Stop.Location = new System.Drawing.Point(13, 118);
+            this.Pic_Doorlock5_2Open_Stop.Location = new System.Drawing.Point(26, 227);
+            this.Pic_Doorlock5_2Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_2Open_Stop.Name = "Pic_Doorlock5_2Open_Stop";
             this.Pic_Doorlock5_2Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock5_2Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_2Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_2Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_2Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_2Open_Stop.TabIndex = 250;
             this.Pic_Doorlock5_2Open_Stop.TagPath = null;
@@ -7004,11 +7454,12 @@
             this.Pic_Doorlock5_1Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_1Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_1Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock5_1Close_Stop.Location = new System.Drawing.Point(13, 74);
+            this.Pic_Doorlock5_1Close_Stop.Location = new System.Drawing.Point(26, 142);
+            this.Pic_Doorlock5_1Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_1Close_Stop.Name = "Pic_Doorlock5_1Close_Stop";
             this.Pic_Doorlock5_1Close_Stop.RotateAngle = 0;
             this.Pic_Doorlock5_1Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_1Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_1Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_1Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_1Close_Stop.TabIndex = 249;
             this.Pic_Doorlock5_1Close_Stop.TagPath = null;
@@ -7020,11 +7471,12 @@
             this.Pic_Doorlock5_1Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_1Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_1Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock5_1Open_Stop.Location = new System.Drawing.Point(13, 30);
+            this.Pic_Doorlock5_1Open_Stop.Location = new System.Drawing.Point(26, 58);
+            this.Pic_Doorlock5_1Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_1Open_Stop.Name = "Pic_Doorlock5_1Open_Stop";
             this.Pic_Doorlock5_1Open_Stop.RotateAngle = 0;
             this.Pic_Doorlock5_1Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_1Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_1Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_1Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_1Open_Stop.TabIndex = 248;
             this.Pic_Doorlock5_1Open_Stop.TagPath = null;
@@ -7036,11 +7488,12 @@
             this.Pic_Doorlock5_2Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_2Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_2Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock5_2Close.Location = new System.Drawing.Point(13, 162);
+            this.Pic_Doorlock5_2Close.Location = new System.Drawing.Point(26, 312);
+            this.Pic_Doorlock5_2Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_2Close.Name = "Pic_Doorlock5_2Close";
             this.Pic_Doorlock5_2Close.RotateAngle = 0;
             this.Pic_Doorlock5_2Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_2Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_2Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_2Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_2Close.TabIndex = 247;
             this.Pic_Doorlock5_2Close.TagPath = null;
@@ -7052,11 +7505,12 @@
             this.Pic_Doorlock5_2Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_2Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_2Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock5_2Open.Location = new System.Drawing.Point(13, 118);
+            this.Pic_Doorlock5_2Open.Location = new System.Drawing.Point(26, 227);
+            this.Pic_Doorlock5_2Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_2Open.Name = "Pic_Doorlock5_2Open";
             this.Pic_Doorlock5_2Open.RotateAngle = 0;
             this.Pic_Doorlock5_2Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_2Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_2Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_2Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_2Open.TabIndex = 246;
             this.Pic_Doorlock5_2Open.TagPath = null;
@@ -7067,9 +7521,10 @@
             this.label141.AutoSize = true;
             this.label141.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label141.ForeColor = System.Drawing.Color.Blue;
-            this.label141.Location = new System.Drawing.Point(71, 168);
+            this.label141.Location = new System.Drawing.Point(142, 323);
+            this.label141.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label141.Name = "label141";
-            this.label141.Size = new System.Drawing.Size(123, 19);
+            this.label141.Size = new System.Drawing.Size(248, 36);
             this.label141.TabIndex = 245;
             this.label141.Text = "Chốt 5_2 đóng hết";
             // 
@@ -7078,9 +7533,10 @@
             this.label142.AutoSize = true;
             this.label142.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label142.ForeColor = System.Drawing.Color.Blue;
-            this.label142.Location = new System.Drawing.Point(71, 124);
+            this.label142.Location = new System.Drawing.Point(142, 238);
+            this.label142.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label142.Name = "label142";
-            this.label142.Size = new System.Drawing.Size(112, 19);
+            this.label142.Size = new System.Drawing.Size(226, 36);
             this.label142.TabIndex = 244;
             this.label142.Text = "Chốt 5_2 mở hết";
             // 
@@ -7090,11 +7546,12 @@
             this.Pic_Doorlock5_1Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_1Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_1Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock5_1Close.Location = new System.Drawing.Point(13, 74);
+            this.Pic_Doorlock5_1Close.Location = new System.Drawing.Point(26, 142);
+            this.Pic_Doorlock5_1Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_1Close.Name = "Pic_Doorlock5_1Close";
             this.Pic_Doorlock5_1Close.RotateAngle = 0;
             this.Pic_Doorlock5_1Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_1Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_1Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_1Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_1Close.TabIndex = 243;
             this.Pic_Doorlock5_1Close.TagPath = null;
@@ -7106,11 +7563,12 @@
             this.Pic_Doorlock5_1Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Doorlock5_1Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Doorlock5_1Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock5_1Open.Location = new System.Drawing.Point(13, 30);
+            this.Pic_Doorlock5_1Open.Location = new System.Drawing.Point(26, 58);
+            this.Pic_Doorlock5_1Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Doorlock5_1Open.Name = "Pic_Doorlock5_1Open";
             this.Pic_Doorlock5_1Open.RotateAngle = 0;
             this.Pic_Doorlock5_1Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_1Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_1Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Doorlock5_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Doorlock5_1Open.TabIndex = 242;
             this.Pic_Doorlock5_1Open.TagPath = null;
@@ -7121,9 +7579,10 @@
             this.label84.AutoSize = true;
             this.label84.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label84.ForeColor = System.Drawing.Color.Blue;
-            this.label84.Location = new System.Drawing.Point(71, 80);
+            this.label84.Location = new System.Drawing.Point(142, 154);
+            this.label84.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label84.Name = "label84";
-            this.label84.Size = new System.Drawing.Size(123, 19);
+            this.label84.Size = new System.Drawing.Size(248, 36);
             this.label84.TabIndex = 8;
             this.label84.Text = "Chốt 5_1 đóng hết";
             // 
@@ -7132,9 +7591,10 @@
             this.label85.AutoSize = true;
             this.label85.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label85.ForeColor = System.Drawing.Color.Blue;
-            this.label85.Location = new System.Drawing.Point(71, 36);
+            this.label85.Location = new System.Drawing.Point(142, 69);
+            this.label85.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label85.Name = "label85";
-            this.label85.Size = new System.Drawing.Size(112, 19);
+            this.label85.Size = new System.Drawing.Size(226, 36);
             this.label85.TabIndex = 5;
             this.label85.Text = "Chốt 5_1 mở hết";
             // 
@@ -7152,10 +7612,12 @@
             this.groupBox24.Controls.Add(this.label87);
             this.groupBox24.Controls.Add(this.label88);
             this.groupBox24.Controls.Add(this.label89);
-            this.groupBox24.Location = new System.Drawing.Point(369, 336);
+            this.groupBox24.Location = new System.Drawing.Point(738, 646);
+            this.groupBox24.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox24.Name = "groupBox24";
+            this.groupBox24.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox24.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox24.Size = new System.Drawing.Size(305, 183);
+            this.groupBox24.Size = new System.Drawing.Size(610, 352);
             this.groupBox24.TabIndex = 244;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Trạng thái cửa";
@@ -7166,11 +7628,12 @@
             this.Pic_Door5_Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door5_Close_Stop.Location = new System.Drawing.Point(15, 139);
+            this.Pic_Door5_Close_Stop.Location = new System.Drawing.Point(30, 267);
+            this.Pic_Door5_Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Close_Stop.Name = "Pic_Door5_Close_Stop";
             this.Pic_Door5_Close_Stop.RotateAngle = 0;
             this.Pic_Door5_Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Close_Stop.TabIndex = 245;
             this.Pic_Door5_Close_Stop.TagPath = null;
@@ -7182,11 +7645,12 @@
             this.Pic_Door5_Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door5_Open_Stop.Location = new System.Drawing.Point(15, 100);
+            this.Pic_Door5_Open_Stop.Location = new System.Drawing.Point(30, 192);
+            this.Pic_Door5_Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Open_Stop.Name = "Pic_Door5_Open_Stop";
             this.Pic_Door5_Open_Stop.RotateAngle = 0;
             this.Pic_Door5_Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Open_Stop.TabIndex = 244;
             this.Pic_Door5_Open_Stop.TagPath = null;
@@ -7198,11 +7662,12 @@
             this.Pic_Door5_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door5_Closing_Stop.Location = new System.Drawing.Point(15, 61);
+            this.Pic_Door5_Closing_Stop.Location = new System.Drawing.Point(30, 117);
+            this.Pic_Door5_Closing_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Closing_Stop.Name = "Pic_Door5_Closing_Stop";
             this.Pic_Door5_Closing_Stop.RotateAngle = 0;
             this.Pic_Door5_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Closing_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Closing_Stop.TabIndex = 243;
             this.Pic_Door5_Closing_Stop.TagPath = null;
@@ -7214,11 +7679,12 @@
             this.Pic_Door5_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door5_Opening_Stop.Location = new System.Drawing.Point(15, 22);
+            this.Pic_Door5_Opening_Stop.Location = new System.Drawing.Point(30, 42);
+            this.Pic_Door5_Opening_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Opening_Stop.Name = "Pic_Door5_Opening_Stop";
             this.Pic_Door5_Opening_Stop.RotateAngle = 0;
             this.Pic_Door5_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Opening_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Opening_Stop.TabIndex = 242;
             this.Pic_Door5_Opening_Stop.TagPath = null;
@@ -7230,11 +7696,12 @@
             this.Pic_Door5_Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door5_Close.Location = new System.Drawing.Point(15, 139);
+            this.Pic_Door5_Close.Location = new System.Drawing.Point(30, 267);
+            this.Pic_Door5_Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Close.Name = "Pic_Door5_Close";
             this.Pic_Door5_Close.RotateAngle = 0;
             this.Pic_Door5_Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Close.TabIndex = 241;
             this.Pic_Door5_Close.TagPath = null;
@@ -7246,11 +7713,12 @@
             this.Pic_Door5_Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door5_Open.Location = new System.Drawing.Point(15, 100);
+            this.Pic_Door5_Open.Location = new System.Drawing.Point(30, 192);
+            this.Pic_Door5_Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Open.Name = "Pic_Door5_Open";
             this.Pic_Door5_Open.RotateAngle = 0;
             this.Pic_Door5_Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Open.TabIndex = 240;
             this.Pic_Door5_Open.TagPath = null;
@@ -7262,11 +7730,12 @@
             this.Pic_Door5_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door5_Closing.Location = new System.Drawing.Point(15, 61);
+            this.Pic_Door5_Closing.Location = new System.Drawing.Point(30, 117);
+            this.Pic_Door5_Closing.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Closing.Name = "Pic_Door5_Closing";
             this.Pic_Door5_Closing.RotateAngle = 0;
             this.Pic_Door5_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Closing.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Closing.TabIndex = 239;
             this.Pic_Door5_Closing.TagPath = null;
@@ -7278,11 +7747,12 @@
             this.Pic_Door5_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door5_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door5_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door5_Opening.Location = new System.Drawing.Point(15, 22);
+            this.Pic_Door5_Opening.Location = new System.Drawing.Point(30, 42);
+            this.Pic_Door5_Opening.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door5_Opening.Name = "Pic_Door5_Opening";
             this.Pic_Door5_Opening.RotateAngle = 0;
             this.Pic_Door5_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door5_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door5_Opening.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door5_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door5_Opening.TabIndex = 238;
             this.Pic_Door5_Opening.TagPath = null;
@@ -7293,9 +7763,10 @@
             this.label86.AutoSize = true;
             this.label86.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label86.ForeColor = System.Drawing.Color.Blue;
-            this.label86.Location = new System.Drawing.Point(72, 145);
+            this.label86.Location = new System.Drawing.Point(144, 279);
+            this.label86.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label86.Name = "label86";
-            this.label86.Size = new System.Drawing.Size(145, 19);
+            this.label86.Size = new System.Drawing.Size(291, 36);
             this.label86.TabIndex = 7;
             this.label86.Text = "Cửa 5 đóng hoàn toàn";
             // 
@@ -7304,9 +7775,10 @@
             this.label87.AutoSize = true;
             this.label87.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label87.ForeColor = System.Drawing.Color.Blue;
-            this.label87.Location = new System.Drawing.Point(72, 106);
+            this.label87.Location = new System.Drawing.Point(144, 204);
+            this.label87.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label87.Name = "label87";
-            this.label87.Size = new System.Drawing.Size(134, 19);
+            this.label87.Size = new System.Drawing.Size(269, 36);
             this.label87.TabIndex = 4;
             this.label87.Text = "Cửa 5 mở hoàn toàn";
             // 
@@ -7315,9 +7787,10 @@
             this.label88.AutoSize = true;
             this.label88.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label88.ForeColor = System.Drawing.Color.Blue;
-            this.label88.Location = new System.Drawing.Point(72, 67);
+            this.label88.Location = new System.Drawing.Point(144, 129);
+            this.label88.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(115, 19);
+            this.label88.Size = new System.Drawing.Size(229, 36);
             this.label88.TabIndex = 2;
             this.label88.Text = "Cửa 5 đang đóng";
             // 
@@ -7326,18 +7799,20 @@
             this.label89.AutoSize = true;
             this.label89.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label89.ForeColor = System.Drawing.Color.Blue;
-            this.label89.Location = new System.Drawing.Point(72, 28);
+            this.label89.Location = new System.Drawing.Point(144, 54);
+            this.label89.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label89.Name = "label89";
-            this.label89.Size = new System.Drawing.Size(104, 19);
+            this.label89.Size = new System.Drawing.Size(207, 36);
             this.label89.TabIndex = 0;
             this.label89.Text = "Cửa 5 đang mở";
             // 
             // label92
             // 
             this.label92.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label92.Location = new System.Drawing.Point(461, 283);
+            this.label92.Location = new System.Drawing.Point(922, 544);
+            this.label92.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label92.Name = "label92";
-            this.label92.Size = new System.Drawing.Size(396, 31);
+            this.label92.Size = new System.Drawing.Size(792, 60);
             this.label92.TabIndex = 236;
             this.label92.Text = "THÔNG TIN VẬN HÀNH CỬA 5";
             this.label92.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -7347,11 +7822,12 @@
             this.tableLayoutPanel9.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel9.ColumnCount = 1;
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Location = new System.Drawing.Point(-15, 278);
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(-30, 535);
+            this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(1297, 39);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(2594, 75);
             this.tableLayoutPanel9.TabIndex = 241;
             // 
             // ahdLabel67
@@ -7359,9 +7835,10 @@
             this.ahdLabel67.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel67.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel67.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel67.Location = new System.Drawing.Point(322, 122);
+            this.ahdLabel67.Location = new System.Drawing.Point(644, 235);
+            this.ahdLabel67.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel67.Name = "ahdLabel67";
-            this.ahdLabel67.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel67.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel67.StringFormat = null;
             this.ahdLabel67.TabIndex = 240;
             this.ahdLabel67.TagPath = null;
@@ -7373,9 +7850,10 @@
             this.ahdLabel68.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel68.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel68.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel68.Location = new System.Drawing.Point(251, 121);
+            this.ahdLabel68.Location = new System.Drawing.Point(502, 233);
+            this.ahdLabel68.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel68.Name = "ahdLabel68";
-            this.ahdLabel68.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel68.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel68.StringFormat = null;
             this.ahdLabel68.TabIndex = 239;
             this.ahdLabel68.TagPath = "Local Station/DauTieng/S71500/Group3/S3_Temp_Oil";
@@ -7387,9 +7865,10 @@
             this.ahdLabel69.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel69.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel69.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel69.Location = new System.Drawing.Point(1038, 87);
+            this.ahdLabel69.Location = new System.Drawing.Point(2076, 167);
+            this.ahdLabel69.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel69.Name = "ahdLabel69";
-            this.ahdLabel69.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel69.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel69.StringFormat = null;
             this.ahdLabel69.TabIndex = 238;
             this.ahdLabel69.TagPath = null;
@@ -7401,9 +7880,10 @@
             this.ahdLabel70.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel70.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel70.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel70.Location = new System.Drawing.Point(966, 86);
+            this.ahdLabel70.Location = new System.Drawing.Point(1932, 165);
+            this.ahdLabel70.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel70.Name = "ahdLabel70";
-            this.ahdLabel70.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel70.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel70.StringFormat = null;
             this.ahdLabel70.TabIndex = 237;
             this.ahdLabel70.TagPath = "Local Station/DauTieng/S71500/Group3/Door5_Aperture";
@@ -7414,9 +7894,10 @@
             // 
             this.label93.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label93.ForeColor = System.Drawing.Color.Black;
-            this.label93.Location = new System.Drawing.Point(483, 8);
+            this.label93.Location = new System.Drawing.Point(966, 15);
+            this.label93.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label93.Name = "label93";
-            this.label93.Size = new System.Drawing.Size(302, 31);
+            this.label93.Size = new System.Drawing.Size(604, 60);
             this.label93.TabIndex = 233;
             this.label93.Text = "CỬA 5";
             this.label93.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -7426,11 +7907,12 @@
             this.tableLayoutPanel10.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel10.ColumnCount = 1;
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(-13, 5);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(-26, 10);
+            this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(1745, 39);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(3490, 75);
             this.tableLayoutPanel10.TabIndex = 235;
             // 
             // tabPage6
@@ -7469,10 +7951,11 @@
             this.tabPage6.Controls.Add(this.label112);
             this.tabPage6.Controls.Add(this.tableLayoutPanel12);
             this.tabPage6.Location = new System.Drawing.Point(4, 54);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPage6.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPage6.Size = new System.Drawing.Size(1716, 807);
+            this.tabPage6.Size = new System.Drawing.Size(3440, 1605);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "       CỬA 6       ";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -7482,10 +7965,12 @@
             this.groupBox34.Controls.Add(this.Pic_Al_Door6Stop);
             this.groupBox34.Controls.Add(this.label147);
             this.groupBox34.Controls.Add(this.Pic_Al_Door6);
-            this.groupBox34.Location = new System.Drawing.Point(358, 568);
+            this.groupBox34.Location = new System.Drawing.Point(716, 1092);
+            this.groupBox34.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox34.Name = "groupBox34";
+            this.groupBox34.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox34.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox34.Size = new System.Drawing.Size(321, 115);
+            this.groupBox34.Size = new System.Drawing.Size(642, 221);
             this.groupBox34.TabIndex = 271;
             this.groupBox34.TabStop = false;
             this.groupBox34.Text = "Cửa";
@@ -7496,11 +7981,12 @@
             this.Pic_Al_Door6Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door6Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door6Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Al_Door6Stop.Location = new System.Drawing.Point(13, 47);
+            this.Pic_Al_Door6Stop.Location = new System.Drawing.Point(26, 90);
+            this.Pic_Al_Door6Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door6Stop.Name = "Pic_Al_Door6Stop";
             this.Pic_Al_Door6Stop.RotateAngle = 0;
             this.Pic_Al_Door6Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door6Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door6Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door6Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door6Stop.TabIndex = 246;
             this.Pic_Al_Door6Stop.TagPath = null;
@@ -7511,9 +7997,10 @@
             this.label147.AutoSize = true;
             this.label147.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label147.ForeColor = System.Drawing.Color.Blue;
-            this.label147.Location = new System.Drawing.Point(70, 53);
+            this.label147.Location = new System.Drawing.Point(140, 102);
+            this.label147.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label147.Name = "label147";
-            this.label147.Size = new System.Drawing.Size(96, 19);
+            this.label147.Size = new System.Drawing.Size(196, 36);
             this.label147.TabIndex = 235;
             this.label147.Text = "Lỗi lệch cửa 6";
             // 
@@ -7523,11 +8010,12 @@
             this.Pic_Al_Door6.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Al_Door6.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Al_Door6.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Al_Door6.Location = new System.Drawing.Point(13, 47);
+            this.Pic_Al_Door6.Location = new System.Drawing.Point(26, 90);
+            this.Pic_Al_Door6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Al_Door6.Name = "Pic_Al_Door6";
             this.Pic_Al_Door6.RotateAngle = 0;
             this.Pic_Al_Door6.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Al_Door6.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Al_Door6.Size = new System.Drawing.Size(70, 60);
             this.Pic_Al_Door6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Al_Door6.TabIndex = 242;
             this.Pic_Al_Door6.TagPath = null;
@@ -7556,10 +8044,12 @@
             this.groupBox30.Controls.Add(this.PicT6_S3_DC1_Running);
             this.groupBox30.Controls.Add(this.label139);
             this.groupBox30.Controls.Add(this.label140);
-            this.groupBox30.Location = new System.Drawing.Point(16, 347);
+            this.groupBox30.Location = new System.Drawing.Point(32, 667);
+            this.groupBox30.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox30.Name = "groupBox30";
+            this.groupBox30.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox30.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox30.Size = new System.Drawing.Size(320, 183);
+            this.groupBox30.Size = new System.Drawing.Size(640, 352);
             this.groupBox30.TabIndex = 266;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Bơm dầu";
@@ -7570,11 +8060,12 @@
             this.PicT6_S3_DC3_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC3_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC3_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT6_S3_DC3_Over_Stop.Location = new System.Drawing.Point(166, 115);
+            this.PicT6_S3_DC3_Over_Stop.Location = new System.Drawing.Point(332, 221);
+            this.PicT6_S3_DC3_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC3_Over_Stop.Name = "PicT6_S3_DC3_Over_Stop";
             this.PicT6_S3_DC3_Over_Stop.RotateAngle = 0;
             this.PicT6_S3_DC3_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC3_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC3_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC3_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC3_Over_Stop.TabIndex = 249;
             this.PicT6_S3_DC3_Over_Stop.TagPath = null;
@@ -7586,11 +8077,12 @@
             this.PicT6_S3_DC2_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC2_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC2_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT6_S3_DC2_Over_Stop.Location = new System.Drawing.Point(166, 75);
+            this.PicT6_S3_DC2_Over_Stop.Location = new System.Drawing.Point(332, 144);
+            this.PicT6_S3_DC2_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC2_Over_Stop.Name = "PicT6_S3_DC2_Over_Stop";
             this.PicT6_S3_DC2_Over_Stop.RotateAngle = 0;
             this.PicT6_S3_DC2_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC2_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC2_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC2_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC2_Over_Stop.TabIndex = 248;
             this.PicT6_S3_DC2_Over_Stop.TagPath = null;
@@ -7602,11 +8094,12 @@
             this.PicT6_S3_DC1_Over_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC1_Over_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC1_Over_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT6_S3_DC1_Over_Stop.Location = new System.Drawing.Point(166, 33);
+            this.PicT6_S3_DC1_Over_Stop.Location = new System.Drawing.Point(332, 63);
+            this.PicT6_S3_DC1_Over_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC1_Over_Stop.Name = "PicT6_S3_DC1_Over_Stop";
             this.PicT6_S3_DC1_Over_Stop.RotateAngle = 0;
             this.PicT6_S3_DC1_Over_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC1_Over_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC1_Over_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC1_Over_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC1_Over_Stop.TabIndex = 247;
             this.PicT6_S3_DC1_Over_Stop.TagPath = null;
@@ -7618,11 +8111,12 @@
             this.PicT6_S3_DC3_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC3_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC3_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT6_S3_DC3_Stop.Location = new System.Drawing.Point(13, 115);
+            this.PicT6_S3_DC3_Stop.Location = new System.Drawing.Point(26, 221);
+            this.PicT6_S3_DC3_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC3_Stop.Name = "PicT6_S3_DC3_Stop";
             this.PicT6_S3_DC3_Stop.RotateAngle = 0;
             this.PicT6_S3_DC3_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC3_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC3_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC3_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC3_Stop.TabIndex = 246;
             this.PicT6_S3_DC3_Stop.TagPath = null;
@@ -7634,11 +8128,12 @@
             this.PicT6_S3_DC2_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC2_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC2_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT6_S3_DC2_Stop.Location = new System.Drawing.Point(13, 75);
+            this.PicT6_S3_DC2_Stop.Location = new System.Drawing.Point(26, 144);
+            this.PicT6_S3_DC2_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC2_Stop.Name = "PicT6_S3_DC2_Stop";
             this.PicT6_S3_DC2_Stop.RotateAngle = 0;
             this.PicT6_S3_DC2_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC2_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC2_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC2_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC2_Stop.TabIndex = 245;
             this.PicT6_S3_DC2_Stop.TagPath = null;
@@ -7650,11 +8145,12 @@
             this.PicT6_S3_DC1_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC1_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC1_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.PicT6_S3_DC1_Stop.Location = new System.Drawing.Point(13, 33);
+            this.PicT6_S3_DC1_Stop.Location = new System.Drawing.Point(26, 63);
+            this.PicT6_S3_DC1_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC1_Stop.Name = "PicT6_S3_DC1_Stop";
             this.PicT6_S3_DC1_Stop.RotateAngle = 0;
             this.PicT6_S3_DC1_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC1_Stop.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC1_Stop.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC1_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC1_Stop.TabIndex = 244;
             this.PicT6_S3_DC1_Stop.TagPath = null;
@@ -7666,11 +8162,12 @@
             this.PicT6_S3_DC3_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC3_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC3_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT6_S3_DC3_Over.Location = new System.Drawing.Point(166, 115);
+            this.PicT6_S3_DC3_Over.Location = new System.Drawing.Point(332, 221);
+            this.PicT6_S3_DC3_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC3_Over.Name = "PicT6_S3_DC3_Over";
             this.PicT6_S3_DC3_Over.RotateAngle = 0;
             this.PicT6_S3_DC3_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC3_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC3_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC3_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC3_Over.TabIndex = 243;
             this.PicT6_S3_DC3_Over.TagPath = null;
@@ -7682,11 +8179,12 @@
             this.PicT6_S3_DC3_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC3_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC3_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT6_S3_DC3_Running.Location = new System.Drawing.Point(13, 115);
+            this.PicT6_S3_DC3_Running.Location = new System.Drawing.Point(26, 221);
+            this.PicT6_S3_DC3_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC3_Running.Name = "PicT6_S3_DC3_Running";
             this.PicT6_S3_DC3_Running.RotateAngle = 0;
             this.PicT6_S3_DC3_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC3_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC3_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC3_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC3_Running.TabIndex = 242;
             this.PicT6_S3_DC3_Running.TagPath = null;
@@ -7697,9 +8195,10 @@
             this.label109.AutoSize = true;
             this.label109.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label109.ForeColor = System.Drawing.Color.Blue;
-            this.label109.Location = new System.Drawing.Point(216, 121);
+            this.label109.Location = new System.Drawing.Point(432, 233);
+            this.label109.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label109.Name = "label109";
-            this.label109.Size = new System.Drawing.Size(90, 19);
+            this.label109.Size = new System.Drawing.Size(185, 36);
             this.label109.TabIndex = 241;
             this.label109.Text = "Lỗi bơm chốt";
             // 
@@ -7708,9 +8207,10 @@
             this.label110.AutoSize = true;
             this.label110.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label110.ForeColor = System.Drawing.Color.Blue;
-            this.label110.Location = new System.Drawing.Point(60, 121);
+            this.label110.Location = new System.Drawing.Point(120, 233);
+            this.label110.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label110.Name = "label110";
-            this.label110.Size = new System.Drawing.Size(68, 19);
+            this.label110.Size = new System.Drawing.Size(138, 36);
             this.label110.TabIndex = 240;
             this.label110.Text = "Bơm chốt";
             // 
@@ -7720,11 +8220,12 @@
             this.PicT6_S3_DC2_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC2_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC2_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT6_S3_DC2_Over.Location = new System.Drawing.Point(166, 75);
+            this.PicT6_S3_DC2_Over.Location = new System.Drawing.Point(332, 144);
+            this.PicT6_S3_DC2_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC2_Over.Name = "PicT6_S3_DC2_Over";
             this.PicT6_S3_DC2_Over.RotateAngle = 0;
             this.PicT6_S3_DC2_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC2_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC2_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC2_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC2_Over.TabIndex = 239;
             this.PicT6_S3_DC2_Over.TagPath = null;
@@ -7736,11 +8237,12 @@
             this.PicT6_S3_DC2_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC2_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC2_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT6_S3_DC2_Running.Location = new System.Drawing.Point(13, 75);
+            this.PicT6_S3_DC2_Running.Location = new System.Drawing.Point(26, 144);
+            this.PicT6_S3_DC2_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC2_Running.Name = "PicT6_S3_DC2_Running";
             this.PicT6_S3_DC2_Running.RotateAngle = 0;
             this.PicT6_S3_DC2_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC2_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC2_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC2_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC2_Running.TabIndex = 238;
             this.PicT6_S3_DC2_Running.TagPath = null;
@@ -7751,9 +8253,10 @@
             this.label137.AutoSize = true;
             this.label137.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label137.ForeColor = System.Drawing.Color.Blue;
-            this.label137.Location = new System.Drawing.Point(216, 81);
+            this.label137.Location = new System.Drawing.Point(432, 156);
+            this.label137.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label137.Name = "label137";
-            this.label137.Size = new System.Drawing.Size(72, 19);
+            this.label137.Size = new System.Drawing.Size(147, 36);
             this.label137.TabIndex = 237;
             this.label137.Text = "Lỗi bơm 2";
             // 
@@ -7762,9 +8265,10 @@
             this.label138.AutoSize = true;
             this.label138.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label138.ForeColor = System.Drawing.Color.Blue;
-            this.label138.Location = new System.Drawing.Point(60, 81);
+            this.label138.Location = new System.Drawing.Point(120, 156);
+            this.label138.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label138.Name = "label138";
-            this.label138.Size = new System.Drawing.Size(50, 19);
+            this.label138.Size = new System.Drawing.Size(100, 36);
             this.label138.TabIndex = 236;
             this.label138.Text = "Bơm 2";
             // 
@@ -7774,11 +8278,12 @@
             this.PicT6_S3_DC1_Over.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC1_Over.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC1_Over.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.PicT6_S3_DC1_Over.Location = new System.Drawing.Point(166, 33);
+            this.PicT6_S3_DC1_Over.Location = new System.Drawing.Point(332, 63);
+            this.PicT6_S3_DC1_Over.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC1_Over.Name = "PicT6_S3_DC1_Over";
             this.PicT6_S3_DC1_Over.RotateAngle = 0;
             this.PicT6_S3_DC1_Over.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC1_Over.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC1_Over.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC1_Over.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC1_Over.TabIndex = 235;
             this.PicT6_S3_DC1_Over.TagPath = null;
@@ -7790,11 +8295,12 @@
             this.PicT6_S3_DC1_Running.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.PicT6_S3_DC1_Running.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.PicT6_S3_DC1_Running.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.PicT6_S3_DC1_Running.Location = new System.Drawing.Point(13, 33);
+            this.PicT6_S3_DC1_Running.Location = new System.Drawing.Point(26, 63);
+            this.PicT6_S3_DC1_Running.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.PicT6_S3_DC1_Running.Name = "PicT6_S3_DC1_Running";
             this.PicT6_S3_DC1_Running.RotateAngle = 0;
             this.PicT6_S3_DC1_Running.ShadedColor = System.Drawing.Color.Gray;
-            this.PicT6_S3_DC1_Running.Size = new System.Drawing.Size(35, 31);
+            this.PicT6_S3_DC1_Running.Size = new System.Drawing.Size(70, 60);
             this.PicT6_S3_DC1_Running.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.PicT6_S3_DC1_Running.TabIndex = 232;
             this.PicT6_S3_DC1_Running.TagPath = null;
@@ -7805,9 +8311,10 @@
             this.label139.AutoSize = true;
             this.label139.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label139.ForeColor = System.Drawing.Color.Blue;
-            this.label139.Location = new System.Drawing.Point(216, 39);
+            this.label139.Location = new System.Drawing.Point(432, 75);
+            this.label139.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label139.Name = "label139";
-            this.label139.Size = new System.Drawing.Size(72, 19);
+            this.label139.Size = new System.Drawing.Size(147, 36);
             this.label139.TabIndex = 8;
             this.label139.Text = "Lỗi bơm 1";
             // 
@@ -7816,9 +8323,10 @@
             this.label140.AutoSize = true;
             this.label140.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label140.ForeColor = System.Drawing.Color.Blue;
-            this.label140.Location = new System.Drawing.Point(60, 39);
+            this.label140.Location = new System.Drawing.Point(120, 75);
+            this.label140.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label140.Name = "label140";
-            this.label140.Size = new System.Drawing.Size(50, 19);
+            this.label140.Size = new System.Drawing.Size(100, 36);
             this.label140.TabIndex = 0;
             this.label140.Text = "Bơm 1";
             // 
@@ -7826,11 +8334,12 @@
             // 
             this.dataGridViewT6.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridViewT6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewT6.Location = new System.Drawing.Point(696, 357);
+            this.dataGridViewT6.Location = new System.Drawing.Point(1392, 687);
+            this.dataGridViewT6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridViewT6.Name = "dataGridViewT6";
             this.dataGridViewT6.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dataGridViewT6.RowHeadersWidth = 82;
-            this.dataGridViewT6.Size = new System.Drawing.Size(578, 445);
+            this.dataGridViewT6.Size = new System.Drawing.Size(1156, 856);
             this.dataGridViewT6.TabIndex = 265;
             // 
             // groupBox26
@@ -7841,10 +8350,12 @@
             this.groupBox26.Controls.Add(this.bnt_Auto_T6);
             this.groupBox26.Controls.Add(this.bnt_Remote_T6);
             this.groupBox26.Controls.Add(this.bnt_Local_T6);
-            this.groupBox26.Location = new System.Drawing.Point(1281, 47);
+            this.groupBox26.Location = new System.Drawing.Point(2562, 90);
+            this.groupBox26.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox26.Name = "groupBox26";
+            this.groupBox26.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox26.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox26.Size = new System.Drawing.Size(428, 233);
+            this.groupBox26.Size = new System.Drawing.Size(856, 448);
             this.groupBox26.TabIndex = 242;
             this.groupBox26.TabStop = false;
             this.groupBox26.Text = "Vận Hành";
@@ -7852,9 +8363,10 @@
             // bnt_Hand_T6
             // 
             this.bnt_Hand_T6.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Hand_T6.Location = new System.Drawing.Point(51, 28);
+            this.bnt_Hand_T6.Location = new System.Drawing.Point(102, 54);
+            this.bnt_Hand_T6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Hand_T6.Name = "bnt_Hand_T6";
-            this.bnt_Hand_T6.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Hand_T6.Size = new System.Drawing.Size(280, 106);
             this.bnt_Hand_T6.TabIndex = 205;
             this.bnt_Hand_T6.Text = "Tay";
             this.bnt_Hand_T6.UseVisualStyleBackColor = true;
@@ -7862,9 +8374,10 @@
             // bnt_Estop_T6
             // 
             this.bnt_Estop_T6.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Estop_T6.Location = new System.Drawing.Point(162, 172);
+            this.bnt_Estop_T6.Location = new System.Drawing.Point(324, 331);
+            this.bnt_Estop_T6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Estop_T6.Name = "bnt_Estop_T6";
-            this.bnt_Estop_T6.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Estop_T6.Size = new System.Drawing.Size(280, 106);
             this.bnt_Estop_T6.TabIndex = 207;
             this.bnt_Estop_T6.Text = "Dừng khẩn";
             this.bnt_Estop_T6.UseVisualStyleBackColor = true;
@@ -7872,9 +8385,10 @@
             // bnt_Auto_T6
             // 
             this.bnt_Auto_T6.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Auto_T6.Location = new System.Drawing.Point(271, 28);
+            this.bnt_Auto_T6.Location = new System.Drawing.Point(542, 54);
+            this.bnt_Auto_T6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Auto_T6.Name = "bnt_Auto_T6";
-            this.bnt_Auto_T6.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Auto_T6.Size = new System.Drawing.Size(280, 106);
             this.bnt_Auto_T6.TabIndex = 206;
             this.bnt_Auto_T6.Text = "Tự động";
             this.bnt_Auto_T6.UseVisualStyleBackColor = true;
@@ -7882,9 +8396,10 @@
             // bnt_Remote_T6
             // 
             this.bnt_Remote_T6.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T6.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T6.Location = new System.Drawing.Point(102, 194);
+            this.bnt_Remote_T6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Remote_T6.Name = "bnt_Remote_T6";
-            this.bnt_Remote_T6.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Remote_T6.Size = new System.Drawing.Size(280, 106);
             this.bnt_Remote_T6.TabIndex = 203;
             this.bnt_Remote_T6.Text = "Từ xa";
             this.bnt_Remote_T6.UseVisualStyleBackColor = true;
@@ -7892,9 +8407,10 @@
             // bnt_Local_T6
             // 
             this.bnt_Local_T6.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T6.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T6.Location = new System.Drawing.Point(542, 194);
+            this.bnt_Local_T6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bnt_Local_T6.Name = "bnt_Local_T6";
-            this.bnt_Local_T6.Size = new System.Drawing.Size(140, 55);
+            this.bnt_Local_T6.Size = new System.Drawing.Size(280, 106);
             this.bnt_Local_T6.TabIndex = 204;
             this.bnt_Local_T6.Text = "Tại chổ";
             this.bnt_Local_T6.UseVisualStyleBackColor = true;
@@ -7905,11 +8421,12 @@
             this.ahdPictureBox47.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox47.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox47.Image = global::RegistrationForm1.Properties.Resources.tranc;
-            this.ahdPictureBox47.Location = new System.Drawing.Point(1280, 278);
+            this.ahdPictureBox47.Location = new System.Drawing.Point(2560, 535);
+            this.ahdPictureBox47.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdPictureBox47.Name = "ahdPictureBox47";
             this.ahdPictureBox47.RotateAngle = 0;
             this.ahdPictureBox47.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox47.Size = new System.Drawing.Size(412, 510);
+            this.ahdPictureBox47.Size = new System.Drawing.Size(824, 981);
             this.ahdPictureBox47.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox47.TabIndex = 234;
             this.ahdPictureBox47.TagPath = null;
@@ -7921,11 +8438,12 @@
             this.ahdBar6.Direction = Ahd.Winforms.Controls.BarDirection.TopToBottom;
             this.ahdBar6.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Percent;
             this.ahdBar6.FillColor = System.Drawing.Color.Green;
-            this.ahdBar6.Location = new System.Drawing.Point(400, 54);
+            this.ahdBar6.Location = new System.Drawing.Point(800, 104);
+            this.ahdBar6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ahdBar6.MaxValue = "100";
             this.ahdBar6.MinValue = "0";
             this.ahdBar6.Name = "ahdBar6";
-            this.ahdBar6.Size = new System.Drawing.Size(289, 218);
+            this.ahdBar6.Size = new System.Drawing.Size(578, 419);
             this.ahdBar6.TabIndex = 264;
             this.ahdBar6.TagPath = "Local Station/DauTieng/S71500/Group3/Door6_Aperture";
             this.ahdBar6.ValueStringFormat = null;
@@ -7935,10 +8453,11 @@
             this.label94.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label94.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label94.ForeColor = System.Drawing.Color.Blue;
-            this.label94.Location = new System.Drawing.Point(28, 218);
+            this.label94.Location = new System.Drawing.Point(56, 419);
+            this.label94.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label94.Name = "label94";
             this.label94.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label94.Size = new System.Drawing.Size(216, 50);
+            this.label94.Size = new System.Drawing.Size(430, 94);
             this.label94.TabIndex = 263;
             this.label94.Text = "Hành trình xy lanh 6_2";
             this.label94.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7948,9 +8467,10 @@
             this.ahdLabel71.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel71.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel71.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel71.Location = new System.Drawing.Point(326, 230);
+            this.ahdLabel71.Location = new System.Drawing.Point(652, 442);
+            this.ahdLabel71.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel71.Name = "ahdLabel71";
-            this.ahdLabel71.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel71.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel71.StringFormat = null;
             this.ahdLabel71.TabIndex = 262;
             this.ahdLabel71.TagPath = null;
@@ -7962,9 +8482,10 @@
             this.ahdLabel72.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel72.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel72.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel72.Location = new System.Drawing.Point(252, 229);
+            this.ahdLabel72.Location = new System.Drawing.Point(504, 440);
+            this.ahdLabel72.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel72.Name = "ahdLabel72";
-            this.ahdLabel72.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel72.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel72.StringFormat = null;
             this.ahdLabel72.TabIndex = 261;
             this.ahdLabel72.TagPath = "Local Station/DauTieng/S71500/Group3/HT_Cylinder6_2";
@@ -7976,10 +8497,11 @@
             this.label95.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label95.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label95.ForeColor = System.Drawing.Color.Blue;
-            this.label95.Location = new System.Drawing.Point(28, 164);
+            this.label95.Location = new System.Drawing.Point(56, 315);
+            this.label95.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label95.Name = "label95";
             this.label95.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label95.Size = new System.Drawing.Size(216, 50);
+            this.label95.Size = new System.Drawing.Size(430, 94);
             this.label95.TabIndex = 260;
             this.label95.Text = "Hành trình xy lanh 6_1";
             this.label95.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7989,9 +8511,10 @@
             this.ahdLabel73.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel73.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel73.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel73.Location = new System.Drawing.Point(326, 176);
+            this.ahdLabel73.Location = new System.Drawing.Point(652, 338);
+            this.ahdLabel73.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel73.Name = "ahdLabel73";
-            this.ahdLabel73.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel73.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel73.StringFormat = null;
             this.ahdLabel73.TabIndex = 259;
             this.ahdLabel73.TagPath = null;
@@ -8003,9 +8526,10 @@
             this.ahdLabel74.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel74.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel74.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel74.Location = new System.Drawing.Point(252, 175);
+            this.ahdLabel74.Location = new System.Drawing.Point(504, 337);
+            this.ahdLabel74.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel74.Name = "ahdLabel74";
-            this.ahdLabel74.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel74.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel74.StringFormat = null;
             this.ahdLabel74.TabIndex = 258;
             this.ahdLabel74.TagPath = "Local Station/DauTieng/S71500/Group3/HT_Cylinder6_1";
@@ -8017,10 +8541,11 @@
             this.label96.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label96.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label96.ForeColor = System.Drawing.Color.Blue;
-            this.label96.Location = new System.Drawing.Point(752, 185);
+            this.label96.Location = new System.Drawing.Point(1504, 356);
+            this.label96.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label96.Name = "label96";
             this.label96.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label96.Size = new System.Drawing.Size(185, 50);
+            this.label96.Size = new System.Drawing.Size(368, 94);
             this.label96.TabIndex = 257;
             this.label96.Text = "Lưu lượng tổng (Qc)";
             this.label96.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -8030,10 +8555,11 @@
             this.label97.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label97.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label97.ForeColor = System.Drawing.Color.Blue;
-            this.label97.Location = new System.Drawing.Point(752, 130);
+            this.label97.Location = new System.Drawing.Point(1504, 250);
+            this.label97.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label97.Name = "label97";
             this.label97.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label97.Size = new System.Drawing.Size(185, 50);
+            this.label97.Size = new System.Drawing.Size(368, 94);
             this.label97.TabIndex = 256;
             this.label97.Text = "Lưu lượng cửa 6 (Qi)";
             this.label97.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -8043,10 +8569,11 @@
             this.label98.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label98.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label98.ForeColor = System.Drawing.Color.Blue;
-            this.label98.Location = new System.Drawing.Point(752, 75);
+            this.label98.Location = new System.Drawing.Point(1504, 144);
+            this.label98.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label98.Name = "label98";
             this.label98.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label98.Size = new System.Drawing.Size(185, 50);
+            this.label98.Size = new System.Drawing.Size(368, 94);
             this.label98.TabIndex = 255;
             this.label98.Text = "Độ mở cửa (a):";
             this.label98.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -8056,10 +8583,11 @@
             this.label99.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label99.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label99.ForeColor = System.Drawing.Color.Blue;
-            this.label99.Location = new System.Drawing.Point(28, 56);
+            this.label99.Location = new System.Drawing.Point(56, 108);
+            this.label99.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label99.Name = "label99";
             this.label99.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label99.Size = new System.Drawing.Size(216, 50);
+            this.label99.Size = new System.Drawing.Size(430, 94);
             this.label99.TabIndex = 254;
             this.label99.Text = "Mực nước :";
             this.label99.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -8069,10 +8597,11 @@
             this.label100.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label100.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label100.ForeColor = System.Drawing.Color.Blue;
-            this.label100.Location = new System.Drawing.Point(28, 110);
+            this.label100.Location = new System.Drawing.Point(56, 212);
+            this.label100.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label100.Name = "label100";
             this.label100.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label100.Size = new System.Drawing.Size(216, 50);
+            this.label100.Size = new System.Drawing.Size(430, 94);
             this.label100.TabIndex = 253;
             this.label100.Text = "Nhiệt độ dầu : ";
             this.label100.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -8082,9 +8611,10 @@
             this.ahdLabel75.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel75.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel75.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel75.Location = new System.Drawing.Point(1038, 197);
+            this.ahdLabel75.Location = new System.Drawing.Point(2076, 379);
+            this.ahdLabel75.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel75.Name = "ahdLabel75";
-            this.ahdLabel75.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel75.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel75.StringFormat = null;
             this.ahdLabel75.TabIndex = 252;
             this.ahdLabel75.TagPath = null;
@@ -8096,9 +8626,10 @@
             this.ahdLabel76.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel76.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel76.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel76.Location = new System.Drawing.Point(966, 196);
+            this.ahdLabel76.Location = new System.Drawing.Point(1932, 377);
+            this.ahdLabel76.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel76.Name = "ahdLabel76";
-            this.ahdLabel76.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel76.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel76.StringFormat = null;
             this.ahdLabel76.TabIndex = 251;
             this.ahdLabel76.TagPath = "Local Station/DauTieng/S71500/Group3/Total_Fllow";
@@ -8110,9 +8641,10 @@
             this.ahdLabel77.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel77.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel77.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel77.Location = new System.Drawing.Point(1038, 142);
+            this.ahdLabel77.Location = new System.Drawing.Point(2076, 273);
+            this.ahdLabel77.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel77.Name = "ahdLabel77";
-            this.ahdLabel77.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel77.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel77.StringFormat = null;
             this.ahdLabel77.TabIndex = 250;
             this.ahdLabel77.TagPath = null;
@@ -8124,9 +8656,10 @@
             this.ahdLabel78.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel78.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel78.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel78.Location = new System.Drawing.Point(966, 141);
+            this.ahdLabel78.Location = new System.Drawing.Point(1932, 271);
+            this.ahdLabel78.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel78.Name = "ahdLabel78";
-            this.ahdLabel78.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel78.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel78.StringFormat = null;
             this.ahdLabel78.TabIndex = 249;
             this.ahdLabel78.TagPath = "Local Station/DauTieng/S71500/Group3/Fllow_Door6";
@@ -8138,9 +8671,10 @@
             this.ahdLabel79.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel79.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel79.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel79.Location = new System.Drawing.Point(324, 68);
+            this.ahdLabel79.Location = new System.Drawing.Point(648, 131);
+            this.ahdLabel79.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel79.Name = "ahdLabel79";
-            this.ahdLabel79.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel79.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel79.StringFormat = null;
             this.ahdLabel79.TabIndex = 248;
             this.ahdLabel79.TagPath = null;
@@ -8152,9 +8686,10 @@
             this.ahdLabel80.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel80.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel80.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel80.Location = new System.Drawing.Point(252, 67);
+            this.ahdLabel80.Location = new System.Drawing.Point(504, 129);
+            this.ahdLabel80.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel80.Name = "ahdLabel80";
-            this.ahdLabel80.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel80.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel80.StringFormat = null;
             this.ahdLabel80.TabIndex = 247;
             this.ahdLabel80.TagPath = "Local Station/DauTieng/S71500/Group4/Fllow_Ho";
@@ -8169,10 +8704,12 @@
             this.groupBox27.Controls.Add(this.Pic_Door6_PressureHigh);
             this.groupBox27.Controls.Add(this.label101);
             this.groupBox27.Controls.Add(this.label102);
-            this.groupBox27.Location = new System.Drawing.Point(16, 568);
+            this.groupBox27.Location = new System.Drawing.Point(32, 1092);
+            this.groupBox27.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox27.Name = "groupBox27";
+            this.groupBox27.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox27.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox27.Size = new System.Drawing.Size(320, 115);
+            this.groupBox27.Size = new System.Drawing.Size(640, 221);
             this.groupBox27.TabIndex = 246;
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "Áp dầu";
@@ -8183,11 +8720,12 @@
             this.Pic_Door6_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door6_PressureLow_Stop.Location = new System.Drawing.Point(14, 78);
+            this.Pic_Door6_PressureLow_Stop.Location = new System.Drawing.Point(28, 150);
+            this.Pic_Door6_PressureLow_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_PressureLow_Stop.Name = "Pic_Door6_PressureLow_Stop";
             this.Pic_Door6_PressureLow_Stop.RotateAngle = 0;
             this.Pic_Door6_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_PressureLow_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_PressureLow_Stop.TabIndex = 245;
             this.Pic_Door6_PressureLow_Stop.TagPath = null;
@@ -8198,11 +8736,12 @@
             this.Pic_Door6_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door6_PressureHigh_Stop.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door6_PressureHigh_Stop.Location = new System.Drawing.Point(28, 60);
+            this.Pic_Door6_PressureHigh_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_PressureHigh_Stop.Name = "Pic_Door6_PressureHigh_Stop";
             this.Pic_Door6_PressureHigh_Stop.RotateAngle = 0;
             this.Pic_Door6_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_PressureHigh_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_PressureHigh_Stop.TabIndex = 244;
             this.Pic_Door6_PressureHigh_Stop.TagPath = null;
@@ -8213,11 +8752,12 @@
             this.Pic_Door6_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_Door6_PressureLow.Location = new System.Drawing.Point(14, 78);
+            this.Pic_Door6_PressureLow.Location = new System.Drawing.Point(28, 150);
+            this.Pic_Door6_PressureLow.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_PressureLow.Name = "Pic_Door6_PressureLow";
             this.Pic_Door6_PressureLow.RotateAngle = 0;
             this.Pic_Door6_PressureLow.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_PressureLow.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_PressureLow.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_PressureLow.TabIndex = 243;
             this.Pic_Door6_PressureLow.TagPath = null;
@@ -8228,11 +8768,12 @@
             this.Pic_Door6_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door6_PressureHigh.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door6_PressureHigh.Location = new System.Drawing.Point(28, 60);
+            this.Pic_Door6_PressureHigh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_PressureHigh.Name = "Pic_Door6_PressureHigh";
             this.Pic_Door6_PressureHigh.RotateAngle = 0;
             this.Pic_Door6_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_PressureHigh.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_PressureHigh.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_PressureHigh.TabIndex = 242;
             this.Pic_Door6_PressureHigh.TagPath = null;
@@ -8242,9 +8783,10 @@
             this.label101.AutoSize = true;
             this.label101.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label101.ForeColor = System.Drawing.Color.Blue;
-            this.label101.Location = new System.Drawing.Point(71, 84);
+            this.label101.Location = new System.Drawing.Point(142, 162);
+            this.label101.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label101.Name = "label101";
-            this.label101.Size = new System.Drawing.Size(123, 19);
+            this.label101.Size = new System.Drawing.Size(245, 36);
             this.label101.TabIndex = 8;
             this.label101.Text = "Áp dầu cửa 6 thấp";
             // 
@@ -8253,9 +8795,10 @@
             this.label102.AutoSize = true;
             this.label102.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label102.ForeColor = System.Drawing.Color.Blue;
-            this.label102.Location = new System.Drawing.Point(71, 37);
+            this.label102.Location = new System.Drawing.Point(142, 71);
+            this.label102.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label102.Name = "label102";
-            this.label102.Size = new System.Drawing.Size(119, 19);
+            this.label102.Size = new System.Drawing.Size(235, 36);
             this.label102.TabIndex = 5;
             this.label102.Text = "Áp dầu cửa 6 cao";
             // 
@@ -8273,10 +8816,12 @@
             this.groupBox29.Controls.Add(this.label106);
             this.groupBox29.Controls.Add(this.label107);
             this.groupBox29.Controls.Add(this.label108);
-            this.groupBox29.Location = new System.Drawing.Point(358, 347);
+            this.groupBox29.Location = new System.Drawing.Point(716, 667);
+            this.groupBox29.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox29.Name = "groupBox29";
+            this.groupBox29.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox29.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox29.Size = new System.Drawing.Size(321, 183);
+            this.groupBox29.Size = new System.Drawing.Size(642, 352);
             this.groupBox29.TabIndex = 244;
             this.groupBox29.TabStop = false;
             this.groupBox29.Text = "Trạng thái cửa";
@@ -8287,11 +8832,12 @@
             this.Pic_Door6_Close_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Close_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Close_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door6_Close_Stop.Location = new System.Drawing.Point(14, 139);
+            this.Pic_Door6_Close_Stop.Location = new System.Drawing.Point(28, 267);
+            this.Pic_Door6_Close_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Close_Stop.Name = "Pic_Door6_Close_Stop";
             this.Pic_Door6_Close_Stop.RotateAngle = 0;
             this.Pic_Door6_Close_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Close_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Close_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Close_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Close_Stop.TabIndex = 245;
             this.Pic_Door6_Close_Stop.TagPath = null;
@@ -8303,11 +8849,12 @@
             this.Pic_Door6_Open_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Open_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Open_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door6_Open_Stop.Location = new System.Drawing.Point(14, 100);
+            this.Pic_Door6_Open_Stop.Location = new System.Drawing.Point(28, 192);
+            this.Pic_Door6_Open_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Open_Stop.Name = "Pic_Door6_Open_Stop";
             this.Pic_Door6_Open_Stop.RotateAngle = 0;
             this.Pic_Door6_Open_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Open_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Open_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Open_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Open_Stop.TabIndex = 244;
             this.Pic_Door6_Open_Stop.TagPath = null;
@@ -8319,11 +8866,12 @@
             this.Pic_Door6_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door6_Closing_Stop.Location = new System.Drawing.Point(14, 61);
+            this.Pic_Door6_Closing_Stop.Location = new System.Drawing.Point(28, 117);
+            this.Pic_Door6_Closing_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Closing_Stop.Name = "Pic_Door6_Closing_Stop";
             this.Pic_Door6_Closing_Stop.RotateAngle = 0;
             this.Pic_Door6_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Closing_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Closing_Stop.TabIndex = 243;
             this.Pic_Door6_Closing_Stop.TagPath = null;
@@ -8335,11 +8883,12 @@
             this.Pic_Door6_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door6_Opening_Stop.Location = new System.Drawing.Point(14, 22);
+            this.Pic_Door6_Opening_Stop.Location = new System.Drawing.Point(28, 42);
+            this.Pic_Door6_Opening_Stop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Opening_Stop.Name = "Pic_Door6_Opening_Stop";
             this.Pic_Door6_Opening_Stop.RotateAngle = 0;
             this.Pic_Door6_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Opening_Stop.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Opening_Stop.TabIndex = 242;
             this.Pic_Door6_Opening_Stop.TagPath = null;
@@ -8351,11 +8900,12 @@
             this.Pic_Door6_Close.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Close.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Close.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door6_Close.Location = new System.Drawing.Point(14, 139);
+            this.Pic_Door6_Close.Location = new System.Drawing.Point(28, 267);
+            this.Pic_Door6_Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Close.Name = "Pic_Door6_Close";
             this.Pic_Door6_Close.RotateAngle = 0;
             this.Pic_Door6_Close.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Close.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Close.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Close.TabIndex = 241;
             this.Pic_Door6_Close.TagPath = null;
@@ -8367,11 +8917,12 @@
             this.Pic_Door6_Open.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Open.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Open.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door6_Open.Location = new System.Drawing.Point(14, 100);
+            this.Pic_Door6_Open.Location = new System.Drawing.Point(28, 192);
+            this.Pic_Door6_Open.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Open.Name = "Pic_Door6_Open";
             this.Pic_Door6_Open.RotateAngle = 0;
             this.Pic_Door6_Open.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Open.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Open.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Open.TabIndex = 240;
             this.Pic_Door6_Open.TagPath = null;
@@ -8383,11 +8934,12 @@
             this.Pic_Door6_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door6_Closing.Location = new System.Drawing.Point(14, 61);
+            this.Pic_Door6_Closing.Location = new System.Drawing.Point(28, 117);
+            this.Pic_Door6_Closing.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Closing.Name = "Pic_Door6_Closing";
             this.Pic_Door6_Closing.RotateAngle = 0;
             this.Pic_Door6_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Closing.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Closing.TabIndex = 239;
             this.Pic_Door6_Closing.TagPath = null;
@@ -8399,11 +8951,12 @@
             this.Pic_Door6_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.Pic_Door6_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.Pic_Door6_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Door6_Opening.Location = new System.Drawing.Point(14, 22);
+            this.Pic_Door6_Opening.Location = new System.Drawing.Point(28, 42);
+            this.Pic_Door6_Opening.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Pic_Door6_Opening.Name = "Pic_Door6_Opening";
             this.Pic_Door6_Opening.RotateAngle = 0;
             this.Pic_Door6_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door6_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door6_Opening.Size = new System.Drawing.Size(70, 60);
             this.Pic_Door6_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.Pic_Door6_Opening.TabIndex = 238;
             this.Pic_Door6_Opening.TagPath = null;
@@ -8414,9 +8967,10 @@
             this.label105.AutoSize = true;
             this.label105.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label105.ForeColor = System.Drawing.Color.Blue;
-            this.label105.Location = new System.Drawing.Point(71, 145);
+            this.label105.Location = new System.Drawing.Point(142, 279);
+            this.label105.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label105.Name = "label105";
-            this.label105.Size = new System.Drawing.Size(145, 19);
+            this.label105.Size = new System.Drawing.Size(291, 36);
             this.label105.TabIndex = 7;
             this.label105.Text = "Cửa 6 đóng hoàn toàn";
             // 
@@ -8425,9 +8979,10 @@
             this.label106.AutoSize = true;
             this.label106.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label106.ForeColor = System.Drawing.Color.Blue;
-            this.label106.Location = new System.Drawing.Point(71, 106);
+            this.label106.Location = new System.Drawing.Point(142, 204);
+            this.label106.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label106.Name = "label106";
-            this.label106.Size = new System.Drawing.Size(134, 19);
+            this.label106.Size = new System.Drawing.Size(269, 36);
             this.label106.TabIndex = 4;
             this.label106.Text = "Cửa 6 mở hoàn toàn";
             // 
@@ -8436,9 +8991,10 @@
             this.label107.AutoSize = true;
             this.label107.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label107.ForeColor = System.Drawing.Color.Blue;
-            this.label107.Location = new System.Drawing.Point(71, 67);
+            this.label107.Location = new System.Drawing.Point(142, 129);
+            this.label107.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label107.Name = "label107";
-            this.label107.Size = new System.Drawing.Size(115, 19);
+            this.label107.Size = new System.Drawing.Size(229, 36);
             this.label107.TabIndex = 2;
             this.label107.Text = "Cửa 6 đang đóng";
             // 
@@ -8447,18 +9003,20 @@
             this.label108.AutoSize = true;
             this.label108.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label108.ForeColor = System.Drawing.Color.Blue;
-            this.label108.Location = new System.Drawing.Point(71, 28);
+            this.label108.Location = new System.Drawing.Point(142, 54);
+            this.label108.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label108.Name = "label108";
-            this.label108.Size = new System.Drawing.Size(104, 19);
+            this.label108.Size = new System.Drawing.Size(207, 36);
             this.label108.TabIndex = 0;
             this.label108.Text = "Cửa 6 đang mở";
             // 
             // label111
             // 
             this.label111.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label111.Location = new System.Drawing.Point(461, 283);
+            this.label111.Location = new System.Drawing.Point(922, 544);
+            this.label111.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label111.Name = "label111";
-            this.label111.Size = new System.Drawing.Size(396, 31);
+            this.label111.Size = new System.Drawing.Size(792, 60);
             this.label111.TabIndex = 236;
             this.label111.Text = "THÔNG TIN VẬN HÀNH CỬA 6";
             this.label111.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -8468,11 +9026,12 @@
             this.tableLayoutPanel11.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel11.ColumnCount = 1;
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(-15, 278);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(-30, 535);
+            this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(1297, 39);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(2594, 75);
             this.tableLayoutPanel11.TabIndex = 241;
             // 
             // ahdLabel81
@@ -8480,9 +9039,10 @@
             this.ahdLabel81.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel81.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel81.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel81.Location = new System.Drawing.Point(323, 122);
+            this.ahdLabel81.Location = new System.Drawing.Point(646, 235);
+            this.ahdLabel81.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel81.Name = "ahdLabel81";
-            this.ahdLabel81.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel81.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel81.StringFormat = null;
             this.ahdLabel81.TabIndex = 240;
             this.ahdLabel81.TagPath = null;
@@ -8494,9 +9054,10 @@
             this.ahdLabel82.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel82.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel82.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel82.Location = new System.Drawing.Point(252, 121);
+            this.ahdLabel82.Location = new System.Drawing.Point(504, 233);
+            this.ahdLabel82.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel82.Name = "ahdLabel82";
-            this.ahdLabel82.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel82.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel82.StringFormat = null;
             this.ahdLabel82.TabIndex = 239;
             this.ahdLabel82.TagPath = "Local Station/DauTieng/S71500/Group3/S3_Temp_Oil";
@@ -8508,9 +9069,10 @@
             this.ahdLabel83.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel83.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel83.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel83.Location = new System.Drawing.Point(1038, 87);
+            this.ahdLabel83.Location = new System.Drawing.Point(2076, 167);
+            this.ahdLabel83.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel83.Name = "ahdLabel83";
-            this.ahdLabel83.Size = new System.Drawing.Size(47, 26);
+            this.ahdLabel83.Size = new System.Drawing.Size(94, 50);
             this.ahdLabel83.StringFormat = null;
             this.ahdLabel83.TabIndex = 238;
             this.ahdLabel83.TagPath = null;
@@ -8522,9 +9084,10 @@
             this.ahdLabel84.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel84.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdLabel84.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel84.Location = new System.Drawing.Point(966, 86);
+            this.ahdLabel84.Location = new System.Drawing.Point(1932, 165);
+            this.ahdLabel84.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ahdLabel84.Name = "ahdLabel84";
-            this.ahdLabel84.Size = new System.Drawing.Size(71, 28);
+            this.ahdLabel84.Size = new System.Drawing.Size(142, 54);
             this.ahdLabel84.StringFormat = null;
             this.ahdLabel84.TabIndex = 237;
             this.ahdLabel84.TagPath = "Local Station/DauTieng/S71500/Group3/Door6_Aperture";
@@ -8535,9 +9098,10 @@
             // 
             this.label112.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label112.ForeColor = System.Drawing.Color.Black;
-            this.label112.Location = new System.Drawing.Point(483, 8);
+            this.label112.Location = new System.Drawing.Point(966, 15);
+            this.label112.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label112.Name = "label112";
-            this.label112.Size = new System.Drawing.Size(302, 31);
+            this.label112.Size = new System.Drawing.Size(604, 60);
             this.label112.TabIndex = 233;
             this.label112.Text = "CỬA 6";
             this.label112.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -8547,20 +9111,22 @@
             this.tableLayoutPanel12.BackColor = System.Drawing.Color.LightSeaGreen;
             this.tableLayoutPanel12.ColumnCount = 1;
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Location = new System.Drawing.Point(-13, 5);
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(-26, 10);
+            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 1;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(1745, 39);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(3490, 75);
             this.tableLayoutPanel12.TabIndex = 235;
             // 
             // FrmTran
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1715, 848);
+            this.ClientSize = new System.Drawing.Size(3430, 1631);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "FrmTran";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Tràn";

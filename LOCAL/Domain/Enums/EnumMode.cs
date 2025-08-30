@@ -1,8 +1,9 @@
-﻿namespace Domain.Enums;
-
-public enum EnumMode
+﻿namespace Domain.Enums
 {
-    Create,
-    Edit,
-    View
+    public enum EnumMode
+    {
+        Create,
+        Edit,
+        View
+    }
 }

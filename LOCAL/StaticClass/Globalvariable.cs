@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,13 @@ namespace RegistrationForm1
     {
         public static ConfigModel ConfigSystem { get; set; } = new ConfigModel();
 
-        public static LocationsModel LocationsInfo { get; set; } = new LocationsModel();
+        public static LocationsInfo LocationsInfo { get; set; } = new LocationsInfo();
 
         public static RealtimeDisplays RealtimeDisplays { get; set; } = new RealtimeDisplays();
+
+        public static FT03 DataLog { get; set; } = new FT03();
+
+        public static FT04 AlarmDataLog { get; set; } = new FT04(); 
 
         public static void InvokeIfRequired(Control control, Action action)
         {

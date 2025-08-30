@@ -7,70 +7,59 @@ using System.Windows.Forms;
 namespace RegistrationForm1
 {
     public partial class FrmTran : Form
-    {      
-       private FrmMain _mainForm;          
+    {
+        private FrmMain _mainForm;
         private BindingList<Tran1Model> tran1List = new BindingList<Tran1Model>();
         private BindingList<Tran2Model> tran2List = new BindingList<Tran2Model>();
         private BindingList<Tran3Model> tran3List = new BindingList<Tran3Model>();
         private BindingList<Tran4Model> tran4List = new BindingList<Tran4Model>();
         private BindingList<Tran5Model> tran5List = new BindingList<Tran5Model>();
         private BindingList<Tran6Model> tran6List = new BindingList<Tran6Model>();
-        public FrmTran(FrmMain frmMain)
-        {        
-            InitializeComponent();          
-              Load += FrmTran_Load;
-            _mainForm = frmMain; // ✅ Gán trước khi sử dụng           
+
+        private Timer _timer = new Timer();
+
+        public FrmTran()
+        {
+            InitializeComponent();
+            Load += FrmTran_Load;
         }
         private void FrmTran_Load(object sender, EventArgs e)
         {
-            Globalvariable.InvokeIfRequired(this, () =>
-            {
-                foreach (var item in Globalvariable.RealtimeDisplays)
-                {
-                    if (item.Path == "Local Station/DauTieng/S71500/Group1")
-                    {
-                        var s1 = item.Al_Door1;
-                    }
-                    else if (item.Path == "Local Station/DauTieng/S71500/Group2")
-                    {
-                        var s1 = item.Al_Door1;
-                    }
-                    else// (item.Path == "Local Station/DauTieng/S71500/Group1")
-                    {
-                        var s1 = item.Al_Door1;
-                    }
-                }
-            });
-
-            if (_mainForm != null)
-            {
-            }
-            else
-            {
-                MessageBox.Show("FrmMain instance is null. Please check.");
-            }
-            // ✅ Load trạng thái ban đầu ngay khi khởi tạo
-            LoadInitialValues();
-            dataGridViewT1.CellFormatting += dataGridViewT1_CellFormatting;
-            dataGridViewT2.CellFormatting += dataGridViewT2_CellFormatting;
-            dataGridViewT3.CellFormatting += dataGridViewT3_CellFormatting;
-            dataGridViewT4.CellFormatting += dataGridViewT4_CellFormatting;
-            dataGridViewT5.CellFormatting += dataGridViewT5_CellFormatting;
-            dataGridViewT6.CellFormatting += dataGridViewT6_CellFormatting;
-
-            LoadAllTags1();
-            ReadAllTagStatus1();
-            LoadAllTags2();
-            ReadAllTagStatus2();
-            LoadAllTags3();
-            ReadAllTagStatus3();
-            LoadAllTags4();
-            ReadAllTagStatus4();
-            LoadAllTags5();
-            ReadAllTagStatus5();
-            LoadAllTags6();
-            ReadAllTagStatus6();
+            _timer.Interval = 1000;
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
         }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                _timer.Enabled = false; // Tạm dừng timer trong quá trình xử lý
+
+                if (Globalvariable.RealtimeDisplays.Count == 0)
+                    return; // Nếu không có dữ liệu, thoát khỏi hàm
+
+                Globalvariable.InvokeIfRequired(this, () =>
+                {
+                    var dataDisplayStation1 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_1");
+
+                    if (dataDisplayStation1?.Al_Door1 == true)
+                    {
+                        Pic_Door1_Opening_Stop.Visible = false; Pic_Door1_Opening.Visible = true;
+                    }
+                    else { Pic_Door1_Opening_Stop.Visible = true; Pic_Door1_Opening.Visible = false; }
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                _timer.Enabled = true;
+            }
+        }
+
         private void FormatGridT6()
         {
             var dgv = dataGridViewT6;
@@ -101,7 +90,7 @@ namespace RegistrationForm1
             // ✅ Full row select
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             // ✅ Đổi màu theo Status
-            
+
         }
         private void FormatGridT5()
         {
@@ -133,7 +122,7 @@ namespace RegistrationForm1
             // ✅ Full row select
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             // ✅ Đổi màu theo Status
-            
+
         }
         private void FormatGridT4()
         {
@@ -165,7 +154,7 @@ namespace RegistrationForm1
             // ✅ Full row select
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             // ✅ Đổi màu theo Status
-            
+
         }
         private void FormatGridT3()
         {
@@ -196,7 +185,7 @@ namespace RegistrationForm1
             dgv.ReadOnly = true;
             // ✅ Full row select
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            
+
         }
         private void FormatGridT2()
         {
@@ -259,12 +248,12 @@ namespace RegistrationForm1
             // ✅ Full row select
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             // ✅ Đổi màu theo Status
-            
+
         }
         private void LoadInitialValues() // Load giá trị ban đầu từ FrmMain (được gọi trong constructor)
         {
 
-        
+
 
         }
 
@@ -361,15 +350,15 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { bnt_Estop_T3.BackColor = DefaultBackColor; bnt_Estop_T4.BackColor = DefaultBackColor; });
-        }       
+        }
         private void S1_Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             if (e.NewValue == "1")
             {
-                this.Invoke((MethodInvoker)delegate { bnt_Remote_T1.BackColor = Color.GreenYellow;bnt_Remote_T2.BackColor = Color.GreenYellow;  });
+                this.Invoke((MethodInvoker)delegate { bnt_Remote_T1.BackColor = Color.GreenYellow; bnt_Remote_T2.BackColor = Color.GreenYellow; });
             }
             else
-                this.Invoke((MethodInvoker)delegate { bnt_Remote_T1.BackColor = DefaultBackColor;bnt_Remote_T2.BackColor = DefaultBackColor; });
+                this.Invoke((MethodInvoker)delegate { bnt_Remote_T1.BackColor = DefaultBackColor; bnt_Remote_T2.BackColor = DefaultBackColor; });
         }
         private void S1_Local_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -429,7 +418,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door6_PressureHigh_Stop.Visible = true; Pic_Door6_PressureHigh.Visible = false; });
         }
-       
+
         //End Tràn 6
         // Tràn 5
         private void Door5_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
@@ -450,7 +439,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door5_PressureLow_Stop.Visible = true; Pic_Door5_PressureLow.Visible = false; });
         }
-       
+
         //End Tràn 5
         //Tràn 4
         private void Door4_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
@@ -471,7 +460,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door4_PressureLow_Stop.Visible = true; Pic_Door4_PressureLow.Visible = false; });
         }
-       
+
         // End Tràn 4
 
         // Tràn 2
@@ -493,7 +482,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door2_PressureLow_Stop.Visible = true; Pic_Door2_PressureLow.Visible = false; });
         }
-       
+
         // Tràn 3,
         private void Door3_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -513,7 +502,7 @@ namespace RegistrationForm1
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door3_PressureLow_Stop.Visible = true; Pic_Door3_PressureLow.Visible = false; });
         }
-       
+
         // Hết Tràn 3,4
         private void Door1_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -532,7 +521,7 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { Pic_Door1_PressureHigh_Stop.Visible = true; Pic_Door1_PressureHigh.Visible = false; });
-        }              
+        }
         // Trạng thái lổi Trạm 3
         private void S3_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -560,7 +549,7 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { Pic_S3_DC1_Over_Stop.Visible = true; PicT6_S3_DC1_Over_Stop.Visible = true; Pic_S3_DC1_Over.Visible = false; PicT6_S3_DC1_Over.Visible = false; });
-        }   
+        }
         // Trạng thái lổi Trạm 2
         private void S2_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -588,7 +577,7 @@ namespace RegistrationForm1
             }
             else
                 this.Invoke((MethodInvoker)delegate { Pic_S2_DC1_Over_Stop.Visible = true; PicT4_S2_DC1_Over_Stop.Visible = true; Pic_S2_DC1_Over.Visible = false; PicT4_S2_DC1_Over.Visible = false; });
-        }      
+        }
         // Running Trạm 2      
         private void S1_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -742,7 +731,7 @@ namespace RegistrationForm1
                 Pic_S1_DC3_Running.Visible = (newValue == "1");
                 PicT2_S1_DC3_Running.Visible = (newValue == "1");
                 Pic_S1_DC3_Stop.Visible = (newValue != "1");
-               PicT2_S1_DC3_Stop.Visible = (newValue != "1");
+                PicT2_S1_DC3_Stop.Visible = (newValue != "1");
             });
         }
         private void S1_DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
@@ -782,7 +771,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-   
+
         }
         private void LoadAllTags1()
         {
@@ -892,7 +881,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-       
+
 
             // Thêm các tag khác tương tự
         }
@@ -1084,7 +1073,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-        
+
 
             // Thêm các tag khác tương tự
         }
@@ -1143,7 +1132,7 @@ namespace RegistrationForm1
         }
         private void S2_DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
-               string newValue = e.NewValue == "1" ? "1" : "0";
+            string newValue = e.NewValue == "1" ? "1" : "0";
             this.Invoke((MethodInvoker)delegate
             {
                 // ✅ Update giá trị BindingList
@@ -1151,7 +1140,7 @@ namespace RegistrationForm1
                 UpdateTagValue4("Bơm 1 Đang Chạy", newValue);
                 // ✅ Update hình ảnh
                 Pic_S2_DC1_Running.Visible = (newValue == "1");
-               PicT4_S2_DC1_Running.Visible = (newValue == "1");
+                PicT4_S2_DC1_Running.Visible = (newValue == "1");
                 Pic_S2_DC1_Stop.Visible = (newValue != "1");
                 PicT4_S2_DC1_Stop.Visible = (newValue != "1");
             });
@@ -1321,7 +1310,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-           
+
 
             // Thêm các tag khác tương tự
         }
@@ -1513,7 +1502,7 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-       
+
 
             // Thêm các tag khác tương tự
         }
@@ -1610,7 +1599,7 @@ namespace RegistrationForm1
             {
                 // ✅ Update giá trị BindingList
                 UpdateTagValue5("Bơm 1 Đang Chạy", newValue);
-               UpdateTagValue6("Bơm 1 Đang Chạy", newValue);
+                UpdateTagValue6("Bơm 1 Đang Chạy", newValue);
                 // ✅ Update hình ảnh
                 Pic_S3_DC1_Running.Visible = (newValue == "1");
                 PicT6_S3_DC1_Running.Visible = (newValue == "1");
@@ -1729,7 +1718,7 @@ namespace RegistrationForm1
                 GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Cửa 6 Đóng Hoàn Toàn", Status = "0", CreateAt = DateTime.Now });
                 GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Cửa 6 Đang Mở", Status = "0", CreateAt = DateTime.Now });
                 GlobalData.Tran6List.Add(new Tran6Model { Id = stt++, Device = "Cửa 6 Đang Đóng", Status = "0", CreateAt = DateTime.Now });
-                
+
 
 
 
@@ -1750,8 +1739,8 @@ namespace RegistrationForm1
                 MessageBox.Show("_mainForm is null");
                 return;
             }
-          
-            
+
+
 
             // Thêm các tag khác tương tự
         }
@@ -1857,6 +1846,6 @@ namespace RegistrationForm1
             });
         }
 
-        
+
     }
 }

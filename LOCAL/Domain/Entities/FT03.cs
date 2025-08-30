@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
@@ -43,8 +44,9 @@ namespace Domain.Entities
         public bool? IsDeleted { get; set; }
 
         //cac gia tri tinh toan
-        public double? Flow_DauTieng { get; set; } = 0;
-        public double? Flow_BenSuc { get; set; } = 0;
+        public double? Fllow_DauTieng { get; set; } = 0;
+        public object FlLow_DauTieng { get; internal set; }
+        public double? Fllow_BenSuc { get; set; } = 0;
         public double? Fllow_SonDai { get; set; } = 0;
         public double? Fllow_BinhNham { get; set; } = 0;
         public double? Fllow_BinhNham2 { get; set; } = 0;
@@ -56,5 +58,7 @@ namespace Domain.Entities
         public double W_Ho { get; set; } = 0;
         public double LuuLuong { get; set; } = 0;
         public double LuuLuongTong { get; set; } = 0;
+        DateTime? GenericEntity.CreateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        DateTime? GenericEntity.UpdateAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

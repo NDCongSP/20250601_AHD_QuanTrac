@@ -1,5 +1,9 @@
 ﻿using Ahd.Core;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Domain;
+using Domain.Entities;
+using Microsoft.Office.Interop.Excel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
@@ -13,9 +17,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
-
 
 namespace RegistrationForm1
 {
@@ -43,6 +44,10 @@ namespace RegistrationForm1
         private const string API_STATIONS_URL = "https://kttv-open.vrain.vn/v1/stations";
         private const string API_STATS_URL = "https://kttv-open.vrain.vn/v1/stations/stats";
         private const string API_KEY = "4c81eccdb524441ba52c390d5b96e233";
+
+        private int _logTime;
+        private DateTime _startTime = DateTime.Now;
+
         public FrmMain()
         {
             InitializeComponent();
@@ -57,537 +62,140 @@ namespace RegistrationForm1
             _timer.Interval = 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
             _timer.Tick += async (s, e) => await Timer_Tick();
             _timer.Start();
-            // Timer API Bình Nhâm
-            //apiTimer = new Timer();
-            //apiTimer.Interval = 60000; // mỗi 60 giây
-            //apiTimer.Tick += async (s, ev) => await ApiTimer_Tick(s, ev);
-            //apiTimer.Start();
-            //// Timer API CDD
-            //api_CDDTimer = new Timer();
-            //api_CDDTimer.Tick += async (s, ev) => await api_CDDTimer_Tick(s, ev); // Gán đúng hàm xử lý
-            //api_CDDTimer.Interval = 60000; // 60 giây
-            //api_CDDTimer.Start();
-            //// Timer để lấy dữ liệu Quan trắc mưa
-            //_refreshTimer = new Timer();
-            //_refreshTimer.Tick += async (s, e) => await _refreshTimer_Tick(s, e);
-            //_refreshTimer.Interval = 10 * 60 * 1000; // 10 phút
-            //_refreshTimer.Start();
-
-            //client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
-
-
         }
 
-        private async Task _refreshTimer_Tick(object sender, EventArgs e)
-        {
-            await LoadRainfallStatsData();
-        }
-        private async Task LoadStationsData()
-        {
-
-            lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Đang tải...)";
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(API_STATIONS_URL);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    string errorMessage = $"API trả về lỗi: {(int)response.StatusCode} {response.ReasonPhrase}.";
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    if (!string.IsNullOrEmpty(errorContent))
-                    {
-                        errorMessage += $"\nChi tiết: {errorContent}";
-                    }
-                    MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi tải)";
-                    dgvStations.DataSource = null;
-                    return;
-                }
-
-                string responseBody = await response.Content.ReadAsStringAsync();
-                List<Station> stations = JsonConvert.DeserializeObject<List<Station>>(responseBody);
-
-                if (stations != null && stations.Count > 0)
-                {
-                    dgvStations.DataSource = stations;
-                    lblStationsTitle.Text = $"Danh sách Trạm Quan Trắc ({stations.Count} trạm)";
-                }
-                else
-                {
-                    MessageBox.Show("Không tìm thấy dữ liệu trạm nào từ API.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dgvStations.DataSource = null;
-                    lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Không có dữ liệu)";
-                }
-            }
-            catch (HttpRequestException e)
-            {
-                MessageBox.Show($"Lỗi HTTP khi tải danh sách trạm: {e.Message}\nVui lòng kiểm tra kết nối internet hoặc URL API.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi tải)";
-            }
-            catch (JsonException e)
-            {
-                MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON cho trạm: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi định dạng)";
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi không mong muốn khi tải trạm: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi không xác định)";
-            }
-        }
-        private async Task LoadRainfallStatsData()
-        {
-            // Thiết lập thời gian bắt đầu và kết thúc cho API
-            // Bắt đầu từ 10 phút trước thời điểm hiện tại
-            DateTime startTime = DateTime.Now.AddMinutes(-10);
-            DateTime endTime = DateTime.Now;
-
-            // --- Bắt đầu phần làm mới giao diện ---
-            // Cập nhật trạng thái để người dùng biết dữ liệu đang được tải
-            lblStatusMessage.Text = "Trạng thái tải dữ liệu: Đang xử lý...";
-            lblStatusMessage.ForeColor = System.Drawing.Color.Orange;
-            // --- Kết thúc phần làm mới giao diện ---
-
-            string formattedStartTime = startTime.ToString("yyyy-MM-dd HH:mm:ss");
-            string formattedEndTime = endTime.ToString("yyyy-MM-dd HH:mm:ss");
-
-            string statsUrl = $"{API_STATS_URL}?start_time={Uri.EscapeDataString(formattedStartTime)}&end_time={Uri.EscapeDataString(formattedEndTime)}&format=10m";
-
-            try
-            {
-                // Gửi yêu cầu API
-                HttpResponseMessage response = await client.GetAsync(statsUrl);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    string errorMessage = $"API trả về lỗi: {(int)response.StatusCode} {response.ReasonPhrase}.";
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    if (!string.IsNullOrEmpty(errorContent))
-                    {
-                        errorMessage += $"\nChi tiết: {errorContent}";
-                    }
-                    MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    lblStatusMessage.Text = "Trạng thái tải dữ liệu: Lỗi tải dữ liệu từ API.";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Red;
-                    return;
-                }
-
-                string responseBody = await response.Content.ReadAsStringAsync();
-                RainfallStatsResponse statsResponse = JsonConvert.DeserializeObject<RainfallStatsResponse>(responseBody);
-
-                if (statsResponse?.Data == null || !statsResponse.Data.Any())
-                {
-                    MessageBox.Show(
-                        "Không tìm thấy dữ liệu thống kê lượng mưa nào trong khoảng thời gian đã chọn.",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
-                    lblStatusMessage.Text = "Trạng thái tải dữ liệu: Không có dữ liệu từ API.";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Black;
-                    return;
-                }
-
-                var displayData = new List<object>();
-                var latestDataPointsByStationFetched = new Dictionary<string, RealtimeRainfallData>();
-
-                foreach (var measurement in statsResponse.Data)
-                {
-                    if (measurement.Value != null && measurement.Value.Any())
-                    {
-                        string stationId = measurement.StationId;
-                        foreach (var depthMeas in measurement.Value)
-                        {
-                            displayData.Add(new
-                            {
-                                StationId = stationId,
-                                Timestamp = depthMeas.TimePoint,
-                                Depth = depthMeas.Depth,
-                                Unit = measurement.Unit
-                            });
-
-                            RealtimeRainfallData currentRealtimeData = new RealtimeRainfallData
-                            {
-                                StationId = stationId,
-                                TimePoint = depthMeas.TimePoint,
-                                Depth = depthMeas.Depth,
-                                Unit = measurement.Unit,
-                                RecordedAt = DateTime.Now
-                            };
-
-                            if (!latestDataPointsByStationFetched.ContainsKey(stationId) || currentRealtimeData.TimePoint > latestDataPointsByStationFetched[stationId].TimePoint)
-                            {
-                                latestDataPointsByStationFetched[stationId] = currentRealtimeData;
-                            }
-                        }
-                    }
-                }
-
-                dgvStats.DataSource = displayData;
-                lblStatusMessage.Text = $"Trạng thái tải dữ liệu: Đã tải thành công {displayData.Count} bản ghi.";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Green;
-
-                List<RealtimeRainfallData> realTimeDataToSave = latestDataPointsByStationFetched.Values.ToList();
-                string saveStatusMessage = "Không có dữ liệu tức thời mới nhất để lưu vào SQL.";
-                bool realtimeSaveSuccess = false;
-
-                if (realTimeDataToSave.Any())
-                {
-                    try
-                    {
-                        await WriteQTM(latestDataPointsByStationFetched);
-
-                        saveStatusMessage = $"Đã lưu {realTimeDataToSave.Count} bản ghi tức thời mới nhất vào SQL.";
-                        realtimeSaveSuccess = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        saveStatusMessage = $"Lỗi lưu tức thời vào SQL: {ex.Message}.";
-                    }
-                }
-
-                if (realtimeSaveSuccess)
-                {
-                    lblStatusMessage.Text = $"Trạng thái: Đã tải dữ liệu. {saveStatusMessage}";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Green;
-                }
-                else
-                {
-                    lblStatusMessage.Text = $"Trạng thái: Tải dữ liệu thành công nhưng có lỗi khi lưu SQL: {saveStatusMessage}";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Red;
-                }
-            }
-            catch (HttpRequestException e)
-            {
-                MessageBox.Show($"Lỗi HTTP: {e.Message}\nVui lòng kiểm tra kết nối internet hoặc URL API.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStatusMessage.Text = $"Trạng thái: Lỗi HTTP khi tải dữ liệu: {e.Message}";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Red;
-            }
-            catch (JsonException e)
-            {
-                MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStatusMessage.Text = $"Trạng thái: Lỗi JSON khi phân tích dữ liệu: {e.Message}";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Red;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi không mong muốn: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStatusMessage.Text = $"Trạng thái: Lỗi không xác định khi tải dữ liệu: {e.Message}";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Red;
-            }
-        }
-
-
-
-        // Khu vực tạo Class Quan trắc mưa 
-        // Định nghĩa lớp Station để ánh xạ dữ liệu JSON từ API /v1/station
-        public class Station
-        {
-            [JsonProperty("uuid")]
-            public string Uuid { get; set; }
-
-            [JsonProperty("code")]
-            public string Code { get; set; }
-
-            [JsonProperty("name")]
-            public string Name { get; set; }
-
-            [JsonProperty("number")]
-            public string Number { get; set; }
-
-            [JsonProperty("latitude")]
-            public double Latitude { get; set; }
-
-            [JsonProperty("longitude")]
-            public double Longitude { get; set; }
-
-            [JsonProperty("area")]
-            public string Area { get; set; }
-
-            [JsonProperty("district")]
-            public string District { get; set; }
-
-            [JsonProperty("city")]
-            public string City { get; set; }
-
-            [JsonProperty("address")]
-            public string Address { get; set; }
-
-            [JsonProperty("altitude")]
-            public object Altitude { get; set; }
-
-            [JsonProperty("waterStationType")]
-            public object WaterStationType { get; set; }
-        }
-        // Lớp mới để ánh xạ mỗi đối tượng bên trong mảng "value"
-        public class DepthMeasurement
-        {
-            [JsonProperty("depth")]
-            public double Depth { get; set; }
-
-            [JsonProperty("time_point")]
-            public DateTime TimePoint { get; set; }
-        }
-        // Định nghĩa lớp RainfallMeasurement để ánh xạ dữ liệu JSON cho mỗi bản ghi thống kê
-        public class RainfallMeasurement
-        {
-            [JsonProperty("station_id")]
-            public string StationId { get; set; }
-
-            [JsonProperty("timestamp")]
-            public DateTime? Timestamp { get; set; }
-
-            [JsonProperty("value")]
-            public List<DepthMeasurement> Value { get; set; }
-
-            [JsonProperty("unit")]
-            public string Unit { get; set; }
-        }
-        // Lớp mới để ánh xạ toàn bộ phản hồi từ API /v1/stations/stats
-        public class RainfallStatsResponse
-        {
-            [JsonProperty("id")]
-            public string Id { get; set; }
-
-            [JsonProperty("data")]
-            public List<RainfallMeasurement> Data { get; set; }
-        }
-
-        // Lớp đại diện cho dữ liệu tức thời để lưu vào DB
-        public class RealtimeRainfallData
-        {
-            public string StationId { get; set; }
-            public DateTime TimePoint { get; set; } // Thời điểm đo
-            public double Depth { get; set; }
-            public string Unit { get; set; }
-            public DateTime RecordedAt { get; set; } // Thời gian ứng dụng ghi nhận bản ghi này
-        }
-        // SingleOrArrayConverter không còn được sử dụng trực tiếp trong RainfallMeasurement.Value
-        // nhưng được giữ lại nếu cần cho các trường hợp khác trong tương lai.
-        public class SingleOrArrayConverter<T> : JsonConverter
-        {
-            public override bool CanConvert(Type objectType)
-            {
-                return (objectType == typeof(List<T>));
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                JToken token = JToken.Load(reader);
-                if (token.Type == JTokenType.Array)
-                {
-                    return token.ToObject<List<T>>();
-                }
-                else if (token.Type == JTokenType.Null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return new List<T> { token.ToObject<T>() };
-                }
-            }
-
-            public override bool CanWrite
-            {
-                get { return false; }
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
-
-
-        // Kết thúc khu vực tạo Class Quan trắc mưa
-        public class SoLieuAPICDDModel
-        {
-            public string ThoiGian { get; set; }
-            public int MaQuanTrac { get; set; }
-            public double GiaTri { get; set; }
-        }
-        public class SoLieuAPIBinhNhamModel
-        {
-            public long ts { get; set; }
-            public long c { get; set; }
-            public double water_proof_1 { get; set; }
-            public double water_proof_2 { get; set; }
-
-            public DateTime Timestamp => DateTimeOffset.FromUnixTimeSeconds(ts).ToLocalTime().DateTime;
-            public DateTime CreatedAt => DateTimeOffset.FromUnixTimeSeconds(c).ToLocalTime().DateTime;
-        }
-
-
-        private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
-        {
-            string url = "https://apiv2.thuyloivietnam.vn/Api/getSoLieuQuanTrac?Key=apiktdlqtDauTieng&MaQuanTrac=7001";
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    try
-                    {
-                        var response = await client.GetAsync(url);
-                        response.EnsureSuccessStatusCode();
-                        string json = await response.Content.ReadAsStringAsync();
-                        var dataList = JsonConvert.DeserializeObject<List<SoLieuAPICDDModel>>(json);
-                        if (dataList != null && dataList.Count > 0)
-                        {
-                            var latest = dataList.OrderByDescending(x => x.ThoiGian).First();
-
-                            // Ghi async xuống PLC
-                            await WriteAPI_CDDsync(latest.GiaTri);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Lỗi đọc API: " + ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
-            }
-        }
-        private async Task WriteAPI_CDDsync(double GT)
-        {
-            try
-            {
-                if (ahdDriverConnector1 == null)
-                {
-                    MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
-                    return;
-                }
-
-                await ahdDriverConnector1.WriteTagAsync(
-                    $"Local Station/DauTieng/S71500/API/Fllow_TL_CDD",
-                    GT.ToString("0.00"),
-                    WritePiority.High);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi ghi PLC async: " + ex.Message);
-            }
-        }
-
-        private async Task ApiTimer_Tick(object sender, EventArgs e)
-        {
-            string url = "https://input.dulieuthuyloivietnam.vn/latest?device_id=CR300-21411";
-
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    var response = await client.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
-
-                    string json = await response.Content.ReadAsStringAsync();
-                    var dataList = JsonConvert.DeserializeObject<List<SoLieuAPIBinhNhamModel>>(json);
-
-                    if (dataList != null && dataList.Count > 0)
-                    {
-                        var latest = dataList.OrderByDescending(x => x.ts).First();
-
-                        // Ghi async xuống PLC
-                        await WriteToPLCAsync(latest.water_proof_1, latest.water_proof_2);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Lỗi đọc API: " + ex.Message);
-                }
-            }
-        }
-        private async Task WriteToPLCAsync(double wp1, double wp2)
-        {
-            try
-            {
-                await ahdDriverConnector1.WriteTagAsync(
-                    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham",
-                    wp1.ToString("0.00"),
-                    WritePiority.High);
-
-                await ahdDriverConnector1.WriteTagAsync(
-                    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham2",
-                    wp2.ToString("0.00"),
-                    WritePiority.High);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi ghi PLC async: " + ex.Message);
-            }
-        }
-        private async Task WriteQTM(Dictionary<string, RealtimeRainfallData> latestApiData)
-        {
-            try
-            {
-                // Xác định các ID trạm (hoặc các phần cuối của tag ID) mà bạn muốn ghi
-
-                string[] stationIdsToProcess = { "610001", "610002", "610003", "610004", "610005", "610006", "610007", "610008", "610009", "610010", "610011", "610012", "610013" };
-
-                // Lặp qua từng StationId mong muốn
-                foreach (string stationId in stationIdsToProcess)
-                {
-                    // Tạo đường dẫn tag hoàn chỉnh
-                    string tagPath = $"Local Station/DauTieng/S71500/API/{stationId}";
-
-                    // Kiểm tra xem có dữ liệu mới nhất cho StationId này không
-                    if (latestApiData.TryGetValue(stationId, out RealtimeRainfallData data))
-                    {
-                        // Lấy giá trị 'Depth' (lượng mưa) từ dữ liệu tức thời và định dạng
-                        string valueToWrite = data.Depth.ToString("0.00");
-
-                        // Ghi giá trị vào tag tương ứng
-                        await ahdDriverConnector1.WriteTagAsync(
-                            tagPath,
-                            valueToWrite,
-                            WritePiority.High
-                        );
-                    }
-                    else
-                    {
-                        // Xử lý trường hợp không tìm thấy dữ liệu cho một trạm cụ thể
-                        // Bạn có thể ghi log, thông báo lỗi, hoặc bỏ qua nếu không cần thiết
-                        Console.WriteLine($"Cảnh báo: Không tìm thấy dữ liệu tức thời cho trạm '{stationId}' để ghi.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Ghi lại lỗi nếu có bất kỳ ngoại lệ nào xảy ra trong quá trình ghi PLC
-                Console.WriteLine($"Lỗi khi ghi giá trị tức thời vào PLC: {ex.Message}");
-            }
-        }
         public async Task Timer_Tick()
         {
             try
             {
                 _timer.Enabled = false;
 
+                if (Globalvariable.RealtimeDisplays == null || Globalvariable.RealtimeDisplays.Count == 0)
+                    return;
+
+                #region hien thi UI
+
                 Globalvariable.InvokeIfRequired(this, () =>
                 {
-                    foreach (var item in Globalvariable.RealtimeDisplays)
+                    var location = Globalvariable.RealtimeDisplays?.FirstOrDefault(loc => loc.LocationId == 1);
+                    if (Location != null)
                     {
-                        if (item.Path == "Local Station/DauTieng/S71500/Group1")
+                        foreach (var item in location.Stations)
                         {
-                            _labALDoor1_Station1.Text = item.Al_Door1.ToString();
-                            _labCalcular1.Text = item.Calculate.ToString();
+                            if (item.Path == "Local Station/DauTieng/S71500/Station_1")
+                            {
+                                _labALDoor1_Station1.Text = item.Al_Door1.ToString();
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
+                            {
+                                _labALDoor1_Station2.Text = item.Al_Door1.ToString();
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_3")
+                            {
+                                _labALDoor1_Station3.Text = item.Al_Door1.ToString();
+                            }
                         }
-                        else if (item.Path == "Local Station/DauTieng/S71500/Group2")
-                        {
-                            _labALDoor1_Station2.Text = item.Al_Door1.ToString();
-                        }
-                        else// (item.Path == "Local Station/DauTieng/S71500/Group1")
-                        {
-                            _labALDoor1_Station3.Text = item.Al_Door1.ToString();
-                        }
+
+                        _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                        _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
                     }
                 });
+                #endregion
+
+                #region Data log                
+                _logTime = (int)(DateTime.Now - _startTime).TotalSeconds;
+
+                if (_logTime >= Globalvariable.ConfigSystem.DataLogInterval)
+                {
+                    var dataLogs = new List<FT03>();
+                    var createAt = DateTime.Now;
+                    var createOperatorId = "System";
+
+                    //datalog
+                    foreach (var item in Globalvariable.RealtimeDisplays)
+                    {
+                        var line = new FT03
+                        {
+                            Id = Guid.NewGuid(),
+                            CreateAt = createAt,
+                            CreateOperatorId = createOperatorId,
+                            LogBaseInterval = true,
+                            LocationId = item.LocationId,
+                            LocationName = item.LocationName,
+
+                            FlLow_DauTieng = item.CalculatorValue.Fllow_DauTieng,
+                            Fllow_BenSuc = item.CalculatorValue.Fllow_BenSuc,
+                            Fllow_SonDai = item.CalculatorValue.Fllow_SonDai,
+                            Fllow_BinhNham = item.CalculatorValue.Fllow_BinhNham,
+                            Fllow_BinhNham2 = item.CalculatorValue.Fllow_BinhNham2,
+                            Fllow_TL_CDD = item.CalculatorValue.Fllow_TL_CDD,
+                            Fllow_HL_TXL = item.CalculatorValue.Fllow_HL_TXL,
+                            Total_Fllow = item.CalculatorValue.Total_Fllow,
+                            Q_Den = item.CalculatorValue.Q_Den,
+                            Q_Di = item.CalculatorValue.Q_Di,
+                            W_Ho = item.CalculatorValue.W_Ho,
+                            LuuLuong = item.CalculatorValue.LuuLuong,
+                            LuuLuongTong = item.CalculatorValue.LuuLuongTong,
+                        };
+
+                        foreach (var itemStation in item.Stations)
+                        {
+                            line.StationId = itemStation.StationId;
+                            line.StationName = itemStation.StationName;
+                            line.Path = itemStation.Path;
+
+                            line.HT_Cylinder1_1 = itemStation.HT_Cylinder1_1;
+                            line.HT_Cylinder1_2 = itemStation.HT_Cylinder1_2;
+                            line.HT_Cylinder2_1 = itemStation.HT_Cylinder2_1;
+                            line.HT_Cylinder2_2 = itemStation.HT_Cylinder2_2;
+                            line.Door1_Aperture = itemStation.Door1_Aperture;
+                            line.Door2_Aperture = itemStation.Door2_Aperture;
+                            line.S1_Temp_Oil = itemStation.S1_Temp_Oil;
+                            line.Pressure_Oil_Door1 = itemStation.Pressure_Oil_Door1;
+                            line.Pressure_Oil_Door2 = itemStation.Pressure_Oil_Door2;
+                            line.Fllow_Door1 = itemStation.Fllow_Door1;
+                            line.Fllow_Door2 = itemStation.Fllow_Door2;
+                            line.Fllow_Ho = itemStation.Fllow_Ho;
+
+                            line.HT_Cylinder1_1_Offset = itemStation.HT_Cylinder1_1_Offset;
+                            line.HT_Cylinder1_2_Offset = itemStation.HT_Cylinder1_2_Offset;
+                            line.HT_Cylinder2_1_Offset = itemStation.HT_Cylinder2_1_Offset;
+                            line.HT_Cylinder2_2_Offset = itemStation.HT_Cylinder2_2_Offset;
+                            line.Door1_Aperture_Offset = itemStation.Door1_Aperture_Offset;
+                            line.Door2_Aperture_Offset = itemStation.Door2_Aperture_Offset;
+                            line.S1_Temp_Oil_Offset = itemStation.S1_Temp_Oil_Offset;
+                            line.Pressure_Oil_Door1_Offset = itemStation.Pressure_Oil_Door1_Offset;
+                            line.Pressure_Oil_Door2_Offset = itemStation.Pressure_Oil_Door2_Offset;
+                            line.Fllow_Door1_Offset = itemStation.Fllow_Door1_Offset;
+                            line.Fllow_Door2_Offset = itemStation.Fllow_Door2_Offset;
+                            line.Fllow_Ho_Offset = itemStation.Fllow_Ho_Offset;
+
+                            line.HT_Cylinder1_1_Final = itemStation.HT_Cylinder1_1_Final;
+                            line.HT_Cylinder1_2_Final = itemStation.HT_Cylinder1_2_Final;
+                            line.HT_Cylinder2_1_Final = itemStation.HT_Cylinder2_1_Final;
+                            line.HT_Cylinder2_2_Final = itemStation.HT_Cylinder2_2_Final;
+                            line.Door1_Aperture_Final = itemStation.Door1_Aperture_Final;
+                            line.Door2_Aperture_Final = itemStation.Door2_Aperture_Final;
+                            line.S1_Temp_Oil_Final = itemStation.S1_Temp_Oil_Final;
+                            line.Pressure_Oil_Door1_Final = itemStation.Pressure_Oil_Door1_Final;
+                            line.Pressure_Oil_Door2_Final = itemStation.Pressure_Oil_Door2_Final;
+                            line.Fllow_Door1_Final = itemStation.Fllow_Door1_Final;
+                            line.Fllow_Door2_Final = itemStation.Fllow_Door2_Final;
+                            line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
+
+                            dataLogs.Add(line);
+                        }
+                    }
+
+                    if (dataLogs.Count == 0)
+                        return;
+                    using var dbContext = new ApplicationDbContext();
+                    dbContext.FT03s.AddRange(dataLogs);
+                    dbContext.SaveChanges();//Luu thay doi vao db
+
+                    _startTime = DateTime.Now;
+                }
+                #endregion
             }
             catch (Exception ex)
             {
@@ -599,43 +207,8 @@ namespace RegistrationForm1
                 _timer.Enabled = true;
             }
         }
-        private Dictionary<string, string> ParseMultipleStationsFromAPI(string apiData, List<string> stationCodes)
-        {
-            var results = new Dictionary<string, string>();
-
-            // ✅ Update regex để parse số âm
-            var regex = new System.Text.RegularExpressions.Regex(@"(F\d{5});\d{2}/\d{2}/\d{4};\d{2}:\d{2};value=(-?\d+);");
-
-            var matches = regex.Matches(apiData);
-            foreach (System.Text.RegularExpressions.Match match in matches)
-            {
-                if (match.Success)
-                {
-                    string code = match.Groups[1].Value;
-                    string value = match.Groups[2].Value;
-
-                    if (stationCodes.Contains(code))
-                    {
-                        results[code] = value;
-                    }
-                }
-            }
-
-            return results;
-        }
-
-        // Hàm ghi log xuống TextBox
-        private void AppendLog(string message)
-        {
-            //if (txtLog.InvokeRequired)
-            //    txtLog.Invoke(new Action(() => txtLog.AppendText($"{DateTime.Now:HH:mm:ss} - {message}{Environment.NewLine}")));
-            //else
-            //    txtLog.AppendText($"{DateTime.Now:HH:mm:ss} - {message}{Environment.NewLine}");
-        }
         private async void FrmMain_Load(object sender, EventArgs e)
         {
-            PermissionManager.ApplyPermission(bntNhaplieu, "edit_data");// test nút nhấn nhập liệu
-            SQLLogin.InitCurrentDataTran();
             lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
             //      btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
@@ -645,57 +218,22 @@ namespace RegistrationForm1
             else
                 Driver_Started(driver, null);
 
-            timer1.Enabled = true;
-            tm_login.Interval = 60000;
-            tm_login.Enabled = true;
-            tm_login.Tick += (s, o) =>
-            {
-                Timer t = (Timer)s;
-                t.Enabled = false;
-                this.Invoke((MethodInvoker)delegate { tm_login.Start(); });
-                t.Enabled = true;
-            };
-            tm_loginMN.Interval = 60000;
-            tm_loginMN.Enabled = true;
-            tm_loginMN.Tick += (s, o) =>
-            {
-                Timer t = (Timer)s;
-                t.Enabled = false;
-                this.Invoke((MethodInvoker)delegate { tm_loginMN.Start(); });
-                t.Enabled = true;
-            };
+            _startTime = DateTime.Now;
 
-            //await LoadRainfallStatsData();
-            await LoadStationsData();
-
-
-
-        }
-        // Hàm Lấy giá trị cho Timer ghi xuống SQL
-        private string GetValue(string tagName)
-        {
-            try
-            {
-                var tag = ahdDriverConnector1.GetTag(tagName);
-                if (tag != null)
+            bnt_Tran.Click += (s, o) => {
+                using (var nf =new FrmTran())
                 {
-                    return tag.Value?.ToString() ?? "0";
+                    nf.StartPosition = FormStartPosition.CenterScreen;
+                    nf.ShowDialog();
                 }
-                return "0";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi đọc tag {tagName}: {ex.Message}");
-                return "0";
-            }
+            };
         }
-
 
         private void Driver_Started(object sender, EventArgs e)
         {
             foreach (var item in Globalvariable.LocationsInfo)
             {
-                foreach (var station in item.Stations)
+                foreach (var station in item.Stations.Where(x => x.Path.Contains("/Station_")))
                 {
                     // Replace this line:
                     ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1").ValueChanged += Al_Door1_ValueChanged;
@@ -703,6 +241,17 @@ namespace RegistrationForm1
                     Al_Door1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1")
                   , "", ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1").Value));
+                }
+
+                var stationLocation = item.Stations.FirstOrDefault(loc => loc.Path.Contains("/Location_Info"));
+                if (stationLocation != null)
+                {
+                    // Replace this line:
+                    ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").ValueChanged += Fllow_Ho_ValueChanged;
+
+                    Fllow_Ho_ValueChanged(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
+                  , "", ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").Value));
                 }
             }
         }
@@ -715,23 +264,22 @@ namespace RegistrationForm1
         {
             try
             {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
                 var path = e.Tag.Parent.Path;
 
-                var itemChange = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.Path == path);
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
 
-                if (itemChange != null)
+                if (station != null)
                 {
-                    var oldValue = itemChange.Al_Door1;
+                    var oldValue = station.Al_Door1;
 
-                    //Debug.WriteLine($"{path}/Tempperature: {e.NewValue}");
-                    itemChange.Al_Door1 = e.NewValue == "1" ? true : false;
-
-                    //tinh toans
-                    itemChange.Calculate = itemChange.Calculate + 1;
-                    ahdDriverConnector1.GetTag($"{path}/Fllow_Door1").WritAhdnc(itemChange.Calculate.ToString(), WritePiority.High);
+                    station.Al_Door1 = e.NewValue == "1" ? true : false;
 
 
-                    if (oldValue != itemChange.Al_Door1)
+                    if (oldValue != station.Al_Door1)
                     {
                         using (var dbContext = new ApplicationDbContext())
                         {
@@ -741,7 +289,8 @@ namespace RegistrationForm1
                             if (check != null)
                             {
                                 check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                dbContext.SaveChanges();
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
                             }
                             else
                             {
@@ -750,15 +299,97 @@ namespace RegistrationForm1
                                     Id = Guid.NewGuid(),
                                     C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
                                     IsDeleted = false,
-                                    CreateAt = DateTime.Now,
-                                    CreateOperatorId = "System",
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
                                 };
 
                                 dbContext.FT02s.Add(newLine);
-                                dbContext.SaveChanges();
                             }
 
                             //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Al_Door1";
+                            Globalvariable.AlarmDataLog.Value = station.Al_Door1 == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.Al_Door1 == true ? "Báo động cửa 1." : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
                         }
                     }
                 }
@@ -766,6 +397,64 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
 
+        private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Fllow_Ho = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+
+                    //tinh toans
+                    station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
+
+                    //location.CalculatorValue.LuuLuongTong = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+                    location.CalculatorValue.LuuLuongTong = TinhToan((double)station.Fllow_Ho_Final);
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+
+        private double TinhToan(double tagValue)
+        {
+            return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+        }
         private void label3_Click(object sender, EventArgs e)
         {
 

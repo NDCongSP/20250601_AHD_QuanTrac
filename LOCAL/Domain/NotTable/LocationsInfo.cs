@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using System.Collections.Generic;
+
+namespace Domain
 {
     /// <summary>
     /// nhiều vị trí ở các khu vực địa lý khác nhau.
@@ -16,11 +18,11 @@
         /// <summary>
         /// Id của vị trí.
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Tên của vị trí.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Mô tả về vị trí.
         /// </summary>
@@ -42,5 +44,7 @@
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>
         public string? Path { get; set; }
+
+        public OffsetConfigModel OffsetConfig { get; set; } = new OffsetConfigModel();
     }
 }

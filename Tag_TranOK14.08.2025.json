@@ -1,5 +1,5 @@
 {
-  "ProjectPath": "D:\\MyCompany\\8.SourceCode\\3.Projects\\20250601_AHD_QuanTrac\\Tag_TranOK14.08.2025.json",
+  "ProjectPath": "D:\\AHD\\PROJECT SCADA\\TRANDAUTIENG\\20250601_AHD_QuanTrac\\Tag_TranOK14.08.2025.json",
   "Username": null,
   "Password": null,
   "ParameterContainer": null,
@@ -11,7 +11,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-05-25T19:38:36.6996706+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -31,7 +31,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:32.2616927+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -46,12 +46,12 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:42.5030547+07:00",
-  "ModifiedDate": "2025-08-30T16:49:42.2523527+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
   "Parameters": {
-    "IpAddress": "192.168.1.100",
+    "IpAddress": "192.168.0.188",
     "Timeout": "1000",
     "TryReadWriteTimes": "3",
     "DelayBetweenPool": "10",
@@ -70,7 +70,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:50.1039733+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -1725,8 +1725,8 @@
     "DBNumber": "3"
   }
 },
-  "Address": "DB3.DBW24",
-  "DataTypeName": "Int",
+  "Address": "M1000",
+  "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -1859,7 +1859,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T14:17:56.2715898+07:00",
-  "ModifiedDate": "2025-08-30T16:49:42.2523527+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -1909,7 +1909,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:29.0051643+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -3550,8 +3550,8 @@
   "CreatedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ModifiedDate": "2025-08-14T09:07:18.9375037+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "M1000",
     "AddressType": "Marker",
@@ -3564,7 +3564,7 @@
     "Address": "M1000"
   }
 },
-  "Address": "M1000",
+  "Address": "M1001",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -3698,7 +3698,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:54.9668898+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -5339,8 +5339,8 @@
   "CreatedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ModifiedDate": "2025-08-14T09:07:31.1230509+07:00",
   "ParameterContainer": {
-  "DisplayName": null,
-  "DisplayParameters": null,
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
   "Parameters": {
     "LastAddress": "M1000",
     "AddressType": "Marker",
@@ -5353,7 +5353,7 @@
     "Address": "M1000"
   }
 },
-  "Address": "M1000",
+  "Address": "M1002",
   "DataTypeName": "Bool",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -5491,7 +5491,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:30:42.2373006+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -5630,7 +5630,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:33:51.0917673+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -5769,7 +5769,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:34:40.351872+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -5910,7 +5910,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:52.4399526+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -5934,7 +5934,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:57.3368646+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -11572,7 +11572,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-14T09:08:00.1886863+07:00",
-  "ModifiedDate": "2025-08-30T15:48:42.9204385+07:00",
+  "ModifiedDate": "2025-08-30T20:26:49.2319907+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,

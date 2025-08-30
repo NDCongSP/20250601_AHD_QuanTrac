@@ -33,7 +33,7 @@ namespace RegistrationForm1
             {
                 foreach (var station in Globalvariable.RealtimeDisplays)
                 {
-                    var al1 = station.Al_Door1;
+                    //var al1 = station.Al_Door1;
                 }
                 //_mainForm.S1_DC1_OverChanged += S1_DC1_Over_ValueChanged;
                 //_mainForm.S1_DC2_OverChanged += S1_DC2_Over_ValueChanged;
