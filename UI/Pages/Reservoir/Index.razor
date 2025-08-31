@@ -1,0 +1,159 @@
+﻿@page "/reservoir"
+@using System.Text.RegularExpressions
+
+<div class="reservoir-layout">
+    <section class="pane pane-left">
+        <div class="metric-row">
+            <div class="metric-item">
+                <div class="metric-header">MỰC NƯỚC MNDBT=0.00</div>
+                <div class="metric-content">
+                    <div class="metric-value">0.00</div>
+                    <div class="metric-unit">(m)</div>
+                </div>
+                <img src="images/generals/P1.jpg" alt="Muc nuoc" />
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-header">DUNG TÍCH MNDBT=0.00</div>
+                <div class="metric-content">
+                    <div class="metric-value">0.00</div>
+                    <div class="metric-unit">(tr.m³)</div>
+                </div>
+                <img src="images/generals/P2.jpg" alt="Dung tich" />
+            </div>
+        </div>
+
+        <div class="metric-row">
+            <div class="metric-item">
+                <div class="metric-header">Q ĐẾN</div>
+                <div class="metric-content">
+                    <div class="metric-value">0.00</div>
+                    <div class="metric-unit">m³/s</div>
+                </div>
+                <img src="images/generals/P3.jpg" alt="Q den" />
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-header">TỔNG Q RA KHỎI HỒ</div>
+                <div class="metric-content">
+                    <div class="metric-value">0.00</div>
+                    <div class="metric-unit">m³/s</div>
+                </div>
+                <img src="images/generals/P4.jpg" alt="Tong Q ra khoi ho" />
+            </div>
+        </div>
+    </section>
+
+    <section class="pane pane-right">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Trạm</th>
+                    <th>Thời gian</th>
+                    <th>Lưu lượng</th>
+                    <th>Tổng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<style>
+    .reservoir-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* 2 cột thay vì 3 */
+        gap: 12px;
+        height: calc(100vh - 120px);
+    }
+
+    .pane {
+        border: 1px solid #d9d9d9;
+        border-radius: 6px;
+        padding: 12px;
+        background: #fff;
+        overflow: auto;
+    }
+
+    .metric-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .metric-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 8px;
+        background: #fafafa;
+    }
+
+    .metric-header {
+        font-weight: 700;
+        font-size: 11px;
+        color: #333;
+        margin-bottom: 4px;
+        text-align: center;
+    }
+
+    .metric-content {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        gap: 4px;
+        margin-bottom: 8px;
+    }
+
+    .metric-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #0066cc;
+    }
+
+    .metric-unit {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .metric-item img {
+        width: 100%;
+        height: auto;
+        max-height: 80px;
+        object-fit: contain;
+        border-radius: 4px;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+    .data-table th,
+    .data-table td {
+        border: 1px solid #e5e5e5;
+        padding: 8px 10px;
+        text-align: left;
+    }
+
+    .data-table thead th {
+        background: #f7f7f7;
+        font-weight: 600;
+    }
+</style>
+
+@code {
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle("Hồ chứa");
+    }
+}

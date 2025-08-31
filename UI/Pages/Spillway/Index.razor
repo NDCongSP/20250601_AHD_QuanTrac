@@ -1,0 +1,444 @@
+@page "/spillway"
+
+<div class="spillway-container">
+    <!-- Header -->
+    <div class="header">
+        <h2>Tràn</h2>
+        <div class="gate-tabs">
+            @for (int i = 1; i <= 6; i++)
+            {
+                <button class="gate-tab @(i == 1 ? "active" : "")" @onclick="() => SelectGate(i)">
+                    CỬA @i
+                </button>
+            }
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Panel - Metrics -->
+        <div class="left-panel">
+            <div class="metrics-section">
+                <h3>Thông số hệ thống</h3>
+                <div class="metric-item">
+                    <label>Mực nước hồ (MN hồ):</label>
+                    <span class="value">0.0 m</span>
+                </div>
+                <div class="metric-item">
+                    <label>Nhiệt độ dầu:</label>
+                    <span class="value">0.0 °C</span>
+                </div>
+                <div class="metric-item">
+                    <label>Hành trình xy lanh 1_1:</label>
+                    <span class="value">0.0 mm</span>
+                </div>
+                <div class="metric-item">
+                    <label>Hành trình xy lanh 1_2:</label>
+                    <span class="value">0.0 mm</span>
+                </div>
+            </div>
+
+            <div class="gate-metrics">
+                <h3>Thông số cửa @selectedGate</h3>
+                <div class="metric-item">
+                    <label>Độ mở cửa (a):</label>
+                    <span class="value">0.0 cm</span>
+                </div>
+                <div class="metric-item">
+                    <label>Lưu lượng cửa @selectedGate (Qi):</label>
+                    <span class="value">0.0 m³/s</span>
+                </div>
+                <div class="metric-item">
+                    <label>Lưu lượng tổng (Qc):</label>
+                    <span class="value">0.0 m³/s</span>
+                </div>
+            </div>
+
+            <div class="operation-controls">
+                <h3>Vận Hành</h3>
+                <div class="control-buttons">
+                    <button class="control-btn">Tay</button>
+                    <button class="control-btn">Tự động</button>
+                    <button class="control-btn">Từ xa</button>
+                    <button class="control-btn">Tại chổ</button>
+                    <button class="control-btn emergency">Dừng khẩn</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Schematic -->
+        <div class="right-panel">
+            <img src="images/generals/tranc.jpg" alt="Sơ đồ tràn" class="schematic-img" />
+        </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="bottom-section">
+        <div class="section-header">
+            <h3>THÔNG TIN VẬN HÀNH CỬA @selectedGate</h3>
+        </div>
+
+        <div class="status-grid">
+            <!-- Pump Status -->
+            <div class="status-group">
+                <h4>Bơm dầu</h4>
+                <div class="status-items">
+                    <div class="status-item">
+                        <div class="status-indicator @(pumpStatus.Pump1 ? "active" : "inactive")"></div>
+                        <span>Bơm 1</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(pumpStatus.Pump1Error ? "error" : "normal")"></div>
+                        <span>Lỗi bơm 1</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(pumpStatus.Pump2 ? "active" : "inactive")"></div>
+                        <span>Bơm 2</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(pumpStatus.Pump2Error ? "error" : "normal")"></div>
+                        <span>Lỗi bơm 2</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(pumpStatus.LockPump ? "active" : "inactive")"></div>
+                        <span>Bơm chốt</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(pumpStatus.LockPumpError ? "error" : "normal")"></div>
+                        <span>Lỗi bơm chốt</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oil Pressure -->
+            <div class="status-group">
+                <h4>Áp dầu</h4>
+                <div class="status-items">
+                    <div class="status-item">
+                        <div class="status-indicator @(oilPressure.High ? "error" : "normal")"></div>
+                        <span>Áp dầu cửa @selectedGate cao</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(oilPressure.Low ? "error" : "normal")"></div>
+                        <span>Áp dầu cửa @selectedGate thấp</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gate Status -->
+            <div class="status-group">
+                <h4>Trạng thái cửa</h4>
+                <div class="status-items">
+                    <div class="status-item">
+                        <div class="status-indicator @(gateStatus.Opening ? "active" : "inactive")"></div>
+                        <span>Cửa @selectedGate đang mở</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(gateStatus.Closing ? "active" : "inactive")"></div>
+                        <span>Cửa @selectedGate đang đóng</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(gateStatus.FullyOpen ? "active" : "inactive")"></div>
+                        <span>Cửa @selectedGate mở hoàn toàn</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator @(gateStatus.FullyClosed ? "active" : "inactive")"></div>
+                        <span>Cửa @selectedGate đóng hoàn toàn</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gate Error -->
+            <div class="status-group">
+                <h4>Cửa</h4>
+                <div class="status-items">
+                    <div class="status-item">
+                        <div class="status-indicator @(gateError.Misalignment ? "error" : "normal")"></div>
+                        <span>Lỗi lệch cửa @selectedGate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .spillway-container {
+        background: #f5f5f5;
+        min-height: 100vh;
+        padding: 16px;
+    }
+
+    .header {
+        background: #008080;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px 6px 0 0;
+        margin-bottom: 0;
+    }
+
+    .header h2 {
+        margin: 0 0 12px 0;
+        font-size: 18px;
+    }
+
+    .gate-tabs {
+        display: flex;
+        gap: 4px;
+    }
+
+    .gate-tab {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+    .gate-tab:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .gate-tab.active {
+        background: white;
+        color: #008080;
+        font-weight: bold;
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        background: white;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-top: none;
+    }
+
+    .left-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .metrics-section,
+    .gate-metrics,
+    .operation-controls {
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 16px;
+        background: #fafafa;
+    }
+
+    .metrics-section h3,
+    .gate-metrics h3,
+    .operation-controls h3 {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 8px;
+    }
+
+    .metric-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px dashed #eee;
+    }
+
+    .metric-item:last-child {
+        border-bottom: none;
+    }
+
+    .metric-item label {
+        font-size: 13px;
+        color: #555;
+    }
+
+    .metric-item .value {
+        font-weight: bold;
+        color: #0066cc;
+        font-size: 14px;
+    }
+
+    .control-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .control-btn {
+        padding: 10px;
+        border: 1px solid #ccc;
+        background: white;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+        background: #f0f0f0;
+    }
+
+    .control-btn.emergency {
+        grid-column: 1 / -1;
+        background: #ff4444;
+        color: white;
+        border-color: #cc0000;
+    }
+
+    .control-btn.emergency:hover {
+        background: #cc0000;
+    }
+
+    .right-panel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f8f8;
+        border-radius: 6px;
+        padding: 16px;
+    }
+
+    .schematic-img {
+        max-width: 100%;
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom-section {
+        background: white;
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 6px 6px;
+        margin-top: 0;
+    }
+
+    .section-header {
+        background: #008080;
+        color: white;
+        padding: 12px 20px;
+    }
+
+    .section-header h3 {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .status-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .status-group {
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 16px;
+        background: #fafafa;
+    }
+
+    .status-group h4 {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 8px;
+    }
+
+    .status-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .status-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .status-indicator {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+        flex-shrink: 0;
+    }
+
+    .status-indicator.active {
+        background: #4CAF50;
+        border-color: #45a049;
+    }
+
+    .status-indicator.inactive {
+        background: #f0f0f0;
+        border-color: #ccc;
+    }
+
+    .status-indicator.normal {
+        background: #FFC107;
+        border-color: #FFA000;
+    }
+
+    .status-indicator.error {
+        background: #f44336;
+        border-color: #d32f2f;
+    }
+</style>
+
+@code {
+    private int selectedGate = 1;
+
+    // Status models for dynamic data mapping
+    private PumpStatus pumpStatus = new();
+    private OilPressure oilPressure = new();
+    private GateStatus gateStatus = new();
+    private GateError gateError = new();
+
+    private void SelectGate(int gateNumber)
+    {
+        selectedGate = gateNumber;
+        // TODO: Load data for selected gate
+    }
+
+    // Data models for dynamic mapping
+    public class PumpStatus
+    {
+        public bool Pump1 { get; set; } = true;
+        public bool Pump1Error { get; set; } = false;
+        public bool Pump2 { get; set; } = true;
+        public bool Pump2Error { get; set; } = false;
+        public bool LockPump { get; set; } = true;
+        public bool LockPumpError { get; set; } = false;
+    }
+
+    public class OilPressure
+    {
+        public bool High { get; set; } = true;
+        public bool Low { get; set; } = false;
+    }
+
+    public class GateStatus
+    {
+        public bool Opening { get; set; } = false;
+        public bool Closing { get; set; } = false;
+        public bool FullyOpen { get; set; } = false;
+        public bool FullyClosed { get; set; } = true;
+    }
+
+    public class GateError
+    {
+        public bool Misalignment { get; set; } = true;
+    }
+}

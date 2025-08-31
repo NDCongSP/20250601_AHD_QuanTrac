@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Components\**" />
+    <Compile Remove="Pages\Notifications\**" />
+    <Compile Remove="Pages\Settings\**" />
+    <Content Remove="Pages\Components\**" />
+    <Content Remove="Pages\Notifications\**" />
+    <Content Remove="Pages\Settings\**" />
+    <EmbeddedResource Remove="Pages\Components\**" />
+    <EmbeddedResource Remove="Pages\Notifications\**" />
+    <EmbeddedResource Remove="Pages\Settings\**" />
+    <None Remove="Pages\Components\**" />
+    <None Remove="Pages\Notifications\**" />
+    <None Remove="Pages\Settings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="8.0.10" />
@@ -21,9 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Components\" />
-    <Folder Include="Pages\Settings\" />
-    <Folder Include="Pages\Notifications\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
