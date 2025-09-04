@@ -1,5 +1,5 @@
 {
-  "ProjectPath": "D:\\AHD\\PROJECT SCADA\\TRANDAUTIENG\\20250601_AHD_QuanTrac\\Tag_TranOK14.08.2025.json",
+  "ProjectPath": "D:\\AHD\\PROJECT SCADA\\TRANDAUTIENG\\20250601_AHD_QuanTrac\\Tag_TranOK4.9.2025.json",
   "Username": null,
   "Password": null,
   "ParameterContainer": null,
@@ -51,7 +51,7 @@
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
   "Parameters": {
-    "IpAddress": "192.168.1.180",
+    "IpAddress": "192.168.0.188",
     "Timeout": "1000",
     "TryReadWriteTimes": "3",
     "DelayBetweenPool": "10",
