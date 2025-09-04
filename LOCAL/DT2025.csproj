@@ -221,22 +221,25 @@
     <Compile Include="AlarmModel.cs" />
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Domain\Entities\BaseEntity\GenericEntity.cs" />
+    <Compile Include="Domain\Entities\ScadaUser.cs" />
     <Compile Include="Domain\Entities\FT01.cs" />
     <Compile Include="Domain\Entities\FT02.cs" />
     <Compile Include="Domain\Entities\FT03.cs" />
+    <Compile Include="Domain\Entities\FT04.cs" />
     <Compile Include="Domain\Entities\FT05.cs" />
-    <Compile Include="Domain\Entities\FT06.cs" />
+    <Compile Include="Domain\Enums\EnumPermissionScada.cs" />
     <Compile Include="Domain\Enums\EnumStatus.cs" />
-    <Compile Include="Domain\Interceptors\AuditableSaveChangesInterceptor.cs" />
-    <Compile Include="Domain\Interceptors\ERPAuditableSaveChangesInterceptor.cs" />
+    <Compile Include="Domain\NotTable\LocationsInfo.cs" />
     <Compile Include="Domain\NotTable\ConfigModel.cs" />
     <Compile Include="Domain\NotTable\ControlPlcModel.cs" />
     <Compile Include="Domain\NotTable\DropDownModel.cs" />
     <Compile Include="Domain\NotTable\FilterModel.cs" />
-    <Compile Include="Domain\NotTable\LocationsModel.cs" />
+    <Compile Include="Domain\NotTable\interfaces\ICalculatorValue.cs" />
+    <Compile Include="Domain\NotTable\OffsetConfigModel.cs" />
+    <Compile Include="Domain\NotTable\ParamettersModel.cs" />
     <Compile Include="Domain\NotTable\RealtimeDisplayModel.cs" />
     <Compile Include="Domain\NotTable\RealtimeDisplays.cs" />
-    <Compile Include="Domain\NotTable\TagsModel.cs" />
+    <Compile Include="Domain\NotTable\TagsStation.cs" />
     <Compile Include="Form2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -335,6 +338,12 @@
     <Compile Include="FrmNhaplieu.Designer.cs">
       <DependentUpon>FrmNhaplieu.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmThongtin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmThongtin.Designer.cs">
+      <DependentUpon>FrmThongtin.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmTran.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -431,6 +440,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmNhaplieu.resx">
       <DependentUpon>FrmNhaplieu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmThongtin.resx">
+      <DependentUpon>FrmThongtin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTran.resx">
       <DependentUpon>FrmTran.cs</DependentUpon>

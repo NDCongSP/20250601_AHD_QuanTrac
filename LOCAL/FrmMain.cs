@@ -1,5 +1,7 @@
 ﻿using Ahd.Core;
+using DocumentFormat.OpenXml.Drawing;
 using Domain;
+using Domain.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
@@ -11,44 +13,104 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
 
 
 namespace RegistrationForm1
 {
        public partial class FrmMain : Form
-    {
-       
-        public static DataTranModel CurrentDataTran = null;
-        private Form currentChildForm = null;
-
-        private Timer _timer;
+    {   
+         private Form currentChildForm = null;
+        private Timer _timer; //. Timer để lấy dữ liệu từ Scada
+        private Timer api_DTtimer; //. Timer lấy dữ liễu API dầu tiếng
         private Timer apiTimer;
         private Timer api_CDDTimer;
         private Timer _refreshTimer;
-        private DateTimePicker dtpStartTime;
-        private DateTimePicker dtpEndTime;
+      
+        private List<Station> _cachedStations; // Lưu trữ danh sách trạm đã tải
+        private Dictionary<string, string> _stationIdToNameMap; // Ánh xạ StationId (uuid HOẶC code) sang Name
+
         private static readonly HttpClient client = new HttpClient();
         private const string API_STATIONS_URL = "https://kttv-open.vrain.vn/v1/stations";
         private const string API_STATS_URL = "https://kttv-open.vrain.vn/v1/stations/stats";
         private const string API_KEY = "4c81eccdb524441ba52c390d5b96e233";
+             private int _logTime;
+              private DateTime _startTime = DateTime.Now;
+        private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+
         public FrmMain()
         {
             InitializeComponent();
             Load += FrmMain_Load; // Đăng ký sự kiện Load của Form
             InitializeTimer();
+            _stationIdToNameMap = new Dictionary<string, string>(); // Khởi tạo map
+
+            dtpStartTime = new DateTimePicker
+            {
+                Format = DateTimePickerFormat.Custom,
+                CustomFormat = "yyyy-MM-dd HH:mm:ss",
+                Value = DateTime.Now.Date.AddHours(-1),
+                Width = 180
+            };
+            dtpEndTime = new DateTimePicker
+            {
+                Format = DateTimePickerFormat.Custom,
+                CustomFormat = "yyyy-MM-dd HH:mm:ss",
+                Value = DateTime.Now,
+                Width = 180
+            };
 
         }
         IAhdDriverConnector driver;
-        private void InitializeTimer()
+        public interface ICalculatableForm
         {
+            void PerformCalculations();
+        }
+        private async Task _refreshTimer_Tick(object sender, EventArgs e)
+        {
+            dtpEndTime.Value = DateTime.Now;
+            // Thời gian bắt đầu là 10 phút trước thời gian hiện tại
+            dtpStartTime.Value = DateTime.Now.AddMinutes(-10);
+            // Tải lại dữ liệu thống kê mưa
+            await LoadRainfallStatsData();
+        }
+        private async void FrmMain_Load(object sender, EventArgs e)
+        {
+
+            lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
+            driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
+
+            if (!driver.IsStarted)
+                // Change this line in FrmMain_Load:
+                driver.Started += Driver_Started;
+            else
+                Driver_Started(driver, null);
+            _startTime = DateTime.Now;
+
+            timer1.Enabled = true;
+            _refreshTimer.Start();
+            await LoadRainfallStatsData();
+            await LoadStationsData();
+
+
+
+        }
+        private void InitializeTimer()
+        { // Timer API dầu tiếng
+            api_DTtimer = new Timer();
+            api_DTtimer.Interval = 60000; // mỗi 60 giây
+            api_DTtimer.Tick += async (s, ev) => await Api_DTtimer_Tick();
+            api_DTtimer.Start();
+
+
+            // Timer Login dữ liệu Scada
             _timer = new Timer();
             _timer.Interval = 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
             _timer.Tick += async (s, e) => await Timer_Tick();
             _timer.Start();
+
 
             // Timer API Bình Nhâm
             apiTimer = new Timer();
@@ -70,20 +132,289 @@ namespace RegistrationForm1
 
 
         }
-
-        private async Task _refreshTimer_Tick(object sender, EventArgs e)
+        private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
         {
-            await LoadRainfallStatsData();
+            string url = "https://apiv2.thuyloivietnam.vn/Api/getSoLieuQuanTrac?Key=apiktdlqtDauTieng&MaQuanTrac=7001";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    try
+                    {
+                        var response = await client.GetAsync(url);
+                        response.EnsureSuccessStatusCode();
+                        string json = await response.Content.ReadAsStringAsync();
+                        var dataList = JsonConvert.DeserializeObject<List<SoLieuAPICDDModel>>(json);
+                        if (dataList != null && dataList.Count > 0)
+                        {
+                            var latest = dataList.OrderByDescending(x => x.ThoiGian).First();
+
+                            // Ghi async xuống PLC
+                            await WriteAPI_CDDsync(latest.GiaTri);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Lỗi đọc API: " + ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
+            }
         }
+        private async Task WriteAPI_CDDsync(double GT)
+        {
+            try
+            {
+                if (ahdDriverConnector1 == null)
+                {
+                    MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
+                    return;
+                }
+
+                await ahdDriverConnector1.WriteTagAsync(
+                    $"Local Station/DauTieng/S71500/API/Fllow_TL_CDD",
+                    GT.ToString("0.00"),
+                    WritePiority.High);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi ghi PLC async: " + ex.Message);
+            }
+        }
+        public class SoLieuAPICDDModel
+        {
+            public string ThoiGian { get; set; }
+            public int MaQuanTrac { get; set; }
+            public double GiaTri { get; set; }
+        }
+       
+       
+        private void Driver_Started(object sender, EventArgs e)
+        {
+            //if (ahdDriverConnector1.ConnectionStatus == ConnectionStatus.Connected)
+            //{
+            //    labDriverStatus.BackColor = Color.Green;
+            //}
+            //else
+            //{
+            //    labDriverStatus.BackColor = Color.Red;
+            //}
+
+            foreach (var item in Globalvariable.LocationsInfo)
+            {
+                foreach (var station in item.Stations.Where(x => x.Path.Contains("/Station_")))
+                {
+                    // Replace this line:
+                  
+                    ahdDriverConnector1.GetTag($"{station.Path}/Remote").ValueChanged += Remote_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Remote").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Local").ValueChanged += Local_ValueChanged;
+                    Local_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Local")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Local")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Local").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Auto").ValueChanged += Auto_ValueChanged;
+                    Auto_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Auto")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Auto")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Auto").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Man").ValueChanged += Man_ValueChanged;
+                    Man_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Man")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Man")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Man").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Local_Stop").ValueChanged += Local_Stop_ValueChanged;
+                    Local_Stop_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Local_Stop")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Local_Stop")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Local_Stop").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/DC1_Running").ValueChanged += DC1_Running_ValueChanged;
+                    DC1_Running_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC1_Running")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC1_Running")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/DC1_Running").Value));
+                  
+                    ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running").ValueChanged += DC2_Running_ValueChanged;
+                    DC2_Running_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/DC3_Running").ValueChanged += DC3_Running_ValueChanged;
+                    DC3_Running_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC3_Running")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/DC3_Running").Value));
+                   
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_Opening").ValueChanged += Door1_Opening_ValueChanged;
+                    Door1_Opening_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Opening")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Opening")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_Opening").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_Closing").ValueChanged += Door1_Closing_ValueChanged;
+                    Door1_Closing_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Closing")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Closing")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_Closing").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_Opening").ValueChanged += Door2_Opening_ValueChanged;
+                    Door2_Opening_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Opening")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Opening")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_Opening").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_Closing").ValueChanged += Door2_Closing_ValueChanged;
+                    Door2_Closing_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Closing")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Closing")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_Closing").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open").ValueChanged += Door1_Open_ValueChanged;
+                    Door1_Open_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_Close").ValueChanged += Door1_Close_ValueChanged;
+                    Door1_Close_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Close")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Close")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_Close").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open").ValueChanged += Door2_Open_ValueChanged;
+                    Door2_Open_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_Close").ValueChanged += Door2_Close_ValueChanged;
+                    Door2_Close_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Close")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Close")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_Close").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Opening").ValueChanged += Doorlock1_Opening_ValueChanged;
+                    Doorlock1_Opening_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Opening")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Opening")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Opening").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Closing").ValueChanged += Doorlock1_Closing_ValueChanged;
+                    Doorlock1_Closing_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Closing")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Closing")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_Closing").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Opening").ValueChanged += Doorlock2_Opening_ValueChanged;
+                    Doorlock2_Opening_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Opening")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Opening")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Opening").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Closing").ValueChanged += Doorlock2_Closing_ValueChanged;
+                    Doorlock2_Closing_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Closing")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Closing")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_Closing").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Open").ValueChanged += Doorlock1_1Open_ValueChanged;
+                    Doorlock1_1Open_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Open")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Open")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Open").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Close").ValueChanged += Doorlock1_1Close_ValueChanged;
+                    Doorlock1_1Close_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Close")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Close")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Close").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_2Open").ValueChanged += Doorlock1_2Open_ValueChanged;
+                    Doorlock1_2Open_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_2Open")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_1Open")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_2Open").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_2Close").ValueChanged += Doorlock1_2Close_ValueChanged;
+                    Doorlock1_2Close_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_2Close")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_2Close")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock1_2Close").Value));
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Open").ValueChanged += Doorlock2_1Open_ValueChanged;
+                    Doorlock2_1Open_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Open")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Open")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Open").Value));
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Close").ValueChanged += Doorlock2_1Close_ValueChanged;
+                    Doorlock2_1Close_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Close")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Close")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_1Close").Value));
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Open").ValueChanged += Doorlock2_2Open_ValueChanged;
+                    Doorlock2_2Open_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Open")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Open")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Open").Value));
+                    ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Close").ValueChanged += Doorlock2_2Close_ValueChanged;
+                    Doorlock2_2Close_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Close")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Close")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Doorlock2_2Close").Value));
+                    // Alarm
+                    ahdDriverConnector1.GetTag($"{station.Path}/DC1_Over").ValueChanged += DC1_Over_ValueChanged;
+                    DC1_Over_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC1_Over")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC1_Over")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/DC1_Over").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/DC2_Over").ValueChanged += DC2_Over_ValueChanged;
+                    DC2_Over_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Over")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Over")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/DC2_Over").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/DC3_Over").ValueChanged += DC3_Over_ValueChanged;
+                    DC3_Over_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC3_Over")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC3_Over")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/DC3_Over").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureHigh").ValueChanged += Door1_PressureHigh_ValueChanged;
+                    Door1_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureHigh")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureHigh")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureHigh").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureLow").ValueChanged += Door1_PressureLow_ValueChanged;
+                    Door1_PressureLow_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureLow")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureLow")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_PressureLow").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureHigh").ValueChanged += Door2_PressureHigh_ValueChanged;
+                    Door2_PressureHigh_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureHigh")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureHigh")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureHigh").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureLow").ValueChanged += Door2_PressureLow_ValueChanged;
+                    Door2_PressureLow_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureLow")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureLow")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_PressureLow").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1").ValueChanged += Al_Door1_ValueChanged;
+                    Al_Door1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2").ValueChanged += Al_Door2_ValueChanged;
+                    Al_Door2_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2").Value));
+
+
+                }
+                var stationLocation = item.Stations.FirstOrDefault(loc => loc.Path.Contains("/Location_Info"));
+                if (stationLocation != null)
+                {
+                    // Replace this line:
+                    ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").ValueChanged += Fllow_Ho_ValueChanged;
+
+                    Fllow_Ho_ValueChanged(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
+                  , "", ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").Value));
+                }
+
+                //  }
+            }
+
+        }
+
         private async Task LoadStationsData()
         {
-
-            lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Đang tải...)";
-
+            _cachedStations = new List<Station>(); // Đảm bảo _cachedStations được khởi tạo
+            _stationIdToNameMap.Clear(); // Xóa map cũ trước khi điền dữ liệu mới
             try
             {
                 HttpResponseMessage response = await client.GetAsync(API_STATIONS_URL);
-
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorMessage = $"API trả về lỗi: {(int)response.StatusCode} {response.ReasonPhrase}.";
@@ -92,66 +423,125 @@ namespace RegistrationForm1
                     {
                         errorMessage += $"\nChi tiết: {errorContent}";
                     }
-                    MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi tải)";
+                    //           MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error); 
                     dgvStations.DataSource = null;
                     return;
                 }
-
                 string responseBody = await response.Content.ReadAsStringAsync();
-                List<Station> stations = JsonConvert.DeserializeObject<List<Station>>(responseBody);
-
-                if (stations != null && stations.Count > 0)
+                _cachedStations = JsonConvert.DeserializeObject<List<Station>>(responseBody); // Lưu vào _cachedStations
+                if (_cachedStations != null && _cachedStations.Count > 0)
                 {
-                    dgvStations.DataSource = stations;
-                    lblStationsTitle.Text = $"Danh sách Trạm Quan Trắc ({stations.Count} trạm)";
+                    dgvStations.DataSource = _cachedStations; // Gán cho DataGridView          
+                    // Điền dữ liệu vào _stationIdToNameMap, sử dụng station.Code làm khóa
+                    foreach (var station in _cachedStations)
+                    {
+                        // Chúng ta cần đảm bảo rằng Code không null hoặc rỗng
+                        if (!string.IsNullOrEmpty(station.Code) && !_stationIdToNameMap.ContainsKey(station.Code))
+                        {
+                            _stationIdToNameMap.Add(station.Code, station.Name);
+                            // Debug: In ra các trạm được thêm vào map
+                            Console.WriteLine($"Debug (LoadStationsData): Added station to map: Code={station.Code}, Name={station.Name}");
+                        }
+                        else if (string.IsNullOrEmpty(station.Code))
+                        {
+                            Console.WriteLine($"Debug (LoadStationsData): Station with Uuid={station.Uuid} has empty/null Code. Skipping for name map.");
+                        }
+                        else if (_stationIdToNameMap.ContainsKey(station.Code))
+                        {
+                            Console.WriteLine($"Debug (LoadStationsData): Duplicate Code '{station.Code}' found for station Uuid={station.Uuid}. Skipping this entry for name map.");
+                        }
+                    }
+                    Console.WriteLine($"Debug (LoadStationsData): _stationIdToNameMap populated with {_stationIdToNameMap.Count} entries.");
                 }
                 else
                 {
                     MessageBox.Show("Không tìm thấy dữ liệu trạm nào từ API.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dgvStations.DataSource = null;
-                    lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Không có dữ liệu)";
                 }
             }
             catch (HttpRequestException e)
             {
                 MessageBox.Show($"Lỗi HTTP khi tải danh sách trạm: {e.Message}\nVui lòng kiểm tra kết nối internet hoặc URL API.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi tải)";
+
             }
             catch (JsonException e)
             {
                 MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON cho trạm: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi định dạng)";
+
             }
             catch (Exception e)
             {
                 MessageBox.Show($"Đã xảy ra lỗi không mong muốn khi tải trạm: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStationsTitle.Text = "Danh sách Trạm Quan Trắc (Lỗi không xác định)";
+
             }
+        }
+        private async Task<double> GetLastAccumulatedDepthForStation(string stationId, DateTime sevenAmCycleStart)
+        {
+            double lastAccumulatedDepth = 0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+                {
+                    await connection.OpenAsync();
+                    string sql = @"SELECT TOP 1 AccumulatedDepth
+                                   FROM RealtimeQTM
+                                   WHERE StationId = @StationId AND TimePoint >= @SevenAmCycleStart
+                                   ORDER BY TimePoint DESC;"; // Lấy bản ghi mới nhất trong chu kỳ
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@StationId", stationId);
+                        command.Parameters.AddWithValue("@SevenAmCycleStart", sevenAmCycleStart);
+                        object result = await command.ExecuteScalarAsync();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            lastAccumulatedDepth = Convert.ToDouble(result);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Debug (GetLastAccumulatedDepth): Lỗi SQL khi lấy AccumulatedDepth cho trạm {stationId}: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Debug (GetLastAccumulatedDepth): Lỗi không mong muốn khi lấy AccumulatedDepth cho trạm {stationId}: {ex.Message}");
+            }
+            return lastAccumulatedDepth;
         }
         private async Task LoadRainfallStatsData()
         {
-            // Thiết lập thời gian bắt đầu và kết thúc cho API
-            // Bắt đầu từ 10 phút trước thời điểm hiện tại
-            DateTime startTime = DateTime.Now.AddMinutes(-10);
-            DateTime endTime = DateTime.Now;
+            DateTime now = DateTime.Now;
+            // Xác định thời điểm 7h sáng của chu kỳ tích lũy hiện tại
+            DateTime sevenAmCycleStart;
+            if (now.Hour < 7) // Nếu hiện tại trước 7h sáng, chu kỳ bắt đầu từ 7h sáng ngày hôm trước
+            {
+                sevenAmCycleStart = now.Date.AddDays(-1).AddHours(7);
+            }
+            else // Nếu hiện tại từ 7h sáng trở đi, chu kỳ bắt đầu từ 7h sáng ngày hiện tại
+            {
+                sevenAmCycleStart = now.Date.AddHours(7);
+            }
 
-            // --- Bắt đầu phần làm mới giao diện ---
-            // Cập nhật trạng thái để người dùng biết dữ liệu đang được tải
-            lblStatusMessage.Text = "Trạng thái tải dữ liệu: Đang xử lý...";
-            lblStatusMessage.ForeColor = System.Drawing.Color.Orange;
-            // --- Kết thúc phần làm mới giao diện ---
+            // dtpStartTime và dtpEndTime được dùng để gọi API (lấy 10 phút gần nhất)
+            // nhưng logic tích lũy sẽ dùng sevenAmCycleStart
+            DateTime apiQueryStartTime = dtpStartTime.Value;
+            DateTime apiQueryEndTime = dtpEndTime.Value;
 
-            string formattedStartTime = startTime.ToString("yyyy-MM-dd HH:mm:ss");
-            string formattedEndTime = endTime.ToString("yyyy-MM-dd HH:mm:ss");
+            if (apiQueryStartTime >= apiQueryEndTime)
+            {
+                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.", "Lỗi tham số", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            string statsUrl = $"{API_STATS_URL}?start_time={Uri.EscapeDataString(formattedStartTime)}&end_time={Uri.EscapeDataString(formattedEndTime)}&format=10m";
+            string formattedApiQueryStartTime = apiQueryStartTime.ToString("yyyy-MM-dd HH:mm:ss");
+            string formattedApiQueryEndTime = apiQueryEndTime.ToString("yyyy-MM-dd HH:mm:ss");
 
+            string statsUrl = $"{API_STATS_URL}?start_time={Uri.EscapeDataString(formattedApiQueryStartTime)}&end_time={Uri.EscapeDataString(formattedApiQueryEndTime)}&format=10m";
+            dgvStats.DataSource = null;
             try
             {
-                // Gửi yêu cầu API
                 HttpResponseMessage response = await client.GetAsync(statsUrl);
-
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorMessage = $"API trả về lỗi: {(int)response.StatusCode} {response.ReasonPhrase}.";
@@ -161,118 +551,283 @@ namespace RegistrationForm1
                         errorMessage += $"\nChi tiết: {errorContent}";
                     }
                     MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    lblStatusMessage.Text = "Trạng thái tải dữ liệu: Lỗi tải dữ liệu từ API.";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Red;
+                    dgvStats.DataSource = null;
+
                     return;
                 }
 
                 string responseBody = await response.Content.ReadAsStringAsync();
                 RainfallStatsResponse statsResponse = JsonConvert.DeserializeObject<RainfallStatsResponse>(responseBody);
 
-                if (statsResponse?.Data == null || !statsResponse.Data.Any())
+                var displayData = new List<object>();
+                var latestDataPointsByStationFetched = new Dictionary<string, RealtimeRainfallData>();
+                var accumulatedRainfallForDisplay = new Dictionary<string, double>(); // Dùng để hiển thị lên lblTotalRainfallSummary
+
+                // Kiểm tra xem _stationIdToNameMap đã được điền chưa
+                if (_stationIdToNameMap == null || _stationIdToNameMap.Count == 0)
+                {
+                    Console.WriteLine("Debug (LoadRainfallStatsData): WARNING! _stationIdToNameMap is empty or null. Attempting to re-load station data.");
+                    await LoadStationsData(); // Thử tải lại dữ liệu trạm nếu map trống
+                }
+
+                if (statsResponse?.Data != null && statsResponse.Data.Count > 0)
+                {
+                    // Lấy AccumulatedDepth cuối cùng từ DB cho mỗi trạm trong chu kỳ 7h sáng hiện tại
+                    // Chỉ lấy một lần trước khi xử lý dữ liệu mới để có cơ sở tích lũy
+                    var initialAccumulatedDepths = new Dictionary<string, double>();
+                    foreach (var measurement in statsResponse.Data)
+                    {
+                        if (!initialAccumulatedDepths.ContainsKey(measurement.StationId))
+                        {
+                            initialAccumulatedDepths.Add(measurement.StationId, await GetLastAccumulatedDepthForStation(measurement.StationId, sevenAmCycleStart));
+                        }
+                    }
+
+                    foreach (var measurement in statsResponse.Data)
+                    {
+                        if (measurement.Value != null && measurement.Value.Any())
+                        {
+                            string stationId = measurement.StationId;
+                            // Debug: In ra StationId từ dữ liệu stats
+                            //          Console.WriteLine($"Debug (LoadRainfallStatsData): Processing rainfall data for StationId: {stationId}");
+
+                            // Sử dụng _stationIdToNameMap để tra cứu tên
+                            string stationName = "Không xác định";
+                            if (_stationIdToNameMap.ContainsKey(stationId))
+                            {
+                                stationName = _stationIdToNameMap[stationId];
+                                //              Console.WriteLine($"Debug (LoadRainfallStatsData): Found name for StationId '{stationId}': '{stationName}'");
+                            }
+                            else
+                            {
+                                //              Console.WriteLine($"Debug (LoadRainfallStatsData): Name NOT found in map for StationId '{stationId}'.");
+                            }
+
+                            // Lấy giá trị tích lũy ban đầu cho trạm này trong chu kỳ hiện tại
+                            double currentAccumulatedDepth = initialAccumulatedDepths.ContainsKey(stationId) ? initialAccumulatedDepths[stationId] : 0;
+
+                            foreach (var depthMeas in measurement.Value)
+                            {
+                                // Cộng dồn lượng mưa của điểm đo hiện tại vào tổng tích lũy
+                                currentAccumulatedDepth += depthMeas.Depth;
+
+                                // Dữ liệu cho DataGridView (có thể hiển thị depth tức thời hoặc accumulated)
+                                displayData.Add(new
+                                {
+                                    StationId = stationId,
+                                    Name = stationName, // Hiển thị tên trạm
+                                    Timestamp = depthMeas.TimePoint,
+                                    Depth = depthMeas.Depth,
+                                    AccumulatedDepth = currentAccumulatedDepth, // Hiển thị giá trị tích lũy
+                                    Unit = measurement.Unit
+                                });
+
+                                // Tạo bản ghi RealtimeRainfallData để lưu vào DB
+                                RealtimeRainfallData currentRealtimeData = new RealtimeRainfallData
+                                {
+                                    StationId = stationId,
+                                    Name = stationName, // Gán tên trạm
+                                    TimePoint = depthMeas.TimePoint,
+                                    Depth = depthMeas.Depth,
+                                    Unit = measurement.Unit,
+                                    AccumulatedDepth = currentAccumulatedDepth, // Giá trị tích lũy sẽ được lưu
+                                    RecordedAt = DateTime.Now
+                                };
+
+                                // Chỉ giữ lại bản ghi mới nhất cho mỗi trạm trong dữ liệu vừa fetch
+                                if (latestDataPointsByStationFetched.ContainsKey(stationId))
+                                {
+                                    // Cập nhật nếu bản ghi mới hơn HOẶC nếu bản ghi có AccumulatedDepth lớn hơn (để đảm bảo tính tích lũy)
+                                    if (currentRealtimeData.TimePoint > latestDataPointsByStationFetched[stationId].TimePoint ||
+                                        (currentRealtimeData.TimePoint == latestDataPointsByStationFetched[stationId].TimePoint &&
+                                         currentRealtimeData.AccumulatedDepth > latestDataPointsByStationFetched[stationId].AccumulatedDepth))
+                                    {
+                                        latestDataPointsByStationFetched[stationId] = currentRealtimeData;
+                                    }
+                                }
+                                else
+                                {
+                                    latestDataPointsByStationFetched.Add(stationId, currentRealtimeData);
+                                }
+                            }
+
+                            // Cập nhật giá trị tích lũy cuối cùng cho mục đích hiển thị tổng
+                            accumulatedRainfallForDisplay[stationId] = currentAccumulatedDepth;
+                        }
+                    }
+
+                    if (displayData.Any())
+                    {
+                        dgvStats.DataSource = displayData;
+                    }
+                    else
+                    {
+                        dgvStats.DataSource = null;
+
+                    }
+
+                    // Hiển thị tổng lượng mưa từng trạm trong lblTotalRainfallSummary
+                    if (accumulatedRainfallForDisplay.Any())
+                    {
+                        StringBuilder summaryBuilder = new StringBuilder();
+                        summaryBuilder.AppendLine("Tổng lượng mưa tích lũy theo trạm (Chu kỳ 7h sáng):");
+                        foreach (var entry in accumulatedRainfallForDisplay)
+                        {
+                            string unit = statsResponse.Data.FirstOrDefault(m => m.StationId == entry.Key)?.Unit ?? "mm";
+                            // Lấy tên trạm từ _stationIdToNameMap
+                            string name = _stationIdToNameMap.ContainsKey(entry.Key) ? _stationIdToNameMap[entry.Key] : entry.Key;
+                            summaryBuilder.AppendLine($"- Trạm {name} ({entry.Key}): {entry.Value:F2} {unit}");
+                        }
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else
                 {
                     MessageBox.Show(
-                        "Không tìm thấy dữ liệu thống kê lượng mưa nào trong khoảng thời gian đã chọn.",
+                        "Không tìm thấy dữ liệu thống kê lượng mưa nào trong khoảng thời gian đã chọn " +
+                        "hoặc API trả về dữ liệu rỗng/null cho khoảng thời gian này.",
                         "Thông báo",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
-                    lblStatusMessage.Text = "Trạng thái tải dữ liệu: Không có dữ liệu từ API.";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Black;
-                    return;
+
+                    dgvStats.DataSource = null;
+
                 }
 
-                var displayData = new List<object>();
-                var latestDataPointsByStationFetched = new Dictionary<string, RealtimeRainfallData>();
-
-                foreach (var measurement in statsResponse.Data)
-                {
-                    if (measurement.Value != null && measurement.Value.Any())
-                    {
-                        string stationId = measurement.StationId;
-                        foreach (var depthMeas in measurement.Value)
-                        {
-                            displayData.Add(new
-                            {
-                                StationId = stationId,
-                                Timestamp = depthMeas.TimePoint,
-                                Depth = depthMeas.Depth,
-                                Unit = measurement.Unit
-                            });
-
-                            RealtimeRainfallData currentRealtimeData = new RealtimeRainfallData
-                            {
-                                StationId = stationId,
-                                TimePoint = depthMeas.TimePoint,
-                                Depth = depthMeas.Depth,
-                                Unit = measurement.Unit,
-                                RecordedAt = DateTime.Now
-                            };
-
-                            if (!latestDataPointsByStationFetched.ContainsKey(stationId) || currentRealtimeData.TimePoint > latestDataPointsByStationFetched[stationId].TimePoint)
-                            {
-                                latestDataPointsByStationFetched[stationId] = currentRealtimeData;
-                            }
-                        }
-                    }
-                }
-
-                dgvStats.DataSource = displayData;
-                lblStatusMessage.Text = $"Trạng thái tải dữ liệu: Đã tải thành công {displayData.Count} bản ghi.";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Green;
-
+                // Lấy danh sách các bản ghi mới nhất từ Dictionary để lưu dữ liệu tức thời vào SQL
                 List<RealtimeRainfallData> realTimeDataToSave = latestDataPointsByStationFetched.Values.ToList();
-                string saveStatusMessage = "Không có dữ liệu tức thời mới nhất để lưu vào SQL.";
+                Console.WriteLine($"Debug: Số lượng bản ghi tức thời mới nhất cần lưu vào SQL: {realTimeDataToSave.Count}");
+
+                string saveStatusMessage = "";
                 bool realtimeSaveSuccess = false;
 
                 if (realTimeDataToSave.Any())
                 {
                     try
                     {
-                        await WriteQTM(latestDataPointsByStationFetched);
-
-                        saveStatusMessage = $"Đã lưu {realTimeDataToSave.Count} bản ghi tức thời mới nhất vào SQL.";
+                        await SaveRealtimeMeasurementsToSql(realTimeDataToSave);
+                        saveStatusMessage += $"Đã lưu {realTimeDataToSave.Count} bản ghi tức thời mới nhất vào SQL (bao gồm tổng lượng mưa tích lũy từ 7h sáng và Tên trạm).";
                         realtimeSaveSuccess = true;
                     }
                     catch (Exception ex)
                     {
-                        saveStatusMessage = $"Lỗi lưu tức thời vào SQL: {ex.Message}.";
+                        saveStatusMessage += $"Lỗi lưu tức thời vào SQL: {ex.Message}.";
                     }
+                }
+                else
+                {
+                    saveStatusMessage += "Không có dữ liệu tức thời mới nhất để lưu vào SQL.";
                 }
 
                 if (realtimeSaveSuccess)
                 {
-                    lblStatusMessage.Text = $"Trạng thái: Đã tải dữ liệu. {saveStatusMessage}";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Green;
+
                 }
                 else
                 {
-                    lblStatusMessage.Text = $"Trạng thái: Tải dữ liệu thành công nhưng có lỗi khi lưu SQL: {saveStatusMessage}";
-                    lblStatusMessage.ForeColor = System.Drawing.Color.Red;
+
                 }
+
+
             }
             catch (HttpRequestException e)
             {
-                MessageBox.Show($"Lỗi HTTP: {e.Message}\nVui lòng kiểm tra kết nối internet hoặc URL API.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStatusMessage.Text = $"Trạng thái: Lỗi HTTP khi tải dữ liệu: {e.Message}";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Red;
+                MessageBox.Show($"Lỗi HTTP khi tải thống kê mưa: {e.Message}\nVui lòng kiểm tra kết nối internet hoặc URL API stats.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
             catch (JsonException e)
             {
-                MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStatusMessage.Text = $"Trạng thái: Lỗi JSON khi phân tích dữ liệu: {e.Message}";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Red;
+                MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON cho thống kê mưa: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Đã xảy ra lỗi không mong muốn: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStatusMessage.Text = $"Trạng thái: Lỗi không xác định khi tải dữ liệu: {e.Message}";
-                lblStatusMessage.ForeColor = System.Drawing.Color.Red;
+                MessageBox.Show($"Đã xảy ra lỗi không mong muốn khi tải thống kê mưa: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
+        private async Task SaveRealtimeMeasurementsToSql(List<RealtimeRainfallData> realtimeData)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+                {
+                    await connection.OpenAsync();
 
+                    foreach (var data in realtimeData)
+                    {
+                        // Ghi log giá trị Unit và Name trước khi thêm vào tham số
+                        Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): Trying to save Realtime data for StationId={data.StationId}, Name='{data.Name}', TimePoint={data.TimePoint}, Depth={data.Depth}, Unit='{data.Unit}', AccumulatedDepth={data.AccumulatedDepth}, RecordedAt={data.RecordedAt}");
 
+                        // Kiểm tra xem bản ghi cho StationId và TimePoint đã tồn tại chưa
+                        string checkSql = @"SELECT COUNT(1) FROM RealtimeQTM
+                                            WHERE StationId = @StationId AND TimePoint = @TimePoint;";
 
+                        using (SqlCommand checkCommand = new SqlCommand(checkSql, connection))
+                        {
+                            checkCommand.Parameters.AddWithValue("@StationId", data.StationId);
+                            checkCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
+                            int existingCount = (int)await checkCommand.ExecuteScalarAsync();
+
+                            if (existingCount > 0)
+                            {
+                                string updateSql = @"UPDATE RealtimeQTM
+                                                     SET Depth = @Depth,
+                                                         Unit = @Unit,
+                                                         AccumulatedDepth = @AccumulatedDepth,
+                                                         Name = @Name,
+                                                         RecordedAt = @RecordedAt
+                                                     WHERE StationId = @StationId AND TimePoint = @TimePoint;";
+                                using (SqlCommand updateCommand = new SqlCommand(updateSql, connection))
+                                {
+                                    updateCommand.Parameters.AddWithValue("@Depth", data.Depth);
+                                    updateCommand.Parameters.AddWithValue("@Unit", (object)data.Unit ?? DBNull.Value);
+                                    updateCommand.Parameters.AddWithValue("@AccumulatedDepth", (object)data.AccumulatedDepth ?? DBNull.Value);
+                                    updateCommand.Parameters.AddWithValue("@Name", (object)data.Name ?? DBNull.Value);
+                                    updateCommand.Parameters.AddWithValue("@RecordedAt", data.RecordedAt);
+                                    updateCommand.Parameters.AddWithValue("@StationId", data.StationId);
+                                    updateCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
+                                    int rowsAffected = await updateCommand.ExecuteNonQueryAsync();
+                                    Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): UPDATE affected {rowsAffected} rows for Realtime data StationId={data.StationId}, TimePoint={data.TimePoint}.");
+                                }
+                            }
+                            else
+                            {
+                                string insertSql = @"INSERT INTO RealtimeQTM (StationId, TimePoint, Depth, Unit, AccumulatedDepth, Name, RecordedAt)
+                                                     VALUES (@StationId, @TimePoint, @Depth, @Unit, @AccumulatedDepth, @Name, @RecordedAt);";
+                                using (SqlCommand insertCommand = new SqlCommand(insertSql, connection))
+                                {
+                                    insertCommand.Parameters.AddWithValue("@StationId", data.StationId);
+                                    insertCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
+                                    insertCommand.Parameters.AddWithValue("@Depth", data.Depth);
+                                    insertCommand.Parameters.AddWithValue("@Unit", (object)data.Unit ?? DBNull.Value);
+                                    insertCommand.Parameters.AddWithValue("@AccumulatedDepth", (object)data.AccumulatedDepth ?? DBNull.Value);
+                                    insertCommand.Parameters.AddWithValue("@Name", (object)data.Name ?? DBNull.Value);
+                                    insertCommand.Parameters.AddWithValue("@RecordedAt", data.RecordedAt);
+                                    int rowsAffected = await insertCommand.ExecuteNonQueryAsync();
+                                    Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): INSERT affected {rowsAffected} rows for Realtime data StationId={data.StationId}, TimePoint={data.TimePoint}.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Lỗi SQL khi lưu dữ liệu tức thời: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi không mong muốn khi lưu dữ liệu tức thời vào SQL: {ex.Message}");
+                throw;
+            }
+        }
         // Khu vực tạo Class Quan trắc mưa 
         // Định nghĩa lớp Station để ánh xạ dữ liệu JSON từ API /v1/station
         public class Station
@@ -351,9 +906,11 @@ namespace RegistrationForm1
         public class RealtimeRainfallData
         {
             public string StationId { get; set; }
+            public string Name { get; set; } // Tên trạm
             public DateTime TimePoint { get; set; } // Thời điểm đo
             public double Depth { get; set; }
             public string Unit { get; set; }
+            public double? AccumulatedDepth { get; set; } // Tổng lượng mưa tích lũy từ 7h sáng trong ngày
             public DateTime RecordedAt { get; set; } // Thời gian ứng dụng ghi nhận bản ghi này
         }
         // SingleOrArrayConverter không còn được sử dụng trực tiếp trong RainfallMeasurement.Value
@@ -392,82 +949,6 @@ namespace RegistrationForm1
                 throw new NotImplementedException();
             }
         }
-
-
-
-
-        // Kết thúc khu vực tạo Class Quan trắc mưa
-        public class SoLieuAPICDDModel
-        {
-            public string ThoiGian { get; set; }
-            public int MaQuanTrac { get; set; }
-            public double GiaTri { get; set; }
-        }
-        public class SoLieuAPIBinhNhamModel
-        {
-            public long ts { get; set; }
-            public long c { get; set; }
-            public double water_proof_1 { get; set; }
-            public double water_proof_2 { get; set; }
-
-            public DateTime Timestamp => DateTimeOffset.FromUnixTimeSeconds(ts).ToLocalTime().DateTime;
-            public DateTime CreatedAt => DateTimeOffset.FromUnixTimeSeconds(c).ToLocalTime().DateTime;
-        }
-
-
-        private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
-        {
-            string url = "https://apiv2.thuyloivietnam.vn/Api/getSoLieuQuanTrac?Key=apiktdlqtDauTieng&MaQuanTrac=7001";
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    try
-                    {
-                        var response = await client.GetAsync(url);
-                        response.EnsureSuccessStatusCode();
-                        string json = await response.Content.ReadAsStringAsync();
-                        var dataList = JsonConvert.DeserializeObject<List<SoLieuAPICDDModel>>(json);
-                        if (dataList != null && dataList.Count > 0)
-                        {
-                            var latest = dataList.OrderByDescending(x => x.ThoiGian).First();
-
-                            // Ghi async xuống PLC
-                            await WriteAPI_CDDsync(latest.GiaTri);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Lỗi đọc API: " + ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
-            }
-        }
-        private async Task WriteAPI_CDDsync(double GT)
-        {
-            try
-            {
-                if (ahdDriverConnector1 == null)
-                {
-                    MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
-                    return;
-                }
-
-                await ahdDriverConnector1.WriteTagAsync(
-                    $"Local Station/DauTieng/S71500/API/Fllow_TL_CDD",
-                    GT.ToString("0.00"),
-                    WritePiority.High);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi ghi PLC async: " + ex.Message);
-            }
-        }
-
         private async Task ApiTimer_Tick(object sender, EventArgs e)
         {
             string url = "https://input.dulieuthuyloivietnam.vn/latest?device_id=CR300-21411";
@@ -515,48 +996,17 @@ namespace RegistrationForm1
                 Console.WriteLine("Lỗi ghi PLC async: " + ex.Message);
             }
         }
-        private async Task WriteQTM(Dictionary<string, RealtimeRainfallData> latestApiData)
+        public class SoLieuAPIBinhNhamModel
         {
-            try
-            {
-                // Xác định các ID trạm (hoặc các phần cuối của tag ID) mà bạn muốn ghi
+            public long ts { get; set; }
+            public long c { get; set; }
+            public double water_proof_1 { get; set; }
+            public double water_proof_2 { get; set; }
 
-                string[] stationIdsToProcess = { "610001", "610002", "610003", "610004", "610005", "610006", "610007", "610008", "610009", "610010", "610011", "610012", "610013" };
-
-                // Lặp qua từng StationId mong muốn
-                foreach (string stationId in stationIdsToProcess)
-                {
-                    // Tạo đường dẫn tag hoàn chỉnh
-                    string tagPath = $"Local Station/DauTieng/S71500/API/{stationId}";
-
-                    // Kiểm tra xem có dữ liệu mới nhất cho StationId này không
-                    if (latestApiData.TryGetValue(stationId, out RealtimeRainfallData data))
-                    {
-                        // Lấy giá trị 'Depth' (lượng mưa) từ dữ liệu tức thời và định dạng
-                        string valueToWrite = data.Depth.ToString("0.00");
-
-                        // Ghi giá trị vào tag tương ứng
-                        await ahdDriverConnector1.WriteTagAsync(
-                            tagPath,
-                            valueToWrite,
-                            WritePiority.High
-                        );
-                    }
-                    else
-                    {
-                        // Xử lý trường hợp không tìm thấy dữ liệu cho một trạm cụ thể
-                        // Bạn có thể ghi log, thông báo lỗi, hoặc bỏ qua nếu không cần thiết
-                        Console.WriteLine($"Cảnh báo: Không tìm thấy dữ liệu tức thời cho trạm '{stationId}' để ghi.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Ghi lại lỗi nếu có bất kỳ ngoại lệ nào xảy ra trong quá trình ghi PLC
-                Console.WriteLine($"Lỗi khi ghi giá trị tức thời vào PLC: {ex.Message}");
-            }
+            public DateTime Timestamp => DateTimeOffset.FromUnixTimeSeconds(ts).ToLocalTime().DateTime;
+            public DateTime CreatedAt => DateTimeOffset.FromUnixTimeSeconds(c).ToLocalTime().DateTime;
         }
-        public async Task Timer_Tick()
+        public async Task Api_DTtimer_Tick()
         {
             string apiUrl = "http://dautiengphuochoa.com/api/getmn.aspx?key=dauhoaphuongtien%3b";
 
@@ -642,6 +1092,161 @@ namespace RegistrationForm1
                 AppendLog($"❌ Lỗi Timer_Tick: {ex.Message}");
             }
         }
+        public async Task Timer_Tick()
+        {
+            try
+            {
+                _timer.Enabled = false;
+
+                if (Globalvariable.RealtimeDisplays == null || Globalvariable.RealtimeDisplays.Count == 0)
+                    return;
+
+                #region hien thi UI
+
+                Globalvariable.InvokeIfRequired(this, () =>
+                {
+                    var location = Globalvariable.RealtimeDisplays?.FirstOrDefault(loc => loc.LocationId == 1);
+                    if (Location != null)
+                    {
+                        foreach (var item in location.Stations)
+                        {
+                            if (item.Path == "Local Station/DauTieng/S71500/Station_1")
+                            {
+                                _labALDoor1_Station1.Text = item.Al_Door1.ToString();
+                                _labALDoor2_Station1.Text = item.Al_Door2.ToString();
+                                
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
+                            {
+                                _labALDoor1_Station2.Text = item.Al_Door1.ToString();
+                                _labALDoor2_Station2.Text = item.Al_Door2.ToString();
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_3")
+                            {
+                                _labALDoor1_Station3.Text = item.Al_Door1.ToString();
+                                _labALDoor2_Station3.Text = item.Al_Door2.ToString();
+                            }
+                        }
+
+                        _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                        _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
+                    }
+                });
+                #endregion
+
+                #region Data log                
+                _logTime = (int)(DateTime.Now - _startTime).TotalSeconds;
+
+                if (_logTime >= Globalvariable.ConfigSystem.DataLogInterval)
+                {
+                    var dataLogs = new List<FT03>();
+                    var createAt = DateTime.Now;
+                    var createOperatorId = "System";
+
+                    //datalog
+                    foreach (var item in Globalvariable.RealtimeDisplays)
+                    {
+                        var line = new FT03
+                        {
+                            Id = Guid.NewGuid(),
+                            CreateAt = createAt,
+                            CreateOperatorId = createOperatorId,
+                            LogBaseInterval = true,
+                            LocationId = item.LocationId,
+                            LocationName = item.LocationName,
+
+                            FlLow_DauTieng = item.CalculatorValue.Fllow_DauTieng,
+                            Fllow_BenSuc = item.CalculatorValue.Fllow_BenSuc,
+                            Fllow_SonDai = item.CalculatorValue.Fllow_SonDai,
+                            Fllow_BinhNham = item.CalculatorValue.Fllow_BinhNham,
+                            Fllow_BinhNham2 = item.CalculatorValue.Fllow_BinhNham2,
+                            Fllow_TL_CDD = item.CalculatorValue.Fllow_TL_CDD,
+                            Fllow_HL_TXL = item.CalculatorValue.Fllow_HL_TXL,
+                            Total_Fllow = item.CalculatorValue.Total_Fllow,
+                            Q_Den = item.CalculatorValue.Q_Den,
+                            Q_Di = item.CalculatorValue.Q_Di,
+                            W_Ho = item.CalculatorValue.W_Ho,
+                            LuuLuong = item.CalculatorValue.LuuLuong,
+                            LuuLuongTong = item.CalculatorValue.LuuLuongTong,
+                        };
+
+                        foreach (var itemStation in item.Stations)
+                        {
+                            line.StationId = itemStation.StationId;
+                            line.StationName = itemStation.StationName;
+                            line.Path = itemStation.Path;
+
+                            line.HT_Cylinder1_1 = itemStation.HT_Cylinder1_1;
+                            line.HT_Cylinder1_2 = itemStation.HT_Cylinder1_2;
+                            line.HT_Cylinder2_1 = itemStation.HT_Cylinder2_1;
+                            line.HT_Cylinder2_2 = itemStation.HT_Cylinder2_2;
+                            line.Door1_Aperture = itemStation.Door1_Aperture;
+                            line.Door2_Aperture = itemStation.Door2_Aperture;
+                            line.S1_Temp_Oil = itemStation.S1_Temp_Oil;
+                            line.Pressure_Oil_Door1 = itemStation.Pressure_Oil_Door1;
+                            line.Pressure_Oil_Door2 = itemStation.Pressure_Oil_Door2;
+                            line.Fllow_Door1 = itemStation.Fllow_Door1;
+                            line.Fllow_Door2 = itemStation.Fllow_Door2;
+                            line.Fllow_Ho = itemStation.Fllow_Ho;
+
+                            line.HT_Cylinder1_1_Offset = itemStation.HT_Cylinder1_1_Offset;
+                            line.HT_Cylinder1_2_Offset = itemStation.HT_Cylinder1_2_Offset;
+                            line.HT_Cylinder2_1_Offset = itemStation.HT_Cylinder2_1_Offset;
+                            line.HT_Cylinder2_2_Offset = itemStation.HT_Cylinder2_2_Offset;
+                            line.Door1_Aperture_Offset = itemStation.Door1_Aperture_Offset;
+                            line.Door2_Aperture_Offset = itemStation.Door2_Aperture_Offset;
+                            line.S1_Temp_Oil_Offset = itemStation.S1_Temp_Oil_Offset;
+                            line.Pressure_Oil_Door1_Offset = itemStation.Pressure_Oil_Door1_Offset;
+                            line.Pressure_Oil_Door2_Offset = itemStation.Pressure_Oil_Door2_Offset;
+                            line.Fllow_Door1_Offset = itemStation.Fllow_Door1_Offset;
+                            line.Fllow_Door2_Offset = itemStation.Fllow_Door2_Offset;
+                            line.Fllow_Ho_Offset = itemStation.Fllow_Ho_Offset;
+
+                            line.HT_Cylinder1_1_Final = itemStation.HT_Cylinder1_1_Final;
+                            line.HT_Cylinder1_2_Final = itemStation.HT_Cylinder1_2_Final;
+                            line.HT_Cylinder2_1_Final = itemStation.HT_Cylinder2_1_Final;
+                            line.HT_Cylinder2_2_Final = itemStation.HT_Cylinder2_2_Final;
+                            line.Door1_Aperture_Final = itemStation.Door1_Aperture_Final;
+                            line.Door2_Aperture_Final = itemStation.Door2_Aperture_Final;
+                            line.S1_Temp_Oil_Final = itemStation.S1_Temp_Oil_Final;
+                            line.Pressure_Oil_Door1_Final = itemStation.Pressure_Oil_Door1_Final;
+                            line.Pressure_Oil_Door2_Final = itemStation.Pressure_Oil_Door2_Final;
+                            line.Fllow_Door1_Final = itemStation.Fllow_Door1_Final;
+                            line.Fllow_Door2_Final = itemStation.Fllow_Door2_Final;
+                            line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
+
+                            dataLogs.Add(line);
+                        }
+                    }
+
+                    if (dataLogs.Count == 0)
+                        return;
+                    using var dbContext = new ApplicationDbContext();
+                    dbContext.FT03s.AddRange(dataLogs);
+                    dbContext.SaveChanges();//Luu thay doi vao db
+
+                    _startTime = DateTime.Now;
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _timer.Enabled = true;
+            }
+        }   
+        // Hàm ghi log xuống TextBox
+        private void AppendLog(string message)
+        {
+            //if (txtLog.InvokeRequired)
+            //    txtLog.Invoke(new Action(() => txtLog.AppendText($"{DateTime.Now:HH:mm:ss} - {message}{Environment.NewLine}")));
+            //else
+            //    txtLog.AppendText($"{DateTime.Now:HH:mm:ss} - {message}{Environment.NewLine}");
+        }
         private Dictionary<string, string> ParseMultipleStationsFromAPI(string apiData, List<string> stationCodes)
         {
             var results = new Dictionary<string, string>();
@@ -667,55 +1272,6 @@ namespace RegistrationForm1
             return results;
         }
 
-        // Hàm ghi log xuống TextBox
-        private void AppendLog(string message)
-        {
-            //if (txtLog.InvokeRequired)
-            //    txtLog.Invoke(new Action(() => txtLog.AppendText($"{DateTime.Now:HH:mm:ss} - {message}{Environment.NewLine}")));
-            //else
-            //    txtLog.AppendText($"{DateTime.Now:HH:mm:ss} - {message}{Environment.NewLine}");
-        }
-        private async void FrmMain_Load(object sender, EventArgs e)
-        {
-
-            PermissionManager.ApplyPermission(bntNhaplieu, "edit_data");// test nút nhấn nhập liệu
-            SQLLogin.InitCurrentDataTran();
-            lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
-            //      btnOpenRegister.Enabled = PermissionManager.CurrentUserRole == "Admin";
-            driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
-
-            if (!driver.IsStarted)
-                // Change this line in FrmMain_Load:
-                driver.Started += Driver_Started;
-            else
-                Driver_Started(driver, null);
-
-            timer1.Enabled = true;
-            tm_login.Interval = 60000;
-            tm_login.Enabled = true;
-            tm_login.Tick += (s, o) =>
-            {
-                Timer t = (Timer)s;
-                t.Enabled = false;
-                this.Invoke((MethodInvoker)delegate { tm_login.Start(); });
-                t.Enabled = true;
-            };
-            tm_loginMN.Interval = 60000;
-            tm_loginMN.Enabled = true;
-            tm_loginMN.Tick += (s, o) =>
-            {
-                Timer t = (Timer)s;
-                t.Enabled = false;
-                this.Invoke((MethodInvoker)delegate { tm_loginMN.Start(); });
-                t.Enabled = true;
-            };
-
-            await LoadRainfallStatsData();
-            await LoadStationsData();
-
-
-
-        }
         // Hàm Lấy giá trị cho Timer ghi xuống SQL
         private string GetValue(string tagName)
         {
@@ -734,55 +1290,26 @@ namespace RegistrationForm1
                 return "0";
             }
         }
-
-
-        private void Driver_Started(object sender, EventArgs e)
-        {
-            foreach (var item in Globalvariable.LocationsInfo)
-            {
-                foreach (var station in item.Stations)
-                {
-                  //  // Replace this line:
-                  //  ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1").ValueChanged += Al_Door1_ValueChanged;
-                  //  Al_Door1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1")
-                  //, new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1")
-                  //, "", ahdDriverConnector1.GetTag($"{station.Path}/Al_Door1").Value));
-
-                    ahdDriverConnector1.GetTag($"{station.Path}/Remote").ValueChanged += Remote_ValueChanged;
-                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
-                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
-                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Remote").Value));
-
-
-
-                }
-            }
-
-        }
-
-
-
-        private void Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
+        private void Door2_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
             {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
                 var path = e.Tag.Parent.Path;
 
-                var itemChange = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.Path == path);
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
 
-                if (itemChange != null)
+                if (station != null)
                 {
-                    var oldValue = itemChange.Remote;
+                    var oldValue = station.Door2_PressureLow;
 
-                    //Debug.WriteLine($"{path}/Tempperature: {e.NewValue}");
-                    itemChange.Remote = e.NewValue == "1" ? true : false;
-
-                    //tinh toans
-                    itemChange.Calculate = itemChange.Calculate + 1;
-                    ahdDriverConnector1.GetTag($"{path}/Remote").WritAhdnc(itemChange.Calculate.ToString(), WritePiority.High);
+                    station.Door2_PressureLow = e.NewValue == "1" ? true : false;
 
 
-                    if (oldValue != itemChange.Al_Door1)
+                    if (oldValue != station.Door2_PressureLow)
                     {
                         using (var dbContext = new ApplicationDbContext())
                         {
@@ -792,7 +1319,8 @@ namespace RegistrationForm1
                             if (check != null)
                             {
                                 check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                dbContext.SaveChanges();
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
                             }
                             else
                             {
@@ -801,15 +1329,102 @@ namespace RegistrationForm1
                                     Id = Guid.NewGuid(),
                                     C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
                                     IsDeleted = false,
-                                    CreateAt = DateTime.Now,
-                                    CreateOperatorId = "System",
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
                                 };
 
                                 dbContext.FT02s.Add(newLine);
-                                dbContext.SaveChanges();
                             }
 
                             //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Door2_PressureLow";
+                            Globalvariable.AlarmDataLog.Value = station.Door2_PressureLow == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.Door2_PressureLow == true ? "Áp suất dầu cửa 2 thấp" : "Áp suất dầu cửa 2 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
                         }
                     }
                 }
@@ -817,299 +1432,5186 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
-        //private void S3_DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    S3_DC3_OverChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevS3_DC3_Overload == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataAlarmModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 3",
-        //            TagName = "Quá Tải Động Cơ 3", // ✅ Tên tag
-        //            S3_DC3_Over = e.NewValue,
-        //        };
-        //        SQLLoginAlarm.InsertAlarm(model);
-        //    }
-        //    prevS3_DC3_Overload = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock1_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock1_1OpenChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock1_1Open == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 1_1 Mở", // ✅ Tên tag
-        //            Doorlock1_1Open = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock1_1Open = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock1_1Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock1_1CloseChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock1_1Close == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 1_1 Đóng", // ✅ Tên tag
-        //            Doorlock1_1Close = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock1_1Close = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock1_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock1_2OpenChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock1_2Open == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 1_2 Mở", // ✅ Tên tag
-        //            Doorlock1_2Open = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock1_2Open = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock1_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock1_2CloseChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock1_2Close == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 1_2 Đóng", // ✅ Tên tag
-        //            Doorlock1_2Close = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock1_2Close = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock2_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock2_1OpenChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock2_1Open == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 2_1 Mở", // ✅ Tên tag
-        //            Doorlock2_1Open = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock2_1Open = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock2_1Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock2_1CloseChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock2_1Close == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 2_1 Đóng", // ✅ Tên tag
-        //            Doorlock2_1Close = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock2_1Close = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock2_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock2_2OpenChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock2_2Open == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 2_2 Mở", // ✅ Tên tag
-        //            Doorlock2_2Open = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock2_2Open = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock2_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock2_2CloseChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock2_2Close == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 1",
-        //            TagName = "Chốt Cửa 2_2 Đóng", // ✅ Tên tag
-        //            Doorlock2_2Close = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock2_2Close = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock3_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock3_1OpenChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock3_1Open == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 2",
-        //            TagName = "Chốt Cửa 3_1 Mở", // ✅ Tên tag
-        //            Doorlock3_1Open = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock3_1Open = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock3_1Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock3_1CloseChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock3_1Close == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 2",
-        //            TagName = "Chốt Cửa 3_1 Đóng", // ✅ Tên tag
-        //            Doorlock3_1Close = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock3_1Close = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock3_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock3_2OpenChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock3_2Open == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = " Trạm 2",
-        //            TagName = "Chốt Cửa 3_2 Mở", // ✅ Tên tag
-        //            Doorlock3_2Open = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock3_2Open = e.NewValue; // Cập nhật trạng thái trước
-        //}
-        //private void Doorlock3_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        //{
-        //    Doorlock3_2CloseChanged?.Invoke(this, e);
-        //    // ✅ Ghi xuống SQL Server chỉ khi từ "0" -> "1"
-        //    if (prevDoorlock3_2Close == "0" && e.NewValue == "1")
-        //    {
-        //        // Tạo object DataTranModel mới
-        //        var model = new DataTranModel
-        //        {
-        //            CreateAt = DateTime.Now,
-        //            Position = "Trạm 2",
-        //            TagName = "Chốt Cửa 3_2 Đóng", // ✅ Tên tag
-        //            Doorlock3_2Close = e.NewValue,
-        //        };
-        //        SQLLoginDataTran.InsertDataTran(model);
-        //    }
-        //    prevDoorlock3_2Close = e.NewValue; // Cập nhật trạng thái trước
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-       
-
-        private void tm_loginMN_Tick(object sender, EventArgs e)
+        private void Door2_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
             {
-                var data = new DataMucNuocModel
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
                 {
-                    CreateAt = DateTime.Now,
+                    var oldValue = station.Door2_PressureHigh;
 
-                    Fllow_Ho = GetValue("Local Station/DauTieng/S71500/Group1/Fllow_Ho"),
-                    Fllow_DauTieng = GetValue("Local Station/DauTieng/S71500/API/Fllow_DauTieng"),
-                    Fllow_BenSuc = GetValue("Local Station/DauTieng/S71500/API/Fllow_BenSuc"),
-                    Fllow_SonDai = GetValue("Local Station/DauTieng/S71500/API/Fllow_SonDai"),
-                    Fllow_BinhNham = GetValue("Local Station/DauTieng/S71500/API/Fllow_BinhNham"),
-                    Fllow_TL_CDD = GetValue("Local Station/DauTieng/S71500/API/Fllow_TL_CDD"),
+                    station.Door2_PressureHigh = e.NewValue == "1" ? true : false;
 
 
+                    if (oldValue != station.Door2_PressureHigh)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
 
-                };
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
 
-                SQLLoginMucNuoc.InsertDataMucNuoc(data);
-                Console.WriteLine($"✅ Đã ghi DataMucNuoc lúc {data.CreateAt}");
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Door2_PressureHigh";
+                            Globalvariable.AlarmDataLog.Value = station.Door2_PressureHigh == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.Door2_PressureHigh == true ? "Áp suất dầu cửa 2 cao" : "Áp suất dầu cửa 2 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ Lỗi ghi DataMucNuoc: {ex.Message}");
-            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
         }
+        private void Door1_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door1_PressureLow;
+
+                    station.Door1_PressureLow = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door1_PressureLow)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Door1_PressureLow";
+                            Globalvariable.AlarmDataLog.Value = station.Door1_PressureLow == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.Door1_PressureLow == true ? "Áp suất dầu cửa 1 thấp" : "Áp suất dầu cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door1_PressureHigh_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door1_PressureHigh;
+
+                    station.Door1_PressureHigh = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door1_PressureHigh)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Door1_PressureHigh";
+                            Globalvariable.AlarmDataLog.Value = station.Door1_PressureHigh == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.Door1_PressureHigh == true ? "Áp suất dầu cửa 1 cao" : "Áp suất dầu cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.DC3_Over;
+
+                    station.DC3_Over = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.DC3_Over)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "DC3_Over";
+                            Globalvariable.AlarmDataLog.Value = station.DC3_Over == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.DC3_Over == true ? "Quá tải bơm 3" : "Bơm 3 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void DC2_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.DC2_Over;
+
+                    station.DC2_Over = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.DC2_Over)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "DC2_Over";
+                            Globalvariable.AlarmDataLog.Value = station.DC2_Over == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.DC2_Over == true ? "Quá tải bơm 2" : "Bơm 2 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void DC1_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.DC1_Over;
+
+                    station.DC1_Over = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.DC1_Over)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "DC1_Over";
+                            Globalvariable.AlarmDataLog.Value = station.DC1_Over == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.DC1_Over == true ? "Quá tải bơm 1" : "Bơm 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock2_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock2_2Close;
+
+                    station.Doorlock2_2Close = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock2_2Close)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock2_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock2_2Open;
+
+                    station.Doorlock2_2Open = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock2_2Open)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock2_1Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock2_1Close;
+
+                    station.Doorlock2_1Close = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock2_1Close)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock2_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock2_1Open;
+
+                    station.Doorlock2_1Open = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock2_1Open)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock1_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock1_2Close;
+
+                    station.Doorlock1_2Close = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock1_2Close)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock1_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock1_2Open;
+
+                    station.Doorlock1_2Open = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock1_2Open)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock1_1Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock1_1Close;
+
+                    station.Doorlock1_1Close = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock1_1Close)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock1_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock1_1Open;
+
+                    station.Doorlock1_1Open = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock1_1Open)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock2_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock2_Closing;
+
+                    station.Doorlock2_Closing = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock2_Closing)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock2_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock2_Opening;
+
+                    station.Doorlock2_Opening = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock2_Opening)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock1_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock1_Closing;
+
+                    station.Doorlock1_Closing = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock1_Closing)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Doorlock1_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Doorlock1_Opening;
+
+                    station.Doorlock1_Opening = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Doorlock1_Opening)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door2_Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door2_Close;
+
+                    station.Door2_Close = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door2_Close)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door2_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door2_Open;
+
+                    station.Door2_Open = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door2_Open)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door1_Close_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door1_Close;
+
+                    station.Door1_Close = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door1_Close)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door1_Open_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door1_Open;
+
+                    station.Door1_Open = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door1_Open)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door2_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door2_Closing;
+
+                    station.Door2_Closing = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door2_Closing)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door2_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door2_Opening;
+
+                    station.Door2_Opening = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door2_Opening)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door1_Closing_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door1_Closing;
+
+                    station.Door1_Closing = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door1_Closing)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door1_Opening_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Door1_Opening;
+
+                    station.Door1_Opening = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Door1_Opening)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void DC3_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.DC3_Running;
+
+                    station.DC3_Running = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.DC3_Running)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void DC2_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.DC2_Running;
+
+                    station.DC2_Running = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.DC2_Running)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void DC1_Running_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.DC1_Running;
+
+                    station.DC1_Running = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.DC1_Running)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Local_Stop_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Local_Stop;
+
+                    station.Local_Stop = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Local_Stop)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Man_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Man;
+
+                    station.Man = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Man)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Auto_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Auto;
+
+                    station.Auto = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Auto)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Local_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Local;
+
+                    station.Local = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Local)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Remote_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Remote;
+
+                    station.Remote = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Remote)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            ////alarms
+                            //Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            //Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            //Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            //Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            //Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            //Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            //Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            //Globalvariable.AlarmDataLog.Path = station.Path;
+                            //Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            //Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            //Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            //dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+
+        private void Al_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Al_Door2;
+
+                    station.Al_Door2 = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Al_Door2)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Al_Door2";
+                            Globalvariable.AlarmDataLog.Value = station.Al_Door2 == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Al_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    var oldValue = station.Al_Door1;
+
+                    station.Al_Door1 = e.NewValue == "1" ? true : false;
+
+
+                    if (oldValue != station.Al_Door1)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            //Real time
+                            var check = dbContext.FT02s.FirstOrDefault();
+
+                            if (check != null)
+                            {
+                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                                check.UpdateAt = createAt;
+                                check.UpdateOperatorId = createOperatorId;
+                            }
+                            else
+                            {
+                                var newLine = new FT02
+                                {
+                                    Id = Guid.NewGuid(),
+                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                    IsDeleted = false,
+                                    CreateAt = createAt,
+                                    CreateOperatorId = createOperatorId,
+                                };
+
+                                dbContext.FT02s.Add(newLine);
+                            }
+
+                            //datalog
+                            Globalvariable.DataLog.Id = Guid.NewGuid();
+                            Globalvariable.DataLog.CreateAt = createAt;
+                            Globalvariable.DataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.DataLog.LogBaseInterval = true;
+                            Globalvariable.DataLog.LocationId = location.LocationId;
+                            Globalvariable.DataLog.LocationName = location.LocationName;
+
+                            Globalvariable.DataLog.FlLow_DauTieng = location.CalculatorValue.Fllow_DauTieng;
+                            Globalvariable.DataLog.Fllow_BenSuc = location.CalculatorValue.Fllow_BenSuc;
+                            Globalvariable.DataLog.Fllow_SonDai = location.CalculatorValue.Fllow_SonDai;
+                            Globalvariable.DataLog.Fllow_BinhNham = location.CalculatorValue.Fllow_BinhNham;
+                            Globalvariable.DataLog.Fllow_BinhNham2 = location.CalculatorValue.Fllow_BinhNham2;
+                            Globalvariable.DataLog.Fllow_TL_CDD = location.CalculatorValue.Fllow_TL_CDD;
+                            Globalvariable.DataLog.Fllow_HL_TXL = location.CalculatorValue.Fllow_HL_TXL;
+                            Globalvariable.DataLog.Total_Fllow = location.CalculatorValue.Total_Fllow;
+                            Globalvariable.DataLog.Q_Den = location.CalculatorValue.Q_Den;
+                            Globalvariable.DataLog.Q_Di = location.CalculatorValue.Q_Di;
+                            Globalvariable.DataLog.W_Ho = location.CalculatorValue.W_Ho;
+                            Globalvariable.DataLog.LuuLuong = location.CalculatorValue.LuuLuong;
+                            Globalvariable.DataLog.LuuLuongTong = location.CalculatorValue.LuuLuongTong;
+
+
+                            Globalvariable.DataLog.StationId = station.StationId;
+                            Globalvariable.DataLog.StationName = station.StationName;
+                            Globalvariable.DataLog.Path = station.Path;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1 = station.HT_Cylinder1_1;
+                            Globalvariable.DataLog.HT_Cylinder1_2 = station.HT_Cylinder1_2;
+                            Globalvariable.DataLog.HT_Cylinder2_1 = station.HT_Cylinder2_1;
+                            Globalvariable.DataLog.HT_Cylinder2_2 = station.HT_Cylinder2_2;
+                            Globalvariable.DataLog.Door1_Aperture = station.Door1_Aperture;
+                            Globalvariable.DataLog.Door2_Aperture = station.Door2_Aperture;
+                            Globalvariable.DataLog.S1_Temp_Oil = station.S1_Temp_Oil;
+                            Globalvariable.DataLog.Pressure_Oil_Door1 = station.Pressure_Oil_Door1;
+                            Globalvariable.DataLog.Pressure_Oil_Door2 = station.Pressure_Oil_Door2;
+                            Globalvariable.DataLog.Fllow_Door1 = station.Fllow_Door1;
+                            Globalvariable.DataLog.Fllow_Door2 = station.Fllow_Door2;
+                            Globalvariable.DataLog.Fllow_Ho = station.Fllow_Ho;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Offset = station.HT_Cylinder1_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Offset = station.HT_Cylinder1_2_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Offset = station.HT_Cylinder2_1_Offset;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Offset = station.HT_Cylinder2_2_Offset;
+                            Globalvariable.DataLog.Door1_Aperture_Offset = station.Door1_Aperture_Offset;
+                            Globalvariable.DataLog.Door2_Aperture_Offset = station.Door2_Aperture_Offset;
+                            Globalvariable.DataLog.S1_Temp_Oil_Offset = station.S1_Temp_Oil_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Offset = station.Pressure_Oil_Door1_Offset;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Offset = station.Pressure_Oil_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Door1_Offset = station.Fllow_Door1_Offset;
+                            Globalvariable.DataLog.Fllow_Door2_Offset = station.Fllow_Door2_Offset;
+                            Globalvariable.DataLog.Fllow_Ho_Offset = station.Fllow_Ho_Offset;
+
+                            Globalvariable.DataLog.HT_Cylinder1_1_Final = station.HT_Cylinder1_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder1_2_Final = station.HT_Cylinder1_2_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_1_Final = station.HT_Cylinder2_1_Final;
+                            Globalvariable.DataLog.HT_Cylinder2_2_Final = station.HT_Cylinder2_2_Final;
+                            Globalvariable.DataLog.Door1_Aperture_Final = station.Door1_Aperture_Final;
+                            Globalvariable.DataLog.Door2_Aperture_Final = station.Door2_Aperture_Final;
+                            Globalvariable.DataLog.S1_Temp_Oil_Final = station.S1_Temp_Oil_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door1_Final = station.Pressure_Oil_Door1_Final;
+                            Globalvariable.DataLog.Pressure_Oil_Door2_Final = station.Pressure_Oil_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Door1_Final = station.Fllow_Door1_Final;
+                            Globalvariable.DataLog.Fllow_Door2_Final = station.Fllow_Door2_Final;
+                            Globalvariable.DataLog.Fllow_Ho_Final = station.Fllow_Ho_Final;
+                            Globalvariable.DataLog.Remote = station.Remote;
+                            Globalvariable.DataLog.Auto = station.Auto;
+                            Globalvariable.DataLog.Man = station.Man;
+                            Globalvariable.DataLog.Local = station.Local;
+                            Globalvariable.DataLog.Local_Stop = station.Local_Stop;
+
+                            dbContext.FT03s.Add(Globalvariable.DataLog);
+
+                            //alarms
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Al_Door1";
+                            Globalvariable.AlarmDataLog.Value = station.Al_Door1 == true ? 1 : 0;
+                            Globalvariable.AlarmDataLog.Description = station.Al_Door1 == true ? "Lệch cửa 1" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Fllow_Ho = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+
+                    //tinh toans
+                    station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
+
+                    //location.CalculatorValue.LuuLuongTong = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+                    location.CalculatorValue.LuuLuongTong = TinhToan((double)station.Fllow_Ho_Final);
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private double TinhToan(double tagValue)
+        {
+            return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+        }
+        
+      
+
+
+
+
+
+
+
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -1119,36 +6621,6 @@ namespace RegistrationForm1
 
             mn.Show();
 
-            //FrmHochua mn = new FrmHochua();
-            //OpenFormInPanel(mn, "Hồ chứa");
-            ////   FrmHochua   frm = new FrmHochua();
-            //  mn.UrlToLoad = "https://simc.id.vn/simc_esp/zdautieng.html";
-            //mn.Show();
-
-
-
-
-        }
-
-        public string GetDoor4_CloseValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Door4_Close").Value;
-        }
-
-
-
-        public string GetDoor5_OpenValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Open").Value;
-        }
-        public string GetDoor5_CloseValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door5_Close").Value;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private async void button4_Click(object sender, EventArgs e)
@@ -1156,20 +6628,7 @@ namespace RegistrationForm1
             await LoadRainfallStatsData();
         }
 
-        public string GetDoor6_OpenValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door6_Open").Value;
-        }
-        public string GetDoor6_CloseValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group3/Door6_Close").Value;
-        }
-
-        public string GetDoorlock1_OpeningValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_Opening").Value;
-        }
-
+   
         private void bntNhaplieu_Click(object sender, EventArgs e)
         {
             // Kiểm tra nếu chưa đăng nhập
@@ -1199,100 +6658,13 @@ namespace RegistrationForm1
             OpenFormInPanel(frm, "Chỉnh sửa dữ liệu");
         }
 
-        public string GetDoorlock1_ClosingValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock1_Closing").Value;
-        }
-        public string GetDoorlock2_OpeningValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock2_Opening").Value;
-        }
-        public string GetDoorlock2_ClosingValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group1/Doorlock2_Closing").Value;
-        }
-        public string GetDoorlock3_OpeningValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Doorlock3_Opening").Value;
-        }
-        public string GetDoorlock3_ClosingValue()
-        {
-            return ahdDriverConnector1.GetTag("Local Station/DauTieng/S71500/Group2/Doorlock3_Closing").Value;
-        }
+        
+        
+       
+        
+        
 
-        private void tm_login_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                // Hàm trợ giúp để chuyển đổi và xử lý giá trị
-                Func<string, decimal> processFlowValue = (valueString) =>
-                {
-                    decimal parsedValue;
-                    if (decimal.TryParse(valueString, out parsedValue))
-                    {
-                        return Math.Round(parsedValue, 2) / 100m;
-                    }
-                    else
-                    {
-                        // Xử lý trường hợp không thể chuyển đổi, ví dụ: log lỗi và trả về 0
-                        Console.Error.WriteLine($"Cảnh báo: Không thể chuyển đổi giá trị '{valueString}' sang Decimal. Sử dụng giá trị 0.");
-                        return 0m;
-                    }
-                };
-
-                var data = new DataVanHanhModel
-                {
-                    CreateAt = DateTime.Now,
-
-                    HT_Cylinder1_1 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder1_1"),
-                    HT_Cylinder1_2 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder1_2"),
-                    HT_Cylinder2_1 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder2_1"),
-                    HT_Cylinder2_2 = GetValue("Local Station/DauTieng/S71500/Group1/HT_Cylinder2_2"),
-                    HT_Cylinder3_1 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder3_1"),
-                    HT_Cylinder3_2 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder3_2"),
-                    HT_Cylinder4_1 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder4_1"),
-                    HT_Cylinder4_2 = GetValue("Local Station/DauTieng/S71500/Group2/HT_Cylinder4_2"),
-                    HT_Cylinder5_1 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder5_1"),
-                    HT_Cylinder5_2 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder5_2"),
-                    HT_Cylinder6_1 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder6_1"),
-                    HT_Cylinder6_2 = GetValue("Local Station/DauTieng/S71500/Group3/HT_Cylinder6_2"),
-
-                    Door1_Aperture = GetValue("Local Station/DauTieng/S71500/Group1/Door1_Aperture"),
-                    Door2_Aperture = GetValue("Local Station/DauTieng/S71500/Group1/Door2_Aperture"),
-                    Door3_Aperture = GetValue("Local Station/DauTieng/S71500/Group2/Door3_Aperture"),
-                    Door4_Aperture = GetValue("Local Station/DauTieng/S71500/Group2/Door4_Aperture"),
-                    Door5_Aperture = GetValue("Local Station/DauTieng/S71500/Group3/Door5_Aperture"),
-                    Door6_Aperture = GetValue("Local Station/DauTieng/S71500/Group3/Door6_Aperture"),
-
-                    Temp_Oil1 = GetValue("Local Station/DauTieng/S71500/Group1/Temp_Oil1"),
-                    Temp_Oil2 = GetValue("Local Station/DauTieng/S71500/Group2/Temp_Oil2"),
-                    Temp_Oil3 = GetValue("Local Station/DauTieng/S71500/Group3/Temp_Oil3"),
-
-                    Fllow_Door1 = GetValue("Local Station/DauTieng/S71500/Group1/Fllow_Door1"),
-                    Fllow_Door2 = GetValue("Local Station/DauTieng/S71500/Group1/Fllow_Door2"),
-                    Fllow_Door3 = GetValue("Local Station/DauTieng/S71500/Group2/Fllow_Door3"),
-                    Fllow_Door4 = GetValue("Local Station/DauTieng/S71500/Group2/Fllow_Door4"),
-                    Fllow_Door5 = GetValue("Local Station/DauTieng/S71500/Group3/Fllow_Door5"),
-                    Fllow_Door6 = GetValue("Local Station/DauTieng/S71500/Group3/Fllow_Door6"),
-
-                    Total_Fllow = GetValue("Local Station/DauTieng/S71500/Group1/Total_Fllow"),
-                    Fllow_Ho = GetValue("Local Station/DauTieng/S71500/Group4/Fllow_Ho"),
-                    // Áp dụng hàm trợ giúp cho các trường cần xử lý
-                    Fllow_DauTieng = processFlowValue(GetValue("Local Station/DauTieng/S71500/API/Fllow_DauTieng")),
-                    Fllow_BenSuc = processFlowValue(GetValue("Local Station/DauTieng/S71500/API/Fllow_BenSuc")),
-                    Fllow_SonDai = processFlowValue(GetValue("Local Station/DauTieng/S71500/API/Fllow_SonDai")),
-                    Fllow_BinhNham = GetValue("Local Station/DauTieng/S71500/API/Fllow_BinhNham"),
-                    Fllow_TL_CDD = GetValue("Local Station/DauTieng/S71500/API/Fllow_TL_CDD")
-                };
-
-                SQLLoginDataVanHanh.InsertDataVanHanh(data);
-                Console.WriteLine($"✅ Đã ghi DataVanHanh lúc {data.CreateAt}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ Lỗi ghi DataVanHanh: {ex.Message}");
-            }
-        }
+       
 
 
 
@@ -1429,6 +6801,12 @@ namespace RegistrationForm1
                 labDriverStatus.BackColor = Color.Red;
                 labDriverStatus.Text = "PLC Mất Kết Nối";
             }
+        }
+
+        private void bntThongtin_Click(object sender, EventArgs e)
+        {
+            FrmThongtin tt = new FrmThongtin();
+            OpenFormInPanel(tt, " CÁC THÔNG TIN CẬP NHẬT");
         }
     }
 }

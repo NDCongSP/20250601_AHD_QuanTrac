@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistrationForm1
+namespace Domain.Entities
 {
     /// <summary>
     /// Bảng chứa các thông tin cấu hình về lò của hệ thống, số lượng lò và tên lò.

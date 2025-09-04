@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 
-
 namespace Domain
 {
     /// <summary>
     /// nhiều vị trí ở các khu vực địa lý khác nhau.
     /// </summary>
-    public class LocationsModel : List<LocationInfoModel>
+    public class LocationsInfo : List<LocationInfoModel>
     {
 
     }
@@ -19,19 +18,17 @@ namespace Domain
         /// <summary>
         /// Id của vị trí.
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Tên của vị trí.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Mô tả về vị trí.
         /// </summary>
         public string? Description { get; set; }
 
         public List<StationInfoModel>? Stations { get; set; } = new List<StationInfoModel>();
-        public List<TagGroupAPI>? StationsAPI { get; set; } = new List<TagGroupAPI>();
-        public List<TagGroupSpecial>? StationsSpecial { get; set; } = new List<TagGroupSpecial>();
     }
 
     public class StationInfoModel
@@ -42,10 +39,12 @@ namespace Domain
         public int? Id { get; set; }
 
         public string? Name { get; set; }
-        public TagsModel? Tags { get; set; }
+        public TagsStation? Tags { get; set; }
         /// <summary>
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>
         public string? Path { get; set; }
+
+        public OffsetConfigModel OffsetConfig { get; set; } = new OffsetConfigModel();
     }
 }

@@ -35,6 +35,7 @@
             this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.bntThongtin = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.bntEditdata = new System.Windows.Forms.Button();
@@ -58,18 +59,29 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this.btnLoadStats = new System.Windows.Forms.Button();
+            this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
+            this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
+            this.dgvStats = new System.Windows.Forms.DataGridView();
+            this.dgvStations = new System.Windows.Forms.DataGridView();
+            this._labFlowHoFinal = new System.Windows.Forms.Label();
+            this._labFllowHo = new System.Windows.Forms.Label();
+            this._labALDoor1_Station3 = new System.Windows.Forms.Label();
+            this._labALDoor1_Station2 = new System.Windows.Forms.Label();
+            this._labALDoor1_Station1 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.lblStationsTitle = new System.Windows.Forms.Label();
-            this.dgvStations = new System.Windows.Forms.DataGridView();
-            this.dgvStats = new System.Windows.Forms.DataGridView();
             this.lblStatusMessage = new System.Windows.Forms.Label();
+            this._labALDoor2_Station1 = new System.Windows.Forms.Label();
+            this._labALDoor2_Station2 = new System.Windows.Forms.Label();
+            this._labALDoor2_Station3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
             this.panelDesktop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -94,7 +106,7 @@
             this.panel1.Controls.Add(this.label5);
             this.panel1.Location = new System.Drawing.Point(-1, -11);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1908, 116);
+            this.panel1.Size = new System.Drawing.Size(2725, 116);
             this.panel1.TabIndex = 5;
             // 
             // ahdPictureBox1
@@ -129,6 +141,7 @@
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Highlight;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.bntThongtin);
             this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.bntEditdata);
@@ -148,21 +161,31 @@
             this.panel2.Size = new System.Drawing.Size(200, 887);
             this.panel2.TabIndex = 6;
             // 
+            // bntThongtin
+            // 
+            this.bntThongtin.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntThongtin.Location = new System.Drawing.Point(-1, 61);
+            this.bntThongtin.Name = "bntThongtin";
+            this.bntThongtin.Size = new System.Drawing.Size(196, 50);
+            this.bntThongtin.TabIndex = 193;
+            this.bntThongtin.Text = "Thông tin";
+            this.bntThongtin.UseVisualStyleBackColor = true;
+            this.bntThongtin.Click += new System.EventHandler(this.bntThongtin_Click);
+            // 
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(-1, 744);
+            this.button3.Location = new System.Drawing.Point(-1, 803);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(196, 50);
             this.button3.TabIndex = 18;
             this.button3.Text = "Cống số 2";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(-1, 687);
+            this.button2.Location = new System.Drawing.Point(-1, 746);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(196, 50);
             this.button2.TabIndex = 17;
@@ -172,7 +195,7 @@
             // bntEditdata
             // 
             this.bntEditdata.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntEditdata.Location = new System.Drawing.Point(-1, 630);
+            this.bntEditdata.Location = new System.Drawing.Point(-1, 689);
             this.bntEditdata.Name = "bntEditdata";
             this.bntEditdata.Size = new System.Drawing.Size(196, 50);
             this.bntEditdata.TabIndex = 16;
@@ -183,7 +206,7 @@
             // bntNhaplieu
             // 
             this.bntNhaplieu.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntNhaplieu.Location = new System.Drawing.Point(-1, 573);
+            this.bntNhaplieu.Location = new System.Drawing.Point(-1, 632);
             this.bntNhaplieu.Name = "bntNhaplieu";
             this.bntNhaplieu.Size = new System.Drawing.Size(196, 50);
             this.bntNhaplieu.TabIndex = 15;
@@ -194,7 +217,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(-1, 60);
+            this.button1.Location = new System.Drawing.Point(-1, 119);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(196, 50);
             this.button1.TabIndex = 14;
@@ -205,7 +228,7 @@
             // bnt_User
             // 
             this.bnt_User.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_User.Location = new System.Drawing.Point(-1, 345);
+            this.bnt_User.Location = new System.Drawing.Point(-1, 404);
             this.bnt_User.Name = "bnt_User";
             this.bnt_User.Size = new System.Drawing.Size(196, 50);
             this.bnt_User.TabIndex = 13;
@@ -227,7 +250,7 @@
             // bnt_BaoCao
             // 
             this.bnt_BaoCao.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_BaoCao.Location = new System.Drawing.Point(-1, 288);
+            this.bnt_BaoCao.Location = new System.Drawing.Point(-1, 347);
             this.bnt_BaoCao.Name = "bnt_BaoCao";
             this.bnt_BaoCao.Size = new System.Drawing.Size(196, 50);
             this.bnt_BaoCao.TabIndex = 11;
@@ -238,7 +261,7 @@
             // bnt_CaiDat
             // 
             this.bnt_CaiDat.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_CaiDat.Location = new System.Drawing.Point(-1, 402);
+            this.bnt_CaiDat.Location = new System.Drawing.Point(-1, 461);
             this.bnt_CaiDat.Name = "bnt_CaiDat";
             this.bnt_CaiDat.Size = new System.Drawing.Size(196, 50);
             this.bnt_CaiDat.TabIndex = 10;
@@ -249,7 +272,7 @@
             // bnt_Exit
             // 
             this.bnt_Exit.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Exit.Location = new System.Drawing.Point(-1, 516);
+            this.bnt_Exit.Location = new System.Drawing.Point(-1, 575);
             this.bnt_Exit.Name = "bnt_Exit";
             this.bnt_Exit.Size = new System.Drawing.Size(196, 50);
             this.bnt_Exit.TabIndex = 9;
@@ -260,7 +283,7 @@
             // bnt_LogIn
             // 
             this.bnt_LogIn.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_LogIn.Location = new System.Drawing.Point(-1, 459);
+            this.bnt_LogIn.Location = new System.Drawing.Point(-1, 518);
             this.bnt_LogIn.Name = "bnt_LogIn";
             this.bnt_LogIn.Size = new System.Drawing.Size(196, 50);
             this.bnt_LogIn.TabIndex = 8;
@@ -271,7 +294,7 @@
             // bnt_TramMN
             // 
             this.bnt_TramMN.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_TramMN.Location = new System.Drawing.Point(-1, 174);
+            this.bnt_TramMN.Location = new System.Drawing.Point(-1, 233);
             this.bnt_TramMN.Name = "bnt_TramMN";
             this.bnt_TramMN.Size = new System.Drawing.Size(196, 50);
             this.bnt_TramMN.TabIndex = 7;
@@ -282,7 +305,7 @@
             // bnt_CanhBao
             // 
             this.bnt_CanhBao.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_CanhBao.Location = new System.Drawing.Point(-1, 231);
+            this.bnt_CanhBao.Location = new System.Drawing.Point(-1, 290);
             this.bnt_CanhBao.Name = "bnt_CanhBao";
             this.bnt_CanhBao.Size = new System.Drawing.Size(196, 50);
             this.bnt_CanhBao.TabIndex = 6;
@@ -293,7 +316,7 @@
             // bnt_Tran
             // 
             this.bnt_Tran.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Tran.Location = new System.Drawing.Point(-1, 116);
+            this.bnt_Tran.Location = new System.Drawing.Point(-1, 175);
             this.bnt_Tran.Name = "bnt_Tran";
             this.bnt_Tran.Size = new System.Drawing.Size(196, 50);
             this.bnt_Tran.TabIndex = 0;
@@ -366,27 +389,119 @@
             this.lblTime.TabIndex = 268;
             this.lblTime.Text = "Time";
             // 
-            // tm_login
-            // 
-            this.tm_login.Tick += new System.EventHandler(this.tm_login_Tick);
-            // 
-            // tm_loginMN
-            // 
-            this.tm_loginMN.Tick += new System.EventHandler(this.tm_loginMN_Tick);
-            // 
             // panelDesktop
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labALDoor2_Station3);
+            this.panelDesktop.Controls.Add(this._labALDoor2_Station2);
+            this.panelDesktop.Controls.Add(this._labALDoor2_Station1);
+            this.panelDesktop.Controls.Add(this.btnLoadStats);
+            this.panelDesktop.Controls.Add(this.dtpEndTime);
+            this.panelDesktop.Controls.Add(this.dtpStartTime);
+            this.panelDesktop.Controls.Add(this.dgvStats);
+            this.panelDesktop.Controls.Add(this.dgvStations);
+            this.panelDesktop.Controls.Add(this._labFlowHoFinal);
+            this.panelDesktop.Controls.Add(this._labFllowHo);
+            this.panelDesktop.Controls.Add(this._labALDoor1_Station3);
+            this.panelDesktop.Controls.Add(this._labALDoor1_Station2);
+            this.panelDesktop.Controls.Add(this._labALDoor1_Station1);
             this.panelDesktop.Controls.Add(this.button4);
             this.panelDesktop.Controls.Add(this.lblStationsTitle);
-            this.panelDesktop.Controls.Add(this.dgvStations);
-            this.panelDesktop.Controls.Add(this.dgvStats);
             this.panelDesktop.Controls.Add(this.lblStatusMessage);
             this.panelDesktop.Location = new System.Drawing.Point(192, 151);
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
+            // 
+            // btnLoadStats
+            // 
+            this.btnLoadStats.Location = new System.Drawing.Point(890, 152);
+            this.btnLoadStats.Name = "btnLoadStats";
+            this.btnLoadStats.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadStats.TabIndex = 192;
+            this.btnLoadStats.Text = "Load";
+            this.btnLoadStats.UseVisualStyleBackColor = true;
+            this.btnLoadStats.Visible = false;
+            // 
+            // dtpEndTime
+            // 
+            this.dtpEndTime.Location = new System.Drawing.Point(855, 94);
+            this.dtpEndTime.Name = "dtpEndTime";
+            this.dtpEndTime.Size = new System.Drawing.Size(200, 20);
+            this.dtpEndTime.TabIndex = 191;
+            this.dtpEndTime.Visible = false;
+            // 
+            // dtpStartTime
+            // 
+            this.dtpStartTime.Location = new System.Drawing.Point(855, 37);
+            this.dtpStartTime.Name = "dtpStartTime";
+            this.dtpStartTime.Size = new System.Drawing.Size(200, 20);
+            this.dtpStartTime.TabIndex = 190;
+            this.dtpStartTime.Visible = false;
+            // 
+            // dgvStats
+            // 
+            this.dgvStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStats.Location = new System.Drawing.Point(1085, 28);
+            this.dgvStats.Name = "dgvStats";
+            this.dgvStats.Size = new System.Drawing.Size(529, 255);
+            this.dgvStats.TabIndex = 189;
+            this.dgvStats.Visible = false;
+            // 
+            // dgvStations
+            // 
+            this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStations.Location = new System.Drawing.Point(306, 5);
+            this.dgvStations.Name = "dgvStations";
+            this.dgvStations.Size = new System.Drawing.Size(529, 290);
+            this.dgvStations.TabIndex = 188;
+            this.dgvStations.Visible = false;
+            // 
+            // _labFlowHoFinal
+            // 
+            this._labFlowHoFinal.AutoSize = true;
+            this._labFlowHoFinal.Location = new System.Drawing.Point(303, 373);
+            this._labFlowHoFinal.Name = "_labFlowHoFinal";
+            this._labFlowHoFinal.Size = new System.Drawing.Size(35, 13);
+            this._labFlowHoFinal.TabIndex = 187;
+            this._labFlowHoFinal.Text = "label2";
+            // 
+            // _labFllowHo
+            // 
+            this._labFllowHo.AutoSize = true;
+            this._labFllowHo.Location = new System.Drawing.Point(298, 327);
+            this._labFllowHo.Name = "_labFllowHo";
+            this._labFllowHo.Size = new System.Drawing.Size(35, 13);
+            this._labFllowHo.TabIndex = 186;
+            this._labFllowHo.Text = "label2";
+            // 
+            // _labALDoor1_Station3
+            // 
+            this._labALDoor1_Station3.AutoSize = true;
+            this._labALDoor1_Station3.Location = new System.Drawing.Point(127, 411);
+            this._labALDoor1_Station3.Name = "_labALDoor1_Station3";
+            this._labALDoor1_Station3.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor1_Station3.TabIndex = 185;
+            this._labALDoor1_Station3.Text = "label2";
+            // 
+            // _labALDoor1_Station2
+            // 
+            this._labALDoor1_Station2.AutoSize = true;
+            this._labALDoor1_Station2.Location = new System.Drawing.Point(127, 380);
+            this._labALDoor1_Station2.Name = "_labALDoor1_Station2";
+            this._labALDoor1_Station2.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor1_Station2.TabIndex = 184;
+            this._labALDoor1_Station2.Text = "label2";
+            // 
+            // _labALDoor1_Station1
+            // 
+            this._labALDoor1_Station1.AutoSize = true;
+            this._labALDoor1_Station1.Location = new System.Drawing.Point(127, 353);
+            this._labALDoor1_Station1.Name = "_labALDoor1_Station1";
+            this._labALDoor1_Station1.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor1_Station1.TabIndex = 183;
+            this._labALDoor1_Station1.Text = "label2";
             // 
             // button4
             // 
@@ -407,22 +522,6 @@
             this.lblStationsTitle.TabIndex = 178;
             this.lblStationsTitle.Text = "label2";
             // 
-            // dgvStations
-            // 
-            this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStations.Location = new System.Drawing.Point(143, 30);
-            this.dgvStations.Name = "dgvStations";
-            this.dgvStations.Size = new System.Drawing.Size(536, 150);
-            this.dgvStations.TabIndex = 177;
-            // 
-            // dgvStats
-            // 
-            this.dgvStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStats.Location = new System.Drawing.Point(745, 5);
-            this.dgvStats.Name = "dgvStats";
-            this.dgvStats.Size = new System.Drawing.Size(536, 308);
-            this.dgvStats.TabIndex = 176;
-            // 
             // lblStatusMessage
             // 
             this.lblStatusMessage.AutoSize = true;
@@ -432,12 +531,39 @@
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
             // 
+            // _labALDoor2_Station1
+            // 
+            this._labALDoor2_Station1.AutoSize = true;
+            this._labALDoor2_Station1.Location = new System.Drawing.Point(208, 353);
+            this._labALDoor2_Station1.Name = "_labALDoor2_Station1";
+            this._labALDoor2_Station1.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor2_Station1.TabIndex = 193;
+            this._labALDoor2_Station1.Text = "label2";
+            // 
+            // _labALDoor2_Station2
+            // 
+            this._labALDoor2_Station2.AutoSize = true;
+            this._labALDoor2_Station2.Location = new System.Drawing.Point(208, 386);
+            this._labALDoor2_Station2.Name = "_labALDoor2_Station2";
+            this._labALDoor2_Station2.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor2_Station2.TabIndex = 194;
+            this._labALDoor2_Station2.Text = "label2";
+            // 
+            // _labALDoor2_Station3
+            // 
+            this._labALDoor2_Station3.AutoSize = true;
+            this._labALDoor2_Station3.Location = new System.Drawing.Point(208, 411);
+            this._labALDoor2_Station3.Name = "_labALDoor2_Station3";
+            this._labALDoor2_Station3.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor2_Station3.TabIndex = 195;
+            this._labALDoor2_Station3.Text = "label2";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.ClientSize = new System.Drawing.Size(1779, 968);
             this.Controls.Add(this.labDriverStatus);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblTime);
@@ -460,8 +586,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
             this.panelDesktop.ResumeLayout(false);
             this.panelDesktop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -497,9 +623,21 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label lblStatusMessage;
-        private System.Windows.Forms.DataGridView dgvStats;
-        private System.Windows.Forms.DataGridView dgvStations;
         private System.Windows.Forms.Label lblStationsTitle;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label _labALDoor1_Station3;
+        private System.Windows.Forms.Label _labALDoor1_Station2;
+        private System.Windows.Forms.Label _labALDoor1_Station1;
+        private System.Windows.Forms.Label _labFlowHoFinal;
+        private System.Windows.Forms.Label _labFllowHo;
+        private System.Windows.Forms.Button btnLoadStats;
+        private System.Windows.Forms.DateTimePicker dtpEndTime;
+        private System.Windows.Forms.DateTimePicker dtpStartTime;
+        private System.Windows.Forms.DataGridView dgvStats;
+        private System.Windows.Forms.DataGridView dgvStations;
+        private System.Windows.Forms.Button bntThongtin;
+        private System.Windows.Forms.Label _labALDoor2_Station3;
+        private System.Windows.Forms.Label _labALDoor2_Station2;
+        private System.Windows.Forms.Label _labALDoor2_Station1;
     }
 }

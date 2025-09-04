@@ -8,6 +8,7 @@ using System.Data.SqlClient; // Thêm thư viện này để làm việc với S
 using System.Globalization; // Để sử dụng CultureInfo.InvariantCulture cho double.Parse
 using System.Diagnostics; // Vẫn giữ để nếu có Debug.Assert hay Debug.Fail thì vẫn dùng được, nhưng sẽ dùng Console.WriteLine cho log
 using Microsoft.Web.WebView2.WinForms;
+using System.Data;
 
 
 
@@ -15,7 +16,7 @@ namespace RegistrationForm1
 {
     public partial class FrmHochua : Form
     {
-        public static string connectionString => ConfigurationHelper.GetConnectionString();
+    //    public static string connectionString => ConfigurationHelper.GetConnectionString();
         // Khai báo các đối tượng Chart, ChartArea và Label ở cấp độ lớp
         private Chart chart;
         private ChartArea ca;
@@ -23,13 +24,12 @@ namespace RegistrationForm1
         private Label lblToaDo; // Label mới để hiển thị tọa độ X (Thời gian) và Y (Mực nước) khi rê chuột
         public string UrlToLoad { get; set; }
 
-
         // Bảng nội suy Z (Mực nước) và W (Giá trị tương ứng) được tải từ CSV
         private Dictionary<int, List<double>> interpolationLookupTable;
-        // Dictionary để lưu trữ các Series theo tên của chúng, giúp dễ dàng truy cập
         private Dictionary<string, Series> chartSeries;
-        // ContextMenuStrip cho menu popup
-        private ContextMenuStrip contextMenuStripSeriesVisibility;
+        private Dictionary<string, int> originalBorderWidths;
+        private Dictionary<string, int> originalMarkerSizes;
+        private Dictionary<string, Color> originalColors; // New: To store original colors for fading                                                         // Dữ liệu CSV thô được nhúng trực tiếp vào code
 
         // Dữ liệu CSV thô được nhúng trực tiếp vào code
         private readonly string csvInterpolationData = @"Z,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99
@@ -48,52 +48,199 @@ namespace RegistrationForm1
 25,1720,1722.32,1724.6399999999999,1726.9599999999998,1729.2799999999997,1731.5999999999997,1733.9199999999996,1736.2399999999996,1738.55999999995,1740.8799999999994,1743.2,1745.52,1747.84,1750.1599999999999,1752.4799999999998,1754.7999999999997,1757.11999999997,1759.4399999999996,1761.75999999995,1764.07999999995,1766.4,1768.72,1771.04,1773.36,1775.6799999999998,1777.9999999999998,1780.3199999999997,1782.6399999999996,1784.95999999996,1787.2799999999995,1789.6,1791.9199999999998,1794.2399999999998,1796.5599999999997,1798.87999999997,1801.1999999999996,1803.5199999999995,1805.8399999999995,1808.1599999999994,1810.4799999999993,1812.8,1815.12,1817.4399999999998,1819.7599999999998,1822.0799999999997,1824.3999999999996,1826.7199999999996,1829.0399999999995,1831.3599999999994,1833.6799999999994,1836,1838.32,1840.6399999999999,1842.9599999999998,1845.2799999999997,1847.5999999999997,1849.9199999999996,1852.2399999999996,1854.55999999995,1856.8799999999994,1859.2,1861.52,1863.84,1866.1599999999999,1868.4799999999998,1870.7999999999997,1873.11999999997,1875.4399999999996,1877.75999999995,1880.07999999995,1882.4,1884.72,1887.04,1889.36,1891.6799999999998,1893.9999999999998,1896.3199999999997,1898.6399999999996,1900.9599999999996,1903.2799999999995,1905.6,1907.9199999999998,1910.2399999999998,1912.5599999999997,1914.87999999997,1917.1999999999996,1919.5199999999995,1921.83999999995,1924.1599999999994,1926.4799999999993,1928.8,1931.12,1933.4399999999998,1935.7599999999998,1938.0799999999997,1940.3999999999996,1942.7199999999996,1945.0399999999995,1947.3599999999994,1949.6799999999994
 26,1952,1954.32,1956.6399999999999,1958.9599999999998,1961.2799999999997,1963.5999999999997,1965.9199999999996,1968.2399999999996,1970.55999999995,1972.8799999999994,1975.2,1977.52,1979.84,1982.1599999999999,1984.4799999999998,1986.7999999999997,1989.11999999997,1991.4399999999996,1993.75999999995,1996.07999999995,1998.4,2000.72,2003.04,2005.36,2007.6799999999998,2009.9999999999998,2012.3199999999997,2014.6399999999996,2016.95999999996,2019.2799999999995,2021.6,2023.9199999999998,2026.2399999999998,2028.55999999995,2030.8799999999997,2033.1999999999996,2035.5199999999995,2037.8399999999995,2040.1599999999994,2042.4799999999993,2044.8,2047.12,2049.44,2051.76,2054.0800000000004,2056.4000000000005,2058.7200000000007,2061.0400000000009,2063.360000000001,2065.6800000000012,2068,2070.32,2072.6400000000003,2074.9600000000005,2077.2800000000007,2079.6000000000008,2081.920000000001,2084.2400000000011,2086.5600000000013,2088.8800000000015,2091.2,2093.56,2095.92,2098.28,2100.6400000000003,2103.0000000000005,2105.3600000000006,2107.7200000000007,2110.0800000000008,2112.440000000001,2114.8,2117.1200000000003,2119.4400000000005,2121.7600000000007,2124.0800000000008,2126.400000000001,2128.7200000000012,2131.0400000000013,2133.3600000000015,2135.6800000000017,2138,2140.32,2142.6400000000003,2144.9600000000005,2147.2800000000007,2149.6000000000008,2151.920000000001,2154.2400000000011,2156.5600000000013,2158.8800000000015,2161.2,2163.52,2165.84,2168.1600000000003,2170.4800000000005,2172.8000000000006,2175.1200000000008,2177.440000000001,2179.7600000000011,2182.0800000000013";
 
+
+        // Mảng các ngày cố định đã sử dụng để vẽ các đường.
+        private DateTime[] fixedDatesForCurves;
+        // Dữ liệu tương ứng cho HCCN và DPPH
+        private double[] hccnValuesForCurves;
+        private double[] dpphValuesForCurves;
+        private double[] dplValuesForCurves; // New member variable for DPL values
+        private Timer dataRefreshTimer; // Khai báo một đối tượng Timer
+
         public FrmHochua()
         {
             InitializeComponent();
-
+            InitializeLabels(); // Khởi tạo và thêm các label vào Form
             LoadInterpolationTable(); // Tải bảng nội suy khi khởi tạo Form
             LoadChart(); // Tải biểu đồ
-            SetupSeriesVisibilityControls(); // Thiết lập các điều khiển hiển thị series (giờ là menu popup)
 
-            // Gắn sự kiện SizeChanged cho form để cập nhật vị trí lblZ và lblToaDo khi form thay đổi kích thước
-            this.SizeChanged += FrmHochua_SizeChanged;
-            UpdateLabelPositions(); // Cập nhật vị trí ban đầu sau khi chart đã được thêm vào form
+            // Gắn sự kiện SizeChanged cho Form để cập nhật vị trí các controls khi Form thay đổi kích thước
+            this.SizeChanged += (sender, e) => AdjustLayout();
+            AdjustLayout(); // Cập nhật vị trí ban đầu sau khi controls đã được thêm vào form
+            LoadAllRainDataWithTimestamp();
+            InitializeTimer(); // Khởi tạo và cấu hình Timer
+            this.Shown += FrmHochua_Shown;
+          
 
         }
-        private void UpdateLabelPositions()
+       
+        private void InitializeTimer()
         {
-            if (chart != null && lblZ != null && lblToaDo != null)
+            dataRefreshTimer = new Timer();
+            dataRefreshTimer.Interval = 10 * 60 * 1000; // 10 phút (10 * 60 giây * 1000 mili giây)
+            dataRefreshTimer.Tick += DataRefreshTimer_Tick; // Gán sự kiện Tick
+            dataRefreshTimer.Start(); // Bắt đầu Timer
+        }
+        private void DataRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            LoadAllRainDataWithTimestamp(); // Tải lại dữ liệu khi Timer Tick
+        }
+        private void LoadAllRainDataWithTimestamp()
+        {
+
+            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+
+            // Câu truy vấn SQL để lấy bản ghi mới nhất cho mỗi StationID, bao gồm cả cột Name (tên trạm).
+            // Dựa trên thông tin bạn cung cấp, cột tên trạm là 'Name' và nằm trong bảng RealtimeQTM.
+            string query = @"
+         WITH RankedRainData AS (
+             SELECT
+                 StationID,
+                 Name AS StationName, -- Lấy cột 'Name' và đặt biệt danh là 'StationName' để dễ sử dụng
+                 Depth, -- Tương ứng với InstantaneousRain
+                 AccumulatedDepth, -- Tương ứng với TotalRain
+                 RecordedAt, -- Tương ứng với Timestamp
+                 ROW_NUMBER() OVER (PARTITION BY StationID ORDER BY RecordedAt DESC) as rn
+             FROM
+                 RealtimeQTM
+         )
+         SELECT
+             StationID,
+             StationName, -- Đã thêm cột StationName (từ Name) vào kết quả cuối cùng
+             Depth,
+             AccumulatedDepth,
+             RecordedAt
+         FROM
+             RankedRainData
+         WHERE
+             rn = 1
+         ORDER BY StationID ASC; -- Sắp xếp theo ID Trạm
+     ";
+
+            // Tạo một DataTable để lưu trữ dữ liệu từ truy vấn
+            DataTable dt = new DataTable();
+
+            // Sử dụng khối 'using' để đảm bảo rằng các đối tượng SqlConnection và SqlCommand được đóng và giải phóng tài nguyên đúng cách
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                // Cập nhật vị trí của lblZ (trên cùng), đảm bảo nó luôn được căn giữa theo chiều ngang của form
-                lblZ.Location = new Point((this.ClientSize.Width - lblZ.Width) / 2, 380);
-                lblZ.BringToFront();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        // Mở kết nối đến cơ sở dữ liệu
+                        connection.Open();
 
-                // Cập nhật vị trí của lblToaDo (ngay dưới lblZ), cũng được căn giữa
-                lblToaDo.Location = new Point((this.ClientSize.Width - lblToaDo.Width) / 2, lblZ.Location.Y + lblZ.Height + 5);
-                lblToaDo.BringToFront();
+                        // Tạo một SqlDataAdapter để thực thi câu lệnh SQL và điền dữ liệu vào DataTable
+                        SqlDataAdapter adapter = new SqlDataAdapter(command);
+                        adapter.Fill(dt); // Điền dữ liệu vào DataTable
+
+                        // Gán DataTable làm nguồn dữ liệu cho DataGridView
+                        // Điều này sẽ tự động tạo các cột và hiển thị dữ liệu
+                        dataGridViewRainData.DataSource = dt;
+
+                        // Tùy chỉnh hiển thị tiêu đề cột trong DataGridView
+                        if (dataGridViewRainData.Columns.Contains("StationID"))
+                        {
+                            dataGridViewRainData.Columns["StationID"].HeaderText = "Trạm";
+                        }
+                        if (dataGridViewRainData.Columns.Contains("StationName")) // Thêm tùy chỉnh cho cột StationName
+                        {
+                            dataGridViewRainData.Columns["StationName"].HeaderText = "Tên";
+                        }
+                        if (dataGridViewRainData.Columns.Contains("Depth")) // Cập nhật tên cột
+                        {
+                            dataGridViewRainData.Columns["Depth"].HeaderText = "Tức Thời";
+                        }
+                        if (dataGridViewRainData.Columns.Contains("AccumulatedDepth")) // Cập nhật tên cột
+                        {
+                            dataGridViewRainData.Columns["AccumulatedDepth"].HeaderText = "Tổng Tích Lũy";
+                            // ĐỊNH DẠNG CỘT NÀY CHỈ HIỂN THỊ 2 SỐ THẬP PHÂN
+                            dataGridViewRainData.Columns["AccumulatedDepth"].DefaultCellStyle.Format = "N2";
+                        }
+                        if (dataGridViewRainData.Columns.Contains("RecordedAt")) // Cập nhật tên cột
+                        {
+                            dataGridViewRainData.Columns["RecordedAt"].HeaderText = "Thời Gian";
+                            // Tùy chọn: Định dạng hiển thị thời gian
+                            dataGridViewRainData.Columns["RecordedAt"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
+                        }
+                        // Đặt chế độ tự động điều chỉnh kích thước cột
+                        //       dataGridViewRainData.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+                    }
+                    catch (SqlException ex)
+                    {
+                        // Xử lý các lỗi liên quan đến SQL (ví dụ: sai chuỗi kết nối, bảng không tồn tại)
+                        MessageBox.Show("Lỗi SQL: " + ex.Message, "Lỗi Cơ sở Dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Xử lý các lỗi khác
+                        MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
-        }
-        /// <summary>
-        /// Xử lý sự kiện khi kích thước của form thay đổi để cập nhật vị trí các nhãn.
-        /// </summary>
-        private void FrmHochua_SizeChanged(object sender, EventArgs e)
-        {
-            UpdateLabelPositions(); // Gọi phương thức cập nhật vị trí cho cả hai nhãn
         }
 
         /// <summary>
         /// Tải và phân tích dữ liệu bảng nội suy từ chuỗi CSV.
         /// Bảng có dạng Z (phần nguyên) ở cột đầu tiên, và W ở các cột .00 đến .99.
         /// </summary>
+        private void InitializeLabels()
+        {
+            // KHỞI TẠO VÀ CẤU HÌNH LABEL lblZ
+            lblZ = new Label();
+            lblZ.AutoSize = true;
+            lblZ.Font = new Font("Arial", 10, FontStyle.Bold);
+            lblZ.ForeColor = Color.DarkOrange;
+            this.Controls.Add(lblZ); // Thêm Label trực tiếp vào Form
+
+            // KHỞI TẠO VÀ CẤU HÌNH LABEL lblToaDo
+            lblToaDo = new Label();
+            lblToaDo.Text = "Rê chuột để xem tọa độ và dung tích";
+            lblToaDo.AutoSize = true;
+            lblToaDo.Font = new Font("Arial", 10, FontStyle.Bold);
+            lblToaDo.ForeColor = Color.DarkGreen;
+            this.Controls.Add(lblToaDo); // Thêm Label trực tiếp vào Form
+        }
+        private void AdjustLayout()
+        {
+            // Một khoảng cách nhỏ từ phía trên Form để các label không bị dính sát
+            int topPadding = 365;
+            int labelMargin = 17; // Khoảng cách giữa các labels
+
+            // Cập nhật vị trí của lblZ (trên cùng), căn giữa theo chiều ngang của Form
+            lblZ.Location = new Point((this.ClientSize.Width - lblZ.Width) / 2, topPadding);
+            lblZ.BringToFront(); // Đảm bảo lblZ luôn ở trên cùng
+
+            // Cập nhật vị trí của lblToaDo (ngay dưới lblZ), cũng được căn giữa
+            lblToaDo.Location = new Point((this.ClientSize.Width - lblToaDo.Width) / 2, lblZ.Bottom + labelMargin);
+            lblToaDo.BringToFront(); // Đảm bảo lblToaDo luôn ở trên cùng
+
+            // Cấu hình vị trí và kích thước của Chart
+            if (chart != null)
+            {
+                // Chiều cao toàn bộ form
+                int totalFormHeight = this.ClientSize.Height;
+
+                // Chiều cao biểu đồ là 2/3 tổng chiều cao form
+                int chartHeight = (int)(totalFormHeight * (2.0 / 3.0));
+
+                // Vị trí top của biểu đồ để nó nằm dưới cùng và chiếm 2/3 tổng chiều cao
+                int chartTop = totalFormHeight - chartHeight;
+
+                chart.Location = new Point(0, chartTop);
+                chart.Size = new Size(this.ClientSize.Width, chartHeight);
+                chart.SendToBack(); // Đảm bảo biểu đồ nằm dưới các label
+            }
+        }
+
         private void LoadInterpolationTable()
         {
             interpolationLookupTable = new Dictionary<int, List<double>>();
 
             // Tách các dòng từ dữ liệu CSV
             string[] lines = csvInterpolationData.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-            // Bỏ qua các dòng tiêu đề (ví dụ 3 dòng đầu tiên, hoặc tìm dòng bắt đầu bằng "Z,")
+            // Bỏ qua các dòng tiêu đề (ví dụ 3 dòng đầu tiên, hoặc tìm dòng bắt đầu bằng "Z,").
             int dataStartLine = 0;
             for (int i = 0; i < lines.Length; i++)
             {
@@ -129,71 +276,69 @@ namespace RegistrationForm1
                 }
             }
         }
+
         private void LoadChart()
         {
-              chart = new Chart(); // Khởi tạo đối tượng chart
-            // DockFill sẽ giúp biểu đồ lấp đầy không gian còn lại sau khi các Labels đã được đặt
-            //     chart.Dock = DockStyle.Bottom;
-            chart.Dock = DockStyle.Bottom; // Đặt biểu đồ lấp đầy không gian còn lại của form
-            chart.Height = this.ClientSize.Height - 350; // Đặt chiều cao biểu đồ để tránh che khuất các nhãn
-            chart.Width = this.ClientSize.Width; // Đặt chiều rộng biểu đồ bằng chiều rộng của form
-            chart.BackColor = Color.White; // Đặt màu nền của biểu đồ
-            chart.BorderlineColor = Color.Black; // Đặt màu viền của biểu đồ
-            chart.BorderlineDashStyle = ChartDashStyle.Solid; // Đặt kiểu đường viền là đường liền
-            chart.BorderlineWidth = 2; // Đặt độ dày viền của biểu đồ
-            chart.Palette = ChartColorPalette.BrightPastel; // Đặt bảng màu cho biểu đồ
+            chart = new Chart(); // Khởi tạo đối tượng chart
+            this.Controls.Add(chart); // Thêm chart trực tiếp vào Form
 
-
-
-            this.Controls.Add(chart);
-            
             ca = new ChartArea(); // Khởi tạo đối tượng chart area
             chart.ChartAreas.Add(ca);
 
+            // Cấu hình InnerPlotPosition để đảm bảo vùng vẽ dữ liệu có đủ không gian
+            // Giá trị là % của ChartArea (Left, Top, Right, Bottom)
+            ca.InnerPlotPosition.Auto = false;
+            ca.InnerPlotPosition.Width = 95;  // Tăng nhẹ chiều rộng để có thêm không gian cho nhãn cuối
+            ca.InnerPlotPosition.Height = 80;
+            ca.InnerPlotPosition.X = 3;
+            ca.InnerPlotPosition.Y = 8;
+            // Đặt màu nền cho ChartArea để đảm bảo masking layer hoạt động chính xác
+            ca.BackColor = Color.GhostWhite;
 
-            // KHỞI TẠO VÀ CẤU HÌNH LABEL lblZ
-            lblZ = new Label();
-            lblZ.AutoSize = true;
-            lblZ.Font = new Font("Arial", 14, FontStyle.Bold); // Đã tăng font size
-            lblZ.ForeColor = Color.DarkOrange; // Đặt màu chữ cho dễ nhìn
-            lblZ.BackColor = Color.LightYellow; // Đặt màu nền để kiểm tra vùng hiển thị
-            this.Controls.Add(lblZ); // Thêm Label vào Form
-            lblZ.Visible = true; // Đảm bảo label hiển thị ngay lập tức
-
-            // KHỞI TẠO VÀ CẤU HÌNH LABEL lblToaDo
-            lblToaDo = new Label();
-            lblToaDo.Text = "Rê chuột để xem tọa độ và dung tích"; // Text mặc định ban đầu
-            lblToaDo.AutoSize = true;
-            lblToaDo.Font = new Font("Arial", 12, FontStyle.Bold);
-            lblToaDo.ForeColor = Color.DarkGreen; // Đặt màu chữ khác để phân biệt
-            this.Controls.Add(lblToaDo); // Thêm Label vào Form
-            lblToaDo.Visible = true; // Đảm bảo label hiển thị ngay lập tức
-
-            // Đăng ký sự kiện DoubleClick cho Chart
-            chart.MouseDoubleClick += Chart_MouseDoubleClick;
 
             // Thêm sự kiện MouseMove cho chart để hiển thị giá trị Z/W và tọa độ khi rê chuột
             chart.MouseMove += chart_MouseMove;
             // Thêm sự kiện MouseLeave để ẩn hoặc reset nhãn khi chuột rời biểu đồ
             chart.MouseLeave += chart_MouseLeave;
+            // Thêm sự kiện MouseClick để xử lý việc ẩn/hiện series bằng cách click vào LegendItem
+            chart.MouseClick += chart_MouseClick;
+
 
             // Năm ảo để cố định trục X
             int baseYear = 2025;
             DateTime startDate = new DateTime(baseYear, 7, 1);
-            DateTime endDate = new DateTime(baseYear + 1, 6, 30);
+            DateTime endDate = new DateTime(baseYear + 1, 6, 30); // Ngày kết thúc: 30/06 năm sau
 
-            // Nới thêm 1 ngày để đảm bảo 30/6 nằm trong phạm vi biểu đồ
+            // Đảm bảo trục X hiển thị tới hết ngày 30/06
             ca.AxisX.Minimum = startDate.ToOADate();
-            ca.AxisX.Maximum = endDate.AddDays(1).ToOADate();
+            ca.AxisX.Maximum = endDate.ToOADate(); // Đặt max chính xác là ngày 30/06
 
             // Cấu hình hiển thị nhãn trục X
             ca.AxisX.LabelStyle.Enabled = true;
-            ca.AxisX.MajorGrid.LineColor = Color.LightGray;
-            ca.AxisX.Interval = 5; // Vẫn giữ interval 5 ngày cho đường lưới chính
-            ca.AxisX.LabelStyle.IsStaggered = true; // Giúp các nhãn hiển thị so le
-            ca.AxisX.LabelStyle.Angle = -45; // Xoay nhãn trục X một góc -45 độ
-            ca.AxisX.LabelStyle.Font = new Font("Arial", 8); // GIẢM KÍCH THƯỚC PHÔNG CHỮ NHÃN TRỤC X
-            ca.AxisX.LabelStyle.ForeColor = Color.Blue; // Đặt màu cho nhãn trục X thành màu xanh dương
+
+            // Cấu hình đường lưới chính trục X
+            ca.AxisX.MajorGrid.Enabled = true;
+            ca.AxisX.MajorGrid.LineColor = Color.LightGray; // Làm mờ đường lưới trục X
+            ca.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash; // Đặt nét đứt cho đường lưới trục X
+
+            // Cấu hình đường trục X chính
+            ca.AxisX.LineColor = Color.Gainsboro; // Làm mờ đường trục X
+            ca.AxisX.LineDashStyle = ChartDashStyle.Dash; // Đặt nét đứt cho đường trục X
+
+            ca.AxisX.MajorGrid.IntervalType = DateTimeIntervalType.Days;
+            ca.AxisX.MajorGrid.Interval = 10;
+
+            ca.AxisX.MajorTickMark.Enabled = true;
+            ca.AxisX.MajorTickMark.IntervalType = DateTimeIntervalType.Days;
+            ca.AxisX.MajorTickMark.Interval = 10;
+
+            ca.AxisX.LabelStyle.IntervalType = DateTimeIntervalType.Days;
+            ca.AxisX.LabelStyle.Interval = 10;
+            ca.AxisX.LabelStyle.IsStaggered = true;
+            ca.AxisX.LabelStyle.Angle = -45;
+            ca.AxisX.LabelStyle.Font = new Font("Arial", 8);
+            ca.AxisX.LabelStyle.ForeColor = Color.Blue;
+            ca.AxisX.LabelStyle.Format = "dd/MM";
 
             ca.AxisY.Minimum = 17;
             ca.AxisY.Maximum = 28;
@@ -201,16 +346,29 @@ namespace RegistrationForm1
             ca.AxisY.Title = "Mực nước (m)";
             ca.AxisX.Title = "Thời gian";
 
+            // Cấu hình đường lưới chính trục Y
+            ca.AxisY.MajorGrid.LineColor = Color.LightGray; // Làm mờ đường lưới trục Y
+            ca.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash; // Đặt nét đứt cho đường lưới trục Y
+
+            // Cấu hình đường trục Y chính
+            ca.AxisY.LineColor = Color.Gainsboro; // Làm mờ đường trục Y
+            ca.AxisY.LineDashStyle = ChartDashStyle.Dash; // Đặt nét đứt cho đường trục Y
+
+
             // Thêm Legend xuống dưới
             Legend legend = new Legend();
             legend.Docking = Docking.Bottom;
             legend.Alignment = StringAlignment.Center;
             chart.Legends.Add(legend);
 
-            // Khởi tạo Dictionary để lưu trữ các Series
+            // Khởi tạo Dictionary để lưu trữ các Series và các thuộc tính gốc để ẩn/hiện đường
             chartSeries = new Dictionary<string, Series>();
+            originalBorderWidths = new Dictionary<string, int>();
+            originalMarkerSizes = new Dictionary<string, int>();
+            originalColors = new Dictionary<string, Color>(); // Khởi tạo dictionary màu sắc gốc
 
-            // Dữ liệu trục X cho các series cứng
+
+            // Dữ liệu trục X cho các series cứng (local copy)
             DateTime[] fixedDates = {
                 new DateTime(baseYear, 7, 1), new DateTime(baseYear, 7, 15), new DateTime(baseYear, 7, 16), new DateTime(baseYear, 7, 31),
                 new DateTime(baseYear, 8, 1), new DateTime(baseYear, 8, 15), new DateTime(baseYear, 8, 16), new DateTime(baseYear, 8, 31),
@@ -225,253 +383,526 @@ namespace RegistrationForm1
                 new DateTime(baseYear + 1, 6, 1), new DateTime(baseYear + 1, 6, 11), new DateTime(baseYear + 1, 6, 21), new DateTime(baseYear + 1, 6, 30)
             };
 
-            // Dữ liệu HCCN (giữ nguyên)
-            double[] hccnValues = {
+            // GÁN DỮ LIỆU TỪ CÁC MẢNG CỤC BỘ VÀO CÁC MẢNG CẤP LỚP
+            fixedDatesForCurves = fixedDates; // Gán mảng DateTime
+            hccnValuesForCurves = new double[] {
                 17.00,17.17,17.17,17.33,17.33,17.57,17.57,17.80,17.80,18.68,18.68,19.56,19.56,20.38,20.38,21.20,
                 21.20,21.67,21.60,21.55,21.50,21.21,21.03,20.81,20.51,20.21,19.97,19.46,19.03,18.59,18.28,17.98,
                 17.70,17.48,17.45,17.40,17.38,17.35,17.00
             };
-
-            // Dữ liệu DPPH (giữ nguyên)
-            double[] dpphValues = {
+            dpphValuesForCurves = new double[] {
                 19.00,19.20,19.24,19.40,19.47,19.90,19.96,20.40,20.45,21.30,21.35,22.15,22.24,23.00,23.09,23.80,23.93,
-                24.40,24.40,24.40,24.40,24.19,23.99,23.80,23.34,22.92,22.62,22.12,21.66,21.21,20.84,20.51,20.21,20.03,19.86,19.69,19.44,19.21,19.00,
+                24.40,24.40,24.40,24.40,24.19,23.99,23.80,23.34,22.92,22.62,22.12,21.66,21.21,20.84,20.51,20.21,20.03,19.86,19.69,19.44,19.21,19.00
             };
-            // Dữ liệu ĐPL (đã thêm đủ giá trị để khớp với dates.Length (41 phần tử))
-            double[] dplValues = {
+            dplValuesForCurves = new double[] {
                 20.30,21.20,21.20,22.10,22.10,22.70,22.70,23.30,23.30,23.65,23.65,24.00,24.00,24.40,24.40,24.40,24.40,
-                24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40,
-                24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40, 24.40,
-                24.40, 24.40, 24.40
+                24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,
+                24.40,24.40,24.40,24.40,24.40
             };
 
-            //Dữ liệu MNDBT (giữ nguyên)
+            // Dữ liệu MNDBT (39 phần tử)
             double[] mndbtValues = {
                 24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,
                 24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,
                 24.40,24.40,24.40,24.40,24.40,24.40,24.40
             };
-            //Dữ liệu MNTK (giữ nguyên)
+            // Dữ liệu MNTK (39 phần tử)
             double[] mntkValues = {
                 25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,
                 25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,
                 25.10,25.10,25.10,25.10,25.10,25.10,25.10
             };
-            //Dữ liệu MNKT (giữ nguyên)
+            // Dữ liệu MNKT (39 phần tử)
             double[] mnktValues = {
                 26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,
                 26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,
                 26.92,26.92,26.92,26.92,26.92,26.92,26.92
             };
-            //Dữ liệu CTĐĐ (giữ nguyên)
+            // Dữ liệu CTĐĐ (39 phần tử)
             double[] ctddValues = {
                 28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,
                 28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,
                 28.00,28.00,28.00,28.00,28.00,28.00,28.00
             };
-            // Dữ liệu MNC (giữ nguyên)
+            // Dữ liệu MNC (39 phần tử)
             double[] mncValues = {
                 17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,
                 17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,
                 17.00,17.00,17.00,17.00,17.00,17.00,17.00
             };
+            // Tính toán giá trị mực nước thấp nhất của đường HCCN (17.00m)
+            double minHCCNValue = hccnValuesForCurves.Min();
+
+
+            // Xóa tất cả các series hiện có trước khi thêm lại
+            chart.Series.Clear();
+            chart.Annotations.Clear(); // Xóa tất cả các Annotation hiện có
+
+            // --- Vùng A: Vùng hạn chế cấp nước (Red Area: HCCN xuống 17.00m) ---
+            Series areaSeriesARed = new Series("Vùng A: Vùng hạn chế cấp nước")
+            {
+                ChartType = SeriesChartType.Area,
+                Color = Color.FromArgb(80, Color.Red), // Đổi màu Vùng A sang đỏ, CÓ trong suốt (alpha = 80)
+                BorderWidth = 0,
+                IsVisibleInLegend = true,
+                LegendText = "Vùng A: Vùng hạn chế cấp nước", // Hiển thị tên đầy đủ
+                ToolTip = "" // Vô hiệu hóa ToolTip trực tiếp cho Area Series
+            };
+
+            for (int i = 0; i < fixedDatesForCurves.Length; i++)
+            {
+                // Chỉ tô màu nếu HCCN trên mức 17.00m. Tô từ HCCN xuống 17.00m.
+                if (hccnValuesForCurves[i] > minHCCNValue)
+                {
+                    areaSeriesARed.Points.Add(new DataPoint(fixedDatesForCurves[i].ToOADate(), new double[] { hccnValuesForCurves[i], minHCCNValue }));
+                }
+                else
+                {
+                    // Thêm điểm với chiều cao vùng bằng 0 để duy trì tính liên tục của Series
+                    areaSeriesARed.Points.Add(new DataPoint(fixedDatesForCurves[i].ToOADate(), new double[] { minHCCNValue, minHCCNValue }));
+                }
+            }
+            // --- Vùng B: Cấp nước bình thường (Green Area) ---
+            Series areaSeriesBGreen = new Series("Vùng B: Cấp nước bình thường")
+            {
+                ChartType = SeriesChartType.Area,
+                Color = Color.FromArgb(80, Color.Green), // Đổi màu Vùng B sang xanh lá, CÓ trong suốt (alpha = 80)
+                BorderWidth = 0,
+                IsVisibleInLegend = true,
+                LegendText = "Vùng B: Cấp nước bình thường", // Hiển thị tên đầy đủ
+                ToolTip = "" // Vô hiệu hóa ToolTip trực tiếp cho Area Series
+            };
+
+            for (int i = 0; i < fixedDatesForCurves.Length; i++)
+            {
+                double currentDPPH = dpphValuesForCurves[i];
+                double currentHCCN = hccnValuesForCurves[i];
+                // Ranh giới dưới của vùng xanh: giờ là đường HCCN
+                double greenLowerBound = currentHCCN; // Đã thay đổi theo yêu cầu
+
+                // Chỉ tô màu xanh nếu DPPH trên ranh giới dưới đã tính toán
+                if (currentDPPH > greenLowerBound)
+                {
+                    areaSeriesBGreen.Points.Add(new DataPoint(fixedDatesForCurves[i].ToOADate(), new double[] { currentDPPH, greenLowerBound }));
+                }
+                else
+                {
+                    // Thêm điểm với chiều cao vùng bằng 0 để duy trì tính liên tục của Series
+                    areaSeriesBGreen.Points.Add(new DataPoint(fixedDatesForCurves[i].ToOADate(), new double[] { greenLowerBound, greenLowerBound }));
+                }
+            }
+            // --- Vùng C: Cấp nước gia tăng (Blue Area) ---
+            Series areaSeriesCBlue = new Series("Vùng C: Cấp nước gia tăng")
+            {
+                ChartType = SeriesChartType.Area,
+                Color = Color.FromArgb(80, Color.LightBlue), // Choose a light blue color for Vùng C, CÓ trong suốt (alpha = 80)
+                BorderWidth = 0,
+                IsVisibleInLegend = true,
+                LegendText = "Vùng C: Cấp nước gia tăng", // Hiển thị tên đầy đủ
+                ToolTip = ""
+            };
+
+            for (int i = 0; i < fixedDatesForCurves.Length; i++)
+            {
+                double currentDPL = dplValuesForCurves[i];
+                double currentDPPH = dpphValuesForCurves[i];
+
+                // Only draw the area if DPL is above DPPH
+                if (currentDPL > currentDPPH)
+                {
+                    areaSeriesCBlue.Points.Add(new DataPoint(fixedDatesForCurves[i].ToOADate(), new double[] { currentDPL, currentDPPH }));
+                }
+                else
+                {
+                    // Add a point with zero height area to maintain continuity if DPL <= DPPH
+                    areaSeriesCBlue.Points.Add(new DataPoint(fixedDatesForCurves[i].ToOADate(), new double[] { currentDPPH, currentDPPH }));
+                }
+            }
+
+            // --- Thêm các Area Series theo thứ tự (Vùng C cao nhất, rồi B, rồi A thấp nhất) ---
+            chart.Series.Add(areaSeriesCBlue); // Vùng C (Cấp nước gia tăng) - Topmost
+            chartSeries.Add(areaSeriesCBlue.Name, areaSeriesCBlue);
+            originalColors.Add(areaSeriesCBlue.Name, Color.FromArgb(80, Color.LightBlue)); // Lưu màu sắc gốc (trong suốt)
+
+            chart.Series.Add(areaSeriesBGreen); // Vùng B (Cấp nước bình thường) - Middle
+            chartSeries.Add(areaSeriesBGreen.Name, areaSeriesBGreen);
+            originalColors.Add(areaSeriesBGreen.Name, Color.FromArgb(80, Color.Green)); // Lưu màu sắc gốc (trong suốt)
+
+            chart.Series.Add(areaSeriesARed); // Vùng A (Hạn chế cấp nước) - Bottommost
+            chartSeries.Add(areaSeriesARed.Name, areaSeriesARed);
+            originalColors.Add(areaSeriesARed.Name, Color.FromArgb(80, Color.Red)); // Lưu màu sắc gốc (trong suốt)
+
+
+
 
             // Thêm series MNC và lưu vào dictionary
-            Series mnc = CreateSeries("MNC", Color.Black, MarkerStyle.Circle, fixedDates, mncValues, baseYear);
+            Series mnc = CreateSeries("MNC", Color.Black, MarkerStyle.Circle, fixedDates, mncValues);
             chart.Series.Add(mnc);
             chartSeries.Add(mnc.Name, mnc);
 
             // Thêm series CTĐĐ
-            Series ctdd = CreateSeries("CTĐĐ", Color.Red, MarkerStyle.Star4, fixedDates, ctddValues, baseYear);
+            Series ctdd = CreateSeries("CTĐĐ", Color.Red, MarkerStyle.Star4, fixedDates, ctddValues);
             chart.Series.Add(ctdd);
             chartSeries.Add(ctdd.Name, ctdd);
 
             // Thêm series MNKT
-            Series mnkt = CreateSeries("MNKT", Color.DarkGoldenrod, MarkerStyle.Triangle, fixedDates, mnktValues, baseYear);
+            Series mnkt = CreateSeries("MNKT", Color.DarkGoldenrod, MarkerStyle.Triangle, fixedDates, mnktValues);
             chart.Series.Add(mnkt);
             chartSeries.Add(mnkt.Name, mnkt);
 
             // Thêm series MNTK
-            Series mntk = CreateSeries("MNTK", Color.Yellow, MarkerStyle.Diamond, fixedDates, mntkValues, baseYear);
+            Series mntk = CreateSeries("MNTK", Color.Yellow, MarkerStyle.Diamond, fixedDates, mntkValues);
             chart.Series.Add(mntk);
             chartSeries.Add(mntk.Name, mntk);
 
             // Thêm series MNDBT
-            Series mndbt = CreateSeries("MNDBT", Color.GreenYellow, MarkerStyle.Cross, fixedDates, mndbtValues, baseYear);
+            Series mndbt = CreateSeries("MNDBT", Color.GreenYellow, MarkerStyle.Cross, fixedDates, mndbtValues);
             chart.Series.Add(mndbt);
             chartSeries.Add(mndbt.Name, mndbt);
 
             // Thêm series DPL
-            Series dpl = CreateSeries("DPL", Color.LightPink, MarkerStyle.Triangle, fixedDates, dplValues, baseYear);
+            Series dpl = CreateSeries("DPL", Color.LightPink, MarkerStyle.Triangle, fixedDatesForCurves, dplValuesForCurves); // Use dplValuesForCurves
             chart.Series.Add(dpl);
             chartSeries.Add(dpl.Name, dpl);
 
-            // Thêm series HCCN
-            Series hccn = CreateSeries("HCCN", Color.Red, MarkerStyle.Circle, fixedDates, hccnValues, baseYear);
+            // Thêm series HCCN (đặt sau các area series để đường HCCN nằm trên vùng đã tô)
+            Series hccn = CreateSeries("HCCN", Color.Red, MarkerStyle.Circle, fixedDatesForCurves, hccnValuesForCurves);
             chart.Series.Add(hccn);
             chartSeries.Add(hccn.Name, hccn);
 
-            // Thêm series DPPH
-            Series dpph = CreateSeries("DPPH", Color.Blue, MarkerStyle.Square, fixedDates, dpphValues, baseYear);
+            // Thêm series DPPH (Không hiển thị nhãn điểm trực tiếp) (đặt sau các area series để đường DPPH nằm trên vùng đã tô)
+            Series dpph = CreateSeries("DPPH", Color.Blue, MarkerStyle.Square, fixedDatesForCurves, dpphValuesForCurves);
             chart.Series.Add(dpph);
             chartSeries.Add(dpph.Name, dpph);
 
-            // Dữ liệu Fllow_TL_CDD sẽ chỉ được đọc một lần và hiển thị trên biểu đồ
+            // Dữ liệu Fllow_TL_CDD sẽ chỉ được đọc một lần và hiển thị trên biểu đồ (Không hiển thị nhãn điểm trực tiếp)
             var sqlData = GetFllowTlCddDataFromSql();
-            Series fllowTlCdd = CreateSeries("Fllow_TL_CDD", Color.Purple, MarkerStyle.Diamond, sqlData.Item1, sqlData.Item2.ToArray(), baseYear);
+            Series fllowTlCdd = CreateSeries("Fllow_TL_CDD", Color.Purple, MarkerStyle.Diamond, sqlData.Item1, sqlData.Item2.ToArray());
             chart.Series.Add(fllowTlCdd);
             chartSeries.Add(fllowTlCdd.Name, fllowTlCdd);
+
 
             // Cập nhật lblZ với giá trị Fllow_TL_CDD mới nhất và giá trị W tương ứng
             if (sqlData.Item2.Any())
             {
                 double latestZ = sqlData.Item2.Last(); // Lấy giá trị mực nước mới nhất
                 double interpolatedW = InterpolateW(latestZ); // Nội suy giá trị W
-
-                if (double.IsNaN(interpolatedW))
-                {
-                    lblZ.Text = $"Mực nước hiện tại: {latestZ:F2}m ⇄ Dung tích: Không xác định";
-                }
-                else
-                {
-                    lblZ.Text = $"Mực nước hiện tại: {latestZ:F2}m ⇄ Dung tích: {interpolatedW:F2}x10⁶m³";
-                }
+               lblZ.Text = $"Mực nước hiện tại: {latestZ:F2}m ⇄ Dung tích: {interpolatedW:F2}x10⁶m³";
             }
             else
             {
                 lblZ.Text = "Không có dữ liệu Fllow_TL_CDD từ SQL.";
             }
-            // Đảm bảo lblZ được vẽ lại và ở trên cùng
-            lblZ.BringToFront();
-            lblZ.Refresh();
-
-
-            chart.Legends.Add(new Legend());
 
             // Thêm tiêu đề biểu đồ
-            Title mainTitle = new Title("BIỂU ĐỒ ĐIỀU PHỐI HỒ CHỨA NƯỚC DẦU TIẾNG");
-            mainTitle.Font = new Font("Verdana", 12, FontStyle.Bold); // Đổi font và kích thước
-            mainTitle.ForeColor = Color.DarkBlue; // Đổi màu chữ
-            chart.Titles.Add(mainTitle);
+            //   chart.Titles.Clear(); // Xóa tất cả các tiêu đề hiện có
 
-            // QUAN TRỌNG: Xóa tất cả nhãn tùy chỉnh cũ để tránh trùng lặp
-            ca.AxisX.CustomLabels.Clear();
+            //// TẠO VÀ CẤU HÌNH TIÊU ĐỀ CHÍNH
+            //Title mainTitle = new Title();
+            //mainTitle.Text = "BIỂU ĐỒ ĐIỀU PHỐI HỒ CHỨA NƯỚC DẦU TIẾNG\r\nKHI CÓ BỔ SUNG NƯỚC TỪ ĐẬP DÂNG PHƯỚC HÒA\r\n";
+            //mainTitle.Font = new Font("Arial", 12, FontStyle.Bold); // Font lớn và đậm hơn
+            //mainTitle.ForeColor = Color.DarkBlue; // Màu chữ xanh đậm
+            //// Đặt vị trí, kích thước của tiêu đề (X, Y, Width, Height là phần trăm của Chart Area)
+            //mainTitle.Position = new ElementPosition(10, 2, 80, 5); // Vẫn dùng Position để tùy chỉnh vị trí
+            //chart.Titles.Add(mainTitle); // Thêm tiêu đề vào biểu đồ
 
-            // Vòng lặp để tạo CustomLabels cho các mốc 10 ngày từ startDate
-            DateTime currentLabelDate = startDate;
-            while (currentLabelDate <= endDate.AddDays(1)) // Duyệt đến cuối phạm vi biểu đồ
-            {
-                // Thêm CustomLabel cho ngày hiện tại
-                ca.AxisX.CustomLabels.Add(new CustomLabel(
-                    currentLabelDate.ToOADate() - 0.5, // Phạm vi bắt đầu của nhãn
-                    currentLabelDate.ToOADate() + 0.5, // Phạm vi kết thúc của nhãn
-                    currentLabelDate.ToString("d-M"),  // Văn bản hiển thị "Ngày-Tháng"
-                    0,                   // Chỉ số hàng nhãn
-                    LabelMarkStyle.None  // Không có dấu hiệu đặc biệt
-                ));
+            // Thêm các StripLine để tô màu vùng chú thích
+            //   AddStripLines(ca);
+            // --- Thêm Annotation cho Vùng A ---
+            TextAnnotation annotationA = new TextAnnotation();
+            annotationA.Text = "Vùng A";
+            annotationA.ForeColor = Color.DarkRed;
+            annotationA.Font = new Font("Arial", 9, FontStyle.Bold);
 
-                // Tăng ngày lên 10 để tạo nhãn cho mốc tiếp theo
-                currentLabelDate = currentLabelDate.AddDays(10);
-            }
+            // Tính toán vị trí X ở giữa trục thời gian
+            double xPosA = fixedDatesForCurves[fixedDatesForCurves.Length / 2].ToOADate();
 
-            // --- THÊM GHI CHÚ VÙNG (STRIP LINES) CẬP NHẬT TRÊN TRỤC Y ---
+            // Tính toán vị trí Y ở giữa vùng A (giữa HCCN và 17.00m)
+            int middleIndexA = areaSeriesARed.Points.Count / 2;
+            double topY_A = areaSeriesARed.Points[middleIndexA].YValues[0]; // HCCN
+            double bottomY_A = areaSeriesARed.Points[middleIndexA].YValues[1]; // 17.00m
+            double yPosA = (topY_A + bottomY_A) / 2.0;
 
-            // 1. Vùng (A) Hạn chế cấp nước: Từ 17m đến 22m trên trục Y
-            StripLine restrictedSupplyStrip = new StripLine();
-            restrictedSupplyStrip.IntervalOffset = 17; // Bắt đầu từ 17m
-            restrictedSupplyStrip.StripWidth = 22 - 17; // Chiều rộng là 22 - 17 = 5m
-            restrictedSupplyStrip.BackColor = Color.FromArgb(70, Color.Orange); // Màu cam, hơi trong suốt
-            restrictedSupplyStrip.Text = "Vùng (A) Hạn chế cấp nước";
-            restrictedSupplyStrip.TextAlignment = StringAlignment.Center;
-            restrictedSupplyStrip.TextLineAlignment = StringAlignment.Center;
-            restrictedSupplyStrip.Font = new Font("Arial", 9, FontStyle.Bold);
-            restrictedSupplyStrip.ForeColor = Color.DarkOrange;
-            restrictedSupplyStrip.BorderColor = Color.OrangeRed;
-            restrictedSupplyStrip.BorderDashStyle = ChartDashStyle.Dash;
-            restrictedSupplyStrip.BorderWidth = 1;
-            ca.AxisY.StripLines.Add(restrictedSupplyStrip);
+            annotationA.X = xPosA;
+            annotationA.Y = yPosA;
+            annotationA.AxisX = ca.AxisX; // Gắn chú thích với trục X của ChartArea
+            annotationA.AxisY = ca.AxisY; // Gắn chú thích với trục Y của ChartArea
+            annotationA.AllowMoving = false;
+            annotationA.Visible = true;
+            annotationA.SmartLabelStyle.Enabled = true;
 
-            // 2. Vùng (B) Cấp nước bình thường: Từ 22m đến 24.40m trên trục Y
-            StripLine normalSupplyStrip = new StripLine();
-            normalSupplyStrip.IntervalOffset = 22; // Bắt đầu từ 22m
-            normalSupplyStrip.StripWidth = 24.40 - 22; // Chiều rộng là 24.40 - 22 = 2.40m
-            normalSupplyStrip.BackColor = Color.FromArgb(70, Color.LightGreen); // Màu xanh lá cây, hơi trong suốt
-            normalSupplyStrip.Text = "Vùng (B) Cấp nước bình thường";
-            normalSupplyStrip.TextAlignment = StringAlignment.Center;
-            normalSupplyStrip.TextLineAlignment = StringAlignment.Center;
-            normalSupplyStrip.Font = new Font("Arial", 9, FontStyle.Bold);
-            normalSupplyStrip.ForeColor = Color.DarkGreen;
-            normalSupplyStrip.BorderColor = Color.ForestGreen;
-            normalSupplyStrip.BorderDashStyle = ChartDashStyle.Dash;
-            normalSupplyStrip.BorderWidth = 1;
-            ca.AxisY.StripLines.Add(normalSupplyStrip);
+            chart.Annotations.Add(annotationA);
 
-            // --- KẾT THÚC GHI CHÚ VÙNG ---
+            // --- Thêm Annotation cho Vùng B ---
+            TextAnnotation annotationB = new TextAnnotation();
+            annotationB.Text = "Vùng B";
+            annotationB.ForeColor = Color.DarkGreen;
+            annotationB.Font = new Font("Arial", 9, FontStyle.Bold);
+
+            // Tính toán vị trí X ở giữa trục thời gian
+            double xPosB = fixedDatesForCurves[fixedDatesForCurves.Length / 2].ToOADate();
+
+            // Tính toán vị trí Y ở giữa vùng B (giữa DPPH và ranh giới dưới của vùng xanh)
+            int middleIndexB = areaSeriesBGreen.Points.Count / 2;
+            double topY_B = areaSeriesBGreen.Points[middleIndexB].YValues[0]; // DPPH
+            double bottomY_B = areaSeriesBGreen.Points[middleIndexB].YValues[1]; // HCCN (theo thay đổi mới)
+            double yPosB = (topY_B + bottomY_B) / 2.0;
+
+            annotationB.X = xPosB;
+            annotationB.Y = yPosB;
+            annotationB.AxisX = ca.AxisX; // Gắn chú thích với trục X của ChartArea
+            annotationB.AxisY = ca.AxisY; // Gắn chú thích với trục Y của ChartArea
+            annotationB.AllowMoving = false;
+            annotationB.Visible = true;
+            annotationB.SmartLabelStyle.Enabled = true;
+
+            chart.Annotations.Add(annotationB);
+
+            // --- Thêm Annotation cho Vùng C (lần 1) ---
+            TextAnnotation annotationC1 = new TextAnnotation();
+            annotationC1.Text = "Vùng C";
+            annotationC1.ForeColor = Color.DarkBlue;
+            annotationC1.Font = new Font("Arial", 9, FontStyle.Bold);
+
+            // Tính toán vị trí X ở giữa một phần tư đầu tiên của trục thời gian
+            double xPosC1 = fixedDatesForCurves[fixedDatesForCurves.Length / 6].ToOADate();
+
+            // Tính toán vị trí Y ở giữa vùng C tại điểm đó
+            int indexC1 = fixedDatesForCurves.Length / 2;
+            double topY_C1 = dplValuesForCurves[indexC1]; // DPL
+            double bottomY_C1 = dpphValuesForCurves[indexC1]; // DPPH
+            double yPosC1 = (topY_C1 + bottomY_C1) / 2.2;
+
+            annotationC1.X = xPosC1;
+            annotationC1.Y = yPosC1;
+            annotationC1.AxisX = ca.AxisX; // Gắn chú thích với trục X của ChartArea
+            annotationC1.AxisY = ca.AxisY; // Gắn chú thích với trục Y của ChartArea
+            annotationC1.AllowMoving = false;
+            annotationC1.Visible = true;
+            annotationC1.SmartLabelStyle.Enabled = true;
+
+            chart.Annotations.Add(annotationC1);
+
+            // --- Thêm Annotation cho Vùng C (lần 2) ở vị trí khác ---
+            TextAnnotation annotationC2 = new TextAnnotation();
+            annotationC2.Text = "Vùng C1";
+            annotationC2.ForeColor = Color.DarkBlue;
+            annotationC2.Font = new Font("Arial", 9, FontStyle.Bold);
+
+            // Tính toán vị trí X ở giữa một phần tư cuối cùng của trục thời gian
+            double xPosC2 = fixedDatesForCurves[fixedDatesForCurves.Length * 3 / 4].ToOADate();
+
+            // Tính toán vị trí Y ở giữa vùng C tại điểm đó
+            int indexC2 = fixedDatesForCurves.Length * 3 / 4;
+            double topY_C2 = dplValuesForCurves[indexC2]; // DPL
+            double bottomY_C2 = dpphValuesForCurves[indexC2]; // DPPH
+            double yPosC2 = (topY_C2 + bottomY_C2) / 2.0;
+
+            annotationC2.X = xPosC2;
+            annotationC2.Y = yPosC2;
+            annotationC2.AxisX = ca.AxisX; // Gắn chú thích với trục X của ChartArea
+            annotationC2.AxisY = ca.AxisY; // Gắn chú thích với trục Y của ChartArea
+            annotationC2.AllowMoving = false;
+            annotationC2.Visible = true;
+            annotationC2.SmartLabelStyle.Enabled = true;
+
+            chart.Annotations.Add(annotationC2);
+
+
+            // Thêm các StripLine còn lại (hiện tại không còn StripLine nào)
+            AddStripLines(ca, hccnValuesForCurves);
         }
+        private void AddStripLines(ChartArea chartArea, double[] hccnValues)
+        {
+            // Vùng A và Vùng B đã được thay thế bằng Area Series trong LoadChart,
+            // nên chúng ta không cần StripLine cho các vùng này nữa.
+            // Nếu bạn muốn thêm StripLine cho mục đích khác, hãy thêm chúng ở đây.
+        }
+        private void chart_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Thực hiện HitTest để xác định phần tử được click
+            HitTestResult result = chart.HitTest(e.X, e.Y);
+
+            // Kiểm tra nếu phần tử được click là một LegendItem
+            if (result.ChartElementType == ChartElementType.LegendItem)
+            {
+                Series series = result.Series;
+                // Ghi log để xem series nào được click
+                Console.WriteLine($"Legend item clicked. Series Name: {series?.Name ?? "NULL"}");
+
+                // Thêm kiểm tra rõ ràng nếu series là null
+                if (series == null)
+                {
+                    Console.WriteLine("Clicked on a legend item, but the associated Series object is null. Aborting.");
+                    return;
+                }
+
+                // Đảm bảo đây là một series chúng ta quản lý và không phải là lớp mặt nạ
+                if (chartSeries.ContainsKey(series.Name))
+                {
+                    // KIỂM TRA ĐỂ KHÔNG BAO GỒM VÙNG A, VÙNG B VÀ VÙNG C TRONG CHỨC NĂNG ẨN/HIỆN
+                    if (series.Name == "Vùng A: Vùng hạn chế cấp nước" || series.Name == "Vùng B: Cấp nước bình thường" || series.Name == "Vùng C: Cấp nước gia tăng")
+                    {
+                        Console.WriteLine($"Area Series '{series.Name}' clicked. Ignoring hide/show.");
+                        // Không làm gì cả, vùng này luôn hiển thị
+                        return;
+                    }
+
+                    bool isCurrentlyHidden;
+
+                    // Kiểm tra nếu là Series kiểu Area
+                    if (series.ChartType == SeriesChartType.Area)
+                    {
+                        Color originalColor;
+                        // Sử dụng TryGetValue để lấy màu gốc một cách an toàn
+                        if (originalColors.TryGetValue(series.Name, out originalColor))
+                        {
+                            isCurrentlyHidden = (series.Color.A == 0);
+
+                            if (isCurrentlyHidden)
+                            {
+                                Console.WriteLine($"Attempting to SHOW Area series '{series.Name}'.");
+                                // Khôi phục màu gốc (có độ trong suốt)
+                                series.Color = originalColor;
+                                series.LegendText = series.Name.Replace(" (ẩn)", "");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Attempting to HIDE Area series '{series.Name}'.");
+                                // Làm cho hoàn toàn trong suốt
+                                series.Color = Color.FromArgb(0, originalColor);
+                                if (!series.LegendText.Contains(" (ẩn)"))
+                                {
+                                    series.LegendText = series.Name + " (ẩn)";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Original color not found for Area series '{series.Name}'. Cannot toggle visibility.");
+                        }
+                    }
+                    else // Giả định là Series kiểu Line
+                    {
+                        isCurrentlyHidden = (series.BorderWidth == 0 && series.MarkerSize == 0);
+
+                        if (isCurrentlyHidden)
+                        {
+                            Console.WriteLine($"Attempting to SHOW Line series '{series.Name}'.");
+                            int storedBorderWidth = 2; // Giá trị mặc định
+                            if (originalBorderWidths.TryGetValue(series.Name, out int tempBorderWidth))
+                            {
+                                storedBorderWidth = tempBorderWidth;
+                            }
+                            series.BorderWidth = storedBorderWidth;
+
+                            int storedMarkerSize = 5; // Giá trị mặc định
+                            if (originalMarkerSizes.TryGetValue(series.Name, out int tempMarkerSize))
+                            {
+                                storedMarkerSize = tempMarkerSize;
+                            }
+                            series.MarkerSize = storedMarkerSize;
+
+                            Color storedOriginalColor = series.Color; // Fallback về màu hiện tại
+                            if (originalColors.TryGetValue(series.Name, out Color tempOriginalColor))
+                            {
+                                storedOriginalColor = tempOriginalColor;
+                            }
+                            series.Color = storedOriginalColor;
+
+                            series.LegendText = series.Name.Replace(" (ẩn)", ""); // Khôi phục text chú giải, loại bỏ "(ẩn)"
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Attempting to HIDE Line series '{series.Name}'.");
+                            // Đối với Series Line, làm cho đường và điểm đánh dấu vô hình
+                            series.BorderWidth = 0;
+                            series.MarkerSize = 0;
+                            series.Color = Color.Transparent; // Hoàn toàn trong suốt
+                            // Thêm "(ẩn)" vào text chú giải nếu chưa có
+                            if (!series.LegendText.Contains(" (ẩn)"))
+                            {
+                                series.LegendText = series.Name + " (ẩn)";
+                            }
+                        }
+                    }
+
+                    // Yêu cầu biểu đồ vẽ lại để áp dụng các thay đổi
+                    chart.Invalidate();
+                }
+                else
+                {
+                    Console.WriteLine($"Clicked series '{series.Name}' is not managed in chartSeries dictionary.");
+                }
+            }
+            else
+            {
+                // Tùy chọn ghi log những gì đã được click nếu không phải là legend item, để hiểu tương tác của người dùng.
+                Console.WriteLine($"Clicked element type: {result.ChartElementType} at X:{e.X}, Y:{e.Y}. Not a legend item.");
+            }
+        }
+
 
         /// <summary>
         /// Thiết lập ContextMenuStrip để bật/tắt hiển thị của các Series trên biểu đồ.
         /// </summary>
-        private void SetupSeriesVisibilityControls()
+        private double InterpolateFixedValueForDate(DateTime targetDate, DateTime[] dates, double[] values)
         {
-            contextMenuStripSeriesVisibility = new ContextMenuStrip();
-
-            // Tạo ToolStripMenuItem cho mỗi Series trong dictionary chartSeries
-            foreach (var entry in chartSeries)
+            if (dates.Length == 0 || values.Length == 0 || dates.Length != values.Length)
             {
-                string seriesName = entry.Key;
-                Series series = entry.Value;
-
-                ToolStripMenuItem menuItem = new ToolStripMenuItem(seriesName);
-                menuItem.CheckOnClick = true; // Cho phép check/uncheck khi click
-                menuItem.Checked = series.Enabled; // Đặt trạng thái ban đầu dựa trên Series.Enabled
-                menuItem.Tag = seriesName; // Lưu tên series vào thuộc tính Tag
-                menuItem.Click += MenuItem_SeriesVisibility_Click; // Gắn sự kiện Click
-
-                contextMenuStripSeriesVisibility.Items.Add(menuItem);
+                return double.NaN;
             }
 
-            // Gán ContextMenuStrip vào chart
-            chart.ContextMenuStrip = contextMenuStripSeriesVisibility;
-        }
-
-        /// <summary>
-        /// Xử lý sự kiện khi một ToolStripMenuItem trong ContextMenuStrip được click.
-        /// Bật/tắt hiển thị của Series tương ứng.
-        /// </summary>
-        private void MenuItem_SeriesVisibility_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem clickedMenuItem = (ToolStripMenuItem)sender;
-            string seriesName = clickedMenuItem.Tag.ToString(); // Lấy tên series từ Tag của MenuItem
-
-            // Tìm Series trong dictionary và cập nhật trạng thái hiển thị
-            if (chartSeries.TryGetValue(seriesName, out Series series))
+            // Handle edge cases: targetDate is before or at the first date
+            if (targetDate <= dates[0])
             {
-                series.Enabled = clickedMenuItem.Checked; // Bật/tắt vẽ series
-                series.IsVisibleInLegend = clickedMenuItem.Checked; // Bật/tắt hiển thị trong chú giải
+                return values[0];
             }
-        }
-
-        /// <summary>
-        /// Xử lý sự kiện DoubleClick trên Chart.
-        /// Hiển thị ContextMenuStrip tại vị trí chuột.
-        /// </summary>
-        private void Chart_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left) // Chỉ xử lý double-click bằng chuột trái
+            // Handle edge cases: targetDate is after or at the last date
+            if (targetDate >= dates[dates.Length - 1])
             {
-                // Cập nhật trạng thái checked của các menu item trước khi hiển thị
-                foreach (ToolStripMenuItem item in contextMenuStripSeriesVisibility.Items)
+                return values[dates.Length - 1];
+            }
+
+            // Find the appropriate segment for interpolation
+            // lowerIndex will be the index of the point just before or equal to targetDate
+            // upperIndex will be the index of the point just after targetDate
+            int lowerIndex = 0;
+            // No need to initialize upperIndex here; it will be assigned after lowerIndex is found.
+
+            for (int i = 0; i < dates.Length - 1; i++)
+            {
+                if (targetDate >= dates[i] && targetDate < dates[i + 1])
                 {
-                    if (chartSeries.TryGetValue(item.Tag.ToString(), out Series series))
-                    {
-                        item.Checked = series.Enabled;
-                    }
+                    lowerIndex = i;
+                    break; // Found the segment, exit loop
                 }
-                contextMenuStripSeriesVisibility.Show(chart, e.Location);
             }
-        }
 
+            // After the loop, lowerIndex is guaranteed to be set to an index from 0 to dates.Length - 2.
+            // This is because the initial checks guarantee targetDate is strictly between dates[0] and dates[dates.Length - 1],
+            // and the loop iterates through all valid segments.
+            int upperIndex = lowerIndex + 1;
+
+
+            DateTime x1Date = dates[lowerIndex];
+            DateTime x2Date = dates[upperIndex];
+            double y1 = values[lowerIndex];
+            double y2 = values[upperIndex];
+
+            // Perform linear interpolation
+            long totalTicks = x2Date.Ticks - x1Date.Ticks;
+            long targetTicks = targetDate.Ticks - x1Date.Ticks;
+
+            if (totalTicks == 0)
+            {
+                // Should not happen if dates are distinct, but handle for safety
+                return y1;
+            }
+
+            double ratio = (double)targetTicks / totalTicks;
+            return y1 + (y2 - y1) * ratio;
+        }
 
         // Phương thức xử lý sự kiện MouseMove trên Chart
         private void chart_MouseMove(object sender, MouseEventArgs e)
@@ -482,71 +913,81 @@ namespace RegistrationForm1
             // Kiểm tra xem chuột có nằm trong vùng plotting area hoặc gridlines của ChartArea hay không
             HitTestResult result = chart.HitTest(e.X, e.Y);
 
-            // Ghi log ra console
-            Console.WriteLine($"Mouse position: ({e.X}, {e.Y}), HitTest result: {result.ChartElementType}");
-
             // Thay đổi điều kiện: chấp nhận cả PlottingArea và Gridlines
-            if (result.ChartArea == ca && (result.ChartElementType == ChartElementType.PlottingArea || result.ChartElementType == ChartElementType.Gridlines))
+            if (result.ChartArea == ca && (result.ChartElementType == ChartElementType.PlottingArea || result.ChartElementType == ChartElementType.Gridlines || result.ChartElementType == ChartElementType.DataPoint))
             {
                 try
                 {
                     // Lấy giá trị trục Y (Z - Mực nước) và trục X (Thời gian) từ vị trí chuột
                     double zValue = ca.AxisY.PixelPositionToValue(e.Y);
                     double xValueOADate = ca.AxisX.PixelPositionToValue(e.X);
-
-                    // Ghi log ra console
-                    Console.WriteLine($"Converted Z: {zValue:F2}, Converted X (OADate): {xValueOADate}");
+                    DateTime xDate = DateTime.FromOADate(xValueOADate);
 
                     // Kiểm tra nếu các giá trị nằm trong phạm vi hiển thị hợp lệ của trục
                     if (zValue >= ca.AxisY.Minimum && zValue <= ca.AxisY.Maximum &&
                         xValueOADate >= ca.AxisX.Minimum && xValueOADate <= ca.AxisX.Maximum)
                     {
-                        DateTime xDate = DateTime.FromOADate(xValueOADate);
                         double interpolatedW = InterpolateW(zValue);
 
-                        // Ghi log ra console
-                        Console.WriteLine($"Interpolated W: {interpolatedW:F2}");
+                        string regionInfo = "";
+                        double minHCCNValue = 17.00; // Giá trị cố định
 
-                        // Cập nhật Label lblToaDo với tọa độ X, Y và W nội suy
-                        if (double.IsNaN(interpolatedW))
+                        // Nội suy các giá trị HCCN, DPPH và DPL tại xDate
+                        double interpolatedHCCN = InterpolateFixedValueForDate(xDate, fixedDatesForCurves, hccnValuesForCurves);
+                        double interpolatedDPPH = InterpolateFixedValueForDate(xDate, fixedDatesForCurves, dpphValuesForCurves);
+                        double interpolatedDPL = InterpolateFixedValueForDate(xDate, fixedDatesForCurves, dplValuesForCurves); // Interpolate DPL
+
+                        // Xác định ranh giới dưới của vùng B (đã thay đổi để chỉ theo HCCN)
+                        // double greenLowerBound = Math.Max(interpolatedHCCN, minHCCNValue); // Dòng cũ
+                        double greenLowerBound = interpolatedHCCN; // Dòng mới
+
+                        // Ưu tiên kiểm tra Vùng C trước (cao nhất), sau đó Vùng B, cuối cùng Vùng A (thấp nhất)
+                        // Kiểm tra nếu chuột nằm trong Vùng C (giữa DPL và DPPH)
+                        if (zValue <= interpolatedDPL && zValue >= interpolatedDPPH && !double.IsNaN(interpolatedDPL) && !double.IsNaN(interpolatedDPPH))
                         {
-                            lblToaDo.Text = $"X: {xDate:dd/MM/yyyy} Y: {zValue:F2}m ⇄ W: Không xác định";
+                            regionInfo = " (Vùng C: Cấp nước gia tăng)";
                         }
-                        else
+                        // Kiểm tra nếu chuột nằm trong Vùng B (giữa DPPH và HCCN)
+                        else if (zValue <= interpolatedDPPH && zValue >= greenLowerBound && !double.IsNaN(interpolatedDPPH)) // Đã cập nhật điều kiện
                         {
-                            lblToaDo.Text = $"X: {xDate:dd/MM/yyyy} Y: {zValue:F2}m ⇄ W:{interpolatedW:F2}x10⁶m³";
+                            regionInfo = " (Vùng B: Cấp nước bình thường)";
                         }
+                        // Kiểm tra nếu chuột nằm trong Vùng A (giữa HCCN và 17m)
+                        else if (zValue <= interpolatedHCCN && zValue >= minHCCNValue && !double.IsNaN(interpolatedHCCN))
+                        {
+                            regionInfo = " (Vùng A: Hạn chế cấp nước)";
+                        }
+
+
+                        // Cập nhật Label lblToaDo với tọa độ X, Y, W nội suy và thông tin vùng
+                        lblToaDo.Text = $"X: {xDate:dd/MM/yyyy HH:mm:ss} Y: {zValue:F2}m ⇄ W:{interpolatedW:F2}x10⁶m³{regionInfo}";
                     }
                     else
                     {
                         // Nếu chuột nằm trong plotting area/gridlines nhưng ngoài vùng dữ liệu hợp lệ
                         lblToaDo.Text = "Ngoài phạm vi dữ liệu biểu đồ";
-                        Console.WriteLine("Values are outside axis range.");
                     }
                 }
                 catch (Exception ex)
                 {
                     // Xử lý lỗi nếu có vấn đề trong quá trình chuyển đổi hoặc nội suy
                     lblToaDo.Text = "Lỗi khi đọc tọa độ: " + ex.Message;
-                    Console.WriteLine("Error reading coordinates or interpolating: " + ex.Message);
                 }
             }
             else
             {
                 // Nếu chuột không nằm trong vùng plotting area hoặc gridlines, hiển thị thông báo mặc định
                 lblToaDo.Text = "Rê chuột để xem tọa độ và dung tích";
-                Console.WriteLine("Mouse not over plotting area or gridlines.");
             }
             // Đảm bảo lblToaDo luôn ở trên cùng sau khi cập nhật text
             lblToaDo.BringToFront();
         }
-
-        // Phương thức xử lý sự kiện MouseLeave khi chuột rời khỏi Chart
         private void chart_MouseLeave(object sender, EventArgs e)
         {
             lblToaDo.Text = "Rê chuột để xem tọa độ và dung tích";
             lblToaDo.BringToFront();
         }
+
 
         // Phương thức để đọc dữ liệu từ SQL cho Fllow_TL_CDD
         private Tuple<List<DateTime>, List<double>> GetFllowTlCddDataFromSql()
@@ -555,7 +996,7 @@ namespace RegistrationForm1
             List<double> values = new List<double>();
 
             // !!! THAY THẾ CHUỖI KẾT NỐI NÀY VỚI THÔNG TIN SQL SERVER CỦA BẠN !!!
-          //  string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
             // Truy vấn cần lấy cả cột ngày (CreateAt) và cột giá trị (Fllow_TL_CDD)
             string query = "SELECT CreateAt, Fllow_TL_CDD FROM DataMucNuoc ORDER BY CreateAt;";
 
@@ -597,18 +1038,15 @@ namespace RegistrationForm1
             return Tuple.Create(dates, values);
         }
 
-        /// <summary>
-        /// Thực hiện nội suy tuyến tính để tìm giá trị W tương ứng với Z từ bảng 2D.
-        /// </summary>
-        /// <param name="zValue">Giá trị mực nước Z cần nội suy.</param>
-        /// <returns>Giá trị W được nội suy, hoặc NaN nếu không tìm thấy dữ liệu.</returns>
+
+
         private double InterpolateW(double zValue)
         {
-            Console.WriteLine($"--- Bắt đầu InterpolateW cho Z = {zValue:F2} ---");
+            //   Console.WriteLine($"--- Bắt đầu InterpolateW cho Z = {zValue:F2} ---");
 
             if (interpolationLookupTable == null || !interpolationLookupTable.Any())
             {
-                Console.WriteLine("Bảng nội suy trống hoặc chưa được tải.");
+                //       Console.WriteLine("Bảng nội suy trống hoặc chưa được tải.");
                 return double.NaN;
             }
 
@@ -616,34 +1054,34 @@ namespace RegistrationForm1
             double zDecimalPart = zValue - zIntegerPart; // Phần thập phân (e.g., 0.56)
             int decimalIndex = (int)Math.Round(zDecimalPart * 100); // Index cột (e.g., 56)
 
-            Console.WriteLine($"Phần nguyên Z: {zIntegerPart}, Phần thập phân Z: {zDecimalPart:F2}, Index thập phân: {decimalIndex}");
+            //   Console.WriteLine($"Phần nguyên Z: {zIntegerPart}, Phần thập phân Z: {zDecimalPart:F2}, Index thập phân: {decimalIndex}");
 
             // Đảm bảo index cột nằm trong phạm vi hợp lệ [0, 99]
             decimalIndex = Math.Max(0, Math.Min(99, decimalIndex));
-            Console.WriteLine($"Index thập phân sau khi kiểm tra: {decimalIndex}");
+            //     Console.WriteLine($"Index thập phân sau khi kiểm tra: {decimalIndex}");
 
 
             // Trường hợp 1: Giá trị Z chính xác nằm trong bảng (Z nguyên + phần thập phân cụ thể)
             if (interpolationLookupTable.ContainsKey(zIntegerPart))
             {
-                Console.WriteLine($"Tìm thấy phần nguyên Z ({zIntegerPart}) trong bảng.");
+                //        Console.WriteLine($"Tìm thấy phần nguyên Z ({zIntegerPart}) trong bảng.");
                 List<double> wValues = interpolationLookupTable[zIntegerPart];
                 if (decimalIndex < wValues.Count && !double.IsNaN(wValues[decimalIndex]))
                 {
                     Console.WriteLine($"Tìm thấy giá trị trực tiếp tại Z={zIntegerPart}.{decimalIndex}: {wValues[decimalIndex]:F2}");
                     return wValues[decimalIndex];
                 }
-                Console.WriteLine("Không tìm thấy giá trị trực tiếp. Thử nội suy ngang.");
+                //        Console.WriteLine("Không tìm thấy giá trị trực tiếp. Thử nội suy ngang.");
                 // Nếu không có giá trị chính xác, thử nội suy ngang trong cùng một hàng Z nguyên
                 // Tìm 2 điểm gần nhất trong hàng wValues
                 int lowerBoundIndex = Math.Min(decimalIndex, wValues.Count - 1);
                 int upperBoundIndex = Math.Min(decimalIndex + 1, wValues.Count - 1);
 
-                Console.WriteLine($"Nội suy ngang: lowerBoundIndex={lowerBoundIndex}, upperBoundIndex={upperBoundIndex}");
+                //          Console.WriteLine($"Nội suy ngang: lowerBoundIndex={lowerBoundIndex}, upperBoundIndex={upperBoundIndex}");
 
                 if (lowerBoundIndex == upperBoundIndex) // Chỉ có 1 điểm hoặc nằm ở cuối
                 {
-                    Console.WriteLine($"Chỉ có một điểm khả dụng ({wValues[lowerBoundIndex]:F2}) cho nội suy ngang.");
+                    //            Console.WriteLine($"Chỉ có một điểm khả dụng ({wValues[lowerBoundIndex]:F2}) cho nội suy ngang.");
                     return wValues[lowerBoundIndex];
                 }
 
@@ -734,20 +1172,26 @@ namespace RegistrationForm1
 
 
         // Phương thức tạo series
-        private Series CreateSeries(string name, Color color, MarkerStyle marker, IEnumerable<DateTime> dates, double[] values, int baseYear)
+        private Series CreateSeries(string name, Color color, MarkerStyle marker, IEnumerable<DateTime> dates, double[] values)
         {
             Series series = new Series(name)
             {
                 ChartType = SeriesChartType.Line,
-                BorderWidth = 2,
+                BorderWidth = 2, // Mặc định
                 Color = color,
                 MarkerStyle = marker,
-                MarkerSize = 5,
-                ToolTip = "Mực nước: #VALY{F2} m "
-               
+                MarkerSize = 5, // Mặc định
+                // Cập nhật ToolTip để hiển thị cả giá trị X (thời gian) và Y (mực nước)
+                ToolTip = "Thời gian: #VALX{dd/MM/yyyy }\nMực nước: #VALY{F2} m",
+                IsVisibleInLegend = true, // Luôn hiển thị trong chú giải
+                LegendText = name // Thiết lập LegendText ban đầu là tên của series
             };
 
-            // Cấu hình Label hiển thị giá trị cho series DPPH
+            // Lưu BorderWidth, MarkerSize và Color gốc khi tạo series
+            originalBorderWidths.Add(series.Name, series.BorderWidth);
+            originalMarkerSizes.Add(series.Name, series.MarkerSize);
+            originalColors.Add(series.Name, series.Color); // Lưu màu sắc gốc
+                                                           // Cấu hình Label hiển thị giá trị cho series DPPH
             if (name == "DPPH")
             {
                 series.IsValueShownAsLabel = true; // Bật hiển thị giá trị làm nhãn
@@ -770,10 +1214,20 @@ namespace RegistrationForm1
             return series;
         }
 
-        private async void FrmHochua_Load(object sender, EventArgs e)
+
+       
+           private async void FrmHochua_Shown(object sender, EventArgs e)
         {
-            await webView21.EnsureCoreWebView2Async();
-            webView21.CoreWebView2.Navigate(UrlToLoad);
+            await webView22.EnsureCoreWebView2Async();
+            webView22.CoreWebView2.Navigate(UrlToLoad);
         }
+        
+
+        private void webView22_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

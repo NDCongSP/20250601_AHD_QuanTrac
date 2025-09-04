@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistrationForm1
+namespace Domain.Entities
 {
     /// <summary>
     /// Bảng chứa giá trị hiển thị web realtime Display.
@@ -23,10 +23,10 @@ namespace RegistrationForm1
         /// chính là class RealtimeDisplays (List<RealtimeDisplayModel>).
         /// </summary>
         public string? C000 { get; set; }
-        public string? CreateOperatorId { get ; set ; }
-        public DateTime? CreateAt { get ; set ; }
-        public string? UpdateOperatorId { get ; set ; }
-        public DateTime? UpdateAt { get ; set ; }
-        public bool? IsDeleted { get ; set ; }
+        public string? CreateOperatorId { get; set; }
+        public DateTime? CreateAt { get; set; }
+        public string? UpdateOperatorId { get; set; }
+        public DateTime? UpdateAt { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }
