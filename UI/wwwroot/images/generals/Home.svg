@@ -1,5 +1,3 @@
-﻿@page "/dashboard"
-
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
@@ -729,8 +727,3 @@
        y="570.54523"
        inkscape:transform-center-x="-13.23544"
        inkscape:transform-center-y="2.4064436" /></g></svg>
-
-
-@code {
-
-}
