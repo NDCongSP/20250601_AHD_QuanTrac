@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("PermissionGroup")]
-    public class PermissionGroup : GenericEntity
+    public class PermissionGroup : IGenericEntity
     {
         [Key] public Guid Id { get; set; }
         public string Name { get; set; }

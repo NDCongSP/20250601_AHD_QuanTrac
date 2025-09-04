@@ -12,7 +12,7 @@ namespace Domain.Entities
     /// Bảng chứa giá trị hiển thị web realtime Display.
     /// </summary>
     [Table("FT02")]
-    public class FT02 : GenericEntity
+    public class FT02 : IGenericEntity
 
     {
         [Key]

@@ -7,7 +7,7 @@ namespace Domain.Entities
     /// Bảng lưu thông tin alarms.
     /// </summary>
     [Table("FT04")]
-    public class FT04 : GenericEntity
+    public class FT04 : IGenericEntity
     {
         [Key]
         public Guid Id { get; set; }
@@ -18,7 +18,7 @@ namespace Domain.Entities
         public string? StationName { get; set; }
         public string? Path { get; set; }
         public string? TagName { get; set; }
-        public double? Value { get; set; } = 0;
+        public bool? Value { get; set; } = false;
         public string? Description { get; set; }
 
         public string? CreateOperatorId { get; set; }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.Entities
 {
     [Table("ScadaUser")]
-    public class ScadaUser : GenericEntity
+    public class ScadaUser : IGenericEntity
     {
         [Key]
         public Guid Id { get; set; }

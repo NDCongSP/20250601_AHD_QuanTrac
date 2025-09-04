@@ -7,7 +7,7 @@ namespace Domain.Entities
     /// Data Log.
     /// </summary>
     [Table("FT03")]
-    public class FT03 : TagsStation, GenericEntity, ICalculatorValue
+    public class FT03 : IGenericEntity, ITagsStationsDouble, ITagLocationInfo, ICalculatorValue
     {
         [Key]
         public Guid Id { get; set; }
@@ -42,7 +42,47 @@ namespace Domain.Entities
         public DateTime? UpdateAt { get; set; }
         public bool? IsDeleted { get; set; }
 
-        //cac gia tri tinh toan
+        //Tag station
+        public double? HT_Cylinder1_1 { get; set; } = 0;
+        public double? HT_Cylinder1_2 { get; set; } = 0;
+        public double? HT_Cylinder2_1 { get; set; } = 0;
+        public double? HT_Cylinder2_2 { get; set; } = 0;
+        public double? Door1_Aperture { get; set; } = 0;
+        public double? Door2_Aperture { get; set; } = 0;
+        public double? S1_Temp_Oil { get; set; } = 0;
+        public double? Pressure_Oil_Door1 { get; set; } = 0;
+        public double? Pressure_Oil_Door2 { get; set; } = 0;
+        public double? Fllow_Door1 { get; set; } = 0;
+        public double? Fllow_Door2 { get; set; } = 0;
+        public double? HT_Cylinder1_1_Offset { get; set; } = 0;
+        public double? HT_Cylinder1_2_Offset { get; set; } = 0;
+        public double? HT_Cylinder2_1_Offset { get; set; } = 0;
+        public double? HT_Cylinder2_2_Offset { get; set; } = 0;
+        public double? Door1_Aperture_Offset { get; set; } = 0;
+        public double? Door2_Aperture_Offset { get; set; } = 0;
+        public double? S1_Temp_Oil_Offset { get; set; } = 0;
+        public double? Pressure_Oil_Door1_Offset { get; set; } = 0;
+        public double? Pressure_Oil_Door2_Offset { get; set; } = 0;
+        public double? Fllow_Door1_Offset { get; set; } = 0;
+        public double? Fllow_Door2_Offset { get; set; } = 0;
+        public double? HT_Cylinder1_1_Final { get; set; } = 0;
+        public double? HT_Cylinder1_2_Final { get; set; } = 0;
+        public double? HT_Cylinder2_1_Final { get; set; } = 0;
+        public double? HT_Cylinder2_2_Final { get; set; } = 0;
+        public double? Door1_Aperture_Final { get; set; } = 0;
+        public double? Door2_Aperture_Final { get; set; } = 0;
+        public double? S1_Temp_Oil_Final { get; set; } = 0;
+        public double? Pressure_Oil_Door1_Final { get; set; } = 0;
+        public double? Pressure_Oil_Door2_Final { get; set; } = 0;
+        public double? Fllow_Door1_Final { get; set; } = 0;
+        public double? Fllow_Door2_Final { get; set; } = 0;
+
+        //Tag location information
+        public double? Fllow_Ho { get; set; } = 0;
+        public double? Fllow_Ho_Offset { get; set; } = 0;
+        public double? Fllow_Ho_Final { get; set; } = 0;
+
+        //Tag calculator value
         public double? Fllow_DauTieng { get; set; } = 0;
         public double? Fllow_BenSuc { get; set; } = 0;
         public double? Fllow_SonDai { get; set; } = 0;
