@@ -524,7 +524,7 @@
             this.Fllow_DauTieng.Size = new System.Drawing.Size(123, 30);
             this.Fllow_DauTieng.StringFormat = "0.00";
             this.Fllow_DauTieng.TabIndex = 293;
-            this.Fllow_DauTieng.TagPath = "Local Station/DauTieng/S71500/API/Fllow_TL_CDD";
+            this.Fllow_DauTieng.TagPath = "Local Station/DauTieng/S71500/Location_Info/Fllow_DauTieng";
             this.Fllow_DauTieng.Text = "0.00";
             this.Fllow_DauTieng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 

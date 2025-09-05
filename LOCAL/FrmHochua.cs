@@ -382,7 +382,7 @@ namespace RegistrationForm1
                 new DateTime(baseYear + 1, 5, 1), new DateTime(baseYear + 1, 5, 11), new DateTime(baseYear + 1, 5, 21),
                 new DateTime(baseYear + 1, 6, 1), new DateTime(baseYear + 1, 6, 11), new DateTime(baseYear + 1, 6, 21), new DateTime(baseYear + 1, 6, 30)
             };
-
+           
             // GÁN DỮ LIỆU TỪ CÁC MẢNG CỤC BỘ VÀO CÁC MẢNG CẤP LỚP
             fixedDatesForCurves = fixedDates; // Gán mảng DateTime
             hccnValuesForCurves = new double[] {
@@ -390,6 +390,7 @@ namespace RegistrationForm1
                 21.20,21.67,21.60,21.55,21.50,21.21,21.03,20.81,20.51,20.21,19.97,19.46,19.03,18.59,18.28,17.98,
                 17.70,17.48,17.45,17.40,17.38,17.35,17.00
             };
+            
             dpphValuesForCurves = new double[] {
                 19.00,19.20,19.24,19.40,19.47,19.90,19.96,20.40,20.45,21.30,21.35,22.15,22.24,23.00,23.09,23.80,23.93,
                 24.40,24.40,24.40,24.40,24.19,23.99,23.80,23.34,22.92,22.62,22.12,21.66,21.21,20.84,20.51,20.21,20.03,19.86,19.69,19.44,19.21,19.00

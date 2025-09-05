@@ -91,6 +91,11 @@ namespace RegistrationForm1
             try
             {
                 // X-axis data (Distance in km) - 39 points
+                //List<double> xAxisData = new List<double>
+                //{
+                //    0, 1.5, 3.5, 5.5, 8.5, 9.5, 10.5, 12.5, 14.5, 16.5, 18.5, 20.6, 22.6, 24.6, 26.6, 28.6, 30.6, 34.7, 38.7, 42.7, 46.7, 50.7, 54.8,
+                //    58.8, 62.8, 66.8, 70.8, 71.8, 73.8, 75.9, 80.9, 84.9, 86.9, 87.9, 91.9, 93.8, 101, 101, 101 // Added 39th value
+                //};
                 List<double> xAxisData = new List<double>
                 {
                     0, 1.5, 3.5, 5.5, 8.5, 9.5, 10.5, 12.5, 14.5, 16.5, 18.5, 20.6, 22.6, 24.6, 26.6, 28.6, 30.6, 34.7, 38.7, 42.7, 46.7, 50.7, 54.8,
@@ -265,7 +270,7 @@ namespace RegistrationForm1
                 // Configure X and Y axis ranges
                 chart.ChartAreas[0].AxisX.Minimum = 0;
                 chart.ChartAreas[0].AxisX.Maximum = 101;
-                chart.ChartAreas[0].AxisY.Minimum = -2;
+                chart.ChartAreas[0].AxisY.Minimum = -10;
                 chart.ChartAreas[0].AxisY.Maximum = 28; // Adjusted max Y-axis for potential higher values
 
                 // Get chart area for more detailed configuration

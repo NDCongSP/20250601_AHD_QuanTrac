@@ -710,6 +710,7 @@ namespace RegistrationForm1
                 {
                     try
                     {
+                        await WriteQTM(latestDataPointsByStationFetched);
                         await SaveRealtimeMeasurementsToSql(realTimeDataToSave);
                         saveStatusMessage += $"Đã lưu {realTimeDataToSave.Count} bản ghi tức thời mới nhất vào SQL (bao gồm tổng lượng mưa tích lũy từ 7h sáng và Tên trạm).";
                         realtimeSaveSuccess = true;
@@ -1092,6 +1093,47 @@ namespace RegistrationForm1
                 AppendLog($"❌ Lỗi Timer_Tick: {ex.Message}");
             }
         }
+        private async Task WriteQTM(Dictionary<string, RealtimeRainfallData> latestApiData)
+        {
+            try
+            {
+                // Xác định các ID trạm (hoặc các phần cuối của tag ID) mà bạn muốn ghi
+
+                string[] stationIdsToProcess = { "610001", "610002", "610003", "610004", "610005", "610006", "610007", "610008", "610009", "610010", "610011", "610012", "610013" };
+
+                // Lặp qua từng StationId mong muốn
+                foreach (string stationId in stationIdsToProcess)
+                {
+                    // Tạo đường dẫn tag hoàn chỉnh
+                    string tagPath = $"Local Station/DauTieng/S71500/API/{stationId}";
+
+                    // Kiểm tra xem có dữ liệu mới nhất cho StationId này không
+                    if (latestApiData.TryGetValue(stationId, out RealtimeRainfallData data))
+                    {
+                        // Lấy giá trị 'Depth' (lượng mưa) từ dữ liệu tức thời và định dạng
+                        string valueToWrite = data.Depth.ToString("0.00");
+
+                        // Ghi giá trị vào tag tương ứng
+                        await ahdDriverConnector1.WriteTagAsync(
+                            tagPath,
+                            valueToWrite,
+                            WritePiority.High
+                        );
+                    }
+                    else
+                    {
+                        // Xử lý trường hợp không tìm thấy dữ liệu cho một trạm cụ thể
+                        // Bạn có thể ghi log, thông báo lỗi, hoặc bỏ qua nếu không cần thiết
+                        Console.WriteLine($"Cảnh báo: Không tìm thấy dữ liệu tức thời cho trạm '{stationId}' để ghi.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ghi lại lỗi nếu có bất kỳ ngoại lệ nào xảy ra trong quá trình ghi PLC
+                Console.WriteLine($"Lỗi khi ghi giá trị tức thời vào PLC: {ex.Message}");
+            }
+        }
         public async Task Timer_Tick()
         {
             try
@@ -1277,24 +1319,24 @@ namespace RegistrationForm1
             return results;
         }
 
-        // Hàm Lấy giá trị cho Timer ghi xuống SQL
-        private string GetValue(string tagName)
-        {
-            try
-            {
-                var tag = ahdDriverConnector1.GetTag(tagName);
-                if (tag != null)
-                {
-                    return tag.Value?.ToString() ?? "0";
-                }
-                return "0";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi đọc tag {tagName}: {ex.Message}");
-                return "0";
-            }
-        }
+        //// Hàm Lấy giá trị cho Timer ghi xuống SQL
+        //private string GetValue(string tagName)
+        //{
+        //    try
+        //    {
+        //        var tag = ahdDriverConnector1.GetTag(tagName);
+        //        if (tag != null)
+        //        {
+        //            return tag.Value?.ToString() ?? "0";
+        //        }
+        //        return "0";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Lỗi đọc tag {tagName}: {ex.Message}");
+        //        return "0";
+        //    }
+        //}
         private void Door2_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -4026,16 +4068,7 @@ namespace RegistrationForm1
         }
 
         
-        
-       
-        
-        
-
-       
-
-
-
-      
+  
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {

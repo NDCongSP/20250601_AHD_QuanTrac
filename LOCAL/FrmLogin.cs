@@ -14,7 +14,7 @@ namespace RegistrationForm1
         public FrmLogin()
         {
             InitializeComponent();
-            CreateTestUser(); // Tạo user test mặc định (admin / 123456)
+        //    CreateTestUser(); // Tạo user test mặc định (admin / 123456)
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -74,27 +74,27 @@ namespace RegistrationForm1
             }
         }
 
-        private void CreateTestUser()
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
+        //private void CreateTestUser()
+        //{
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        conn.Open();
 
-                string checkQuery = "SELECT COUNT(*) FROM Users WHERE Username = 'admin'";
-                SqlCommand checkCmd = new SqlCommand(checkQuery, conn);
-                int count = (int)checkCmd.ExecuteScalar();
+        //        string checkQuery = "SELECT COUNT(*) FROM Users WHERE Username = 'admin'";
+        //        SqlCommand checkCmd = new SqlCommand(checkQuery, conn);
+        //        int count = (int)checkCmd.ExecuteScalar();
 
-                if (count > 0) return;
+        //        if (count > 0) return;
 
-                string hashed = BCrypt.Net.BCrypt.HashPassword("123456");
-                string query = "INSERT INTO Users (Username, PasswordHash, Role) VALUES ('admin', @p, 'Admin')";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@p", hashed);
-                cmd.ExecuteNonQuery();
+        //        string hashed = BCrypt.Net.BCrypt.HashPassword("123456");
+        //        string query = "INSERT INTO Users (Username, PasswordHash, Role) VALUES ('admin', @p, 'Admin')";
+        //        SqlCommand cmd = new SqlCommand(query, conn);
+        //        cmd.Parameters.AddWithValue("@p", hashed);
+        //        cmd.ExecuteNonQuery();
 
-                MessageBox.Show("Tài khoản test admin/123456 đã được tạo.");
-            }
-        }
+        //        MessageBox.Show("Tài khoản test admin/123456 đã được tạo.");
+        //    }
+        //}
         // Khi User thoát đăng nhập, lưu log đăng nhập
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
