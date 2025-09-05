@@ -1,6 +1,9 @@
-﻿namespace Domain
+﻿using Domain.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain
 {
-    public class TagsStation : TagsLocation_Info
+    public class TagsStation : ITagsStationsDouble, ITagLocationInfo
     {
         public string Path { get; set; }
         public int StationId { get; set; }
@@ -44,6 +47,10 @@
         public bool? Door2_PressureLow { get; set; } = false;
         public bool? Al_Door1 { get; set; } = false;
         public bool? Al_Door2 { get; set; } = false;
+        public bool? Temp_Oil_High { get; set; } = false;
+        public bool? Temp_Oil_Low { get; set; } = false;
+        public bool? Lock1 { get; set; } = false;
+        public bool? Lock2 { get; set; } = false;
 
         public double? HT_Cylinder1_1 { get; set; } = 0;
         public double? HT_Cylinder1_2 { get; set; } = 0;
@@ -56,8 +63,6 @@
         public double? Pressure_Oil_Door2 { get; set; } = 0;
         public double? Fllow_Door1 { get; set; } = 0;
         public double? Fllow_Door2 { get; set; } = 0;
-
-        //gia tri offset
         public double? HT_Cylinder1_1_Offset { get; set; } = 0;
         public double? HT_Cylinder1_2_Offset { get; set; } = 0;
         public double? HT_Cylinder2_1_Offset { get; set; } = 0;
@@ -69,8 +74,6 @@
         public double? Pressure_Oil_Door2_Offset { get; set; } = 0;
         public double? Fllow_Door1_Offset { get; set; } = 0;
         public double? Fllow_Door2_Offset { get; set; } = 0;
-
-        //gia tri sau cung = origin + Offset
         public double? HT_Cylinder1_1_Final { get; set; } = 0;
         public double? HT_Cylinder1_2_Final { get; set; } = 0;
         public double? HT_Cylinder2_1_Final { get; set; } = 0;
@@ -82,13 +85,9 @@
         public double? Pressure_Oil_Door2_Final { get; set; } = 0;
         public double? Fllow_Door1_Final { get; set; } = 0;
         public double? Fllow_Door2_Final { get; set; } = 0;
-    }
-
-    public class TagsLocation_Info
-    {
         public double? Fllow_Ho { get; set; } = 0;
-        public double? Fllow_Ho_Offset { get; set; } = 0;
-        public double? Fllow_Ho_Final { get; set; } = 0;
+        public double? Fllow_Ho_Offset { get; set;} = 0;
+        public double? Fllow_Ho_Final { get; set;} = 0;
     }
 
     public class CalculatorValueModel : ICalculatorValue

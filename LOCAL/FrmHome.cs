@@ -1003,10 +1003,7 @@ private void UpdateDoorlockStatus(Label lbl, string openingValue, string closing
         //        dbb.Execute(insertQuery, newRow);
         //    }
         //}
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            
-        }
+        
 
         //private void tm_login_Tick(object sender, EventArgs e)
         //{

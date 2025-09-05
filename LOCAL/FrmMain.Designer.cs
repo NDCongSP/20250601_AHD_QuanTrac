@@ -59,6 +59,9 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labALDoor2_Station3 = new System.Windows.Forms.Label();
+            this._labALDoor2_Station2 = new System.Windows.Forms.Label();
+            this._labALDoor2_Station1 = new System.Windows.Forms.Label();
             this.btnLoadStats = new System.Windows.Forms.Button();
             this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
             this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
@@ -72,9 +75,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
-            this._labALDoor2_Station1 = new System.Windows.Forms.Label();
-            this._labALDoor2_Station2 = new System.Windows.Forms.Label();
-            this._labALDoor2_Station3 = new System.Windows.Forms.Label();
+            this._labFllow_Dautieng = new System.Windows.Forms.Label();
+            this._labHT_Cylinder1_1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -393,6 +395,8 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labHT_Cylinder1_1);
+            this.panelDesktop.Controls.Add(this._labFllow_Dautieng);
             this.panelDesktop.Controls.Add(this._labALDoor2_Station3);
             this.panelDesktop.Controls.Add(this._labALDoor2_Station2);
             this.panelDesktop.Controls.Add(this._labALDoor2_Station1);
@@ -413,6 +417,33 @@
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
+            // 
+            // _labALDoor2_Station3
+            // 
+            this._labALDoor2_Station3.AutoSize = true;
+            this._labALDoor2_Station3.Location = new System.Drawing.Point(208, 411);
+            this._labALDoor2_Station3.Name = "_labALDoor2_Station3";
+            this._labALDoor2_Station3.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor2_Station3.TabIndex = 195;
+            this._labALDoor2_Station3.Text = "label2";
+            // 
+            // _labALDoor2_Station2
+            // 
+            this._labALDoor2_Station2.AutoSize = true;
+            this._labALDoor2_Station2.Location = new System.Drawing.Point(208, 386);
+            this._labALDoor2_Station2.Name = "_labALDoor2_Station2";
+            this._labALDoor2_Station2.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor2_Station2.TabIndex = 194;
+            this._labALDoor2_Station2.Text = "label2";
+            // 
+            // _labALDoor2_Station1
+            // 
+            this._labALDoor2_Station1.AutoSize = true;
+            this._labALDoor2_Station1.Location = new System.Drawing.Point(208, 353);
+            this._labALDoor2_Station1.Name = "_labALDoor2_Station1";
+            this._labALDoor2_Station1.Size = new System.Drawing.Size(35, 13);
+            this._labALDoor2_Station1.TabIndex = 193;
+            this._labALDoor2_Station1.Text = "label2";
             // 
             // btnLoadStats
             // 
@@ -531,32 +562,23 @@
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
             // 
-            // _labALDoor2_Station1
+            // _labFllow_Dautieng
             // 
-            this._labALDoor2_Station1.AutoSize = true;
-            this._labALDoor2_Station1.Location = new System.Drawing.Point(208, 353);
-            this._labALDoor2_Station1.Name = "_labALDoor2_Station1";
-            this._labALDoor2_Station1.Size = new System.Drawing.Size(35, 13);
-            this._labALDoor2_Station1.TabIndex = 193;
-            this._labALDoor2_Station1.Text = "label2";
+            this._labFllow_Dautieng.AutoSize = true;
+            this._labFllow_Dautieng.Location = new System.Drawing.Point(97, 173);
+            this._labFllow_Dautieng.Name = "_labFllow_Dautieng";
+            this._labFllow_Dautieng.Size = new System.Drawing.Size(35, 13);
+            this._labFllow_Dautieng.TabIndex = 196;
+            this._labFllow_Dautieng.Text = "label2";
             // 
-            // _labALDoor2_Station2
+            // _labHT_Cylinder1_1
             // 
-            this._labALDoor2_Station2.AutoSize = true;
-            this._labALDoor2_Station2.Location = new System.Drawing.Point(208, 386);
-            this._labALDoor2_Station2.Name = "_labALDoor2_Station2";
-            this._labALDoor2_Station2.Size = new System.Drawing.Size(35, 13);
-            this._labALDoor2_Station2.TabIndex = 194;
-            this._labALDoor2_Station2.Text = "label2";
-            // 
-            // _labALDoor2_Station3
-            // 
-            this._labALDoor2_Station3.AutoSize = true;
-            this._labALDoor2_Station3.Location = new System.Drawing.Point(208, 411);
-            this._labALDoor2_Station3.Name = "_labALDoor2_Station3";
-            this._labALDoor2_Station3.Size = new System.Drawing.Size(35, 13);
-            this._labALDoor2_Station3.TabIndex = 195;
-            this._labALDoor2_Station3.Text = "label2";
+            this._labHT_Cylinder1_1.AutoSize = true;
+            this._labHT_Cylinder1_1.Location = new System.Drawing.Point(127, 94);
+            this._labHT_Cylinder1_1.Name = "_labHT_Cylinder1_1";
+            this._labHT_Cylinder1_1.Size = new System.Drawing.Size(35, 13);
+            this._labHT_Cylinder1_1.TabIndex = 197;
+            this._labHT_Cylinder1_1.Text = "label2";
             // 
             // FrmMain
             // 
@@ -639,5 +661,7 @@
         private System.Windows.Forms.Label _labALDoor2_Station3;
         private System.Windows.Forms.Label _labALDoor2_Station2;
         private System.Windows.Forms.Label _labALDoor2_Station1;
+        private System.Windows.Forms.Label _labFllow_Dautieng;
+        private System.Windows.Forms.Label _labHT_Cylinder1_1;
     }
 }

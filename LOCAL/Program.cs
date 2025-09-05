@@ -30,6 +30,7 @@ namespace RegistrationForm1
             using (var dbContext = new ApplicationDbContext())
             {
                 //   var configTable = await dbContext.FT01s.FirstOrDefaultAsync();
+                //var configTable = dbContext.FT01s.ToList();
                 var configTable = dbContext.FT01s.FirstOrDefault();
                 if (configTable == null)
                 {
@@ -71,7 +72,7 @@ namespace RegistrationForm1
 
                     }
                     Globalvariable.RealtimeDisplays.Add(displayItem);
-                    var dlRealtime = dbContext.FT05s.FirstOrDefault();
+                    var dlRealtime = dbContext.FT02s.FirstOrDefault();
                     if (dlRealtime != null)
                     {
                         dlRealtime.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);

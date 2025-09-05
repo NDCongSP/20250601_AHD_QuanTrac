@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmHome));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblASCua1 = new Ahd.Winforms.Controls.AhdLabel();
@@ -80,8 +79,6 @@
             this.button32 = new System.Windows.Forms.Button();
             this.button34 = new System.Windows.Forms.Button();
             this.button33 = new System.Windows.Forms.Button();
-            this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.Temp_Oil3 = new Ahd.Winforms.Controls.AhdLabel();
             this.Temp_Oil2 = new Ahd.Winforms.Controls.AhdLabel();
             this.Temp_Oil1 = new Ahd.Winforms.Controls.AhdLabel();
@@ -170,7 +167,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblCua4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil1)).BeginInit();
@@ -602,7 +598,7 @@
             this.Door1_Aperture.Size = new System.Drawing.Size(110, 35);
             this.Door1_Aperture.StringFormat = null;
             this.Door1_Aperture.TabIndex = 51;
-            this.Door1_Aperture.TagPath = "Local Station/DauTieng/S71500/Group1/Door1_Aperture";
+            this.Door1_Aperture.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Aperture";
             this.Door1_Aperture.Text = "0.00";
             this.Door1_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -617,7 +613,7 @@
             this.Door2_Aperture.Size = new System.Drawing.Size(110, 35);
             this.Door2_Aperture.StringFormat = null;
             this.Door2_Aperture.TabIndex = 50;
-            this.Door2_Aperture.TagPath = "Local Station/DauTieng/S71500/Group1/Door2_Aperture";
+            this.Door2_Aperture.TagPath = "Local Station/DauTieng/S71500/Station_1/Door2_Aperture";
             this.Door2_Aperture.Text = "0.00";
             this.Door2_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -970,25 +966,6 @@
             this.button33.TabIndex = 29;
             this.button33.Text = "CỬA 5";
             this.button33.UseVisualStyleBackColor = false;
-            // 
-            // ahdDriverConnector1
-            // 
-            this.ahdDriverConnector1.CollectionName = null;
-            this.ahdDriverConnector1.CommunicationMode = Ahd.Core.CommunicationMode.ReceiveFromServer;
-            this.ahdDriverConnector1.DatabaseName = null;
-            this.ahdDriverConnector1.MongoDb_ConnectionString = null;
-            this.ahdDriverConnector1.Port = ((ushort)(8800));
-            this.ahdDriverConnector1.RefreshRate = 1000;
-            this.ahdDriverConnector1.ServerAddress = "127.0.0.1";
-            this.ahdDriverConnector1.StationName = null;
-            this.ahdDriverConnector1.Timeout = 30;
-            this.ahdDriverConnector1.UseMongoDb = false;
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 200;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Temp_Oil3
             // 
@@ -1719,7 +1696,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblCua4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdDriverConnector1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Temp_Oil1)).EndInit();
@@ -1821,7 +1797,6 @@
         private System.Windows.Forms.Button button32;
         private System.Windows.Forms.Button button34;
         private System.Windows.Forms.Button button33;
-        private Ahd.Winforms.Controls.AhdDriverConnector ahdDriverConnector1;
         private System.Windows.Forms.PictureBox Pic_Door2_Opening;
         private System.Windows.Forms.PictureBox Pic_Door2_Closing;
         private System.Windows.Forms.PictureBox Pic_Doorlock2_1Open;
@@ -1830,7 +1805,6 @@
         private System.Windows.Forms.PictureBox Pic_Door1_Closing;
         private System.Windows.Forms.PictureBox Pic_Doorlock2_2Open;
         private System.Windows.Forms.PictureBox Pic_Doorlock2_2Close;
-        private System.Windows.Forms.Timer timer1;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil3;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil2;
         private Ahd.Winforms.Controls.AhdLabel Temp_Oil1;

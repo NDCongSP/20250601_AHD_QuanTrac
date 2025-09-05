@@ -221,6 +221,9 @@
     <Compile Include="AlarmModel.cs" />
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Domain\Entities\BaseEntity\GenericEntity.cs" />
+    <Compile Include="Domain\Entities\IGenericEntity.cs" />
+    <Compile Include="Domain\Entities\ITagLocationInfo.cs" />
+    <Compile Include="Domain\Entities\ITagsStationsDouble.cs" />
     <Compile Include="Domain\Entities\ScadaUser.cs" />
     <Compile Include="Domain\Entities\FT01.cs" />
     <Compile Include="Domain\Entities\FT02.cs" />

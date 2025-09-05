@@ -35,7 +35,7 @@
             this.Pic_Al_Door1_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label103 = new System.Windows.Forms.Label();
             this.Pic_Al_Door1 = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.dataGridViewT1 = new System.Windows.Forms.DataGridView();
+            this._dataGridViewT1 = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.bnt_Hand_T1 = new System.Windows.Forms.Button();
             this.bnt_Estop_T1 = new System.Windows.Forms.Button();
@@ -118,6 +118,12 @@
             this.Pic_Al_Door2 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.Pic_Doorlock2_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock2_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock2_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock2_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.label152 = new System.Windows.Forms.Label();
+            this.label153 = new System.Windows.Forms.Label();
             this.Pic_Doorlock2_2Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock2_2Open_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock2_2Close = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -240,6 +246,13 @@
             this.label38 = new System.Windows.Forms.Label();
             this.ahdLabel25 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel28 = new Ahd.Winforms.Controls.AhdLabel();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.Pic_Door3_PressureLow_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Door3_PressureHigh_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Door3_PressureLow = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Door3_PressureHigh = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
@@ -252,6 +265,12 @@
             this.ahdLabel33 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel34 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.Pic_Doorlock3_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock3_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock3_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock3_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.label148 = new System.Windows.Forms.Label();
+            this.label149 = new System.Windows.Forms.Label();
             this.Pic_Doorlock3_2Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock3_2Open_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock3_1Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -343,6 +362,12 @@
             this.label63 = new System.Windows.Forms.Label();
             this.label64 = new System.Windows.Forms.Label();
             this.groupBox18 = new System.Windows.Forms.GroupBox();
+            this.Pic_Doorlock4_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock4_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock4_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock4_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.label150 = new System.Windows.Forms.Label();
+            this.label151 = new System.Windows.Forms.Label();
             this.Pic_Doorlock4_2Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock4_2Open_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock4_1Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -434,6 +459,12 @@
             this.label82 = new System.Windows.Forms.Label();
             this.label83 = new System.Windows.Forms.Label();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
+            this.Pic_Doorlock5_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock5_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock5_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.Pic_Doorlock5_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
+            this.label154 = new System.Windows.Forms.Label();
+            this.label155 = new System.Windows.Forms.Label();
             this.Pic_Doorlock5_2Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock5_2Open_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Doorlock5_1Close_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -545,43 +576,12 @@
             this.ahdLabel84 = new Ahd.Winforms.Controls.AhdLabel();
             this.label112 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.Pic_Doorlock2_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock2_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock2_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock2_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.label152 = new System.Windows.Forms.Label();
-            this.label153 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.Pic_Door3_PressureHigh = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Door3_PressureLow = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Door3_PressureHigh_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Door3_PressureLow_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.Pic_Doorlock3_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock3_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock3_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock3_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.label148 = new System.Windows.Forms.Label();
-            this.label149 = new System.Windows.Forms.Label();
-            this.Pic_Doorlock4_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock4_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock4_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock4_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.label150 = new System.Windows.Forms.Label();
-            this.label151 = new System.Windows.Forms.Label();
-            this.Pic_Doorlock5_Closing_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock5_Opening_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock5_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.Pic_Doorlock5_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.label154 = new System.Windows.Forms.Label();
-            this.label155 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door1_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._dataGridViewT1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar2)).BeginInit();
@@ -633,6 +633,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door2_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door2)).BeginInit();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Close_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Open_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Close)).BeginInit();
@@ -711,6 +715,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel24)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel28)).BeginInit();
+            this.groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel29)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel31)).BeginInit();
@@ -718,6 +727,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel34)).BeginInit();
             this.groupBox13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Close_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Open_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_1Close_Stop)).BeginInit();
@@ -776,6 +789,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_PressureLow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_PressureHigh)).BeginInit();
             this.groupBox18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Close_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Open_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_1Close_Stop)).BeginInit();
@@ -834,6 +851,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door5_PressureLow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door5_PressureHigh)).BeginInit();
             this.groupBox23.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening_Stop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close_Stop)).BeginInit();
@@ -904,27 +925,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow_Stop)).BeginInit();
-            this.groupBox12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening_Stop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -951,7 +951,7 @@
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage1.Controls.Add(this.groupBox8);
-            this.tabPage1.Controls.Add(this.dataGridViewT1);
+            this.tabPage1.Controls.Add(this._dataGridViewT1);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.ahdPictureBox1);
             this.tabPage1.Controls.Add(this.ahdBar2);
@@ -1051,15 +1051,15 @@
             this.Pic_Al_Door1.TagPath = null;
             this.Pic_Al_Door1.Text = "ahdPictureBox4";
             // 
-            // dataGridViewT1
+            // _dataGridViewT1
             // 
-            this.dataGridViewT1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewT1.Location = new System.Drawing.Point(681, 348);
-            this.dataGridViewT1.Name = "dataGridViewT1";
-            this.dataGridViewT1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.dataGridViewT1.RowHeadersWidth = 82;
-            this.dataGridViewT1.Size = new System.Drawing.Size(605, 432);
-            this.dataGridViewT1.TabIndex = 234;
+            this._dataGridViewT1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._dataGridViewT1.Location = new System.Drawing.Point(669, 348);
+            this._dataGridViewT1.Name = "_dataGridViewT1";
+            this._dataGridViewT1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this._dataGridViewT1.RowHeadersWidth = 82;
+            this._dataGridViewT1.Size = new System.Drawing.Size(617, 432);
+            this._dataGridViewT1.TabIndex = 234;
             // 
             // groupBox2
             // 
@@ -2231,6 +2231,92 @@
             this.groupBox5.TabIndex = 267;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Chốt cửa";
+            // 
+            // Pic_Doorlock2_Closing_Stop
+            // 
+            this.Pic_Doorlock2_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock2_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock2_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock2_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock2_Closing_Stop.Location = new System.Drawing.Point(6, 82);
+            this.Pic_Doorlock2_Closing_Stop.Name = "Pic_Doorlock2_Closing_Stop";
+            this.Pic_Doorlock2_Closing_Stop.RotateAngle = 0;
+            this.Pic_Doorlock2_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock2_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock2_Closing_Stop.TabIndex = 257;
+            this.Pic_Doorlock2_Closing_Stop.TagPath = null;
+            this.Pic_Doorlock2_Closing_Stop.Text = "ahdPictureBox5";
+            // 
+            // Pic_Doorlock2_Opening_Stop
+            // 
+            this.Pic_Doorlock2_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock2_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock2_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock2_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock2_Opening_Stop.Location = new System.Drawing.Point(6, 37);
+            this.Pic_Doorlock2_Opening_Stop.Name = "Pic_Doorlock2_Opening_Stop";
+            this.Pic_Doorlock2_Opening_Stop.RotateAngle = 0;
+            this.Pic_Doorlock2_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock2_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock2_Opening_Stop.TabIndex = 256;
+            this.Pic_Doorlock2_Opening_Stop.TagPath = null;
+            this.Pic_Doorlock2_Opening_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock2_Closing
+            // 
+            this.Pic_Doorlock2_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock2_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock2_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock2_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
+            this.Pic_Doorlock2_Closing.Location = new System.Drawing.Point(6, 82);
+            this.Pic_Doorlock2_Closing.Name = "Pic_Doorlock2_Closing";
+            this.Pic_Doorlock2_Closing.RotateAngle = 0;
+            this.Pic_Doorlock2_Closing.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock2_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock2_Closing.TabIndex = 255;
+            this.Pic_Doorlock2_Closing.TagPath = null;
+            this.Pic_Doorlock2_Closing.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock2_Opening
+            // 
+            this.Pic_Doorlock2_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock2_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock2_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock2_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
+            this.Pic_Doorlock2_Opening.Location = new System.Drawing.Point(6, 37);
+            this.Pic_Doorlock2_Opening.Name = "Pic_Doorlock2_Opening";
+            this.Pic_Doorlock2_Opening.RotateAngle = 0;
+            this.Pic_Doorlock2_Opening.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock2_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock2_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock2_Opening.TabIndex = 254;
+            this.Pic_Doorlock2_Opening.TagPath = null;
+            this.Pic_Doorlock2_Opening.Text = "ahdPictureBox4";
+            // 
+            // label152
+            // 
+            this.label152.AutoSize = true;
+            this.label152.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label152.ForeColor = System.Drawing.Color.Blue;
+            this.label152.Location = new System.Drawing.Point(47, 88);
+            this.label152.Name = "label152";
+            this.label152.Size = new System.Drawing.Size(145, 19);
+            this.label152.TabIndex = 253;
+            this.label152.Text = "Chốt cửa 2 đang đóng";
+            // 
+            // label153
+            // 
+            this.label153.AutoSize = true;
+            this.label153.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label153.ForeColor = System.Drawing.Color.Blue;
+            this.label153.Location = new System.Drawing.Point(47, 43);
+            this.label153.Name = "label153";
+            this.label153.Size = new System.Drawing.Size(134, 19);
+            this.label153.TabIndex = 252;
+            this.label153.Text = "Chốt cửa 2 đang mở";
             // 
             // Pic_Doorlock2_2Close_Stop
             // 
@@ -3984,6 +4070,107 @@
             this.ahdLabel28.Text = "0.0";
             this.ahdLabel28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // groupBox12
+            // 
+            this.groupBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(236)))), ((int)(((byte)(236)))));
+            this.groupBox12.Controls.Add(this.Pic_Door3_PressureLow_Stop);
+            this.groupBox12.Controls.Add(this.Pic_Door3_PressureHigh_Stop);
+            this.groupBox12.Controls.Add(this.Pic_Door3_PressureLow);
+            this.groupBox12.Controls.Add(this.Pic_Door3_PressureHigh);
+            this.groupBox12.Controls.Add(this.label44);
+            this.groupBox12.Controls.Add(this.label45);
+            this.groupBox12.Location = new System.Drawing.Point(472, 554);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.groupBox12.Size = new System.Drawing.Size(196, 115);
+            this.groupBox12.TabIndex = 246;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Áp dầu";
+            // 
+            // Pic_Door3_PressureLow_Stop
+            // 
+            this.Pic_Door3_PressureLow_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door3_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Door3_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Door3_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Door3_PressureLow_Stop.Location = new System.Drawing.Point(14, 74);
+            this.Pic_Door3_PressureLow_Stop.Name = "Pic_Door3_PressureLow_Stop";
+            this.Pic_Door3_PressureLow_Stop.RotateAngle = 0;
+            this.Pic_Door3_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Door3_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Door3_PressureLow_Stop.TabIndex = 245;
+            this.Pic_Door3_PressureLow_Stop.TagPath = null;
+            this.Pic_Door3_PressureLow_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Door3_PressureHigh_Stop
+            // 
+            this.Pic_Door3_PressureHigh_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door3_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Door3_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Door3_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Door3_PressureHigh_Stop.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door3_PressureHigh_Stop.Name = "Pic_Door3_PressureHigh_Stop";
+            this.Pic_Door3_PressureHigh_Stop.RotateAngle = 0;
+            this.Pic_Door3_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Door3_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Door3_PressureHigh_Stop.TabIndex = 244;
+            this.Pic_Door3_PressureHigh_Stop.TagPath = null;
+            this.Pic_Door3_PressureHigh_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Door3_PressureLow
+            // 
+            this.Pic_Door3_PressureLow.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door3_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Door3_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Door3_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
+            this.Pic_Door3_PressureLow.Location = new System.Drawing.Point(14, 74);
+            this.Pic_Door3_PressureLow.Name = "Pic_Door3_PressureLow";
+            this.Pic_Door3_PressureLow.RotateAngle = 0;
+            this.Pic_Door3_PressureLow.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Door3_PressureLow.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Door3_PressureLow.TabIndex = 243;
+            this.Pic_Door3_PressureLow.TagPath = null;
+            this.Pic_Door3_PressureLow.Text = "ahdPictureBox4";
+            // 
+            // Pic_Door3_PressureHigh
+            // 
+            this.Pic_Door3_PressureHigh.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Door3_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Door3_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Door3_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
+            this.Pic_Door3_PressureHigh.Location = new System.Drawing.Point(14, 31);
+            this.Pic_Door3_PressureHigh.Name = "Pic_Door3_PressureHigh";
+            this.Pic_Door3_PressureHigh.RotateAngle = 0;
+            this.Pic_Door3_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Door3_PressureHigh.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Door3_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Door3_PressureHigh.TabIndex = 242;
+            this.Pic_Door3_PressureHigh.TagPath = null;
+            this.Pic_Door3_PressureHigh.Text = "ahdPictureBox4";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.Location = new System.Drawing.Point(64, 80);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(123, 19);
+            this.label44.TabIndex = 8;
+            this.label44.Text = "Áp dầu cửa 3 thấp";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.Location = new System.Drawing.Point(64, 37);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(119, 19);
+            this.label45.TabIndex = 5;
+            this.label45.Text = "Áp dầu cửa 3 cao";
+            // 
             // label39
             // 
             this.label39.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -4160,6 +4347,92 @@
             this.groupBox13.TabIndex = 245;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Chốt cửa";
+            // 
+            // Pic_Doorlock3_Closing_Stop
+            // 
+            this.Pic_Doorlock3_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock3_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock3_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock3_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock3_Closing_Stop.Location = new System.Drawing.Point(6, 86);
+            this.Pic_Doorlock3_Closing_Stop.Name = "Pic_Doorlock3_Closing_Stop";
+            this.Pic_Doorlock3_Closing_Stop.RotateAngle = 0;
+            this.Pic_Doorlock3_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock3_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock3_Closing_Stop.TabIndex = 257;
+            this.Pic_Doorlock3_Closing_Stop.TagPath = null;
+            this.Pic_Doorlock3_Closing_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock3_Opening_Stop
+            // 
+            this.Pic_Doorlock3_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock3_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock3_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock3_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock3_Opening_Stop.Location = new System.Drawing.Point(6, 42);
+            this.Pic_Doorlock3_Opening_Stop.Name = "Pic_Doorlock3_Opening_Stop";
+            this.Pic_Doorlock3_Opening_Stop.RotateAngle = 0;
+            this.Pic_Doorlock3_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock3_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock3_Opening_Stop.TabIndex = 256;
+            this.Pic_Doorlock3_Opening_Stop.TagPath = null;
+            this.Pic_Doorlock3_Opening_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock3_Closing
+            // 
+            this.Pic_Doorlock3_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock3_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock3_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock3_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
+            this.Pic_Doorlock3_Closing.Location = new System.Drawing.Point(6, 86);
+            this.Pic_Doorlock3_Closing.Name = "Pic_Doorlock3_Closing";
+            this.Pic_Doorlock3_Closing.RotateAngle = 0;
+            this.Pic_Doorlock3_Closing.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock3_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock3_Closing.TabIndex = 255;
+            this.Pic_Doorlock3_Closing.TagPath = null;
+            this.Pic_Doorlock3_Closing.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock3_Opening
+            // 
+            this.Pic_Doorlock3_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock3_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock3_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock3_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
+            this.Pic_Doorlock3_Opening.Location = new System.Drawing.Point(6, 42);
+            this.Pic_Doorlock3_Opening.Name = "Pic_Doorlock3_Opening";
+            this.Pic_Doorlock3_Opening.RotateAngle = 0;
+            this.Pic_Doorlock3_Opening.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock3_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock3_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock3_Opening.TabIndex = 254;
+            this.Pic_Doorlock3_Opening.TagPath = null;
+            this.Pic_Doorlock3_Opening.Text = "ahdPictureBox4";
+            // 
+            // label148
+            // 
+            this.label148.AutoSize = true;
+            this.label148.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label148.ForeColor = System.Drawing.Color.Blue;
+            this.label148.Location = new System.Drawing.Point(64, 92);
+            this.label148.Name = "label148";
+            this.label148.Size = new System.Drawing.Size(145, 19);
+            this.label148.TabIndex = 253;
+            this.label148.Text = "Chốt cửa 3 đang đóng";
+            // 
+            // label149
+            // 
+            this.label149.AutoSize = true;
+            this.label149.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label149.ForeColor = System.Drawing.Color.Blue;
+            this.label149.Location = new System.Drawing.Point(64, 48);
+            this.label149.Name = "label149";
+            this.label149.Size = new System.Drawing.Size(134, 19);
+            this.label149.TabIndex = 252;
+            this.label149.Text = "Chốt cửa 3 đang mở";
             // 
             // Pic_Doorlock3_2Close_Stop
             // 
@@ -5487,6 +5760,92 @@
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Chốt cửa";
             // 
+            // Pic_Doorlock4_Closing_Stop
+            // 
+            this.Pic_Doorlock4_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock4_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock4_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock4_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock4_Closing_Stop.Location = new System.Drawing.Point(13, 81);
+            this.Pic_Doorlock4_Closing_Stop.Name = "Pic_Doorlock4_Closing_Stop";
+            this.Pic_Doorlock4_Closing_Stop.RotateAngle = 0;
+            this.Pic_Doorlock4_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock4_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock4_Closing_Stop.TabIndex = 257;
+            this.Pic_Doorlock4_Closing_Stop.TagPath = null;
+            this.Pic_Doorlock4_Closing_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock4_Opening_Stop
+            // 
+            this.Pic_Doorlock4_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock4_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock4_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock4_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock4_Opening_Stop.Location = new System.Drawing.Point(13, 37);
+            this.Pic_Doorlock4_Opening_Stop.Name = "Pic_Doorlock4_Opening_Stop";
+            this.Pic_Doorlock4_Opening_Stop.RotateAngle = 0;
+            this.Pic_Doorlock4_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock4_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock4_Opening_Stop.TabIndex = 256;
+            this.Pic_Doorlock4_Opening_Stop.TagPath = null;
+            this.Pic_Doorlock4_Opening_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock4_Closing
+            // 
+            this.Pic_Doorlock4_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock4_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock4_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock4_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
+            this.Pic_Doorlock4_Closing.Location = new System.Drawing.Point(13, 81);
+            this.Pic_Doorlock4_Closing.Name = "Pic_Doorlock4_Closing";
+            this.Pic_Doorlock4_Closing.RotateAngle = 0;
+            this.Pic_Doorlock4_Closing.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock4_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock4_Closing.TabIndex = 255;
+            this.Pic_Doorlock4_Closing.TagPath = null;
+            this.Pic_Doorlock4_Closing.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock4_Opening
+            // 
+            this.Pic_Doorlock4_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock4_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock4_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock4_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
+            this.Pic_Doorlock4_Opening.Location = new System.Drawing.Point(13, 37);
+            this.Pic_Doorlock4_Opening.Name = "Pic_Doorlock4_Opening";
+            this.Pic_Doorlock4_Opening.RotateAngle = 0;
+            this.Pic_Doorlock4_Opening.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock4_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock4_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock4_Opening.TabIndex = 254;
+            this.Pic_Doorlock4_Opening.TagPath = null;
+            this.Pic_Doorlock4_Opening.Text = "ahdPictureBox4";
+            // 
+            // label150
+            // 
+            this.label150.AutoSize = true;
+            this.label150.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label150.ForeColor = System.Drawing.Color.Blue;
+            this.label150.Location = new System.Drawing.Point(70, 87);
+            this.label150.Name = "label150";
+            this.label150.Size = new System.Drawing.Size(145, 19);
+            this.label150.TabIndex = 253;
+            this.label150.Text = "Chốt cửa 4 đang đóng";
+            // 
+            // label151
+            // 
+            this.label151.AutoSize = true;
+            this.label151.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label151.ForeColor = System.Drawing.Color.Blue;
+            this.label151.Location = new System.Drawing.Point(70, 43);
+            this.label151.Name = "label151";
+            this.label151.Size = new System.Drawing.Size(134, 19);
+            this.label151.TabIndex = 252;
+            this.label151.Text = "Chốt cửa 4 đang mở";
+            // 
             // Pic_Doorlock4_2Close_Stop
             // 
             this.Pic_Doorlock4_2Close_Stop.BackColor = System.Drawing.Color.Transparent;
@@ -6812,6 +7171,92 @@
             this.groupBox23.TabIndex = 245;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Chốt cửa";
+            // 
+            // Pic_Doorlock5_Closing_Stop
+            // 
+            this.Pic_Doorlock5_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock5_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock5_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock5_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock5_Closing_Stop.Location = new System.Drawing.Point(21, 81);
+            this.Pic_Doorlock5_Closing_Stop.Name = "Pic_Doorlock5_Closing_Stop";
+            this.Pic_Doorlock5_Closing_Stop.RotateAngle = 0;
+            this.Pic_Doorlock5_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock5_Closing_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock5_Closing_Stop.TabIndex = 257;
+            this.Pic_Doorlock5_Closing_Stop.TagPath = null;
+            this.Pic_Doorlock5_Closing_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock5_Opening_Stop
+            // 
+            this.Pic_Doorlock5_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock5_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock5_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock5_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
+            this.Pic_Doorlock5_Opening_Stop.Location = new System.Drawing.Point(21, 37);
+            this.Pic_Doorlock5_Opening_Stop.Name = "Pic_Doorlock5_Opening_Stop";
+            this.Pic_Doorlock5_Opening_Stop.RotateAngle = 0;
+            this.Pic_Doorlock5_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock5_Opening_Stop.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock5_Opening_Stop.TabIndex = 256;
+            this.Pic_Doorlock5_Opening_Stop.TagPath = null;
+            this.Pic_Doorlock5_Opening_Stop.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock5_Closing
+            // 
+            this.Pic_Doorlock5_Closing.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock5_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock5_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock5_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
+            this.Pic_Doorlock5_Closing.Location = new System.Drawing.Point(21, 81);
+            this.Pic_Doorlock5_Closing.Name = "Pic_Doorlock5_Closing";
+            this.Pic_Doorlock5_Closing.RotateAngle = 0;
+            this.Pic_Doorlock5_Closing.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock5_Closing.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock5_Closing.TabIndex = 255;
+            this.Pic_Doorlock5_Closing.TagPath = null;
+            this.Pic_Doorlock5_Closing.Text = "ahdPictureBox4";
+            // 
+            // Pic_Doorlock5_Opening
+            // 
+            this.Pic_Doorlock5_Opening.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Doorlock5_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
+            this.Pic_Doorlock5_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
+            this.Pic_Doorlock5_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
+            this.Pic_Doorlock5_Opening.Location = new System.Drawing.Point(21, 37);
+            this.Pic_Doorlock5_Opening.Name = "Pic_Doorlock5_Opening";
+            this.Pic_Doorlock5_Opening.RotateAngle = 0;
+            this.Pic_Doorlock5_Opening.ShadedColor = System.Drawing.Color.Gray;
+            this.Pic_Doorlock5_Opening.Size = new System.Drawing.Size(35, 31);
+            this.Pic_Doorlock5_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
+            this.Pic_Doorlock5_Opening.TabIndex = 254;
+            this.Pic_Doorlock5_Opening.TagPath = null;
+            this.Pic_Doorlock5_Opening.Text = "ahdPictureBox4";
+            // 
+            // label154
+            // 
+            this.label154.AutoSize = true;
+            this.label154.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label154.ForeColor = System.Drawing.Color.Blue;
+            this.label154.Location = new System.Drawing.Point(79, 87);
+            this.label154.Name = "label154";
+            this.label154.Size = new System.Drawing.Size(118, 19);
+            this.label154.TabIndex = 253;
+            this.label154.Text = "Chốt 5 đang đóng";
+            // 
+            // label155
+            // 
+            this.label155.AutoSize = true;
+            this.label155.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label155.ForeColor = System.Drawing.Color.Blue;
+            this.label155.Location = new System.Drawing.Point(79, 43);
+            this.label155.Name = "label155";
+            this.label155.Size = new System.Drawing.Size(107, 19);
+            this.label155.TabIndex = 252;
+            this.label155.Text = "Chốt 5 đang mở";
             // 
             // Pic_Doorlock5_2Close_Stop
             // 
@@ -8401,451 +8846,6 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(1745, 39);
             this.tableLayoutPanel12.TabIndex = 235;
             // 
-            // Pic_Doorlock2_Closing_Stop
-            // 
-            this.Pic_Doorlock2_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock2_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock2_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock2_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock2_Closing_Stop.Location = new System.Drawing.Point(6, 82);
-            this.Pic_Doorlock2_Closing_Stop.Name = "Pic_Doorlock2_Closing_Stop";
-            this.Pic_Doorlock2_Closing_Stop.RotateAngle = 0;
-            this.Pic_Doorlock2_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_Closing_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock2_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock2_Closing_Stop.TabIndex = 257;
-            this.Pic_Doorlock2_Closing_Stop.TagPath = null;
-            this.Pic_Doorlock2_Closing_Stop.Text = "ahdPictureBox5";
-            // 
-            // Pic_Doorlock2_Opening_Stop
-            // 
-            this.Pic_Doorlock2_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock2_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock2_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock2_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock2_Opening_Stop.Location = new System.Drawing.Point(6, 37);
-            this.Pic_Doorlock2_Opening_Stop.Name = "Pic_Doorlock2_Opening_Stop";
-            this.Pic_Doorlock2_Opening_Stop.RotateAngle = 0;
-            this.Pic_Doorlock2_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_Opening_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock2_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock2_Opening_Stop.TabIndex = 256;
-            this.Pic_Doorlock2_Opening_Stop.TagPath = null;
-            this.Pic_Doorlock2_Opening_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock2_Closing
-            // 
-            this.Pic_Doorlock2_Closing.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock2_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock2_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock2_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock2_Closing.Location = new System.Drawing.Point(6, 82);
-            this.Pic_Doorlock2_Closing.Name = "Pic_Doorlock2_Closing";
-            this.Pic_Doorlock2_Closing.RotateAngle = 0;
-            this.Pic_Doorlock2_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_Closing.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock2_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock2_Closing.TabIndex = 255;
-            this.Pic_Doorlock2_Closing.TagPath = null;
-            this.Pic_Doorlock2_Closing.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock2_Opening
-            // 
-            this.Pic_Doorlock2_Opening.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock2_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock2_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock2_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock2_Opening.Location = new System.Drawing.Point(6, 37);
-            this.Pic_Doorlock2_Opening.Name = "Pic_Doorlock2_Opening";
-            this.Pic_Doorlock2_Opening.RotateAngle = 0;
-            this.Pic_Doorlock2_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock2_Opening.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock2_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock2_Opening.TabIndex = 254;
-            this.Pic_Doorlock2_Opening.TagPath = null;
-            this.Pic_Doorlock2_Opening.Text = "ahdPictureBox4";
-            // 
-            // label152
-            // 
-            this.label152.AutoSize = true;
-            this.label152.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label152.ForeColor = System.Drawing.Color.Blue;
-            this.label152.Location = new System.Drawing.Point(47, 88);
-            this.label152.Name = "label152";
-            this.label152.Size = new System.Drawing.Size(145, 19);
-            this.label152.TabIndex = 253;
-            this.label152.Text = "Chốt cửa 2 đang đóng";
-            // 
-            // label153
-            // 
-            this.label153.AutoSize = true;
-            this.label153.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label153.ForeColor = System.Drawing.Color.Blue;
-            this.label153.Location = new System.Drawing.Point(47, 43);
-            this.label153.Name = "label153";
-            this.label153.Size = new System.Drawing.Size(134, 19);
-            this.label153.TabIndex = 252;
-            this.label153.Text = "Chốt cửa 2 đang mở";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.Location = new System.Drawing.Point(64, 37);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(119, 19);
-            this.label45.TabIndex = 5;
-            this.label45.Text = "Áp dầu cửa 3 cao";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label44.Location = new System.Drawing.Point(64, 80);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(123, 19);
-            this.label44.TabIndex = 8;
-            this.label44.Text = "Áp dầu cửa 3 thấp";
-            // 
-            // Pic_Door3_PressureHigh
-            // 
-            this.Pic_Door3_PressureHigh.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Door3_PressureHigh.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Door3_PressureHigh.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Door3_PressureHigh.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Door3_PressureHigh.Location = new System.Drawing.Point(14, 31);
-            this.Pic_Door3_PressureHigh.Name = "Pic_Door3_PressureHigh";
-            this.Pic_Door3_PressureHigh.RotateAngle = 0;
-            this.Pic_Door3_PressureHigh.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureHigh.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Door3_PressureHigh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Door3_PressureHigh.TabIndex = 242;
-            this.Pic_Door3_PressureHigh.TagPath = null;
-            this.Pic_Door3_PressureHigh.Text = "ahdPictureBox4";
-            // 
-            // Pic_Door3_PressureLow
-            // 
-            this.Pic_Door3_PressureLow.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Door3_PressureLow.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Door3_PressureLow.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Door3_PressureLow.Image = global::RegistrationForm1.Properties.Resources.Tron_Vang;
-            this.Pic_Door3_PressureLow.Location = new System.Drawing.Point(14, 74);
-            this.Pic_Door3_PressureLow.Name = "Pic_Door3_PressureLow";
-            this.Pic_Door3_PressureLow.RotateAngle = 0;
-            this.Pic_Door3_PressureLow.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureLow.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Door3_PressureLow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Door3_PressureLow.TabIndex = 243;
-            this.Pic_Door3_PressureLow.TagPath = null;
-            this.Pic_Door3_PressureLow.Text = "ahdPictureBox4";
-            // 
-            // Pic_Door3_PressureHigh_Stop
-            // 
-            this.Pic_Door3_PressureHigh_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Door3_PressureHigh_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Door3_PressureHigh_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Door3_PressureHigh_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_PressureHigh_Stop.Location = new System.Drawing.Point(14, 31);
-            this.Pic_Door3_PressureHigh_Stop.Name = "Pic_Door3_PressureHigh_Stop";
-            this.Pic_Door3_PressureHigh_Stop.RotateAngle = 0;
-            this.Pic_Door3_PressureHigh_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureHigh_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Door3_PressureHigh_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Door3_PressureHigh_Stop.TabIndex = 244;
-            this.Pic_Door3_PressureHigh_Stop.TagPath = null;
-            this.Pic_Door3_PressureHigh_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Door3_PressureLow_Stop
-            // 
-            this.Pic_Door3_PressureLow_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Door3_PressureLow_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Door3_PressureLow_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Door3_PressureLow_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Door3_PressureLow_Stop.Location = new System.Drawing.Point(14, 74);
-            this.Pic_Door3_PressureLow_Stop.Name = "Pic_Door3_PressureLow_Stop";
-            this.Pic_Door3_PressureLow_Stop.RotateAngle = 0;
-            this.Pic_Door3_PressureLow_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Door3_PressureLow_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Door3_PressureLow_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Door3_PressureLow_Stop.TabIndex = 245;
-            this.Pic_Door3_PressureLow_Stop.TagPath = null;
-            this.Pic_Door3_PressureLow_Stop.Text = "ahdPictureBox4";
-            // 
-            // groupBox12
-            // 
-            this.groupBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(236)))), ((int)(((byte)(236)))));
-            this.groupBox12.Controls.Add(this.Pic_Door3_PressureLow_Stop);
-            this.groupBox12.Controls.Add(this.Pic_Door3_PressureHigh_Stop);
-            this.groupBox12.Controls.Add(this.Pic_Door3_PressureLow);
-            this.groupBox12.Controls.Add(this.Pic_Door3_PressureHigh);
-            this.groupBox12.Controls.Add(this.label44);
-            this.groupBox12.Controls.Add(this.label45);
-            this.groupBox12.Location = new System.Drawing.Point(472, 554);
-            this.groupBox12.Name = "groupBox12";
-            this.groupBox12.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox12.Size = new System.Drawing.Size(196, 115);
-            this.groupBox12.TabIndex = 246;
-            this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Áp dầu";
-            // 
-            // Pic_Doorlock3_Closing_Stop
-            // 
-            this.Pic_Doorlock3_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock3_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock3_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock3_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock3_Closing_Stop.Location = new System.Drawing.Point(6, 86);
-            this.Pic_Doorlock3_Closing_Stop.Name = "Pic_Doorlock3_Closing_Stop";
-            this.Pic_Doorlock3_Closing_Stop.RotateAngle = 0;
-            this.Pic_Doorlock3_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_Closing_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock3_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock3_Closing_Stop.TabIndex = 257;
-            this.Pic_Doorlock3_Closing_Stop.TagPath = null;
-            this.Pic_Doorlock3_Closing_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock3_Opening_Stop
-            // 
-            this.Pic_Doorlock3_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock3_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock3_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock3_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock3_Opening_Stop.Location = new System.Drawing.Point(6, 42);
-            this.Pic_Doorlock3_Opening_Stop.Name = "Pic_Doorlock3_Opening_Stop";
-            this.Pic_Doorlock3_Opening_Stop.RotateAngle = 0;
-            this.Pic_Doorlock3_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_Opening_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock3_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock3_Opening_Stop.TabIndex = 256;
-            this.Pic_Doorlock3_Opening_Stop.TagPath = null;
-            this.Pic_Doorlock3_Opening_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock3_Closing
-            // 
-            this.Pic_Doorlock3_Closing.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock3_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock3_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock3_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock3_Closing.Location = new System.Drawing.Point(6, 86);
-            this.Pic_Doorlock3_Closing.Name = "Pic_Doorlock3_Closing";
-            this.Pic_Doorlock3_Closing.RotateAngle = 0;
-            this.Pic_Doorlock3_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_Closing.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock3_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock3_Closing.TabIndex = 255;
-            this.Pic_Doorlock3_Closing.TagPath = null;
-            this.Pic_Doorlock3_Closing.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock3_Opening
-            // 
-            this.Pic_Doorlock3_Opening.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock3_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock3_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock3_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock3_Opening.Location = new System.Drawing.Point(6, 42);
-            this.Pic_Doorlock3_Opening.Name = "Pic_Doorlock3_Opening";
-            this.Pic_Doorlock3_Opening.RotateAngle = 0;
-            this.Pic_Doorlock3_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock3_Opening.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock3_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock3_Opening.TabIndex = 254;
-            this.Pic_Doorlock3_Opening.TagPath = null;
-            this.Pic_Doorlock3_Opening.Text = "ahdPictureBox4";
-            // 
-            // label148
-            // 
-            this.label148.AutoSize = true;
-            this.label148.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label148.ForeColor = System.Drawing.Color.Blue;
-            this.label148.Location = new System.Drawing.Point(64, 92);
-            this.label148.Name = "label148";
-            this.label148.Size = new System.Drawing.Size(145, 19);
-            this.label148.TabIndex = 253;
-            this.label148.Text = "Chốt cửa 3 đang đóng";
-            // 
-            // label149
-            // 
-            this.label149.AutoSize = true;
-            this.label149.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label149.ForeColor = System.Drawing.Color.Blue;
-            this.label149.Location = new System.Drawing.Point(64, 48);
-            this.label149.Name = "label149";
-            this.label149.Size = new System.Drawing.Size(134, 19);
-            this.label149.TabIndex = 252;
-            this.label149.Text = "Chốt cửa 3 đang mở";
-            // 
-            // Pic_Doorlock4_Closing_Stop
-            // 
-            this.Pic_Doorlock4_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock4_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock4_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock4_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock4_Closing_Stop.Location = new System.Drawing.Point(13, 81);
-            this.Pic_Doorlock4_Closing_Stop.Name = "Pic_Doorlock4_Closing_Stop";
-            this.Pic_Doorlock4_Closing_Stop.RotateAngle = 0;
-            this.Pic_Doorlock4_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_Closing_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock4_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock4_Closing_Stop.TabIndex = 257;
-            this.Pic_Doorlock4_Closing_Stop.TagPath = null;
-            this.Pic_Doorlock4_Closing_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock4_Opening_Stop
-            // 
-            this.Pic_Doorlock4_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock4_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock4_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock4_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock4_Opening_Stop.Location = new System.Drawing.Point(13, 37);
-            this.Pic_Doorlock4_Opening_Stop.Name = "Pic_Doorlock4_Opening_Stop";
-            this.Pic_Doorlock4_Opening_Stop.RotateAngle = 0;
-            this.Pic_Doorlock4_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_Opening_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock4_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock4_Opening_Stop.TabIndex = 256;
-            this.Pic_Doorlock4_Opening_Stop.TagPath = null;
-            this.Pic_Doorlock4_Opening_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock4_Closing
-            // 
-            this.Pic_Doorlock4_Closing.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock4_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock4_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock4_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock4_Closing.Location = new System.Drawing.Point(13, 81);
-            this.Pic_Doorlock4_Closing.Name = "Pic_Doorlock4_Closing";
-            this.Pic_Doorlock4_Closing.RotateAngle = 0;
-            this.Pic_Doorlock4_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_Closing.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock4_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock4_Closing.TabIndex = 255;
-            this.Pic_Doorlock4_Closing.TagPath = null;
-            this.Pic_Doorlock4_Closing.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock4_Opening
-            // 
-            this.Pic_Doorlock4_Opening.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock4_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock4_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock4_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock4_Opening.Location = new System.Drawing.Point(13, 37);
-            this.Pic_Doorlock4_Opening.Name = "Pic_Doorlock4_Opening";
-            this.Pic_Doorlock4_Opening.RotateAngle = 0;
-            this.Pic_Doorlock4_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock4_Opening.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock4_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock4_Opening.TabIndex = 254;
-            this.Pic_Doorlock4_Opening.TagPath = null;
-            this.Pic_Doorlock4_Opening.Text = "ahdPictureBox4";
-            // 
-            // label150
-            // 
-            this.label150.AutoSize = true;
-            this.label150.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label150.ForeColor = System.Drawing.Color.Blue;
-            this.label150.Location = new System.Drawing.Point(70, 87);
-            this.label150.Name = "label150";
-            this.label150.Size = new System.Drawing.Size(145, 19);
-            this.label150.TabIndex = 253;
-            this.label150.Text = "Chốt cửa 4 đang đóng";
-            // 
-            // label151
-            // 
-            this.label151.AutoSize = true;
-            this.label151.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label151.ForeColor = System.Drawing.Color.Blue;
-            this.label151.Location = new System.Drawing.Point(70, 43);
-            this.label151.Name = "label151";
-            this.label151.Size = new System.Drawing.Size(134, 19);
-            this.label151.TabIndex = 252;
-            this.label151.Text = "Chốt cửa 4 đang mở";
-            // 
-            // Pic_Doorlock5_Closing_Stop
-            // 
-            this.Pic_Doorlock5_Closing_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock5_Closing_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock5_Closing_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock5_Closing_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock5_Closing_Stop.Location = new System.Drawing.Point(21, 81);
-            this.Pic_Doorlock5_Closing_Stop.Name = "Pic_Doorlock5_Closing_Stop";
-            this.Pic_Doorlock5_Closing_Stop.RotateAngle = 0;
-            this.Pic_Doorlock5_Closing_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_Closing_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock5_Closing_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock5_Closing_Stop.TabIndex = 257;
-            this.Pic_Doorlock5_Closing_Stop.TagPath = null;
-            this.Pic_Doorlock5_Closing_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock5_Opening_Stop
-            // 
-            this.Pic_Doorlock5_Opening_Stop.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock5_Opening_Stop.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock5_Opening_Stop.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock5_Opening_Stop.Image = global::RegistrationForm1.Properties.Resources.Tron_Xam;
-            this.Pic_Doorlock5_Opening_Stop.Location = new System.Drawing.Point(21, 37);
-            this.Pic_Doorlock5_Opening_Stop.Name = "Pic_Doorlock5_Opening_Stop";
-            this.Pic_Doorlock5_Opening_Stop.RotateAngle = 0;
-            this.Pic_Doorlock5_Opening_Stop.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_Opening_Stop.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock5_Opening_Stop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock5_Opening_Stop.TabIndex = 256;
-            this.Pic_Doorlock5_Opening_Stop.TagPath = null;
-            this.Pic_Doorlock5_Opening_Stop.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock5_Closing
-            // 
-            this.Pic_Doorlock5_Closing.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock5_Closing.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock5_Closing.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock5_Closing.Image = global::RegistrationForm1.Properties.Resources.Tron_Do;
-            this.Pic_Doorlock5_Closing.Location = new System.Drawing.Point(21, 81);
-            this.Pic_Doorlock5_Closing.Name = "Pic_Doorlock5_Closing";
-            this.Pic_Doorlock5_Closing.RotateAngle = 0;
-            this.Pic_Doorlock5_Closing.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_Closing.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock5_Closing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock5_Closing.TabIndex = 255;
-            this.Pic_Doorlock5_Closing.TagPath = null;
-            this.Pic_Doorlock5_Closing.Text = "ahdPictureBox4";
-            // 
-            // Pic_Doorlock5_Opening
-            // 
-            this.Pic_Doorlock5_Opening.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Doorlock5_Opening.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
-            this.Pic_Doorlock5_Opening.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
-            this.Pic_Doorlock5_Opening.Image = global::RegistrationForm1.Properties.Resources.Tron_Xanh;
-            this.Pic_Doorlock5_Opening.Location = new System.Drawing.Point(21, 37);
-            this.Pic_Doorlock5_Opening.Name = "Pic_Doorlock5_Opening";
-            this.Pic_Doorlock5_Opening.RotateAngle = 0;
-            this.Pic_Doorlock5_Opening.ShadedColor = System.Drawing.Color.Gray;
-            this.Pic_Doorlock5_Opening.Size = new System.Drawing.Size(35, 31);
-            this.Pic_Doorlock5_Opening.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
-            this.Pic_Doorlock5_Opening.TabIndex = 254;
-            this.Pic_Doorlock5_Opening.TagPath = null;
-            this.Pic_Doorlock5_Opening.Text = "ahdPictureBox4";
-            // 
-            // label154
-            // 
-            this.label154.AutoSize = true;
-            this.label154.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label154.ForeColor = System.Drawing.Color.Blue;
-            this.label154.Location = new System.Drawing.Point(79, 87);
-            this.label154.Name = "label154";
-            this.label154.Size = new System.Drawing.Size(118, 19);
-            this.label154.TabIndex = 253;
-            this.label154.Text = "Chốt 5 đang đóng";
-            // 
-            // label155
-            // 
-            this.label155.AutoSize = true;
-            this.label155.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label155.ForeColor = System.Drawing.Color.Blue;
-            this.label155.Location = new System.Drawing.Point(79, 43);
-            this.label155.Name = "label155";
-            this.label155.Size = new System.Drawing.Size(107, 19);
-            this.label155.TabIndex = 252;
-            this.label155.Text = "Chốt 5 đang mở";
-            // 
             // FrmTran
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -8862,7 +8862,7 @@
             this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door1_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewT1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._dataGridViewT1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar2)).EndInit();
@@ -8919,6 +8919,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door2)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Close_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Open_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_2Close)).EndInit();
@@ -9002,6 +9006,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel24)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel28)).EndInit();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel29)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel31)).EndInit();
@@ -9010,6 +9020,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel34)).EndInit();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Close_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_2Open_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_1Close_Stop)).EndInit();
@@ -9073,6 +9087,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_PressureHigh)).EndInit();
             this.groupBox18.ResumeLayout(false);
             this.groupBox18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Close_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_2Open_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_1Close_Stop)).EndInit();
@@ -9136,6 +9154,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door5_PressureHigh)).EndInit();
             this.groupBox23.ResumeLayout(false);
             this.groupBox23.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening_Stop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Close_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_2Open_Stop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_1Close_Stop)).EndInit();
@@ -9211,28 +9233,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Closing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock2_Opening)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow_Stop)).EndInit();
-            this.groupBox12.ResumeLayout(false);
-            this.groupBox12.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Closing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock3_Opening)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Closing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock4_Opening)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening_Stop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Closing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Doorlock5_Opening)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -9727,7 +9727,7 @@
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door6_Open_Stop;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door6_Closing_Stop;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door6_Opening_Stop;
-        private System.Windows.Forms.DataGridView dataGridViewT1;
+        private System.Windows.Forms.DataGridView _dataGridViewT1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label103;
         private System.Windows.Forms.GroupBox groupBox8;

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +12,7 @@ namespace Domain.Entities
     /// Bảng chứa các thông tin cấu hình về lò của hệ thống, số lượng lò và tên lò.
     /// </summary>
     [Table("FT01")]
-    public class FT01 : GenericEntity
+    public class FT01 : IGenericEntity
     {
         [Key]
         public Guid Id { get; set; }
