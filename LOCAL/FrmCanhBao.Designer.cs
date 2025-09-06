@@ -49,17 +49,17 @@
             this.dataGridViewAlarm.Margin = new System.Windows.Forms.Padding(5);
             this.dataGridViewAlarm.Name = "dataGridViewAlarm";
             this.dataGridViewAlarm.RowHeadersWidth = 82;
-            this.dataGridViewAlarm.Size = new System.Drawing.Size(574, 177);
+            this.dataGridViewAlarm.Size = new System.Drawing.Size(574, 297);
             this.dataGridViewAlarm.TabIndex = 0;
             // 
             // DgvHistory
             // 
             this.DgvHistory.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.DgvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvHistory.Location = new System.Drawing.Point(4, 213);
+            this.DgvHistory.Location = new System.Drawing.Point(4, 441);
             this.DgvHistory.Margin = new System.Windows.Forms.Padding(5);
             this.DgvHistory.Name = "DgvHistory";
-            this.DgvHistory.Size = new System.Drawing.Size(1702, 633);
+            this.DgvHistory.Size = new System.Drawing.Size(1702, 405);
             this.DgvHistory.TabIndex = 2;
             // 
             // bntLoad

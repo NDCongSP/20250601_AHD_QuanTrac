@@ -41,7 +41,7 @@ namespace Domain.Entities
         public DateTime? CreateAt { get; set; }
         public string? UpdateOperatorId { get; set; }
         public DateTime? UpdateAt { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; } = false;
 
         //Tag station
         public double? HT_Cylinder1_1 { get; set; } = 0;

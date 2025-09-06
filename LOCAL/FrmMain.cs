@@ -20,15 +20,15 @@ using System.Windows.Forms;
 
 namespace RegistrationForm1
 {
-       public partial class FrmMain : Form
-    {   
-         private Form currentChildForm = null;
+    public partial class FrmMain : Form
+    {
+        private Form currentChildForm = null;
         private Timer _timer; //. Timer để lấy dữ liệu từ Scada
         private Timer api_DTtimer; //. Timer lấy dữ liễu API dầu tiếng
         private Timer apiTimer;
         private Timer api_CDDTimer;
         private Timer _refreshTimer;
-      
+
         private List<Station> _cachedStations; // Lưu trữ danh sách trạm đã tải
         private Dictionary<string, string> _stationIdToNameMap; // Ánh xạ StationId (uuid HOẶC code) sang Name
 
@@ -36,8 +36,8 @@ namespace RegistrationForm1
         private const string API_STATIONS_URL = "https://kttv-open.vrain.vn/v1/stations";
         private const string API_STATS_URL = "https://kttv-open.vrain.vn/v1/stations/stats";
         private const string API_KEY = "4c81eccdb524441ba52c390d5b96e233";
-             private int _logTime;
-              private DateTime _startTime = DateTime.Now;
+        private int _logTime;
+        private DateTime _startTime = DateTime.Now;
         private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
 
         public FrmMain()
@@ -190,8 +190,8 @@ namespace RegistrationForm1
             public int MaQuanTrac { get; set; }
             public double GiaTri { get; set; }
         }
-       
-       
+
+
         private void Driver_Started(object sender, EventArgs e)
         {
             //if (ahdDriverConnector1.ConnectionStatus == ConnectionStatus.Connected)
@@ -208,7 +208,7 @@ namespace RegistrationForm1
                 foreach (var station in item.Stations.Where(x => x.Path.Contains("/Station_")))
                 {
                     // Replace this line:
-                  
+
                     ahdDriverConnector1.GetTag($"{station.Path}/Remote").ValueChanged += Remote_ValueChanged;
                     Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
@@ -238,7 +238,7 @@ namespace RegistrationForm1
                     DC1_Running_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC1_Running")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC1_Running")
                   , "", ahdDriverConnector1.GetTag($"{station.Path}/DC1_Running").Value));
-                  
+
                     ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running").ValueChanged += DC2_Running_ValueChanged;
                     DC2_Running_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running")
                         , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running")
@@ -248,7 +248,7 @@ namespace RegistrationForm1
                     DC3_Running_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/DC3_Running")
                         , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/DC2_Running")
                         , "", ahdDriverConnector1.GetTag($"{station.Path}/DC3_Running").Value));
-                   
+
                     ahdDriverConnector1.GetTag($"{station.Path}/Door1_Opening").ValueChanged += Door1_Opening_ValueChanged;
                     Door1_Opening_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Opening")
                         , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Opening")
@@ -390,14 +390,16 @@ namespace RegistrationForm1
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2")
                   , "", ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2").Value));
 
-
+                    ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1").ValueChanged += HT_Cylinder1_1_ValueChanged;
+                    HT_Cylinder1_1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1").Value));
                 }
                 var stationLocation = item.Stations.FirstOrDefault(loc => loc.Path.Contains("/Location_Info"));
                 if (stationLocation != null)
                 {
                     // Replace this line:
                     ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").ValueChanged += Fllow_Ho_ValueChanged;
-
                     Fllow_Ho_ValueChanged(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
                   , "", ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").Value));
@@ -1175,7 +1177,7 @@ namespace RegistrationForm1
 
                         _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
                         _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
-                       
+
                     }
                 });
                 #endregion
@@ -1197,6 +1199,7 @@ namespace RegistrationForm1
                             Id = Guid.NewGuid(),
                             CreateAt = createAt,
                             CreateOperatorId = createOperatorId,
+                            IsDeleted = false,
                             LogBaseInterval = true,
                             LocationId = item.LocationId,
                             LocationName = item.LocationName,
@@ -1285,7 +1288,7 @@ namespace RegistrationForm1
             {
                 _timer.Enabled = true;
             }
-        }   
+        }
         // Hàm ghi log xuống TextBox
         private void AppendLog(string message)
         {
@@ -1319,74 +1322,58 @@ namespace RegistrationForm1
             return results;
         }
 
-        //// Hàm Lấy giá trị cho Timer ghi xuống SQL
-        //private string GetValue(string tagName)
-        //{
-        //    try
-        //    {
-        //        var tag = ahdDriverConnector1.GetTag(tagName);
-        //        if (tag != null)
-        //        {
-        //            return tag.Value?.ToString() ?? "0";
-        //        }
-        //        return "0";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Lỗi đọc tag {tagName}: {ex.Message}");
-        //        return "0";
-        //    }
-        //}
+       
         private void Door2_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
             {
                 var createAt = DateTime.Now;
                 var createOperatorId = "System";
-
                 var path = e.Tag.Parent.Path;
-
                 var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
                 var station = location?.Stations.FirstOrDefault(x => x.Path == path);
 
                 if (station != null)
                 {
-                    var oldValue = station.Door2_PressureLow;
-
                     station.Door2_PressureLow = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door2_PressureLow)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                            //alarms
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                          .Where(x => x.Path == station.Path && x.TagName == "Door2_PressureLow" && x.IsDeleted != true)
+                          .OrderByDescending(x => x.CreateAt)
+                          .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Door2_PressureLow)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -1394,7 +1381,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door2_PressureLow";
                             Globalvariable.AlarmDataLog.Value = station.Door2_PressureLow;
-                            Globalvariable.AlarmDataLog.Description = station.Door2_PressureLow == true ? "Áp suất dầu cửa 2 thấp" : "Áp suất dầu cửa 2 bình thường.";
+                            Globalvariable.AlarmDataLog.Description = station.Door2_PressureLow == true ? "AS dầu cửa 2 thấp" : "AS dầu cửa 2 bình thường";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -1412,50 +1399,51 @@ namespace RegistrationForm1
             {
                 var createAt = DateTime.Now;
                 var createOperatorId = "System";
-
                 var path = e.Tag.Parent.Path;
-
                 var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
                 var station = location?.Stations.FirstOrDefault(x => x.Path == path);
 
                 if (station != null)
                 {
-                    var oldValue = station.Door2_PressureHigh;
-
                     station.Door2_PressureHigh = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door2_PressureHigh)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                            //alarms
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                          .Where(x => x.Path == station.Path && x.TagName == "Door2_PressureHigh" && x.IsDeleted != true)
+                          .OrderByDescending(x => x.CreateAt)
+                          .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Door2_PressureHigh)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -1463,7 +1451,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door2_PressureHigh";
                             Globalvariable.AlarmDataLog.Value = station.Door2_PressureHigh;
-                            Globalvariable.AlarmDataLog.Description = station.Door2_PressureHigh == true ? "Áp suất dầu cửa 2 cao" : "Áp suất dầu cửa 2 bình thường.";
+                            Globalvariable.AlarmDataLog.Description = station.Door2_PressureHigh == true ? "AS dầu cửa 2 cao" : "AS dầu cửa 2 bình thường";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -1475,6 +1463,7 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
+
         private void Door1_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -1489,42 +1478,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door1_PressureLow;
-
                     station.Door1_PressureLow = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door1_PressureLow)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
-                            
-                            //alarms
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door1_PressureLow" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Door1_PressureLow)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -1532,7 +1524,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door1_PressureLow";
                             Globalvariable.AlarmDataLog.Value = station.Door1_PressureLow;
-                            Globalvariable.AlarmDataLog.Description = station.Door1_PressureLow == true ? "Áp suất dầu cửa 1 thấp" : "Áp suất dầu cửa 1 bình thường.";
+                            Globalvariable.AlarmDataLog.Description = station.Door1_PressureLow == true ? "AS dầu cửa 1 thấp" : "AS dầu cửa 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -1558,52 +1550,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door1_PressureHigh;
-
                     station.Door1_PressureHigh = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door1_PressureHigh)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                           
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door1_PressureHigh" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door1_PressureHigh)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door1_PressureHigh";
-                            Globalvariable.AlarmDataLog.Value = station.Door1_PressureHigh ;
-                            Globalvariable.AlarmDataLog.Description = station.Door1_PressureHigh == true ? "Áp suất dầu cửa 1 cao" : "Áp suất dầu cửa 1 bình thường.";
+                            Globalvariable.AlarmDataLog.Value = station.Door1_PressureHigh;
+                            Globalvariable.AlarmDataLog.Description = station.Door1_PressureHigh == true ? "AS dầu cửa 1 cao" : "AS dầu cửa 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -1614,7 +1607,9 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
+
         }
+
         private void DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -1629,54 +1624,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.DC3_Over;
-
                     station.DC3_Over = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.DC3_Over)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                           
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "DC3_Over" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                          
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.DC3_Over)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "DC3_Over";
-                            Globalvariable.AlarmDataLog.Value = station.DC3_Over ;
-                            Globalvariable.AlarmDataLog.Description = station.DC3_Over == true ? "Quá tải bơm 3" : "Bơm 3 bình thường.";
+                            Globalvariable.AlarmDataLog.Value = station.DC3_Over;
+                            Globalvariable.AlarmDataLog.Description = station.DC3_Over == true ? "Quá tải bơm chốt" : "Bơm chốt bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -1702,51 +1696,52 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.DC2_Over;
-
                     station.DC2_Over = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.DC2_Over)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                           
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "DC2_Over" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.DC2_Over)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "DC2_Over";
-                            Globalvariable.AlarmDataLog.Value = station.DC2_Over ;
+                            Globalvariable.AlarmDataLog.Value = station.DC2_Over;
                             Globalvariable.AlarmDataLog.Description = station.DC2_Over == true ? "Quá tải bơm 2" : "Bơm 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
@@ -1773,52 +1768,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.DC1_Over;
-
                     station.DC1_Over = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.DC1_Over)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                           
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "DC1_Over" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.DC1_Over)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "DC1_Over";
-                            Globalvariable.AlarmDataLog.Value = station.DC1_Over ;
-                            Globalvariable.AlarmDataLog.Description = station.DC1_Over == true ? "Quá tải bơm 1" : "Bơm 1 bình thường.";
+                            Globalvariable.AlarmDataLog.Value = station.DC1_Over;
+                            Globalvariable.AlarmDataLog.Description = station.DC1_Over == true ? "Bơm 1 quá tải" : "Bơm 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -1831,26 +1827,21 @@ namespace RegistrationForm1
 
         }
         private void Doorlock2_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {
-            try
-            {
-                var createAt = DateTime.Now;
-                var createOperatorId = "System";
-
-                var path = e.Tag.Parent.Path;
-
-                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
-                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
-
-                if (station != null)
+        {                
+                try
                 {
-                    var oldValue = station.Doorlock2_2Close;
+                    var createAt = DateTime.Now;
+                    var createOperatorId = "System";
 
-                    station.Doorlock2_2Close = e.NewValue == "1" ? true : false;
+                    var path = e.Tag.Parent.Path;
 
+                    var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                    var station = location?.Stations.FirstOrDefault(x => x.Path == path);
 
-                    if (oldValue != station.Doorlock2_2Close)
+                    if (station != null)
                     {
+                        station.Doorlock2_2Close = e.NewValue == "1" ? true : false;
+
                         using (var dbContext = new ApplicationDbContext())
                         {
                             //Real time
@@ -1876,30 +1867,37 @@ namespace RegistrationForm1
                                 dbContext.FT02s.Add(newLine);
                             }
 
-
                             //alarms
-                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
-                            Globalvariable.AlarmDataLog.CreateAt = createAt;
-                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
-                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
-                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
-                            Globalvariable.AlarmDataLog.StationId = station.StationId;
-                            Globalvariable.AlarmDataLog.StationName = station.StationName;
-                            Globalvariable.AlarmDataLog.Path = station.Path;
-                            Globalvariable.AlarmDataLog.TagName = "Doorlock2_2Close";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_2Close;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_2Close == true ? "Chốt 2_2 đóng" : "Chốt 2_2.";
+                            var checkExist = dbContext.FT04s
+                                .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_2Close" && x.IsDeleted != true)
+                                .OrderByDescending(x => x.CreateAt)
+                                .FirstOrDefault();
 
-                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+                            if (checkExist == null || checkExist.Value != station.Doorlock2_2Close)
+                            {
+                                Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                                Globalvariable.AlarmDataLog.CreateAt = createAt;
+                                Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                                Globalvariable.AlarmDataLog.IsDeleted = false;
+                                Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                                Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                                Globalvariable.AlarmDataLog.StationId = station.StationId;
+                                Globalvariable.AlarmDataLog.StationName = station.StationName;
+                                Globalvariable.AlarmDataLog.Path = station.Path;
+                                Globalvariable.AlarmDataLog.TagName = "Doorlock2_2Close";
+                                Globalvariable.AlarmDataLog.Value = station.Doorlock2_2Close;
+                                Globalvariable.AlarmDataLog.Description = station.Doorlock2_2Close == true ? "Chốt 2_2 đóng hết" : "Chốt 2_2 bình thường.";
 
-                            dbContext.SaveChanges();//Luu thay doi vao db
+                                dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                                dbContext.SaveChanges();//Luu thay doi vao db
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+                catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
-        }
+            }
         private void Doorlock2_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -1914,52 +1912,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock2_2Open;
-
                     station.Doorlock2_2Open = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock2_2Open)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_2Open" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock2_2Open)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock2_2Open";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_2Open ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_2Open == true ? "Chốt 2_2 mở" : "Chốt 2_2";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_2Open;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_2Open == true ? "Chốt 2_2 mở hết" : "Chốt 2_2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -1985,43 +1984,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock2_1Close;
-
                     station.Doorlock2_1Close = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock2_1Close)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_1Close" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock2_1Close)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -2029,7 +2030,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock2_1Close";
                             Globalvariable.AlarmDataLog.Value = station.Doorlock2_1Close;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_1Close == true ? "Chốt 2_1 đóng" : "Chốt 2_1";
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_1Close == true ? "Chốt 2_1 đóng hết" : "Chốt 2_1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2039,7 +2040,6 @@ namespace RegistrationForm1
                 }
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
-
         }
         private void Doorlock2_1Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -2055,52 +2055,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock2_1Open;
-
                     station.Doorlock2_1Open = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock2_1Open)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_1Open" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock2_1Open)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock2_1Open";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_1Open ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_1Open == true ? "Chốt 2_1 mở" : "Chốt 2_1";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_1Open;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_1Open == true ? "Chốt 2_1 mở hết" : "Chốt 2_1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2126,52 +2127,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock1_2Close;
-
                     station.Doorlock1_2Close = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock1_2Close)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock1_2Close" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock1_2Close)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock1_2Close";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_2Close ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_2Close == true ? "Chốt 1_2 đóng" : "Chốt 1_2";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_2Close;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_2Close == true ? "Chốt 1_2 đóng hết" : "Chốt 1_2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2197,52 +2199,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock1_2Open;
-
                     station.Doorlock1_2Open = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock1_2Open)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock1_2Open" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock1_2Open)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock1_2Open";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_2Open ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_2Open == true ? "Chốt 1_2 mở" : "Chốt 1_2";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_2Open;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_2Open == true ? "Chốt 1_2 mở hết" : "Chốt 1_2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2268,52 +2271,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock1_1Close;
-
                     station.Doorlock1_1Close = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock1_1Close)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock1_1Close" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock1_1Close)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock1_1Close";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_1Close ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_1Close == true ? "Chốt 1_1 đóng" : "Chốt 1_1";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_1Close;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_1Close == true ? "Chốt 1_1 đóng hết" : "Chốt 1_1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2339,52 +2343,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock1_1Open;
-
                     station.Doorlock1_1Open = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock1_1Open)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock1_1Open" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock1_1Open)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock1_1Open";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_1Open ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_1Open == true ? "Chốt 1_1 mở" : "Chốt 1_1";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_1Open;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_1Open == true ? "Chốt 1_1 mở hết" : "Chốt 1_1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2410,52 +2415,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock2_Closing;
-
                     station.Doorlock2_Closing = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock2_Closing)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_Closing" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock2_Closing)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock2_Closing";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_Closing ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_Closing == true ? "Chốt 2 đang đóng" : "Chốt 2";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_Closing;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_Closing == true ? "Chốt 2 đang đóng" : "Chốt 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2481,42 +2487,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock2_Opening;
-
                     station.Doorlock2_Opening = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock2_Opening)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                            //alarms
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_Opening" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Doorlock2_Opening)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -2524,7 +2533,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock2_Opening";
                             Globalvariable.AlarmDataLog.Value = station.Doorlock2_Opening;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_Opening == true ? "Chốt 2 đang mở" : "Chốt 2";
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_Opening == true ? "Chốt 2 đang mở" : "Chốt 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2550,51 +2559,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock1_Closing;
-
                     station.Doorlock1_Closing = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock1_Closing)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock1_Closing" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock1_Closing)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock1_Closing";
-                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_Closing ;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_Closing == true ? "Chốt 1 đang đóng" : "Chốt 1";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock1_Closing;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_Closing == true ? "Chốt 1 đang đóng" : "Chốt 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2620,44 +2631,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Doorlock1_Opening;
-
                     station.Doorlock1_Opening = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Doorlock1_Opening)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock1_Opening" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Doorlock1_Opening)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -2665,7 +2677,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Doorlock1_Opening";
                             Globalvariable.AlarmDataLog.Value = station.Doorlock1_Opening;
-                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_Opening == true ? "Chốt 1 đang mở" : "Chốt 1";
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock1_Opening == true ? "Chốt 1 đang mở" : "Chốt 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2691,43 +2703,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door2_Close;
-
                     station.Door2_Close = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door2_Close)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door2_Close" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door2_Close)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -2735,7 +2749,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door2_Close";
                             Globalvariable.AlarmDataLog.Value = station.Door2_Close;
-                            Globalvariable.AlarmDataLog.Description = station.Door2_Close == true ? "Cửa 2 đóng" : "Cửa 2";
+                            Globalvariable.AlarmDataLog.Description = station.Door2_Close == true ? "Cửa 2 đóng hết" : "Cửa 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2761,44 +2775,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door2_Open;
-
                     station.Door2_Open = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door2_Open)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door2_Open" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door2_Open)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -2806,7 +2821,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door2_Open";
                             Globalvariable.AlarmDataLog.Value = station.Door2_Open;
-                            Globalvariable.AlarmDataLog.Description = station.Door2_Open == true ? "Cửa 2 mở" : "Cửa 2";
+                            Globalvariable.AlarmDataLog.Description = station.Door2_Open == true ? "Cửa 2 mở hết" : "Cửa 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2832,52 +2847,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door1_Close;
-
                     station.Door1_Close = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door1_Close)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door1_Close" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door1_Close)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door1_Close";
-                            Globalvariable.AlarmDataLog.Value = station.Door1_Close ;
-                            Globalvariable.AlarmDataLog.Description = station.Door1_Close == true ? "Cửa 1 đóng" : "Cửa 1";
+                            Globalvariable.AlarmDataLog.Value = station.Door1_Close;
+                            Globalvariable.AlarmDataLog.Description = station.Door1_Close == true ? "Cửa 1 đóng hết" : "Cửa 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2903,52 +2919,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door1_Open;
-
                     station.Door1_Open = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door1_Open)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door1_Open" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door1_Open)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door1_Open";
-                            Globalvariable.AlarmDataLog.Value = station.Door1_Open ;
-                            Globalvariable.AlarmDataLog.Description = station.Door1_Open == true ? "Cửa 1 mở" : "Cửa 1";
+                            Globalvariable.AlarmDataLog.Value = station.Door1_Open;
+                            Globalvariable.AlarmDataLog.Description = station.Door1_Open == true ? "Cửa 1 mở hết" : "Cửa 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -2974,44 +2991,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door2_Closing;
-
                     station.Door2_Closing = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door2_Closing)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door2_Closing" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door2_Closing)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -3019,7 +3037,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door2_Closing";
                             Globalvariable.AlarmDataLog.Value = station.Door2_Closing;
-                            Globalvariable.AlarmDataLog.Description = station.Door2_Closing == true ? "Cửa 2 đang đóng" : "Cửa 2";
+                            Globalvariable.AlarmDataLog.Description = station.Door2_Closing == true ? "Cửa 2 đang đóng" : "Cửa 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3045,52 +3063,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door2_Opening;
-
                     station.Door2_Opening = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door2_Opening)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door2_Opening" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door2_Opening)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door2_Opening";
-                            Globalvariable.AlarmDataLog.Value = station.Door2_Opening ;
-                            Globalvariable.AlarmDataLog.Description = station.Door2_Opening == true ? "Cửa 2 đang mở" : "Cửa 2";
+                            Globalvariable.AlarmDataLog.Value = station.Door2_Opening;
+                            Globalvariable.AlarmDataLog.Description = station.Door2_Opening == true ? "Cửa 2 đang mở" : "Cửa 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3116,52 +3135,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door1_Closing;
-
                     station.Door1_Closing = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door1_Closing)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door1_Closing" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door1_Closing)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door1_Closing";
-                            Globalvariable.AlarmDataLog.Value = station.Door1_Closing ;
-                            Globalvariable.AlarmDataLog.Description = station.Door1_Closing == true ? "Cửa 1 đang đóng" : "Cửa 1";
+                            Globalvariable.AlarmDataLog.Value = station.Door1_Closing;
+                            Globalvariable.AlarmDataLog.Description = station.Door1_Closing == true ? "Cửa 1 đang đóng" : "Cửa 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3187,43 +3207,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Door1_Opening;
-
                     station.Door1_Opening = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Door1_Opening)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door1_Opening" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Door1_Opening)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -3231,7 +3253,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Door1_Opening";
                             Globalvariable.AlarmDataLog.Value = station.Door1_Opening;
-                            Globalvariable.AlarmDataLog.Description = station.Door1_Opening == true ? "Cửa 1 đang mở" : "Cửa 1";
+                            Globalvariable.AlarmDataLog.Description = station.Door1_Opening == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3257,52 +3279,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.DC3_Running;
-
                     station.DC3_Running = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.DC3_Running)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "DC3_Running" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.DC3_Running)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "DC3_Running";
-                            Globalvariable.AlarmDataLog.Value = station.DC3_Running ;
-                            Globalvariable.AlarmDataLog.Description = station.DC3_Running == true ? "Bơm 3 đang chạy" : "Bơm 3";
+                            Globalvariable.AlarmDataLog.Value = station.DC3_Running;
+                            Globalvariable.AlarmDataLog.Description = station.DC3_Running == true ? "Bơm 3 đang chạy" : "Bơm 3 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3328,52 +3351,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.DC2_Running;
-
                     station.DC2_Running = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.DC2_Running)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "DC2_Running" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.DC2_Running)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "DC2_Running";
-                            Globalvariable.AlarmDataLog.Value = station.DC2_Running ;
-                            Globalvariable.AlarmDataLog.Description = station.DC2_Running == true ? "Bơm 2 đang chạy" : "Bơm 2";
+                            Globalvariable.AlarmDataLog.Value = station.DC2_Running;
+                            Globalvariable.AlarmDataLog.Description = station.DC2_Running == true ? "Bơm 2 đang chạy" : "Bơm 2 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3399,52 +3423,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.DC1_Running;
-
                     station.DC1_Running = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.DC1_Running)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "DC1_Running" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.DC1_Running)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "DC1_Running";
-                            Globalvariable.AlarmDataLog.Value = station.DC1_Running ;
-                            Globalvariable.AlarmDataLog.Description = station.DC1_Running == true ? "Bơm 1 đang chạy" : "Bơm 1";
+                            Globalvariable.AlarmDataLog.Value = station.DC1_Running;
+                            Globalvariable.AlarmDataLog.Description = station.DC1_Running == true ? "Bơm 1 đang chạy" : "Bơm 1 bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3470,44 +3495,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Local_Stop;
-
                     station.Local_Stop = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Local_Stop)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Local_Stop" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Local_Stop)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -3515,7 +3541,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Local_Stop";
                             Globalvariable.AlarmDataLog.Value = station.Local_Stop;
-                            Globalvariable.AlarmDataLog.Description = station.Local_Stop == true ? "Đang dừng khẩn" : "dừng";
+                            Globalvariable.AlarmDataLog.Description = station.Local_Stop == true ? "Đang dừng khẩn" : "Bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3541,52 +3567,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Man;
-
                     station.Man = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Man)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Man" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Man)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Man";
-                            Globalvariable.AlarmDataLog.Value = station.Man ;
-                            Globalvariable.AlarmDataLog.Description = station.Man == true ? "Chế độ tay hoạt động" : "tay";
+                            Globalvariable.AlarmDataLog.Value = station.Man;
+                            Globalvariable.AlarmDataLog.Description = station.Man == true ? "Đang chạy tay" : "Bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3612,52 +3639,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Auto;
-
                     station.Auto = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Auto)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Auto" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Auto)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Auto";
-                            Globalvariable.AlarmDataLog.Value = station.Auto ;
-                            Globalvariable.AlarmDataLog.Description = station.Auto == true ? "Chế độ tự động hoạt động" : "tự động";
+                            Globalvariable.AlarmDataLog.Value = station.Auto;
+                            Globalvariable.AlarmDataLog.Description = station.Auto == true ? "Đang chạy tự động" : "Bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3683,44 +3711,45 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Local;
-
                     station.Local = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Local)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Local" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Local)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
@@ -3728,7 +3757,7 @@ namespace RegistrationForm1
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Local";
                             Globalvariable.AlarmDataLog.Value = station.Local;
-                            Globalvariable.AlarmDataLog.Description = station.Local == true ? "Chế độ tại chổ" : "tại chổ";
+                            Globalvariable.AlarmDataLog.Description = station.Local == true ? "Đang chạy tại chổ" : "Bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3754,52 +3783,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Remote;
-
                     station.Remote = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Remote)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Remote" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Remote)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Remote";
-                            Globalvariable.AlarmDataLog.Value = station.Remote ;
-                            Globalvariable.AlarmDataLog.Description = station.Remote == true ? "Chế độ từ xa" : "từ xa";
+                            Globalvariable.AlarmDataLog.Value = station.Remote;
+                            Globalvariable.AlarmDataLog.Description = station.Remote == true ? "Đang chạy từ xa" : "Bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3826,52 +3856,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Al_Door2;
-
                     station.Al_Door2 = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Al_Door2)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                           
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Al_Door2" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Al_Door2)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Al_Door2";
-                            Globalvariable.AlarmDataLog.Value = station.Al_Door2 ;
-                            Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Lệch cửa 2" : "Cửa 2 bình thường.";
+                            Globalvariable.AlarmDataLog.Value = station.Al_Door2;
+                            Globalvariable.AlarmDataLog.Description = station.Al_Door2 == true ? "Đang lệch cửa 2" : "Bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3897,52 +3928,53 @@ namespace RegistrationForm1
 
                 if (station != null)
                 {
-                    var oldValue = station.Al_Door1;
-
                     station.Al_Door1 = e.NewValue == "1" ? true : false;
 
-
-                    if (oldValue != station.Al_Door1)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        using (var dbContext = new ApplicationDbContext())
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                          
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Al_Door1" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            //alarms
+                        if (checkExist == null || checkExist.Value != station.Al_Door1)
+                        {
                             Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
                             Globalvariable.AlarmDataLog.CreateAt = createAt;
                             Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
                             Globalvariable.AlarmDataLog.LocationId = location.LocationId;
                             Globalvariable.AlarmDataLog.LocationName = location.LocationName;
                             Globalvariable.AlarmDataLog.StationId = station.StationId;
                             Globalvariable.AlarmDataLog.StationName = station.StationName;
                             Globalvariable.AlarmDataLog.Path = station.Path;
                             Globalvariable.AlarmDataLog.TagName = "Al_Door1";
-                            Globalvariable.AlarmDataLog.Value = station.Al_Door1 ;
-                            Globalvariable.AlarmDataLog.Description = station.Al_Door1 == true ? "Lệch cửa 1" : "Cửa 1 bình thường.";
+                            Globalvariable.AlarmDataLog.Value = station.Al_Door1;
+                            Globalvariable.AlarmDataLog.Description = station.Al_Door1 == true ? "Đang lệch cửa 1" : "Bình thường.";
 
                             dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
@@ -3954,6 +3986,49 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
+      private void HT_Cylinder1_1_ValueChanged(object sender, TagValueChangedEventArgs e)
+            {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.HT_Cylinder1_1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 + station.HT_Cylinder1_1_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+
         private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -4011,8 +4086,6 @@ namespace RegistrationForm1
         {
             return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
         }
-        
-      
 
 
 
@@ -4020,7 +4093,9 @@ namespace RegistrationForm1
 
 
 
-        
+
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -4037,7 +4112,7 @@ namespace RegistrationForm1
             await LoadRainfallStatsData();
         }
 
-   
+
         private void bntNhaplieu_Click(object sender, EventArgs e)
         {
             // Kiểm tra nếu chưa đăng nhập
@@ -4067,8 +4142,8 @@ namespace RegistrationForm1
             OpenFormInPanel(frm, "Chỉnh sửa dữ liệu");
         }
 
-        
-  
+
+
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
