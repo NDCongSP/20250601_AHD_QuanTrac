@@ -1,5 +1,5 @@
 {
-  "ProjectPath": "D:\\AHD\\PROJECT SCADA\\TRANDAUTIENG\\20250601_AHD_QuanTrac\\Tag_TranOK4.9.2025.json",
+  "ProjectPath": "D:\\AHD\\PROJECT SCADA\\TRANDAUTIENG\\20250601_AHD_QuanTrac\\Tag_TranOK7.9.2025.json",
   "Username": null,
   "Password": null,
   "ParameterContainer": null,
@@ -11,7 +11,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-05-25T19:38:36.6996706+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -31,7 +31,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:32.2616927+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -46,7 +46,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:42.5030547+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -70,7 +70,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:50.1039733+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -1392,7 +1392,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW6",
+  "Address": "DB2.DBW1",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1429,7 +1429,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW8",
+  "Address": "DB2.DBW5",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1455,7 +1455,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW10",
     "LastAddress": "DB2.DBW10",
     "AddressType": "Datablock",
@@ -1492,7 +1492,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW12",
     "LastAddress": "DB2.DBW12",
     "AddressType": "Datablock",
@@ -1503,7 +1503,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW12",
+  "Address": "DB2.DBW15",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1529,7 +1529,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW14",
     "LastAddress": "DB2.DBW14",
     "AddressType": "Datablock",
@@ -1540,7 +1540,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW14",
+  "Address": "DB2.DBW20",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1566,7 +1566,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW16",
     "LastAddress": "DB2.DBW16",
     "AddressType": "Datablock",
@@ -1577,7 +1577,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW16",
+  "Address": "DB2.DBW25",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1603,7 +1603,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW18",
     "LastAddress": "DB2.DBW18",
     "AddressType": "Datablock",
@@ -1614,7 +1614,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW18",
+  "Address": "DB2.DBW30",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1640,7 +1640,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW20",
     "LastAddress": "DB2.DBW20",
     "AddressType": "Datablock",
@@ -1651,7 +1651,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW20",
+  "Address": "DB2.DBW35",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1677,7 +1677,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW22",
     "LastAddress": "DB2.DBW22",
     "AddressType": "Datablock",
@@ -1688,7 +1688,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW22",
+  "Address": "DB2.DBW40",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1790,7 +1790,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW28",
     "LastAddress": "DB2.DBW28",
     "AddressType": "Datablock",
@@ -1801,7 +1801,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW28",
+  "Address": "DB2.DBW45",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -1827,7 +1827,7 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB2.DBW30",
     "LastAddress": "DB2.DBW30",
     "AddressType": "Datablock",
@@ -1838,7 +1838,7 @@
     "DBNumber": "2"
   }
 },
-  "Address": "DB2.DBW30",
+  "Address": "DB2.DBW50",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -2009,7 +2009,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T10:07:27.1946693+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -2694,7 +2694,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T14:17:56.2715898+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -2781,7 +2781,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:29.0051643+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -4100,11 +4100,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW6"
   }
 },
-  "Address": "DB3.DBW6",
+  "Address": "DB3.DBW1",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4137,11 +4137,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW8"
   }
 },
-  "Address": "DB3.DBW8",
+  "Address": "DB3.DBW5",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4174,7 +4174,7 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW10"
   }
 },
@@ -4211,11 +4211,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW12"
   }
 },
-  "Address": "DB3.DBW12",
+  "Address": "DB3.DBW15",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4248,11 +4248,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW14"
   }
 },
-  "Address": "DB3.DBW14",
+  "Address": "DB3.DBW20",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4285,11 +4285,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW16"
   }
 },
-  "Address": "DB3.DBW16",
+  "Address": "DB3.DBW25",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4315,19 +4315,19 @@
   "DisplayName": "Tag Parameters",
   "DisplayParameters": "Tag Parameters",
   "Parameters": {
-    "LastAddress": "DB3.DBW18",
+    "LastAddress": "DB3.DBW30",
     "AddressType": "Datablock",
-    "ByteOffset": "18",
+    "ByteOffset": "30",
     "BitOffset": "0",
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "2",
-    "DataType": "Int",
-    "Address": "DB2.DBW18",
+    "DataType": "Real",
+    "Address": "DB3.DBW18",
     "bitOffset": "0"
   }
 },
-  "Address": "DB3.DBW18",
+  "Address": "DB3.DBW30",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4360,11 +4360,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW20"
   }
 },
-  "Address": "DB3.DBW20",
+  "Address": "DB3.DBW35",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4397,11 +4397,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW22"
   }
 },
-  "Address": "DB3.DBW22",
+  "Address": "DB3.DBW40",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4509,11 +4509,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW28"
   }
 },
-  "Address": "DB3.DBW28",
+  "Address": "DB3.DBW45",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4546,11 +4546,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "3",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB3.DBW30"
   }
 },
-  "Address": "DB3.DBW30",
+  "Address": "DB3.DBW50",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -4721,7 +4721,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:54.9668898+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -6039,11 +6039,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW6"
   }
 },
-  "Address": "DB4.DBW6",
+  "Address": "DB4.DBW1",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6076,11 +6076,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW8"
   }
 },
-  "Address": "DB4.DBW8",
+  "Address": "DB4.DBW5",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6113,7 +6113,7 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW10"
   }
 },
@@ -6150,11 +6150,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW12"
   }
 },
-  "Address": "DB4.DBW12",
+  "Address": "DB4.DBW15",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6187,11 +6187,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW14"
   }
 },
-  "Address": "DB4.DBW14",
+  "Address": "DB4.DBW20",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6224,11 +6224,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW16"
   }
 },
-  "Address": "DB4.DBW16",
+  "Address": "DB4.DBW25",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6261,11 +6261,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW18"
   }
 },
-  "Address": "DB4.DBW18",
+  "Address": "DB4.DBW30",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6298,11 +6298,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW20"
   }
 },
-  "Address": "DB4.DBW20",
+  "Address": "DB4.DBW35",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6335,11 +6335,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW22"
   }
 },
-  "Address": "DB4.DBW22",
+  "Address": "DB4.DBW40",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6446,11 +6446,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW28"
   }
 },
-  "Address": "DB4.DBW28",
+  "Address": "DB4.DBW45",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6483,11 +6483,11 @@
     "IsValid": "True",
     "IsBitAddress": "False",
     "DBNumber": "4",
-    "DataType": "Int",
+    "DataType": "Real",
     "Address": "DB4.DBW30"
   }
 },
-  "Address": "DB4.DBW30",
+  "Address": "DB4.DBW50",
   "DataTypeName": "Real",
   "RefreshRate": 100,
   "ByteOrder": 0,
@@ -6662,7 +6662,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:30:42.2373006+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -7101,7 +7101,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:33:51.0917673+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -7630,7 +7630,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:34:40.351872+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -8071,7 +8071,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:52.4399526+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -8095,7 +8095,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:57.3368646+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -13733,7 +13733,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-14T09:08:00.1886863+07:00",
-  "ModifiedDate": "2025-09-06T15:50:31.8453623+07:00",
+  "ModifiedDate": "2025-09-07T10:53:39.0451633+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,

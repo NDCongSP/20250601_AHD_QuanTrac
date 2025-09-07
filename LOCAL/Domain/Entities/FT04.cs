@@ -24,7 +24,8 @@ namespace Domain.Entities
         [Browsable(false)]
         public int? StationId { get; set; }
 
-        [Browsable(false)]
+        //  [Browsable(false)]
+        [DisplayName("Trạm")]
         public string? StationName { get; set; }
 
         [Browsable(false)]

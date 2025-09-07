@@ -323,12 +323,6 @@
     <Compile Include="FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmMNGoogle.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMNGoogle.Designer.cs">
-      <DependentUpon>FrmMNGoogle.cs</DependentUpon>
-    </Compile>
     <Compile Include="FrmMucnuoc.cs">
       <SubType>Form</SubType>
     </Compile>

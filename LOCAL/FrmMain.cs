@@ -207,8 +207,7 @@ namespace RegistrationForm1
             {
                 foreach (var station in item.Stations.Where(x => x.Path.Contains("/Station_")))
                 {
-                    // Replace this line:
-
+                 
                     ahdDriverConnector1.GetTag($"{station.Path}/Remote").ValueChanged += Remote_ValueChanged;
                     Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
@@ -394,7 +393,59 @@ namespace RegistrationForm1
                     HT_Cylinder1_1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
                   , "", ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2").ValueChanged += HT_Cylinder1_2_ValueChanged;
+                    HT_Cylinder1_2_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_1").ValueChanged += HT_Cylinder2_1_ValueChanged;
+                    HT_Cylinder2_1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_1")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_1")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_2").ValueChanged += HT_Cylinder2_2_ValueChanged;
+                    HT_Cylinder2_2_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_2")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_2")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder2_2").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door1").ValueChanged += Pressure_Oil_Door1_ValueChanged;
+                    Pressure_Oil_Door1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door1")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door1")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door2").ValueChanged += Pressure_Oil_Door2_ValueChanged;
+                    Pressure_Oil_Door2_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door2")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door2")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Pressure_Oil_Door2").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/S1_Temp_Oil").ValueChanged += S1_Temp_Oil_ValueChanged;
+                    S1_Temp_Oil_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/S1_Temp_Oil")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/S1_Temp_Oil")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/S1_Temp_Oil").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_Aperture").ValueChanged += Door1_Aperture_ValueChanged;
+                    Door1_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Aperture")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Aperture")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_Aperture").Value));
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture").ValueChanged += Door2_Aperture_ValueChanged;
+                    Door2_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture").Value));
+
+
+
+
+
+
+
+
+
+
+
                 }
+
+
                 var stationLocation = item.Stations.FirstOrDefault(loc => loc.Path.Contains("/Location_Info"));
                 if (stationLocation != null)
                 {
@@ -1159,6 +1210,7 @@ namespace RegistrationForm1
                                 _labALDoor1_Station1.Text = item.Al_Door1.ToString();
                                 _labALDoor2_Station1.Text = item.Al_Door2.ToString();
                                 _labHT_Cylinder1_1.Text = item.HT_Cylinder1_1.ToString();
+                                _labHT_Cylinder1_2.Text = item.HT_Cylinder1_2.ToString();
 
 
 
@@ -1200,7 +1252,7 @@ namespace RegistrationForm1
                             CreateAt = createAt,
                             CreateOperatorId = createOperatorId,
                             IsDeleted = false,
-                            LogBaseInterval = true,
+                            LogBaseInterval = false,
                             LocationId = item.LocationId,
                             LocationName = item.LocationName,
 
@@ -3986,6 +4038,7 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
+
       private void HT_Cylinder1_1_ValueChanged(object sender, TagValueChangedEventArgs e)
             {
             try
@@ -4028,7 +4081,343 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
-
+        private void HT_Cylinder1_2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.HT_Cylinder1_2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.HT_Cylinder1_2_Final = Math.Round(station.HT_Cylinder1_2 + station.HT_Cylinder1_2_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private void HT_Cylinder2_1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.HT_Cylinder2_1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.HT_Cylinder2_1_Final = Math.Round(station.HT_Cylinder2_1 + station.HT_Cylinder2_1_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private void HT_Cylinder2_2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.HT_Cylinder2_2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.HT_Cylinder2_2_Final = Math.Round(station.HT_Cylinder2_2 + station.HT_Cylinder2_2_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private void Pressure_Oil_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.Pressure_Oil_Door1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.Pressure_Oil_Door1_Final = Math.Round(station.Pressure_Oil_Door1 + station.Pressure_Oil_Door1_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private void Pressure_Oil_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.Pressure_Oil_Door2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.Pressure_Oil_Door2_Final = Math.Round(station.Pressure_Oil_Door2 + station.Pressure_Oil_Door2_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private void S1_Temp_Oil_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.S1_Temp_Oil = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.S1_Temp_Oil_Final = Math.Round(station.S1_Temp_Oil + station.S1_Temp_Oil_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        // Door1_Aperture
+        private void Door1_Aperture_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.Door1_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.Door1_Aperture_Final = Math.Round(station.Door1_Aperture + station.Door1_Aperture_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private void Door2_Aperture_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.Door2_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.Door2_Aperture_Final = Math.Round(station.Door2_Aperture + station.Door2_Aperture_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
         private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -4195,7 +4584,7 @@ namespace RegistrationForm1
 
         private void bnt_Tran_Click(object sender, EventArgs e)
         {
-            FrmTran data = new FrmTran(this);
+            FrmTran data = new FrmTran();
             OpenFormInPanel(data, "Hệ thống tràn");
         }
 
@@ -4207,7 +4596,7 @@ namespace RegistrationForm1
 
         private void bnt_TrangChu_Click(object sender, EventArgs e)
         {
-            FrmHome H = new FrmHome(this);
+            FrmHome H = new FrmHome();
             OpenFormInPanel(H, " GIÁM SÁT CỦA TRÀN HỒ DẦU TIẾNG");
         }
 

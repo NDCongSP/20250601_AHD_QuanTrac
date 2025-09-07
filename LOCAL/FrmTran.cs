@@ -12,14 +12,14 @@ namespace RegistrationForm1
 {
     public partial class FrmTran : Form
     {
-        private FrmMain _mainForm;
+      
 
         private Timer _timer = new Timer();
-        public FrmTran(FrmMain frmMain)
+        public FrmTran()
         {
             InitializeComponent();
             Load += FrmTran_Load;
-            //        _mainForm = frmMain; // ✅ Gán trước khi sử dụng           
+              
         }
         private void FrmTran_Load(object sender, EventArgs e)
         {

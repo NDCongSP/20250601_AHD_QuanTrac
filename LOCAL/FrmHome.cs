@@ -1,4 +1,6 @@
 ﻿using Ahd.Core;
+using Dapper;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,14 +12,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Dapper;
 namespace RegistrationForm1
 {
     public partial class FrmHome : Form
     {
     //    private FrmMain _mainForm;
         private Timer _timer = new Timer();
-        public FrmHome(FrmMain frmMain)
+        public FrmHome()
         {
             InitializeComponent();
       
@@ -41,8 +42,32 @@ namespace RegistrationForm1
 
                 Globalvariable.InvokeIfRequired(this, () =>
                 {
+
+                   
                     //Satation 1
                     var dataDisplayStation1 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_1");
+
+                    if (dataDisplayStation1.Path == "Local Station/DauTieng/S71500/Station_1")
+                    {
+                        // _labALDoor1_Station1.Text = item.Al_Door1.ToString();
+                        //  _labALDoor2_Station1.Text = item.Al_Door2.ToString();
+                        _labHT_Cylinder1_1.Text = dataDisplayStation1.HT_Cylinder1_1.ToString();
+                        _labHT_Cylinder1_2.Text = dataDisplayStation1.HT_Cylinder1_2.ToString();
+                        _labHT_Cylinder2_1.Text = dataDisplayStation1.HT_Cylinder2_1.ToString();
+                        _labHT_Cylinder2_2.Text = dataDisplayStation1.HT_Cylinder2_2.ToString();
+                        _labPressure_Oil_Door1.Text = dataDisplayStation1.Pressure_Oil_Door1.ToString();
+                        _labPressure_Oil_Door2.Text = dataDisplayStation1.Pressure_Oil_Door2.ToString();
+                        _lblTemp_Oil1.Text = dataDisplayStation1.S1_Temp_Oil.ToString();
+                       _labFllow_Door1.Text = dataDisplayStation1.Fllow_Door1.ToString();
+                        _labFllow_Door2.Text = dataDisplayStation1.Fllow_Door2.ToString();
+                        _labDoor1_Aperture.Text = dataDisplayStation1.Door1_Aperture.ToString();
+                        _labDoor2_Aperture.Text = dataDisplayStation1.Door2_Aperture.ToString();
+
+                    }
+                   
+                   
+
+
 
                     if (dataDisplayStation1?.Doorlock2_1Open == true)
                     {
@@ -88,6 +113,24 @@ namespace RegistrationForm1
 
                     //Station 2
                     var dataDisplayStation2 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_2");
+                    
+                    if (dataDisplayStation2.Path == "Local Station/DauTieng/S71500/Station_2")
+                    {
+                        _labHT_Cylinder3_1.Text = dataDisplayStation2.HT_Cylinder1_1.ToString();
+                        _labHT_Cylinder3_2.Text = dataDisplayStation2.HT_Cylinder1_2.ToString();
+                        _labHT_Cylinder4_1.Text = dataDisplayStation2.HT_Cylinder2_1.ToString();
+                        _labHT_Cylinder4_2.Text = dataDisplayStation2.HT_Cylinder2_2.ToString();
+                        _labPressure_Oil_Door3.Text = dataDisplayStation2.Pressure_Oil_Door1.ToString();
+                        _labPressure_Oil_Door4.Text = dataDisplayStation2.Pressure_Oil_Door2.ToString();
+                        _lblTemp_Oil2.Text = dataDisplayStation2.S1_Temp_Oil.ToString();
+                        _labFllow_Door3.Text = dataDisplayStation2.Fllow_Door1.ToString();
+                        _labFllow_Door4.Text = dataDisplayStation2.Fllow_Door2.ToString();
+                        _labDoor3_Aperture.Text = dataDisplayStation2.Door1_Aperture.ToString();
+                        _labDoor4_Aperture.Text = dataDisplayStation2.Door2_Aperture.ToString();
+                    }
+
+
+
                     if (dataDisplayStation2?.Doorlock1_1Open == true)
                     {
                         Pic_Doorlock3_1Open.Visible = true;
@@ -172,6 +215,24 @@ namespace RegistrationForm1
 
                     //Station 3
                     var dataDisplayStation3 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_3");
+
+                     if (dataDisplayStation3.Path == "Local Station/DauTieng/S71500/Station_3")
+                    {
+                        _labHT_Cylinder5_1.Text = dataDisplayStation3.HT_Cylinder1_1.ToString();
+                        _labHT_Cylinder5_2.Text = dataDisplayStation3.HT_Cylinder1_2.ToString();
+                        _labHT_Cylinder6_1.Text = dataDisplayStation3.HT_Cylinder2_1.ToString();
+                        _labHT_Cylinder6_2.Text = dataDisplayStation3.HT_Cylinder2_2.ToString();
+                        _labPressure_Oil_Door5.Text = dataDisplayStation3.Pressure_Oil_Door1.ToString();
+                        _labPressure_Oil_Door6.Text = dataDisplayStation3.Pressure_Oil_Door2.ToString();
+                        _lblTemp_Oil3.Text = dataDisplayStation3.S1_Temp_Oil.ToString();
+                        _labFllow_Door5.Text = dataDisplayStation3.Fllow_Door1.ToString();
+                        _labFllow_Door6.Text = dataDisplayStation3.Fllow_Door2.ToString();
+                        _labDoor5_Aperture.Text = dataDisplayStation3.Door1_Aperture.ToString();
+                        _labDoor6_Aperture.Text = dataDisplayStation3.Door2_Aperture.ToString();
+
+                    }
+
+
                     if (dataDisplayStation3?.Doorlock1_1Open == true)
                     {
                         Pic_Doorlock5_1Open.Visible = true;
@@ -231,14 +292,6 @@ namespace RegistrationForm1
                         Pic_Door6_Closing.Visible = true; lblCua6.Text = "Đang đóng"; lblCua6.ForeColor = Color.Black; lblCua6.BackColor = Color.Red;
                     }
                     else { Pic_Door6_Opening.Visible = false; Pic_Door6_Closing.Visible = false; lblCua6.Text = "Cửa 6"; lblCua6.ForeColor = Color.Black; lblCua6.BackColor = DefaultBackColor; }
-
-
-
-
-
-
-
-
 
 
                 });

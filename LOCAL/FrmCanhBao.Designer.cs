@@ -49,22 +49,22 @@
             this.dataGridViewAlarm.Margin = new System.Windows.Forms.Padding(5);
             this.dataGridViewAlarm.Name = "dataGridViewAlarm";
             this.dataGridViewAlarm.RowHeadersWidth = 82;
-            this.dataGridViewAlarm.Size = new System.Drawing.Size(574, 297);
+            this.dataGridViewAlarm.Size = new System.Drawing.Size(757, 289);
             this.dataGridViewAlarm.TabIndex = 0;
             // 
             // DgvHistory
             // 
             this.DgvHistory.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.DgvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvHistory.Location = new System.Drawing.Point(4, 441);
+            this.DgvHistory.Location = new System.Drawing.Point(4, 322);
             this.DgvHistory.Margin = new System.Windows.Forms.Padding(5);
             this.DgvHistory.Name = "DgvHistory";
-            this.DgvHistory.Size = new System.Drawing.Size(1702, 405);
+            this.DgvHistory.Size = new System.Drawing.Size(1702, 524);
             this.DgvHistory.TabIndex = 2;
             // 
             // bntLoad
             // 
-            this.bntLoad.Location = new System.Drawing.Point(964, 154);
+            this.bntLoad.Location = new System.Drawing.Point(1011, 154);
             this.bntLoad.Margin = new System.Windows.Forms.Padding(5);
             this.bntLoad.Name = "bntLoad";
             this.bntLoad.Size = new System.Drawing.Size(125, 37);
@@ -78,7 +78,7 @@
             this.dateTimePickerStart.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dateTimePickerStart.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePickerStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStart.Location = new System.Drawing.Point(734, 78);
+            this.dateTimePickerStart.Location = new System.Drawing.Point(781, 78);
             this.dateTimePickerStart.Name = "dateTimePickerStart";
             this.dateTimePickerStart.ShowUpDown = true;
             this.dateTimePickerStart.Size = new System.Drawing.Size(280, 44);
@@ -89,7 +89,7 @@
             this.dateTimePickerEnd.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dateTimePickerEnd.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePickerEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerEnd.Location = new System.Drawing.Point(1064, 78);
+            this.dateTimePickerEnd.Location = new System.Drawing.Point(1111, 78);
             this.dateTimePickerEnd.Name = "dateTimePickerEnd";
             this.dateTimePickerEnd.ShowUpDown = true;
             this.dateTimePickerEnd.Size = new System.Drawing.Size(280, 44);
@@ -98,7 +98,7 @@
             // lblToDate
             // 
             this.lblToDate.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblToDate.Location = new System.Drawing.Point(1089, 14);
+            this.lblToDate.Location = new System.Drawing.Point(1136, 14);
             this.lblToDate.Name = "lblToDate";
             this.lblToDate.Size = new System.Drawing.Size(228, 42);
             this.lblToDate.TabIndex = 20;
@@ -107,7 +107,7 @@
             // lblFromDate
             // 
             this.lblFromDate.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFromDate.Location = new System.Drawing.Point(762, 14);
+            this.lblFromDate.Location = new System.Drawing.Point(809, 14);
             this.lblFromDate.Name = "lblFromDate";
             this.lblFromDate.Size = new System.Drawing.Size(204, 42);
             this.lblFromDate.TabIndex = 19;
