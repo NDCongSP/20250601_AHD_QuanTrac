@@ -119,7 +119,7 @@ namespace RegistrationForm1
 
             // Timer Login dữ liệu Scada
             _timer = new Timer();
-            _timer.Interval = Globalvariable.ConfigSystem.DataLogInterval * 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
+            _timer.Interval = 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
                                                                                   // Fix for the CS0029 error: Replace the incorrect line with the correct event handler assignment.
             _timer.Tick += _timer_Tick;
             _timer.Start();
@@ -186,8 +186,8 @@ namespace RegistrationForm1
                             }
                         }
 
-                        _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
-                        _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
+                     //   _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                     //   _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
 
                         _labQtr.Text = location.CalculatorValue.Qtr.ToString();
 
@@ -366,14 +366,6 @@ namespace RegistrationForm1
 
         private void Driver_Started(object sender, EventArgs e)
         {
-            //if (ahdDriverConnector1.ConnectionStatus == ConnectionStatus.Connected)
-            //{
-            //    labDriverStatus.BackColor = Color.Green;
-            //}
-            //else
-            //{
-            //    labDriverStatus.BackColor = Color.Red;
-            //}
 
             foreach (var item in Globalvariable.LocationsInfo)
             {
@@ -561,10 +553,7 @@ namespace RegistrationForm1
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2")
                   , "", ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2").Value));
 
-                    ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1").ValueChanged += HT_Cylinder1_1_ValueChanged;
-                    HT_Cylinder1_1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
-                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
-                  , "", ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1").Value));
+                   
 
                     ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2").ValueChanged += HT_Cylinder1_2_ValueChanged;
                     HT_Cylinder1_2_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2")
@@ -616,12 +605,10 @@ namespace RegistrationForm1
                         , "", ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door2").Value));
 
 
-
-
-
-
-
-
+                    ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1").ValueChanged += HT_Cylinder1_1_ValueChanged;
+                    HT_Cylinder1_1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_1").Value));
 
 
 
@@ -630,6 +617,7 @@ namespace RegistrationForm1
 
 
                 var stationLocation = item.Stations.FirstOrDefault(loc => loc.Path.Contains("/Location_Info"));
+              
                 if (stationLocation != null)
                 {
                     // Replace this line:
@@ -637,6 +625,10 @@ namespace RegistrationForm1
                     Fllow_Ho_ValueChanged(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
                   , "", ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").Value));
+
+                   
+
+
                 }
 
                 //  }
@@ -4080,13 +4072,19 @@ namespace RegistrationForm1
                 var station = location?.Stations.FirstOrDefault(x => x.Path == path);
                 if (station != null)
                 {
-                    station.HT_Cylinder1_1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                   
+                    station.HT_Cylinder1_1 = double.TryParse(e.NewValue.ToString(), out double newValue1) ? Math.Round(newValue1, 2) : 0;
+
                     //tinh toans
-                    station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 + station.HT_Cylinder1_1_Offset ?? 0, 2);
+
+                   station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 + station.HT_Cylinder1_1_Offset ?? 0, 2);
+
+
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
                         var check = dbContext.FT02s.FirstOrDefault();
+
                         if (check != null)
                         {
                             check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
@@ -4103,8 +4101,10 @@ namespace RegistrationForm1
                                 CreateAt = createAt,
                                 CreateOperatorId = createOperatorId,
                             };
+
                             dbContext.FT02s.Add(newLine);
                         }
+
                         dbContext.SaveChanges();//Luu thay doi vao db
                     }
                 }
@@ -4549,6 +4549,7 @@ namespace RegistrationForm1
                 if (station != null)
                 {
                     station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
+                  //  station.HT_Cylinder1_1 = double.TryParse(e.NewValue.ToString(), out double newValue1) ? Math.Round(newValue1, 2) : 0;
 
                     //tinh toans
 

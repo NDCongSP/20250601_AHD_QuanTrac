@@ -25,6 +25,5 @@ namespace Domain
         public double Qtr { get; set; }
         public double LuuLuong { get; set; }
         public double LuuLuongTong { get; set; }
-
     }
 }

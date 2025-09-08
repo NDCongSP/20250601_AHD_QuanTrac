@@ -13,7 +13,7 @@ namespace Domain.Entities
     {
         [Key]
         [Browsable(false)]
-        public Guid Id { get; set; }
+        public System.Guid Id { get; set; }
 
         [Browsable(false)]
         public int? LocationId { get; set; }
