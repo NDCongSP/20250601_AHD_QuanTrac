@@ -7,6 +7,6 @@
         /// <summary>
         /// chu ky lof data (giay).
         /// </summary>
-        public int DataLogInterval { get; set; } = 60;
+        public int DataLogInterval { get; set; } = 5;
     }
 }

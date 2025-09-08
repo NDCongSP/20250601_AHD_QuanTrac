@@ -32,5 +32,7 @@ namespace RegistrationForm1
                 action();
             }
         }
+
+        public static ScadaUser UserInfo { get; set; } 
     }
 }

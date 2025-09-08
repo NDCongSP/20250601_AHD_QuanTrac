@@ -59,6 +59,7 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labHT_Cylinder1_2 = new System.Windows.Forms.Label();
             this._labHT_Cylinder1_1 = new System.Windows.Forms.Label();
             this._labFllow_Dautieng = new System.Windows.Forms.Label();
             this._labALDoor2_Station3 = new System.Windows.Forms.Label();
@@ -77,7 +78,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
-            this._labHT_Cylinder1_2 = new System.Windows.Forms.Label();
+            this._labQtr = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -396,6 +397,7 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labQtr);
             this.panelDesktop.Controls.Add(this._labHT_Cylinder1_2);
             this.panelDesktop.Controls.Add(this._labHT_Cylinder1_1);
             this.panelDesktop.Controls.Add(this._labFllow_Dautieng);
@@ -419,6 +421,15 @@
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
+            // 
+            // _labHT_Cylinder1_2
+            // 
+            this._labHT_Cylinder1_2.AutoSize = true;
+            this._labHT_Cylinder1_2.Location = new System.Drawing.Point(127, 121);
+            this._labHT_Cylinder1_2.Name = "_labHT_Cylinder1_2";
+            this._labHT_Cylinder1_2.Size = new System.Drawing.Size(35, 13);
+            this._labHT_Cylinder1_2.TabIndex = 198;
+            this._labHT_Cylinder1_2.Text = "label2";
             // 
             // _labHT_Cylinder1_1
             // 
@@ -512,7 +523,7 @@
             // _labFlowHoFinal
             // 
             this._labFlowHoFinal.AutoSize = true;
-            this._labFlowHoFinal.Location = new System.Drawing.Point(303, 373);
+            this._labFlowHoFinal.Location = new System.Drawing.Point(498, 349);
             this._labFlowHoFinal.Name = "_labFlowHoFinal";
             this._labFlowHoFinal.Size = new System.Drawing.Size(35, 13);
             this._labFlowHoFinal.TabIndex = 187;
@@ -521,7 +532,7 @@
             // _labFllowHo
             // 
             this._labFllowHo.AutoSize = true;
-            this._labFllowHo.Location = new System.Drawing.Point(298, 327);
+            this._labFllowHo.Location = new System.Drawing.Point(383, 329);
             this._labFllowHo.Name = "_labFllowHo";
             this._labFllowHo.Size = new System.Drawing.Size(35, 13);
             this._labFllowHo.TabIndex = 186;
@@ -582,14 +593,15 @@
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
             // 
-            // _labHT_Cylinder1_2
+            // _labQtr
             // 
-            this._labHT_Cylinder1_2.AutoSize = true;
-            this._labHT_Cylinder1_2.Location = new System.Drawing.Point(127, 121);
-            this._labHT_Cylinder1_2.Name = "_labHT_Cylinder1_2";
-            this._labHT_Cylinder1_2.Size = new System.Drawing.Size(35, 13);
-            this._labHT_Cylinder1_2.TabIndex = 198;
-            this._labHT_Cylinder1_2.Text = "label2";
+            this._labQtr.AutoSize = true;
+            this._labQtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQtr.Location = new System.Drawing.Point(727, 313);
+            this._labQtr.Name = "_labQtr";
+            this._labQtr.Size = new System.Drawing.Size(66, 24);
+            this._labQtr.TabIndex = 199;
+            this._labQtr.Text = "label2";
             // 
             // FrmMain
             // 
@@ -675,5 +687,6 @@
         private System.Windows.Forms.Label _labFllow_Dautieng;
         private System.Windows.Forms.Label _labHT_Cylinder1_1;
         private System.Windows.Forms.Label _labHT_Cylinder1_2;
+        private System.Windows.Forms.Label _labQtr;
     }
 }

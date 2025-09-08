@@ -30,6 +30,41 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmHome));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this._lblTemp_Oil3 = new System.Windows.Forms.Label();
+            this._lblTemp_Oil2 = new System.Windows.Forms.Label();
+            this._lblTemp_Oil1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this._labTotal_Fllow = new System.Windows.Forms.Label();
+            this._labFllow_Door6 = new System.Windows.Forms.Label();
+            this._labFllow_Door5 = new System.Windows.Forms.Label();
+            this._labFllow_Door4 = new System.Windows.Forms.Label();
+            this._labFllow_Door3 = new System.Windows.Forms.Label();
+            this._labFllow_Door2 = new System.Windows.Forms.Label();
+            this._labFllow_Door1 = new System.Windows.Forms.Label();
+            this._labDoor6_Aperture = new System.Windows.Forms.Label();
+            this._labDoor5_Aperture = new System.Windows.Forms.Label();
+            this._labDoor4_Aperture = new System.Windows.Forms.Label();
+            this._labDoor3_Aperture = new System.Windows.Forms.Label();
+            this._labDoor2_Aperture = new System.Windows.Forms.Label();
+            this._labDoor1_Aperture = new System.Windows.Forms.Label();
+            this._labPressure_Oil_Door6 = new System.Windows.Forms.Label();
+            this._labPressure_Oil_Door5 = new System.Windows.Forms.Label();
+            this._labPressure_Oil_Door4 = new System.Windows.Forms.Label();
+            this._labPressure_Oil_Door3 = new System.Windows.Forms.Label();
+            this._labPressure_Oil_Door2 = new System.Windows.Forms.Label();
+            this._labPressure_Oil_Door1 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder6_2 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder6_1 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder5_2 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder5_1 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder4_2 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder4_1 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder3_2 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder3_1 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder2_2 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder2_1 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder1_1 = new System.Windows.Forms.Label();
+            this._labHT_Cylinder1_2 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.lblCua1 = new Ahd.Winforms.Controls.AhdLabel();
@@ -86,7 +121,6 @@
             this.ahdLabel4 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel1 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel2 = new Ahd.Winforms.Controls.AhdLabel();
-            this.Fllow_Ho = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel10 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel7 = new Ahd.Winforms.Controls.AhdLabel();
             this.Fllow_BenSuc = new Ahd.Winforms.Controls.AhdLabel();
@@ -95,41 +129,7 @@
             this.ahdLabel30 = new Ahd.Winforms.Controls.AhdLabel();
             this.Fllow_SonDai = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel25 = new Ahd.Winforms.Controls.AhdLabel();
-            this._labHT_Cylinder1_2 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder1_1 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder2_2 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder2_1 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder3_1 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder3_2 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder4_1 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder4_2 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder5_1 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder5_2 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder6_1 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder6_2 = new System.Windows.Forms.Label();
-            this._labPressure_Oil_Door1 = new System.Windows.Forms.Label();
-            this._labPressure_Oil_Door2 = new System.Windows.Forms.Label();
-            this._labPressure_Oil_Door3 = new System.Windows.Forms.Label();
-            this._labPressure_Oil_Door4 = new System.Windows.Forms.Label();
-            this._labPressure_Oil_Door5 = new System.Windows.Forms.Label();
-            this._labPressure_Oil_Door6 = new System.Windows.Forms.Label();
-            this._labDoor1_Aperture = new System.Windows.Forms.Label();
-            this._labDoor2_Aperture = new System.Windows.Forms.Label();
-            this._labDoor3_Aperture = new System.Windows.Forms.Label();
-            this._labDoor4_Aperture = new System.Windows.Forms.Label();
-            this._labDoor5_Aperture = new System.Windows.Forms.Label();
-            this._labDoor6_Aperture = new System.Windows.Forms.Label();
-            this._labFllow_Door1 = new System.Windows.Forms.Label();
-            this._labFllow_Door2 = new System.Windows.Forms.Label();
-            this._labFllow_Door3 = new System.Windows.Forms.Label();
-            this._labFllow_Door4 = new System.Windows.Forms.Label();
-            this._labFllow_Door5 = new System.Windows.Forms.Label();
-            this._labFllow_Door6 = new System.Windows.Forms.Label();
-            this._labTotal_Fllow = new System.Windows.Forms.Label();
-            this._lblTemp_Oil3 = new System.Windows.Forms.Label();
-            this._lblTemp_Oil2 = new System.Windows.Forms.Label();
-            this._lblTemp_Oil1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this._labFllow_ho = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua2)).BeginInit();
@@ -175,7 +175,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_Ho)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Fllow_BenSuc)).BeginInit();
@@ -250,6 +249,391 @@
             this.groupBox1.TabIndex = 172;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "THÔNG TIN VẬN HÀNH  TRÀN XẢ LŨ";
+            // 
+            // _lblTemp_Oil3
+            // 
+            this._lblTemp_Oil3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._lblTemp_Oil3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._lblTemp_Oil3.Location = new System.Drawing.Point(221, 107);
+            this._lblTemp_Oil3.Name = "_lblTemp_Oil3";
+            this._lblTemp_Oil3.Size = new System.Drawing.Size(220, 35);
+            this._lblTemp_Oil3.TabIndex = 360;
+            this._lblTemp_Oil3.Text = "0.00";
+            this._lblTemp_Oil3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _lblTemp_Oil2
+            // 
+            this._lblTemp_Oil2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._lblTemp_Oil2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._lblTemp_Oil2.Location = new System.Drawing.Point(441, 107);
+            this._lblTemp_Oil2.Name = "_lblTemp_Oil2";
+            this._lblTemp_Oil2.Size = new System.Drawing.Size(220, 35);
+            this._lblTemp_Oil2.TabIndex = 358;
+            this._lblTemp_Oil2.Text = "0.00";
+            this._lblTemp_Oil2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _lblTemp_Oil1
+            // 
+            this._lblTemp_Oil1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._lblTemp_Oil1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._lblTemp_Oil1.Location = new System.Drawing.Point(661, 107);
+            this._lblTemp_Oil1.Name = "_lblTemp_Oil1";
+            this._lblTemp_Oil1.Size = new System.Drawing.Size(220, 35);
+            this._lblTemp_Oil1.TabIndex = 356;
+            this._lblTemp_Oil1.Text = "0.00";
+            this._lblTemp_Oil1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Navy;
+            this.button1.Location = new System.Drawing.Point(11, 107);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(205, 35);
+            this.button1.TabIndex = 354;
+            this.button1.Text = "Nhiệt độ dầu(°C)";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // _labTotal_Fllow
+            // 
+            this._labTotal_Fllow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labTotal_Fllow.Font = new System.Drawing.Font("Times New Roman", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotal_Fllow.Location = new System.Drawing.Point(884, 72);
+            this._labTotal_Fllow.Name = "_labTotal_Fllow";
+            this._labTotal_Fllow.Size = new System.Drawing.Size(200, 210);
+            this._labTotal_Fllow.TabIndex = 353;
+            this._labTotal_Fllow.Text = "0.00";
+            this._labTotal_Fllow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labFllow_Door6
+            // 
+            this._labFllow_Door6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_Door6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door6.Location = new System.Drawing.Point(221, 247);
+            this._labFllow_Door6.Name = "_labFllow_Door6";
+            this._labFllow_Door6.Size = new System.Drawing.Size(110, 35);
+            this._labFllow_Door6.TabIndex = 352;
+            this._labFllow_Door6.Text = "0.00";
+            this._labFllow_Door6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labFllow_Door5
+            // 
+            this._labFllow_Door5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_Door5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door5.Location = new System.Drawing.Point(331, 247);
+            this._labFllow_Door5.Name = "_labFllow_Door5";
+            this._labFllow_Door5.Size = new System.Drawing.Size(110, 35);
+            this._labFllow_Door5.TabIndex = 351;
+            this._labFllow_Door5.Text = "0.00";
+            this._labFllow_Door5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labFllow_Door4
+            // 
+            this._labFllow_Door4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_Door4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door4.Location = new System.Drawing.Point(441, 247);
+            this._labFllow_Door4.Name = "_labFllow_Door4";
+            this._labFllow_Door4.Size = new System.Drawing.Size(110, 35);
+            this._labFllow_Door4.TabIndex = 350;
+            this._labFllow_Door4.Text = "0.00";
+            this._labFllow_Door4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labFllow_Door3
+            // 
+            this._labFllow_Door3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_Door3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door3.Location = new System.Drawing.Point(551, 247);
+            this._labFllow_Door3.Name = "_labFllow_Door3";
+            this._labFllow_Door3.Size = new System.Drawing.Size(110, 35);
+            this._labFllow_Door3.TabIndex = 349;
+            this._labFllow_Door3.Text = "0.00";
+            this._labFllow_Door3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labFllow_Door2
+            // 
+            this._labFllow_Door2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_Door2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door2.Location = new System.Drawing.Point(661, 247);
+            this._labFllow_Door2.Name = "_labFllow_Door2";
+            this._labFllow_Door2.Size = new System.Drawing.Size(110, 35);
+            this._labFllow_Door2.TabIndex = 349;
+            this._labFllow_Door2.Text = "0.00";
+            this._labFllow_Door2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labFllow_Door1
+            // 
+            this._labFllow_Door1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_Door1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door1.Location = new System.Drawing.Point(771, 247);
+            this._labFllow_Door1.Name = "_labFllow_Door1";
+            this._labFllow_Door1.Size = new System.Drawing.Size(110, 35);
+            this._labFllow_Door1.TabIndex = 348;
+            this._labFllow_Door1.Text = "0.00";
+            this._labFllow_Door1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor6_Aperture
+            // 
+            this._labDoor6_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labDoor6_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor6_Aperture.Location = new System.Drawing.Point(221, 212);
+            this._labDoor6_Aperture.Name = "_labDoor6_Aperture";
+            this._labDoor6_Aperture.Size = new System.Drawing.Size(110, 35);
+            this._labDoor6_Aperture.TabIndex = 347;
+            this._labDoor6_Aperture.Text = "0.00";
+            this._labDoor6_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor5_Aperture
+            // 
+            this._labDoor5_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labDoor5_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor5_Aperture.Location = new System.Drawing.Point(331, 212);
+            this._labDoor5_Aperture.Name = "_labDoor5_Aperture";
+            this._labDoor5_Aperture.Size = new System.Drawing.Size(110, 35);
+            this._labDoor5_Aperture.TabIndex = 346;
+            this._labDoor5_Aperture.Text = "0.00";
+            this._labDoor5_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor4_Aperture
+            // 
+            this._labDoor4_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labDoor4_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor4_Aperture.Location = new System.Drawing.Point(441, 212);
+            this._labDoor4_Aperture.Name = "_labDoor4_Aperture";
+            this._labDoor4_Aperture.Size = new System.Drawing.Size(110, 35);
+            this._labDoor4_Aperture.TabIndex = 345;
+            this._labDoor4_Aperture.Text = "0.00";
+            this._labDoor4_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor3_Aperture
+            // 
+            this._labDoor3_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labDoor3_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor3_Aperture.Location = new System.Drawing.Point(551, 212);
+            this._labDoor3_Aperture.Name = "_labDoor3_Aperture";
+            this._labDoor3_Aperture.Size = new System.Drawing.Size(110, 35);
+            this._labDoor3_Aperture.TabIndex = 344;
+            this._labDoor3_Aperture.Text = "0.00";
+            this._labDoor3_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor2_Aperture
+            // 
+            this._labDoor2_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labDoor2_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor2_Aperture.Location = new System.Drawing.Point(661, 212);
+            this._labDoor2_Aperture.Name = "_labDoor2_Aperture";
+            this._labDoor2_Aperture.Size = new System.Drawing.Size(110, 35);
+            this._labDoor2_Aperture.TabIndex = 343;
+            this._labDoor2_Aperture.Text = "0.00";
+            this._labDoor2_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor1_Aperture
+            // 
+            this._labDoor1_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labDoor1_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor1_Aperture.Location = new System.Drawing.Point(771, 212);
+            this._labDoor1_Aperture.Name = "_labDoor1_Aperture";
+            this._labDoor1_Aperture.Size = new System.Drawing.Size(110, 35);
+            this._labDoor1_Aperture.TabIndex = 342;
+            this._labDoor1_Aperture.Text = "0.00";
+            this._labDoor1_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labPressure_Oil_Door6
+            // 
+            this._labPressure_Oil_Door6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labPressure_Oil_Door6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labPressure_Oil_Door6.Location = new System.Drawing.Point(221, 72);
+            this._labPressure_Oil_Door6.Name = "_labPressure_Oil_Door6";
+            this._labPressure_Oil_Door6.Size = new System.Drawing.Size(110, 35);
+            this._labPressure_Oil_Door6.TabIndex = 341;
+            this._labPressure_Oil_Door6.Text = "0.00";
+            this._labPressure_Oil_Door6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labPressure_Oil_Door5
+            // 
+            this._labPressure_Oil_Door5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labPressure_Oil_Door5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labPressure_Oil_Door5.Location = new System.Drawing.Point(331, 72);
+            this._labPressure_Oil_Door5.Name = "_labPressure_Oil_Door5";
+            this._labPressure_Oil_Door5.Size = new System.Drawing.Size(110, 35);
+            this._labPressure_Oil_Door5.TabIndex = 340;
+            this._labPressure_Oil_Door5.Text = "0.00";
+            this._labPressure_Oil_Door5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labPressure_Oil_Door4
+            // 
+            this._labPressure_Oil_Door4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labPressure_Oil_Door4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labPressure_Oil_Door4.Location = new System.Drawing.Point(441, 72);
+            this._labPressure_Oil_Door4.Name = "_labPressure_Oil_Door4";
+            this._labPressure_Oil_Door4.Size = new System.Drawing.Size(110, 35);
+            this._labPressure_Oil_Door4.TabIndex = 339;
+            this._labPressure_Oil_Door4.Text = "0.00";
+            this._labPressure_Oil_Door4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labPressure_Oil_Door3
+            // 
+            this._labPressure_Oil_Door3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labPressure_Oil_Door3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labPressure_Oil_Door3.Location = new System.Drawing.Point(551, 72);
+            this._labPressure_Oil_Door3.Name = "_labPressure_Oil_Door3";
+            this._labPressure_Oil_Door3.Size = new System.Drawing.Size(110, 35);
+            this._labPressure_Oil_Door3.TabIndex = 338;
+            this._labPressure_Oil_Door3.Text = "0.00";
+            this._labPressure_Oil_Door3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labPressure_Oil_Door2
+            // 
+            this._labPressure_Oil_Door2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labPressure_Oil_Door2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labPressure_Oil_Door2.Location = new System.Drawing.Point(661, 72);
+            this._labPressure_Oil_Door2.Name = "_labPressure_Oil_Door2";
+            this._labPressure_Oil_Door2.Size = new System.Drawing.Size(110, 35);
+            this._labPressure_Oil_Door2.TabIndex = 337;
+            this._labPressure_Oil_Door2.Text = "0.00";
+            this._labPressure_Oil_Door2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labPressure_Oil_Door1
+            // 
+            this._labPressure_Oil_Door1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labPressure_Oil_Door1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labPressure_Oil_Door1.Location = new System.Drawing.Point(771, 72);
+            this._labPressure_Oil_Door1.Name = "_labPressure_Oil_Door1";
+            this._labPressure_Oil_Door1.Size = new System.Drawing.Size(110, 35);
+            this._labPressure_Oil_Door1.TabIndex = 336;
+            this._labPressure_Oil_Door1.Text = "0.00";
+            this._labPressure_Oil_Door1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder6_2
+            // 
+            this._labHT_Cylinder6_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder6_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder6_2.Location = new System.Drawing.Point(276, 177);
+            this._labHT_Cylinder6_2.Name = "_labHT_Cylinder6_2";
+            this._labHT_Cylinder6_2.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder6_2.TabIndex = 335;
+            this._labHT_Cylinder6_2.Text = "0.00";
+            this._labHT_Cylinder6_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder6_1
+            // 
+            this._labHT_Cylinder6_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder6_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder6_1.Location = new System.Drawing.Point(221, 177);
+            this._labHT_Cylinder6_1.Name = "_labHT_Cylinder6_1";
+            this._labHT_Cylinder6_1.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder6_1.TabIndex = 334;
+            this._labHT_Cylinder6_1.Text = "0.00";
+            this._labHT_Cylinder6_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder5_2
+            // 
+            this._labHT_Cylinder5_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder5_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder5_2.Location = new System.Drawing.Point(386, 177);
+            this._labHT_Cylinder5_2.Name = "_labHT_Cylinder5_2";
+            this._labHT_Cylinder5_2.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder5_2.TabIndex = 333;
+            this._labHT_Cylinder5_2.Text = "0.00";
+            this._labHT_Cylinder5_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder5_1
+            // 
+            this._labHT_Cylinder5_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder5_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder5_1.Location = new System.Drawing.Point(331, 177);
+            this._labHT_Cylinder5_1.Name = "_labHT_Cylinder5_1";
+            this._labHT_Cylinder5_1.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder5_1.TabIndex = 332;
+            this._labHT_Cylinder5_1.Text = "0.00";
+            this._labHT_Cylinder5_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder4_2
+            // 
+            this._labHT_Cylinder4_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder4_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder4_2.Location = new System.Drawing.Point(496, 177);
+            this._labHT_Cylinder4_2.Name = "_labHT_Cylinder4_2";
+            this._labHT_Cylinder4_2.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder4_2.TabIndex = 331;
+            this._labHT_Cylinder4_2.Text = "0.00";
+            this._labHT_Cylinder4_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder4_1
+            // 
+            this._labHT_Cylinder4_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder4_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder4_1.Location = new System.Drawing.Point(441, 177);
+            this._labHT_Cylinder4_1.Name = "_labHT_Cylinder4_1";
+            this._labHT_Cylinder4_1.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder4_1.TabIndex = 330;
+            this._labHT_Cylinder4_1.Text = "0.00";
+            this._labHT_Cylinder4_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder3_2
+            // 
+            this._labHT_Cylinder3_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder3_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder3_2.Location = new System.Drawing.Point(606, 177);
+            this._labHT_Cylinder3_2.Name = "_labHT_Cylinder3_2";
+            this._labHT_Cylinder3_2.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder3_2.TabIndex = 329;
+            this._labHT_Cylinder3_2.Text = "0.00";
+            this._labHT_Cylinder3_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder3_1
+            // 
+            this._labHT_Cylinder3_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder3_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder3_1.Location = new System.Drawing.Point(551, 177);
+            this._labHT_Cylinder3_1.Name = "_labHT_Cylinder3_1";
+            this._labHT_Cylinder3_1.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder3_1.TabIndex = 328;
+            this._labHT_Cylinder3_1.Text = "0.00";
+            this._labHT_Cylinder3_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder2_2
+            // 
+            this._labHT_Cylinder2_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder2_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder2_2.Location = new System.Drawing.Point(716, 177);
+            this._labHT_Cylinder2_2.Name = "_labHT_Cylinder2_2";
+            this._labHT_Cylinder2_2.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder2_2.TabIndex = 326;
+            this._labHT_Cylinder2_2.Text = "0.00";
+            this._labHT_Cylinder2_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder2_1
+            // 
+            this._labHT_Cylinder2_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder2_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder2_1.Location = new System.Drawing.Point(661, 177);
+            this._labHT_Cylinder2_1.Name = "_labHT_Cylinder2_1";
+            this._labHT_Cylinder2_1.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder2_1.TabIndex = 327;
+            this._labHT_Cylinder2_1.Text = "0.00";
+            this._labHT_Cylinder2_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder1_1
+            // 
+            this._labHT_Cylinder1_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder1_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder1_1.Location = new System.Drawing.Point(771, 177);
+            this._labHT_Cylinder1_1.Name = "_labHT_Cylinder1_1";
+            this._labHT_Cylinder1_1.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder1_1.TabIndex = 325;
+            this._labHT_Cylinder1_1.Text = "0.00";
+            this._labHT_Cylinder1_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labHT_Cylinder1_2
+            // 
+            this._labHT_Cylinder1_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labHT_Cylinder1_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labHT_Cylinder1_2.Location = new System.Drawing.Point(826, 177);
+            this._labHT_Cylinder1_2.Name = "_labHT_Cylinder1_2";
+            this._labHT_Cylinder1_2.Size = new System.Drawing.Size(55, 35);
+            this._labHT_Cylinder1_2.TabIndex = 324;
+            this._labHT_Cylinder1_2.Text = "0.00";
+            this._labHT_Cylinder1_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button8
             // 
@@ -829,7 +1213,7 @@
             // 
             this.ahdBar5.BackColor = System.Drawing.Color.PowderBlue;
             this.ahdBar5.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar5.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Percent;
+            this.ahdBar5.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Value;
             this.ahdBar5.FillColor = System.Drawing.Color.Green;
             this.ahdBar5.Location = new System.Drawing.Point(518, 572);
             this.ahdBar5.MaxValue = "510";
@@ -916,22 +1300,6 @@
             this.ahdLabel2.TagPath = null;
             this.ahdLabel2.Text = "TRẠM BÌNH NHÂM ";
             this.ahdLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Fllow_Ho
-            // 
-            this.Fllow_Ho.BackColor = System.Drawing.SystemColors.Control;
-            this.Fllow_Ho.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Fllow_Ho.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.Fllow_Ho.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fllow_Ho.ForeColor = System.Drawing.Color.Red;
-            this.Fllow_Ho.Location = new System.Drawing.Point(1163, 61);
-            this.Fllow_Ho.Name = "Fllow_Ho";
-            this.Fllow_Ho.Size = new System.Drawing.Size(162, 30);
-            this.Fllow_Ho.StringFormat = "0.00";
-            this.Fllow_Ho.TabIndex = 318;
-            this.Fllow_Ho.TagPath = "Local Station/DauTieng/S71500/Group4/Fllow_Ho";
-            this.Fllow_Ho.Text = "0.0";
-            this.Fllow_Ho.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel10
             // 
@@ -1056,390 +1424,16 @@
             this.ahdLabel25.Text = "TRẠM SƠN ĐÀI";
             this.ahdLabel25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // _labHT_Cylinder1_2
-            // 
-            this._labHT_Cylinder1_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder1_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder1_2.Location = new System.Drawing.Point(826, 177);
-            this._labHT_Cylinder1_2.Name = "_labHT_Cylinder1_2";
-            this._labHT_Cylinder1_2.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder1_2.TabIndex = 324;
-            this._labHT_Cylinder1_2.Text = "0.00";
-            this._labHT_Cylinder1_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder1_1
-            // 
-            this._labHT_Cylinder1_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder1_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder1_1.Location = new System.Drawing.Point(771, 177);
-            this._labHT_Cylinder1_1.Name = "_labHT_Cylinder1_1";
-            this._labHT_Cylinder1_1.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder1_1.TabIndex = 325;
-            this._labHT_Cylinder1_1.Text = "0.00";
-            this._labHT_Cylinder1_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder2_2
-            // 
-            this._labHT_Cylinder2_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder2_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder2_2.Location = new System.Drawing.Point(716, 177);
-            this._labHT_Cylinder2_2.Name = "_labHT_Cylinder2_2";
-            this._labHT_Cylinder2_2.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder2_2.TabIndex = 326;
-            this._labHT_Cylinder2_2.Text = "0.00";
-            this._labHT_Cylinder2_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder2_1
-            // 
-            this._labHT_Cylinder2_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder2_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder2_1.Location = new System.Drawing.Point(661, 177);
-            this._labHT_Cylinder2_1.Name = "_labHT_Cylinder2_1";
-            this._labHT_Cylinder2_1.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder2_1.TabIndex = 327;
-            this._labHT_Cylinder2_1.Text = "0.00";
-            this._labHT_Cylinder2_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder3_1
-            // 
-            this._labHT_Cylinder3_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder3_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder3_1.Location = new System.Drawing.Point(551, 177);
-            this._labHT_Cylinder3_1.Name = "_labHT_Cylinder3_1";
-            this._labHT_Cylinder3_1.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder3_1.TabIndex = 328;
-            this._labHT_Cylinder3_1.Text = "0.00";
-            this._labHT_Cylinder3_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder3_2
-            // 
-            this._labHT_Cylinder3_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder3_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder3_2.Location = new System.Drawing.Point(606, 177);
-            this._labHT_Cylinder3_2.Name = "_labHT_Cylinder3_2";
-            this._labHT_Cylinder3_2.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder3_2.TabIndex = 329;
-            this._labHT_Cylinder3_2.Text = "0.00";
-            this._labHT_Cylinder3_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder4_1
-            // 
-            this._labHT_Cylinder4_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder4_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder4_1.Location = new System.Drawing.Point(441, 177);
-            this._labHT_Cylinder4_1.Name = "_labHT_Cylinder4_1";
-            this._labHT_Cylinder4_1.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder4_1.TabIndex = 330;
-            this._labHT_Cylinder4_1.Text = "0.00";
-            this._labHT_Cylinder4_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder4_2
-            // 
-            this._labHT_Cylinder4_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder4_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder4_2.Location = new System.Drawing.Point(496, 177);
-            this._labHT_Cylinder4_2.Name = "_labHT_Cylinder4_2";
-            this._labHT_Cylinder4_2.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder4_2.TabIndex = 331;
-            this._labHT_Cylinder4_2.Text = "0.00";
-            this._labHT_Cylinder4_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder5_1
-            // 
-            this._labHT_Cylinder5_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder5_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder5_1.Location = new System.Drawing.Point(331, 177);
-            this._labHT_Cylinder5_1.Name = "_labHT_Cylinder5_1";
-            this._labHT_Cylinder5_1.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder5_1.TabIndex = 332;
-            this._labHT_Cylinder5_1.Text = "0.00";
-            this._labHT_Cylinder5_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder5_2
-            // 
-            this._labHT_Cylinder5_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder5_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder5_2.Location = new System.Drawing.Point(386, 177);
-            this._labHT_Cylinder5_2.Name = "_labHT_Cylinder5_2";
-            this._labHT_Cylinder5_2.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder5_2.TabIndex = 333;
-            this._labHT_Cylinder5_2.Text = "0.00";
-            this._labHT_Cylinder5_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder6_1
-            // 
-            this._labHT_Cylinder6_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder6_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder6_1.Location = new System.Drawing.Point(221, 177);
-            this._labHT_Cylinder6_1.Name = "_labHT_Cylinder6_1";
-            this._labHT_Cylinder6_1.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder6_1.TabIndex = 334;
-            this._labHT_Cylinder6_1.Text = "0.00";
-            this._labHT_Cylinder6_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labHT_Cylinder6_2
-            // 
-            this._labHT_Cylinder6_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labHT_Cylinder6_2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labHT_Cylinder6_2.Location = new System.Drawing.Point(276, 177);
-            this._labHT_Cylinder6_2.Name = "_labHT_Cylinder6_2";
-            this._labHT_Cylinder6_2.Size = new System.Drawing.Size(55, 35);
-            this._labHT_Cylinder6_2.TabIndex = 335;
-            this._labHT_Cylinder6_2.Text = "0.00";
-            this._labHT_Cylinder6_2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labPressure_Oil_Door1
-            // 
-            this._labPressure_Oil_Door1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labPressure_Oil_Door1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labPressure_Oil_Door1.Location = new System.Drawing.Point(771, 72);
-            this._labPressure_Oil_Door1.Name = "_labPressure_Oil_Door1";
-            this._labPressure_Oil_Door1.Size = new System.Drawing.Size(110, 35);
-            this._labPressure_Oil_Door1.TabIndex = 336;
-            this._labPressure_Oil_Door1.Text = "0.00";
-            this._labPressure_Oil_Door1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labPressure_Oil_Door2
-            // 
-            this._labPressure_Oil_Door2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labPressure_Oil_Door2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labPressure_Oil_Door2.Location = new System.Drawing.Point(661, 72);
-            this._labPressure_Oil_Door2.Name = "_labPressure_Oil_Door2";
-            this._labPressure_Oil_Door2.Size = new System.Drawing.Size(110, 35);
-            this._labPressure_Oil_Door2.TabIndex = 337;
-            this._labPressure_Oil_Door2.Text = "0.00";
-            this._labPressure_Oil_Door2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labPressure_Oil_Door3
-            // 
-            this._labPressure_Oil_Door3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labPressure_Oil_Door3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labPressure_Oil_Door3.Location = new System.Drawing.Point(551, 72);
-            this._labPressure_Oil_Door3.Name = "_labPressure_Oil_Door3";
-            this._labPressure_Oil_Door3.Size = new System.Drawing.Size(110, 35);
-            this._labPressure_Oil_Door3.TabIndex = 338;
-            this._labPressure_Oil_Door3.Text = "0.00";
-            this._labPressure_Oil_Door3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labPressure_Oil_Door4
-            // 
-            this._labPressure_Oil_Door4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labPressure_Oil_Door4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labPressure_Oil_Door4.Location = new System.Drawing.Point(441, 72);
-            this._labPressure_Oil_Door4.Name = "_labPressure_Oil_Door4";
-            this._labPressure_Oil_Door4.Size = new System.Drawing.Size(110, 35);
-            this._labPressure_Oil_Door4.TabIndex = 339;
-            this._labPressure_Oil_Door4.Text = "0.00";
-            this._labPressure_Oil_Door4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labPressure_Oil_Door5
-            // 
-            this._labPressure_Oil_Door5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labPressure_Oil_Door5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labPressure_Oil_Door5.Location = new System.Drawing.Point(331, 72);
-            this._labPressure_Oil_Door5.Name = "_labPressure_Oil_Door5";
-            this._labPressure_Oil_Door5.Size = new System.Drawing.Size(110, 35);
-            this._labPressure_Oil_Door5.TabIndex = 340;
-            this._labPressure_Oil_Door5.Text = "0.00";
-            this._labPressure_Oil_Door5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labPressure_Oil_Door6
-            // 
-            this._labPressure_Oil_Door6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labPressure_Oil_Door6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labPressure_Oil_Door6.Location = new System.Drawing.Point(221, 72);
-            this._labPressure_Oil_Door6.Name = "_labPressure_Oil_Door6";
-            this._labPressure_Oil_Door6.Size = new System.Drawing.Size(110, 35);
-            this._labPressure_Oil_Door6.TabIndex = 341;
-            this._labPressure_Oil_Door6.Text = "0.00";
-            this._labPressure_Oil_Door6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labDoor1_Aperture
-            // 
-            this._labDoor1_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labDoor1_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labDoor1_Aperture.Location = new System.Drawing.Point(771, 212);
-            this._labDoor1_Aperture.Name = "_labDoor1_Aperture";
-            this._labDoor1_Aperture.Size = new System.Drawing.Size(110, 35);
-            this._labDoor1_Aperture.TabIndex = 342;
-            this._labDoor1_Aperture.Text = "0.00";
-            this._labDoor1_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labDoor2_Aperture
-            // 
-            this._labDoor2_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labDoor2_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labDoor2_Aperture.Location = new System.Drawing.Point(661, 212);
-            this._labDoor2_Aperture.Name = "_labDoor2_Aperture";
-            this._labDoor2_Aperture.Size = new System.Drawing.Size(110, 35);
-            this._labDoor2_Aperture.TabIndex = 343;
-            this._labDoor2_Aperture.Text = "0.00";
-            this._labDoor2_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labDoor3_Aperture
-            // 
-            this._labDoor3_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labDoor3_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labDoor3_Aperture.Location = new System.Drawing.Point(551, 212);
-            this._labDoor3_Aperture.Name = "_labDoor3_Aperture";
-            this._labDoor3_Aperture.Size = new System.Drawing.Size(110, 35);
-            this._labDoor3_Aperture.TabIndex = 344;
-            this._labDoor3_Aperture.Text = "0.00";
-            this._labDoor3_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labDoor4_Aperture
-            // 
-            this._labDoor4_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labDoor4_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labDoor4_Aperture.Location = new System.Drawing.Point(441, 212);
-            this._labDoor4_Aperture.Name = "_labDoor4_Aperture";
-            this._labDoor4_Aperture.Size = new System.Drawing.Size(110, 35);
-            this._labDoor4_Aperture.TabIndex = 345;
-            this._labDoor4_Aperture.Text = "0.00";
-            this._labDoor4_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labDoor5_Aperture
-            // 
-            this._labDoor5_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labDoor5_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labDoor5_Aperture.Location = new System.Drawing.Point(331, 212);
-            this._labDoor5_Aperture.Name = "_labDoor5_Aperture";
-            this._labDoor5_Aperture.Size = new System.Drawing.Size(110, 35);
-            this._labDoor5_Aperture.TabIndex = 346;
-            this._labDoor5_Aperture.Text = "0.00";
-            this._labDoor5_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labDoor6_Aperture
-            // 
-            this._labDoor6_Aperture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labDoor6_Aperture.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labDoor6_Aperture.Location = new System.Drawing.Point(221, 212);
-            this._labDoor6_Aperture.Name = "_labDoor6_Aperture";
-            this._labDoor6_Aperture.Size = new System.Drawing.Size(110, 35);
-            this._labDoor6_Aperture.TabIndex = 347;
-            this._labDoor6_Aperture.Text = "0.00";
-            this._labDoor6_Aperture.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labFllow_Door1
-            // 
-            this._labFllow_Door1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labFllow_Door1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labFllow_Door1.Location = new System.Drawing.Point(771, 247);
-            this._labFllow_Door1.Name = "_labFllow_Door1";
-            this._labFllow_Door1.Size = new System.Drawing.Size(110, 35);
-            this._labFllow_Door1.TabIndex = 348;
-            this._labFllow_Door1.Text = "0.00";
-            this._labFllow_Door1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labFllow_Door2
-            // 
-            this._labFllow_Door2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labFllow_Door2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labFllow_Door2.Location = new System.Drawing.Point(661, 247);
-            this._labFllow_Door2.Name = "_labFllow_Door2";
-            this._labFllow_Door2.Size = new System.Drawing.Size(110, 35);
-            this._labFllow_Door2.TabIndex = 349;
-            this._labFllow_Door2.Text = "0.00";
-            this._labFllow_Door2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labFllow_Door3
-            // 
-            this._labFllow_Door3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labFllow_Door3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labFllow_Door3.Location = new System.Drawing.Point(551, 247);
-            this._labFllow_Door3.Name = "_labFllow_Door3";
-            this._labFllow_Door3.Size = new System.Drawing.Size(110, 35);
-            this._labFllow_Door3.TabIndex = 349;
-            this._labFllow_Door3.Text = "0.00";
-            this._labFllow_Door3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labFllow_Door4
-            // 
-            this._labFllow_Door4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labFllow_Door4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labFllow_Door4.Location = new System.Drawing.Point(441, 247);
-            this._labFllow_Door4.Name = "_labFllow_Door4";
-            this._labFllow_Door4.Size = new System.Drawing.Size(110, 35);
-            this._labFllow_Door4.TabIndex = 350;
-            this._labFllow_Door4.Text = "0.00";
-            this._labFllow_Door4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labFllow_Door5
-            // 
-            this._labFllow_Door5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labFllow_Door5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labFllow_Door5.Location = new System.Drawing.Point(331, 247);
-            this._labFllow_Door5.Name = "_labFllow_Door5";
-            this._labFllow_Door5.Size = new System.Drawing.Size(110, 35);
-            this._labFllow_Door5.TabIndex = 351;
-            this._labFllow_Door5.Text = "0.00";
-            this._labFllow_Door5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labFllow_Door6
-            // 
-            this._labFllow_Door6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labFllow_Door6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labFllow_Door6.Location = new System.Drawing.Point(221, 247);
-            this._labFllow_Door6.Name = "_labFllow_Door6";
-            this._labFllow_Door6.Size = new System.Drawing.Size(110, 35);
-            this._labFllow_Door6.TabIndex = 352;
-            this._labFllow_Door6.Text = "0.00";
-            this._labFllow_Door6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labTotal_Fllow
-            // 
-            this._labTotal_Fllow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labTotal_Fllow.Font = new System.Drawing.Font("Times New Roman", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labTotal_Fllow.Location = new System.Drawing.Point(884, 72);
-            this._labTotal_Fllow.Name = "_labTotal_Fllow";
-            this._labTotal_Fllow.Size = new System.Drawing.Size(200, 210);
-            this._labTotal_Fllow.TabIndex = 353;
-            this._labTotal_Fllow.Text = "0.00";
-            this._labTotal_Fllow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _lblTemp_Oil3
-            // 
-            this._lblTemp_Oil3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._lblTemp_Oil3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._lblTemp_Oil3.Location = new System.Drawing.Point(221, 107);
-            this._lblTemp_Oil3.Name = "_lblTemp_Oil3";
-            this._lblTemp_Oil3.Size = new System.Drawing.Size(220, 35);
-            this._lblTemp_Oil3.TabIndex = 360;
-            this._lblTemp_Oil3.Text = "0.00";
-            this._lblTemp_Oil3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _lblTemp_Oil2
-            // 
-            this._lblTemp_Oil2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._lblTemp_Oil2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._lblTemp_Oil2.Location = new System.Drawing.Point(441, 107);
-            this._lblTemp_Oil2.Name = "_lblTemp_Oil2";
-            this._lblTemp_Oil2.Size = new System.Drawing.Size(220, 35);
-            this._lblTemp_Oil2.TabIndex = 358;
-            this._lblTemp_Oil2.Text = "0.00";
-            this._lblTemp_Oil2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _lblTemp_Oil1
-            // 
-            this._lblTemp_Oil1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._lblTemp_Oil1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._lblTemp_Oil1.Location = new System.Drawing.Point(661, 107);
-            this._lblTemp_Oil1.Name = "_lblTemp_Oil1";
-            this._lblTemp_Oil1.Size = new System.Drawing.Size(220, 35);
-            this._lblTemp_Oil1.TabIndex = 356;
-            this._lblTemp_Oil1.Text = "0.00";
-            this._lblTemp_Oil1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.Navy;
-            this.button1.Location = new System.Drawing.Point(11, 107);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(205, 35);
-            this.button1.TabIndex = 354;
-            this.button1.Text = "Nhiệt độ dầu(°C)";
-            this.button1.UseVisualStyleBackColor = true;
+            // _labFllow_ho
+            // 
+            this._labFllow_ho.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_ho.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_ho.Location = new System.Drawing.Point(1163, 61);
+            this._labFllow_ho.Name = "_labFllow_ho";
+            this._labFllow_ho.Size = new System.Drawing.Size(162, 30);
+            this._labFllow_ho.TabIndex = 361;
+            this._labFllow_ho.Text = "0.00";
+            this._labFllow_ho.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FrmHome
             // 
@@ -1447,11 +1441,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::RegistrationForm1.Properties.Resources.Home;
             this.ClientSize = new System.Drawing.Size(1694, 848);
+            this.Controls.Add(this._labFllow_ho);
             this.Controls.Add(this.ahdCDD);
             this.Controls.Add(this.ahdLabel4);
             this.Controls.Add(this.ahdLabel1);
             this.Controls.Add(this.ahdLabel2);
-            this.Controls.Add(this.Fllow_Ho);
             this.Controls.Add(this.ahdLabel10);
             this.Controls.Add(this.ahdLabel7);
             this.Controls.Add(this.Fllow_BenSuc);
@@ -1543,7 +1537,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_Ho)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Fllow_BenSuc)).EndInit();
@@ -1616,7 +1609,6 @@
         private Ahd.Winforms.Controls.AhdLabel ahdLabel4;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel1;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel2;
-        private Ahd.Winforms.Controls.AhdLabel Fllow_Ho;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel10;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel7;
         private Ahd.Winforms.Controls.AhdLabel Fllow_BenSuc;
@@ -1660,5 +1652,6 @@
         private System.Windows.Forms.Label _lblTemp_Oil2;
         private System.Windows.Forms.Label _lblTemp_Oil1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label _labFllow_ho;
     }
 }

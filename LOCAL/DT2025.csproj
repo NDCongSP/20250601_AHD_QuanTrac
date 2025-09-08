@@ -365,6 +365,7 @@
     <Compile Include="SQLLoginDataTran.cs" />
     <Compile Include="SQLLoginDataVanHanh.cs" />
     <Compile Include="SQLLoginMucNuoc.cs" />
+    <Compile Include="StaticClass\BCryptHelper.cs" />
     <Compile Include="StaticClass\Globalvariable.cs" />
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>

@@ -96,7 +96,7 @@ namespace RegistrationForm1
             }
 
 
-            Application.Run(new FrmMain());
+            Application.Run(new FrmLogin());
          //   Application.Run(new FrmMucnuoc());
         }
         private static bool TestConnectionSilently(string connectionString)

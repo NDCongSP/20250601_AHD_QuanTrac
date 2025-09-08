@@ -95,6 +95,7 @@ namespace Domain.Entities
         public double Q_Den { get; set; } = 0;
         public double Q_Di { get; set; } = 0;
         public double W_Ho { get; set; } = 0;
+        public double Qtr { get; set; } = 0;
         public double LuuLuong { get; set; } = 0;
         public double LuuLuongTong { get; set; } = 0;
     }

@@ -293,6 +293,12 @@ namespace RegistrationForm1
                     }
                     else { Pic_Door6_Opening.Visible = false; Pic_Door6_Closing.Visible = false; lblCua6.Text = "Cửa 6"; lblCua6.ForeColor = Color.Black; lblCua6.BackColor = DefaultBackColor; }
 
+                    var location = Globalvariable.RealtimeDisplays?.FirstOrDefault(loc => loc.LocationId == 1);
+                    if (Location != null)
+                    {
+                        _labFllow_ho.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                       
+                    }
 
                 });
                 }

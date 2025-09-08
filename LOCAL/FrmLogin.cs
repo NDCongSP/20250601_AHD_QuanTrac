@@ -10,11 +10,11 @@ namespace RegistrationForm1
     public partial class FrmLogin : Form
     {
         public static int currentLoginLogId = 0; // Share giữa 2 form (FrmLogin và FrmMain)
-      public static string connectionString => ConfigurationHelper.GetConnectionString();
+        public static string connectionString => ConfigurationHelper.GetConnectionString();
         public FrmLogin()
         {
             InitializeComponent();
-        //    CreateTestUser(); // Tạo user test mặc định (admin / 123456)
+            //    CreateTestUser(); // Tạo user test mặc định (admin / 123456)
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -37,41 +37,11 @@ namespace RegistrationForm1
 
 
         private bool CheckLogin(string username, string password)
-        {          
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "SELECT PasswordHash, Role FROM Users WHERE Username = @username";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@username", username);
+        {
+            using var dbContext = new ApplicationDbContext();
+            Globalvariable.UserInfo = dbContext.ScadaUsers.FirstOrDefault(u => u.UserName == username);
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    string storedHash = reader.GetString(0);
-                    string role = reader.GetString(1);
-
-                    bool isSuccess = BCrypt.Net.BCrypt.Verify(password, storedHash);
-                    reader.Close();
-
-                    if (isSuccess)
-                    {
-                        currentLoginLogId = SaveLoginLog(username, true); // ✅ lưu login log và lấy ID
-                        PermissionManager.SetUser(username, role);
-                        return true;
-                    }
-                    else
-                    {
-                        SaveLoginLog(username, false);
-                    }
-                }
-                else
-                {
-                    SaveLoginLog(username, false);
-                }
-
-                return false;
-            }
+            return Globalvariable.UserInfo != null && BCrypt.Net.BCrypt.Verify(password, Globalvariable.UserInfo.Password);
         }
 
         //private void CreateTestUser()

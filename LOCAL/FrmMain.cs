@@ -1,5 +1,7 @@
 ﻿using Ahd.Core;
 using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Office2010.Word;
+
 using Domain;
 using Domain.Entities;
 using Newtonsoft.Json;
@@ -40,6 +42,15 @@ namespace RegistrationForm1
         private DateTime _startTime = DateTime.Now;
         private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
 
+        // Bảng tra cứu α theo a/H
+        private static Dictionary<double, double> alphaTable = new Dictionary<double, double>
+        {
+            { 0.00, 0.611 }, { 0.10, 0.615 }, { 0.15, 0.618 }, { 0.20, 0.620 }, { 0.25, 0.622 },
+            { 0.30, 0.625 }, { 0.35, 0.628 }, { 0.40, 0.632 }, { 0.45, 0.638 }, { 0.50, 0.645 },
+            { 0.55, 0.650 }, { 0.60, 0.660 }, { 0.65, 0.672 }, { 0.70, 0.690 }, { 0.75, 0.705 }
+        };
+
+
         public FrmMain()
         {
             InitializeComponent();
@@ -79,7 +90,7 @@ namespace RegistrationForm1
         private async void FrmMain_Load(object sender, EventArgs e)
         {
 
-            lblWelcome.Text = $"Xin chào: {PermissionManager.CurrentUsername} ({PermissionManager.CurrentUserRole})";
+            lblWelcome.Text = $"Xin chào: {Globalvariable.UserInfo.UserName} ({Globalvariable.UserInfo.PermissionScada.ToString()})";
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
 
             if (!driver.IsStarted)
@@ -96,6 +107,7 @@ namespace RegistrationForm1
 
 
 
+
         }
         private void InitializeTimer()
         { // Timer API dầu tiếng
@@ -107,8 +119,9 @@ namespace RegistrationForm1
 
             // Timer Login dữ liệu Scada
             _timer = new Timer();
-            _timer.Interval = 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
-            _timer.Tick += async (s, e) => await Timer_Tick();
+            _timer.Interval = Globalvariable.ConfigSystem.DataLogInterval * 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
+                                                                                  // Fix for the CS0029 error: Replace the incorrect line with the correct event handler assignment.
+            _timer.Tick += _timer_Tick;
             _timer.Start();
 
 
@@ -132,6 +145,165 @@ namespace RegistrationForm1
 
 
         }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                _timer.Enabled = false;
+
+                if (Globalvariable.RealtimeDisplays == null || Globalvariable.RealtimeDisplays.Count == 0)
+                    return;
+
+                #region hien thi UI
+
+                Globalvariable.InvokeIfRequired(this, () =>
+                {
+                    var location = Globalvariable.RealtimeDisplays?.FirstOrDefault(loc => loc.LocationId == 1);
+                    if (Location != null)
+                    {
+                        foreach (var item in location.Stations)
+                        {
+                            if (item.Path == "Local Station/DauTieng/S71500/Station_1")
+                            {
+                                _labALDoor1_Station1.Text = item.Al_Door1.ToString();
+                                _labALDoor2_Station1.Text = item.Al_Door2.ToString();
+                                _labHT_Cylinder1_1.Text = item.HT_Cylinder1_1.ToString();
+                                _labHT_Cylinder1_2.Text = item.HT_Cylinder1_2.ToString();
+
+
+
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
+                            {
+                                _labALDoor1_Station2.Text = item.Al_Door1.ToString();
+                                _labALDoor2_Station2.Text = item.Al_Door2.ToString();
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_3")
+                            {
+                                _labALDoor1_Station3.Text = item.Al_Door1.ToString();
+                                _labALDoor2_Station3.Text = item.Al_Door2.ToString();
+                            }
+                        }
+
+                        _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                        _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
+
+                        _labQtr.Text = location.CalculatorValue.Qtr.ToString();
+
+                    }
+                });
+                #endregion
+
+                #region Data log                
+                _logTime = (int)(DateTime.Now - _startTime).TotalSeconds;
+
+                if (_logTime >= Globalvariable.ConfigSystem.DataLogInterval)
+                {
+                    var dataLogs = new List<FT03>();
+                    var createAt = DateTime.Now;
+                    var createOperatorId = "System";
+
+                    //datalog
+                    foreach (var item in Globalvariable.RealtimeDisplays)
+                    {
+                        var line = new FT03
+                        {
+                            Id = Guid.NewGuid(),
+                            CreateAt = createAt,
+                            CreateOperatorId = createOperatorId,
+                            IsDeleted = false,
+                            LogBaseInterval = false,
+                            LocationId = item.LocationId,
+                            LocationName = item.LocationName,
+
+                            Fllow_DauTieng = item.CalculatorValue.Fllow_DauTieng,
+                            Fllow_BenSuc = item.CalculatorValue.Fllow_BenSuc,
+                            Fllow_SonDai = item.CalculatorValue.Fllow_SonDai,
+                            Fllow_BinhNham = item.CalculatorValue.Fllow_BinhNham,
+                            Fllow_BinhNham2 = item.CalculatorValue.Fllow_BinhNham2,
+                            Fllow_TL_CDD = item.CalculatorValue.Fllow_TL_CDD,
+                            Fllow_HL_TXL = item.CalculatorValue.Fllow_HL_TXL,
+                            Total_Fllow = item.CalculatorValue.Total_Fllow,
+                            Q_Den = item.CalculatorValue.Q_Den,
+                            Q_Di = item.CalculatorValue.Q_Di,
+                            W_Ho = item.CalculatorValue.W_Ho,
+                            Qtr = item.CalculatorValue.Qtr,
+                            LuuLuong = item.CalculatorValue.LuuLuong,
+                            LuuLuongTong = item.CalculatorValue.LuuLuongTong,
+                        };
+
+                        foreach (var itemStation in item.Stations)
+                        {
+                            line.StationId = itemStation.StationId;
+                            line.StationName = itemStation.StationName;
+                            line.Path = itemStation.Path;
+
+                            line.HT_Cylinder1_1 = itemStation.HT_Cylinder1_1;
+                            line.HT_Cylinder1_2 = itemStation.HT_Cylinder1_2;
+                            line.HT_Cylinder2_1 = itemStation.HT_Cylinder2_1;
+                            line.HT_Cylinder2_2 = itemStation.HT_Cylinder2_2;
+                            line.Door1_Aperture = itemStation.Door1_Aperture;
+                            line.Door2_Aperture = itemStation.Door2_Aperture;
+                            line.S1_Temp_Oil = itemStation.S1_Temp_Oil;
+                            line.Pressure_Oil_Door1 = itemStation.Pressure_Oil_Door1;
+                            line.Pressure_Oil_Door2 = itemStation.Pressure_Oil_Door2;
+                            line.Fllow_Door1 = itemStation.Fllow_Door1;
+                            line.Fllow_Door2 = itemStation.Fllow_Door2;
+                            line.Fllow_Ho = itemStation.Fllow_Ho;
+
+                            line.HT_Cylinder1_1_Offset = itemStation.HT_Cylinder1_1_Offset;
+                            line.HT_Cylinder1_2_Offset = itemStation.HT_Cylinder1_2_Offset;
+                            line.HT_Cylinder2_1_Offset = itemStation.HT_Cylinder2_1_Offset;
+                            line.HT_Cylinder2_2_Offset = itemStation.HT_Cylinder2_2_Offset;
+                            line.Door1_Aperture_Offset = itemStation.Door1_Aperture_Offset;
+                            line.Door2_Aperture_Offset = itemStation.Door2_Aperture_Offset;
+                            line.S1_Temp_Oil_Offset = itemStation.S1_Temp_Oil_Offset;
+                            line.Pressure_Oil_Door1_Offset = itemStation.Pressure_Oil_Door1_Offset;
+                            line.Pressure_Oil_Door2_Offset = itemStation.Pressure_Oil_Door2_Offset;
+                            line.Fllow_Door1_Offset = itemStation.Fllow_Door1_Offset;
+                            line.Fllow_Door2_Offset = itemStation.Fllow_Door2_Offset;
+                            line.Fllow_Ho_Offset = itemStation.Fllow_Ho_Offset;
+
+                            line.HT_Cylinder1_1_Final = itemStation.HT_Cylinder1_1_Final;
+                            line.HT_Cylinder1_2_Final = itemStation.HT_Cylinder1_2_Final;
+                            line.HT_Cylinder2_1_Final = itemStation.HT_Cylinder2_1_Final;
+                            line.HT_Cylinder2_2_Final = itemStation.HT_Cylinder2_2_Final;
+                            line.Door1_Aperture_Final = itemStation.Door1_Aperture_Final;
+                            line.Door2_Aperture_Final = itemStation.Door2_Aperture_Final;
+                            line.S1_Temp_Oil_Final = itemStation.S1_Temp_Oil_Final;
+                            line.Pressure_Oil_Door1_Final = itemStation.Pressure_Oil_Door1_Final;
+                            line.Pressure_Oil_Door2_Final = itemStation.Pressure_Oil_Door2_Final;
+                            line.Fllow_Door1_Final = itemStation.Fllow_Door1_Final;
+                            line.Fllow_Door2_Final = itemStation.Fllow_Door2_Final;
+                            line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
+
+                            dataLogs.Add(line);
+                        }
+                    }
+
+                    if (dataLogs.Count == 0)
+                        return;
+
+                    using var dbContext = new ApplicationDbContext();
+                    dbContext.FT03s.AddRange(dataLogs);
+                    dbContext.SaveChanges();//Luu thay doi vao db
+
+                    _startTime = DateTime.Now;
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _timer.Enabled = true;
+            }
+        }
+
         private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
         {
             string url = "https://apiv2.thuyloivietnam.vn/Api/getSoLieuQuanTrac?Key=apiktdlqtDauTieng&MaQuanTrac=7001";
@@ -207,7 +379,7 @@ namespace RegistrationForm1
             {
                 foreach (var station in item.Stations.Where(x => x.Path.Contains("/Station_")))
                 {
-                 
+
                     ahdDriverConnector1.GetTag($"{station.Path}/Remote").ValueChanged += Remote_ValueChanged;
                     Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
@@ -428,10 +600,21 @@ namespace RegistrationForm1
                     Door1_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Aperture")
                         , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Aperture")
                         , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_Aperture").Value));
+
                     ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture").ValueChanged += Door2_Aperture_ValueChanged;
                     Door2_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture")
                         , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture")
                         , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_Aperture").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door1").ValueChanged += Fllow_Door1_ValueChanged;
+                    Fllow_Door1_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door1")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door1")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door1").Value));
+                    ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door2").ValueChanged += Fllow_Door2_ValueChanged;
+                    Fllow_Door2_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door2")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door2")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Fllow_Door2").Value));
+
 
 
 
@@ -1187,160 +1370,7 @@ namespace RegistrationForm1
                 Console.WriteLine($"Lỗi khi ghi giá trị tức thời vào PLC: {ex.Message}");
             }
         }
-        public async Task Timer_Tick()
-        {
-            try
-            {
-                _timer.Enabled = false;
-
-                if (Globalvariable.RealtimeDisplays == null || Globalvariable.RealtimeDisplays.Count == 0)
-                    return;
-
-                #region hien thi UI
-
-                Globalvariable.InvokeIfRequired(this, () =>
-                {
-                    var location = Globalvariable.RealtimeDisplays?.FirstOrDefault(loc => loc.LocationId == 1);
-                    if (Location != null)
-                    {
-                        foreach (var item in location.Stations)
-                        {
-                            if (item.Path == "Local Station/DauTieng/S71500/Station_1")
-                            {
-                                _labALDoor1_Station1.Text = item.Al_Door1.ToString();
-                                _labALDoor2_Station1.Text = item.Al_Door2.ToString();
-                                _labHT_Cylinder1_1.Text = item.HT_Cylinder1_1.ToString();
-                                _labHT_Cylinder1_2.Text = item.HT_Cylinder1_2.ToString();
-
-
-
-                            }
-                            else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
-                            {
-                                _labALDoor1_Station2.Text = item.Al_Door1.ToString();
-                                _labALDoor2_Station2.Text = item.Al_Door2.ToString();
-                            }
-                            else if (item.Path == "Local Station/DauTieng/S71500/Station_3")
-                            {
-                                _labALDoor1_Station3.Text = item.Al_Door1.ToString();
-                                _labALDoor2_Station3.Text = item.Al_Door2.ToString();
-                            }
-                        }
-
-                        _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
-                        _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
-
-                    }
-                });
-                #endregion
-
-                #region Data log                
-                _logTime = (int)(DateTime.Now - _startTime).TotalSeconds;
-
-                if (_logTime >= Globalvariable.ConfigSystem.DataLogInterval)
-                {
-                    var dataLogs = new List<FT03>();
-                    var createAt = DateTime.Now;
-                    var createOperatorId = "System";
-
-                    //datalog
-                    foreach (var item in Globalvariable.RealtimeDisplays)
-                    {
-                        var line = new FT03
-                        {
-                            Id = Guid.NewGuid(),
-                            CreateAt = createAt,
-                            CreateOperatorId = createOperatorId,
-                            IsDeleted = false,
-                            LogBaseInterval = false,
-                            LocationId = item.LocationId,
-                            LocationName = item.LocationName,
-
-                            Fllow_DauTieng = item.CalculatorValue.Fllow_DauTieng,
-                            Fllow_BenSuc = item.CalculatorValue.Fllow_BenSuc,
-                            Fllow_SonDai = item.CalculatorValue.Fllow_SonDai,
-                            Fllow_BinhNham = item.CalculatorValue.Fllow_BinhNham,
-                            Fllow_BinhNham2 = item.CalculatorValue.Fllow_BinhNham2,
-                            Fllow_TL_CDD = item.CalculatorValue.Fllow_TL_CDD,
-                            Fllow_HL_TXL = item.CalculatorValue.Fllow_HL_TXL,
-                            Total_Fllow = item.CalculatorValue.Total_Fllow,
-                            Q_Den = item.CalculatorValue.Q_Den,
-                            Q_Di = item.CalculatorValue.Q_Di,
-                            W_Ho = item.CalculatorValue.W_Ho,
-                            LuuLuong = item.CalculatorValue.LuuLuong,
-                            LuuLuongTong = item.CalculatorValue.LuuLuongTong,
-                        };
-
-                        foreach (var itemStation in item.Stations)
-                        {
-                            line.StationId = itemStation.StationId;
-                            line.StationName = itemStation.StationName;
-                            line.Path = itemStation.Path;
-
-                            line.HT_Cylinder1_1 = itemStation.HT_Cylinder1_1;
-                            line.HT_Cylinder1_2 = itemStation.HT_Cylinder1_2;
-                            line.HT_Cylinder2_1 = itemStation.HT_Cylinder2_1;
-                            line.HT_Cylinder2_2 = itemStation.HT_Cylinder2_2;
-                            line.Door1_Aperture = itemStation.Door1_Aperture;
-                            line.Door2_Aperture = itemStation.Door2_Aperture;
-                            line.S1_Temp_Oil = itemStation.S1_Temp_Oil;
-                            line.Pressure_Oil_Door1 = itemStation.Pressure_Oil_Door1;
-                            line.Pressure_Oil_Door2 = itemStation.Pressure_Oil_Door2;
-                            line.Fllow_Door1 = itemStation.Fllow_Door1;
-                            line.Fllow_Door2 = itemStation.Fllow_Door2;
-                            line.Fllow_Ho = itemStation.Fllow_Ho;
-
-                            line.HT_Cylinder1_1_Offset = itemStation.HT_Cylinder1_1_Offset;
-                            line.HT_Cylinder1_2_Offset = itemStation.HT_Cylinder1_2_Offset;
-                            line.HT_Cylinder2_1_Offset = itemStation.HT_Cylinder2_1_Offset;
-                            line.HT_Cylinder2_2_Offset = itemStation.HT_Cylinder2_2_Offset;
-                            line.Door1_Aperture_Offset = itemStation.Door1_Aperture_Offset;
-                            line.Door2_Aperture_Offset = itemStation.Door2_Aperture_Offset;
-                            line.S1_Temp_Oil_Offset = itemStation.S1_Temp_Oil_Offset;
-                            line.Pressure_Oil_Door1_Offset = itemStation.Pressure_Oil_Door1_Offset;
-                            line.Pressure_Oil_Door2_Offset = itemStation.Pressure_Oil_Door2_Offset;
-                            line.Fllow_Door1_Offset = itemStation.Fllow_Door1_Offset;
-                            line.Fllow_Door2_Offset = itemStation.Fllow_Door2_Offset;
-                            line.Fllow_Ho_Offset = itemStation.Fllow_Ho_Offset;
-
-                            line.HT_Cylinder1_1_Final = itemStation.HT_Cylinder1_1_Final;
-                            line.HT_Cylinder1_2_Final = itemStation.HT_Cylinder1_2_Final;
-                            line.HT_Cylinder2_1_Final = itemStation.HT_Cylinder2_1_Final;
-                            line.HT_Cylinder2_2_Final = itemStation.HT_Cylinder2_2_Final;
-                            line.Door1_Aperture_Final = itemStation.Door1_Aperture_Final;
-                            line.Door2_Aperture_Final = itemStation.Door2_Aperture_Final;
-                            line.S1_Temp_Oil_Final = itemStation.S1_Temp_Oil_Final;
-                            line.Pressure_Oil_Door1_Final = itemStation.Pressure_Oil_Door1_Final;
-                            line.Pressure_Oil_Door2_Final = itemStation.Pressure_Oil_Door2_Final;
-                            line.Fllow_Door1_Final = itemStation.Fllow_Door1_Final;
-                            line.Fllow_Door2_Final = itemStation.Fllow_Door2_Final;
-                            line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
-
-                            dataLogs.Add(line);
-                        }
-                    }
-
-                    if (dataLogs.Count == 0)
-                        return;
-
-                    using var dbContext = new ApplicationDbContext();
-                    dbContext.FT03s.AddRange(dataLogs);
-                    dbContext.SaveChanges();//Luu thay doi vao db
-
-                    _startTime = DateTime.Now;
-                }
-                #endregion
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            finally
-            {
-                _timer.Enabled = true;
-            }
-        }
+      
         // Hàm ghi log xuống TextBox
         private void AppendLog(string message)
         {
@@ -1374,7 +1404,7 @@ namespace RegistrationForm1
             return results;
         }
 
-       
+
         private void Door2_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -1879,77 +1909,77 @@ namespace RegistrationForm1
 
         }
         private void Doorlock2_2Close_ValueChanged(object sender, TagValueChangedEventArgs e)
-        {                
-                try
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
                 {
-                    var createAt = DateTime.Now;
-                    var createOperatorId = "System";
+                    station.Doorlock2_2Close = e.NewValue == "1" ? true : false;
 
-                    var path = e.Tag.Parent.Path;
-
-                    var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
-                    var station = location?.Stations.FirstOrDefault(x => x.Path == path);
-
-                    if (station != null)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        station.Doorlock2_2Close = e.NewValue == "1" ? true : false;
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
 
-                        using (var dbContext = new ApplicationDbContext())
+                        if (check != null)
                         {
-                            //Real time
-                            var check = dbContext.FT02s.FirstOrDefault();
-
-                            if (check != null)
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
                             {
-                                check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                                check.UpdateAt = createAt;
-                                check.UpdateOperatorId = createOperatorId;
-                            }
-                            else
-                            {
-                                var newLine = new FT02
-                                {
-                                    Id = Guid.NewGuid(),
-                                    C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                    IsDeleted = false,
-                                    CreateAt = createAt,
-                                    CreateOperatorId = createOperatorId,
-                                };
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
 
-                                dbContext.FT02s.Add(newLine);
-                            }
+                            dbContext.FT02s.Add(newLine);
+                        }
 
-                            //alarms
-                            var checkExist = dbContext.FT04s
-                                .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_2Close" && x.IsDeleted != true)
-                                .OrderByDescending(x => x.CreateAt)
-                                .FirstOrDefault();
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Doorlock2_2Close" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
 
-                            if (checkExist == null || checkExist.Value != station.Doorlock2_2Close)
-                            {
-                                Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
-                                Globalvariable.AlarmDataLog.CreateAt = createAt;
-                                Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
-                                Globalvariable.AlarmDataLog.IsDeleted = false;
-                                Globalvariable.AlarmDataLog.LocationId = location.LocationId;
-                                Globalvariable.AlarmDataLog.LocationName = location.LocationName;
-                                Globalvariable.AlarmDataLog.StationId = station.StationId;
-                                Globalvariable.AlarmDataLog.StationName = station.StationName;
-                                Globalvariable.AlarmDataLog.Path = station.Path;
-                                Globalvariable.AlarmDataLog.TagName = "Doorlock2_2Close";
-                                Globalvariable.AlarmDataLog.Value = station.Doorlock2_2Close;
-                                Globalvariable.AlarmDataLog.Description = station.Doorlock2_2Close == true ? "Chốt 2_2 đóng hết" : "Chốt 2_2 bình thường.";
+                        if (checkExist == null || checkExist.Value != station.Doorlock2_2Close)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Doorlock2_2Close";
+                            Globalvariable.AlarmDataLog.Value = station.Doorlock2_2Close;
+                            Globalvariable.AlarmDataLog.Description = station.Doorlock2_2Close == true ? "Chốt 2_2 đóng hết" : "Chốt 2_2 bình thường.";
 
-                                dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
 
-                                dbContext.SaveChanges();//Luu thay doi vao db
-                            }
+                            dbContext.SaveChanges();//Luu thay doi vao db
                         }
                     }
                 }
-                catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
-
             }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
         private void Doorlock2_2Open_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -4039,8 +4069,8 @@ namespace RegistrationForm1
 
         }
 
-      private void HT_Cylinder1_1_ValueChanged(object sender, TagValueChangedEventArgs e)
-            {
+        private void HT_Cylinder1_1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
             try
             {
                 var createAt = DateTime.Now;
@@ -4418,28 +4448,167 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
+
+        //Fllow_Door1
+        private void Fllow_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.Fllow_Door1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.Fllow_Door1_Final = Math.Round(station.Fllow_Door1 + station.Fllow_Door1_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+        private void Fllow_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+                var path = e.Tag.Parent.Path;
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+                if (station != null)
+                {
+                    station.Fllow_Door2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    //tinh toans
+                    station.Fllow_Door2_Final = Math.Round(station.Fllow_Door2 + station.Fllow_Door2_Offset ?? 0, 2);
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+                            dbContext.FT02s.Add(newLine);
+                        }
+                        dbContext.SaveChanges();//Luu thay doi vao db
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        }
+
+
+
         private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
             {
                 var createAt = DateTime.Now;
                 var createOperatorId = "System";
-
                 var path = e.Tag.Parent.Path;
-
                 var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
                 var station = location?.Stations.FirstOrDefault(x => x.Path == path);
-
                 if (station != null)
                 {
-                    station.Fllow_Ho = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                    station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
 
                     //tinh toans
+
                     station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
 
-                    //location.CalculatorValue.LuuLuongTong = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
-                    location.CalculatorValue.LuuLuongTong = TinhToan((double)station.Fllow_Ho_Final);
+                    // lấy giá trị từ cấu hình
+                    double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
+                    double H0 = Math.Round(station.Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ?? 0, 2);
+                    double aOverH = Math.Round((Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h) / H0, 2);
+                    double anpha = GetAlphaFromTable(aOverH);
+                    double alpha = anpha;
+                    double h = Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h;
+                    double SumB = Math.Round(10.0 * Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo, 2);
+                    int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
+                    double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
 
+
+                    //if (H0 < 0)
+                    //{
+                    //    MessageBox.Show("Cột nước trên ngưỡng Ho phải lớn hơn 0!",
+                    //             "Lỗi giá trị", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //    return;
+
+                    //}
+                    //if ( Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h <= 0 || Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h > 6)
+                    //{
+                    //    MessageBox.Show("Chiều cao mở thực tế h phải lớn hơn 0 và nhỏ hơn 6!",
+                    //               "Lỗi giá trị", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //    return;
+                    //}
+                    //if ( Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h <= 0)
+                    //{
+                    //    MessageBox.Show("Số cửa mở phải lớn hơn 0!",
+                    //              "Lỗi giá trị", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //    return;
+                    //}
+
+                    double alphaTimesH = alpha * Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h;
+                    if (H0 <= alphaTimesH)
+                    {
+                        MessageBox.Show($"Giá trị (Ho - α × h) phải lớn hơn 0 để tính căn bậc hai!\n" +
+                                      $"Hiện tại: Ho = {H0:F2}, α × h = {alphaTimesH:F2}\n" + // Thay đổi từ F3 thành F2
+                                      $"Vui lòng kiểm tra lại các giá trị đầu vào.",
+                                      "Lỗi tính toán", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    double insideSqrt = 2 * Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G * (H0 - alphaTimesH);
+                    double sqrt = Math.Sqrt(insideSqrt);
+                    //         double Qtr = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * anpha * Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h* SumB * Math.Sqrt(insideSqrt);
+                    double Qtr = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;// * Math.Sqrt(insideSqrt);
+
+                    // Tính toán theo công thức: Qtr = φ × α × h × Σb × √(2 × g × (Ho - α × h))
+
+                    //  location.CalculatorValue.Qtr = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+
+                    location.CalculatorValue.LuuLuongTong = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+
+                    //   location.CalculatorValue.LuuLuongTong = TinhToan((double)station.Fllow_Ho_Final);
+                    location.CalculatorValue.Qtr = Qtr;
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -4474,13 +4643,8 @@ namespace RegistrationForm1
         private double TinhToan(double tagValue)
         {
             return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+
         }
-
-
-
-
-
-
 
 
 
@@ -4672,5 +4836,78 @@ namespace RegistrationForm1
             FrmThongtin tt = new FrmThongtin();
             OpenFormInPanel(tt, " CÁC THÔNG TIN CẬP NHẬT");
         }
+
+        // khu vực nội suy công thức 
+        private static double GetAlphaFromTable(double aOverH)
+        {
+            // Làm tròn a/H đến 2 chữ số thập phân để so sánh chính xác hơn
+            aOverH = Math.Round(aOverH, 2);
+
+            // Nếu giá trị a/H có trong bảng, trả về α tương ứng
+            if (alphaTable.ContainsKey(aOverH))
+            {
+                return alphaTable[aOverH];
+            }
+            // Nếu không có, thực hiện nội suy tuyến tính
+            var keys = alphaTable.Keys.OrderBy(x => x).ToList();
+            // Nếu a/H nhỏ hơn hoặc bằng giá trị nhỏ nhất trong bảng
+            if (aOverH <= keys.First())
+            {
+                return alphaTable[keys.First()];
+            }
+            // Nếu a/H lớn hơn hoặc bằng giá trị lớn nhất trong bảng
+            if (aOverH >= keys.Last())
+            {
+                return alphaTable[keys.Last()];
+            }
+            // Tìm hai giá trị gần nhất để nội suy
+            double lowerKey = keys.Where(x => x <= aOverH).Max();
+            double upperKey = keys.Where(x => x >= aOverH).Min();
+
+            // Nội suy tuyến tính
+            double lowerAlpha = alphaTable[lowerKey];
+            double upperAlpha = alphaTable[upperKey];
+            double interpolatedAlpha = lowerAlpha + (upperAlpha - lowerAlpha) * (aOverH - lowerKey) / (upperKey - lowerKey);
+            return interpolatedAlpha;
+        }
+        //private void UpdateAlpha()
+        //{
+        //    var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+        //    if (station != null)
+        //    {
+        //     //   station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
+
+        //        //tinh toans
+
+        //        station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
+        //        //// if (Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h && Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo != null)
+        //        //     try
+        //        //     {
+        //        double h = Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h;
+        //             double Ho = Math.Round(station.Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ?? 0, 2);
+
+        //        if (Ho != 0)
+        //            {
+        //                double aOverH = h / Ho;
+        //                double alpha = GetAlphaFromTable(aOverH);
+        //                alpha = Math.Round(alpha, 2); // Làm tròn đến 2 chữ số thập phân
+        //              //  txtAlpha.Text = alpha.ToString("F3");
+        //            }
+        //            else
+        //            {
+        //              //  txtAlpha.Text = "";
+        //            }
+        //        }
+        //        catch
+        //        {
+        //          //  txtAlpha.Text = "";
+        //        }
+        //    }
+        //    else
+        //    {
+        //      //  txtAlpha.Text = "";
+        //    }
+        //}
+
     }
 }
