@@ -96,7 +96,8 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IAccount>()
     .UseWithRestEaseClient<IPermissions>()
     .UseWithRestEaseClient<IRoleToPermissions>()
-    .UseWithRestEaseClient<IFT01>();
+    .UseWithRestEaseClient<IFT01>()
+    .UseWithRestEaseClient<IFT02>();
 
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));
 builder.Services.AddBlazoredLocalStorage();
