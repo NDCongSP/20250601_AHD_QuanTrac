@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public interface GenericEntity
+    public interface IGenericEntity
     {
         public string? CreateOperatorId { get; set; }
 

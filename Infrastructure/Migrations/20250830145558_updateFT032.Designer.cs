@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250830145558_updateFT032")]
+    partial class updateFT032
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,11 +166,38 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool?>("Al_Door1")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Al_Door2")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Auto")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreateOperatorId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("DC1_Over")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("DC1_Running")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("DC2_Over")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("DC2_Running")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("DC3_Over")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("DC3_Running")
+                        .HasColumnType("bit");
 
                     b.Property<double?>("Door1_Aperture")
                         .HasColumnType("float");
@@ -178,6 +208,24 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("Door1_Aperture_Offset")
                         .HasColumnType("float");
 
+                    b.Property<bool?>("Door1_Close")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door1_Closing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door1_Open")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door1_Opening")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door1_PressureHigh")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door1_PressureLow")
+                        .HasColumnType("bit");
+
                     b.Property<double?>("Door2_Aperture")
                         .HasColumnType("float");
 
@@ -186,6 +234,60 @@ namespace Infrastructure.Migrations
 
                     b.Property<double?>("Door2_Aperture_Offset")
                         .HasColumnType("float");
+
+                    b.Property<bool?>("Door2_Close")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door2_Closing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door2_Open")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door2_Opening")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door2_PressureHigh")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Door2_PressureLow")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock1_1Close")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock1_1Open")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock1_2Close")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock1_2Open")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock1_Closing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock1_Opening")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock2_1Close")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock2_1Open")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock2_2Close")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock2_2Open")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock2_Closing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Doorlock2_Opening")
+                        .HasColumnType("bit");
 
                     b.Property<double?>("Fllow_BenSuc")
                         .HasColumnType("float");
@@ -274,6 +376,12 @@ namespace Infrastructure.Migrations
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("Local")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Local_Stop")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
@@ -289,6 +397,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<double>("LuuLuongTong")
                         .HasColumnType("float");
+
+                    b.Property<bool?>("Man")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Path")
                         .IsRequired()
@@ -317,6 +428,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<double>("Q_Di")
                         .HasColumnType("float");
+
+                    b.Property<bool?>("Remote")
+                        .HasColumnType("bit");
 
                     b.Property<double?>("S1_Temp_Oil")
                         .HasColumnType("float");
@@ -392,12 +506,42 @@ namespace Infrastructure.Migrations
                     b.Property<string>("UpdateOperatorId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Value")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Value")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.ToTable("FT04");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FT05", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("C000")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateOperatorId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateOperatorId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FT05");
                 });
 
             modelBuilder.Entity("Domain.Entities.MstUserSetting", b =>
