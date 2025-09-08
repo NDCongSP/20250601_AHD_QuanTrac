@@ -22,6 +22,7 @@ namespace Domain
         public double Q_Den { get; set; }
         public double Q_Di { get; set; }
         public double W_Ho { get; set; }
+        public double Qtr { get; set; }
         public double LuuLuong { get; set; }
         public double LuuLuongTong { get; set; }
     }
