@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
+using Domain;
 
 namespace UI
 {
@@ -12,5 +13,6 @@ namespace UI
         public static string FilePathTemporary { get; set; }
         public static string ApiURL { get; set; }
         public static bool AllowUpdateImageProduct { get; set; } = true;
+        public static ConfigModel ConfigSystem { get; set; } = new();
     }
 }
