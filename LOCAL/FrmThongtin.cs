@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics; // Dùng để đo thời gian bằng Stopwatch và Process.Start
+using System.IO;          // Dùng để làm việc với các file và thư mục
 
 namespace RegistrationForm1
 {
+    //namespace RegistrationForm1
+    //{
+    //    public partial class FrmThongtin : Form
+
     public partial class FrmThongtin : Form
     {
         private string _appSaveDirectory; // Thư mục để lưu các tệp đã tải lên
+
         public FrmThongtin()
         {
-            InitializeComponent();
+            InitializeComponent(); // Khởi tạo các thành phần giao diện của Form
+
             // Thiết lập các thuộc tính ban đầu cho Form
             this.Text = "Trình Xem Tệp";
             this.Size = new Size(1000, 700);
@@ -31,11 +32,6 @@ namespace RegistrationForm1
                 Directory.CreateDirectory(_appSaveDirectory);
             }
 
-            // Cấu hình Panel Main Content trước, sau đó là Panel Sidebar
-            // để pnlSidebar không che khuất pnlMainContent.
-            //    pnlMainContent.Dock = DockStyle.Fill;
-            pnlMainContent.BackColor = Color.White;
-
             // Cấu hình Panel Sidebar
             pnlSidebar.Dock = DockStyle.Left;
             pnlSidebar.Width = 280;
@@ -44,7 +40,7 @@ namespace RegistrationForm1
             // Cấu hình Nút tải tệp
             btnUploadFile.Dock = DockStyle.Top;
             btnUploadFile.Margin = new Padding(10);
-            btnUploadFile.Text = "➕ Tải tệp lên...";
+            btnUploadFile.Text = "➕ Quản lý tập tin...";
             btnUploadFile.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             btnUploadFile.Height = 40;
 
@@ -57,6 +53,10 @@ namespace RegistrationForm1
             // Tải cấu trúc thư mục ban đầu và các tệp đã lưu từ đĩa
             LoadTreeViewContent();
             trvFiles.AfterSelect += TrvFiles_AfterSelect; // Gắn sự kiện khi chọn node trong TreeView
+
+            // Cấu hình Panel Main Content
+            pnlMainContent.Dock = DockStyle.Fill;
+            pnlMainContent.BackColor = Color.White;
 
             // Cấu hình Nhãn tên file
             lblFileName.Text = "Tên tệp:";
@@ -97,9 +97,20 @@ namespace RegistrationForm1
             btnDownloadFile.Enabled = false; // Mặc định vô hiệu hóa nút
             btnDownloadFile.Click += BtnDownloadFile_Click; // Gắn sự kiện Click cho nút
 
+            // Cấu hình nút "Xóa tệp" mới
+            btnDeleteFile.Text = "Xóa tệp";
+            btnDeleteFile.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+            btnDeleteFile.Size = new Size(100, 30); // Kích thước nút
+            btnDeleteFile.BackColor = Color.LightCoral; // Màu nổi bật cho nút xóa
+            btnDeleteFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            // Đặt dưới nút "Tải về"
+            btnDeleteFile.Location = new Point(pnlMainContent.Width - btnDeleteFile.Width - 30, btnDownloadFile.Bottom + 5);
+            btnDeleteFile.Enabled = false; // Mặc định vô hiệu hóa
+            btnDeleteFile.Click += BtnDeleteFile_Click; // Gắn sự kiện Click
+
             // Cấu hình RichTextBox hiển thị nội dung file
             // Điều chỉnh vị trí bắt đầu của RichTextBox để tránh chồng chéo với các nút và nhãn mới
-            rtbFileContent.Location = new Point(30, Math.Max(lblUploadTimestamp.Bottom, btnDownloadFile.Bottom) + 20);
+            rtbFileContent.Location = new Point(30, Math.Max(lblUploadTimestamp.Bottom, btnDeleteFile.Bottom) + 20);
             rtbFileContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             rtbFileContent.Width = pnlMainContent.Width - 60;
             rtbFileContent.Height = pnlMainContent.Height - rtbFileContent.Top - 30;
@@ -110,7 +121,7 @@ namespace RegistrationForm1
 
             // Gắn sự kiện Click cho nút tải tệp
             btnUploadFile.Click += BtnUploadFile_Click;
-            this.SizeChanged += FrmThongtin_SizeChanged; // Xử lý khi Form thay đổi kích thước để điều chỉnh vị trí nút "Mở Tệp" và "Tải về"
+            this.SizeChanged += Form1_SizeChanged; // Xử lý khi Form thay đổi kích thước để điều chỉnh vị trí nút "Mở Tệp" và "Tải về"
         }
         // Lớp tùy chỉnh để lưu thông tin chi tiết về một tệp
         public class FileEntry
@@ -132,18 +143,19 @@ namespace RegistrationForm1
             }
         }
 
-        // Điều chỉnh vị trí của các nút "Mở Tệp" và "Tải về" khi Form thay đổi kích thước
-        private void FrmThongtin_SizeChanged(object sender, EventArgs e)
+        // Điều chỉnh vị trí của các nút "Mở Tệp", "Tải về" và "Xóa tệp" khi Form thay đổi kích thước
+        private void Form1_SizeChanged(object sender, EventArgs e)
         {
             btnOpenFileExternal.Location = new Point(pnlMainContent.Width - btnOpenFileExternal.Width - 30, 30);
             btnDownloadFile.Location = new Point(pnlMainContent.Width - btnDownloadFile.Width - 30, btnOpenFileExternal.Bottom + 5);
+            btnDeleteFile.Location = new Point(pnlMainContent.Width - btnDeleteFile.Width - 30, btnDownloadFile.Bottom + 5);
 
             // Điều chỉnh lại vị trí của các nhãn thông tin
             lblLoadDuration.Location = new Point(30, lblFileName.Bottom + 5);
             lblUploadTimestamp.Location = new Point(30, lblLoadDuration.Bottom + 5);
 
             // Cần điều chỉnh lại vị trí của rtbFileContent khi Form thay đổi kích thước
-            rtbFileContent.Location = new Point(30, Math.Max(lblUploadTimestamp.Bottom, btnDownloadFile.Bottom) + 20);
+            rtbFileContent.Location = new Point(30, Math.Max(lblUploadTimestamp.Bottom, btnDeleteFile.Bottom) + 20);
             rtbFileContent.Width = pnlMainContent.Width - 60;
             rtbFileContent.Height = pnlMainContent.Height - rtbFileContent.Top - 30;
         }
@@ -308,7 +320,7 @@ namespace RegistrationForm1
                 // Chọn tệp cuối cùng vừa được thêm vào để hiển thị ngay lập tức
                 if (targetTreeNode.Nodes.Count > 0)
                 {
-                    trvFiles.SelectedNode = targetTreeNode.Nodes[trvFiles.Nodes.Count - 1];
+                    trvFiles.SelectedNode = targetTreeNode.Nodes[targetTreeNode.Nodes.Count - 1];
                 }
             }
         }
@@ -318,9 +330,10 @@ namespace RegistrationForm1
         /// </summary>
         private void TrvFiles_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            // Vô hiệu hóa cả hai nút "Mở Tệp" và "Tải về" mặc định
+            // Vô hiệu hóa cả ba nút "Mở Tệp", "Tải về" và "Xóa tệp" mặc định
             btnOpenFileExternal.Enabled = false;
             btnDownloadFile.Enabled = false;
+            btnDeleteFile.Enabled = false;
 
             if (e.Node != null && e.Node.Tag is FileEntry fileEntry)
             {
@@ -336,9 +349,12 @@ namespace RegistrationForm1
                 }
                 btnOpenFileExternal.Tag = fileEntry.FullPath; // Luôn lưu đường dẫn file vào Tag của nút "Mở Tệp"
 
-                // Kích hoạt nút "Tải về" cho MỌI tệp đã chọn
+                // Kích hoạt nút "Tải về" và "Xóa tệp" cho MỌI tệp đã chọn
                 btnDownloadFile.Enabled = true;
                 btnDownloadFile.Tag = fileEntry.FullPath; // Lưu đường dẫn file vào Tag của nút "Tải về"
+
+                btnDeleteFile.Enabled = true;
+                btnDeleteFile.Tag = e.Node; // Lưu cả node để dễ dàng xóa khỏi TreeView sau này
             }
             else
             {
@@ -406,6 +422,49 @@ namespace RegistrationForm1
         }
 
         /// <summary>
+        /// Xử lý sự kiện khi nút "Xóa tệp" được nhấn.
+        /// Xóa tệp đã chọn khỏi hệ thống và khỏi TreeView.
+        /// </summary>
+        private void BtnDeleteFile_Click(object sender, EventArgs e)
+        {
+            if (btnDeleteFile.Tag is TreeNode fileNode && fileNode.Tag is FileEntry fileEntry)
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    $"Bạn có chắc chắn muốn xóa tệp này?\n\nTên tệp: {fileEntry.DisplayName}",
+                    "Xác nhận xóa",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        File.Delete(fileEntry.FullPath);
+                        fileNode.Remove(); // Xóa node khỏi TreeView
+                        MessageBox.Show("Tệp đã được xóa thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Cập nhật lại UI sau khi xóa
+                        lblFileName.Text = "Tên tệp:";
+                        lblLoadDuration.Text = "Thời gian tải:";
+                        lblUploadTimestamp.Text = "Thời gian tải lên:";
+                        rtbFileContent.Text = "Tệp đã được xóa. Vui lòng chọn một tệp khác hoặc tải lên tệp mới.";
+                        btnOpenFileExternal.Enabled = false;
+                        btnDownloadFile.Enabled = false;
+                        btnDeleteFile.Enabled = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi xóa tệp: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một tệp hợp lệ để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
         /// Tải nội dung của tệp và hiển thị lên Form.
         /// </summary>
         /// <param name="filePath">Đường dẫn đầy đủ của tệp.</param>
@@ -436,8 +495,8 @@ namespace RegistrationForm1
                 }
                 else if (fileExtension == ".docx" || fileExtension == ".xlsx" || fileExtension == ".pdf")
                 {
-                    rtbFileContent.Text = $"Không thể xem trước nội dung tệp {fileExtension.ToUpper()} này trong ứng dụng đơn giản.\n\n" +
-                                          "Vui lòng nhấn nút 'Mở Tệp' để xem bằng ứng dụng mặc định của hệ thống hoặc 'Tải về' để lưu vào máy tính.";
+                    rtbFileContent.Text = $"Không thể xem trước nội dung tệp {fileExtension} này trong ứng dụng đơn giản.\n\n" +
+                                            "Vui lòng nhấn nút 'Mở Tệp' để xem bằng ứng dụng mặc định của hệ thống hoặc 'Tải về' để lưu vào máy tính.";
                 }
                 else
                 {
@@ -459,5 +518,7 @@ namespace RegistrationForm1
                 rtbFileContent.Text = "Không thể tải nội dung tệp do lỗi.";
             }
         }
+
+
     }
 }

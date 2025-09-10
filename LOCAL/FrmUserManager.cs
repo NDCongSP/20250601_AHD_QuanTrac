@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace RegistrationForm1
 {
@@ -33,18 +34,23 @@ namespace RegistrationForm1
         }
         private void LoadUsers()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+
+            using var dbContext = new ApplicationDbContext();
+            string username = null;
+            Globalvariable.UserInfo = dbContext.ScadaUsers.FirstOrDefault(u => u.UserName == username);
+
+           // using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                conn.Open();
-                SqlDataAdapter da = new SqlDataAdapter("SELECT Id, FullName, Username, Role FROM Users", conn);
+                //conn.Open();
+                //SqlDataAdapter da = new SqlDataAdapter("SELECT Id, FullName, Username, Role FROM Users", conn);
                 DataTable dt = new DataTable();
-                da.Fill(dt);
+            //    da.Fill(dt);
                 dgvUsers.DataSource = dt;
                 // ✅ Đặt tiêu đề tiếng Việt cho từng cột
-                dgvUsers.Columns["Id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dgvUsers.Columns["FullName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dgvUsers.Columns["Username"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dgvUsers.Columns["Role"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dgvUsers.Columns["Id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dgvUsers.Columns["FullName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dgvUsers.Columns["Username"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dgvUsers.Columns["Role"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                
                 dgvUsers.Columns["Id"].HeaderText = "STT";
                 dgvUsers.Columns["FullName"].HeaderText = "Họ Và Tên";

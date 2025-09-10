@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlMainContent = new System.Windows.Forms.Panel();
+            this.btnDeleteFile = new System.Windows.Forms.Button();
             this.lblUploadTimestamp = new System.Windows.Forms.Label();
             this.btnDownloadFile = new System.Windows.Forms.Button();
             this.btnOpenFileExternal = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@
             // 
             // pnlMainContent
             // 
+            this.pnlMainContent.Controls.Add(this.btnDeleteFile);
             this.pnlMainContent.Controls.Add(this.lblUploadTimestamp);
             this.pnlMainContent.Controls.Add(this.btnDownloadFile);
             this.pnlMainContent.Controls.Add(this.btnOpenFileExternal);
@@ -54,6 +56,16 @@
             this.pnlMainContent.Name = "pnlMainContent";
             this.pnlMainContent.Size = new System.Drawing.Size(1418, 891);
             this.pnlMainContent.TabIndex = 10;
+            // 
+            // btnDeleteFile
+            // 
+            this.btnDeleteFile.Location = new System.Drawing.Point(337, 264);
+            this.btnDeleteFile.Name = "btnDeleteFile";
+            this.btnDeleteFile.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteFile.TabIndex = 11;
+            this.btnDeleteFile.Text = "Xoá file";
+            this.btnDeleteFile.UseVisualStyleBackColor = true;
+           // this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
             // 
             // lblUploadTimestamp
             // 
@@ -130,7 +142,7 @@
             this.btnUploadFile.Name = "btnUploadFile";
             this.btnUploadFile.Size = new System.Drawing.Size(120, 23);
             this.btnUploadFile.TabIndex = 0;
-            this.btnUploadFile.Text = "Tải tệp lên...";
+            this.btnUploadFile.Text = "Quản lý tập tin";
             this.btnUploadFile.UseVisualStyleBackColor = true;
             // 
             // FrmThongtin
@@ -161,5 +173,6 @@
         private System.Windows.Forms.Panel pnlSidebar;
         private System.Windows.Forms.TreeView trvFiles;
         private System.Windows.Forms.Button btnUploadFile;
+        private System.Windows.Forms.Button btnDeleteFile;
     }
 }

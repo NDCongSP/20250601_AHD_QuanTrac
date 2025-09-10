@@ -41,6 +41,13 @@ namespace RegistrationForm1
                 Globalvariable.ConfigSystem = JsonConvert.DeserializeObject<ConfigModel>(configTable.C000);
                 Globalvariable.LocationsInfo = JsonConvert.DeserializeObject<LocationsInfo>(configTable.C001);
 
+
+                ////chinh tay cac thong so de test
+                //Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 0.1;
+                //Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 0.2;
+
+                ////////////////////////////
+
                 foreach (var location in Globalvariable.LocationsInfo)
                 {
                     var displayItem = new RealtimeDisplayModel()
@@ -97,7 +104,7 @@ namespace RegistrationForm1
 
 
             Application.Run(new FrmLogin());
-         //   Application.Run(new FrmMucnuoc());
+           // Application.Run(new FrmHochua());
         }
         private static bool TestConnectionSilently(string connectionString)
         {

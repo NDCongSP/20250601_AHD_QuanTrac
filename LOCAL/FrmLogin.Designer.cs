@@ -43,13 +43,13 @@
             // 
             // label5
             // 
-            this.label5.BackColor = System.Drawing.SystemColors.Highlight;
-            this.label5.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(101, 9);
+            this.label5.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Navy;
+            this.label5.Location = new System.Drawing.Point(11, 9);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(575, 73);
+            this.label5.Size = new System.Drawing.Size(460, 48);
             this.label5.TabIndex = 183;
             this.label5.Text = "CÔNG TY TNHH MTV KHAI THÁC THỦY LỢI MIỀN NAM";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -57,8 +57,8 @@
             // chkShowPassword
             // 
             this.chkShowPassword.AutoSize = true;
-            this.chkShowPassword.ForeColor = System.Drawing.Color.White;
-            this.chkShowPassword.Location = new System.Drawing.Point(288, 288);
+            this.chkShowPassword.ForeColor = System.Drawing.Color.Navy;
+            this.chkShowPassword.Location = new System.Drawing.Point(159, 181);
             this.chkShowPassword.Margin = new System.Windows.Forms.Padding(4);
             this.chkShowPassword.Name = "chkShowPassword";
             this.chkShowPassword.Size = new System.Drawing.Size(175, 23);
@@ -69,10 +69,10 @@
             // 
             // bntRegister
             // 
-            this.bntRegister.Location = new System.Drawing.Point(461, 330);
+            this.bntRegister.Location = new System.Drawing.Point(282, 212);
             this.bntRegister.Margin = new System.Windows.Forms.Padding(4);
             this.bntRegister.Name = "bntRegister";
-            this.bntRegister.Size = new System.Drawing.Size(147, 50);
+            this.bntRegister.Size = new System.Drawing.Size(106, 32);
             this.bntRegister.TabIndex = 180;
             this.bntRegister.Text = "Thoát";
             this.bntRegister.UseVisualStyleBackColor = true;
@@ -80,10 +80,10 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(288, 331);
+            this.btnLogin.Location = new System.Drawing.Point(159, 212);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(4);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(147, 50);
+            this.btnLogin.Size = new System.Drawing.Size(105, 31);
             this.btnLogin.TabIndex = 179;
             this.btnLogin.Text = "Đăng Nhập";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -94,31 +94,30 @@
             this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPassword.Location = new System.Drawing.Point(288, 227);
+            this.txtPassword.Location = new System.Drawing.Point(159, 147);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPassword.Multiline = true;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(320, 50);
+            this.txtPassword.Size = new System.Drawing.Size(229, 26);
             this.txtPassword.TabIndex = 178;
+            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // txtUsername
             // 
             this.txtUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtUsername.Location = new System.Drawing.Point(288, 122);
+            this.txtUsername.Location = new System.Drawing.Point(159, 80);
             this.txtUsername.Margin = new System.Windows.Forms.Padding(4);
-            this.txtUsername.Multiline = true;
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(320, 50);
+            this.txtUsername.Size = new System.Drawing.Size(229, 26);
             this.txtUsername.TabIndex = 177;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(288, 185);
+            this.label2.ForeColor = System.Drawing.Color.Navy;
+            this.label2.Location = new System.Drawing.Point(159, 124);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 19);
@@ -128,8 +127,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(288, 94);
+            this.label1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label1.ForeColor = System.Drawing.Color.Navy;
+            this.label1.Location = new System.Drawing.Point(159, 57);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(106, 19);
@@ -142,12 +142,12 @@
             this.ahdPictureBox1.FillMode = Ahd.Winforms.Controls.ImageFillMode.Original;
             this.ahdPictureBox1.FlipMode = Ahd.Winforms.Controls.ImageFlipMode.None;
             this.ahdPictureBox1.Image = global::RegistrationForm1.Properties.Resources.logo_removebg_preview;
-            this.ahdPictureBox1.Location = new System.Drawing.Point(29, 107);
+            this.ahdPictureBox1.Location = new System.Drawing.Point(24, 70);
             this.ahdPictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.ahdPictureBox1.Name = "ahdPictureBox1";
             this.ahdPictureBox1.RotateAngle = 0;
             this.ahdPictureBox1.ShadedColor = System.Drawing.Color.Gray;
-            this.ahdPictureBox1.Size = new System.Drawing.Size(185, 186);
+            this.ahdPictureBox1.Size = new System.Drawing.Size(103, 106);
             this.ahdPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal;
             this.ahdPictureBox1.TabIndex = 182;
             this.ahdPictureBox1.TagPath = null;
@@ -157,8 +157,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ClientSize = new System.Drawing.Size(679, 393);
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ClientSize = new System.Drawing.Size(473, 258);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.ahdPictureBox1);
             this.Controls.Add(this.chkShowPassword);

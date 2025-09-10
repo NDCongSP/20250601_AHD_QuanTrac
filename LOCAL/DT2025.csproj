@@ -528,9 +528,6 @@
     <None Include="PIC\tranc.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PIC\TRAN6.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="PIC\Main.bmp" />
   </ItemGroup>
   <ItemGroup>

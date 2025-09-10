@@ -120,7 +120,7 @@ namespace RegistrationForm1
             // Timer Login dữ liệu Scada
             _timer = new Timer();
             _timer.Interval = 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
-                                                                                  // Fix for the CS0029 error: Replace the incorrect line with the correct event handler assignment.
+                                    // Fix for the CS0029 error: Replace the incorrect line with the correct event handler assignment.
             _timer.Tick += _timer_Tick;
             _timer.Start();
 
@@ -186,8 +186,8 @@ namespace RegistrationForm1
                             }
                         }
 
-                     //   _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
-                     //   _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
+                        //   _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                        //   _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
 
                         _labQtr.Text = location.CalculatorValue.Qtr.ToString();
 
@@ -207,34 +207,33 @@ namespace RegistrationForm1
                     //datalog
                     foreach (var item in Globalvariable.RealtimeDisplays)
                     {
-                        var line = new FT03
-                        {
-                            Id = Guid.NewGuid(),
-                            CreateAt = createAt,
-                            CreateOperatorId = createOperatorId,
-                            IsDeleted = false,
-                            LogBaseInterval = false,
-                            LocationId = item.LocationId,
-                            LocationName = item.LocationName,
-
-                            Fllow_DauTieng = item.CalculatorValue.Fllow_DauTieng,
-                            Fllow_BenSuc = item.CalculatorValue.Fllow_BenSuc,
-                            Fllow_SonDai = item.CalculatorValue.Fllow_SonDai,
-                            Fllow_BinhNham = item.CalculatorValue.Fllow_BinhNham,
-                            Fllow_BinhNham2 = item.CalculatorValue.Fllow_BinhNham2,
-                            Fllow_TL_CDD = item.CalculatorValue.Fllow_TL_CDD,
-                            Fllow_HL_TXL = item.CalculatorValue.Fllow_HL_TXL,
-                            Total_Fllow = item.CalculatorValue.Total_Fllow,
-                            Q_Den = item.CalculatorValue.Q_Den,
-                            Q_Di = item.CalculatorValue.Q_Di,
-                            W_Ho = item.CalculatorValue.W_Ho,
-                            Qtr = item.CalculatorValue.Qtr,
-                            LuuLuong = item.CalculatorValue.LuuLuong,
-                            LuuLuongTong = item.CalculatorValue.LuuLuongTong,
-                        };
-
                         foreach (var itemStation in item.Stations)
                         {
+                            var line = new FT03();
+
+                            line.Id = Guid.NewGuid();
+                            line.CreateAt = createAt;
+                            line.CreateOperatorId = createOperatorId;
+                            line.IsDeleted = false;
+                            line.LogBaseInterval = false;
+                            line.LocationId = item.LocationId;
+                            line.LocationName = item.LocationName;
+
+                            line.Fllow_DauTieng = item.CalculatorValue.Fllow_DauTieng;
+                            line.Fllow_BenSuc = item.CalculatorValue.Fllow_BenSuc;
+                            line.Fllow_SonDai = item.CalculatorValue.Fllow_SonDai;
+                            line.Fllow_BinhNham = item.CalculatorValue.Fllow_BinhNham;
+                            line.Fllow_BinhNham2 = item.CalculatorValue.Fllow_BinhNham2;
+                            line.Fllow_TL_CDD = item.CalculatorValue.Fllow_TL_CDD;
+                            line.Fllow_HL_TXL = item.CalculatorValue.Fllow_HL_TXL;
+                            line.Total_Fllow = item.CalculatorValue.Total_Fllow;
+                            line.Q_Den = item.CalculatorValue.Q_Den;
+                            line.Q_Di = item.CalculatorValue.Q_Di;
+                            line.W_Ho = item.CalculatorValue.W_Ho;
+                            line.Qtr = item.CalculatorValue.Qtr;
+                            line.LuuLuong = item.CalculatorValue.LuuLuong;
+                            line.LuuLuongTong = item.CalculatorValue.LuuLuongTong;
+
                             line.StationId = itemStation.StationId;
                             line.StationName = itemStation.StationName;
                             line.Path = itemStation.Path;
@@ -553,7 +552,7 @@ namespace RegistrationForm1
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2")
                   , "", ahdDriverConnector1.GetTag($"{station.Path}/Al_Door2").Value));
 
-                   
+
 
                     ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2").ValueChanged += HT_Cylinder1_2_ValueChanged;
                     HT_Cylinder1_2_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/HT_Cylinder1_2")
@@ -617,7 +616,7 @@ namespace RegistrationForm1
 
 
                 var stationLocation = item.Stations.FirstOrDefault(loc => loc.Path.Contains("/Location_Info"));
-              
+
                 if (stationLocation != null)
                 {
                     // Replace this line:
@@ -626,7 +625,7 @@ namespace RegistrationForm1
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
                   , "", ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").Value));
 
-                   
+
 
 
                 }
@@ -1362,7 +1361,7 @@ namespace RegistrationForm1
                 Console.WriteLine($"Lỗi khi ghi giá trị tức thời vào PLC: {ex.Message}");
             }
         }
-      
+
         // Hàm ghi log xuống TextBox
         private void AppendLog(string message)
         {
@@ -4072,12 +4071,12 @@ namespace RegistrationForm1
                 var station = location?.Stations.FirstOrDefault(x => x.Path == path);
                 if (station != null)
                 {
-                   
+
                     station.HT_Cylinder1_1 = double.TryParse(e.NewValue.ToString(), out double newValue1) ? Math.Round(newValue1, 2) : 0;
 
                     //tinh toans
 
-                   station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 + station.HT_Cylinder1_1_Offset ?? 0, 2);
+                    station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 + station.HT_Cylinder1_1_Offset ?? 0, 2);
 
 
                     using (var dbContext = new ApplicationDbContext())
@@ -4549,7 +4548,7 @@ namespace RegistrationForm1
                 if (station != null)
                 {
                     station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
-                  //  station.HT_Cylinder1_1 = double.TryParse(e.NewValue.ToString(), out double newValue1) ? Math.Round(newValue1, 2) : 0;
+                    //  station.HT_Cylinder1_1 = double.TryParse(e.NewValue.ToString(), out double newValue1) ? Math.Round(newValue1, 2) : 0;
 
                     //tinh toans
 
@@ -4835,7 +4834,7 @@ namespace RegistrationForm1
         private void bntThongtin_Click(object sender, EventArgs e)
         {
             FrmThongtin tt = new FrmThongtin();
-            OpenFormInPanel(tt, " CÁC THÔNG TIN CẬP NHẬT");
+            OpenFormInPanel(tt, " THÔNG TIN HỔ TRỢ VẬN HÀNH");
         }
 
         // khu vực nội suy công thức 

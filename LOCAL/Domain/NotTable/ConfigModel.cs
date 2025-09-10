@@ -7,6 +7,11 @@
         /// <summary>
         /// chu ky lof data (giay).
         /// </summary>
-        public int DataLogInterval { get; set; } = 5;
+        public int DataLogInterval { get; set; } = 60;
+
+        /// <summary>
+        /// Vhu kyf cuar timer (milisecond).
+        /// </summary>
+        public int TimerInterval { get; set; } = 5000;
     }
 }

@@ -59,6 +59,7 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labQtr = new System.Windows.Forms.Label();
             this._labHT_Cylinder1_2 = new System.Windows.Forms.Label();
             this._labHT_Cylinder1_1 = new System.Windows.Forms.Label();
             this._labFllow_Dautieng = new System.Windows.Forms.Label();
@@ -78,7 +79,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
-            this._labQtr = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -172,7 +172,7 @@
             this.bntThongtin.Name = "bntThongtin";
             this.bntThongtin.Size = new System.Drawing.Size(196, 50);
             this.bntThongtin.TabIndex = 193;
-            this.bntThongtin.Text = "Thông tin";
+            this.bntThongtin.Text = "Thông tin tổng hợp";
             this.bntThongtin.UseVisualStyleBackColor = true;
             this.bntThongtin.Click += new System.EventHandler(this.bntThongtin_Click);
             // 
@@ -189,7 +189,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(-1, 746);
+            this.button2.Location = new System.Drawing.Point(-1, 747);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(196, 50);
             this.button2.TabIndex = 17;
@@ -422,6 +422,17 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
+            // _labQtr
+            // 
+            this._labQtr.AutoSize = true;
+            this._labQtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQtr.Location = new System.Drawing.Point(727, 313);
+            this._labQtr.Name = "_labQtr";
+            this._labQtr.Size = new System.Drawing.Size(66, 24);
+            this._labQtr.TabIndex = 199;
+            this._labQtr.Text = "label2";
+            this._labQtr.Visible = false;
+            // 
             // _labHT_Cylinder1_2
             // 
             this._labHT_Cylinder1_2.AutoSize = true;
@@ -430,6 +441,7 @@
             this._labHT_Cylinder1_2.Size = new System.Drawing.Size(35, 13);
             this._labHT_Cylinder1_2.TabIndex = 198;
             this._labHT_Cylinder1_2.Text = "label2";
+            this._labHT_Cylinder1_2.Visible = false;
             // 
             // _labHT_Cylinder1_1
             // 
@@ -439,6 +451,7 @@
             this._labHT_Cylinder1_1.Size = new System.Drawing.Size(35, 13);
             this._labHT_Cylinder1_1.TabIndex = 197;
             this._labHT_Cylinder1_1.Text = "label2";
+            this._labHT_Cylinder1_1.Visible = false;
             // 
             // _labFllow_Dautieng
             // 
@@ -448,6 +461,7 @@
             this._labFllow_Dautieng.Size = new System.Drawing.Size(35, 13);
             this._labFllow_Dautieng.TabIndex = 196;
             this._labFllow_Dautieng.Text = "label2";
+            this._labFllow_Dautieng.Visible = false;
             // 
             // _labALDoor2_Station3
             // 
@@ -457,6 +471,7 @@
             this._labALDoor2_Station3.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station3.TabIndex = 195;
             this._labALDoor2_Station3.Text = "label2";
+            this._labALDoor2_Station3.Visible = false;
             // 
             // _labALDoor2_Station2
             // 
@@ -466,6 +481,7 @@
             this._labALDoor2_Station2.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station2.TabIndex = 194;
             this._labALDoor2_Station2.Text = "label2";
+            this._labALDoor2_Station2.Visible = false;
             // 
             // _labALDoor2_Station1
             // 
@@ -475,6 +491,7 @@
             this._labALDoor2_Station1.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station1.TabIndex = 193;
             this._labALDoor2_Station1.Text = "label2";
+            this._labALDoor2_Station1.Visible = false;
             // 
             // btnLoadStats
             // 
@@ -516,7 +533,7 @@
             this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStations.Location = new System.Drawing.Point(306, 5);
             this.dgvStations.Name = "dgvStations";
-            this.dgvStations.Size = new System.Drawing.Size(529, 290);
+            this.dgvStations.Size = new System.Drawing.Size(529, 166);
             this.dgvStations.TabIndex = 188;
             this.dgvStations.Visible = false;
             // 
@@ -528,6 +545,7 @@
             this._labFlowHoFinal.Size = new System.Drawing.Size(35, 13);
             this._labFlowHoFinal.TabIndex = 187;
             this._labFlowHoFinal.Text = "label2";
+            this._labFlowHoFinal.Visible = false;
             // 
             // _labFllowHo
             // 
@@ -537,6 +555,7 @@
             this._labFllowHo.Size = new System.Drawing.Size(35, 13);
             this._labFllowHo.TabIndex = 186;
             this._labFllowHo.Text = "label2";
+            this._labFllowHo.Visible = false;
             // 
             // _labALDoor1_Station3
             // 
@@ -546,6 +565,7 @@
             this._labALDoor1_Station3.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station3.TabIndex = 185;
             this._labALDoor1_Station3.Text = "label2";
+            this._labALDoor1_Station3.Visible = false;
             // 
             // _labALDoor1_Station2
             // 
@@ -555,6 +575,7 @@
             this._labALDoor1_Station2.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station2.TabIndex = 184;
             this._labALDoor1_Station2.Text = "label2";
+            this._labALDoor1_Station2.Visible = false;
             // 
             // _labALDoor1_Station1
             // 
@@ -564,6 +585,7 @@
             this._labALDoor1_Station1.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station1.TabIndex = 183;
             this._labALDoor1_Station1.Text = "label2";
+            this._labALDoor1_Station1.Visible = false;
             // 
             // button4
             // 
@@ -573,6 +595,7 @@
             this.button4.TabIndex = 179;
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // lblStationsTitle
@@ -583,6 +606,7 @@
             this.lblStationsTitle.Size = new System.Drawing.Size(35, 13);
             this.lblStationsTitle.TabIndex = 178;
             this.lblStationsTitle.Text = "label2";
+            this.lblStationsTitle.Visible = false;
             // 
             // lblStatusMessage
             // 
@@ -592,16 +616,7 @@
             this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
-            // 
-            // _labQtr
-            // 
-            this._labQtr.AutoSize = true;
-            this._labQtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labQtr.Location = new System.Drawing.Point(727, 313);
-            this._labQtr.Name = "_labQtr";
-            this._labQtr.Size = new System.Drawing.Size(66, 24);
-            this._labQtr.TabIndex = 199;
-            this._labQtr.Text = "label2";
+            this.lblStatusMessage.Visible = false;
             // 
             // FrmMain
             // 
