@@ -101,58 +101,29 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<bool>> DeleteLocationAsync(int? locationId)
+        private RealtimeDisplayModel GetRealTimeDisplayFromC001(FT02 FT02)
         {
-            try
-            {
-                var FT02 = await dbContext.FT02s.FirstOrDefaultAsync();
-                if (FT02 == null)
-                {
-                    return await Result<bool>.FailAsync("No FT02 record found");
-                }
-
-                var locations = await GetRealTimeDisplayFromC001(FT02);
-
-                var locationToRemove = locations.FirstOrDefault(x => x.LocationId == locationId);
-                if (locationToRemove != null)
-                {
-                    locations.Remove(locationToRemove);
-
-                    await SaveRealTimeDisplayToC000(FT02, locations);
-
-                    return await Result<bool>.SuccessAsync(true);
-                }
-
-                return await Result<bool>.FailAsync("Location not found");
-            }
-            catch (Exception ex)
-            {
-                return await Result<bool>.FailAsync(ex.Message);
-            }
-        }
-
-        private async Task<List<RealtimeDisplayModel>> GetRealTimeDisplayFromC001(FT02 FT02)
-        {
-            return string.IsNullOrEmpty(FT02.C000)
+            var result = string.IsNullOrEmpty(FT02.C000)
                 ? new List<RealtimeDisplayModel>()
                 : JsonConvert.DeserializeObject<List<RealtimeDisplayModel>>(FT02.C000) ?? new List<RealtimeDisplayModel>();
+            return result.FirstOrDefault() ?? new RealtimeDisplayModel();
         }
 
-        public async Task<List<RealtimeDisplayModel>> GetFirstOrDefaultRealTimeDisplay()
+        public async Task<RealtimeDisplayModel> GetFirstOrDefaultRealTimeDisplay()
         {
             try
             {
                 var entity = await dbContext.FT02s.FirstOrDefaultAsync();
                 if (entity == null)
                 {
-                    return new List<RealtimeDisplayModel>();
+                    return new RealtimeDisplayModel();
                 }
-                return await GetRealTimeDisplayFromC001(entity);
+                return GetRealTimeDisplayFromC001(entity);
             }
             catch (Exception)
             {
                 // Log the exception if needed
-                return new List<RealtimeDisplayModel>();
+                return new RealtimeDisplayModel();
             }
         }
 

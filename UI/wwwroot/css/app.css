@@ -109,3 +109,51 @@ h1:focus {
 .rz-navigation-item-wrapper .rz-navigation-item-link {
     justify-content: center;
 }
+
+/*add css svg*/
+
+figure {
+    display: block;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    border: solid thin navy;
+}
+
+figure:nth-of-type(2n) {
+    background: #bfc;
+}
+
+figcaption, figure > div {
+    display: block;
+    vertical-align: middle;
+}
+
+figure > div {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+img, svg, .bg-svg {
+    border: thin dotted darkgrey;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+svg.defs-only {
+    display: block;
+    position: absolute;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+}
+

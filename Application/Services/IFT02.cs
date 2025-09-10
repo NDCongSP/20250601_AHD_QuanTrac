@@ -4,6 +4,6 @@ namespace Application.Services
     public interface IFT02: IRepository<Guid,FT02>
     {
         [Get(ApiRoutes.FT02.GetRealtimeDisplay)]
-        Task<List<RealtimeDisplayModel>> GetFirstOrDefaultRealTimeDisplay();
+        Task<RealtimeDisplayModel> GetFirstOrDefaultRealTimeDisplay();
     }
 }

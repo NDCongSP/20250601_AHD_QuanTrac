@@ -24,10 +24,12 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\images\generals\Home.svg" />
+    <Content Remove="wwwroot\images\generals\MNGG.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\images\generals\Home.svg" />
+    <EmbeddedResource Include="wwwroot\images\generals\MNGG.svg" />
   </ItemGroup>
 
   <ItemGroup>

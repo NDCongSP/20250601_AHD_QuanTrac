@@ -16,7 +16,7 @@ namespace API.Controllers
 
         [HttpGet(ApiRoutes.FT02.GetRealtimeDisplay)]
 
-        public async Task<List<RealtimeDisplayModel>> GetFirstOrDefaultRealTimeDisplay()
+        public async Task<RealtimeDisplayModel> GetFirstOrDefaultRealTimeDisplay()
         {   
             return await _repository.SFT02s.GetFirstOrDefaultRealTimeDisplay();
         }

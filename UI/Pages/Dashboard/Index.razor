@@ -1,4 +1,4 @@
-﻿@page "/dashboard"
+@page "/dashboard"
 @using System.Timers
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
     <figure>
@@ -11,65 +11,6 @@
         </RadzenStack>
     </figure>
 </RadzenPanel>
-
-<style>
-
-    figure {
-        display: block;
-        background: #fff;
-        width: 100%;
-        box-sizing: border-box;
-        border: solid thin navy;
-    }
-
-
-
-        figure:nth-of-type(2n) {
-            background: #bfc;
-        }
-
-
-
-        figcaption, figure > div {
-            display: block;
-            vertical-align: middle;
-        }
-
-
-
-        figure > div {
-            text-align: center;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-
-
-    img, svg, .bg-svg {
-        border: thin dotted darkgrey;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-
-
-        svg.defs-only {
-            display: block;
-            position: absolute;
-            height: 0;
-            width: 0;
-            margin: 0;
-            padding: 0;
-            border: none;
-            overflow: hidden;
-        }
-
-</style>
 
 @code {
     string _svg;
@@ -84,7 +25,7 @@
         base.OnInitialized();
 
         #region Timer refresh data
-        _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.RefreshInterval);
+        _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
         _timer.Elapsed += RefreshData;
         _timer.Enabled = true;
         #endregion
@@ -95,7 +36,8 @@
         //try
         {
             var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
-
+            //using js, append data to svg, using property name is id of html tag
+            await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
             StateHasChanged(); // NOTE: MUST CALL StateHasChanged() BECAUSE THIS IS TRIGGERED BY A TIMER INSTEAD OF A USER EVENT
         }
         //catch { }
