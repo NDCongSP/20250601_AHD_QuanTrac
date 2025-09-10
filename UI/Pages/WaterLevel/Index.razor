@@ -32,15 +32,14 @@
 
     private async void RefreshData(object? sender, ElapsedEventArgs e)
     {
-        //try
+        try
         {
             var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             var data = realtimeData.CalculatorValue;
-            //using js, append data to svg, using property name is id of html tag
-            await _jsRuntime.InvokeVoidAsync("updateSvgWaterLevel", data);
-            StateHasChanged(); // NOTE: MUST CALL StateHasChanged() BECAUSE THIS IS TRIGGERED BY A TIMER INSTEAD OF A USER EVENT
+            await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgWaterLevel", data);
+            StateHasChanged();
         }
-        //catch { }
+        catch { }
     }
 
     public void Dispose()
@@ -48,4 +47,3 @@
         _timer.Dispose();
     }
 }
-

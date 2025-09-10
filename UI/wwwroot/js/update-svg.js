@@ -6,7 +6,7 @@ function updateSvgWaterLevel(data) {
             const value = data[key];
             // Format number to 2 decimal places if it's a number
             const formattedValue = typeof value === 'number' ? value.toFixed(2) : value;
-            document.getElementById(Nkey).innerHTML = formattedValue;
+            document.getElementById(key).innerHTML = formattedValue;
         }
     }
 }
@@ -38,7 +38,10 @@ function updateSvgFillOverflow(location) {
             const element = document.getElementById(elementId);
             
             if (element) {
-                const formattedValue = typeof value === 'number' ? value.toFixed(3) : value;
+                //random value from 1 to 10
+                // const randomValue = Math.random() * (10 - 1) + 1;
+                // const formattedValue = typeof randomValue === 'number' ? randomValue.toFixed(2) : randomValue;
+                const formattedValue = typeof value === 'number' ? value.toFixed(2) : value;
                 element.innerHTML = formattedValue;
             }
         }
@@ -50,7 +53,10 @@ function updateSvgFillOverflow(location) {
         const element = document.getElementById(key);
         
         if (element) {
-            const formattedValue = typeof value === 'number' ? value.toFixed(3) : value;
+            //random value from 1 to 10
+            // const randomValue = Math.random() * (10 - 1) + 1;
+            // const formattedValue = typeof randomValue === 'number' ? randomValue.toFixed(1) : randomValue;
+            const formattedValue = typeof value === 'number' ? value.toFixed(1) : value;
             element.innerHTML = formattedValue;
         }
     }

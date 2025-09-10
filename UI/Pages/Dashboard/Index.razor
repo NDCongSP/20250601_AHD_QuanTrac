@@ -1,4 +1,4 @@
-@page "/dashboard"
+﻿@page "/dashboard"
 @using System.Timers
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
     <figure>
@@ -33,14 +33,13 @@
 
     private async void RefreshData(object? sender, ElapsedEventArgs e)
     {
-        //try
+        try
         {
             var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
-            //using js, append data to svg, using property name is id of html tag
             await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
-            StateHasChanged(); // NOTE: MUST CALL StateHasChanged() BECAUSE THIS IS TRIGGERED BY A TIMER INSTEAD OF A USER EVENT
+            StateHasChanged();
         }
-        //catch { }
+        catch { }
     }
 
     public void Dispose()
