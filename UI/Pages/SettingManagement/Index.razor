@@ -1,0 +1,186 @@
+﻿@page "/setting-management"
+@using Radzen
+@using Radzen.Blazor
+
+<RadzenRow Gap="1rem" Class="padding-body-content">
+    <RadzenColumn SizeXS="12" SizeMD="12">
+        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center"
+                   AlignItems="AlignItems.Stretch" Gap="5px">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End"
+                       AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
+                <RadzenButton Click="@HandleSaveClick" Variant="Variant.Flat" Shade="Shade.Dark"
+                            Text="@_localizer["btn_Save"]" Icon="save" ButtonStyle="ButtonStyle.Success" />
+            </RadzenStack>
+
+            @if (_isLoading)
+            {
+                <div class="text-center p-4">
+                    <RadzenLoading></RadzenLoading>
+                    <p>@_localizer["msg_LoadingSettings"]</p>
+                </div>
+            }
+            else
+            {
+                <RadzenCard>
+                    <RadzenTabs>
+                        <Tabs>
+                            <RadzenTabsItem Text="@_localizer["lbl_GeneralSettings"]">
+                                <div class="row p-3">
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_HeSoLuuToc_Phi"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoLuuToc_Phi" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_GiaToc_G"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.GiaToc_G" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_CaoTrinhNguongTran_Zn"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.CaoTrinhNguongTran_Zn" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_DoMoCuaTran_h"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.DoMoCuaTran_h" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_SoCuaMo"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="int" @bind-Value="@_config.ParametterConfig.SoCuaMo" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_HeSoCoHep_ALpha"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoCoHep_ALpha"
+                                                           Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+                                </div>
+                            </RadzenTabsItem>
+
+                            <RadzenTabsItem Text="@_localizer["lbl_FlowSettings"]">
+                                <div class="row p-3">
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_Q_CongSo1"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo1" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_Q_CongSo2"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo2"
+                                                           Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_Q_CongSo3"]" Variant="Variant.Outlined" Style="width:100%">
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo3"
+                                                           Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+                                </div>
+                            </RadzenTabsItem>
+
+                            <RadzenTabsItem Text="@_localizer["lbl_SystemSettings"]">
+                                <div class="row p-3">
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_DataLogInterval"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="int" @bind-Value="@_config.DataLogInterval" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_TimerInterval"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="int" @bind-Value="@_config.TimerInterval" 
+                                                        Style="width: 100%"></RadzenNumeric>
+                                        </RadzenFormField>
+                                    </div>
+                                </div>
+                            </RadzenTabsItem>
+                        </Tabs>
+                    </RadzenTabs>
+                </RadzenCard>
+            }
+        </RadzenStack>
+    </RadzenColumn>
+</RadzenRow>
+
+@code {
+    private ConfigModel _config = new();
+    private bool _isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await LoadConfigAsync();
+    }
+
+    private async Task LoadConfigAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            StateHasChanged();
+
+            var result = await _ft01Service.GetConfigAsync();
+            if (result.Succeeded && result.Data != null)
+            {
+                _config = result.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, "Error", $"Error loading settings: {ex.Message}");
+        }
+        finally
+        {
+            _isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task HandleSaveClick()
+    {
+        try
+        {
+            var result = await _ft01Service.UpdateConfigAsync(_config);
+            if (result.Succeeded)
+            {
+                _notificationService.Notify(NotificationSeverity.Success, "Success", "Settings saved successfully!");
+            }
+            else
+            {
+                _notificationService.Notify(NotificationSeverity.Error, "Error", $"Error saving settings: {string.Join(", ", result.Messages)}");
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, "Error", $"Error saving settings: {ex.Message}");
+        }
+    }
+}

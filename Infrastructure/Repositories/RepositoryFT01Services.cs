@@ -177,6 +177,60 @@ namespace Infrastructure.Repositories
             }
         }
 
+        public async Task<Result<ConfigModel>> GetConfigAsync()
+        {
+            try
+            {
+                var ft01 = await dbContext.FT01s.FirstOrDefaultAsync();
+                if (ft01 == null)
+                {
+                    // Return default config if no record exists
+                    return await Result<ConfigModel>.SuccessAsync(new ConfigModel());
+                }
+
+                if (string.IsNullOrEmpty(ft01.C000))
+                {
+                    return await Result<ConfigModel>.SuccessAsync(new ConfigModel());
+                }
+
+                var config = JsonConvert.DeserializeObject<ConfigModel>(ft01.C000);
+                return await Result<ConfigModel>.SuccessAsync(config);
+            }
+            catch (Exception ex)
+            {
+                return HandleError<ConfigModel>(ex);
+            }
+        }
+
+        public async Task<Result<ConfigModel>> UpdateConfigAsync(ConfigModel config)
+        {
+            try
+            {
+                var ft01 = await dbContext.FT01s.FirstOrDefaultAsync();
+                if (ft01 == null)
+                {
+                    ft01 = new FT01
+                    {
+                        Id = Guid.NewGuid(),
+                        C000 = JsonConvert.SerializeObject(config)
+                    };
+                    await dbContext.FT01s.AddAsync(ft01);
+                }
+                else
+                {
+                    ft01.C000 = JsonConvert.SerializeObject(config);
+                    dbContext.FT01s.Update(ft01);
+                }
+
+                await dbContext.SaveChangesAsync();
+                return await Result<ConfigModel>.SuccessAsync(config);
+            }
+            catch (Exception ex)
+            {
+                return HandleError<ConfigModel>(ex);
+            }
+        }
+
         private async Task<List<LocationInfoModel>> GetLocationsFromC001(FT01 ft01)
         {
             return string.IsNullOrEmpty(ft01.C001)

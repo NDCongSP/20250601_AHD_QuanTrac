@@ -13,5 +13,11 @@ namespace Application.Services
         Task<Result<bool>> DeleteLocationAsync([Path]int? locationId);
         [Post(ApiRoutes.FT01.AddOrUpdateLocation)]
         Task<Result<LocationInfoModel>> AddOrUpdateLocationAsync([Body] LocationInfoModel location);
+        
+        [Get(ApiRoutes.FT01.GetConfig)]
+        Task<Result<ConfigModel>> GetConfigAsync();
+        
+        [Post(ApiRoutes.FT01.UpdateConfig)]
+        Task<Result<ConfigModel>> UpdateConfigAsync([Body] ConfigModel config);
     }
 }
