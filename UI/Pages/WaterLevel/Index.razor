@@ -1,5 +1,6 @@
 ﻿@page "/water-level"
 @using System.Timers
+@using UI.StaticClass
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
     <figure>
         <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
@@ -22,7 +23,7 @@
         StreamReader reader = new StreamReader(stream);
         _svg = reader.ReadToEnd();
         base.OnInitialized();
-
+        RefreshData(null, null);
         #region Timer refresh data
         _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
         _timer.Elapsed += RefreshData;
@@ -30,11 +31,12 @@
         #endregion
     }
 
-    private async void RefreshData(object? sender, ElapsedEventArgs e)
+    private async void RefreshData(object? sender, ElapsedEventArgs? e)
     {
         try
         {
             var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
+            //var realtimeData = FakeDataGenerator.GenerateLocation();
             var data = realtimeData.CalculatorValue;
             await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgWaterLevel", data);
             StateHasChanged();

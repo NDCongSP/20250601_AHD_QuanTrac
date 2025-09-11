@@ -1,12 +1,52 @@
+/**
+ * Updates SVG elements based on the provided data
+ * @param {Object} element - The DOM element to update
+ * @param {*} value - The value to set
+ * @param {Object} options - Configuration options
+ * @param {number} [options.decimals=2] - Number of decimal places for numbers
+ * @param {string} [options.prefix=''] - Prefix for the value
+ * @param {string} [options.suffix=''] - Suffix for the value
+ */
+function updateElement(element, value, { decimals = 2, prefix = '', suffix = '' } = {}) {
+    if (!element) return;
+    if (element.id.includes('STT'))
+        console.log(`${element} :${value}`)
+    if (typeof value === 'number') {
+        const formattedValue = value.toFixed(decimals);
+        element.innerHTML = `${prefix}${formattedValue}${suffix}`;
+        element.style.display = '';
+        element.style.fill = value === 0 ? 'red' : '';
+    } else if (typeof value === 'boolean') {
+        element.style.display = value ? '' : 'none';
+    } else {
+        element.innerHTML = `${prefix}${value}${suffix}`;
+    }
+}
+function setRectPercent(filledId, value) {
+    const rect = document.getElementById(filledId);
+    const bg = document.getElementById(filledId.replace('color', 'bgcolor'));
+
+    // Lấy thông tin từ rect nền
+    const maxHeight = parseFloat(bg.getAttribute("height"));
+    const yBase = parseFloat(bg.getAttribute("y")) + maxHeight;
+
+    // Clamp percent [0, 100]
+    const p = Math.max(0, Math.min(100, value / 510));
+
+    // Tính toán chiều cao và y mới
+    const height = maxHeight * p;
+    const y = yBase - height;
+
+    // Gán vào rect cần fill
+    rect.setAttribute("height", height);
+    rect.setAttribute("y", y);
+}
+
 function updateSvgWaterLevel(data) {
-    //data is a object, so need check all property of object to update svg
-    for (var key in data) {
-        //check if exist id of key
-        if (document.getElementById(key)) {
-            const value = data[key];
-            // Format number to 2 decimal places if it's a number
-            const formattedValue = typeof value === 'number' ? value.toFixed(2) : value;
-            document.getElementById(key).innerHTML = formattedValue;
+    for (const [key, value] of Object.entries(data)) {
+        const element = document.getElementById(key);
+        if (element) {
+            updateElement(element, value);
         }
     }
 }
@@ -21,44 +61,44 @@ function updateSvgFillOverflow(location) {
     
     // Process first 3 stations, sorted by StationId
     const stations = [...location.Stations]
-        .filter(s => s.StationId <= 3) // Get first 3 stations
-        .sort((a, b) => a.StationId - b.StationId); // Sort by StationId
+        .filter(s => s.StationId <= 3)
+        .sort((a, b) => a.StationId - b.StationId);
     
     // Process each station
     stations.forEach(station => {
-        const stationId = station.StationId;
+        const { StationId: stationId } = station;
         const locationId = location.LocationId;
         
         // Process all properties of the station
         for (const [key, value] of Object.entries(station)) {
-            if (key === 'StationId' || key === 'StationName' || key === 'Path') continue;
+            if (['StationId', 'StationName', 'Path'].includes(key)) continue;
             
-            // Format property name (Upper first letter)
-            const elementId = `Location${locationId}_Station${stationId}_${key}`;
-            const element = document.getElementById(elementId);
+            // Define elements to update
+            const elements = [
+                document.getElementById(`Location${locationId}_Station${stationId}_${key}`),
+                document.getElementById(`Location${locationId}_Station${stationId}_a${key}`),
+                document.getElementById(`Location${locationId}_Station${stationId}_STT${key}`),
+                document.getElementById(`Location${locationId}_Station${stationId}_color${key}`)
+            ];
             
-            if (element) {
-                //random value from 1 to 10
-                // const randomValue = Math.random() * (10 - 1) + 1;
-                // const formattedValue = typeof randomValue === 'number' ? randomValue.toFixed(2) : randomValue;
-                const formattedValue = typeof value === 'number' ? value.toFixed(2) : value;
-                element.innerHTML = formattedValue;
-            }
+            // Update all elements
+            elements.forEach(element => {
+                if (element && element.id.includes('_color')) {
+                    // For color elements, use setRectPercent if the value is a number
+                    if (typeof value === 'number') {
+                        setRectPercent(element.id, value);
+                    }
+                } else {
+                    updateElement(element, value);
+                }
+            });
         }
     });
     
     // Process CalculatorValue
-    const calculatorValues = location.CalculatorValue;
-    for (const [key, value] of Object.entries(calculatorValues)) {
+    for (const [key, value] of Object.entries(location.CalculatorValue)) {
         const element = document.getElementById(key);
-        
-        if (element) {
-            //random value from 1 to 10
-            // const randomValue = Math.random() * (10 - 1) + 1;
-            // const formattedValue = typeof randomValue === 'number' ? randomValue.toFixed(1) : randomValue;
-            const formattedValue = typeof value === 'number' ? value.toFixed(1) : value;
-            element.innerHTML = formattedValue;
-        }
+        updateElement(element, value, { decimals: 1 });
     }
 }
 

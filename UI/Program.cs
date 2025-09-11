@@ -48,6 +48,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStatePr
 
 builder.Services.AddScoped<IHttpInterceptorManager, HttpInterceptorManager>();
 
+
 builder.Services.AddAuthorizationCore(b =>
 {
     b.AddPolicy("Admin", p =>
@@ -98,7 +99,8 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IRoleToPermissions>()
     .UseWithRestEaseClient<IFT01>()
     .UseWithRestEaseClient<IFT02>();
-
+var app = builder.Build();
+await GlobalVariable.InitializeConfigAsync(app.Services);
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));
 builder.Services.AddBlazoredLocalStorage();
 
