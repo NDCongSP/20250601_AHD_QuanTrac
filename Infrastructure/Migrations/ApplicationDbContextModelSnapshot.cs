@@ -163,6 +163,48 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<double?>("API_DM_HoDT")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Doi95")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_DongBan")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_KaTum")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocNinh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocThanh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocThien")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_MinhHoa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_MinhTam")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHoa1")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHoa2")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanThanh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_ThanhLuong")
+                        .HasColumnType("float");
+
                     b.Property<DateTime?>("CreateAt")
                         .HasColumnType("datetime2");
 
@@ -284,12 +326,6 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("LogBaseInterval")
                         .HasColumnType("bit");
 
-                    b.Property<double>("LuuLuong")
-                        .HasColumnType("float");
-
-                    b.Property<double>("LuuLuongTong")
-                        .HasColumnType("float");
-
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -312,13 +348,31 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("Pressure_Oil_Door2_Offset")
                         .HasColumnType("float");
 
-                    b.Property<double>("Q_Den")
+                    b.Property<double>("Q_cs1")
                         .HasColumnType("float");
 
-                    b.Property<double>("Q_Di")
+                    b.Property<double>("Q_cs2")
                         .HasColumnType("float");
 
-                    b.Property<double>("Qtr")
+                    b.Property<double>("Q_cs3")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Q_den")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Q_denta")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Q_di")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Q_i")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Q_tr")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Q_tt")
                         .HasColumnType("float");
 
                     b.Property<double?>("S1_Temp_Oil")
@@ -336,16 +390,43 @@ namespace Infrastructure.Migrations
                     b.Property<string>("StationName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Total_Fllow")
-                        .HasColumnType("float");
-
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdateOperatorId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("W_Ho")
+                    b.Property<double>("W1_ho")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W1_ho_old")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W2_ho")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W2_ho_old")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_cs1")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_cs2")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_cs3")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_den")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_di")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_tr")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_tt")
                         .HasColumnType("float");
 
                     b.HasKey("Id");

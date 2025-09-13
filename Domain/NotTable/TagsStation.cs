@@ -50,6 +50,8 @@ namespace Domain
         public bool? Temp_Oil_Low { get; set; } = false;
         public bool? Lock1 { get; set; } = false;
         public bool? Lock2 { get; set; } = false;
+        public bool? Door1_Open_Door { get; set; } = false;
+        public bool? Door2_Open_Door { get; set; } = false;
 
         public double? HT_Cylinder1_1 { get; set; } = 0;
         public double? HT_Cylinder1_2 { get; set; } = 0;
@@ -98,12 +100,39 @@ namespace Domain
         public double? Fllow_BinhNham2 { get; set; } = 0;
         public double? Fllow_TL_CDD { get; set; } = 0;
         public double? Fllow_HL_TXL { get; set; } = 0;
-        public double? Total_Fllow { get; set; } = 0;
-        public double Q_Den { get; set; } = 0;
-        public double Q_Di { get; set; } = 0;
-        public double W_Ho { get; set; } = 0;
-        public double LuuLuong { get; set; } = 0;
-        public double LuuLuongTong { get; set; } = 0;
-        public double Qtr { get; set; } = 0;
+        public double? API_DM_HoDT { get; set; } = 0;
+        public double? API_MinhHoa { get; set; } = 0;
+        public double? API_MinhTam { get; set; } = 0;
+        public double? API_LocThien { get; set; } = 0;
+        public double? API_LocNinh { get; set; } = 0;
+        public double? API_LocThanh { get; set; } = 0;
+        public double? API_ThanhLuong { get; set; } = 0;
+        public double? API_TanHoa1 { get; set; } = 0;
+        public double? API_TanHoa2 { get; set; } = 0;
+        public double? API_KaTum { get; set; } = 0;
+        public double? API_TanThanh { get; set; } = 0;
+        public double? API_DongBan { get; set; } = 0;
+        public double? API_TanHa { get; set; } = 0;
+        public double? API_Doi95 { get; set; } = 0;
+        public double W1_ho { get; set; } = 0;
+        public double W1_ho_old { get; set; } = 0;
+        public double W2_ho { get; set; } = 0;
+        public double W2_ho_old { get; set; } = 0;
+        public double Q_den { get; set; } = 0;
+        public double W_den { get; set; } = 0;
+        public double Q_i { get; set; } = 0;
+        public double Q_tr { get; set; } = 0;
+        public double W_tr { get; set; } = 0;
+        public double Q_cs1 { get; set; } = 0;
+        public double W_cs1 { get; set; } = 0;
+        public double Q_cs2 { get; set; } = 0;
+        public double W_cs2 { get; set; } = 0;
+        public double Q_cs3 { get; set; } = 0;
+        public double W_cs3 { get; set; } = 0;
+        public double Q_tt { get; set; } = 0;
+        public double W_tt { get; set; } = 0;
+        public double Q_di { get; set; } = 0;
+        public double W_di { get; set; } = 0;
+        public double Q_denta { get; set; } = 0;
     }
 }
