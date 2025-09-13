@@ -13,6 +13,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -30,6 +31,7 @@ namespace RegistrationForm1
         private Timer apiTimer;
         private Timer api_CDDTimer;
         private Timer _refreshTimer;
+       
 
         private List<Station> _cachedStations; // Lưu trữ danh sách trạm đã tải
         private Dictionary<string, string> _stationIdToNameMap; // Ánh xạ StationId (uuid HOẶC code) sang Name
@@ -42,6 +44,12 @@ namespace RegistrationForm1
         private DateTime _startTime = DateTime.Now;
         private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
 
+        
+        private const double Z_OFFSET_FOR_RESULT2 = 0.01;// Offset cho giá trị Z của nội suy lần 2
+        private double currentSimulatedZ_ho = 15.0;
+        private double z_ho_change_direction = 0.1; // Thay đổi 0.1 mỗi lần tick
+
+
         // Bảng tra cứu α theo a/H
         private static Dictionary<double, double> alphaTable = new Dictionary<double, double>
         {
@@ -49,7 +57,25 @@ namespace RegistrationForm1
             { 0.30, 0.625 }, { 0.35, 0.628 }, { 0.40, 0.632 }, { 0.45, 0.638 }, { 0.50, 0.645 },
             { 0.55, 0.650 }, { 0.60, 0.660 }, { 0.65, 0.672 }, { 0.70, 0.690 }, { 0.75, 0.705 }
         };
+        // Bảng tra cứu 
+        private readonly string csvInterpolationData = @"Z	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30	31	32	33	34	35	36	37	38	39	40	41	42	43	44	45	46	47	48	49	50	51	52	53	54	55	56	57	58	59	60	61	62	63	64	65	66	67	68	69	70	71	72	73	74	75	76	77	78	79	80	81	82	83	84	85	86	87	88	89	90	91	92	93	94	95	96	97	98	99
+13	203.00	203.40	203.80	204.20	204.60	205.00	205.40	205.80	206.20	206.60	207.00	207.60	208.20	208.80	209.40	210.00	210.60	211.20	211.80	212.40	213.00	213.40	213.80	214.20	214.60	215.00	215.40	215.80	216.20	216.60	217.00	217.60	218.20	218.80	219.40	220.00	220.60	221.20	221.80	222.40	223.00	223.45	223.90	224.35	224.80	225.25	225.70	226.15	226.60	227.05	227.50	228.05	228.60	229.15	229.70	230.25	230.80	231.35	231.90	232.45	233.00	233.60	234.20	234.80	235.40	236.00	236.60	237.20	237.80	238.40	239.00	239.60	240.20	240.80	241.40	242.00	242.60	243.20	243.80	244.40	245.00	245.50	246.00	246.50	247.00	247.50	248.00	248.50	249.00	249.50	250.00	250.20	250.40	250.60	250.80	251.00	251.20	251.40	251.60	251.80
+14	252.00	253.00	254.00	255.00	256.00	257.00	258.00	259.00	260.00	261.00	262.00	262.50	263.00	263.50	264.00	264.50	265.00	265.50	266.00	266.50	267.00	267.65	268.30	268.95	269.60	270.25	270.90	271.55	272.20	272.85	273.50	274.15	274.80	275.45	276.10	276.75	277.40	278.05	278.70	279.35	280.00	280.50	281.00	281.50	282.00	282.50	283.00	283.50	284.00	284.50	285.00	285.70	286.40	287.10	287.80	288.50	289.20	289.90	290.60	291.30	292.00	292.70	293.40	294.10	294.80	295.50	296.20	296.90	297.60	298.30	299.00	299.70	300.40	301.10	301.80	302.50	303.20	303.90	304.60	305.30	306.00	306.70	307.40	308.10	308.80	309.50	310.20	310.90	311.60	312.30	313.00	313.60	314.20	314.80	315.40	316.00	316.60	317.20	317.80	318.40
+15	319.00	319.60	320.20	320.80	321.40	322.00	322.60	323.20	323.80	324.40	325.00	325.72	326.44	327.16	327.88	328.60	329.32	330.04	330.76	331.48	332.20	332.83	333.46	334.09	334.72	335.35	335.98	336.61	337.24	337.87	338.50	339.19	339.88	340.57	341.26	341.95	342.64	343.33	344.02	344.71	345.40	346.06	346.72	347.38	348.04	348.70	349.36	350.02	350.68	351.34	352.00	352.66	353.32	353.98	354.64	355.30	355.96	356.62	357.28	357.94	358.60	359.26	359.92	360.58	361.24	361.90	362.56	363.22	363.88	364.54	365.20	365.78	366.36	366.94	367.52	368.10	368.68	369.26	369.84	370.42	371.00	371.74	372.48	373.22	373.96	374.70	375.44	376.18	376.92	377.66	378.40	379.06	379.72	380.38	381.04	381.70	382.36	383.02	383.68	384.34
+16	385.00	385.85	386.70	387.55	388.40	389.25	390.10	390.95	391.80	392.65	393.50	394.35	395.20	396.05	396.90	397.75	398.60	399.45	400.30	401.15	402.00	402.85	403.70	404.55	405.40	406.25	407.10	407.95	408.80	409.65	410.50	410.95	411.40	411.85	412.30	412.75	413.20	413.65	414.10	414.55	415.00	416.25	417.50	418.75	420.00	421.25	422.50	423.75	425.00	426.25	427.50	428.35	429.20	430.05	430.90	431.75	432.60	433.45	434.30	435.15	436.00	436.85	437.70	438.55	439.40	440.25	441.10	441.95	442.80	443.65	444.50	445.35	446.20	447.05	447.90	448.75	449.60	450.45	451.30	452.15	453.00	453.85	454.70	455.55	456.40	457.25	458.10	458.95	459.80	460.65	461.50	462.35	463.20	464.05	464.90	465.75	466.60	467.45	468.30	469.15
+17	470.00	470.97	471.94	472.91	473.88	474.85	475.82	476.79	477.76	478.73	479.70	480.67	481.64	482.61	483.58	484.55	485.52	486.49	487.46	488.43	489.40	490.37	491.34	492.31	493.28	494.25	495.22	496.19	497.16	498.13	499.10	500.07	501.04	502.01	502.98	503.95	504.92	505.89	506.86	507.83	508.80	509.77	510.74	511.71	512.68	513.65	514.62	515.59	516.56	517.53	518.50	519.47	520.44	521.41	522.38	523.35	524.32	525.29	526.26	527.23	528.20	529.17	530.14	531.11	532.08	533.05	534.02	534.99	535.96	536.93	537.90	538.87	539.84	540.81	541.78	542.75	543.72	544.69	545.66	546.63	547.60	548.57	549.54	550.51	551.48	552.45	553.42	554.39	555.36	556.33	557.30	558.27	559.24	560.21	561.18	562.15	563.12	564.09	565.06	566.03
+18	567.00	568.12	569.24	570.36	571.48	572.60	573.72	574.84	575.96	577.08	578.20	579.32	580.44	581.56	582.68	583.80	584.92	586.04	587.16	588.28	589.40	590.52	591.64	592.76	593.88	595.00	596.12	597.24	598.36	599.48	600.60	601.72	602.84	603.96	605.08	606.20	607.32	608.44	609.56	610.68	611.80	612.92	614.04	615.16	616.28	617.40	618.52	619.64	620.76	621.88	623.00	624.12	625.24	626.36	627.48	628.60	629.72	630.84	631.96	633.08	634.20	635.32	636.44	637.56	638.68	639.80	640.92	642.04	643.16	644.28	645.40	646.52	647.64	648.76	649.88	651.00	652.12	653.24	654.36	655.48	656.60	657.72	658.84	659.96	661.08	662.20	663.32	664.44	665.56	666.68	667.80	668.92	670.04	671.16	672.28	673.40	674.52	675.64	676.76	677.88
+19	679.00	680.19	681.38	682.57	683.76	684.95	686.14	687.33	688.52	689.71	690.90	692.09	693.28	694.47	695.66	696.85	698.04	699.23	700.42	701.61	702.80	703.99	705.18	706.37	707.56	708.75	709.94	711.13	712.32	713.51	714.70	715.89	717.08	718.27	719.46	720.65	721.84	723.03	724.22	725.41	726.60	727.79	728.98	730.17	731.36	732.55	733.74	734.93	736.12	737.31	738.50	739.69	740.88	742.07	743.26	744.45	745.64	746.83	748.02	749.21	750.40	751.59	752.78	753.97	755.16	756.35	757.54	758.73	759.92	761.11	762.30	763.49	764.68	765.87	767.06	768.25	769.44	770.63	771.82	773.01	774.20	775.39	776.58	777.77	778.96	780.15	781.34	782.53	783.72	784.91	786.10	787.29	788.48	789.67	790.86	792.05	793.24	794.43	795.62	796.81
+20	798.00	799.40	800.80	802.20	803.60	805.00	806.40	807.80	809.20	810.60	812.00	813.40	814.80	816.20	817.60	819.00	820.40	821.80	823.20	824.60	826.00	827.40	828.80	830.20	831.60	833.00	834.40	835.80	837.20	838.60	840.00	841.40	842.80	844.20	845.60	847.00	848.40	849.80	851.20	852.60	854.00	855.40	856.80	858.20	859.60	861.00	862.40	863.80	865.20	866.60	868.00	869.40	870.80	872.20	873.60	875.00	876.40	877.80	879.20	880.60	882.00	883.40	884.80	886.20	887.60	889.00	890.40	891.80	893.20	894.60	896.00	897.40	898.80	900.20	901.60	903.00	904.40	905.80	907.20	908.60	910.00	911.40	912.80	914.20	915.60	917.00	918.40	919.80	921.20	922.60	924.00	925.40	926.80	928.20	929.60	931.00	932.40	933.80	935.20	936.60
+21	938.00	939.63	941.26	942.89	944.52	946.15	947.78	949.41	951.04	952.67	954.30	955.93	957.56	959.19	960.82	962.45	964.08	965.71	967.34	968.97	970.60	972.23	973.86	975.49	977.12	978.75	980.38	982.01	983.64	985.27	986.90	988.53	990.16	991.79	993.42	995.05	996.68	998.31	999.94	1001.57	1003.20	1004.83	1006.46	1008.09	1009.72	1011.35	1012.98	1014.61	1016.24	1017.87	1019.50	1021.13	1022.76	1024.39	1026.02	1027.65	1029.28	1030.91	1032.54	1034.17	1035.80	1037.43	1039.06	1040.69	1042.32	1043.95	1045.58	1047.21	1048.84	1050.47	1052.10	1053.73	1055.36	1056.99	1058.62	1060.25	1061.88	1063.51	1065.14	1066.77	1068.40	1070.03	1071.66	1073.29	1074.92	1076.55	1078.18	1079.81	1081.44	1083.07	1084.70	1086.33	1087.96	1089.59	1091.22	1092.85	1094.48	1096.11	1097.74	1099.37
+22	1101.00	1102.78	1104.56	1106.34	1108.12	1109.90	1111.68	1113.46	1115.24	1117.02	1118.80	1120.58	1122.36	1124.14	1125.92	1127.70	1129.48	1131.26	1133.04	1134.82	1136.60	1138.38	1140.16	1141.94	1143.72	1145.50	1147.28	1149.06	1150.84	1152.62	1154.40	1156.18	1157.96	1159.74	1161.52	1163.30	1165.08	1166.86	1168.64	1170.42	1172.20	1173.98	1175.76	1177.54	1179.32	1181.10	1182.88	1184.66	1186.44	1188.22	1190.00	1191.78	1193.56	1195.34	1197.12	1198.90	1200.68	1202.46	1204.24	1206.02	1207.80	1209.58	1211.36	1213.14	1214.92	1216.70	1218.48	1220.26	1222.04	1223.82	1225.60	1227.38	1229.16	1230.94	1232.72	1234.50	1236.28	1238.06	1239.84	1241.62	1243.40	1245.18	1246.96	1248.74	1250.52	1252.30	1254.08	1255.86	1257.64	1259.42	1261.20	1263.28	1265.36	1267.44	1269.52	1271.60	1273.68	1275.76	1277.84	1279.92
+23	1282.00	1284.06	1286.12	1288.18	1290.24	1292.30	1294.36	1296.42	1298.48	1300.54	1302.60	1304.71	1306.82	1308.93	1311.04	1313.15	1315.26	1317.37	1319.48	1321.59	1323.70	1325.71	1327.72	1329.73	1331.74	1333.75	1335.76	1337.77	1339.78	1341.79	1343.80	1345.86	1347.92	1349.98	1352.04	1354.10	1356.16	1358.22	1360.28	1362.34	1364.40	1366.46	1368.52	1370.58	1372.64	1374.70	1376.76	1378.82	1380.88	1382.94	1385.00	1387.06	1389.12	1391.18	1393.24	1395.30	1397.36	1399.42	1401.48	1403.54	1405.60	1407.66	1409.72	1411.78	1413.84	1415.90	1417.96	1420.02	1422.08	1424.14	1426.20	1428.26	1430.32	1432.38	1434.44	1436.50	1438.56	1440.62	1442.68	1444.74	1446.80	1448.86	1450.92	1452.98	1455.04	1457.10	1459.16	1461.22	1463.28	1465.34	1467.40	1469.46	1471.52	1473.58	1475.64	1477.70	1479.76	1481.82	1483.88	1485.94
+24	1488.00	1490.32	1492.64	1494.96	1497.28	1499.60	1501.92	1504.24	1506.56	1508.88	1511.20	1513.52	1515.84	1518.16	1520.48	1522.80	1525.12	1527.44	1529.76	1532.08	1534.40	1536.72	1539.04	1541.36	1543.68	1546.00	1548.32	1550.64	1552.96	1555.28	1557.60	1559.92	1562.24	1564.56	1566.88	1569.20	1571.52	1573.84	1576.16	1578.48	1580.80	1583.12	1585.44	1587.76	1590.08	1592.40	1594.72	1597.04	1599.36	1601.68	1604.00	1606.32	1608.64	1610.96	1613.28	1615.60	1617.92	1620.24	1622.56	1624.88	1627.20	1629.52	1631.84	1634.16	1636.48	1638.80	1641.12	1643.44	1645.76	1648.08	1650.40	1652.72	1655.04	1657.36	1659.68	1662.00	1664.32	1666.64	1668.96	1671.28	1673.60	1675.92	1678.24	1680.56	1682.88	1685.20	1687.52	1689.84	1692.16	1694.48	1696.80	1699.12	1701.44	1703.76	1706.08	1708.40	1710.72	1713.04	1715.36	1717.68
+25	1720.00	1722.32	1724.64	1726.96	1729.28	1731.60	1733.92	1736.24	1738.56	1740.88	1743.20	1745.52	1747.84	1750.16	1752.48	1754.80	1757.12	1759.44	1761.76	1764.08	1766.40	1768.72	1771.04	1773.36	1775.68	1778.00	1780.32	1782.64	1784.96	1787.28	1789.60	1791.92	1794.24	1796.56	1798.88	1801.20	1803.52	1805.84	1808.16	1810.48	1812.80	1815.12	1817.44	1819.76	1822.08	1824.40	1826.72	1829.04	1831.36	1833.68	1836.00	1838.32	1840.64	1842.96	1845.28	1847.60	1849.92	1852.24	1854.56	1856.88	1859.20	1861.52	1863.84	1866.16	1868.48	1870.80	1873.12	1875.44	1877.76	1880.08	1882.40	1884.72	1887.04	1889.36	1891.68	1894.00	1896.32	1898.64	1900.96	1903.28	1905.60	1907.92	1910.24	1912.56	1914.88	1917.20	1919.52	1921.84	1924.16	1926.48	1928.80	1931.12	1933.44	1935.76	1938.08	1940.40	1942.72	1945.04	1947.36	1949.68
+26	1952.00	1954.32	1956.64	1958.96	1961.28	1963.60	1965.92	1968.24	1970.56	1972.88	1975.20	1977.52	1979.84	1982.16	1984.48	1986.80	1989.12	1991.44	1993.76	1996.08	1998.40	2000.72	2003.04	2005.36	2007.68	2010.00	2012.32	2014.64	2016.96	2019.28	2021.60	2023.92	2026.24	2028.56	2030.88	2033.20	2035.52	2037.84	2040.16	2042.48	2044.80	2047.12	2049.44	2051.76	2054.08	2056.40	2058.72	2061.04	2063.36	2065.68	2068.00	2070.32	2072.64	2074.96	2077.28	2079.60	2081.92	2084.24	2086.56	2088.88	2091.20	2093.56	2095.92	2098.28	2100.64	2103.00	2105.36	2107.72	2110.08	2112.44	2114.80	2117.12	2119.44	2121.76	2124.08	2126.40	2128.72	2131.04	2133.36	2135.68	2138.00	2140.32	2142.64	2144.96	2147.28	2149.60	2151.92	2154.24	2156.56	2158.88	2161.20	2163.52	2165.84	2168.16	2170.48	2172.80	2175.12	2177.44	2179.76	2182.08";
 
+        private double[] xValues;
+        private Dictionary<double, double[]> table;
 
         public FrmMain()
         {
@@ -104,11 +130,152 @@ namespace RegistrationForm1
             _refreshTimer.Start();
             await LoadRainfallStatsData();
             await LoadStationsData();
+          
+                     
+            InitializeDefaultValues();
+           
+            try
+            {
+                table = ParseCsvToDictionary(csvInterpolationData, out xValues);
 
-
+                // Điền giá trị X vào ComboBox
+                foreach (var x in xValues)
+                {
+                    cmbX.Items.Add(x.ToString(CultureInfo.InvariantCulture));
+                }
+                if (cmbX.Items.Count > 0)
+                {
+                    cmbX.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi đọc bảng nội suy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
 
         }
+        // Parse CSV thành dictionary<double, double[]>
+        private Dictionary<double, double[]> ParseCsvToDictionary(string csvData, out double[] xVals)
+        {
+            var result = new Dictionary<double, double[]>();
+            // Sử dụng tab để phân tách các giá trị
+            var lines = csvData.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Đọc tiêu đề cột X
+            var headerParts = lines.First().Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            xVals = headerParts.Skip(1)
+                .Select(v => double.Parse(v.Trim(), CultureInfo.InvariantCulture))
+                .ToArray();
+
+            // Đọc các dòng dữ liệu
+            foreach (var line in lines.Skip(1))
+            {
+                var parts = line.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+                if (parts.Length > 0)
+                {
+                    if (!double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double z))
+                        throw new FormatException($"Không đọc được giá trị Z: {parts[0]}");
+
+                    double[] values = new double[parts.Length - 1];
+                    for (int i = 1; i < parts.Length; i++)
+                    {
+                        if (!double.TryParse(parts[i], NumberStyles.Float, CultureInfo.InvariantCulture, out double val))
+                            throw new FormatException($"Không đọc được giá trị tại Z={z}, cột {i}: {parts[i]}");
+                        values[i - 1] = val;
+                    }
+
+                    result[z] = values;
+                }
+            }
+
+            return result;
+        }
+        // Thực hiện nội suy tuyến tính một giá trị duy nhất
+        private double InterpolateSingleValue(Dictionary<double, double[]> table, double Z, int colIndex)
+        {
+            // Tìm 2 giá trị Z lân cận
+            var sortedKeys = table.Keys.OrderBy(k => k).ToList();
+            double z0 = sortedKeys.LastOrDefault(k => k <= Z);
+            double z1 = sortedKeys.FirstOrDefault(k => k >= Z);
+
+            // Xử lý các trường hợp ngoại lệ (giá trị Z nằm ngoài bảng)
+            if (Z < sortedKeys.Min() || Z > sortedKeys.Max())
+            {
+                throw new ArgumentOutOfRangeException("Giá trị Z nằm ngoài phạm vi của bảng dữ liệu.");
+            }
+            if (Math.Abs(z0 - z1) < 1e-9) // Nếu giá trị Z trùng khớp
+            {
+                return table[z0][colIndex];
+            }
+
+            double[] row0 = table[z0];
+            double[] row1 = table[z1];
+
+            double t = (Z - z0) / (z1 - z0);
+
+            return row0[colIndex] + (row1[colIndex] - row0[colIndex]) * t;
+        }
+
+        private void InitializeDefaultValues()
+        {
+            // Thiết lập giá trị mặc định cho các textbox
+            txtW.Text = "0";     // Bắt đầu từ giá trị W mặc định là 0
+            txtQCs1.Text = "10.66"; // Giá trị QCs1 mặc định
+            txtQCs2.Text = "10.80"; // Giá trị QCs2 mặc định
+            txtQCs3.Text = "2.00"; // Giá trị QCs3 mặc định
+         //   txtQTr.Text = "20"; // Giá trị QTr mặc định
+
+
+            // Khởi tạo txtResultOnZChange
+            //if (txtResultOnZChange != null)
+            //{
+            //    txtResultOnZChange.Text = "";
+            //}
+            // Khởi tạo txtHieu
+            if (txtHieu != null)
+            {
+                txtHieu.Text = "";
+            }
+            // Khởi tạo txtTong
+            if (txtTong != null)
+            {
+                txtTong.Text = "";
+            }
+            // Khởi tạo txtQden
+            if (txtQden != null)
+            {
+                txtQden.Text = "";
+            }
+            // Khởi tạo txtQ1Denta
+            //if (txtQ1Denta != null)
+            //{
+            //    txtQ1Denta.Text = "";
+            //}
+            //// Khởi tạo txtWTt
+            //if (txtWTt != null)
+            //{
+            //    txtWTt.Text = "";
+            //}
+            //// Khởi tạo txtQtt
+            //if (txtQTt != null)
+            //{
+            //    txtQTt.Text = "";
+            //}
+            //// Khởi tạo txtQdi
+            //if (txtQdi != null)
+            //{
+            //    txtQdi.Text = "";
+            //}
+            // Khởi tạo txtResult2
+            if (txtResult2 != null)
+            {
+                txtResult2.Text = "";
+            }
+            txtResult.Text = ""; // Khởi tạo txtResult rỗng
+                                 // _previousW_ho không còn được sử dụng trực tiếp để khởi tạo txtResultOnZChange nữa
+        }
+       
         private void InitializeTimer()
         { // Timer API dầu tiếng
             api_DTtimer = new Timer();
@@ -142,6 +309,7 @@ namespace RegistrationForm1
             _refreshTimer.Start();
 
             client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
+
 
 
         }
@@ -186,10 +354,13 @@ namespace RegistrationForm1
                             }
                         }
 
-                        //   _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
-                        //   _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
+                           _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+
+                           _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
 
                         _labQtr.Text = location.CalculatorValue.Qtr.ToString();
+                        lblKetQua.Text = location.CalculatorValue.W_Ho.ToString();
+                   
 
                     }
                 });
@@ -4540,6 +4711,8 @@ namespace RegistrationForm1
         {
             try
             {
+               
+
                 var createAt = DateTime.Now;
                 var createOperatorId = "System";
                 var path = e.Tag.Parent.Path;
@@ -4554,61 +4727,51 @@ namespace RegistrationForm1
 
                     station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
 
-                    // lấy giá trị từ cấu hình
+                    //double current_w_ho = 0;
+                    //double W = Globalvariable.ConfigSystem.ParametterConfig.HeSoCoHep_ALpha; // lấy tạm dùng cho W
+                    //double QCs1 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1;
+                    //double QCs2 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2;
+                    //double QCs3 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3;
+           
+
+
+
                     double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
-                    double H0 = Math.Round(station.Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ?? 0, 2);
-                    double aOverH = Math.Round((Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h) / H0, 2);
-                    double anpha = GetAlphaFromTable(aOverH);
+                    double H0 = Math.Round(station.Fllow_Ho - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ?? 0, 3);
+                    double aOverH = Math.Round((Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h) / H0, 3);
+                    double anpha = Math.Round(GetAlphaFromTable(aOverH),3);
                     double alpha = anpha;
                     double h = Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h;
                     double SumB = Math.Round(10.0 * Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo, 2);
                     int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
                     double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
 
-
-                    //if (H0 < 0)
-                    //{
-                    //    MessageBox.Show("Cột nước trên ngưỡng Ho phải lớn hơn 0!",
-                    //             "Lỗi giá trị", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //    return;
-
-                    //}
-                    //if ( Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h <= 0 || Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h > 6)
-                    //{
-                    //    MessageBox.Show("Chiều cao mở thực tế h phải lớn hơn 0 và nhỏ hơn 6!",
-                    //               "Lỗi giá trị", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //    return;
-                    //}
-                    //if ( Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h <= 0)
-                    //{
-                    //    MessageBox.Show("Số cửa mở phải lớn hơn 0!",
-                    //              "Lỗi giá trị", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //    return;
-                    //}
-
                     double alphaTimesH = alpha * Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h;
-                    if (H0 <= alphaTimesH)
-                    {
-                        MessageBox.Show($"Giá trị (Ho - α × h) phải lớn hơn 0 để tính căn bậc hai!\n" +
-                                      $"Hiện tại: Ho = {H0:F2}, α × h = {alphaTimesH:F2}\n" + // Thay đổi từ F3 thành F2
-                                      $"Vui lòng kiểm tra lại các giá trị đầu vào.",
-                                      "Lỗi tính toán", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                   
 
                     double insideSqrt = 2 * Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G * (H0 - alphaTimesH);
                     double sqrt = Math.Sqrt(insideSqrt);
-                    //         double Qtr = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * anpha * Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h* SumB * Math.Sqrt(insideSqrt);
-                    double Qtr = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;// * Math.Sqrt(insideSqrt);
+                    double Qtr = Math.Round((double)Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * anpha * Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h * SumB * Math.Sqrt(insideSqrt),1);
+                    // Qtr = φ × α × h × Σb × √(2 × g × (Ho - α × h)) -> là của 1 cửa( Q_i)
 
-                    // Tính toán theo công thức: Qtr = φ × α × h × Σb × √(2 × g × (Ho - α × h))
 
-                    //  location.CalculatorValue.Qtr = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+
+                    ////// tính tổng lưu lượng qua tràn: Q = ΣQ_i = c × Qtr
+                   
 
                     location.CalculatorValue.LuuLuongTong = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
 
-                    //   location.CalculatorValue.LuuLuongTong = TinhToan((double)station.Fllow_Ho_Final);
-                    location.CalculatorValue.Qtr = Qtr;
+                     location.CalculatorValue.LuuLuongTong = TinhToan((double)station.Fllow_Ho_Final);
+                     location.CalculatorValue.Qtr = Qtr;
+
+
+                    //    double w_ho = BilinearInterpolation(z_ho, w_input);
+                    // Cập nhật các trường hiển thị và lịch sử
+                    //    UpdateDisplayFields(w_ho);
+                    //  PerformManualCalculation();
+                   
+
+
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -4841,7 +5004,7 @@ namespace RegistrationForm1
         private static double GetAlphaFromTable(double aOverH)
         {
             // Làm tròn a/H đến 2 chữ số thập phân để so sánh chính xác hơn
-            aOverH = Math.Round(aOverH, 2);
+            aOverH = Math.Round(aOverH, 3);
 
             // Nếu giá trị a/H có trong bảng, trả về α tương ứng
             if (alphaTable.ContainsKey(aOverH))
@@ -4870,44 +5033,35 @@ namespace RegistrationForm1
             double interpolatedAlpha = lowerAlpha + (upperAlpha - lowerAlpha) * (aOverH - lowerKey) / (upperKey - lowerKey);
             return interpolatedAlpha;
         }
-        //private void UpdateAlpha()
-        //{
-        //    var station = location?.Stations.FirstOrDefault(x => x.Path == path);
-        //    if (station != null)
-        //    {
-        //     //   station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
 
-        //        //tinh toans
+        private void btnNoiSuy_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(_labFllowHo.Text.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double Z))
+            {
+                MessageBox.Show("Vui lòng nhập giá trị mực nước hợp lệ (ví dụ: 11.8).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-        //        station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
-        //        //// if (Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h && Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo != null)
-        //        //     try
-        //        //     {
-        //        double h = Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h;
-        //             double Ho = Math.Round(station.Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ?? 0, 2);
+            if (cmbX.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn một giá trị X để nội suy.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-        //        if (Ho != 0)
-        //            {
-        //                double aOverH = h / Ho;
-        //                double alpha = GetAlphaFromTable(aOverH);
-        //                alpha = Math.Round(alpha, 2); // Làm tròn đến 2 chữ số thập phân
-        //              //  txtAlpha.Text = alpha.ToString("F3");
-        //            }
-        //            else
-        //            {
-        //              //  txtAlpha.Text = "";
-        //            }
-        //        }
-        //        catch
-        //        {
-        //          //  txtAlpha.Text = "";
-        //        }
-        //    }
-        //    else
-        //    {
-        //      //  txtAlpha.Text = "";
-        //    }
-        //}
-
+            try
+            {
+                int selectedColumnIndex = cmbX.SelectedIndex;
+                double value = InterpolateSingleValue(table, Z, selectedColumnIndex);
+                lblKetQua.Text = $"Nội suy tại Z={Z:F2}, X={xValues[selectedColumnIndex]:F2}: {value:F2}";
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi nội suy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

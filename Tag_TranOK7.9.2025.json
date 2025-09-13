@@ -11,7 +11,7 @@
   "IsReadOnly": true,
   "Enabled": true,
   "CreatedDate": "2025-05-25T19:38:36.6996706+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -31,7 +31,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:32.2616927+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -46,12 +46,12 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:42.5030547+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
   "Parameters": {
-    "IpAddress": "192.168.1.118",
+    "IpAddress": "192.168.1.134",
     "Timeout": "1000",
     "TryReadWriteTimes": "3",
     "DelayBetweenPool": "10",
@@ -70,7 +70,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-25T20:42:50.1039733+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -1394,7 +1394,7 @@
   }
 },
   "Address": "DB2.DBW55",
-  "DataTypeName": "Real",
+  "DataTypeName": "Int",
   "RefreshRate": 100,
   "ByteOrder": 0,
   "AccessPermission": "ReadAndWrite",
@@ -2002,6 +2002,76 @@
   "Childs": [],
   "HaveTags": true,
   "Tags": []
+},
+    {
+  "Name": "Door1_Open_Door",
+  "Description": null,
+  "ItemType": "Tag",
+  "IsReadOnly": false,
+  "Enabled": true,
+  "CreatedDate": "2025-09-11T07:54:49.0549049+07:00",
+  "ModifiedDate": "2025-09-11T07:54:49.0549049+07:00",
+  "ParameterContainer": {
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB2.DBX4.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "2"
+  }
+},
+  "Address": "DB2.DBX4.3",
+  "DataTypeName": "Bool",
+  "RefreshRate": 100,
+  "ByteOrder": 0,
+  "AccessPermission": "ReadAndWrite",
+  "Offset": 0.0,
+  "Gain": 1.0,
+  "IsInternalTag": false,
+  "GUID": null,
+  "Retain": false,
+  "Childs": [],
+  "HaveTags": true,
+  "Tags": []
+},
+    {
+  "Name": "Door2_Open_Door",
+  "Description": null,
+  "ItemType": "Tag",
+  "IsReadOnly": false,
+  "Enabled": true,
+  "CreatedDate": "2025-09-11T07:55:21.2970315+07:00",
+  "ModifiedDate": "2025-09-11T07:55:21.2970315+07:00",
+  "ParameterContainer": {
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB2.DBX4.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "2"
+  }
+},
+  "Address": "DB2.DBX4.4",
+  "DataTypeName": "Bool",
+  "RefreshRate": 100,
+  "ByteOrder": 0,
+  "AccessPermission": "ReadAndWrite",
+  "Offset": 0.0,
+  "Gain": 1.0,
+  "IsInternalTag": false,
+  "GUID": null,
+  "Retain": false,
+  "Childs": [],
+  "HaveTags": true,
+  "Tags": []
 }
   ]
 },
@@ -2012,7 +2082,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T10:07:27.1946693+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -2697,7 +2767,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-05-26T14:17:56.2715898+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -2784,7 +2854,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:29.0051643+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -4714,6 +4784,76 @@
   "Childs": [],
   "HaveTags": true,
   "Tags": []
+},
+    {
+  "Name": "Door1_Open_Door",
+  "Description": null,
+  "ItemType": "Tag",
+  "IsReadOnly": false,
+  "Enabled": true,
+  "CreatedDate": "2025-09-11T07:56:08.4250948+07:00",
+  "ModifiedDate": "2025-09-11T07:56:08.4250948+07:00",
+  "ParameterContainer": {
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX4.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3"
+  }
+},
+  "Address": "DB3.DBX4.3",
+  "DataTypeName": "Bool",
+  "RefreshRate": 100,
+  "ByteOrder": 0,
+  "AccessPermission": "ReadAndWrite",
+  "Offset": 0.0,
+  "Gain": 1.0,
+  "IsInternalTag": false,
+  "GUID": null,
+  "Retain": false,
+  "Childs": [],
+  "HaveTags": true,
+  "Tags": []
+},
+    {
+  "Name": "Door2_Open_Door",
+  "Description": null,
+  "ItemType": "Tag",
+  "IsReadOnly": false,
+  "Enabled": true,
+  "CreatedDate": "2025-09-11T07:56:35.0327046+07:00",
+  "ModifiedDate": "2025-09-11T07:56:35.0327046+07:00",
+  "ParameterContainer": {
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB3.DBX4.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "3"
+  }
+},
+  "Address": "DB3.DBX4.4",
+  "DataTypeName": "Bool",
+  "RefreshRate": 100,
+  "ByteOrder": 0,
+  "AccessPermission": "ReadAndWrite",
+  "Offset": 0.0,
+  "Gain": 1.0,
+  "IsInternalTag": false,
+  "GUID": null,
+  "Retain": false,
+  "Childs": [],
+  "HaveTags": true,
+  "Tags": []
 }
   ]
 },
@@ -4724,7 +4864,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-13T20:26:54.9668898+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "Childs": [],
   "HaveTags": true,
   "Tags": [
@@ -6651,6 +6791,76 @@
   "Childs": [],
   "HaveTags": true,
   "Tags": []
+},
+    {
+  "Name": "Door1_Open_Door",
+  "Description": null,
+  "ItemType": "Tag",
+  "IsReadOnly": false,
+  "Enabled": true,
+  "CreatedDate": "2025-09-11T07:57:01.1870508+07:00",
+  "ModifiedDate": "2025-09-11T07:57:01.1870508+07:00",
+  "ParameterContainer": {
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX4.3",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "3",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4"
+  }
+},
+  "Address": "DB4.DBX4.3",
+  "DataTypeName": "Bool",
+  "RefreshRate": 100,
+  "ByteOrder": 0,
+  "AccessPermission": "ReadAndWrite",
+  "Offset": 0.0,
+  "Gain": 1.0,
+  "IsInternalTag": false,
+  "GUID": null,
+  "Retain": false,
+  "Childs": [],
+  "HaveTags": true,
+  "Tags": []
+},
+    {
+  "Name": "Door2_Open_Door",
+  "Description": null,
+  "ItemType": "Tag",
+  "IsReadOnly": false,
+  "Enabled": true,
+  "CreatedDate": "2025-09-11T07:57:24.4293658+07:00",
+  "ModifiedDate": "2025-09-11T07:57:24.4293658+07:00",
+  "ParameterContainer": {
+  "DisplayName": "Tag Parameters",
+  "DisplayParameters": "Tag Parameters",
+  "Parameters": {
+    "LastAddress": "DB4.DBX4.4",
+    "AddressType": "Datablock",
+    "ByteOffset": "4",
+    "BitOffset": "4",
+    "IsValid": "True",
+    "IsBitAddress": "True",
+    "DBNumber": "4"
+  }
+},
+  "Address": "DB4.DBX4.4",
+  "DataTypeName": "Bool",
+  "RefreshRate": 100,
+  "ByteOrder": 0,
+  "AccessPermission": "ReadAndWrite",
+  "Offset": 0.0,
+  "Gain": 1.0,
+  "IsInternalTag": false,
+  "GUID": null,
+  "Retain": false,
+  "Childs": [],
+  "HaveTags": true,
+  "Tags": []
 }
   ]
 }
@@ -6665,7 +6875,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:30:42.2373006+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -7104,7 +7314,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:33:51.0917673+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -7633,7 +7843,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-02T08:34:40.351872+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": "S7Ethernet Device Parameter",
   "DisplayParameters": "S7Ethernet Device Parameter",
@@ -8074,7 +8284,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:52.4399526+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -8098,7 +8308,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-06-03T20:01:57.3368646+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,
@@ -13736,7 +13946,7 @@
   "IsReadOnly": false,
   "Enabled": true,
   "CreatedDate": "2025-08-14T09:08:00.1886863+07:00",
-  "ModifiedDate": "2025-09-08T14:33:50.0384532+07:00",
+  "ModifiedDate": "2025-09-12T11:03:06.2901169+07:00",
   "ParameterContainer": {
   "DisplayName": null,
   "DisplayParameters": null,

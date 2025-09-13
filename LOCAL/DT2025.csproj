@@ -218,7 +218,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlarmModel.cs" />
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Domain\Entities\BaseEntity\GenericEntity.cs" />
     <Compile Include="Domain\Entities\IGenericEntity.cs" />

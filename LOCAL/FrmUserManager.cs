@@ -35,34 +35,34 @@ namespace RegistrationForm1
         private void LoadUsers()
         {
 
-            using var dbContext = new ApplicationDbContext();
-            string username = null;
-            Globalvariable.UserInfo = dbContext.ScadaUsers.FirstOrDefault(u => u.UserName == username);
+           // using var dbContext = new ApplicationDbContext();
+           // string username = null;
+           // Globalvariable.UserInfo = dbContext.ScadaUsers.FirstOrDefault(u => u.UserName == username);
 
-           // using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                //conn.Open();
-                //SqlDataAdapter da = new SqlDataAdapter("SELECT Id, FullName, Username, Role FROM Users", conn);
-                DataTable dt = new DataTable();
-            //    da.Fill(dt);
-                dgvUsers.DataSource = dt;
-                // ✅ Đặt tiêu đề tiếng Việt cho từng cột
-                //dgvUsers.Columns["Id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                //dgvUsers.Columns["FullName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                //dgvUsers.Columns["Username"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                //dgvUsers.Columns["Role"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+           //// using (SqlConnection conn = new SqlConnection(connectionString))
+           // {
+           //     //conn.Open();
+           //     //SqlDataAdapter da = new SqlDataAdapter("SELECT Id, FullName, Username, Role FROM Users", conn);
+           //     DataTable dt = new DataTable();
+           // //    da.Fill(dt);
+           //     dgvUsers.DataSource = dt;
+           //     // ✅ Đặt tiêu đề tiếng Việt cho từng cột
+           //     //dgvUsers.Columns["Id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+           //     //dgvUsers.Columns["FullName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+           //     //dgvUsers.Columns["Username"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+           //     //dgvUsers.Columns["Role"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                
-                dgvUsers.Columns["Id"].HeaderText = "STT";
-                dgvUsers.Columns["FullName"].HeaderText = "Họ Và Tên";
-                dgvUsers.Columns["Username"].HeaderText = "Tên Đăng Nhập";
-                dgvUsers.Columns["Role"].HeaderText = "Phân Quyền";
-                // ✅ Tùy chỉnh màu tiêu đề
-                dgvUsers.EnableHeadersVisualStyles = false; // Cho phép tùy chỉnh tiêu đề
-                dgvUsers.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkBlue;
-                dgvUsers.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                dgvUsers.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                dgvUsers.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
+           //     dgvUsers.Columns["Id"].HeaderText = "STT";
+           //     dgvUsers.Columns["FullName"].HeaderText = "Họ Và Tên";
+           //     dgvUsers.Columns["Username"].HeaderText = "Tên Đăng Nhập";
+           //     dgvUsers.Columns["Role"].HeaderText = "Phân Quyền";
+           //     // ✅ Tùy chỉnh màu tiêu đề
+           //     dgvUsers.EnableHeadersVisualStyles = false; // Cho phép tùy chỉnh tiêu đề
+           //     dgvUsers.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkBlue;
+           //     dgvUsers.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+           //     dgvUsers.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+           //     dgvUsers.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+           // }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

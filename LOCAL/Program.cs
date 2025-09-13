@@ -43,8 +43,15 @@ namespace RegistrationForm1
 
 
                 ////chinh tay cac thong so de test
-                //Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 0.1;
-                //Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 0.2;
+                Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi = 0.98;
+                Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 9.81;
+                Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 6;
+                Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
+                Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
+               Globalvariable.ConfigSystem.ParametterConfig.HeSoCoHep_ALpha = 0;
+                Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1 = 10.66;
+                Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2 = 10.80;
+                Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3 = 2.0;
 
                 ////////////////////////////
 
