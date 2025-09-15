@@ -59,39 +59,35 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this._labWtr = new System.Windows.Forms.Label();
+            this._labWdi = new System.Windows.Forms.Label();
+            this._labWden = new System.Windows.Forms.Label();
+            this._labQtt = new System.Windows.Forms.Label();
+            this._labWtt = new System.Windows.Forms.Label();
+            this._LabQdi = new System.Windows.Forms.Label();
+            this._labW2_ho = new System.Windows.Forms.Label();
+            this._labTotalFlow = new System.Windows.Forms.Label();
+            this._labQi = new System.Windows.Forms.Label();
+            this._labW1_ho = new System.Windows.Forms.Label();
             this.txtZ = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtW = new System.Windows.Forms.TextBox();
-            this.lblKetQua = new System.Windows.Forms.Label();
-            this.txtQCs3 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtQCs2 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtQCs1 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtQden = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtTong = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtHieu = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtResult2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtResult = new System.Windows.Forms.TextBox();
-            this._labsumB = new System.Windows.Forms.Label();
-            this._labH0 = new System.Windows.Forms.Label();
-            this._labanpha = new System.Windows.Forms.Label();
+            this._labQden = new System.Windows.Forms.Label();
             this._labQtr = new System.Windows.Forms.Label();
-            this._labHT_Cylinder1_2 = new System.Windows.Forms.Label();
-            this._labHT_Cylinder1_1 = new System.Windows.Forms.Label();
-            this._labFllow_Dautieng = new System.Windows.Forms.Label();
             this._labALDoor2_Station3 = new System.Windows.Forms.Label();
             this._labALDoor2_Station2 = new System.Windows.Forms.Label();
             this._labALDoor2_Station1 = new System.Windows.Forms.Label();
-            this.btnNoiSuy = new System.Windows.Forms.Button();
             this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
             this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
             this.dgvStats = new System.Windows.Forms.DataGridView();
@@ -104,7 +100,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
-            this.cmbX = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -229,9 +224,9 @@
             this.bntEditdata.Name = "bntEditdata";
             this.bntEditdata.Size = new System.Drawing.Size(196, 50);
             this.bntEditdata.TabIndex = 16;
-            this.bntEditdata.Text = "Edit data";
+            this.bntEditdata.Text = "Điều khiển";
             this.bntEditdata.UseVisualStyleBackColor = true;
-            this.bntEditdata.Click += new System.EventHandler(this.button2_Click);
+            this.bntEditdata.Click += new System.EventHandler(this.bntEditdata_Click);
             // 
             // bntNhaplieu
             // 
@@ -240,7 +235,7 @@
             this.bntNhaplieu.Name = "bntNhaplieu";
             this.bntNhaplieu.Size = new System.Drawing.Size(196, 50);
             this.bntNhaplieu.TabIndex = 15;
-            this.bntNhaplieu.Text = "NL";
+            this.bntNhaplieu.Text = "CT Q";
             this.bntNhaplieu.UseVisualStyleBackColor = true;
             this.bntNhaplieu.Click += new System.EventHandler(this.bntNhaplieu_Click);
             // 
@@ -423,40 +418,35 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
-            this.panelDesktop.Controls.Add(this.cmbX);
+            this.panelDesktop.Controls.Add(this.label21);
+            this.panelDesktop.Controls.Add(this.label20);
+            this.panelDesktop.Controls.Add(this.label19);
+            this.panelDesktop.Controls.Add(this.label18);
+            this.panelDesktop.Controls.Add(this.label17);
+            this.panelDesktop.Controls.Add(this.label16);
+            this.panelDesktop.Controls.Add(this.label15);
+            this.panelDesktop.Controls.Add(this.label7);
+            this.panelDesktop.Controls.Add(this.label6);
+            this.panelDesktop.Controls.Add(this.label4);
+            this.panelDesktop.Controls.Add(this.label3);
+            this.panelDesktop.Controls.Add(this._labWtr);
+            this.panelDesktop.Controls.Add(this._labWdi);
+            this.panelDesktop.Controls.Add(this._labWden);
+            this.panelDesktop.Controls.Add(this._labQtt);
+            this.panelDesktop.Controls.Add(this._labWtt);
+            this.panelDesktop.Controls.Add(this._LabQdi);
+            this.panelDesktop.Controls.Add(this._labW2_ho);
+            this.panelDesktop.Controls.Add(this._labTotalFlow);
+            this.panelDesktop.Controls.Add(this._labQi);
+            this.panelDesktop.Controls.Add(this._labW1_ho);
             this.panelDesktop.Controls.Add(this.txtZ);
             this.panelDesktop.Controls.Add(this.label13);
-            this.panelDesktop.Controls.Add(this.label12);
             this.panelDesktop.Controls.Add(this.label11);
-            this.panelDesktop.Controls.Add(this.txtW);
-            this.panelDesktop.Controls.Add(this.lblKetQua);
-            this.panelDesktop.Controls.Add(this.txtQCs3);
-            this.panelDesktop.Controls.Add(this.label10);
-            this.panelDesktop.Controls.Add(this.txtQCs2);
-            this.panelDesktop.Controls.Add(this.label9);
-            this.panelDesktop.Controls.Add(this.txtQCs1);
-            this.panelDesktop.Controls.Add(this.label8);
-            this.panelDesktop.Controls.Add(this.txtQden);
-            this.panelDesktop.Controls.Add(this.label7);
-            this.panelDesktop.Controls.Add(this.txtTong);
-            this.panelDesktop.Controls.Add(this.label6);
-            this.panelDesktop.Controls.Add(this.txtHieu);
-            this.panelDesktop.Controls.Add(this.label4);
-            this.panelDesktop.Controls.Add(this.txtResult2);
-            this.panelDesktop.Controls.Add(this.label3);
-            this.panelDesktop.Controls.Add(this.label2);
-            this.panelDesktop.Controls.Add(this.txtResult);
-            this.panelDesktop.Controls.Add(this._labsumB);
-            this.panelDesktop.Controls.Add(this._labH0);
-            this.panelDesktop.Controls.Add(this._labanpha);
+            this.panelDesktop.Controls.Add(this._labQden);
             this.panelDesktop.Controls.Add(this._labQtr);
-            this.panelDesktop.Controls.Add(this._labHT_Cylinder1_2);
-            this.panelDesktop.Controls.Add(this._labHT_Cylinder1_1);
-            this.panelDesktop.Controls.Add(this._labFllow_Dautieng);
             this.panelDesktop.Controls.Add(this._labALDoor2_Station3);
             this.panelDesktop.Controls.Add(this._labALDoor2_Station2);
             this.panelDesktop.Controls.Add(this._labALDoor2_Station1);
-            this.panelDesktop.Controls.Add(this.btnNoiSuy);
             this.panelDesktop.Controls.Add(this.dtpEndTime);
             this.panelDesktop.Controls.Add(this.dtpStartTime);
             this.panelDesktop.Controls.Add(this.dgvStats);
@@ -474,6 +464,198 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(20, 268);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(26, 13);
+            this.label21.TabIndex = 450;
+            this.label21.Text = "Wdi";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(20, 247);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(23, 13);
+            this.label20.TabIndex = 449;
+            this.label20.Text = "Qdi";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(17, 313);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(24, 13);
+            this.label19.TabIndex = 448;
+            this.label19.Text = "Wtt";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(14, 288);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(21, 13);
+            this.label18.TabIndex = 447;
+            this.label18.Text = "Qtt";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(14, 228);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(42, 13);
+            this.label17.TabIndex = 446;
+            this.label17.Text = "W_den";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(14, 199);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(33, 13);
+            this.label16.TabIndex = 445;
+            this.label16.Text = "Qden";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(14, 158);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(24, 13);
+            this.label15.TabIndex = 444;
+            this.label15.Text = "Wtr";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 126);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(21, 13);
+            this.label7.TabIndex = 443;
+            this.label7.Text = "Qtr";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 84);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 13);
+            this.label6.TabIndex = 442;
+            this.label6.Text = "Fllow_Door1";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 45);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.TabIndex = 441;
+            this.label4.Text = "W2_ho";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.TabIndex = 440;
+            this.label3.Text = "W1_ho";
+            // 
+            // _labWtr
+            // 
+            this._labWtr.AutoSize = true;
+            this._labWtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labWtr.Location = new System.Drawing.Point(81, 154);
+            this._labWtr.Name = "_labWtr";
+            this._labWtr.Size = new System.Drawing.Size(52, 24);
+            this._labWtr.TabIndex = 439;
+            this._labWtr.Text = "W_tr";
+            // 
+            // _labWdi
+            // 
+            this._labWdi.AutoSize = true;
+            this._labWdi.Location = new System.Drawing.Point(87, 267);
+            this._labWdi.Name = "_labWdi";
+            this._labWdi.Size = new System.Drawing.Size(32, 13);
+            this._labWdi.TabIndex = 438;
+            this._labWdi.Text = "W_di";
+            // 
+            // _labWden
+            // 
+            this._labWden.AutoSize = true;
+            this._labWden.Location = new System.Drawing.Point(87, 222);
+            this._labWden.Name = "_labWden";
+            this._labWden.Size = new System.Drawing.Size(42, 13);
+            this._labWden.TabIndex = 437;
+            this._labWden.Text = "W_den";
+            // 
+            // _labQtt
+            // 
+            this._labQtt.AutoSize = true;
+            this._labQtt.Location = new System.Drawing.Point(87, 288);
+            this._labQtt.Name = "_labQtt";
+            this._labQtt.Size = new System.Drawing.Size(27, 13);
+            this._labQtt.TabIndex = 436;
+            this._labQtt.Text = "Q_tt";
+            // 
+            // _labWtt
+            // 
+            this._labWtt.AutoSize = true;
+            this._labWtt.Location = new System.Drawing.Point(82, 309);
+            this._labWtt.Name = "_labWtt";
+            this._labWtt.Size = new System.Drawing.Size(30, 13);
+            this._labWtt.TabIndex = 435;
+            this._labWtt.Text = "W_tt";
+            // 
+            // _LabQdi
+            // 
+            this._LabQdi.AutoSize = true;
+            this._LabQdi.Location = new System.Drawing.Point(87, 247);
+            this._LabQdi.Name = "_LabQdi";
+            this._LabQdi.Size = new System.Drawing.Size(25, 13);
+            this._LabQdi.TabIndex = 434;
+            this._LabQdi.Text = "QDi";
+            // 
+            // _labW2_ho
+            // 
+            this._labW2_ho.AutoSize = true;
+            this._labW2_ho.Location = new System.Drawing.Point(78, 45);
+            this._labW2_ho.Name = "_labW2_ho";
+            this._labW2_ho.Size = new System.Drawing.Size(42, 13);
+            this._labW2_ho.TabIndex = 433;
+            this._labW2_ho.Text = "W2_ho";
+            // 
+            // _labTotalFlow
+            // 
+            this._labTotalFlow.AutoSize = true;
+            this._labTotalFlow.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotalFlow.Location = new System.Drawing.Point(653, 173);
+            this._labTotalFlow.Name = "_labTotalFlow";
+            this._labTotalFlow.Size = new System.Drawing.Size(101, 24);
+            this._labTotalFlow.TabIndex = 432;
+            this._labTotalFlow.Text = "TotalFlow";
+            // 
+            // _labQi
+            // 
+            this._labQi.AutoSize = true;
+            this._labQi.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQi.Location = new System.Drawing.Point(81, 76);
+            this._labQi.Name = "_labQi";
+            this._labQi.Size = new System.Drawing.Size(42, 24);
+            this._labQi.TabIndex = 431;
+            this._labQi.Text = "Q_i";
+            // 
+            // _labW1_ho
+            // 
+            this._labW1_ho.AutoSize = true;
+            this._labW1_ho.Location = new System.Drawing.Point(78, 13);
+            this._labW1_ho.Name = "_labW1_ho";
+            this._labW1_ho.Size = new System.Drawing.Size(42, 13);
+            this._labW1_ho.TabIndex = 430;
+            this._labW1_ho.Text = "W1_ho";
+            // 
             // txtZ
             // 
             this.txtZ.Location = new System.Drawing.Point(931, 193);
@@ -490,15 +672,6 @@
             this.label13.TabIndex = 224;
             this.label13.Text = "Z ho";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(1092, 139);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(55, 13);
-            this.label12.TabIndex = 223;
-            this.label12.Text = "Gán giá trị";
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -508,216 +681,24 @@
             this.label11.TabIndex = 221;
             this.label11.Text = "W1";
             // 
-            // txtW
+            // _labQden
             // 
-            this.txtW.Location = new System.Drawing.Point(1213, 139);
-            this.txtW.Name = "txtW";
-            this.txtW.Size = new System.Drawing.Size(100, 20);
-            this.txtW.TabIndex = 220;
-            // 
-            // lblKetQua
-            // 
-            this.lblKetQua.AutoSize = true;
-            this.lblKetQua.Location = new System.Drawing.Point(1364, 199);
-            this.lblKetQua.Name = "lblKetQua";
-            this.lblKetQua.Size = new System.Drawing.Size(24, 13);
-            this.lblKetQua.TabIndex = 219;
-            this.lblKetQua.Text = "W1";
-            // 
-            // txtQCs3
-            // 
-            this.txtQCs3.Location = new System.Drawing.Point(1213, 225);
-            this.txtQCs3.Name = "txtQCs3";
-            this.txtQCs3.Size = new System.Drawing.Size(100, 20);
-            this.txtQCs3.TabIndex = 218;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1146, 233);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(25, 13);
-            this.label10.TabIndex = 217;
-            this.label10.Text = "Cs3";
-            // 
-            // txtQCs2
-            // 
-            this.txtQCs2.Location = new System.Drawing.Point(1213, 199);
-            this.txtQCs2.Name = "txtQCs2";
-            this.txtQCs2.Size = new System.Drawing.Size(100, 20);
-            this.txtQCs2.TabIndex = 216;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1146, 207);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(25, 13);
-            this.label9.TabIndex = 215;
-            this.label9.Text = "Cs2";
-            // 
-            // txtQCs1
-            // 
-            this.txtQCs1.Location = new System.Drawing.Point(1213, 173);
-            this.txtQCs1.Name = "txtQCs1";
-            this.txtQCs1.Size = new System.Drawing.Size(100, 20);
-            this.txtQCs1.TabIndex = 214;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1158, 177);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(25, 13);
-            this.label8.TabIndex = 213;
-            this.label8.Text = "Cs1";
-            // 
-            // txtQden
-            // 
-            this.txtQden.Location = new System.Drawing.Point(931, 322);
-            this.txtQden.Name = "txtQden";
-            this.txtQden.Size = new System.Drawing.Size(100, 20);
-            this.txtQden.TabIndex = 212;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(864, 330);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(33, 13);
-            this.label7.TabIndex = 211;
-            this.label7.Text = "Qden";
-            // 
-            // txtTong
-            // 
-            this.txtTong.Location = new System.Drawing.Point(931, 292);
-            this.txtTong.Name = "txtTong";
-            this.txtTong.Size = new System.Drawing.Size(100, 20);
-            this.txtTong.TabIndex = 210;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(864, 300);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(32, 13);
-            this.label6.TabIndex = 209;
-            this.label6.Text = "Tong";
-            // 
-            // txtHieu
-            // 
-            this.txtHieu.Location = new System.Drawing.Point(931, 253);
-            this.txtHieu.Name = "txtHieu";
-            this.txtHieu.Size = new System.Drawing.Size(100, 20);
-            this.txtHieu.TabIndex = 208;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(864, 261);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 13);
-            this.label4.TabIndex = 207;
-            this.label4.Text = "hieu";
-            // 
-            // txtResult2
-            // 
-            this.txtResult2.Location = new System.Drawing.Point(1213, 306);
-            this.txtResult2.Name = "txtResult2";
-            this.txtResult2.Size = new System.Drawing.Size(100, 20);
-            this.txtResult2.TabIndex = 206;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1146, 309);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(24, 13);
-            this.label3.TabIndex = 205;
-            this.label3.Text = "W2";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1146, 268);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 13);
-            this.label2.TabIndex = 204;
-            this.label2.Text = "W1";
-            // 
-            // txtResult
-            // 
-            this.txtResult.Location = new System.Drawing.Point(1213, 261);
-            this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(100, 20);
-            this.txtResult.TabIndex = 203;
-            // 
-            // _labsumB
-            // 
-            this._labsumB.AutoSize = true;
-            this._labsumB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labsumB.Location = new System.Drawing.Point(646, 305);
-            this._labsumB.Name = "_labsumB";
-            this._labsumB.Size = new System.Drawing.Size(65, 24);
-            this._labsumB.TabIndex = 202;
-            this._labsumB.Text = "SumB";
-            // 
-            // _labH0
-            // 
-            this._labH0.AutoSize = true;
-            this._labH0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labH0.Location = new System.Drawing.Point(646, 261);
-            this._labH0.Name = "_labH0";
-            this._labH0.Size = new System.Drawing.Size(36, 24);
-            this._labH0.TabIndex = 201;
-            this._labH0.Text = "H0";
-            // 
-            // _labanpha
-            // 
-            this._labanpha.AutoSize = true;
-            this._labanpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labanpha.Location = new System.Drawing.Point(646, 222);
-            this._labanpha.Name = "_labanpha";
-            this._labanpha.Size = new System.Drawing.Size(68, 24);
-            this._labanpha.TabIndex = 200;
-            this._labanpha.Text = "anpha";
+            this._labQden.AutoSize = true;
+            this._labQden.Location = new System.Drawing.Point(87, 200);
+            this._labQden.Name = "_labQden";
+            this._labQden.Size = new System.Drawing.Size(33, 13);
+            this._labQden.TabIndex = 211;
+            this._labQden.Text = "Qden";
             // 
             // _labQtr
             // 
             this._labQtr.AutoSize = true;
             this._labQtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labQtr.Location = new System.Drawing.Point(742, 338);
+            this._labQtr.Location = new System.Drawing.Point(81, 121);
             this._labQtr.Name = "_labQtr";
-            this._labQtr.Size = new System.Drawing.Size(66, 24);
+            this._labQtr.Size = new System.Drawing.Size(49, 24);
             this._labQtr.TabIndex = 199;
-            this._labQtr.Text = "label2";
-            // 
-            // _labHT_Cylinder1_2
-            // 
-            this._labHT_Cylinder1_2.AutoSize = true;
-            this._labHT_Cylinder1_2.Location = new System.Drawing.Point(127, 121);
-            this._labHT_Cylinder1_2.Name = "_labHT_Cylinder1_2";
-            this._labHT_Cylinder1_2.Size = new System.Drawing.Size(35, 13);
-            this._labHT_Cylinder1_2.TabIndex = 198;
-            this._labHT_Cylinder1_2.Text = "label2";
-            // 
-            // _labHT_Cylinder1_1
-            // 
-            this._labHT_Cylinder1_1.AutoSize = true;
-            this._labHT_Cylinder1_1.Location = new System.Drawing.Point(127, 94);
-            this._labHT_Cylinder1_1.Name = "_labHT_Cylinder1_1";
-            this._labHT_Cylinder1_1.Size = new System.Drawing.Size(35, 13);
-            this._labHT_Cylinder1_1.TabIndex = 197;
-            this._labHT_Cylinder1_1.Text = "label2";
-            // 
-            // _labFllow_Dautieng
-            // 
-            this._labFllow_Dautieng.AutoSize = true;
-            this._labFllow_Dautieng.Location = new System.Drawing.Point(97, 173);
-            this._labFllow_Dautieng.Name = "_labFllow_Dautieng";
-            this._labFllow_Dautieng.Size = new System.Drawing.Size(35, 13);
-            this._labFllow_Dautieng.TabIndex = 196;
-            this._labFllow_Dautieng.Text = "label2";
+            this._labQtr.Text = "Q_tr";
             // 
             // _labALDoor2_Station3
             // 
@@ -746,19 +727,9 @@
             this._labALDoor2_Station1.TabIndex = 193;
             this._labALDoor2_Station1.Text = "label2";
             // 
-            // btnNoiSuy
-            // 
-            this.btnNoiSuy.Location = new System.Drawing.Point(841, 134);
-            this.btnNoiSuy.Name = "btnNoiSuy";
-            this.btnNoiSuy.Size = new System.Drawing.Size(75, 23);
-            this.btnNoiSuy.TabIndex = 192;
-            this.btnNoiSuy.Text = "noisuy";
-            this.btnNoiSuy.UseVisualStyleBackColor = true;
-            this.btnNoiSuy.Click += new System.EventHandler(this.btnNoiSuy_Click);
-            // 
             // dtpEndTime
             // 
-            this.dtpEndTime.Location = new System.Drawing.Point(855, 94);
+            this.dtpEndTime.Location = new System.Drawing.Point(855, 35);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.Size = new System.Drawing.Size(200, 20);
             this.dtpEndTime.TabIndex = 191;
@@ -766,7 +737,7 @@
             // 
             // dtpStartTime
             // 
-            this.dtpStartTime.Location = new System.Drawing.Point(855, 37);
+            this.dtpStartTime.Location = new System.Drawing.Point(855, 5);
             this.dtpStartTime.Name = "dtpStartTime";
             this.dtpStartTime.Size = new System.Drawing.Size(200, 20);
             this.dtpStartTime.TabIndex = 190;
@@ -786,14 +757,14 @@
             this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStations.Location = new System.Drawing.Point(306, 5);
             this.dgvStations.Name = "dgvStations";
-            this.dgvStations.Size = new System.Drawing.Size(529, 166);
+            this.dgvStations.Size = new System.Drawing.Size(529, 87);
             this.dgvStations.TabIndex = 188;
             this.dgvStations.Visible = false;
             // 
             // _labFlowHoFinal
             // 
             this._labFlowHoFinal.AutoSize = true;
-            this._labFlowHoFinal.Location = new System.Drawing.Point(498, 349);
+            this._labFlowHoFinal.Location = new System.Drawing.Point(568, 329);
             this._labFlowHoFinal.Name = "_labFlowHoFinal";
             this._labFlowHoFinal.Size = new System.Drawing.Size(35, 13);
             this._labFlowHoFinal.TabIndex = 187;
@@ -802,11 +773,11 @@
             // _labFllowHo
             // 
             this._labFllowHo.AutoSize = true;
-            this._labFllowHo.Location = new System.Drawing.Point(498, 292);
+            this._labFllowHo.Location = new System.Drawing.Point(141, 39);
             this._labFllowHo.Name = "_labFllowHo";
-            this._labFllowHo.Size = new System.Drawing.Size(35, 13);
+            this._labFllowHo.Size = new System.Drawing.Size(55, 13);
             this._labFllowHo.TabIndex = 186;
-            this._labFllowHo.Text = "label2";
+            this._labFllowHo.Text = "Mức nước";
             // 
             // _labALDoor1_Station3
             // 
@@ -858,19 +829,11 @@
             // lblStatusMessage
             // 
             this.lblStatusMessage.AutoSize = true;
-            this.lblStatusMessage.Location = new System.Drawing.Point(208, 233);
+            this.lblStatusMessage.Location = new System.Drawing.Point(208, 292);
             this.lblStatusMessage.Name = "lblStatusMessage";
             this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
-            // 
-            // cmbX
-            // 
-            this.cmbX.FormattingEnabled = true;
-            this.cmbX.Location = new System.Drawing.Point(943, 150);
-            this.cmbX.Name = "cmbX";
-            this.cmbX.Size = new System.Drawing.Size(121, 21);
-            this.cmbX.TabIndex = 226;
             // 
             // FrmMain
             // 
@@ -944,7 +907,6 @@
         private System.Windows.Forms.Label _labALDoor1_Station1;
         private System.Windows.Forms.Label _labFlowHoFinal;
         private System.Windows.Forms.Label _labFllowHo;
-        private System.Windows.Forms.Button btnNoiSuy;
         private System.Windows.Forms.DateTimePicker dtpEndTime;
         private System.Windows.Forms.DateTimePicker dtpStartTime;
         private System.Windows.Forms.DataGridView dgvStats;
@@ -953,35 +915,31 @@
         private System.Windows.Forms.Label _labALDoor2_Station3;
         private System.Windows.Forms.Label _labALDoor2_Station2;
         private System.Windows.Forms.Label _labALDoor2_Station1;
-        private System.Windows.Forms.Label _labFllow_Dautieng;
-        private System.Windows.Forms.Label _labHT_Cylinder1_1;
-        private System.Windows.Forms.Label _labHT_Cylinder1_2;
         private System.Windows.Forms.Label _labQtr;
-        private System.Windows.Forms.Label _labsumB;
-        private System.Windows.Forms.Label _labH0;
-        private System.Windows.Forms.Label _labanpha;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtResult;
-        private System.Windows.Forms.TextBox txtResult2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtHieu;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtTong;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtQden;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtQCs2;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtQCs1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtQCs3;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label lblKetQua;
-        private System.Windows.Forms.TextBox txtW;
+        private System.Windows.Forms.Label _labQden;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtZ;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox cmbX;
+        private System.Windows.Forms.Label _labW1_ho;
+        private System.Windows.Forms.Label _labQi;
+        private System.Windows.Forms.Label _labTotalFlow;
+        private System.Windows.Forms.Label _labW2_ho;
+        private System.Windows.Forms.Label _LabQdi;
+        private System.Windows.Forms.Label _labQtt;
+        private System.Windows.Forms.Label _labWtt;
+        private System.Windows.Forms.Label _labWtr;
+        private System.Windows.Forms.Label _labWdi;
+        private System.Windows.Forms.Label _labWden;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
     }
 }

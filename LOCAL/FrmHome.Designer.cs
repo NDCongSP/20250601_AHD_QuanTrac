@@ -153,6 +153,11 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this._labAPISondai = new System.Windows.Forms.Label();
+            this._labAPIDautieng = new System.Windows.Forms.Label();
+            this._labAPIBensuc = new System.Windows.Forms.Label();
+            this._labAPIBinhnham = new System.Windows.Forms.Label();
+            this._labAPICDD = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua2)).BeginInit();
@@ -1816,12 +1821,62 @@
             this.label7.Text = "(cm)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // _labAPISondai
+            // 
+            this._labAPISondai.AutoSize = true;
+            this._labAPISondai.Location = new System.Drawing.Point(1178, 261);
+            this._labAPISondai.Name = "_labAPISondai";
+            this._labAPISondai.Size = new System.Drawing.Size(41, 13);
+            this._labAPISondai.TabIndex = 428;
+            this._labAPISondai.Text = "label18";
+            // 
+            // _labAPIDautieng
+            // 
+            this._labAPIDautieng.AutoSize = true;
+            this._labAPIDautieng.Location = new System.Drawing.Point(1306, 261);
+            this._labAPIDautieng.Name = "_labAPIDautieng";
+            this._labAPIDautieng.Size = new System.Drawing.Size(41, 13);
+            this._labAPIDautieng.TabIndex = 429;
+            this._labAPIDautieng.Text = "label18";
+            // 
+            // _labAPIBensuc
+            // 
+            this._labAPIBensuc.AutoSize = true;
+            this._labAPIBensuc.Location = new System.Drawing.Point(1442, 261);
+            this._labAPIBensuc.Name = "_labAPIBensuc";
+            this._labAPIBensuc.Size = new System.Drawing.Size(41, 13);
+            this._labAPIBensuc.TabIndex = 430;
+            this._labAPIBensuc.Text = "label18";
+            // 
+            // _labAPIBinhnham
+            // 
+            this._labAPIBinhnham.AutoSize = true;
+            this._labAPIBinhnham.Location = new System.Drawing.Point(1547, 261);
+            this._labAPIBinhnham.Name = "_labAPIBinhnham";
+            this._labAPIBinhnham.Size = new System.Drawing.Size(41, 13);
+            this._labAPIBinhnham.TabIndex = 431;
+            this._labAPIBinhnham.Text = "label18";
+            // 
+            // _labAPICDD
+            // 
+            this._labAPICDD.AutoSize = true;
+            this._labAPICDD.Location = new System.Drawing.Point(1547, 109);
+            this._labAPICDD.Name = "_labAPICDD";
+            this._labAPICDD.Size = new System.Drawing.Size(41, 13);
+            this._labAPICDD.TabIndex = 432;
+            this._labAPICDD.Text = "label18";
+            // 
             // FrmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::RegistrationForm1.Properties.Resources.Home;
             this.ClientSize = new System.Drawing.Size(1694, 848);
+            this.Controls.Add(this._labAPICDD);
+            this.Controls.Add(this._labAPIBinhnham);
+            this.Controls.Add(this._labAPIBensuc);
+            this.Controls.Add(this._labAPIDautieng);
+            this.Controls.Add(this._labAPISondai);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label17);
@@ -2086,5 +2141,10 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label _labAPISondai;
+        private System.Windows.Forms.Label _labAPIDautieng;
+        private System.Windows.Forms.Label _labAPIBensuc;
+        private System.Windows.Forms.Label _labAPIBinhnham;
+        private System.Windows.Forms.Label _labAPICDD;
     }
 }

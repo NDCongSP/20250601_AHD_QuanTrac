@@ -28,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +38,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ahd.Core">
@@ -258,10 +260,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConfigurationHelper.cs" />
-    <Compile Include="DataAlarmModel.cs" />
-    <Compile Include="DataMucNuocModel.cs" />
-    <Compile Include="DataTrangThaiModel.cs" />
-    <Compile Include="DataVanHanhModel.cs" />
     <Compile Include="FrmDangKyUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -286,17 +284,17 @@
     <Compile Include="FrmCanhBao.Designer.cs">
       <DependentUpon>FrmCanhBao.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmDieukhienscada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDieukhienscada.Designer.cs">
+      <DependentUpon>FrmDieukhienscada.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmDoipassword.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmDoipassword.Designer.cs">
       <DependentUpon>FrmDoipassword.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmEditdata.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmEditdata.Designer.cs">
-      <DependentUpon>FrmEditdata.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmEditUser.cs">
       <SubType>Form</SubType>
@@ -352,18 +350,12 @@
     <Compile Include="FrmUserManager.Designer.cs">
       <DependentUpon>FrmUserManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalData.cs" />
     <Compile Include="LoginServices.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SQLLogin.cs" />
-    <Compile Include="SQLLoginAlarm.cs" />
-    <Compile Include="SQLLoginDataTran.cs" />
-    <Compile Include="SQLLoginDataVanHanh.cs" />
-    <Compile Include="SQLLoginMucNuoc.cs" />
     <Compile Include="StaticClass\BCryptHelper.cs" />
     <Compile Include="StaticClass\Globalvariable.cs" />
     <Compile Include="TestForm.cs">
@@ -387,7 +379,6 @@
     <Compile Include="PermissionManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataTranModel.cs" />
     <Compile Include="Tran1Model.cs" />
     <Compile Include="Tran2Model.cs" />
     <Compile Include="Tran3Model.cs" />
@@ -414,11 +405,11 @@
     <EmbeddedResource Include="FrmCanhBao.resx">
       <DependentUpon>FrmCanhBao.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmDieukhienscada.resx">
+      <DependentUpon>FrmDieukhienscada.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmDoipassword.resx">
       <DependentUpon>FrmDoipassword.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmEditdata.resx">
-      <DependentUpon>FrmEditdata.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEditUser.resx">
       <DependentUpon>FrmEditUser.cs</DependentUpon>

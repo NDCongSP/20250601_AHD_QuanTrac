@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Domain;
+using Microsoft.Web.WebView2.WinForms;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient; // Thêm thư viện này để làm việc với SQL Server
+using System.Diagnostics; // Vẫn giữ để nếu có Debug.Assert hay Debug.Fail thì vẫn dùng được, nhưng sẽ dùng Console.WriteLine cho log
 using System.Drawing;
+using System.Globalization; // Để sử dụng CultureInfo.InvariantCulture cho double.Parse
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.Data.SqlClient; // Thêm thư viện này để làm việc với SQL Server
-using System.Globalization; // Để sử dụng CultureInfo.InvariantCulture cho double.Parse
-using System.Diagnostics; // Vẫn giữ để nếu có Debug.Assert hay Debug.Fail thì vẫn dùng được, nhưng sẽ dùng Console.WriteLine cho log
-using Microsoft.Web.WebView2.WinForms;
-using System.Data;
 
 
 
@@ -56,6 +57,7 @@ namespace RegistrationForm1
         private double[] dpphValuesForCurves;
         private double[] dplValuesForCurves; // New member variable for DPL values
         private Timer dataRefreshTimer; // Khai báo một đối tượng Timer
+        private Timer _timer = new Timer();
 
         public FrmHochua()
         {
@@ -70,10 +72,80 @@ namespace RegistrationForm1
             LoadAllRainDataWithTimestamp();
             InitializeTimer(); // Khởi tạo và cấu hình Timer
             this.Shown += FrmHochua_Shown;
-          
+            _timer.Interval = 1000;
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
+
 
         }
-       
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                _timer.Enabled = false; // Tạm dừng timer trong quá trình xử lý
+
+                if (Globalvariable.RealtimeDisplays.Count == 0)
+                    return; // Nếu không có dữ liệu, thoát khỏi hàm
+
+                Globalvariable.InvokeIfRequired(this, () =>
+                {
+                    var location = Globalvariable.RealtimeDisplays?.FirstOrDefault(loc => loc.LocationId == 1);
+                    if (location != null) 
+                    {
+                        foreach (var item in location.Stations)
+                        {
+                            if (item.Path == "Local Station/DauTieng/S71500/Station_1")
+                            {
+                                //_labALDoor1_Station1.Text = item.Al_Door1.ToString();
+                                //_labALDoor2_Station1.Text = item.Al_Door2.ToString();
+                                //   _labHT_Cylinder1_1.Text = item.HT_Cylinder1_1.ToString();
+                                //    _labHT_Cylinder1_2.Text = item.HT_Cylinder1_2.ToString();
+                          //      _labFllow_ho.Text = item.Fllow_ho.ToString();
+
+
+
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
+                            {
+                                //_labALDoor1_Station2.Text = item.Al_Door1.ToString();
+                                //_labALDoor2_Station2.Text = item.Al_Door2.ToString();
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Station_3")
+                            {
+                                //_labALDoor1_Station3.Text = item.Al_Door1.ToString();
+                                //_labALDoor2_Station3.Text = item.Al_Door2.ToString();
+                            }
+                            
+                            _labFllow_ho.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                            _labW1_ho.Text = location.CalculatorValue.W1_ho.ToString();
+                            _lab_Q_tr.Text = location.CalculatorValue.Q_tr.ToString();
+                            _labQ_cs1.Text = location.CalculatorValue.Q_cs1.ToString();
+                            _labQ_cs2.Text = location.CalculatorValue.Q_cs2.ToString();
+                            _labQ_cs3.Text = location.CalculatorValue.Q_cs3.ToString();
+                            _labQ_den.Text = location.CalculatorValue.Q_den.ToString();
+                            _labQ_di.Text = location.CalculatorValue.Q_di.ToString();
+
+
+                        }
+
+                    }
+                    
+
+                });
+            
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                _timer.Enabled = true;
+            }
+        }
+            
+
         private void InitializeTimer()
         {
             dataRefreshTimer = new Timer();
@@ -985,52 +1057,44 @@ namespace RegistrationForm1
         }
 
 
-        // Phương thức để đọc dữ liệu từ SQL cho Fllow_TL_CDD
         private Tuple<List<DateTime>, List<double>> GetFllowTlCddDataFromSql()
         {
             List<DateTime> dates = new List<DateTime>();
             List<double> values = new List<double>();
 
-            // !!! THAY THẾ CHUỖI KẾT NỐI NÀY VỚI THÔNG TIN SQL SERVER CỦA BẠN !!!
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-            // Truy vấn cần lấy cả cột ngày (CreateAt) và cột giá trị (Fllow_TL_CDD)
-            string query = "SELECT CreateAt, Fllow_TL_CDD FROM DataMucNuoc ORDER BY CreateAt;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                try
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        // Kiểm tra IsDBNull trước khi đọc để xử lý giá trị NULL từ database
-                        double dataValue;
-                        if (reader.IsDBNull(1))
-                        {
-                            dataValue = double.NaN;
-                        }
-                        else
-                        {
-                            // Thay đổi từ GetDecimal sang GetValue và Convert.ToDouble để xử lý linh hoạt hơn
-                            dataValue = Convert.ToDouble(reader.GetValue(1));
-                        }
+                using var dbContext = new ApplicationDbContext();
 
-                        DateTime dateValue = reader.GetDateTime(0); // Cột ngày
-                        dates.Add(dateValue);
-                        values.Add(dataValue);
-                    }
-                    reader.Close();
-                }
-                catch (Exception ex)
+                // Lấy tất cả các bản ghi thỏa mãn điều kiện và sắp xếp chúng theo thời gian.
+                // Biểu đồ xu hướng cần dữ liệu được sắp xếp theo thời gian.
+                var records = dbContext.FT03s
+                    .Where(x => x.IsDeleted == false &&
+                               (x.StationName == "Station_1" || x.StationName == "Station_2" ||
+                                x.StationName == "Station_3" || x.StationName == "Location_Info"))
+                    .OrderBy(x => x.CreateAt) // Sắp xếp theo thời gian để tạo chuỗi dữ liệu cho biểu đồ
+                    .ToList();
+
+                // Lặp qua các bản ghi và điền dữ liệu vào danh sách.
+                foreach (var record in records)
                 {
-                    // Hiển thị thông báo lỗi nếu có vấn đề khi kết nối hoặc đọc dữ liệu
-                    MessageBox.Show("Lỗi khi đọc dữ liệu 'Fllow_TL_CDD' từ SQL: " + ex.Message, "Lỗi Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    // Trả về danh sách rỗng nếu có lỗi để tránh lỗi NullReferenceException
-                    return Tuple.Create(new List<DateTime>(), new List<double>());
+                    // Kiểm tra nếu giá trị không phải là null và khác 0 trước khi thêm vào danh sách.
+                    if (record.Fllow_TL_CDD.HasValue && record.Fllow_TL_CDD.Value != 0)
+                    {
+                        dates.Add((DateTime)record.CreateAt);
+                        values.Add(record.Fllow_TL_CDD.Value);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi trong trường hợp có vấn đề khi truy vấn database.
+                // Có thể ghi log lỗi thay vì hiển thị MessageBox trong môi trường thực tế.
+                Console.WriteLine($"Lỗi khi đọc dữ liệu 'Fllow_TL_CDD' từ SQL: {ex.Message}");
+                // Trả về danh sách rỗng để tránh lỗi NullReferenceException.
+                return Tuple.Create(new List<DateTime>(), new List<double>());
+            }
+
             return Tuple.Create(dates, values);
         }
 

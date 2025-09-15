@@ -566,26 +566,26 @@ namespace RegistrationForm1
                 }
             }
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
+            //using (SqlConnection conn = new SqlConnection(connectionString))
+            //{
+            //    conn.Open();
 
-                string query = "SELECT * FROM DataMucNuoc WHERE CreateAt BETWEEN @FromTime AND @ToTime ORDER BY CreateAt DESC";
+            //    string query = "SELECT * FROM DataMucNuoc WHERE CreateAt BETWEEN @FromTime AND @ToTime ORDER BY CreateAt DESC";
 
-                var data = conn.Query<DataMucNuocModel>(query, new
-                {
-                    FromTime = fromTime,
-                    ToTime = toTime
-                }).ToList();
+            //    var data = conn.Query<DataMucNuocModel>(query, new
+            //    {
+            //        FromTime = fromTime,
+            //        ToTime = toTime
+            //    }).ToList();
 
-                dataGridView1.DataSource = data;
+            //    dataGridView1.DataSource = data;
 
-                if (data.Count == 0)
-                {
-                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                DrawChartFromMucNuoc(); // Gọi hàm vẽ biểu đồ từ dữ liệu mực nước
-            }
+            //    if (data.Count == 0)
+            //    {
+            //        MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //    DrawChartFromMucNuoc(); // Gọi hàm vẽ biểu đồ từ dữ liệu mực nước
+            //}
         }
         private void ExportChartAsImage()
         {

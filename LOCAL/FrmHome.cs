@@ -297,7 +297,16 @@ namespace RegistrationForm1
                     if (Location != null)
                     {
                         _labFllow_ho.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
-                       
+                  //      _labTotal_Fllow.Text = location.CalculatorValue.Qtr.ToString();
+                        _labFllow_Door6.Text = location.CalculatorValue.Q_i.ToString();
+                        _labAPISondai.Text = location.CalculatorValue.Fllow_SonDai.ToString();
+                        _labAPIBensuc.Text = location.CalculatorValue.Fllow_BenSuc.ToString();
+                        _labAPIDautieng.Text = location.CalculatorValue.Fllow_DauTieng.ToString();
+                        _labAPIBinhnham.Text = location.CalculatorValue.Fllow_BinhNham.ToString();
+                        //  _labAPIBinhnham2.Text = location.CalculatorValue.Fllow_BinhNham2.ToString();
+                        _labAPICDD.Text = location.CalculatorValue.Fllow_TL_CDD.ToString();
+                    //    _labAPIHL_TXL.Text = location.CalculatorValue.Fllow_HL_TXL.ToString();
+
                     }
 
                 });

@@ -5,7 +5,7 @@ namespace Domain
 {
     public class RealtimeDisplays : List<RealtimeDisplayModel>
     {
-        internal object FirstOrDefault(Func<object, bool> value)
+        internal void FirstOrDefault(Func<object, bool> value)
         {
             throw new NotImplementedException();
         }
