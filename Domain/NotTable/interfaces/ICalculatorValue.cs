@@ -9,13 +9,13 @@ namespace Domain
     public interface ICalculatorValue
     {
         #region API
-        public double? Fllow_DauTieng { get; set; }
-        public double? Fllow_BenSuc { get; set; }
-        public double? Fllow_SonDai { get; set; }
-        public double? Fllow_BinhNham { get; set; }
-        public double? Fllow_BinhNham2 { get; set; }
-        public double? Fllow_TL_CDD { get; set; }
-        public double? Fllow_HL_TXL { get; set; }
+        public double? API_Fllow_DauTieng { get; set; }
+        public double? API_Fllow_BenSuc { get; set; }
+        public double? API_Fllow_SonDai { get; set; }
+        public double? API_Fllow_BinhNham { get; set; }
+        public double? API_Fllow_BinhNham2 { get; set; }
+        public double? API_Fllow_TL_CDD { get; set; }
+        public double? API_Fllow_HL_TXL { get; set; }
 
         //6100001
         public double? API_DM_HoDT { get; set; }
@@ -63,7 +63,7 @@ namespace Domain
         public double W2_ho_old { get; set; }
         public double Q_den { get; set; }
         public double W_den { get; set; }
-        public double Q_i { get; set; }
+        public double Q_i_total { get; set; }
         public double Q_tr { get; set; }
         public double W_tr { get; set; }
         public double Q_cs1 { get; set; }

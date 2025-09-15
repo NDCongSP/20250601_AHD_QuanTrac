@@ -76,6 +76,7 @@ namespace Domain.Entities
         public double? Pressure_Oil_Door2_Final { get; set; } = 0;
         public double? Fllow_Door1_Final { get; set; } = 0;
         public double? Fllow_Door2_Final { get; set; } = 0;
+        public double? Q_i { get; set; } = 0;
 
         //Tag location information
         public double? Fllow_Ho { get; set; } = 0;
@@ -83,13 +84,14 @@ namespace Domain.Entities
         public double? Fllow_Ho_Final { get; set; } = 0;
 
         //Tag calculator value
-        public double? Fllow_DauTieng { get; set; } = 0;
-        public double? Fllow_BenSuc { get; set; } = 0;
-        public double? Fllow_SonDai { get; set; } = 0;
-        public double? Fllow_BinhNham { get; set; } = 0;
-        public double? Fllow_BinhNham2 { get; set; } = 0;
-        public double? Fllow_TL_CDD { get; set; } = 0;
-        public double? Fllow_HL_TXL { get; set; } = 0;
+        public double? API_Fllow_DauTieng { get; set; } = 0;
+        public double? API_Fllow_BenSuc { get; set; } = 0;
+        public double? API_Fllow_SonDai { get; set; } = 0;
+        public double? API_Fllow_BinhNham { get; set; } = 0;
+        public double? API_Fllow_BinhNham2 { get; set; } = 0;
+        public double? API_Fllow_TL_CDD { get; set; } = 0;
+        public double? API_Fllow_HL_TXL { get; set; } = 0;
+
         public double? API_DM_HoDT { get; set; } = 0;
         public double? API_MinhHoa { get; set; } = 0;
         public double? API_MinhTam { get; set; } = 0;
@@ -110,7 +112,7 @@ namespace Domain.Entities
         public double W2_ho_old { get; set; } = 0;
         public double Q_den { get; set; } = 0;
         public double W_den { get; set; } = 0;
-        public double Q_i { get; set; } = 0;
+        public double Q_i_total { get; set; } = 0;
         public double Q_tr { get; set; } = 0;
         public double W_tr { get; set; } = 0;
         public double Q_cs1 { get; set; } = 0;

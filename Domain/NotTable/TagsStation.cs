@@ -89,17 +89,19 @@ namespace Domain
         public double? Fllow_Ho { get; set; } = 0;
         public double? Fllow_Ho_Offset { get; set;} = 0;
         public double? Fllow_Ho_Final { get; set;} = 0;
+        public double? Q_i { get; set; } = 0;
     }
 
     public class CalculatorValueModel : ICalculatorValue
     {
-        public double? Fllow_DauTieng { get; set; } = 0;
-        public double? Fllow_BenSuc { get; set; } = 0;
-        public double? Fllow_SonDai { get; set; } = 0;
-        public double? Fllow_BinhNham { get; set; } = 0;
-        public double? Fllow_BinhNham2 { get; set; } = 0;
-        public double? Fllow_TL_CDD { get; set; } = 0;
-        public double? Fllow_HL_TXL { get; set; } = 0;
+        public double? API_Fllow_DauTieng { get; set; } = 0;
+        public double? API_Fllow_BenSuc { get; set; } = 0;
+        public double? API_Fllow_SonDai { get; set; } = 0;
+        public double? API_Fllow_BinhNham { get; set; } = 0;
+        public double? API_Fllow_BinhNham2 { get; set; } = 0;
+        public double? API_Fllow_TL_CDD { get; set; } = 0;
+        public double? API_Fllow_HL_TXL { get; set; } = 0;
+
         public double? API_DM_HoDT { get; set; } = 0;
         public double? API_MinhHoa { get; set; } = 0;
         public double? API_MinhTam { get; set; } = 0;
@@ -134,5 +136,6 @@ namespace Domain
         public double Q_di { get; set; } = 0;
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
+        public double Q_i_total { get; set; } = 0;
     }
 }

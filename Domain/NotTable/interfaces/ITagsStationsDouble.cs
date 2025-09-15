@@ -44,6 +44,8 @@ namespace Domain
         public double? Pressure_Oil_Door1_Final { get; set; } 
         public double? Pressure_Oil_Door2_Final { get; set; } 
         public double? Fllow_Door1_Final { get; set; } 
-        public double? Fllow_Door2_Final { get; set; } 
+        public double? Fllow_Door2_Final { get; set; }
+
+        public double? Q_i { get; set; }
     }
 }
