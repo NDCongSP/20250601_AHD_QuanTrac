@@ -163,46 +163,109 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double?>("API_DM_HoDT")
+                    b.Property<double?>("API_D_DM_HoDT")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_Doi95")
+                    b.Property<double?>("API_D_DM_HoDT_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_DongBan")
+                    b.Property<double?>("API_D_Doi95")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_KaTum")
+                    b.Property<double?>("API_D_Doi95_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_LocNinh")
+                    b.Property<double?>("API_D_DongBan")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_LocThanh")
+                    b.Property<double?>("API_D_DongBan_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_LocThien")
+                    b.Property<double?>("API_D_KaTum")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_MinhHoa")
+                    b.Property<double?>("API_D_KaTum_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_MinhTam")
+                    b.Property<double?>("API_D_LocNinh")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_TanHa")
+                    b.Property<double?>("API_D_LocNinh_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_TanHoa1")
+                    b.Property<double?>("API_D_LocThanh")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_TanHoa2")
+                    b.Property<double?>("API_D_LocThanh_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_TanThanh")
+                    b.Property<double?>("API_D_LocThien")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_ThanhLuong")
+                    b.Property<double?>("API_D_LocThien_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhHoa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhHoa_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhTam")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhTam_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHa_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa1")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa1_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa2")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa2_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanThanh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanThanh_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_ThanhLuong")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_ThanhLuong_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_BenSuc")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_BinhNham")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_BinhNham2")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_DauTieng")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_HL_TXL")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_SonDai")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_TL_CDD")
                         .HasColumnType("float");
 
                     b.Property<DateTime?>("CreateAt")
@@ -229,18 +292,6 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("Door2_Aperture_Offset")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Fllow_BenSuc")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_BinhNham")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_BinhNham2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_DauTieng")
-                        .HasColumnType("float");
-
                     b.Property<double?>("Fllow_Door1")
                         .HasColumnType("float");
 
@@ -259,9 +310,6 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("Fllow_Door2_Offset")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Fllow_HL_TXL")
-                        .HasColumnType("float");
-
                     b.Property<double?>("Fllow_Ho")
                         .HasColumnType("float");
 
@@ -269,12 +317,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<double?>("Fllow_Ho_Offset")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_SonDai")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Fllow_TL_CDD")
                         .HasColumnType("float");
 
                     b.Property<double?>("HT_Cylinder1_1")
@@ -366,7 +408,10 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Q_di")
                         .HasColumnType("float");
 
-                    b.Property<double>("Q_i")
+                    b.Property<double?>("Q_i")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Q_i_total")
                         .HasColumnType("float");
 
                     b.Property<double>("Q_tr")

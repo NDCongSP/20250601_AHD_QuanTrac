@@ -76,6 +76,7 @@ namespace Domain.Entities
         public double? Pressure_Oil_Door2_Final { get; set; } = 0;
         public double? Fllow_Door1_Final { get; set; } = 0;
         public double? Fllow_Door2_Final { get; set; } = 0;
+        public double? Q_i { get; set; } = 0;
 
         //Tag location information
         public double? Fllow_Ho { get; set; } = 0;
@@ -83,34 +84,50 @@ namespace Domain.Entities
         public double? Fllow_Ho_Final { get; set; } = 0;
 
         //Tag calculator value
-        public double? Fllow_DauTieng { get; set; } = 0;
-        public double? Fllow_BenSuc { get; set; } = 0;
-        public double? Fllow_SonDai { get; set; } = 0;
-        public double? Fllow_BinhNham { get; set; } = 0;
-        public double? Fllow_BinhNham2 { get; set; } = 0;
-        public double? Fllow_TL_CDD { get; set; } = 0;
-        public double? Fllow_HL_TXL { get; set; } = 0;
-        public double? API_DM_HoDT { get; set; } = 0;
-        public double? API_MinhHoa { get; set; } = 0;
-        public double? API_MinhTam { get; set; } = 0;
-        public double? API_LocThien { get; set; } = 0;
-        public double? API_LocNinh { get; set; } = 0;
-        public double? API_LocThanh { get; set; } = 0;
-        public double? API_ThanhLuong { get; set; } = 0;
-        public double? API_TanHoa1 { get; set; } = 0;
-        public double? API_TanHoa2 { get; set; } = 0;
-        public double? API_KaTum { get; set; } = 0;
-        public double? API_TanThanh { get; set; } = 0;
-        public double? API_DongBan { get; set; } = 0;
-        public double? API_TanHa { get; set; } = 0;
-        public double? API_Doi95 { get; set; } = 0;
+        public double? API_Fllow_DauTieng { get; set; } = 0;
+        public double? API_Fllow_BenSuc { get; set; } = 0;
+        public double? API_Fllow_SonDai { get; set; } = 0;
+        public double? API_Fllow_BinhNham { get; set; } = 0;
+        public double? API_Fllow_BinhNham2 { get; set; } = 0;
+        public double? API_Fllow_TL_CDD { get; set; } = 0;
+        public double? API_Fllow_HL_TXL { get; set; } = 0;
+
+        public double? API_D_DM_HoDT { get; set; } = 0;
+        public double? API_D_DM_HoDT_Total { get; set; } = 0;
+        public double? API_D_MinhHoa { get; set; } = 0;
+        public double? API_D_MinhHoa_Total { get; set; } = 0;
+        public double? API_D_MinhTam { get; set; } = 0;
+        public double? API_D_MinhTam_Total { get; set; } = 0;
+        public double? API_D_LocThien { get; set; } = 0;
+        public double? API_D_LocThien_Total { get; set; } = 0;
+        public double? API_D_LocNinh { get; set; } = 0;
+        public double? API_D_LocNinh_Total { get; set; } = 0;
+        public double? API_D_LocThanh { get; set; } = 0;
+        public double? API_D_LocThanh_Total { get; set; } = 0;
+        public double? API_D_ThanhLuong { get; set; } = 0;
+        public double? API_D_ThanhLuong_Total { get; set; } = 0;
+        public double? API_D_TanHoa1 { get; set; } = 0;
+        public double? API_D_TanHoa1_Total { get; set; } = 0;
+        public double? API_D_TanHoa2 { get; set; } = 0;
+        public double? API_D_TanHoa2_Total { get; set; } = 0;
+        public double? API_D_KaTum { get; set; } = 0;
+        public double? API_D_KaTum_Total { get; set; } = 0;
+        public double? API_D_TanThanh { get; set; } = 0;
+        public double? API_D_TanThanh_Total { get; set; } = 0;
+        public double? API_D_DongBan { get; set; } = 0;
+        public double? API_D_DongBan_Total { get; set; } = 0;
+        public double? API_D_TanHa { get; set; } = 0;
+        public double? API_D_TanHa_Total { get; set; } = 0;
+        public double? API_D_Doi95 { get; set; } = 0;
+        public double? API_D_Doi95_Total { get; set; } = 0;
+
         public double W1_ho { get; set; } = 0;
         public double W1_ho_old { get; set; } = 0;
         public double W2_ho { get; set; } = 0;
         public double W2_ho_old { get; set; } = 0;
         public double Q_den { get; set; } = 0;
         public double W_den { get; set; } = 0;
-        public double Q_i { get; set; } = 0;
+        public double Q_i_total { get; set; } = 0;
         public double Q_tr { get; set; } = 0;
         public double W_tr { get; set; } = 0;
         public double Q_cs1 { get; set; } = 0;
