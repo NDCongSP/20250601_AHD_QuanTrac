@@ -137,7 +137,6 @@ namespace Domain
         public double W2_ho_old { get; set; } = 0;
         public double Q_den { get; set; } = 0;
         public double W_den { get; set; } = 0;
-        public double Q_i { get; set; } = 0;
         public double Q_tr { get; set; } = 0;
         public double W_tr { get; set; } = 0;
         public double Q_cs1 { get; set; } = 0;
