@@ -1,0 +1,266 @@
+@using Domain
+@using Radzen.Blazor
+<RadzenTabsItem Text="@($"CỬA {GateNo}")">
+    <RadzenRow>
+        <RadzenColumn SizeXS="12" SizeMD="12">
+            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+                CỬA @(GateNo)
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <div class="param-row">
+                <RadzenTextBox Value="Mực nước hồ (MN hồ):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{GateData.CalculatorValue.W1_ho:F2}")</span>
+                <span class="param-unit">m</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Nhiệt độ dầu:" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.S1_Temp_Oil_Final ?? 0:F1}")</span>
+                <span class="param-unit">°C</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Hành trình xy lanh 1_1:" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.HT_Cylinder1_1_Final ?? 0:F2}")</span>
+                <span class="param-unit">mm</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Hành trình xy lanh 1_2:" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.HT_Cylinder1_2_Final ?? 0:F2}")</span>
+                <span class="param-unit">mm</span>
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <div class="param-row">
+                <RadzenTextBox Value="Độ mở cửa (a):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.Door1_Aperture_Final ?? 0}")</span>
+                <span class="param-unit">cm</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Lưu lượng cửa 1 (Qi):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.Fllow_Door1_Final ?? 0:F2}")</span>
+                <span class="param-unit">m³/s</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Lưu lượng tổng (Qtr):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.Fllow_Ho_Final ?? 0:F2}")</span>
+                <span class="param-unit">m³/s</span>
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <RadzenFieldset Text="Vận Hành">
+                <RadzenRow GutterSize="1rem">
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Thủ công" Style="@(Station.Man.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Tự động" Style="@(Station.Auto.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Tại chỗ" Style="@(Station.Local.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Từ xa" Style="@(Station.Remote.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                </RadzenRow>
+                <div class="rz-text-align-center rz-mt-2">
+                    <RadzenButton Text="Dừng khẩn" Style="@(Station.Remote.GetValueOrDefault() ? "background-color: red; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                </div>
+            </RadzenFieldset>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="12" class="mt-3">
+            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+                THÔNG TIN VẬN HÀNH CỬA @(GateNo + 1)
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="8" Style="background: #F0F0F0;padding: 10px;">
+            <RadzenRow>
+                <RadzenColumn SizeXS="12" SizeMD="12">
+                    <RadzenRow>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Bơm dầu">
+                                <RadzenRow>
+                                    <RadzenColumn Size="6">
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm 1</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm 2</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.DC3_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm chốt</span></div>
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6">
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm 1</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm 2</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.DC3_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm chốt</span></div>
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Trạng thái cửa">
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Opening == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa 1 đang mở</span></div>
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Closing == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa 1 đang đóng</span></div>
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Open == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa 1 mở hoàn toàn</span></div>
+                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_Close == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa 1 đóng hoàn toàn</span></div>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenColumn>
+
+                <RadzenColumn SizeXS="12" SizeMD="12">
+                    <RadzenRow>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Áp dầu">
+                                <RadzenRow>
+                                    <RadzenColumn Size="12">
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_PressureHigh == true ? "status-circle-red" : "")"></span> <span class="ml-1">Áp dầu cửa 1 cao</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_PressureLow == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Áp dầu cửa 1 thấp</span></div>
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Cửa">
+                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Al_Door1 == true ? "status-circle-red" : "")"></span> <span class="ml-1">Lỗi lệch cửa 1</span></div>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <RadzenImage Path="images/generals/tranc.jpg" AlternateText="Sơ đồ cửa van" Style="width: 100%; height: auto;" />
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenTabsItem>
+<RadzenTabsItem Text="@($"CỬA {GateNo + 1}")">
+    <RadzenRow>
+        <RadzenColumn SizeXS="12" SizeMD="12">
+            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+                CỬA @(GateNo + 1)
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <div class="param-row">
+                <RadzenTextBox Value="Mực nước hồ (MN hồ):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{GateData.CalculatorValue.W2_ho:F2}")</span>
+                <span class="param-unit">m</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Nhiệt độ dầu:" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.S1_Temp_Oil_Final ?? 0:F1}")</span>
+                <span class="param-unit">°C</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Hành trình xy lanh 1_1:" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.HT_Cylinder2_1_Final ?? 0:F2}")</span>
+                <span class="param-unit">mm</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Hành trình xy lanh 1_2:" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.HT_Cylinder2_2_Final ?? 0:F2}")</span>
+                <span class="param-unit">mm</span>
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <div class="param-row">
+                <RadzenTextBox Value="Độ mở cửa (a):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.Door2_Aperture_Final ?? 0}")</span>
+                <span class="param-unit">cm</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Lưu lượng cửa 1 (Qi):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.Fllow_Door2_Final ?? 0:F2}")</span>
+                <span class="param-unit">m³/s</span>
+            </div>
+            <div class="param-row">
+                <RadzenTextBox Value="Lưu lượng tổng (Qtr):" Disabled="true" class="param-label-box" Style="width: 200px;" />
+                <span class="param-value">@($"{Station.Fllow_Ho_Final ?? 0:F2}")</span>
+                <span class="param-unit">m³/s</span>
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <RadzenFieldset Text="Vận Hành">
+                <RadzenRow GutterSize="1rem">
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Thủ công" Style="@(Station.Man.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #1FB0A9; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Tự động" Style="@(Station.Auto.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #1FB0A9; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Tại chỗ" Style="@(Station.Local.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #1FB0A9; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="6">
+                        <RadzenButton Text="Từ xa" Style="@(Station.Remote.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #1FB0A9; color: blue; width: 100%;")" />
+                    </RadzenColumn>
+                </RadzenRow>
+                <div class="rz-text-align-center rz-mt-2">
+                    <RadzenButton Text="Dừng khẩn" ButtonStyle="ButtonStyle.Danger" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="12" class="mt-3">
+            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+                THÔNG TIN VẬN HÀNH CỬA @(Station.StationId)
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="8" Style="background: #F0F0F0;padding: 10px;">
+            <RadzenRow>
+                <RadzenColumn SizeXS="12" SizeMD="12">
+                    <RadzenRow>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Bơm dầu">
+                                <RadzenRow>
+                                    <RadzenColumn Size="6">
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm 1</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm 2</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.DC3_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm chốt</span></div>
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6">
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm 1</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm 2</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.DC3_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm chốt</span></div>
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Trạng thái cửa">
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Opening == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa 1 đang mở</span></div>
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Closing == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa 1 đang đóng</span></div>
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Open == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa 1 mở hoàn toàn</span></div>
+                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_Close == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa 1 đóng hoàn toàn</span></div>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenColumn>
+
+                <RadzenColumn SizeXS="12" SizeMD="12">
+                    <RadzenRow>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Áp dầu">
+                                <RadzenRow>
+                                    <RadzenColumn Size="12">
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_PressureHigh == true ? "status-circle-red" : "")"></span> <span class="ml-1">Áp dầu cửa 1 cao</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_PressureLow == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Áp dầu cửa 1 thấp</span></div>
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                        <RadzenColumn SizeXS="12" SizeMD="6">
+                            <RadzenFieldset Text="Cửa">
+                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Al_Door1 == true ? "status-circle-red" : "")"></span> <span class="ml-1">Lỗi lệch cửa 1</span></div>
+                            </RadzenFieldset>
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="4">
+            <RadzenImage Path="images/generals/tranc.jpg" AlternateText="Sơ đồ cửa van" Style="width: 100%; height: auto;" />
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenTabsItem>
+
+@code {
+    [Parameter] public TagsStation Station { get; set; }
+    [Parameter] public RealtimeDisplayModel GateData { get; set; }
+    [Parameter] public int GateNo { get; set; }
+}

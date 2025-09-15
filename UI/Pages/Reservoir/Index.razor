@@ -31,16 +31,16 @@
 
     .top-section {
         flex: 1;
-        min-height: 45%;
-        max-height: 45%;
+        min-height: 50%;
+        max-height: 50%;
         display: flex;
         flex-direction: column;
     }
 
     .bottom-section {
         flex: 1;
-        min-height: 55%;
-        max-height: 55%;
+        min-height: 50%;
+        max-height: 50%;
         margin-top: 1rem;
     }
 
@@ -81,14 +81,14 @@
     <div class="top-section">
         <RadzenRow class="h-100">
             <!-- First Column with Fieldset -->
-            <RadzenColumn SizeXS="12" SizeMD="3" class="rz-mx-auto equal-height-column">
+            <RadzenColumn SizeXS="12" SizeMD="5" class="rz-mx-auto equal-height-column">
                 <div style="flex: 1; display: flex; flex-direction: column; height: 100%;">
                     <div
                         style="font-weight: 500; padding: 0.5rem 1rem; background-color: #f8f9fa; border: 1px solid #dee2e6; border-bottom: none; border-radius: 4px 4px 0 0;">
                         @_localizer["Hồ chứa"]
                     </div>
                     <div
-                        style="flex: 1; overflow: auto; border: 1px solid #dee2e6; border-radius: 0 0 4px 4px; display: flex;">
+                        style="flex: 1; border: 1px solid #dee2e6; border-radius: 0 0 4px 4px;">
                         <RadzenRow>
                             <RadzenColumn SizeXS="12" SizeMD="12" class="rz-mx-auto p-0"
                                 Style="background-color:#F0F0F0;">
@@ -100,38 +100,17 @@
             </RadzenColumn>
 
             <!-- Second Column without Fieldset -->
-            <RadzenColumn SizeXS="12" SizeMD="5" class="rz-mx-auto equal-height-column">
-                <RadzenDataGrid Data="@(new[] { realtimeData?.CalculatorValue })" Style="height: 100%;"
-                    TItem="CalculatorValueModel" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
-                    AllowPaging="false" ShowPagingSummary="false" BorderStyle="GridBorders.Both"
-                    HeaderStyle="font-weight: 500;">
+            <RadzenColumn SizeXS="12" SizeMD="3" class="rz-mx-auto equal-height-column">
+                <RadzenDataGrid Data="@apiData" Style="height: 100%;"
+                    TItem="KeyValuePair<string, double>" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
+                    AllowPaging="false" ShowPagingSummary="false">
                     <Columns>
-                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Vị trí" Property="Key" />
+                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Vị trí" Property="Key"/>
                         <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Giá trị (m)" Property="Value"
-                            FormatString="{0:N2}" TextAlign="TextAlign.Right" />
+                                              FormatString="{0:N2}" TextAlign="TextAlign.Right" />
+                        
                     </Columns>
-                    <Template Context="data">
-                        @{
-                            var properties = data?.GetType().GetProperties()
-                            .Where(p => p.Name.StartsWith("API_"))
-                            .Select(p => new KeyValuePair<string, double>(
-                            _localizer[p.Name.Replace("API_", "").Replace("_", " ")] ?? p.Name.Replace("API_", ""),
-                            Convert.ToDouble(p.GetValue(data) ?? 0)
-                            ));
-
-                            foreach (var prop in properties ?? Enumerable.Empty<KeyValuePair<string, double>>())
-                            {
-                                <RadzenDataGridRow>
-                                    <RadzenDataGridRowCell>
-                                        @prop.Key
-                                    </RadzenDataGridRowCell>
-                                    <RadzenDataGridRowCell Style="text-align: right;">
-                                        @prop.Value.ToString("N2")
-                                    </RadzenDataGridRowCell>
-                                </RadzenDataGridRow>
-                            }
-                        }
-                    </Template>
+                        
                     <EmptyTemplate>
                         <div class="rz-datatable-emptymessage" style="text-align: center; padding: 10px;">
                             @_localizer["Không có dữ liệu"]
@@ -185,8 +164,8 @@
 
 @code {
     string _svg;
-    RealtimeDisplayModel realtimeData { get; set; } = new();
     private System.Timers.Timer _timer;
+    RealtimeDisplayModel realtimeData { get; set; } = new();
     public class ChartDataPoint
     {
         public DateTime Time { get; set; }
@@ -196,7 +175,7 @@
     }
 
     private List<ChartDataPoint> chartData = new List<ChartDataPoint>();
-
+    private List<KeyValuePair<string, double>> apiData = new();
     protected override void OnInitialized()
     {
         LayoutState.SetTitle("Hồ chứa");
@@ -233,10 +212,21 @@
         {
             //var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             realtimeData = FakeDataGenerator.GenerateLocation();
+            GetAPIData();
             await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
             StateHasChanged();
         }
         catch { }
+    }
+
+    private void GetAPIData()
+    {
+        apiData = realtimeData.CalculatorValue?.GetType().GetProperties()
+                            .Where(p => p.Name.StartsWith("API_"))
+                            .Select(p => new KeyValuePair<string, double>(
+                            _localizer[p.Name.Replace("API_", "").Replace("_", " ")] ?? p.Name.Replace("API_", ""),
+                            Convert.ToDouble(p.GetValue(realtimeData.CalculatorValue) ?? 0)
+                            )).ToList();
     }
 
     public void Dispose()

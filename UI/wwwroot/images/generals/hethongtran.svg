@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" style="background:#f5ffff; font-family:Arial, sans-serif;">
+
+  <!-- Tabs -->
+  <g font-size="16" font-weight="bold">
+    <rect x="0" y="0" width="200" height="40" fill="#ffffff" stroke="#ccc"/>
+    <text x="90" y="25" text-anchor="middle">CỬA 1</text>
+
+    <rect x="200" y="0" width="200" height="40" fill="#f2f2f2" stroke="#ccc"/>
+    <text x="290" y="25" text-anchor="middle">CỬA 2</text>
+
+    <rect x="400" y="0" width="200" height="40" fill="#f2f2f2" stroke="#ccc"/>
+    <text x="490" y="25" text-anchor="middle">CỬA 3</text>
+
+    <rect x="600" y="0" width="200" height="40" fill="#f2f2f2" stroke="#ccc"/>
+    <text x="690" y="25" text-anchor="middle">CỬA 4</text>
+
+    <rect x="800" y="0" width="200" height="40" fill="#f2f2f2" stroke="#ccc"/>
+    <text x="890" y="25" text-anchor="middle">CỬA 5</text>
+
+    <rect x="1000" y="0" width="200" height="40" fill="#f2f2f2" stroke="#ccc"/>
+    <text x="1090" y="25" text-anchor="middle">CỬA 6</text>
+  </g>
+
+  <!-- Khung CỬA 1 -->
+  <rect x="0" y="50" width="1180" height="250" fill="#eaf9f9" stroke="#00a0a0" stroke-width="2"/>
+  <text x="20" y="80" font-size="18" font-weight="bold">CỬA 1</text>
+
+  <!-- Bên trái: Thông số -->
+  <g font-size="14">
+    <text x="20" y="120">Mực nước hồ (MN hồ): 0.00 m</text>
+    <text x="20" y="150">Nhiệt độ dầu: 0.0 °C</text>
+    <text x="20" y="180">Hành trình xy lanh 1_1: 0 mm</text>
+    <text x="20" y="210">Hành trình xy lanh 1_2: 0 mm</text>
+  </g>
+
+  <!-- Bên phải thông số -->
+  <g font-size="14">
+    <text x="600" y="120">Độ mở cửa (a): 0 cm</text>
+    <text x="600" y="150">Lưu lượng cửa 1 (Qi): 0.0 m³/s</text>
+    <text x="600" y="180">Lưu lượng tổng (Qtr): 0.0 m³/s</text>
+  </g>
+
+  <!-- Vận hành -->
+  <g font-size="14">
+    <text x="950" y="100" font-weight="bold">Vận Hành</text>
+    <rect x="930" y="110" width="90" height="30" fill="#fff" stroke="#ccc"/>
+    <text x="975" y="130" text-anchor="middle">Thủ công</text>
+
+    <rect x="1030" y="110" width="90" height="30" fill="#fff" stroke="#ccc"/>
+    <text x="1075" y="130" text-anchor="middle">Tự động</text>
+
+    <rect x="930" y="150" width="90" height="30" fill="#fff" stroke="#ccc"/>
+    <text x="975" y="170" text-anchor="middle">Tại chỗ</text>
+
+    <rect x="1030" y="150" width="90" height="30" fill="#fff" stroke="#ccc"/>
+    <text x="1075" y="170" text-anchor="middle">Từ xa</text>
+
+    <rect x="980" y="190" width="90" height="30" fill="#ffcccc" stroke="red"/>
+    <text x="1025" y="210" text-anchor="middle" fill="red">Dừng khẩn</text>
+  </g>
+
+  <!-- Khung vận hành cửa -->
+  <rect x="0" y="310" width="1180" height="180" fill="#ffffff" stroke="#00a0a0" stroke-width="2"/>
+  <text x="20" y="330" font-size="18" font-weight="bold">THÔNG TIN VẬN HÀNH CỬA 1</text>
+
+  <!-- Bơm dầu -->
+  <g font-size="14">
+    <text x="20" y="360">Bơm 1 ○</text>
+    <text x="20" y="390">Bơm 2 ○</text>
+    <text x="20" y="420">Bơm chốt ○</text>
+
+    <text x="150" y="360">Lỗi bơm 1 ○</text>
+    <text x="150" y="390">Lỗi bơm 2 ○</text>
+    <text x="150" y="420">Lỗi bơm chốt ○</text>
+  </g>
+
+  <!-- Trạng thái cửa -->
+  <g font-size="14">
+    <text x="400" y="360">Cửa 1 đang mở ○</text>
+    <text x="400" y="390">Cửa 1 đang đóng ○</text>
+    <text x="400" y="420">Cửa 1 mở hoàn toàn ○</text>
+    <text x="400" y="450">Cửa 1 đóng hoàn toàn ○</text>
+  </g>
+
+  <!-- Áp dầu -->
+  <g font-size="14">
+    <text x="700" y="360">Áp dầu cửa 1 cao ○</text>
+    <text x="700" y="390">Áp dầu cửa 1 thấp ○</text>
+  </g>
+
+  <!-- Lỗi lệch -->
+  <g font-size="14">
+    <text x="950" y="360">Lỗi lệch cửa 1 ○</text>
+  </g>
+
+  <!-- Hình minh họa cửa bên phải -->
+  <rect x="900" y="350" width="260" height="130" fill="#f9f9f9" stroke="#ccc"/>
+  <text x="1030" y="420" text-anchor="middle" font-size="14" fill="gray">[Ảnh kỹ thuật / SVG cửa]</text>
+
+</svg>
