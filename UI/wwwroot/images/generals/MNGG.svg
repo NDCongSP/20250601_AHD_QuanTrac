@@ -101,15 +101,15 @@
    inkscape:deskcolor="#505050"
    showgrid="false"
    showguides="true"
-   inkscape:zoom="1.7536248"
-   inkscape:cx="1264.5236"
-   inkscape:cy="208.99567"
-   inkscape:window-width="1920"
+   inkscape:zoom="0.8768124"
+   inkscape:cx="436.80952"
+   inkscape:cy="195.59486"
+   inkscape:window-width="2560"
    inkscape:window-height="1009"
    inkscape:window-x="-8"
    inkscape:window-y="-8"
    inkscape:window-maximized="1"
-   inkscape:current-layer="g20-4-8-1-9">
+   inkscape:current-layer="g1">
     <inkscape:page
    x="0"
    y="0"
@@ -180,9 +180,9 @@
    style="font-size:19.873px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;font-weight:bold;fill:#ff0000;fill-opacity:1;stroke-width:4.25824"
    x="326.58969"
    y="119.03449"
-   id="Fllow_HL_TXL"
+   id="API_Fllow_HL_TXL"
    transform="scale(1.1937979,0.83766274)"
-   inkscape:label="Fllow_HL_TXL"
+   inkscape:label="lblAPI_Fllow_HL_TXL"
    sodipodi:role="line">0.00</text>
     </g>
     <g
@@ -206,10 +206,10 @@
    style="font-weight:bold;font-size:19.873px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#ff0000;fill-opacity:1;stroke-width:4.25824"
    x="333.94931"
    y="117.57786"
-   id="Fllow_SonDai"
+   id="API_Fllow_SonDai"
    transform="scale(1.1937979,0.83766273)"
    sodipodi:role="line"
-   inkscape:label="Fllow_SonDai">0.00</text>
+   inkscape:label="lblAPI_Fllow_SonDai">0.00</text>
       <text
    xml:space="preserve"
    style="font-size:15.1181px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#0000ff;fill-opacity:1;stroke-width:1.63732"
@@ -261,9 +261,10 @@
    style="font-size:15.7742px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;font-weight:bold;fill:#ff0000;fill-opacity:1;stroke-width:3.37998"
    x="158.23813"
    y="429.13943"
-   id="Fllow_TL_CDD"
+   id="API_Fllow_TL_CDD"
    transform="matrix(1.5039954,0,0,1.0553218,154.47279,-355.77271)"
-   sodipodi:role="line">0.00</text>
+   sodipodi:role="line"
+   inkscape:label="lblAPI_Fllow_TL_CDD">0.00</text>
       <text
    xml:space="preserve"
    style="font-size:15.1181px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke-width:1.63732"
@@ -315,9 +316,10 @@
    style="font-size:15.7742px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;font-weight:bold;fill:#ff0000;fill-opacity:1;stroke-width:3.37998"
    x="333.75568"
    y="75.989807"
-   id="Fllow_DauTieng"
+   id="API_Fllow_DauTieng"
    transform="matrix(1.5039954,0,0,1.0553218,-111.7675,17.963886)"
-   sodipodi:role="line">0.00</text>
+   sodipodi:role="line"
+   inkscape:label="lblAPI_Fllow_DauTieng">0.00</text>
       <text
    xml:space="preserve"
    style="font-size:15.1181px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke-width:1.63732"
@@ -367,9 +369,10 @@
    style="font-size:15.7742px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;font-weight:bold;fill:#ff0000;fill-opacity:1;stroke-width:3.37998"
    x="590.62323"
    y="76.067337"
-   id="Fllow_BenSuc"
+   id="API_Fllow_BenSuc"
    transform="matrix(1.5039954,0,0,1.0553218,-495.74417,17.636589)"
-   sodipodi:role="line">0.00</text>
+   sodipodi:role="line"
+   inkscape:label="lblAPI_Fllow_BenSuc">0.00</text>
       <text
    xml:space="preserve"
    style="font-size:15.1181px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke-width:1.63732"
@@ -421,9 +424,10 @@
    style="font-weight:bold;font-size:19.873px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#ff0000;fill-opacity:1;stroke-width:4.25824"
    x="327.97552"
    y="118.05947"
-   id="Fllow_BinhNham"
+   id="API_Fllow_BinhNham"
    transform="scale(1.1937979,0.83766275)"
-   sodipodi:role="line">0.00</text>
+   sodipodi:role="line"
+   inkscape:label="lblAPI_Fllow_BinhNham">0.00</text>
       <text
    xml:space="preserve"
    style="font-size:15.1181px;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;opacity:1;fill:#0000ff;fill-opacity:1;stroke-width:1.63732"

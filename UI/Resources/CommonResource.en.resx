@@ -223,4 +223,22 @@
 <data name="No records to display." xml:space="preserve">
   <value>No records to display.</value>
 </data>
+<data name="lbl_HeSoLuuToc_Phi" xml:space="preserve">
+  <value>Flow Coefficient (Phi)</value>
+</data>
+<data name="lbl_GiaToc_G" xml:space="preserve">
+  <value>Gravity Acceleration (g)</value>
+</data>
+<data name="lbl_CaoTrinhNguongTran_Zn" xml:space="preserve">
+  <value>Spillway Crest Level (Zn)</value>
+</data>
+<data name="lbl_SoCuaMo" xml:space="preserve">
+  <value>Number of Gates</value>
+</data>
+<data name="lbl_HeSoCoHep_ALpha" xml:space="preserve">
+  <value>Contraction Coefficient (Alpha)</value>
+</data>
+<data name="lbl_GeneralSettings" xml:space="preserve">
+  <value>General Settings</value>
+</data>
 </root>

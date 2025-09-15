@@ -51,14 +51,6 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_DoMoCuaTran_h"]" Variant="Variant.Outlined" Style="width:100%">
-
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.DoMoCuaTran_h" 
-                                                        Style="width: 100%"></RadzenNumeric>
-                                        </RadzenFormField>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
                                         <RadzenFormField Text="@_localizer["lbl_SoCuaMo"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="int" @bind-Value="@_config.ParametterConfig.SoCuaMo" 
@@ -136,6 +128,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        LayoutState.SetTitle(_localizer["Cấu hình thông số"]);
         await base.OnInitializedAsync();
         await LoadConfigAsync();
     }

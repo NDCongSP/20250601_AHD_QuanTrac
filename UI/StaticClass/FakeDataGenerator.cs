@@ -155,23 +155,27 @@ public static class FakeDataGenerator
     private static void SetRandomDoorStates(TagsStation station)
     {
         // For Door 1
-        var door1States = new[] { "Open", "Close", "Opening", "Closing" };
+        var door1States = new[] { "Open", "Close", "Opening", "Closing", "Open_Door" };
         var door1State = door1States[rnd.Next(door1States.Length)];
         
         // For Door 2
-        var door2States = new[] { "Open", "Close", "Opening", "Closing" };
+        var door2States = new[] { "Open", "Close", "Opening", "Closing", "Open_Door" };
         var door2State = door2States[rnd.Next(door2States.Length)];
         
         // Set door 1 state
         station.Door1_Open = door1State == "Open";
-        station.Door1_Close = door1State == "Close";
         station.Door1_Opening = door1State == "Opening";
+        station.Door1_Open_Door = door1State == "Open_Door";
+
+        station.Door1_Close = door1State == "Close";
         station.Door1_Closing = door1State == "Closing";
-        
+
         // Set door 2 state
         station.Door2_Open = door2State == "Open";
-        station.Door2_Close = door2State == "Close";
         station.Door2_Opening = door2State == "Opening";
+        station.Door2_Open_Door = door2State == "Open_Door";
+
+        station.Door2_Close = door2State == "Close";
         station.Door2_Closing = door2State == "Closing";
     }
     

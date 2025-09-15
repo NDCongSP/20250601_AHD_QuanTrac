@@ -124,4 +124,22 @@
   <data name="msg_DeleteError" xml:space="preserve">
     <value>Xóa trạm không thành công: {0}</value>
   </data>
+  <data name="lbl_HeSoLuuToc_Phi" xml:space="preserve">
+  <value>Hệ số lưu tốc (Phi)</value>
+</data>
+<data name="lbl_GiaToc_G" xml:space="preserve">
+  <value>Gia tốc trọng trường (g)</value>
+</data>
+<data name="lbl_CaoTrinhNguongTran_Zn" xml:space="preserve">
+  <value>Cao trình ngưỡng tràn (Zn)</value>
+</data>
+<data name="lbl_SoCuaMo" xml:space="preserve">
+  <value>Số cửa mở</value>
+</data>
+<data name="lbl_HeSoCoHep_ALpha" xml:space="preserve">
+  <value>Hệ số co hẹp (Alpha)</value>
+</data>
+<data name="lbl_GeneralSettings" xml:space="preserve">
+  <value>Cài đặt chung</value>
+</data>
 </root>
