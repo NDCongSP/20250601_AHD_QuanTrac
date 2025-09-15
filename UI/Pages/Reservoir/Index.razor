@@ -113,9 +113,9 @@
                     <Template Context="data">
                         @{
                             var properties = data?.GetType().GetProperties()
-                            .Where(p => p.Name.StartsWith("API_"))
+                            .Where(p => p.Name.StartsWith("API_D_"))
                             .Select(p => new KeyValuePair<string, double>(
-                            _localizer[p.Name.Replace("API_", "").Replace("_", " ")] ?? p.Name.Replace("API_", ""),
+                            _localizer[p.Name.Replace("API_D_", "").Replace("_", " ")] ?? p.Name.Replace("API_", ""),
                             Convert.ToDouble(p.GetValue(data) ?? 0)
                             ));
 
