@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250915135544_updateFT03113")]
+    partial class updateFT03113
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,88 +166,22 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double?>("API_D_DM_HoDT")
+                    b.Property<double?>("API_DM_HoDT")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_D_DM_HoDT_Total")
+                    b.Property<double?>("API_DM_HoDT_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_D_Doi95")
+                    b.Property<double?>("API_Doi95")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_D_Doi95_Total")
+                    b.Property<double?>("API_Doi95_Total")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_D_DongBan")
+                    b.Property<double?>("API_DongBan")
                         .HasColumnType("float");
 
-                    b.Property<double?>("API_D_DongBan_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_KaTum")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_KaTum_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_LocNinh")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_LocNinh_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_LocThanh")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_LocThanh_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_LocThien")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_LocThien_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_MinhHoa")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_MinhHoa_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_MinhTam")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_MinhTam_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanHa")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanHa_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanHoa1")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanHoa1_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanHoa2")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanHoa2_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanThanh")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_TanThanh_Total")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_ThanhLuong")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("API_D_ThanhLuong_Total")
+                    b.Property<double?>("API_DongBan_Total")
                         .HasColumnType("float");
 
                     b.Property<double?>("API_Fllow_BenSuc")
@@ -266,6 +203,72 @@ namespace Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<double?>("API_Fllow_TL_CDD")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_KaTum")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_KaTum_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocNinh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocNinh_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocThanh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocThanh_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocThien")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_LocThien_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_MinhHoa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_MinhHoa_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_MinhTam")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_MinhTam_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHa_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHoa1")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHoa1_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHoa2")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanHoa2_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanThanh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_TanThanh_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_ThanhLuong")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_ThanhLuong_Total")
                         .HasColumnType("float");
 
                     b.Property<DateTime?>("CreateAt")

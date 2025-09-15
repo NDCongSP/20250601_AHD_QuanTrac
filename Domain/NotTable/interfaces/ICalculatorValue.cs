@@ -17,34 +17,51 @@ namespace Domain
         public double? API_Fllow_TL_CDD { get; set; }
         public double? API_Fllow_HL_TXL { get; set; }
 
-        //6100001
-        public double? API_DM_HoDT { get; set; }
+        //6100001 
+        /// <summary>
+        /// Prefix API_D lad sẽ hiển thị ở grid lượng mưa.
+        /// </summary>
+        public double? API_D_DM_HoDT { get; set; }
+        public double? API_D_DM_HoDT_Total { get; set; }
         //6100002
-        public double? API_MinhHoa { get; set; }
+        public double? API_D_MinhHoa { get; set; }
+        public double? API_D_MinhHoa_Total { get; set; }
         //6100003
-        public double? API_MinhTam { get; set; }
+        public double? API_D_MinhTam { get; set; }
+        public double? API_D_MinhTam_Total { get; set; }
         //6100004
-        public double? API_LocThien { get; set; }
+        public double? API_D_LocThien { get; set; }
+        public double? API_D_LocThien_Total { get; set; }
         //6100005
-        public double? API_LocNinh { get; set; }
+        public double? API_D_LocNinh { get; set; }
+        public double? API_D_LocNinh_Total { get; set; }
         //6100006
-        public double? API_LocThanh { get; set; }
+        public double? API_D_LocThanh { get; set; }
+        public double? API_D_LocThanh_Total { get; set; }
         //6100007
-        public double? API_ThanhLuong { get; set; }
+        public double? API_D_ThanhLuong { get; set; }
+        public double? API_D_ThanhLuong_Total { get; set; }
         //6100008
-        public double? API_TanHoa1 { get; set; }
+        public double? API_D_TanHoa1 { get; set; }
+        public double? API_D_TanHoa1_Total { get; set; }
         //6100009
-        public double? API_TanHoa2 { get; set; }
+        public double? API_D_TanHoa2 { get; set; }
+        public double? API_D_TanHoa2_Total { get; set; }
         //6100010
-        public double? API_KaTum { get; set; }
+        public double? API_D_KaTum { get; set; }
+        public double? API_D_KaTum_Total { get; set; }
         //6100011
-        public double? API_TanThanh { get; set; }
+        public double? API_D_TanThanh { get; set; }
+        public double? API_D_TanThanh_Total { get; set; }
         //6100012
-        public double? API_DongBan { get; set; }
+        public double? API_D_DongBan { get; set; }
+        public double? API_D_DongBan_Total { get; set; }
         //6100013
-        public double? API_TanHa { get; set; }
+        public double? API_D_TanHa { get; set; }
+        public double? API_D_TanHa_Total { get; set; }
         //6100014
-        public double? API_Doi95 { get; set; }
+        public double? API_D_Doi95 { get; set; }
+        public double? API_D_Doi95_Total { get; set; }
 
         #endregion
 
