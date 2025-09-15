@@ -28,13 +28,32 @@ public static class FakeDataGenerator
                 Fllow_BinhNham2 = RandomDouble(0, 100),
                 Fllow_TL_CDD = RandomDouble(0, 100),
                 Fllow_HL_TXL = RandomDouble(0, 100),
-                Total_Fllow = RandomDouble(100, 500),
-                Q_Den = RandomDouble(0, 200),
-                Q_Di = RandomDouble(0, 200),
-                W_Ho = RandomDouble(1000, 5000),
-                LuuLuong = RandomDouble(0, 200),
-                LuuLuongTong = RandomDouble(200, 1000),
-                Qtr = RandomDouble(0, 10)
+                
+                Q_i = RandomDouble(0, 200),
+                Q_tt = RandomDouble(200, 1000),
+                Q_den = RandomDouble(0, 200),
+                Q_di = RandomDouble(0, 200),
+
+                Q_tr = RandomDouble(0, 10),
+                Q_cs1 = RandomDouble(1000, 5000),
+                Q_cs2 = RandomDouble(1000, 5000),
+                Q_cs3 = RandomDouble(1000, 5000),
+
+                //mapping API field
+                API_DM_HoDT = RandomDouble(0, 100),
+                API_MinhHoa = RandomDouble(0, 100),
+                API_MinhTam = RandomDouble(0, 100),
+                API_LocThien = RandomDouble(0, 100),
+                API_LocNinh = RandomDouble(0, 100),
+                API_LocThanh = RandomDouble(0, 100),
+                API_ThanhLuong = RandomDouble(0, 100),
+                API_TanHoa1 = RandomDouble(0, 100),
+                API_TanHoa2 = RandomDouble(0, 100),
+                API_KaTum = RandomDouble(0, 100),
+                API_TanThanh = RandomDouble(0, 100),
+                API_DongBan = RandomDouble(0, 100),
+                API_TanHa = RandomDouble(0, 100),
+                API_Doi95 = RandomDouble(0, 100),
             }
         };
     }

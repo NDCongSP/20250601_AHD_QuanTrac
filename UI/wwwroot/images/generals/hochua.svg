@@ -44,8 +44,8 @@
      font-family="Arial, sans-serif"
      font-size="24px"
      fill="#0000ff"
-     id="LuuLuong"
-     inkscape:label="lblLuuLuong">0.00</text><text
+     id="Q_i"
+     inkscape:label="lblQ_i">0.00</text><text
      x="450"
      y="80"
      font-family="Arial, sans-serif"
@@ -57,8 +57,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="W_Ho"
-     inkscape:label="lblW_Ho">0.000</text><text
+     id="Q_tt"
+     inkscape:label="lblQ_tt">0.000</text><text
      x="50"
      y="240"
      font-family="Arial, sans-serif"
@@ -70,8 +70,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_Den"
-     inkscape:label="lblQ_Den">0.0</text><text
+     id="Q_den"
+     inkscape:label="lblQ_den">0.0</text><text
      x="450"
      y="240"
      font-family="Arial, sans-serif"
@@ -83,8 +83,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_Di"
-     inkscape:label="lblQ_Di">0.0</text><text
+     id="Q_di"
+     inkscape:label="lblQ_di">0.0</text><text
      x="50"
      y="400"
      font-family="Arial, sans-serif"
@@ -96,8 +96,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Qtr"
-     inkscape:label="lblQtr">0.0</text><text
+     id="Q_tr"
+     inkscape:label="lblQ_tr">0.0</text><text
      x="250"
      y="400"
      font-family="Arial, sans-serif"
@@ -109,8 +109,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Location1_Station1_Fllow_Ho"
-     inkscape:label="lblLocation1_Station1_Fllow_Ho">0.0</text><text
+     id="Q_cs1"
+     inkscape:label="lblQ_cs1">0.0</text><text
      x="450"
      y="400"
      font-family="Arial, sans-serif"
@@ -122,8 +122,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Location1_Station2_Fllow_Ho"
-     inkscape:label="lblLocation1_Station2_Fllow_Ho">0.0</text><text
+     id="Q_cs2"
+     inkscape:label="lblQ_cs2">0.0</text><text
      x="650"
      y="400"
      font-family="Arial, sans-serif"
@@ -135,8 +135,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Location1_Station3_Fllow_Ho"
-     inkscape:label="lblLocation1_Station3_Fllow_Ho">0.0</text><image
+     id="Q_cs3"
+     inkscape:label="lblQ_cs3">0.0</text><image
      width="175.83054"
      height="105.55243"
      preserveAspectRatio="none"
