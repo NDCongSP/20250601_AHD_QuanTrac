@@ -408,7 +408,10 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Q_di")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Q_i")
+                    b.Property<double?>("Q_i_1")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Q_i_2")
                         .HasColumnType("float");
 
                     b.Property<double>("Q_i_total")

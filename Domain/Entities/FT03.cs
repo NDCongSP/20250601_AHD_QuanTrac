@@ -76,7 +76,8 @@ namespace Domain.Entities
         public double? Pressure_Oil_Door2_Final { get; set; } = 0;
         public double? Fllow_Door1_Final { get; set; } = 0;
         public double? Fllow_Door2_Final { get; set; } = 0;
-        public double? Q_i { get; set; } = 0;
+        public double? Q_i_1 { get; set; } = 0;
+        public double? Q_i_2 { get; set; } = 0;
 
         //Tag location information
         public double? Fllow_Ho { get; set; } = 0;

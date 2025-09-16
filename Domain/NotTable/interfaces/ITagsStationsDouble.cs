@@ -46,6 +46,7 @@ namespace Domain
         public double? Fllow_Door1_Final { get; set; } 
         public double? Fllow_Door2_Final { get; set; }
 
-        public double? Q_i { get; set; }
+        public double? Q_i_1 { get; set; }
+        public double? Q_i_2 { get; set; }
     }
 }
