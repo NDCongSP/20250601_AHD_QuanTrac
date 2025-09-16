@@ -110,9 +110,9 @@
     {
         try
         {
-            var _gateData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
+            _gateData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             //_gateData = FakeDataGenerator.GenerateLocation();
-            await JSRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", _gateData);
+            // await JSRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", _gateData);
             await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)

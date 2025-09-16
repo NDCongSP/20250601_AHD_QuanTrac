@@ -61,7 +61,6 @@ function updateSvgFillOverflow(location) {
     
     // Process first 3 stations, sorted by StationId
     const stations = [...location.Stations]
-        .filter(s => s.StationId <= 3)
         .sort((a, b) => a.StationId - b.StationId);
     
     // Process each station
