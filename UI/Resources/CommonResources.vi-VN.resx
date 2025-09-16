@@ -462,4 +462,61 @@
   <data name="Permissions" xml:space="preserve">
     <value>Quyền</value>
   </data>
+  <data name="LakeWaterLevel" xml:space="preserve">
+    <value>Mực nước hồ (MN hồ)</value>
+  </data>
+  <data name="OilTemperature" xml:space="preserve">
+    <value>Nhiệt độ dầu</value>
+  </data>
+  <data name="CylinderJourney" xml:space="preserve">
+    <value>Hành trình xy lanh</value>
+  </data>
+  <data name="GateOpeningDegree" xml:space="preserve">
+    <value>Độ mở cửa (a)</value>
+  </data>
+  <data name="GateFlow" xml:space="preserve">
+    <value>Lưu lượng cửa {0} (Qi)</value>
+  </data>
+  <data name="TotalFlow" xml:space="preserve">
+    <value>Lưu lượng tổng (Qtr)</value>
+  </data>
+  <data name="GateOperationInfo" xml:space="preserve">
+    <value>THÔNG TIN VẬN HÀNH CỬA {0}</value>
+  </data>
+  <data name="Pump" xml:space="preserve">
+    <value>Bơm {0}</value>
+  </data>
+  <data name="PinPump" xml:space="preserve">
+    <value>Bơm chốt</value>
+  </data>
+  <data name="PumpError" xml:space="preserve">
+    <value>Lỗi bơm {0}</value>
+  </data>
+  <data name="PinPumpError" xml:space="preserve">
+    <value>Lỗi bơm chốt</value>
+  </data>
+  <data name="GateIsOpening" xml:space="preserve">
+    <value>Cửa {0} đang mở</value>
+  </data>
+  <data name="GateIsClosing" xml:space="preserve">
+    <value>Cửa {0} đang đóng</value>
+  </data>
+  <data name="GateFullyOpened" xml:space="preserve">
+    <value>Cửa {0} mở hoàn toàn</value>
+  </data>
+  <data name="GateFullyClosed" xml:space="preserve">
+    <value>Cửa {0} đóng hoàn toàn</value>
+  </data>
+  <data name="GateOilPressureHigh" xml:space="preserve">
+    <value>Áp dầu cửa {0} cao</value>
+  </data>
+  <data name="GateOilPressureLow" xml:space="preserve">
+    <value>Áp dầu cửa {0} thấp</value>
+  </data>
+  <data name="GateSkewError" xml:space="preserve">
+    <value>Lỗi lệch cửa {0}</value>
+  </data>
+  <data name="GateValveDiagram" xml:space="preserve">
+    <value>Sơ đồ cửa van</value>
+  </data>
 </root>

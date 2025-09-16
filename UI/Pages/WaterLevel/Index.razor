@@ -1,6 +1,7 @@
 ﻿@page "/water-level"
 @using System.Timers
 @using UI.StaticClass
+@attribute [Authorize(Policy = "Admin")]
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
     <figure>
         <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">

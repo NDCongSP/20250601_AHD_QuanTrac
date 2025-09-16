@@ -1,67 +1,250 @@
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+/* Reservoir Page Variables */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --background-color: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-color: #343a40;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.rz-fieldset-content {
-    padding: 0 !important;
-}
-
-.rz-fieldset {
-    background-color: #F0F0F0;
-}
-
+/* Base Layout */
 .main-container {
-    height: calc(100vh - 105px);
     display: flex;
     flex-direction: column;
+    height: 100%;
+    gap: 1rem;
+    padding: 1rem;
 }
 
+/* Top Section */
 .top-section {
     flex: 1;
-    min-height: 50%;
-    max-height: 50%;
+    min-height: 0;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
 
+/* Bottom Section */
 .bottom-section {
-    flex: 1;
-    min-height: 50%;
-    max-height: 50%;
-    margin-top: 1rem;
-}
-
-.equal-height-column {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.rz-fieldset {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.rz-fieldset-content {
-    flex: 1;
-    overflow: auto;
-}
-
-.rz-datatable {
-    height: 100%;
-}
-
-.map-container {
-    height: 100%;
+    height: 40vh;
     min-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Chart Components */
+.chart-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.chart-header {
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .chart-container {
+    flex: 1;
+    padding: 1rem;
+    min-height: 200px;
+}
+
+/* Grid Layout */
+.reservoir-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    width: 100%;
     height: 100%;
+}
+
+/* Map Container */
+.map-container {
+    grid-column: span 8;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
     min-height: 300px;
+}
+
+.map-content {
+    flex: 1;
+    padding: 0;
+    min-height: 300px;
+}
+
+/* SVG Container */
+.svg-container {
+    background-color: #F0F0F0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+/* Column Layout */
+.column-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.column-header {
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.column-content {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+}
+
+/* Data Grid */
+.data-grid-container {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+/* Utility Classes */
+.equal-height-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .map-container {
+        grid-column: span 12;
+        min-height: 300px;
+    }
+    
+    .chart-container {
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-container {
+        padding: 0.75rem;
+    }
+    
+    .bottom-section {
+        height: 50vh;
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .reservoir-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .map-container {
+        min-height: 250px;
+    }
+    
+    .chart-container {
+        min-height: 200px;
+        padding: 0.75rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .bottom-section {
+        height: 60vh;
+        min-height: 200px;
+    }
+    
+    .chart-container {
+        min-height: 150px;
+        padding: 0.5rem;
+    }
+    
+    .chart-header {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Empty States */
+.empty-table-message,
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #6c757d;
+    font-style: italic;
+    padding: 2rem;
+    text-align: center;
 }

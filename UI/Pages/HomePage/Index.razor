@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components
+@attribute [Authorize(Policy = "Admin")]
 
 <style>
     .homepage-container {
@@ -34,7 +35,7 @@
         text-align: center;
         color: white;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .logo-container {
@@ -71,7 +72,7 @@
     }
 
     .feature-item {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgb(0 0 0 / 46%);
         backdrop-filter: blur(5px);
         padding: 1.5rem;
         border-radius: 8px;
@@ -109,12 +110,12 @@
 <div class="homepage-container">
     <div class="background-image"></div>
     <div class="content-overlay">
-        <div class="header">
+   @*      <div class="header">
             <div class="logo-container">
                 <img src="images/generals/logo-removebg-preview.png" alt="Logo" class="logo" />
             </div>
             <h1 class="welcome-text">CÔNG TY TNHH MTV KHAI THÁC THỦY LỢI MIỀN NAM</h1>
-        </div>
+        </div> *@
         @* <p class="subtitle">Giải pháp toàn diện cho việc giám sát và quản lý hồ chứa thông minh, đảm bảo an toàn và hiệu
             quả hoạt động.</p> *@
 
@@ -145,5 +146,8 @@
 </div>
 
 @code {
-    // Any necessary code-behind logic here
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle("CÔNG TY TNHH MTV KHAI THÁC THỦY LỢI MIỀN NAM");
+    }
 }

@@ -8,6 +8,7 @@
 @inject IStringLocalizer<Index> _localizer
 @using Radzen.Blazor
 @using UI.Pages.Spillway
+@attribute [Authorize(Policy = "Admin")]
 
 <style>
     .param-row {
@@ -50,20 +51,20 @@
     }
 
     .status-circle-green {
-        background-color: #28a745; /* Green */
-        border: 1px solid red;
-        border-color: #28a745;
+        background-color: #00FF00; /* Green */
+        border: 1px solid #FF0000;
+        border: 1px solid #FF0000;
     }
 
     .status-circle-yellow {
-        background-color: yellow;
-        border: 1px solid red;
-        border-color: yellow;
+        background-color: #FFFF00;
+        border: 1px solid #FF0000;
+        border-color: #FFFF00;
     }
 
     .status-circle-red {
-        background-color: red;
-        border-color: red;
+        background-color: #FF0000;
+        border: 1px solid #FF0000;
     }
 </style>
 

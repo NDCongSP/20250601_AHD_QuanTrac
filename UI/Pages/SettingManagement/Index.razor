@@ -1,7 +1,7 @@
 ﻿@page "/setting-management"
 @using Radzen
 @using Radzen.Blazor
-@inject IStringLocalizer<CommonResources> _localizer
+@attribute [Authorize(Policy = "Admin")]
 
 <RadzenRow Gap="1rem" Class="padding-body-content">
     <RadzenColumn SizeXS="12" SizeMD="12">

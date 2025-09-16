@@ -442,4 +442,61 @@
   <data name="Permissions" xml:space="preserve">
     <value>Permissions</value>
   </data>
+  <data name="LakeWaterLevel" xml:space="preserve">
+    <value>Lake Water Level</value>
+  </data>
+  <data name="OilTemperature" xml:space="preserve">
+    <value>Oil Temperature</value>
+  </data>
+  <data name="CylinderJourney" xml:space="preserve">
+    <value>Cylinder Journey</value>
+  </data>
+  <data name="GateOpeningDegree" xml:space="preserve">
+    <value>Gate Opening (a)</value>
+  </data>
+  <data name="GateFlow" xml:space="preserve">
+    <value>Gate {0} Flow (Qi)</value>
+  </data>
+  <data name="TotalFlow" xml:space="preserve">
+    <value>Total Flow (Qtr)</value>
+  </data>
+  <data name="GateOperationInfo" xml:space="preserve">
+    <value>GATE {0} OPERATION INFO</value>
+  </data>
+  <data name="Pump" xml:space="preserve">
+    <value>Pump {0}</value>
+  </data>
+  <data name="PinPump" xml:space="preserve">
+    <value>Pin Pump</value>
+  </data>
+  <data name="PumpError" xml:space="preserve">
+    <value>Pump {0} Error</value>
+  </data>
+  <data name="PinPumpError" xml:space="preserve">
+    <value>Pin Pump Error</value>
+  </data>
+  <data name="GateIsOpening" xml:space="preserve">
+    <value>Gate {0} is opening</value>
+  </data>
+  <data name="GateIsClosing" xml:space="preserve">
+    <value>Gate {0} is closing</value>
+  </data>
+  <data name="GateFullyOpened" xml:space="preserve">
+    <value>Gate {0} fully opened</value>
+  </data>
+  <data name="GateFullyClosed" xml:space="preserve">
+    <value>Gate {0} fully closed</value>
+  </data>
+  <data name="GateOilPressureHigh" xml:space="preserve">
+    <value>Gate {0} oil pressure high</value>
+  </data>
+  <data name="GateOilPressureLow" xml:space="preserve">
+    <value>Gate {0} oil pressure low</value>
+  </data>
+  <data name="GateSkewError" xml:space="preserve">
+    <value>Gate {0} skew error</value>
+  </data>
+  <data name="GateValveDiagram" xml:space="preserve">
+    <value>Gate Valve Diagram</value>
+  </data>
 </root>

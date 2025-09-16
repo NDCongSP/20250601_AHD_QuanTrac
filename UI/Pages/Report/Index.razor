@@ -1,7 +1,11 @@
 ﻿@page "/report"
+@attribute [Authorize(Policy = "Admin")]
 
 <h3>Chức năng đang phát triển</h3>
 
 @code {
-
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle(_localizer["Report"]);
+    }
 }

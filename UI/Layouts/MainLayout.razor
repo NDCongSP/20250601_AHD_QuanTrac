@@ -4,17 +4,28 @@
 @using Radzen.Blazor
 @using Radzen.Blazor.Rendering
 @using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components
 @inject UI.Services.LayoutStateService LayoutState
 @inject UI.Services.ThemeService ThemeService
 @inject ILogger<MainLayout> Logger
-@using Microsoft.JSInterop
+@inject NavigationManager _navigation
+@inject IJSRuntime _jsRuntime
+@inject AuthenticationStateProvider _authStateProvider
+@inject HttpClient _httpClient
 
-<RadzenLayout>
-    <RadzenHeader>
+<RadzenLayout Class="rz-layout">
+    <RadzenHeader Class="rz-header">
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
             JustifyContent="JustifyContent.SpaceBetween" Gap="0" Class="rz-py-2 rz-px-4">
             <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="1rem">
-                <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+                <button class="mobile-menu-btn" @onclick="ToggleSidebar">
+                    <i class="rz-icon-menu"></i>
+                </button>
+                <RadzenSidebarToggle Click="@(() => { sidebarExpanded = !sidebarExpanded; StateHasChanged(); })" />
+                @* when click redirect to '/' *@
+                <RadzenImage src="images/generals/logo-removebg-preview.png" Style="cursor: pointer;background:#fff; width: 70px;border-radius: 50%;" Click="@(() => _navigation.NavigateTo("/"))"/>
                 <RadzenStack Gap="0">
                     @if (!string.IsNullOrEmpty(LayoutState.Subtitle))
                     {
@@ -87,23 +98,24 @@
             </RadzenStack>
         </RadzenStack>
     </RadzenHeader>
-    <RadzenSidebar Responsive="false" Style="@(sidebarExpanded ? "width: 13vw" : "width: max-content")">
+    <div class="rz-sidebar-overlay @(sidebarExpanded ? "show" : "")" @onclick="() => { sidebarExpanded = false; StateHasChanged(); }"></div>
+    <RadzenSidebar @ref="sidebar" Responsive="false" Class="@(sidebarExpanded ? "rz-sidebar-show" : "")" Style="@(sidebarExpanded ? "width: 280px" : "width: 70px")">
         <RadzenPanelMenu DisplayStyle="@(sidebarExpanded? MenuItemDisplayStyle.IconAndText: MenuItemDisplayStyle.Icon)"
             ShowArrow="false">
             <RadzenPanelMenuItem Path="/dashboard" Text="@_localizer["HomePage"]" Icon="dashboard" />
             <RadzenPanelMenuItem Path="/reservoir" Text="@_localizer["Reservoir"]" Icon="water_drop" />
             <RadzenPanelMenuItem Path="/spillway" Text="@_localizer["SpillwayDischarge"]" Icon="analytics" />
-            <RadzenPanelMenuItem Path="/water-level" Text="@_localizer["WaterLevelHLSSG"]" Icon="home" />
-            <RadzenPanelMenuItem Path="/alert" Text="@_localizer["Alerts"]" Icon="home" />
-            <RadzenPanelMenuItem Path="/report" Text="@_localizer["Reports"]" Icon="home" />
+            <RadzenPanelMenuItem Path="/water-level" Text="@_localizer["WaterLevelHLSSG"]" Icon="water" />
+            <RadzenPanelMenuItem Path="/alert" Text="@_localizer["Alerts"]" Icon="notification_important" />
+            <RadzenPanelMenuItem Path="/report" Text="@_localizer["Reports"]" Icon="receipt" />
 
 
-            <RadzenPanelMenuItem Text="@_localizer["MasterData"]" Icon="account_box">
-                <RadzenPanelMenuItem Path="/location-management" Text="@_localizer["StationDeclaration"]" Icon="account_box" />
-                <RadzenPanelMenuItem Path="/setting-management" Text="@_localizer["CoefficientManagement"]" Icon="account_box" />
+            <RadzenPanelMenuItem Text="@_localizer["MasterData"]" Icon="build">
+                <RadzenPanelMenuItem Path="/location-management" Text="@_localizer["StationDeclaration"]" Icon="location_city" />
+                <RadzenPanelMenuItem Path="/setting-management" Text="@_localizer["CoefficientManagement"]" Icon="equalizer" />
                 <!--add 1 line border phân tách 2 phần-->
                 <hr />
-                <RadzenPanelMenuItem Path="/users" Text="@_localizer["UserManagement"]" Icon="account_box" />
+                <RadzenPanelMenuItem Path="/users" Text="@_localizer["UserManagement"]" Icon="person" />
                 <RadzenPanelMenuItem Path="/roles" Text="@_localizer["Roles"]" Icon="lock_open" />
                 <RadzenPanelMenuItem Path="/permissions" Text="@_localizer["Permissions"]" Icon="gavel" />
             </RadzenPanelMenuItem>
@@ -117,15 +129,72 @@
 </RadzenLayout>
 
 @code {
-    bool sidebarExpanded = true;
-    string currentCulture = "vi";
+    private bool sidebarExpanded = false; // Hidden by default on mobile
+    private string currentCulture = "vi";
+    private RadzenSidebar? sidebar;
+    private bool isMobile = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isMobile = await _jsRuntime.InvokeAsync<bool>("eval", "window.innerWidth < 993");
+            // Always start with sidebar hidden on mobile
+            if (isMobile)
+            {
+                sidebarExpanded = false;
+                StateHasChanged();
+            }
+            
+            // Add window resize event listener
+            await _jsRuntime.InvokeVoidAsync("eval", @"
+                window.addEventListener('resize', function() {
+                    const isMobileNow = window.innerWidth < 993;
+                    if (isMobileNow) {
+                        // Close sidebar when resizing to mobile view
+                        document.querySelector('.rz-sidebar').classList.remove('rz-sidebar-show');
+                        document.querySelector('.rz-sidebar-overlay').classList.remove('show');
+                    }
+                    DotNet.invokeMethodAsync('UI', 'OnWindowResize', window.innerWidth);
+                });
+            ");
+        }
+    }
+
+    [JSInvokable]
+    public static void OnWindowResize(int width)
+    {
+        // This method will be called from JavaScript when the window is resized
+    }
+
+    private async Task ToggleSidebar()
+    {
+        sidebarExpanded = !sidebarExpanded;
+        
+        if (isMobile && _jsRuntime != null)
+        {
+            try 
+            {
+                // Toggle body scroll lock when sidebar is open/closed on mobile
+                await _jsRuntime.InvokeVoidAsync("eval", @"
+                    document.body.style.overflow = arguments[0] ? 'hidden' : '';
+                ", sidebarExpanded);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error toggling sidebar scroll lock");
+            }
+        }
+        
+        StateHasChanged();
+    }
 
     protected override async Task OnInitializedAsync()
     {
         await ThemeService.InitializeAsync();
         LayoutState.OnChange += StateHasChanged;
         ThemeService.OnChange += StateHasChanged;
-        LayoutState.SetTitle("");
+        LayoutState.SetTitle("CÔNG TY TNHH MTV KHAI THÁC THỦY LỢI MIỀN NAM");
 
         // Get current culture from localStorage
         var culture = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "culture");
@@ -162,6 +231,7 @@
     {
         await ThemeService.ToggleThemeAsync();
     }
+
     async Task OnParentClicked(RadzenProfileMenuItem args)
     {
         if (args.Text == "Logout")
@@ -169,8 +239,15 @@
             GlobalVariable.AuthenticationStateTask = null;
             GlobalVariable.UserAuthorizationInfo = null;
             GlobalVariable.UserAuthorizationInfo = new UserAuthorizationInfo();
-            await _authStateProvider.ClearCacheAsync();
-            ((ApiAuthenticationStateProvider)_authStateProvider).MarkUserAsLoggedOut();
+            
+            if (_authStateProvider is ApiAuthenticationStateProvider authProvider)
+            {
+                authProvider.MarkUserAsLoggedOut();
+            }
+            
+            // Clear the authorization header
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+            
             _navigation.NavigateTo("/login");
         }
     }
