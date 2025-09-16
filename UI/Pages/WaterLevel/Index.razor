@@ -39,8 +39,7 @@
         {
             var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             //var realtimeData = FakeDataGenerator.GenerateLocation();
-            var data = realtimeData.CalculatorValue;
-            await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgWaterLevel", data);
+            await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
             StateHasChanged();
         }
         catch { }
