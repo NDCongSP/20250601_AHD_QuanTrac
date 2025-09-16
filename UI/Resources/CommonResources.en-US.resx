@@ -241,4 +241,205 @@
 <data name="lbl_GeneralSettings" xml:space="preserve">
   <value>General Settings</value>
 </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="QuanLyTran" xml:space="preserve">
+    <value>Spillway Management</value>
+  </data>
+  <data name="HoChua" xml:space="preserve">
+    <value>Reservoir</value>
+  </data>
+  <data name="HeThongTran" xml:space="preserve">
+    <value>Spillway System</value>
+  </data>
+  <data name="MucNuoc" xml:space="preserve">
+    <value>Water Level</value>
+  </data>
+  <data name="CauHinhThongSo" xml:space="preserve">
+    <value>Parameter Configuration</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UserManager.Title" xml:space="preserve">
+    <value>USER MANAGEMENT</value>
+  </data>
+  <data name="UserDetail.Title" xml:space="preserve">
+    <value>USER DETAIL</value>
+  </data>
+  <data name="User.CreateTitle" xml:space="preserve">
+    <value>Create new user</value>
+  </data>
+  <data name="User.EditTitle" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="Detail.BackToList" xml:space="preserve">
+    <value>Back to list</value>
+  </data>
+  <data name="UesrDetail.Information" xml:space="preserve">
+    <value>User Information</value>
+  </data>
+  <data name="Detail.Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="Confirmation.Create" xml:space="preserve">
+    <value>are you sure you want to create?</value>
+  </data>
+  <data name="Confirmation.Update" xml:space="preserve">
+    <value>are you sure you want to update?</value>
+  </data>
+  <data name="Confirmation.Delete" xml:space="preserve">
+    <value>Are you sure you want to delete</value>
+  </data>
+  <data name="UpdateUsetTitle" xml:space="preserve">
+    <value>Update User</value>
+  </data>
+  <data name="Result user null." xml:space="preserve">
+    <value>User not found.</value>
+  </data>
+  <data name="Validate.EmailRequried" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="Validate.EmailFormat" xml:space="preserve">
+    <value>Invalid email format</value>
+  </data>
+  <data name="Validate.Role" xml:space="preserve">
+    <value>Role is required</value>
+  </data>
+  <data name="btn_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="msg_LoadingSettings" xml:space="preserve">
+    <value>Loading settings...</value>
+  </data>
+  <data name="lbl_FlowSettings" xml:space="preserve">
+    <value>Flow Settings</value>
+  </data>
+  <data name="lbl_Q_CongSo1" xml:space="preserve">
+    <value>Q Gate 1</value>
+  </data>
+  <data name="lbl_Q_CongSo2" xml:space="preserve">
+    <value>Q Gate 2</value>
+  </data>
+  <data name="lbl_Q_CongSo3" xml:space="preserve">
+    <value>Q Gate 3</value>
+  </data>
+  <data name="lbl_SystemSettings" xml:space="preserve">
+    <value>System Settings</value>
+  </data>
+  <data name="lbl_DataLogInterval" xml:space="preserve">
+    <value>Data Log Interval</value>
+  </data>
+  <data name="lbl_TimerInterval" xml:space="preserve">
+    <value>Timer Interval</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="Automatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="Remote" xml:space="preserve">
+    <value>Remote</value>
+  </data>
+  <data name="EmergencyStop" xml:space="preserve">
+    <value>Emergency Stop</value>
+  </data>
+  <data name="OilPump" xml:space="preserve">
+    <value>Oil Pump</value>
+  </data>
+  <data name="GateStatus" xml:space="preserve">
+    <value>Gate Status</value>
+  </data>
+  <data name="OilPressure" xml:space="preserve">
+    <value>Oil Pressure</value>
+  </data>
+  <data name="Gate" xml:space="preserve">
+    <value>Gate</value>
+  </data>
+  <data name="Vietnamese" xml:space="preserve">
+    <value>Vietnamese</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="MasterData" xml:space="preserve">
+    <value>Master Data</value>
+  </data>
+  <data name="Reservoir" xml:space="preserve">
+    <value>Reservoir</value>
+  </data>
+  <data name="SpillwayDischarge" xml:space="preserve">
+    <value>Spillway Discharge</value>
+  </data>
+  <data name="WaterLevelHLSSG" xml:space="preserve">
+    <value>Water Level HL SSG</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Alerts</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="StationDeclaration" xml:space="preserve">
+    <value>Station Declaration</value>
+  </data>
+  <data name="CoefficientManagement" xml:space="preserve">
+    <value>Coefficient Management</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
 </root>

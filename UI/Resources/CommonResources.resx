@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Welcome" xml:space="preserve">
+    <value>Chào mừng</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Đang tải...</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Trở về</value>
+  </data>
+  <data name="btn_AddNew" xml:space="preserve">
+    <value>Thêm mới</value>
+  </data>
+  <data name="lbl_RowsPerPage" xml:space="preserve">
+    <value>Số dòng mỗi trang</value>
+  </data>
+  <data name="lbl_NoData" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="lbl_SerialNumber" xml:space="preserve">
+    <value>STT</value>
+  </data>
+  <data name="lbl_StationName" xml:space="preserve">
+    <value>Tên trạm</value>
+  </data>
+  <data name="lbl_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="lbl_Actions" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="LocationList" xml:space="preserve">
+    <value>Danh sách địa điểm</value>
+  </data>
+  <data name="LocationName" xml:space="preserve">
+    <value>Tên địa điểm</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="StationList" xml:space="preserve">
+    <value>Danh sách trạm</value>
+  </data>
+  <data name="StationName" xml:space="preserve">
+    <value>Tên trạm</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Thẻ</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Đường dẫn</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu lại</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="lbl_LocationManagement" xml:space="preserve">
+    <value>QUẢN LÝ TRẠM</value>
+  </data>
+  <data name="msg_DeleteConfirmation" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn xóa trạm '{0}'?</value>
+  </data>
+  <data name="lbl_DeleteConfirmation" xml:space="preserve">
+    <value>Xác nhận xóa</value>
+  </data>
+  <data name="btn_Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="lbl_Success" xml:space="preserve">
+    <value>Thành công</value>
+  </data>
+  <data name="msg_DeleteSuccess" xml:space="preserve">
+    <value>Đã xóa trạm '{0}' thành công</value>
+  </data>
+  <data name="lbl_Error" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="msg_DeleteError" xml:space="preserve">
+    <value>Xóa trạm không thành công: {0}</value>
+  </data>
+  <data name="lbl_HeSoLuuToc_Phi" xml:space="preserve">
+    <value>Hệ số lưu tốc (Phi)</value>
+  </data>
+  <data name="lbl_GiaToc_G" xml:space="preserve">
+    <value>Gia tốc trọng trường (g)</value>
+  </data>
+  <data name="lbl_CaoTrinhNguongTran_Zn" xml:space="preserve">
+    <value>Cao trình ngưỡng tràn (Zn)</value>
+  </data>
+  <data name="lbl_SoCuaMo" xml:space="preserve">
+    <value>Số cửa mở</value>
+  </data>
+  <data name="lbl_HeSoCoHep_ALpha" xml:space="preserve">
+    <value>Hệ số co hẹp (Alpha)</value>
+  </data>
+  <data name="lbl_GeneralSettings" xml:space="preserve">
+    <value>Cài đặt chung</value>
+    <comment>Cài đặt chung</comment>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="Fullname" xml:space="preserve">
+    <value>Họ và tên</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="User.Search" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="Keyword" xml:space="preserve">
+    <value>Từ khóa</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Vai trò</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Chọn</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Làm mới</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="User.List" xml:space="preserve">
+    <value>Danh sách người dùng</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Tạo mới</value>
+  </data>
+  <data name="items per page" xml:space="preserve">
+    <value>mục mỗi trang</value>
+  </data>
+  <data name="No records to display." xml:space="preserve">
+    <value>Không có dữ liệu hiển thị.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Ghi nhớ tôi</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="QuanLyTran" xml:space="preserve">
+    <value>Quản lý tràn</value>
+  </data>
+  <data name="HoChua" xml:space="preserve">
+    <value>Hồ chứa</value>
+  </data>
+  <data name="HeThongTran" xml:space="preserve">
+    <value>Hệ thống tràn</value>
+  </data>
+  <data name="MucNuoc" xml:space="preserve">
+    <value>Mực nước</value>
+  </data>
+  <data name="CauHinhThongSo" xml:space="preserve">
+    <value>Cấu hình thông số</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Cảnh báo</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Bắt buộc</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="UserManager.Title" xml:space="preserve">
+    <value>QUẢN LÝ NGƯỜI DÙNG</value>
+  </data>
+  <data name="UserDetail.Title" xml:space="preserve">
+    <value>CHI TIẾT NGƯỜI DÙNG</value>
+  </data>
+  <data name="User.CreateTitle" xml:space="preserve">
+    <value>Tạo mới người dùng</value>
+  </data>
+  <data name="User.EditTitle" xml:space="preserve">
+    <value>Chỉnh sửa người dùng</value>
+  </data>
+  <data name="Detail.BackToList" xml:space="preserve">
+    <value>Quay lại danh sách</value>
+  </data>
+  <data name="UesrDetail.Information" xml:space="preserve">
+    <value>Thông tin người dùng</value>
+  </data>
+  <data name="Detail.Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Đặt lại mật khẩu</value>
+  </data>
+  <data name="Confirmation.Create" xml:space="preserve">
+    <value>bạn có chắc muốn tạo mới không</value>
+  </data>
+  <data name="Confirmation.Update" xml:space="preserve">
+    <value>bạn có chắc muốn cập nhật không</value>
+  </data>
+  <data name="Confirmation.Delete" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn xóa</value>
+  </data>
+  <data name="UpdateUsetTitle" xml:space="preserve">
+    <value>Cập nhật người dùng</value>
+  </data>
+  <data name="Result user null." xml:space="preserve">
+    <value>Không tìm thấy người dùng.</value>
+  </data>
+  <data name="Validate.EmailRequried" xml:space="preserve">
+    <value>Email là bắt buộc</value>
+  </data>
+  <data name="Validate.EmailFormat" xml:space="preserve">
+    <value>Email không đúng định dạng</value>
+  </data>
+  <data name="Validate.Role" xml:space="preserve">
+    <value>Vai trò là bắt buộc</value>
+  </data>
+  <data name="btn_Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="msg_LoadingSettings" xml:space="preserve">
+    <value>Đang tải cài đặt...</value>
+  </data>
+  <data name="lbl_FlowSettings" xml:space="preserve">
+    <value>Cài đặt lưu lượng</value>
+  </data>
+  <data name="lbl_Q_CongSo1" xml:space="preserve">
+    <value>Q Cống số 1</value>
+  </data>
+  <data name="lbl_Q_CongSo2" xml:space="preserve">
+    <value>Q Cống số 2</value>
+  </data>
+  <data name="lbl_Q_CongSo3" xml:space="preserve">
+    <value>Q Cống số 3</value>
+  </data>
+  <data name="lbl_SystemSettings" xml:space="preserve">
+    <value>Cài đặt hệ thống</value>
+  </data>
+  <data name="lbl_DataLogInterval" xml:space="preserve">
+    <value>Khoảng thời gian ghi dữ liệu</value>
+  </data>
+  <data name="lbl_TimerInterval" xml:space="preserve">
+    <value>Khoảng thời gian làm mới</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Vận Hành</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Thủ công</value>
+  </data>
+  <data name="Automatic" xml:space="preserve">
+    <value>Tự động</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>Tại chỗ</value>
+  </data>
+  <data name="Remote" xml:space="preserve">
+    <value>Từ xa</value>
+  </data>
+  <data name="EmergencyStop" xml:space="preserve">
+    <value>Dừng khẩn</value>
+  </data>
+  <data name="OilPump" xml:space="preserve">
+    <value>Bơm dầu</value>
+  </data>
+  <data name="GateStatus" xml:space="preserve">
+    <value>Trạng thái cửa</value>
+  </data>
+  <data name="OilPressure" xml:space="preserve">
+    <value>Áp dầu</value>
+  </data>
+  <data name="Gate" xml:space="preserve">
+    <value>Cửa</value>
+  </data>
+  <data name="Vietnamese" xml:space="preserve">
+    <value>Tiếng Việt</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Tiếng Anh</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Hồ sơ</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Đổi mật khẩu</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Trang chủ</value>
+  </data>
+  <data name="Reservoir" xml:space="preserve">
+    <value>Hồ chứa</value>
+  </data>
+  <data name="MasterData" xml:space="preserve">
+    <value>Quản lý/Cấu hình</value>
+  </data>
+  <data name="SpillwayDischarge" xml:space="preserve">
+    <value>Tràn xả lũ</value>
+  </data>
+  <data name="WaterLevelHLSSG" xml:space="preserve">
+    <value>Mực nước HL SSG</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Cảnh báo</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Báo cáo</value>
+  </data>
+  <data name="StationDeclaration" xml:space="preserve">
+    <value>Khai báo trạm</value>
+  </data>
+  <data name="CoefficientManagement" xml:space="preserve">
+    <value>Quản lý hệ số</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>Quản lý người dùng</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Danh sách</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Vai trò</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Quyền</value>
+  </data>
+</root>

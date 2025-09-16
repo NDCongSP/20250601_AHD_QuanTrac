@@ -26,7 +26,7 @@ var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
 
 // Get the culture from localStorage or use default 'vi'
 var result = await jsInterop.InvokeAsync<string>("localStorage.getItem", "culture");
-var culture = result ?? "vi";
+var culture = result ?? "vi-VN";
 
 // Set the culture for the application
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);

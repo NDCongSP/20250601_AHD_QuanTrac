@@ -16,7 +16,6 @@
 @using Microsoft.AspNetCore.Authorization
 @using UI.Shared
 @using Domain
-@using UI.ResourceClass
 
 @inject IJSRuntime _jsRuntime
 @inject ILocalStorageService _localStorage
@@ -32,6 +31,6 @@
 @inject IHttpInterceptorManager _httpInterceptorManager
 @inject IPermissions _permissionsServices
 @inject IRoleToPermissions _roleToPermissionServices
-@inject IStringLocalizer<CommonResource> _localizer
+@inject IStringLocalizer<CommonResources> _localizer
 @inject IFT01 _ft01Service
 @inject IFT02 _ft02Service
