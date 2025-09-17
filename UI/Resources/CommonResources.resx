@@ -376,6 +376,24 @@
   <data name="lbl_TimerInterval" xml:space="preserve">
     <value>Khoảng thời gian làm mới</value>
   </data>
+  <data name="lbl_Fllow_HL_TXL" xml:space="preserve">
+    <value>Lưu lượng hồ lưu TXL</value>
+  </data>
+  <data name="unit_Seconds" xml:space="preserve">
+    <value>giây</value>
+  </data>
+  <data name="unit_MS" xml:space="preserve">
+    <value>mili giây</value>
+  </data>
+  <data name="unit_M3s" xml:space="preserve">
+    <value>m³/s</value>
+  </data>
+  <data name="validation_Required" xml:space="preserve">
+    <value>Vui lòng nhập {0}</value>
+  </data>
+  <data name="validation_Range" xml:space="preserve">
+    <value>{0} phải từ {1} đến {2}</value>
+  </data>
   <data name="Operation" xml:space="preserve">
     <value>Vận Hành</value>
   </data>

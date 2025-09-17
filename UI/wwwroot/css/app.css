@@ -181,12 +181,11 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .rz-body {
-    background-color: #fff !important;
     margin: 10px !important;
     padding: 0 !important;
 }

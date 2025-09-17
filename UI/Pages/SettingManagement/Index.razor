@@ -1,6 +1,13 @@
-﻿@page "/setting-management"
+@page "/setting-management"
 @using Radzen
 @using Radzen.Blazor
+@using Radzen.Blazor.Rendering
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Domain
+@using Application.Services
+@inject IStringLocalizer<CommonResources> _localizer
+@inject NotificationService _notificationService
 @attribute [Authorize(Policy = "Admin")]
 
 <RadzenRow Gap="1rem" Class="padding-body-content">
@@ -16,7 +23,7 @@
             @if (_isLoading)
             {
                 <div class="text-center p-4">
-                    <RadzenLoading></RadzenLoading>
+                    <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 10px;" />
                     <p>@_localizer["msg_LoadingSettings"]</p>
                 </div>
             }
@@ -31,7 +38,10 @@
                                         <RadzenFormField Text="@_localizer["lbl_HeSoLuuToc_Phi"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoLuuToc_Phi" 
-                                                        Style="width: 100%"></RadzenNumeric>
+                                                        Style="width: 100%" FormatString="F4">
+                                                <RadzenRequiredValidator Component="HeSoLuuToc_Phi" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_HeSoLuuToc_Phi"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="HeSoLuuToc_Phi" Min="0" Max="1" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_HeSoLuuToc_Phi"], 0, 1)" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
@@ -39,7 +49,10 @@
                                         <RadzenFormField Text="@_localizer["lbl_GiaToc_G"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.GiaToc_G" 
-                                                        Style="width: 100%"></RadzenNumeric>
+                                                        Style="width: 100%" FormatString="F2" Suffix=" m/s²">
+                                                <RadzenRequiredValidator Component="GiaToc_G" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_GiaToc_G"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="GiaToc_G" Min="0" Max="20" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_GiaToc_G"], 0, 20)" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
@@ -47,7 +60,9 @@
                                         <RadzenFormField Text="@_localizer["lbl_CaoTrinhNguongTran_Zn"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.CaoTrinhNguongTran_Zn" 
-                                                        Style="width: 100%"></RadzenNumeric>
+                                                        Style="width: 100%" FormatString="F2" Suffix=" m">
+                                                <RadzenRequiredValidator Component="CaoTrinhNguongTran_Zn" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_CaoTrinhNguongTran_Zn"])" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
@@ -55,7 +70,10 @@
                                         <RadzenFormField Text="@_localizer["lbl_SoCuaMo"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="int" @bind-Value="@_config.ParametterConfig.SoCuaMo" 
-                                                        Style="width: 100%"></RadzenNumeric>
+                                                        Style="width: 100%" FormatString="F0">
+                                                <RadzenRequiredValidator Component="SoCuaMo" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_SoCuaMo"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="SoCuaMo" Min="1" Max="10" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_SoCuaMo"], 1, 10)" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
@@ -63,7 +81,10 @@
                                         <RadzenFormField Text="@_localizer["lbl_HeSoCoHep_ALpha"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoCoHep_ALpha"
-                                                           Style="width: 100%"></RadzenNumeric>
+                                                           Style="width: 100%" FormatString="F4">
+                                                <RadzenRequiredValidator Component="HeSoCoHep_ALpha" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_HeSoCoHep_ALpha"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="HeSoCoHep_ALpha" Min="0" Max="1" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_HeSoCoHep_ALpha"], 0, 1)" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
                                 </div>
@@ -75,7 +96,19 @@
                                         <RadzenFormField Text="@_localizer["lbl_Q_CongSo1"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo1" 
-                                                        Style="width: 100%"></RadzenNumeric>
+                                                        Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                            </RadzenNumeric>
+                                            <RadzenRequiredValidator Component="Q_CongSo1" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo1"])" Style="display: block" />
+                                        </RadzenFormField>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <RadzenFormField Text="@_localizer["lbl_Fllow_HL_TXL"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Fllow_HL_TXL" 
+                                                        Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                                <RadzenRequiredValidator Component="Fllow_HL_TXL" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Fllow_HL_TXL"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="Fllow_HL_TXL" Min="0" Max="10000" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_Fllow_HL_TXL"], 0, 10000)" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
@@ -83,14 +116,18 @@
                                         <RadzenFormField Text="@_localizer["lbl_Q_CongSo2"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo2"
-                                                           Style="width: 100%"></RadzenNumeric>
+                                                           Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                                <RadzenRequiredValidator Component="Q_CongSo2" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo2"])" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                                         <RadzenFormField Text="@_localizer["lbl_Q_CongSo3"]" Variant="Variant.Outlined" Style="width:100%">
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo3"
-                                                           Style="width: 100%"></RadzenNumeric>
+                                                           Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                                <RadzenRequiredValidator Component="Q_CongSo3" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo3"])" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
                                 </div>
@@ -102,7 +139,10 @@
                                         <RadzenFormField Text="@_localizer["lbl_DataLogInterval"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="int" @bind-Value="@_config.DataLogInterval" 
-                                                        Style="width: 100%"></RadzenNumeric>
+                                                        Style="width: 100%" FormatString="F0" Suffix='@(" " + _localizer["unit_Seconds"])'>
+                                                <RadzenRequiredValidator Component="DataLogInterval" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_DataLogInterval"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="DataLogInterval" Min="1" Max="3600" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_DataLogInterval"], 1, 3600)" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
@@ -110,7 +150,10 @@
                                         <RadzenFormField Text="@_localizer["lbl_TimerInterval"]" Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="int" @bind-Value="@_config.TimerInterval" 
-                                                        Style="width: 100%"></RadzenNumeric>
+                                                        Style="width: 100%" FormatString="F0" Suffix='@(" " + _localizer["unit_MS"])'>
+                                                <RadzenRequiredValidator Component="TimerInterval" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_TimerInterval"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="TimerInterval" Min="100" Max="60000" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_TimerInterval"], 100, 60000)" Style="display: block" />
+                                            </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
                                 </div>
@@ -129,7 +172,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        LayoutState.SetTitle(_localizer["Cấu hình thông số"]);
         await base.OnInitializedAsync();
         await LoadConfigAsync();
     }

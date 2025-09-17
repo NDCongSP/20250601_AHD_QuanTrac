@@ -1,9 +1,131 @@
 @using Domain
 @using Radzen.Blazor
+
+<style>
+    :root {
+        --rz-primary-2: #1FB0A9;
+        --rz-text-inverse: #fff;
+    }
+    .gate-header {
+        background-color: var(--rz-primary-2);
+        color: var(--rz-text-inverse) !important;
+        text-align: center;
+        padding: 8px;
+        font-weight: bold;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+    
+    .param-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+        background-color: var(--rz-base-background-color);
+        border: 1px solid var(--rz-border-color);
+    }
+    
+    .param-label-box {
+        margin-right: 0.5rem;
+        color: var(--rz-text-color);
+    }
+    
+    .param-value {
+        font-weight: 500;
+        margin-right: 0.25rem;
+        color: var(--rz-text-color);
+    }
+    
+    /* Dark mode text colors */
+    .rz-application[data-theme="dark"] .param-row,
+    .rz-application[data-theme="dark"] .param-value,
+    .rz-application[data-theme="dark"] .param-unit,
+    .rz-application[data-theme="dark"] .rz-textbox-disabled {
+        color: #ffffff !important;
+    }
+    
+    /* Ensure disabled inputs have proper contrast in dark mode */
+    .rz-application[data-theme="dark"] .rz-textbox-disabled {
+        background-color: transparent !important;
+        border-color: var(--rz-border-color) !important;
+    }
+    
+    .param-unit {
+        color: var(--rz-text-secondary-color);
+        font-size: 0.9em;
+    }
+    
+    .operation-panel {
+        background: var(--rz-base-background-color) !important;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid var(--rz-border-color);
+    }
+    
+    .status-circle {
+        display: inline-block;
+        border-radius: 50%;
+        margin-right: 8px;
+        background-color: var(--rz-border-color);
+    }
+
+    .status-circle {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        margin-right: 8px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+    .status-circle-green {
+        background-color: #00FF00; /* Green */
+        border: 1px solid #FF0000;
+        border: 1px solid #FF0000;
+    }
+
+    .status-circle-yellow {
+        background-color: #FFFF00;
+        border: 1px solid #FF0000;
+        border-color: #FFFF00;
+    }
+
+    .status-circle-red {
+        background-color: #FF0000;
+        border: 1px solid #FF0000;
+    }
+    .ml-1 {
+        margin-left: 0.25rem;
+    }
+    
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    .btn-active{
+        background-color: green !important;
+        color: white !important;
+        width: 100%;
+    }
+
+    .btn-inactive{
+        background-color: #F0F0F0 !important;
+        color: blue !important;
+        width: 100%;
+    }
+
+    .btn-emergency{
+        background-color: !important;
+        color: white !important;
+        width: 100%;
+    }
+</style>
+
 <RadzenTabsItem Text="@($"CỬA {GateNo}")">
     <RadzenRow>
         <RadzenColumn SizeXS="12" SizeMD="12">
-            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+            <div class="gate-header">
                 CỬA @(GateNo)
             </div>
         </RadzenColumn>
@@ -50,29 +172,31 @@
             <RadzenFieldset Text="Vận Hành">
                 <RadzenRow GutterSize="1rem">
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Thủ công" Style="@(Station.Man.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Thủ công" Class="@(Station.Man.GetValueOrDefault() ? "btn-active" : "btn-inactive")" Style="width: 100%;" />
                     </RadzenColumn>
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Tự động" Style="@(Station.Auto.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Tự động" Class="@(Station.Auto.GetValueOrDefault() ? "btn-active" : "btn-inactive")" Style="width: 100%;" />
                     </RadzenColumn>
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Tại chỗ" Style="@(Station.Local.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Tại chỗ" Class="@(Station.Local.GetValueOrDefault() ? "btn-active" : "btn-inactive")" Style="width: 100%;" />
                     </RadzenColumn>
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Từ xa" Style="@(Station.Remote.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Từ xa" Class="@(Station.Remote.GetValueOrDefault() ? "btn-active" : "btn-inactive")" Style="width: 100%;" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12">
+                        <RadzenButton Text="Dừng khẩn" Class="@(Station.Local_Stop.GetValueOrDefault() ? "btn-emergency" : "btn-inactive")" Style="width: 100%;" />
                     </RadzenColumn>
                 </RadzenRow>
                 <div class="rz-text-align-center rz-mt-2">
-                    <RadzenButton Text="Dừng khẩn" Style="@(Station.Remote.GetValueOrDefault() ? "background-color: red; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
                 </div>
             </RadzenFieldset>
         </RadzenColumn>
         <RadzenColumn SizeXS="12" SizeMD="12" class="mt-3">
-            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+            <div class="gate-header">
                 THÔNG TIN VẬN HÀNH CỬA @(GateNo + 1)
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="8" Style="background: #F0F0F0;padding: 10px;">
+        <RadzenColumn SizeXS="12" SizeMD="8" Class="operation-panel">
             <RadzenRow>
                 <RadzenColumn SizeXS="12" SizeMD="12">
                     <RadzenRow>
@@ -132,7 +256,7 @@
 <RadzenTabsItem Text="@($"CỬA {GateNo + 1}")">
     <RadzenRow>
         <RadzenColumn SizeXS="12" SizeMD="12">
-            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+            <div class="gate-header">
                 CỬA @(GateNo + 1)
             </div>
         </RadzenColumn>
@@ -179,29 +303,30 @@
             <RadzenFieldset Text="Vận Hành">
                 <RadzenRow GutterSize="1rem">
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Thủ công" Style="@(Station.Man.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Thủ công" Class="@(Station.Man.GetValueOrDefault() ? "btn-active" : "btn-inactive")" />
                     </RadzenColumn>
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Tự động" Style="@(Station.Auto.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Tự động" Class="@(Station.Auto.GetValueOrDefault() ? "btn-active" : "btn-inactive")" />
                     </RadzenColumn>
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Tại chỗ" Style="@(Station.Local.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Tại chỗ" Class="@(Station.Local.GetValueOrDefault() ? "btn-active" : "btn-inactive")" />
                     </RadzenColumn>
                     <RadzenColumn Size="6">
-                        <RadzenButton Text="Từ xa" Style="@(Station.Remote.GetValueOrDefault() ? "background-color: green; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
+                        <RadzenButton Text="Từ xa" Class="@(Station.Remote.GetValueOrDefault() ? "btn-active" : "btn-inactive")" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12">
+                        <RadzenButton Text="Dừng khẩn" Class="@(Station.Local_Stop.GetValueOrDefault() ? "btn-emergency" : "btn-inactive")" Style="width: 100%;" />
                     </RadzenColumn>
                 </RadzenRow>
-                <div class="rz-text-align-center rz-mt-2">
-                    <RadzenButton Text="Dừng khẩn" Style="@(Station.Remote.GetValueOrDefault() ? "background-color: red; color: white; width: 100%;" : "background-color: #F0F0F0; color: blue; width: 100%;")" />
-                </div>
             </RadzenFieldset>
         </RadzenColumn>
         <RadzenColumn SizeXS="12" SizeMD="12" class="mt-3">
-            <div style="background-color: #1FB0A9;color:blue; color: white; text-align: center; padding: 8px; font-weight: bold;">
+            <div class="gate-header">
+
                 THÔNG TIN VẬN HÀNH CỬA @(Station.StationId)
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="8" Style="background: #F0F0F0;padding: 10px;">
+        <RadzenColumn SizeXS="12" SizeMD="8" Class="operation-panel">
             <RadzenRow>
                 <RadzenColumn SizeXS="12" SizeMD="12">
                     <RadzenRow>
