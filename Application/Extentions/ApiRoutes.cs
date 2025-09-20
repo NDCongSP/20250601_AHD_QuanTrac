@@ -75,6 +75,13 @@
             public const string BasePath = "api/FT01";
             public const string DeleteLocation = "DeleteLocation/{locationId}";
             public const string AddOrUpdateLocation = "AddOrUpdateLocation";
+            public const string GetConfig = "get-config";
+            public const string UpdateConfig = "update-config";
+        }
+        public static class FT02
+        {
+            public const string BasePath = "api/FT02";
+            public const string GetRealtimeDisplay = "GetRealtimeDisplay";
         }
     }
 }

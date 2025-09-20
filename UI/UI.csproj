@@ -4,7 +4,35 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Components\**" />
+    <Compile Remove="Pages\Notifications\**" />
+    <Compile Remove="Pages\Settings\**" />
+    <Content Remove="Pages\Components\**" />
+    <Content Remove="Pages\Notifications\**" />
+    <Content Remove="Pages\Settings\**" />
+    <EmbeddedResource Remove="Pages\Components\**" />
+    <EmbeddedResource Remove="Pages\Notifications\**" />
+    <EmbeddedResource Remove="Pages\Settings\**" />
+    <None Remove="Pages\Components\**" />
+    <None Remove="Pages\Notifications\**" />
+    <None Remove="Pages\Settings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\images\generals\hochua.svg" />
+    <Content Remove="wwwroot\images\generals\Home.svg" />
+    <Content Remove="wwwroot\images\generals\MNGG.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\images\generals\hochua.svg" />
+    <EmbeddedResource Include="wwwroot\images\generals\Home.svg" />
+    <EmbeddedResource Include="wwwroot\images\generals\MNGG.svg" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.16" />
@@ -20,18 +48,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Components\" />
-    <Folder Include="Pages\Settings\" />
-    <Folder Include="Pages\Notifications\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="wwwroot\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\flags\en.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\flags\vi.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

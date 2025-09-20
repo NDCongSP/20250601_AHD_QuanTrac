@@ -1,0 +1,101 @@
+﻿@page "/spillway"
+@using Domain
+@using System.Timers
+@using UI.StaticClass
+@using Microsoft.Extensions.Localization
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+@inject IStringLocalizer<Index> _localizer
+@using Radzen.Blazor
+@using UI.Pages.Spillway
+@attribute [Authorize(Policy = "Admin")]
+
+<style>
+    .param-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .param-label-box {
+        color: blue !important;
+        border: 1px solid #ced4da !important;
+        line-height: 1.8;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .param-value {
+        margin-left: 16px;
+        min-width: 50px;
+        text-align: right;
+    }
+
+    .param-unit {
+        margin-left: 8px;
+        min-width: 20px;
+    }
+
+    .rz-fieldset {
+        min-height: 200px;
+    }
+</style>
+
+<RadzenTabs>
+    <Tabs>
+        @if (_gateData.Stations != null)
+        {
+            foreach (var station in _gateData.Stations.OrderBy(s => s.StationId).Take(3))
+            {
+                <GateInfo Station="@station" GateData="@_gateData" GateNo="@(station.StationId * 2 - 1)" />
+            }
+        }
+    </Tabs>
+</RadzenTabs>
+
+@code {
+    private string _svg = string.Empty;
+    private System.Timers.Timer _timer = new();
+    private RealtimeDisplayModel _gateData = new();
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle(_localizer["Hệ thống tràn"]);
+        using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.hochua.svg");
+        if (stream != null)
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+            using StreamReader reader = new StreamReader(stream);
+            _svg = reader.ReadToEnd();
+        }
+        base.OnInitialized();
+        RefreshData(null, null);
+
+        // Timer refresh data
+        _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
+        _timer.Elapsed += RefreshData;
+        _timer.Enabled = true;
+    }
+
+    private async void RefreshData(object? sender, ElapsedEventArgs? e)
+    {
+        try
+        {
+            _gateData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
+            //_gateData = FakeDataGenerator.GenerateLocation();
+            // await JSRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", _gateData);
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error refreshing data: {ex.Message}");
+        }
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}

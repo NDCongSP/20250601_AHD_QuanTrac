@@ -1,5 +1,4 @@
-﻿using Application.Services;
-using Application.Services.Authen;
+﻿using Application.Services.Authen;
 using Application.Services.Authen.UI;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
@@ -10,18 +9,28 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 using RestEase.HttpClientFactory;
+using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using UI;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+// Add localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-var jsInterop = builder.Build().Services.GetRequiredService<IJSRuntime>();
-//var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
-//var culture = result ?? "ja-JP";
-//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
-//CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+
+// Build a temporary service provider to get the IJSRuntime
+var host = builder.Build();
+var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
+
+// Get the culture from localStorage or use default 'vi'
+var result = await jsInterop.InvokeAsync<string>("localStorage.getItem", "culture");
+var culture = result ?? "vi-VN";
+
+// Set the culture for the application
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
 
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<UI.Services.LayoutStateService>();
@@ -38,6 +47,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStatePr
     .AddScoped<AuthenticationHeaderHandler>();
 
 builder.Services.AddScoped<IHttpInterceptorManager, HttpInterceptorManager>();
+
 
 builder.Services.AddAuthorizationCore(b =>
 {
@@ -87,8 +97,10 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IAccount>()
     .UseWithRestEaseClient<IPermissions>()
     .UseWithRestEaseClient<IRoleToPermissions>()
-    .UseWithRestEaseClient<IFT01>();
-
+    .UseWithRestEaseClient<IFT01>()
+    .UseWithRestEaseClient<IFT02>();
+var app = builder.Build();
+await GlobalVariable.InitializeConfigAsync(app.Services);
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));
 builder.Services.AddBlazoredLocalStorage();
 

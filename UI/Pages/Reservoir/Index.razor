@@ -1,0 +1,165 @@
+@page "/reservoir"
+@using System.Text.RegularExpressions
+@using System.Timers
+@using UI.StaticClass
+@using Radzen.Blazor
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@attribute [Authorize(Policy = "Admin")]
+@{
+    int i = 1;
+}
+
+
+<div class="main-container">
+    <!-- Top Section with 3 columns -->
+    <div class="top-section">
+        <RadzenRow class="h-100">
+            <!-- First Column with Fieldset -->
+            <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column">
+                <div class="column-container">
+                    <div class="column-header">
+                        @_localizer["Hồ chứa"]
+                    </div>
+                    <div class="column-content">
+                        <RadzenRow>
+                            <RadzenColumn SizeXS="12" SizeMD="12" class="svg-container">
+                                @((MarkupString)_svg)
+                            </RadzenColumn>
+                        </RadzenRow>
+                    </div>
+                </div>
+            </RadzenColumn>
+
+            <!-- Second Column without Fieldset -->
+            <RadzenColumn SizeXS="12" SizeLG="3" class="rz-mx-auto equal-height-column" Style="height: 365px;">
+                <RadzenDataGrid Data="@apiData" Style="height: 100%;"
+                    TItem="KeyValuePair<string, double>" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
+                    AllowPaging="false" ShowPagingSummary="false">
+                    <Columns>
+                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Vị trí" Property="Key"/>
+                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Giá trị (m)" Property="Value"
+                                              FormatString="{0:N2}" TextAlign="TextAlign.Right" />
+                        
+                    </Columns>
+                        
+                    <EmptyTemplate>
+                        <div class="rz-datatable-emptymessage" style="text-align: center; padding: 10px;">
+                            @_localizer["Không có dữ liệu"]
+                        </div>
+                    </EmptyTemplate>
+                </RadzenDataGrid>
+            </RadzenColumn>
+
+            <!-- Third Column without Fieldset -->
+            <RadzenColumn SizeXS="12" SizeLG="5" class="rz-mx-auto equal-height-column">
+                <div class="map-container" style="border-top: none;height: 365px;">
+                    <iframe src="https://vrain.vn/61/overview?public_map=windy"
+                        style="width: 100%; height: 100%; border: none; border-radius: 0 0 4px 4px;" allowfullscreen>
+                    </iframe>
+                </div>
+            </RadzenColumn>
+        </RadzenRow>
+    </div>
+
+    <!-- Bottom Section with Stacked Area Chart -->
+    <div class="bottom-section">
+        <div class="chart-wrapper">
+            <div class="chart-header">
+                Biểu đồ thống kê
+            </div>
+            <div class="chart-container">
+                <RadzenChart @ref="_chart" Style="width: 100%; height: 100%;">
+                    <RadzenStackedAreaSeries Smooth="true" Data="@chartData" CategoryProperty="Time" Title="Lộc Thiện"
+                                             ValueProperty="LocThien">
+                        <RadzenSeriesDataLabels Visible="false" Fill="#FB7185" />
+                    </RadzenStackedAreaSeries>
+                    <RadzenStackedAreaSeries Smooth="false" Data="@chartData" CategoryProperty="Time" Title="Lộc Ninh"
+                                             LineType="LineType.Dashed" ValueProperty="LocNinh">
+                        <RadzenSeriesDataLabels Visible="@false" />
+                    </RadzenStackedAreaSeries>
+                    <RadzenAreaSeries Data="@chartData" CategoryProperty="Time" Title="Lộc Thành"
+                                      ValueProperty="LocThanh" LineType="LineType.Solid" />
+                    <RadzenLegend Position="LegendPosition.Top" />
+                    <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" />
+                    <RadzenValueAxis />
+                </RadzenChart>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private RadzenChart? _chart;
+    string _svg;
+    private System.Timers.Timer _timer;
+    RealtimeDisplayModel realtimeData { get; set; } = new();
+    public class ChartDataPoint
+    {
+        public DateTime Time { get; set; }
+        public double LocThien { get; set; }
+        public double LocNinh { get; set; }
+        public double LocThanh { get; set; }
+    }
+
+    private List<ChartDataPoint> chartData = new List<ChartDataPoint>();
+    private List<KeyValuePair<string, double>> apiData = new();
+
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle(_localizer["Hồ chứa"]);
+        using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.hochua.svg");
+        stream.Seek(0, SeekOrigin.Begin);
+        StreamReader reader = new StreamReader(stream);
+        _svg = reader.ReadToEnd();
+        base.OnInitialized();
+        RefreshData(null, null);
+        #region Timer refresh data
+        _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
+        _timer.Elapsed += RefreshData;
+        _timer.Enabled = true;
+        #endregion
+
+        // Initialize chart data (example data)
+        var now = DateTime.Now;
+        var rnd = new Random();
+        for (int i = 0; i < 10; i++)
+        {
+            chartData.Add(new ChartDataPoint
+            {
+                Time = now.AddHours(-i * 2),
+                LocThien = rnd.Next(10, 50),
+                LocNinh = rnd.Next(10, 50),
+                LocThanh = rnd.Next(10, 50)
+            });
+        }
+    }
+
+    private async void RefreshData(object? sender, ElapsedEventArgs? e)
+    {
+        try
+        {
+            realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
+            //realtimeData = FakeDataGenerator.GenerateLocation();
+            GetAPIData();
+            await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
+            StateHasChanged();
+        }
+        catch { }
+    }
+
+    private void GetAPIData()
+    {
+        apiData = realtimeData.CalculatorValue?.GetType().GetProperties()
+                            .Where(p => p.Name.StartsWith("API_D_"))
+                            .Select(p => new KeyValuePair<string, double>(
+                            _localizer[p.Name.Replace("API_D_", "").Replace("_", " ")] ?? p.Name.Replace("API_D_", ""),
+                            Convert.ToDouble(p.GetValue(realtimeData.CalculatorValue) ?? 0)
+                            )).ToList();
+    }
+
+    public void Dispose()
+    {
+        _timer.Dispose();
+    }
+}

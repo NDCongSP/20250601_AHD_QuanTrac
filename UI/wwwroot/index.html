@@ -11,17 +11,17 @@
     <link id="radzen-theme" rel="stylesheet" />
     <link href="css/custom-colors.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"/>
-    <!-- If you add any scoped CSS files, uncomment the following to load them
-    <link href="UI.styles.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" />
+    <!-- If you add any scoped CSS files, uncomment the following to load them-->
+    <link href="UI.styles.css" rel="stylesheet" />
 </head>
 
 <body>
     <div id="app">
         <!--<div class="spinner-border text-info" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>-->
+            <span class="visually-hidden">Loading...</span>
+        </div>-->
         <div class="loader">
             <div class="dot"></div>
             <div class="dot"></div>
@@ -39,6 +39,9 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script src="js/culture.js"></script>
+    <script src="js/update-svg.js"></script>
+
     <script>
         (function () {
             const theme = localStorage.getItem('theme') || 'light';

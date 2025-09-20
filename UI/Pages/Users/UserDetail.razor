@@ -4,7 +4,7 @@
 @using Application.DTOs.Response.Account
 @using Domain
 @using Microsoft.AspNetCore.Authorization
-@inject IStringLocalizer<CommonResource> _localizer
+@inject IStringLocalizer<CommonResources> _localizer
 
 @attribute [Authorize]
 @if (_roles.Count <= 0 || _model == null)

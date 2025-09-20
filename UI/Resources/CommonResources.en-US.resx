@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btn_AddNew" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="lbl_RowsPerPage" xml:space="preserve">
+    <value>Rows per page</value>
+  </data>
+  <data name="lbl_NoData" xml:space="preserve">
+    <value>No data available</value>
+  </data>
+  <data name="lbl_SerialNumber" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="lbl_StationName" xml:space="preserve">
+    <value>Station Name</value>
+  </data>
+  <data name="lbl_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="lbl_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="LocationList" xml:space="preserve">
+    <value>Main Location</value>
+  </data>
+  <data name="LocationName" xml:space="preserve">
+    <value>Main Location</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="StationList" xml:space="preserve">
+    <value>Browser</value>
+  </data>
+  <data name="StationName" xml:space="preserve">
+    <value>Name Station</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="lbl_LocationManagement" xml:space="preserve">
+    <value>STATION MANAGEMENT</value>
+  </data>
+  <data name="msg_DeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete station '{0}'?</value>
+  </data>
+  <data name="lbl_DeleteConfirmation" xml:space="preserve">
+    <value>Confirm Deletion</value>
+  </data>
+  <data name="btn_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="lbl_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="msg_DeleteSuccess" xml:space="preserve">
+    <value>Successfully deleted station '{0}'</value>
+  </data>
+  <data name="lbl_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="msg_DeleteError" xml:space="preserve">
+    <value>Failed to delete station: {0}</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save button</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+  <value>User Name</value>
+</data>
+<data name="Fullname" xml:space="preserve">
+  <value>Full Name</value>
+</data>
+<data name="Email" xml:space="preserve">
+  <value>Email</value>
+</data>
+<data name="User.Search" xml:space="preserve">
+  <value>User Search</value>
+</data>
+<data name="Keyword" xml:space="preserve">
+  <value>Keyword</value>
+</data>
+<data name="Role" xml:space="preserve">
+  <value>Role</value>
+</data>
+<data name="Select" xml:space="preserve">
+  <value>Select</value>
+</data>
+<data name="Search" xml:space="preserve">
+  <value>Search</value>
+</data>
+<data name="Refresh" xml:space="preserve">
+  <value>Refresh</value>
+</data>
+<data name="Clear" xml:space="preserve">
+  <value>Clear</value>
+</data>
+<data name="User.List" xml:space="preserve">
+  <value>User List</value>
+</data>
+<data name="Create" xml:space="preserve">
+  <value>Create</value>
+</data>
+<data name="items per page" xml:space="preserve">
+  <value>items per page</value>
+</data>
+<data name="No records to display." xml:space="preserve">
+  <value>No records to display.</value>
+</data>
+<data name="lbl_HeSoLuuToc_Phi" xml:space="preserve">
+  <value>Flow Coefficient (Phi)</value>
+</data>
+<data name="lbl_GiaToc_G" xml:space="preserve">
+  <value>Gravity Acceleration (g)</value>
+</data>
+<data name="lbl_CaoTrinhNguongTran_Zn" xml:space="preserve">
+  <value>Spillway Crest Level (Zn)</value>
+</data>
+<data name="lbl_SoCuaMo" xml:space="preserve">
+  <value>Number of Gates</value>
+</data>
+<data name="lbl_HeSoCoHep_ALpha" xml:space="preserve">
+  <value>Contraction Coefficient (Alpha)</value>
+</data>
+<data name="lbl_GeneralSettings" xml:space="preserve">
+  <value>General Settings</value>
+</data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="QuanLyTran" xml:space="preserve">
+    <value>Spillway Management</value>
+  </data>
+  <data name="HoChua" xml:space="preserve">
+    <value>Reservoir</value>
+  </data>
+  <data name="HeThongTran" xml:space="preserve">
+    <value>Spillway System</value>
+  </data>
+  <data name="MucNuoc" xml:space="preserve">
+    <value>Water Level</value>
+  </data>
+  <data name="CauHinhThongSo" xml:space="preserve">
+    <value>Parameter Configuration</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UserManager.Title" xml:space="preserve">
+    <value>USER MANAGEMENT</value>
+  </data>
+  <data name="UserDetail.Title" xml:space="preserve">
+    <value>USER DETAIL</value>
+  </data>
+  <data name="User.CreateTitle" xml:space="preserve">
+    <value>Create new user</value>
+  </data>
+  <data name="User.EditTitle" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="Detail.BackToList" xml:space="preserve">
+    <value>Back to list</value>
+  </data>
+  <data name="UesrDetail.Information" xml:space="preserve">
+    <value>User Information</value>
+  </data>
+  <data name="Detail.Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="Confirmation.Create" xml:space="preserve">
+    <value>are you sure you want to create?</value>
+  </data>
+  <data name="Confirmation.Update" xml:space="preserve">
+    <value>are you sure you want to update?</value>
+  </data>
+  <data name="Confirmation.Delete" xml:space="preserve">
+    <value>Are you sure you want to delete</value>
+  </data>
+  <data name="UpdateUsetTitle" xml:space="preserve">
+    <value>Update User</value>
+  </data>
+  <data name="Result user null." xml:space="preserve">
+    <value>User not found.</value>
+  </data>
+  <data name="Validate.EmailRequried" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="Validate.EmailFormat" xml:space="preserve">
+    <value>Invalid email format</value>
+  </data>
+  <data name="Validate.Role" xml:space="preserve">
+    <value>Role is required</value>
+  </data>
+  <data name="btn_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="msg_LoadingSettings" xml:space="preserve">
+    <value>Loading settings...</value>
+  </data>
+  <data name="lbl_FlowSettings" xml:space="preserve">
+    <value>Flow Settings</value>
+  </data>
+  <data name="lbl_Q_CongSo1" xml:space="preserve">
+    <value>Q Gate 1</value>
+  </data>
+  <data name="lbl_Q_CongSo2" xml:space="preserve">
+    <value>Q Gate 2</value>
+  </data>
+  <data name="lbl_Q_CongSo3" xml:space="preserve">
+    <value>Q Gate 3</value>
+  </data>
+  <data name="lbl_SystemSettings" xml:space="preserve">
+    <value>System Settings</value>
+  </data>
+  <data name="lbl_DataLogInterval" xml:space="preserve">
+    <value>Data Log Interval</value>
+  </data>
+  <data name="lbl_TimerInterval" xml:space="preserve">
+    <value>Timer Interval</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="Automatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="Remote" xml:space="preserve">
+    <value>Remote</value>
+  </data>
+  <data name="EmergencyStop" xml:space="preserve">
+    <value>Emergency Stop</value>
+  </data>
+  <data name="OilPump" xml:space="preserve">
+    <value>Oil Pump</value>
+  </data>
+  <data name="GateStatus" xml:space="preserve">
+    <value>Gate Status</value>
+  </data>
+  <data name="OilPressure" xml:space="preserve">
+    <value>Oil Pressure</value>
+  </data>
+  <data name="Gate" xml:space="preserve">
+    <value>Gate</value>
+  </data>
+  <data name="Vietnamese" xml:space="preserve">
+    <value>Vietnamese</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="MasterData" xml:space="preserve">
+    <value>Master Data</value>
+  </data>
+  <data name="Reservoir" xml:space="preserve">
+    <value>Reservoir</value>
+  </data>
+  <data name="SpillwayDischarge" xml:space="preserve">
+    <value>Spillway Discharge</value>
+  </data>
+  <data name="WaterLevelHLSSG" xml:space="preserve">
+    <value>Water Level HL SSG</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Alerts</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="StationDeclaration" xml:space="preserve">
+    <value>Station Declaration</value>
+  </data>
+  <data name="CoefficientManagement" xml:space="preserve">
+    <value>Coefficient Management</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="LakeWaterLevel" xml:space="preserve">
+    <value>Lake Water Level</value>
+  </data>
+  <data name="OilTemperature" xml:space="preserve">
+    <value>Oil Temperature</value>
+  </data>
+  <data name="CylinderJourney" xml:space="preserve">
+    <value>Cylinder Journey</value>
+  </data>
+  <data name="GateOpeningDegree" xml:space="preserve">
+    <value>Gate Opening (a)</value>
+  </data>
+  <data name="GateFlow" xml:space="preserve">
+    <value>Gate {0} Flow (Qi)</value>
+  </data>
+  <data name="TotalFlow" xml:space="preserve">
+    <value>Total Flow (Qtr)</value>
+  </data>
+  <data name="GateOperationInfo" xml:space="preserve">
+    <value>GATE {0} OPERATION INFO</value>
+  </data>
+  <data name="Pump" xml:space="preserve">
+    <value>Pump {0}</value>
+  </data>
+  <data name="PinPump" xml:space="preserve">
+    <value>Pin Pump</value>
+  </data>
+  <data name="PumpError" xml:space="preserve">
+    <value>Pump {0} Error</value>
+  </data>
+  <data name="PinPumpError" xml:space="preserve">
+    <value>Pin Pump Error</value>
+  </data>
+  <data name="GateIsOpening" xml:space="preserve">
+    <value>Gate {0} is opening</value>
+  </data>
+  <data name="GateIsClosing" xml:space="preserve">
+    <value>Gate {0} is closing</value>
+  </data>
+  <data name="GateFullyOpened" xml:space="preserve">
+    <value>Gate {0} fully opened</value>
+  </data>
+  <data name="GateFullyClosed" xml:space="preserve">
+    <value>Gate {0} fully closed</value>
+  </data>
+  <data name="GateOilPressureHigh" xml:space="preserve">
+    <value>Gate {0} oil pressure high</value>
+  </data>
+  <data name="GateOilPressureLow" xml:space="preserve">
+    <value>Gate {0} oil pressure low</value>
+  </data>
+  <data name="GateSkewError" xml:space="preserve">
+    <value>Gate {0} skew error</value>
+  </data>
+  <data name="GateValveDiagram" xml:space="preserve">
+    <value>Gate Valve Diagram</value>
+  </data>
+</root>

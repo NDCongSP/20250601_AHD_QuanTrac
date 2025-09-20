@@ -1,14 +1,157 @@
 h1:focus {
     outline: none;
 }
-/*#app {
+
+/* Responsive Layout */
+@media (max-width: 992px) {
+    .rz-layout {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .rz-sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 280px !important;
+        z-index: 1030;
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        transform: translateX(-100%);
+        background-color: var(--rz-sidebar-background-color);
+    }
+
+    .rz-sidebar.rz-sidebar-show {
+        transform: translateX(0);
+        z-index: 9999;
+    }
+
+    .rz-sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1029;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: pan-y;
+    }
+
+    .rz-sidebar-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .rz-layout-content {
+        margin-left: 0 !important;
+        transition: margin-left 0.3s ease-in-out;
+    }
+
+    .rz-header {
+        position: sticky;
+        top: 0;
+        z-index: 9999;
+    }
+
+    .mobile-menu-btn {
+        display: block !important;
+        margin-right: 1rem;
+    }
+
+    .rz-panelmenu .rz-navigator-item {
+        padding: 0.5rem 0.5rem 0.5rem 1rem;
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 993px) {
+    .mobile-menu-btn {
+        display: none !important;
+    }
+
+    .rz-sidebar-overlay {
+        display: none !important;
+    }
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: none;
+}
+
+/* Sidebar styles */
+.rz-sidebar {
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    overflow-y: auto;
+    background-color: var(--rz-sidebar-background-color);
     display: flex;
-    height: 100vh;
-    width: 100vw;
-    align-content: center;
-    align-items: center;
+    flex-direction: column;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Header styles */
+.rz-header {
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Adjust main content area */
+.rz-layout-content {
+    padding: 1rem;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Hide text in collapsed sidebar */
+.rz-sidebar-collapsed .rz-panelmenu-text,
+.rz-sidebar-collapsed .rz-panelmenu-icon {
+    display: none;
+}
+
+/* Make sure sidebar items are properly aligned when collapsed */
+.rz-sidebar-collapsed .rz-navigator-item {
+    display: flex;
     justify-content: center;
-}*/
+    padding: 0.5rem;
+}
+
+/* Responsive adjustments for header elements */
+@media (max-width: 768px) {
+    .rz-header .rz-stack {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .rz-header .rz-stack > * {
+        flex: 0 0 auto;
+    }
+
+    .logo-container {
+        order: 1;
+    }
+
+    .header-actions {
+        order: 2;
+        margin-left: auto;
+    }
+
+    .user-menu {
+        order: 3;
+    }
+}
 .loading-center {
     width: 50px;
     height: 50px;
@@ -38,12 +181,11 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .rz-body {
-    background-color: #fff !important;
     margin: 10px !important;
     padding: 0 !important;
 }
@@ -109,3 +251,51 @@ h1:focus {
 .rz-navigation-item-wrapper .rz-navigation-item-link {
     justify-content: center;
 }
+
+/*add css svg*/
+
+figure {
+    display: block;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    /*border: solid thin navy;*/
+}
+
+figure:nth-of-type(2n) {
+    background: #bfc;
+}
+
+figcaption, figure > div {
+    display: block;
+    vertical-align: middle;
+}
+
+figure > div {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+img, svg, .bg-svg {
+    /*border: thin dotted darkgrey;*/
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+svg.defs-only {
+    display: block;
+    position: absolute;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+}
+

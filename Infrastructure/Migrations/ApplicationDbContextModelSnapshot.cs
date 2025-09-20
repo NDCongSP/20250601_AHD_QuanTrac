@@ -163,44 +163,110 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool?>("Auto")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_DM_HoDT")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Door1")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_DM_HoDT_Total")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Door2")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_Doi95")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Door3")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_Doi95_Total")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Door4")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_DongBan")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Door5")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_DongBan_Total")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Door6")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_KaTum")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Doorlock1")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_KaTum_Total")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Doorlock2")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_LocNinh")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Doorlock3")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_LocNinh_Total")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Doorlock4")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_LocThanh")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Doorlock5")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_LocThanh_Total")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Close_Doorlock6")
-                        .HasColumnType("bit");
+                    b.Property<double?>("API_D_LocThien")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_LocThien_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhHoa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhHoa_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhTam")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_MinhTam_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHa")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHa_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa1")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa1_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa2")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanHoa2_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanThanh")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_TanThanh_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_ThanhLuong")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_D_ThanhLuong_Total")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_BenSuc")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_BinhNham")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_BinhNham2")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_DauTieng")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_HL_TXL")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_SonDai")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_Fllow_TL_CDD")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("CreateAt")
                         .HasColumnType("datetime2");
@@ -208,331 +274,88 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CreateOperatorId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("DC1_Over")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Door1_Aperture")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("DC1_Running")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Door1_Aperture_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("DC2_Over")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Door1_Aperture_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("DC2_Running")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Door2_Aperture")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("DC3_Over")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Door2_Aperture_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("DC3_Running")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Door2_Aperture_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door1_Aperture")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Door1")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door1_Close")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Door1_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door1_Closing")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Door1_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door1_Open")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Door2")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door1_Opening")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Door2_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door1_PressureHigh")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Door2_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door1_PressureLow")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Ho")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door2_Aperture")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Ho_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door2_Close")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Fllow_Ho_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door2_Closing")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder1_1")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door2_Open")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder1_1_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door2_Opening")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder1_1_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door2_PressureHigh")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder1_2")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door2_PressureLow")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder1_2_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door3_Aperture")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder1_2_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door3_Close")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder2_1")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door3_Closing")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder2_1_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door3_Open")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder2_1_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door3_Opening")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder2_2")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door3_PressureHigh")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder2_2_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Door3_PressureLow")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door4_Aperture")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door4_Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door4_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door4_Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door4_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door4_PressureHigh")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door4_PressureLow")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door5_Aperture")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door5_Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door5_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door5_Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door5_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door5_PressureHigh")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door5_PressureLow")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door6_Aperture")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door6_Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door6_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door6_Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door6_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door6_PressureHigh")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Door6_PressureLow")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock1_1Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock1_1Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock1_2Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock1_2Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock1_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock1_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock2_1Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock2_1Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock2_2Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock2_2Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock2_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock2_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock3_1Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock3_1Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock3_2Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock3_2Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock3_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock3_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock4_1Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock4_1Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock4_2Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock4_2Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock4_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock4_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock5_1Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock5_1Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock5_2Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock5_2Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock5_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock5_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock6_1Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock6_1Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock6_2Close")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock6_2Open")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock6_Closing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Doorlock6_Opening")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("Fllow_BenSuc")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_DauTieng")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_Door1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_Door2")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_Door3")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_Door4")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_Door5")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_Door6")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_Ho")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fllow_SonDai")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("HT_Cylinder1_1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder1_2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder2_1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder2_2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder3_1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder3_2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder4_1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder4_2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder5_1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder5_2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder6_1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("HT_Cylinder6_2")
-                        .HasColumnType("bit");
+                    b.Property<double?>("HT_Cylinder2_2_Offset")
+                        .HasColumnType("float");
 
                     b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Local")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("Local_Stop")
                         .HasColumnType("bit");
 
                     b.Property<int>("LocationId")
@@ -542,74 +365,72 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Man")
+                    b.Property<bool>("LogBaseInterval")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("Open_Door1")
-                        .HasColumnType("bit");
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Open_Door2")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Pressure_Oil_Door1")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Door3")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Pressure_Oil_Door1_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Door4")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Pressure_Oil_Door1_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Door5")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Pressure_Oil_Door2")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Door6")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Pressure_Oil_Door2_Final")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Doorlock1")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Pressure_Oil_Door2_Offset")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Doorlock2")
-                        .HasColumnType("bit");
+                    b.Property<double>("Q_cs1")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Doorlock3")
-                        .HasColumnType("bit");
+                    b.Property<double>("Q_cs2")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Doorlock4")
-                        .HasColumnType("bit");
+                    b.Property<double>("Q_cs3")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Doorlock5")
-                        .HasColumnType("bit");
+                    b.Property<double>("Q_den")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Open_Doorlock6")
-                        .HasColumnType("bit");
+                    b.Property<double>("Q_denta")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Remote")
-                        .HasColumnType("bit");
+                    b.Property<double>("Q_di")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Run_Pump1")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Q_i_1")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Run_Pump2")
-                        .HasColumnType("bit");
+                    b.Property<double?>("Q_i_2")
+                        .HasColumnType("float");
 
-                    b.Property<bool?>("Run_Pump3")
-                        .HasColumnType("bit");
+                    b.Property<double>("Q_i_total")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("Setting_Door1_Aperture")
-                        .HasColumnType("int");
+                    b.Property<double>("Q_tr")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("Setting_Door2_Aperture")
-                        .HasColumnType("int");
+                    b.Property<double>("Q_tt")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("Setting_Door3_Aperture")
-                        .HasColumnType("int");
+                    b.Property<double?>("S1_Temp_Oil")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("Setting_Door4_Aperture")
-                        .HasColumnType("int");
+                    b.Property<double?>("S1_Temp_Oil_Final")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("Setting_Door5_Aperture")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Setting_Door6_Aperture")
-                        .HasColumnType("int");
+                    b.Property<double?>("S1_Temp_Oil_Offset")
+                        .HasColumnType("float");
 
                     b.Property<int>("StationId")
                         .HasColumnType("int");
@@ -617,95 +438,85 @@ namespace Infrastructure.Migrations
                     b.Property<string>("StationName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Stop_Remote")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("Temp_Oil")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Fllow")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdateOperatorId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("W1_ho")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W1_ho_old")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W2_ho")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W2_ho_old")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_cs1")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_cs2")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_cs3")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_den")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_di")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_tr")
+                        .HasColumnType("float");
+
+                    b.Property<double>("W_tt")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.ToTable("FT03");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FT05", b =>
+            modelBuilder.Entity("Domain.Entities.FT04", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ACK")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ACKDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Actived")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreateOperatorId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Details")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
-
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Minutes")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OvenId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OvenName")
-                        .IsRequired()
+                    b.Property<string>("LocationName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProfileName")
-                        .IsRequired()
+                    b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Seconds")
+                    b.Property<int?>("StationId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Setpoint")
-                        .HasColumnType("float");
-
-                    b.Property<int>("StepId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StepName")
-                        .IsRequired()
+                    b.Property<string>("StationName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Temperature")
-                        .HasColumnType("float");
+                    b.Property<string>("TagName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -713,39 +524,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("UpdateOperatorId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("FT05");
-                });
-
-            modelBuilder.Entity("Domain.Entities.FT06", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("C000")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateOperatorId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool?>("Value")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdateOperatorId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("FT06");
+                    b.ToTable("FT04");
                 });
 
             modelBuilder.Entity("Domain.Entities.MstUserSetting", b =>
@@ -871,6 +655,46 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RoleToPermission");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ScadaUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateOperatorId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PermissionScada")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateOperatorId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScadaUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

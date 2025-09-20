@@ -13,6 +13,7 @@ namespace Infrastructure.IoC.DependencyInjection
             services.AddScoped<IPermissions, RepositoryPermissionsServices>();
             services.AddScoped<IRoleToPermissions, RepositoryRoleToPermissionsServices>();
             services.AddScoped<IFT01, RepositoryFT01Services>();
+            services.AddScoped<IFT02, RepositoryFT02Services>();
         }
     }
 }

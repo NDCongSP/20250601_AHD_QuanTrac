@@ -1,0 +1,62 @@
+@page "/login"
+@using Application.DTOs.Request.Account
+@using Microsoft.AspNetCore.Components
+@using Radzen
+@using Radzen.Blazor
+@using UI.Layouts
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Login> _localizer
+@layout LoginLayout
+
+<RadzenRow style="min-height: 100vh; margin: 0;" Class="login-container">
+    <RadzenColumn Size="12" SizeLg="7" Class="rz-p-0 d-none d-lg-flex align-items-center justify-content-center" style="background-color: #2196F3;">
+        <RadzenImage src="images/generals/logo-removebg-preview.png" Style="cursor: pointer; background: #fff; width: 240px; height: 170px; border-radius: 50%;" Click="@(() => _navigation.NavigateTo("/"))" />
+    </RadzenColumn>
+    <RadzenColumn Size="12" SizeLg="5" Class="d-flex align-items-center justify-content-center rz-p-4">
+        <RadzenCard Class="login-card">
+            @if (_loginRequest == null)
+            {
+                <p><em>@_localizer["Loading"]</em></p>
+            }
+            else
+            {
+                <RadzenTemplateForm Data="@_loginRequest" Submit="@((LoginRequestDTO args) => { Submit(args); })">
+                    <RadzenStack Gap="2rem">
+                        <div class="text-center">
+                            <h4 class="login-title">Welcome to AHD</h4>
+                            <p class="small text-secondary">Hệ thống quan trắc - Giám sát vận hành</p>
+                        </div>
+                        <RadzenStack Gap="1.5rem">
+                            <RadzenFormField Text="@_localizer["Email"]" Variant="Variant.Outlined" Style="width:100%;">
+                                <RadzenTextBox Name="_txtEmail" @bind-Value="@_loginRequest.EmailAddress" Placeholder="Typing..." />
+                                <RadzenRequiredValidator Component="_txtEmail" Text="Email is required" Popup=false />
+                                <RadzenEmailValidator Component="_txtEmail" Text="Provide a valid email address" Popup=false />
+                            </RadzenFormField>
+
+                            <RadzenFormField Text="@_localizer["Password"]" Variant="Variant.Outlined" Style="width:100%;">
+                                <ChildContent>
+                                    <RadzenTextBox Name="_txtPass" @bind-Value="@_loginRequest.Password" Visible="@(!password)" />
+                                    <RadzenPassword @bind-Value="@_loginRequest.Password" Visible="@password" />
+                                </ChildContent>
+                                <End>
+                                    <RadzenButton Icon="@(password ? "visibility" : "visibility_off")" Click="TogglePassword"
+                                                  Variant="Variant.Text" Size="ButtonSize.Small" />
+                                </End>
+                            </RadzenFormField>
+                        </RadzenStack>
+
+                        <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.Start" AlignItems="AlignItems.Center">
+                            <RadzenCheckBox @bind-Value="@_remember" Name="rememberCheckbox" />
+                            <RadzenLabel Text="@_localizer["RememberMe"]" Component="rememberCheckbox" />
+                        </RadzenStack>
+
+                        <RadzenButton ButtonType="Radzen.ButtonType.Submit" 
+                                    Size="ButtonSize.Large" 
+                                    Icon="login" 
+                                    Text="@_localizer["Login"]" 
+                                    Class="login-button" />
+                    </RadzenStack>
+                </RadzenTemplateForm>
+            }
+        </RadzenCard>
+    </RadzenColumn>
+</RadzenRow>

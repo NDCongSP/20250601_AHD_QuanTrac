@@ -1,0 +1,37 @@
+﻿@page "/location-management"
+@attribute [Authorize(Policy = "Admin")]
+
+<ListDetail TModel="LocationInfoModel" @ref="listDetailRef" OnReloadChanged="OnReloadChanged" BaseRoute="location-management" BaseTitle="QUẢN LÝ TRẠM">
+    <ListTemplate>
+        <LocationManagement 
+            OnCreate="@(() => listDetailRef?.HandleCreate())"
+            OnEdit="@((tuple) => listDetailRef?.HandleEdit(tuple.Id, tuple.Model))"
+            RefreshOnLoad="@ShouldReload" />
+    </ListTemplate>
+    <DetailTemplate Context="model">
+        <AddEditLocation 
+            Mode="@listDetailRef.DetailMode" 
+            Id="@listDetailRef?.ItemId" 
+            Model="@model"
+            OnBack="@(() => listDetailRef?.HandleBack())"
+            OnSaved="@(() => listDetailRef?.HandleSaved())" />
+    </DetailTemplate>
+</ListDetail>
+
+@code {
+    private ListDetail<LocationInfoModel>? listDetailRef;
+    private bool ShouldReload;
+
+    private void OnReloadChanged(bool value)
+    {
+        ShouldReload = value;
+        if (ShouldReload)
+        {
+            _ = Task.Delay(100).ContinueWith(_ =>
+            {
+                ShouldReload = false;
+                InvokeAsync(StateHasChanged);
+            });
+        }
+    }
+}

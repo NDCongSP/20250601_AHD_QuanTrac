@@ -1,6 +1,6 @@
 ﻿namespace Domain
 {
-    public class RealtimeDisplays:List<RealtimeDisplayModel>
+    public class RealtimeDisplays : List<RealtimeDisplayModel>
     {
     }
 }

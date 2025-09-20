@@ -1,0 +1,59 @@
+﻿@page "/dashboard"
+@using System.Timers
+@using UI.StaticClass
+@attribute [Authorize(Policy = "Admin")]
+<style>
+    body{
+        font-family:'Times New Roman' !important;
+    }
+</style>
+<RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
+    <figure>
+        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
+            <RadzenRow>
+                <RadzenColumn SizeXS="12" SizeMD="12" class="rz-mx-auto">
+                    @((MarkupString)_svg)
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </figure>
+</RadzenPanel>
+
+@code {
+    string _svg;
+    private System.Timers.Timer _timer;
+
+    protected override void OnInitialized()
+    {
+        LayoutState.SetTitle(_localizer["Quản lý tràn"]);
+        using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.Home.svg");
+        stream.Seek(0, SeekOrigin.Begin);
+        StreamReader reader = new StreamReader(stream);
+        _svg = reader.ReadToEnd();
+        base.OnInitialized();
+        RefreshData(null, null);
+
+        #region Timer refresh data
+        _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
+        _timer.Elapsed += RefreshData;
+        _timer.Enabled = true;
+        #endregion
+    }
+
+    private async void RefreshData(object? sender, ElapsedEventArgs? e)
+    {
+        try
+        {
+            var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
+            //var realtimeData = FakeDataGenerator.GenerateLocation();
+            await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
+            StateHasChanged();
+        }
+        catch { }
+    }
+
+    public void Dispose()
+    {
+        _timer.Dispose();
+    }
+}
