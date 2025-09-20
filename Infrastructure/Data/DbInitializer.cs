@@ -1,8 +1,11 @@
 ﻿using Application.Extentions;
+using DocumentFormat.OpenXml.VariantTypes;
 using Domain;
 using Domain.Entities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Infrastructure.Data
 {
@@ -275,6 +278,51 @@ namespace Infrastructure.Data
                 var adminUser = await context.ScadaUsers.FirstOrDefaultAsync(u => u.UserName == "admin");
                 var result = BCryptHelper.VerifyPassword("admin@123", adminUser.Password);
             }
+
+            #region fixed data for chart
+            if (!context.FT05s_ChartHoChua.Any())
+            {
+                List<FT05_ChartHoChua> dInsert = new List<FT05_ChartHoChua>();
+
+                List<string> dates = new List<string>
+        {
+            "1-Jul", "16-Jul", "31-Jul", "15-Aug", "30-Aug",
+            "14-Sep", "29-Sep", "14-Oct", "29-Oct", "13-Nov",
+            "28-Nov", "13-Dec", "28-Dec", "12-Jan", "27-Jan",
+            "11-Feb", "26-Feb", "13-Mar", "28-Mar", "12-Apr",
+            "27-Apr", "12-May", "27-May", "11-Jun", "26-Jun"
+        };
+
+                int index = 1;
+                foreach (var d in dates)
+                {
+                    // Parse ngày theo định dạng "d-MMM"
+                    DateTime dt = DateTime.ParseExact(d, "d-MMM", CultureInfo.InvariantCulture);
+
+                    // Format lại thành "dd-MM"
+                    string formattedDate = dt.ToString("dd-MM");
+
+                    dInsert.Add(new FT05_ChartHoChua()
+                    {
+                        Id = Guid.NewGuid(),
+                        Index = index,
+                        X_Value = formattedDate,
+                        CTDD = 28.00,
+                        MNKT = 26.92,
+                        MNTK = 25.00,
+                        MNDBT = 24.40,
+                        DPL = 0,
+                        DPPH = 0,
+                        HCCN = 17.00,
+                    });
+
+                    index++;
+                }
+
+                await context.FT05s_ChartHoChua.AddRangeAsync(dInsert);
+                await context.SaveChangesAsync();
+            }
+            #endregion
 
             // save the changes to the database
             await context.SaveChangesAsync();

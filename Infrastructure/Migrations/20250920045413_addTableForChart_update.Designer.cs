@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250920045413_addTableForChart_update")]
+    partial class addTableForChart_update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -541,6 +544,12 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("CTDD")
                         .HasColumnType("float");
 
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateOperatorId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double?>("DPL")
                         .HasColumnType("float");
 
@@ -550,8 +559,8 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("HCCN")
                         .HasColumnType("float");
 
-                    b.Property<int?>("Index")
-                        .HasColumnType("int");
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<double?>("MNDBT")
                         .HasColumnType("float");
@@ -561,6 +570,12 @@ namespace Infrastructure.Migrations
 
                     b.Property<double?>("MNTK")
                         .HasColumnType("float");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateOperatorId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("X_Value")
                         .HasColumnType("nvarchar(max)");
@@ -896,9 +911,6 @@ namespace Infrastructure.Migrations
                     b.Property<double?>("BoTrai")
                         .HasColumnType("float");
 
-                    b.Property<int?>("Index")
-                        .HasColumnType("int");
-
                     b.Property<double?>("Q2800")
                         .HasColumnType("float");
 
@@ -909,12 +921,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<double?>("Q600")
-                        .HasColumnType("float");
-
-                    b.Property<string>("X_Prefix")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("X_Value")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
