@@ -29,6 +29,9 @@ namespace Infrastructure.Data
         public DbSet<FT03> FT03s { get; set; }
         public DbSet<FT04> FT04s { get; set; }
         public DbSet<ScadaUser> ScadaUsers { get; set; }
+        public DbSet<FT05_ChartHoChua> FT05s_ChartHoChua { get; set; }
+        public DbSet<FT06_InterpolationTable> FT06s_Interpolation { get; set; }
+        public DbSet<FT07_ChartMucNuoc> FT07s_ChartMucNuoc { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
