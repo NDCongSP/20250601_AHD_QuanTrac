@@ -24,7 +24,7 @@ namespace RegistrationForm1
         
       
 
-        public FrmCanhBao(FrmMain frmMain)
+        public FrmCanhBao()
         {
             InitializeComponent();
             _timer.Interval = 1000;

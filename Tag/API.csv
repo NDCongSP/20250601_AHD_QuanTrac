@@ -1,0 +1,22 @@
+Name,Address,DataType,RefreshRate,AccessPermission,Gain,Offset,Description
+Fllow_DauTieng,Retain,String,0,ReadAndWrite,1,0,
+Fllow_BenSuc,Retain,String,0,ReadAndWrite,1,0,
+Fllow_SonDai,Retain,String,0,ReadAndWrite,1,0,
+Fllow_BinhNham,Retain,String,0,ReadAndWrite,1,0,
+Fllow_BinhNham2,Retain,String,0,ReadAndWrite,1,0,
+Fllow_TL_CDD,Retain,String,0,ReadAndWrite,1,0,
+Fllow_HL_TXL,Retain,String,0,ReadAndWrite,1,0,
+610001,Retain,String,0,ReadAndWrite,1,0,Đầu mối hồ Dầu Tiếng (DT)
+610002,Retain,String,0,ReadAndWrite,1,0,Minh Hòa (DT)
+610003,Retain,String,0,ReadAndWrite,1,0,Minh Tâm (DT)
+610004,Retain,String,0,ReadAndWrite,1,0,Lộc Thiện (DT)
+610005,Retain,String,0,ReadAndWrite,1,0,Lộc Ninh (DT)
+610006,Retain,String,0,ReadAndWrite,1,0,Lộc Thành (DT)
+610007,Retain,String,0,ReadAndWrite,1,0,Thanh Lương (DT)
+610008,Retain,String,0,ReadAndWrite,1,0,Tân Hòa 1 (DT)
+610009,Retain,String,0,ReadAndWrite,1,0,Tân Hòa 2 (DT)
+610010,Retain,String,0,ReadAndWrite,1,0,Kà Tum (DT)
+610011,Retain,String,0,ReadAndWrite,1,0,Tân Thành (DT)
+610012,Retain,String,0,ReadAndWrite,1,0,Đồng Ban (DT)
+610013,Retain,String,0,ReadAndWrite,1,0,Tân Hà (DT)
+996206,Retain,String,0,ReadAndWrite,1,0,Đồi 95

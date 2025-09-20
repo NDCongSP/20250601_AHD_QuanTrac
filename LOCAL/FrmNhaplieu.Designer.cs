@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBoxInputs = new System.Windows.Forms.GroupBox();
+            this.txtMNTL = new System.Windows.Forms.TextBox();
             this.txtDoorOpen = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblAlpha = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@
             this.lblResult = new System.Windows.Forms.Label();
             this.txtResult = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.txtMNTL = new System.Windows.Forms.TextBox();
             this.groupBoxInputs.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
             this.SuspendLayout();
@@ -84,14 +84,22 @@
             this.groupBoxInputs.Controls.Add(this.btnCalculate);
             this.groupBoxInputs.Controls.Add(this.btnClear);
             this.groupBoxInputs.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxInputs.Location = new System.Drawing.Point(76, 73);
+            this.groupBoxInputs.Location = new System.Drawing.Point(12, 54);
             this.groupBoxInputs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBoxInputs.Name = "groupBoxInputs";
             this.groupBoxInputs.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBoxInputs.Size = new System.Drawing.Size(820, 461);
+            this.groupBoxInputs.Size = new System.Drawing.Size(706, 461);
             this.groupBoxInputs.TabIndex = 27;
             this.groupBoxInputs.TabStop = false;
             this.groupBoxInputs.Text = "Thông số đầu vào";
+            // 
+            // txtMNTL
+            // 
+            this.txtMNTL.Location = new System.Drawing.Point(320, 46);
+            this.txtMNTL.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMNTL.Name = "txtMNTL";
+            this.txtMNTL.Size = new System.Drawing.Size(116, 25);
+            this.txtMNTL.TabIndex = 26;
             // 
             // txtDoorOpen
             // 
@@ -219,7 +227,7 @@
             // 
             this.lblPhi.AutoSize = true;
             this.lblPhi.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhi.Location = new System.Drawing.Point(527, 41);
+            this.lblPhi.Location = new System.Drawing.Point(460, 37);
             this.lblPhi.Name = "lblPhi";
             this.lblPhi.Size = new System.Drawing.Size(128, 19);
             this.lblPhi.TabIndex = 1;
@@ -227,7 +235,7 @@
             // 
             // txtPhi
             // 
-            this.txtPhi.Location = new System.Drawing.Point(680, 41);
+            this.txtPhi.Location = new System.Drawing.Point(613, 37);
             this.txtPhi.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPhi.Name = "txtPhi";
             this.txtPhi.Size = new System.Drawing.Size(69, 25);
@@ -238,7 +246,7 @@
             // 
             this.lblG.AutoSize = true;
             this.lblG.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblG.Location = new System.Drawing.Point(532, 86);
+            this.lblG.Location = new System.Drawing.Point(465, 82);
             this.lblG.Name = "lblG";
             this.lblG.Size = new System.Drawing.Size(84, 19);
             this.lblG.TabIndex = 13;
@@ -246,7 +254,7 @@
             // 
             // txtG
             // 
-            this.txtG.Location = new System.Drawing.Point(680, 82);
+            this.txtG.Location = new System.Drawing.Point(613, 78);
             this.txtG.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtG.Name = "txtG";
             this.txtG.Size = new System.Drawing.Size(69, 25);
@@ -370,19 +378,11 @@
             this.lblTitle.TabIndex = 29;
             this.lblTitle.Text = "Tính toán khả năng tháo của tràn ";
             // 
-            // txtMNTL
-            // 
-            this.txtMNTL.Location = new System.Drawing.Point(320, 46);
-            this.txtMNTL.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtMNTL.Name = "txtMNTL";
-            this.txtMNTL.Size = new System.Drawing.Size(116, 25);
-            this.txtMNTL.TabIndex = 26;
-            // 
             // FrmNhaplieu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1313, 840);
+            this.ClientSize = new System.Drawing.Size(920, 780);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.groupBoxResult);
             this.Controls.Add(this.groupBoxInputs);

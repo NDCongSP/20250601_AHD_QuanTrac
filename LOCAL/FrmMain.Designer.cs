@@ -59,6 +59,16 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labQi6 = new System.Windows.Forms.Label();
+            this._labQi5 = new System.Windows.Forms.Label();
+            this._labQi4 = new System.Windows.Forms.Label();
+            this._labQi3 = new System.Windows.Forms.Label();
+            this._labQi2 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -77,12 +87,8 @@
             this._labWtt = new System.Windows.Forms.Label();
             this._LabQdi = new System.Windows.Forms.Label();
             this._labW2_ho = new System.Windows.Forms.Label();
-            this._labTotalFlow = new System.Windows.Forms.Label();
-            this._labQi = new System.Windows.Forms.Label();
+            this._labQi1 = new System.Windows.Forms.Label();
             this._labW1_ho = new System.Windows.Forms.Label();
-            this.txtZ = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this._labQden = new System.Windows.Forms.Label();
             this._labQtr = new System.Windows.Forms.Label();
             this._labALDoor2_Station3 = new System.Windows.Forms.Label();
@@ -97,7 +103,6 @@
             this._labALDoor1_Station3 = new System.Windows.Forms.Label();
             this._labALDoor1_Station2 = new System.Windows.Forms.Label();
             this._labALDoor1_Station1 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -418,6 +423,16 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labQi6);
+            this.panelDesktop.Controls.Add(this._labQi5);
+            this.panelDesktop.Controls.Add(this._labQi4);
+            this.panelDesktop.Controls.Add(this._labQi3);
+            this.panelDesktop.Controls.Add(this._labQi2);
+            this.panelDesktop.Controls.Add(this.label9);
+            this.panelDesktop.Controls.Add(this.label10);
+            this.panelDesktop.Controls.Add(this.label12);
+            this.panelDesktop.Controls.Add(this.label8);
+            this.panelDesktop.Controls.Add(this.label2);
             this.panelDesktop.Controls.Add(this.label21);
             this.panelDesktop.Controls.Add(this.label20);
             this.panelDesktop.Controls.Add(this.label19);
@@ -436,12 +451,8 @@
             this.panelDesktop.Controls.Add(this._labWtt);
             this.panelDesktop.Controls.Add(this._LabQdi);
             this.panelDesktop.Controls.Add(this._labW2_ho);
-            this.panelDesktop.Controls.Add(this._labTotalFlow);
-            this.panelDesktop.Controls.Add(this._labQi);
+            this.panelDesktop.Controls.Add(this._labQi1);
             this.panelDesktop.Controls.Add(this._labW1_ho);
-            this.panelDesktop.Controls.Add(this.txtZ);
-            this.panelDesktop.Controls.Add(this.label13);
-            this.panelDesktop.Controls.Add(this.label11);
             this.panelDesktop.Controls.Add(this._labQden);
             this.panelDesktop.Controls.Add(this._labQtr);
             this.panelDesktop.Controls.Add(this._labALDoor2_Station3);
@@ -456,7 +467,6 @@
             this.panelDesktop.Controls.Add(this._labALDoor1_Station3);
             this.panelDesktop.Controls.Add(this._labALDoor1_Station2);
             this.panelDesktop.Controls.Add(this._labALDoor1_Station1);
-            this.panelDesktop.Controls.Add(this.button4);
             this.panelDesktop.Controls.Add(this.lblStationsTitle);
             this.panelDesktop.Controls.Add(this.lblStatusMessage);
             this.panelDesktop.Location = new System.Drawing.Point(192, 151);
@@ -464,10 +474,105 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
+            // _labQi6
+            // 
+            this._labQi6.AutoSize = true;
+            this._labQi6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQi6.Location = new System.Drawing.Point(80, 216);
+            this._labQi6.Name = "_labQi6";
+            this._labQi6.Size = new System.Drawing.Size(53, 24);
+            this._labQi6.TabIndex = 460;
+            this._labQi6.Text = "Q_i6";
+            // 
+            // _labQi5
+            // 
+            this._labQi5.AutoSize = true;
+            this._labQi5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQi5.Location = new System.Drawing.Point(79, 187);
+            this._labQi5.Name = "_labQi5";
+            this._labQi5.Size = new System.Drawing.Size(53, 24);
+            this._labQi5.TabIndex = 459;
+            this._labQi5.Text = "Q_i5";
+            // 
+            // _labQi4
+            // 
+            this._labQi4.AutoSize = true;
+            this._labQi4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQi4.Location = new System.Drawing.Point(80, 160);
+            this._labQi4.Name = "_labQi4";
+            this._labQi4.Size = new System.Drawing.Size(53, 24);
+            this._labQi4.TabIndex = 458;
+            this._labQi4.Text = "Q_i4";
+            // 
+            // _labQi3
+            // 
+            this._labQi3.AutoSize = true;
+            this._labQi3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQi3.Location = new System.Drawing.Point(79, 131);
+            this._labQi3.Name = "_labQi3";
+            this._labQi3.Size = new System.Drawing.Size(53, 24);
+            this._labQi3.TabIndex = 457;
+            this._labQi3.Text = "Q_i3";
+            // 
+            // _labQi2
+            // 
+            this._labQi2.AutoSize = true;
+            this._labQi2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQi2.Location = new System.Drawing.Point(80, 103);
+            this._labQi2.Name = "_labQi2";
+            this._labQi2.Size = new System.Drawing.Size(53, 24);
+            this._labQi2.TabIndex = 456;
+            this._labQi2.Text = "Q_i2";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 220);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(66, 13);
+            this.label9.TabIndex = 455;
+            this.label9.Text = "Fllow_Door6";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 192);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(66, 13);
+            this.label10.TabIndex = 454;
+            this.label10.Text = "Fllow_Door5";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 167);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(66, 13);
+            this.label12.TabIndex = 453;
+            this.label12.Text = "Fllow_Door4";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 135);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 13);
+            this.label8.TabIndex = 452;
+            this.label8.Text = "Fllow_Door3";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.TabIndex = 451;
+            this.label2.Text = "Fllow_Door2";
+            // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(20, 268);
+            this.label21.Location = new System.Drawing.Point(241, 369);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(26, 13);
             this.label21.TabIndex = 450;
@@ -476,7 +581,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(20, 247);
+            this.label20.Location = new System.Drawing.Point(241, 348);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(23, 13);
             this.label20.TabIndex = 449;
@@ -485,7 +590,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(17, 313);
+            this.label19.Location = new System.Drawing.Point(238, 414);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(24, 13);
             this.label19.TabIndex = 448;
@@ -494,7 +599,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(14, 288);
+            this.label18.Location = new System.Drawing.Point(235, 389);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(21, 13);
             this.label18.TabIndex = 447;
@@ -503,7 +608,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(14, 228);
+            this.label17.Location = new System.Drawing.Point(235, 329);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(42, 13);
             this.label17.TabIndex = 446;
@@ -512,7 +617,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(14, 199);
+            this.label16.Location = new System.Drawing.Point(235, 300);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(33, 13);
             this.label16.TabIndex = 445;
@@ -521,7 +626,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(14, 158);
+            this.label15.Location = new System.Drawing.Point(235, 276);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(24, 13);
             this.label15.TabIndex = 444;
@@ -530,7 +635,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 126);
+            this.label7.Location = new System.Drawing.Point(228, 244);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(21, 13);
             this.label7.TabIndex = 443;
@@ -567,7 +672,7 @@
             // 
             this._labWtr.AutoSize = true;
             this._labWtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labWtr.Location = new System.Drawing.Point(81, 154);
+            this._labWtr.Location = new System.Drawing.Point(302, 272);
             this._labWtr.Name = "_labWtr";
             this._labWtr.Size = new System.Drawing.Size(52, 24);
             this._labWtr.TabIndex = 439;
@@ -576,7 +681,7 @@
             // _labWdi
             // 
             this._labWdi.AutoSize = true;
-            this._labWdi.Location = new System.Drawing.Point(87, 267);
+            this._labWdi.Location = new System.Drawing.Point(308, 368);
             this._labWdi.Name = "_labWdi";
             this._labWdi.Size = new System.Drawing.Size(32, 13);
             this._labWdi.TabIndex = 438;
@@ -585,7 +690,7 @@
             // _labWden
             // 
             this._labWden.AutoSize = true;
-            this._labWden.Location = new System.Drawing.Point(87, 222);
+            this._labWden.Location = new System.Drawing.Point(308, 323);
             this._labWden.Name = "_labWden";
             this._labWden.Size = new System.Drawing.Size(42, 13);
             this._labWden.TabIndex = 437;
@@ -594,7 +699,7 @@
             // _labQtt
             // 
             this._labQtt.AutoSize = true;
-            this._labQtt.Location = new System.Drawing.Point(87, 288);
+            this._labQtt.Location = new System.Drawing.Point(308, 389);
             this._labQtt.Name = "_labQtt";
             this._labQtt.Size = new System.Drawing.Size(27, 13);
             this._labQtt.TabIndex = 436;
@@ -603,7 +708,7 @@
             // _labWtt
             // 
             this._labWtt.AutoSize = true;
-            this._labWtt.Location = new System.Drawing.Point(82, 309);
+            this._labWtt.Location = new System.Drawing.Point(303, 410);
             this._labWtt.Name = "_labWtt";
             this._labWtt.Size = new System.Drawing.Size(30, 13);
             this._labWtt.TabIndex = 435;
@@ -612,7 +717,7 @@
             // _LabQdi
             // 
             this._LabQdi.AutoSize = true;
-            this._LabQdi.Location = new System.Drawing.Point(87, 247);
+            this._LabQdi.Location = new System.Drawing.Point(308, 348);
             this._LabQdi.Name = "_LabQdi";
             this._LabQdi.Size = new System.Drawing.Size(25, 13);
             this._LabQdi.TabIndex = 434;
@@ -627,25 +732,15 @@
             this._labW2_ho.TabIndex = 433;
             this._labW2_ho.Text = "W2_ho";
             // 
-            // _labTotalFlow
+            // _labQi1
             // 
-            this._labTotalFlow.AutoSize = true;
-            this._labTotalFlow.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labTotalFlow.Location = new System.Drawing.Point(653, 173);
-            this._labTotalFlow.Name = "_labTotalFlow";
-            this._labTotalFlow.Size = new System.Drawing.Size(101, 24);
-            this._labTotalFlow.TabIndex = 432;
-            this._labTotalFlow.Text = "TotalFlow";
-            // 
-            // _labQi
-            // 
-            this._labQi.AutoSize = true;
-            this._labQi.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labQi.Location = new System.Drawing.Point(81, 76);
-            this._labQi.Name = "_labQi";
-            this._labQi.Size = new System.Drawing.Size(42, 24);
-            this._labQi.TabIndex = 431;
-            this._labQi.Text = "Q_i";
+            this._labQi1.AutoSize = true;
+            this._labQi1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labQi1.Location = new System.Drawing.Point(81, 76);
+            this._labQi1.Name = "_labQi1";
+            this._labQi1.Size = new System.Drawing.Size(53, 24);
+            this._labQi1.TabIndex = 431;
+            this._labQi1.Text = "Q_i1";
             // 
             // _labW1_ho
             // 
@@ -656,35 +751,10 @@
             this._labW1_ho.TabIndex = 430;
             this._labW1_ho.Text = "W1_ho";
             // 
-            // txtZ
-            // 
-            this.txtZ.Location = new System.Drawing.Point(931, 193);
-            this.txtZ.Name = "txtZ";
-            this.txtZ.Size = new System.Drawing.Size(100, 20);
-            this.txtZ.TabIndex = 225;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(864, 201);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 13);
-            this.label13.TabIndex = 224;
-            this.label13.Text = "Z ho";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(784, 233);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(24, 13);
-            this.label11.TabIndex = 221;
-            this.label11.Text = "W1";
-            // 
             // _labQden
             // 
             this._labQden.AutoSize = true;
-            this._labQden.Location = new System.Drawing.Point(87, 200);
+            this._labQden.Location = new System.Drawing.Point(308, 301);
             this._labQden.Name = "_labQden";
             this._labQden.Size = new System.Drawing.Size(33, 13);
             this._labQden.TabIndex = 211;
@@ -694,7 +764,7 @@
             // 
             this._labQtr.AutoSize = true;
             this._labQtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labQtr.Location = new System.Drawing.Point(81, 121);
+            this._labQtr.Location = new System.Drawing.Point(302, 239);
             this._labQtr.Name = "_labQtr";
             this._labQtr.Size = new System.Drawing.Size(49, 24);
             this._labQtr.TabIndex = 199;
@@ -703,7 +773,7 @@
             // _labALDoor2_Station3
             // 
             this._labALDoor2_Station3.AutoSize = true;
-            this._labALDoor2_Station3.Location = new System.Drawing.Point(208, 411);
+            this._labALDoor2_Station3.Location = new System.Drawing.Point(433, 433);
             this._labALDoor2_Station3.Name = "_labALDoor2_Station3";
             this._labALDoor2_Station3.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station3.TabIndex = 195;
@@ -712,7 +782,7 @@
             // _labALDoor2_Station2
             // 
             this._labALDoor2_Station2.AutoSize = true;
-            this._labALDoor2_Station2.Location = new System.Drawing.Point(208, 386);
+            this._labALDoor2_Station2.Location = new System.Drawing.Point(433, 408);
             this._labALDoor2_Station2.Name = "_labALDoor2_Station2";
             this._labALDoor2_Station2.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station2.TabIndex = 194;
@@ -721,7 +791,7 @@
             // _labALDoor2_Station1
             // 
             this._labALDoor2_Station1.AutoSize = true;
-            this._labALDoor2_Station1.Location = new System.Drawing.Point(208, 353);
+            this._labALDoor2_Station1.Location = new System.Drawing.Point(433, 375);
             this._labALDoor2_Station1.Name = "_labALDoor2_Station1";
             this._labALDoor2_Station1.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station1.TabIndex = 193;
@@ -748,7 +818,7 @@
             this.dgvStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStats.Location = new System.Drawing.Point(1085, 28);
             this.dgvStats.Name = "dgvStats";
-            this.dgvStats.Size = new System.Drawing.Size(529, 86);
+            this.dgvStats.Size = new System.Drawing.Size(529, 218);
             this.dgvStats.TabIndex = 189;
             this.dgvStats.Visible = false;
             // 
@@ -757,7 +827,7 @@
             this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStations.Location = new System.Drawing.Point(306, 5);
             this.dgvStations.Name = "dgvStations";
-            this.dgvStations.Size = new System.Drawing.Size(529, 87);
+            this.dgvStations.Size = new System.Drawing.Size(397, 65);
             this.dgvStations.TabIndex = 188;
             this.dgvStations.Visible = false;
             // 
@@ -782,7 +852,7 @@
             // _labALDoor1_Station3
             // 
             this._labALDoor1_Station3.AutoSize = true;
-            this._labALDoor1_Station3.Location = new System.Drawing.Point(127, 411);
+            this._labALDoor1_Station3.Location = new System.Drawing.Point(352, 433);
             this._labALDoor1_Station3.Name = "_labALDoor1_Station3";
             this._labALDoor1_Station3.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station3.TabIndex = 185;
@@ -791,7 +861,7 @@
             // _labALDoor1_Station2
             // 
             this._labALDoor1_Station2.AutoSize = true;
-            this._labALDoor1_Station2.Location = new System.Drawing.Point(127, 380);
+            this._labALDoor1_Station2.Location = new System.Drawing.Point(352, 402);
             this._labALDoor1_Station2.Name = "_labALDoor1_Station2";
             this._labALDoor1_Station2.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station2.TabIndex = 184;
@@ -800,22 +870,11 @@
             // _labALDoor1_Station1
             // 
             this._labALDoor1_Station1.AutoSize = true;
-            this._labALDoor1_Station1.Location = new System.Drawing.Point(127, 353);
+            this._labALDoor1_Station1.Location = new System.Drawing.Point(352, 375);
             this._labALDoor1_Station1.Name = "_labALDoor1_Station1";
             this._labALDoor1_Station1.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station1.TabIndex = 183;
             this._labALDoor1_Station1.Text = "label2";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(409, 193);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 179;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Visible = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // lblStationsTitle
             // 
@@ -829,7 +888,7 @@
             // lblStatusMessage
             // 
             this.lblStatusMessage.AutoSize = true;
-            this.lblStatusMessage.Location = new System.Drawing.Point(208, 292);
+            this.lblStatusMessage.Location = new System.Drawing.Point(433, 314);
             this.lblStatusMessage.Name = "lblStatusMessage";
             this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
             this.lblStatusMessage.TabIndex = 173;
@@ -901,7 +960,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label lblStatusMessage;
         private System.Windows.Forms.Label lblStationsTitle;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label _labALDoor1_Station3;
         private System.Windows.Forms.Label _labALDoor1_Station2;
         private System.Windows.Forms.Label _labALDoor1_Station1;
@@ -917,12 +975,8 @@
         private System.Windows.Forms.Label _labALDoor2_Station1;
         private System.Windows.Forms.Label _labQtr;
         private System.Windows.Forms.Label _labQden;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtZ;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label _labW1_ho;
-        private System.Windows.Forms.Label _labQi;
-        private System.Windows.Forms.Label _labTotalFlow;
+        private System.Windows.Forms.Label _labQi1;
         private System.Windows.Forms.Label _labW2_ho;
         private System.Windows.Forms.Label _LabQdi;
         private System.Windows.Forms.Label _labQtt;
@@ -941,5 +995,15 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label _labQi6;
+        private System.Windows.Forms.Label _labQi5;
+        private System.Windows.Forms.Label _labQi4;
+        private System.Windows.Forms.Label _labQi3;
+        private System.Windows.Forms.Label _labQi2;
     }
 }

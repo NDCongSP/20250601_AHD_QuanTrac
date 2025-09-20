@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Entities;
 using Microsoft.Web.WebView2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -157,103 +158,78 @@ namespace RegistrationForm1
         {
             LoadAllRainDataWithTimestamp(); // Tải lại dữ liệu khi Timer Tick
         }
+
+
         private void LoadAllRainDataWithTimestamp()
         {
-
-            string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
-            // Câu truy vấn SQL để lấy bản ghi mới nhất cho mỗi StationID, bao gồm cả cột Name (tên trạm).
-            // Dựa trên thông tin bạn cung cấp, cột tên trạm là 'Name' và nằm trong bảng RealtimeQTM.
-            string query = @"
-         WITH RankedRainData AS (
-             SELECT
-                 StationID,
-                 Name AS StationName, -- Lấy cột 'Name' và đặt biệt danh là 'StationName' để dễ sử dụng
-                 Depth, -- Tương ứng với InstantaneousRain
-                 AccumulatedDepth, -- Tương ứng với TotalRain
-                 RecordedAt, -- Tương ứng với Timestamp
-                 ROW_NUMBER() OVER (PARTITION BY StationID ORDER BY RecordedAt DESC) as rn
-             FROM
-                 RealtimeQTM
-         )
-         SELECT
-             StationID,
-             StationName, -- Đã thêm cột StationName (từ Name) vào kết quả cuối cùng
-             Depth,
-             AccumulatedDepth,
-             RecordedAt
-         FROM
-             RankedRainData
-         WHERE
-             rn = 1
-         ORDER BY StationID ASC; -- Sắp xếp theo ID Trạm
-     ";
-
-            // Tạo một DataTable để lưu trữ dữ liệu từ truy vấn
-            DataTable dt = new DataTable();
-
-            // Sử dụng khối 'using' để đảm bảo rằng các đối tượng SqlConnection và SqlCommand được đóng và giải phóng tài nguyên đúng cách
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                using (SqlCommand command = new SqlCommand(query, connection))
+                if (Globalvariable.RealtimeDisplays.Count == 0)
+                    return;
+
+                using var dbContext = new ApplicationDbContext();
+
+                // Lấy bản ghi mới nhất
+                var latest = dbContext.FT03s
+                    .Where(x => x.IsDeleted == false)
+                    .OrderByDescending(x => x.CreateAt)
+                    .FirstOrDefault();
+
+                if (latest == null)
                 {
-                    try
-                    {
-                        // Mở kết nối đến cơ sở dữ liệu
-                        connection.Open();
-
-                        // Tạo một SqlDataAdapter để thực thi câu lệnh SQL và điền dữ liệu vào DataTable
-                        SqlDataAdapter adapter = new SqlDataAdapter(command);
-                        adapter.Fill(dt); // Điền dữ liệu vào DataTable
-
-                        // Gán DataTable làm nguồn dữ liệu cho DataGridView
-                        // Điều này sẽ tự động tạo các cột và hiển thị dữ liệu
-                        dataGridViewRainData.DataSource = dt;
-
-                        // Tùy chỉnh hiển thị tiêu đề cột trong DataGridView
-                        if (dataGridViewRainData.Columns.Contains("StationID"))
-                        {
-                            dataGridViewRainData.Columns["StationID"].HeaderText = "Trạm";
-                        }
-                        if (dataGridViewRainData.Columns.Contains("StationName")) // Thêm tùy chỉnh cho cột StationName
-                        {
-                            dataGridViewRainData.Columns["StationName"].HeaderText = "Tên";
-                        }
-                        if (dataGridViewRainData.Columns.Contains("Depth")) // Cập nhật tên cột
-                        {
-                            dataGridViewRainData.Columns["Depth"].HeaderText = "Tức Thời";
-                        }
-                        if (dataGridViewRainData.Columns.Contains("AccumulatedDepth")) // Cập nhật tên cột
-                        {
-                            dataGridViewRainData.Columns["AccumulatedDepth"].HeaderText = "Tổng luỹ tích";
-                            // ĐỊNH DẠNG CỘT NÀY CHỈ HIỂN THỊ 2 SỐ THẬP PHÂN
-                            dataGridViewRainData.Columns["AccumulatedDepth"].DefaultCellStyle.Format = "N2";
-                        }
-                        if (dataGridViewRainData.Columns.Contains("RecordedAt")) // Cập nhật tên cột
-                        {
-                            dataGridViewRainData.Columns["RecordedAt"].HeaderText = "Thời Gian";
-                            // Tùy chọn: Định dạng hiển thị thời gian
-                            dataGridViewRainData.Columns["RecordedAt"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
-                        }
-                        // Đặt chế độ tự động điều chỉnh kích thước cột
-                        //       dataGridViewRainData.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-
-                    }
-                    catch (SqlException ex)
-                    {
-                        // Xử lý các lỗi liên quan đến SQL (ví dụ: sai chuỗi kết nối, bảng không tồn tại)
-                        MessageBox.Show("Lỗi SQL: " + ex.Message, "Lỗi Cơ sở Dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Xử lý các lỗi khác
-                        MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    dataGridViewRainData.DataSource = null;
+                    return;
                 }
+
+                Globalvariable.InvokeIfRequired(this, () =>
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("Tên", typeof(string));
+                    dt.Columns.Add("Tức thời", typeof(double));
+                    dt.Columns.Add("Tổng tích luỹ", typeof(double));
+                    dt.Columns.Add("Thời gian", typeof(DateTime));
+
+                    // Truyền đủ 4 tham số theo thứ tự
+                    dt.Rows.Add("Đầu mối HDT", latest.API_D_DM_HoDT, 0, latest.CreateAt);
+                    dt.Rows.Add("Minh hòa", latest.API_D_MinhHoa, 0, latest.CreateAt);
+                    dt.Rows.Add("Minh tâm", latest.API_D_MinhTam, 0, latest.CreateAt);
+                    dt.Rows.Add("Lộc thiện", latest.API_D_LocThien, 0, latest.CreateAt);
+                    dt.Rows.Add("Lộc ninh", latest.API_D_LocNinh, 0, latest.CreateAt);
+                    dt.Rows.Add("Lộc thành", latest.API_D_LocThanh, 0, latest.CreateAt);
+                    dt.Rows.Add("Thanh lương", latest.API_D_ThanhLuong, 0, latest.CreateAt);
+                    dt.Rows.Add("Tân hoà 1", latest.API_D_TanHoa1, 0, latest.CreateAt);
+                    dt.Rows.Add("Tân hoà 2", latest.API_D_TanHoa2, 0, latest.CreateAt);
+                    dt.Rows.Add("Kà tum", latest.API_D_KaTum, 0, latest.CreateAt);
+                    dt.Rows.Add("Tân thành", latest.API_D_TanThanh, 0, latest.CreateAt);
+                    dt.Rows.Add("Đồng ban", latest.API_D_DongBan, 0, latest.CreateAt);
+                    dt.Rows.Add("Tân hà", latest.API_D_TanHa, 0, latest.CreateAt);
+                    // Nếu bạn có thêm API khác, thêm dòng tương tự:
+
+
+                    dataGridViewRainData.DataSource = dt;
+
+                    dataGridViewRainData.Columns["Tức thời"].DefaultCellStyle.Format = "N2";
+                    dataGridViewRainData.Columns["Tổng tích luỹ"].DefaultCellStyle.Format = "N2";
+                    dataGridViewRainData.Columns["Thời gian"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
+
+                    dataGridViewRainData.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                    dataGridViewRainData.Refresh();
+                });
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Lỗi SQL: " + ex.Message, "Lỗi Cơ sở Dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-       
+
+
+
+
         private void InitializeLabels()
         {
             // KHỞI TẠO VÀ CẤU HÌNH LABEL lblZ
@@ -674,7 +650,7 @@ namespace RegistrationForm1
             {
                 double latestZ = sqlData.Item2.Last(); // Lấy giá trị mực nước mới nhất
                 double interpolatedW = InterpolateW(latestZ); // Nội suy giá trị W
-               lblZ.Text = $"Mực nước hiện tại: {latestZ:F2}m ⇄ Dung tích: {interpolatedW:F2}x10⁶m³";
+                lblZ.Text = $"Mực nước hiện tại: {latestZ:F2}m ⇄ Dung tích: {interpolatedW:F2}x10⁶m³";
             }
             else
             {
@@ -932,12 +908,7 @@ namespace RegistrationForm1
                 return values[dates.Length - 1];
             }
 
-            // Find the appropriate segment for interpolation
-            // lowerIndex will be the index of the point just before or equal to targetDate
-            // upperIndex will be the index of the point just after targetDate
             int lowerIndex = 0;
-            // No need to initialize upperIndex here; it will be assigned after lowerIndex is found.
-
             for (int i = 0; i < dates.Length - 1; i++)
             {
                 if (targetDate >= dates[i] && targetDate < dates[i + 1])
@@ -947,9 +918,7 @@ namespace RegistrationForm1
                 }
             }
 
-            // After the loop, lowerIndex is guaranteed to be set to an index from 0 to dates.Length - 2.
-            // This is because the initial checks guarantee targetDate is strictly between dates[0] and dates[dates.Length - 1],
-            // and the loop iterates through all valid segments.
+         
             int upperIndex = lowerIndex + 1;
 
 
@@ -1056,47 +1025,79 @@ namespace RegistrationForm1
             lblToaDo.BringToFront();
         }
 
-
         private Tuple<List<DateTime>, List<double>> GetFllowTlCddDataFromSql()
         {
-            List<DateTime> dates = new List<DateTime>();
-            List<double> values = new List<double>();
-
             try
             {
                 using var dbContext = new ApplicationDbContext();
 
-                // Lấy tất cả các bản ghi thỏa mãn điều kiện và sắp xếp chúng theo thời gian.
-                // Biểu đồ xu hướng cần dữ liệu được sắp xếp theo thời gian.
-                var records = dbContext.FT03s
-                    .Where(x => x.IsDeleted == false &&
-                               (x.StationName == "Station_1" || x.StationName == "Station_2" ||
-                                x.StationName == "Station_3" || x.StationName == "Location_Info"))
-                    .OrderBy(x => x.CreateAt) // Sắp xếp theo thời gian để tạo chuỗi dữ liệu cho biểu đồ
+                var query = dbContext.FT03s
+                    .Where(x =>
+                        x.IsDeleted == false &&   // ✅ sửa: so sánh rõ ràng với false
+                        x.StationName == "Location_Info" &&
+                        x.API_Fllow_TL_CDD.HasValue &&
+                        x.API_Fllow_TL_CDD.Value != 0)
+                    .OrderBy(x => x.CreateAt)
+                    .Select(x => new
+                    {
+                        Date = x.CreateAt,
+                        Value = x.API_Fllow_TL_CDD.Value
+                    })
                     .ToList();
 
-                // Lặp qua các bản ghi và điền dữ liệu vào danh sách.
-                foreach (var record in records)
-                {
-                    // Kiểm tra nếu giá trị không phải là null và khác 0 trước khi thêm vào danh sách.
-                    if (record.Fllow_TL_CDD.HasValue && record.Fllow_TL_CDD.Value != 0)
-                    {
-                        dates.Add((DateTime)record.CreateAt);
-                        values.Add(record.Fllow_TL_CDD.Value);
-                    }
-                }
+                var dates = query.Select(x => x.Date ?? DateTime.MinValue).ToList();
+                var values = query.Select(x => x.Value).ToList();
+
+                return Tuple.Create(dates, values);
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi trong trường hợp có vấn đề khi truy vấn database.
-                // Có thể ghi log lỗi thay vì hiển thị MessageBox trong môi trường thực tế.
                 Console.WriteLine($"Lỗi khi đọc dữ liệu 'Fllow_TL_CDD' từ SQL: {ex.Message}");
-                // Trả về danh sách rỗng để tránh lỗi NullReferenceException.
                 return Tuple.Create(new List<DateTime>(), new List<double>());
             }
-
-            return Tuple.Create(dates, values);
         }
+
+
+        //private Tuple<List<DateTime>, List<double>> GetFllowTlCddDataFromSql()
+        //{
+        //    List<DateTime> dates = new List<DateTime>();
+        //    List<double> values = new List<double>();
+
+        //    try
+        //    {
+        //        using var dbContext = new ApplicationDbContext();
+
+        //        // Lấy tất cả các bản ghi thỏa mãn điều kiện và sắp xếp chúng theo thời gian.
+        //        // Biểu đồ xu hướng cần dữ liệu được sắp xếp theo thời gian.
+        //        var records = dbContext.FT03s
+        //            .Where(x => x.IsDeleted == false &&
+        //                       (x.StationName == "Station_1" || x.StationName == "Station_2" ||
+        //                        x.StationName == "Station_3" || x.StationName == "Location_Info"))
+        //            .OrderBy(x => x.CreateAt) // Sắp xếp theo thời gian để tạo chuỗi dữ liệu cho biểu đồ
+        //            .ToList();
+
+        //        // Lặp qua các bản ghi và điền dữ liệu vào danh sách.
+        //        foreach (var record in records)
+        //        {
+        //            // Kiểm tra nếu giá trị không phải là null và khác 0 trước khi thêm vào danh sách.
+        //            if (!(!record.API_Fllow_TL_CDD.HasValue || record.API_Fllow_TL_CDD.Value == 0))
+        //            {
+        //                dates.Add((DateTime)record.CreateAt);
+        //                values.Add(record.API_Fllow_TL_CDD.Value);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Xử lý lỗi trong trường hợp có vấn đề khi truy vấn database.
+        //        // Có thể ghi log lỗi thay vì hiển thị MessageBox trong môi trường thực tế.
+        //        Console.WriteLine($"Lỗi khi đọc dữ liệu 'Fllow_TL_CDD' từ SQL: {ex.Message}");
+        //        // Trả về danh sách rỗng để tránh lỗi NullReferenceException.
+        //        return Tuple.Create(new List<DateTime>(), new List<double>());
+        //    }
+
+        //    return Tuple.Create(dates, values);
+        //}
 
 
 

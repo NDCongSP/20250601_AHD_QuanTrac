@@ -1,10 +1,6 @@
 ﻿using Ahd.Core;
-using DocumentFormat.OpenXml.Drawing;
-using DocumentFormat.OpenXml.Office2010.Word;
-
 using Domain;
 using Domain.Entities;
-using GemBox.Spreadsheet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
@@ -32,6 +28,7 @@ namespace RegistrationForm1
         private Timer apiTimer;
         private Timer api_CDDTimer;
         private Timer _refreshTimer;
+        Button currentButton = null; // Biến toàn cục trong Form
 
 
         private List<Station> _cachedStations; // Lưu trữ danh sách trạm đã tải
@@ -43,12 +40,8 @@ namespace RegistrationForm1
         private const string API_KEY = "4c81eccdb524441ba52c390d5b96e233";
         private int _logTime;
         private DateTime _startTime = DateTime.Now;
-        private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+   //     private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
 
-
-        private const double Z_OFFSET_FOR_RESULT2 = 0.01;// Offset cho giá trị Z của nội suy lần 2
-      //  private double SelectedIndex = 0;
-        private double z_ho_change_direction = 0.1; // Thay đổi 0.1 mỗi lần tick
 
 
         // Bảng tra cứu α theo a/H
@@ -102,10 +95,10 @@ namespace RegistrationForm1
 
         }
         IAhdDriverConnector driver;
-        public interface ICalculatableForm
-        {
-            void PerformCalculations();
-        }
+        //public interface ICalculatableForm
+        //{
+        //    void PerformCalculations();
+        //}
         private async Task _refreshTimer_Tick(object sender, EventArgs e)
         {
             dtpEndTime.Value = DateTime.Now;
@@ -132,28 +125,29 @@ namespace RegistrationForm1
             await LoadRainfallStatsData();
             await LoadStationsData();
 
+            int cmbX = 0; // Chỉ số cột X mặc định
+            table = ParseCsvToDictionary(csvInterpolationData, out xValues);
+            //   InitializeDefaultValues();
 
-            InitializeDefaultValues();
+            //try
+            //{
+            //    int cmbX = 0; // Chỉ số cột X mặc định
+            //    table = ParseCsvToDictionary(csvInterpolationData, out xValues);
 
-            try
-            {
-                int cmbX = 0; // Chỉ số cột X mặc định
-                table = ParseCsvToDictionary(csvInterpolationData, out xValues);
-
-                //// Điền giá trị X vào ComboBox
-                //foreach (var x in xValues)
-                //{
-                //    cmbX.Items.Add(x.ToString(CultureInfo.InvariantCulture));
-                //}
-                //if (cmbX.Items.Count > 0)
-                //{
-                //    cmbX.SelectedIndex = 0;
-                //}
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi đọc bảng nội suy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    //// Điền giá trị X vào ComboBox
+            //    //foreach (var x in xValues)
+            //    //{
+            //    //    cmbX.Items.Add(x.ToString(CultureInfo.InvariantCulture));
+            //    //}
+            //    //if (cmbX.Items.Count > 0)
+            //    //{
+            //    //    cmbX.SelectedIndex = 0;
+            //    //}
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Lỗi khi đọc bảng nội suy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
 
         }
@@ -219,64 +213,7 @@ namespace RegistrationForm1
             return row0[colIndex] + (row1[colIndex] - row0[colIndex]) * t;
         }
 
-        private void InitializeDefaultValues()
-        {
-            // Thiết lập giá trị mặc định cho các textbox
-            //txtW.Text = "0";     // Bắt đầu từ giá trị W mặc định là 0
-            //txtQCs1.Text = "10.66"; // Giá trị QCs1 mặc định
-            //txtQCs2.Text = "10.80"; // Giá trị QCs2 mặc định
-            //txtQCs3.Text = "2.00"; // Giá trị QCs3 mặc định
-                                   //   txtQTr.Text = "20"; // Giá trị QTr mặc định
 
-
-            // Khởi tạo txtResultOnZChange
-            //if (txtResultOnZChange != null)
-            //{
-            //    txtResultOnZChange.Text = "";
-            //}
-            // Khởi tạo txtHieu
-            //if (txtHieu != null)
-            //{
-            //    txtHieu.Text = "";
-            //}
-            // Khởi tạo txtTong
-            //if (txtTong != null)
-            //{
-            //    txtTong.Text = "";
-            //}
-            // Khởi tạo txtQden
-            //if (txtQden != null)
-            //{
-            //    txtQden.Text = "";
-            //}
-            // Khởi tạo txtQ1Denta
-            //if (txtQ1Denta != null)
-            //{
-            //    txtQ1Denta.Text = "";
-            //}
-            //// Khởi tạo txtWTt
-            //if (txtWTt != null)
-            //{
-            //    txtWTt.Text = "";
-            //}
-            //// Khởi tạo txtQtt
-            //if (txtQTt != null)
-            //{
-            //    txtQTt.Text = "";
-            //}
-            //// Khởi tạo txtQdi
-            //if (txtQdi != null)
-            //{
-            //    txtQdi.Text = "";
-            //}
-            // Khởi tạo txtResult2
-            //if (txtResult2 != null)
-            //{
-            //    txtResult2.Text = "";
-            //}
-            //txtResult.Text = ""; // Khởi tạo txtResult rỗng
-            //                     // _previousW_ho không còn được sử dụng trực tiếp để khởi tạo txtResultOnZChange nữa
-        }
 
         private void InitializeTimer()
         { // Timer API dầu tiếng
@@ -338,8 +275,9 @@ namespace RegistrationForm1
                             {
                                 _labALDoor1_Station1.Text = item.Al_Door1.ToString();
                                 _labALDoor2_Station1.Text = item.Al_Door2.ToString();
-                             //   _labHT_Cylinder1_1.Text = item.HT_Cylinder1_1.ToString();
-                            //    _labHT_Cylinder1_2.Text = item.HT_Cylinder1_2.ToString();
+                                _labQi1.Text = item.Q_i_1.ToString();
+                                _labQi2.Text = item.Q_i_2.ToString();
+                                
 
 
 
@@ -348,29 +286,44 @@ namespace RegistrationForm1
                             {
                                 _labALDoor1_Station2.Text = item.Al_Door1.ToString();
                                 _labALDoor2_Station2.Text = item.Al_Door2.ToString();
+                                _labQi3.Text = item.Q_i_1.ToString();
+                                _labQi4.Text = item.Q_i_2.ToString();
+
                             }
                             else if (item.Path == "Local Station/DauTieng/S71500/Station_3")
                             {
                                 _labALDoor1_Station3.Text = item.Al_Door1.ToString();
                                 _labALDoor2_Station3.Text = item.Al_Door2.ToString();
+                                _labQi5.Text = item.Q_i_1.ToString();
+                                _labQi6.Text = item.Q_i_2.ToString();
+                            }
+                            else if (item.Path == "Local Station/DauTieng/S71500/Location_Info")
+                            {
+                                _labFllowHo.Text = item.Fllow_Ho.ToString();
                             }
                         }
 
-                        _labFllowHo.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
 
-                 //       _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
 
-                       _labQi.Text = location.CalculatorValue.Q_i.ToString();
-                       _labWtt.Text = location.CalculatorValue.W_tt.ToString();
-                       _labQtt.Text = location.CalculatorValue.Q_tt.ToString();
+                        //       _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
+
+                        //      _labQi.Text = location.CalculatorValue.Q_i.ToString();
+                        _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
+
+
+
+
+                        _labWtt.Text = location.CalculatorValue.W_tt.ToString();
+                        _labQtt.Text = location.CalculatorValue.Q_tt.ToString();
                         _labW1_ho.Text = location.CalculatorValue.W1_ho.ToString();
                         _labW2_ho.Text = location.CalculatorValue.W2_ho.ToString();
-                          _labQden.Text = location.CalculatorValue.Q_den.ToString();
+                        _labQden.Text = location.CalculatorValue.Q_den.ToString();
                         _labWden.Text = location.CalculatorValue.W_den.ToString();
-                        _labQtr.Text = location.CalculatorValue.Q_tr.ToString();
+
                         _labWtr.Text = location.CalculatorValue.W_tr.ToString();
                         _labWdi.Text = location.CalculatorValue.W_di.ToString();
                         _LabQdi.Text = location.CalculatorValue.Q_di.ToString();
+                       
 
                     }
                 });
@@ -400,30 +353,31 @@ namespace RegistrationForm1
                             line.LocationId = item.LocationId;
                             line.LocationName = item.LocationName;
 
-                            line.Fllow_DauTieng = item.CalculatorValue.Fllow_DauTieng;
-                            line.Fllow_BenSuc = item.CalculatorValue.Fllow_BenSuc;
-                            line.Fllow_SonDai = item.CalculatorValue.Fllow_SonDai;
-                            line.Fllow_BinhNham = item.CalculatorValue.Fllow_BinhNham;
-                            line.Fllow_BinhNham2 = item.CalculatorValue.Fllow_BinhNham2;
-                            line.Fllow_TL_CDD = item.CalculatorValue.Fllow_TL_CDD;
-                            line.Fllow_HL_TXL = item.CalculatorValue.Fllow_HL_TXL;
-                            line.Total_Fllow = item.CalculatorValue.Total_Fllow;
-                            line.API_DM_HoDT = item.CalculatorValue.API_DM_HoDT;
-                            line.API_MinhHoa = item.CalculatorValue.API_MinhHoa;
-                            line.API_MinhTam = item.CalculatorValue.API_MinhTam;
-                            line.API_LocThien = item.CalculatorValue.API_LocThien;
-                            line.API_LocNinh = item.CalculatorValue.API_LocNinh;
-                            line.API_LocThanh = item.CalculatorValue.API_LocThanh;
-                            line.API_ThanhLuong = item.CalculatorValue.API_ThanhLuong;
-                            line.API_TanHoa1 = item.CalculatorValue.API_TanHoa1;
-                            line.API_TanHoa2 = item.CalculatorValue.API_TanHoa2;
-                            line.API_KaTum = item.CalculatorValue.API_KaTum;
-                            line.API_TanThanh = item.CalculatorValue.API_TanThanh;
-                            line.API_DongBan  = item.CalculatorValue.API_DongBan;
-                            line.API_TanHa = item.CalculatorValue.API_TanHa;
-                            line.API_Doi95 = item.CalculatorValue.API_Doi95;
+                            line.API_Fllow_DauTieng = item.CalculatorValue.API_Fllow_DauTieng;
+                            line.API_Fllow_BenSuc = item.CalculatorValue.API_Fllow_BenSuc;
+                            line.API_Fllow_SonDai = item.CalculatorValue.API_Fllow_SonDai;
+                            line.API_Fllow_BinhNham = item.CalculatorValue.API_Fllow_BinhNham;
+                            line.API_Fllow_BinhNham2 = item.CalculatorValue.API_Fllow_BinhNham2;
+                            line.API_Fllow_TL_CDD = item.CalculatorValue.API_Fllow_TL_CDD;
+                            line.API_Fllow_HL_TXL = item.CalculatorValue.API_Fllow_HL_TXL;
+                            //      line.Total_Fllow = item.CalculatorValue.Total_Fllow;
+                            line.API_D_DM_HoDT = item.CalculatorValue.API_D_DM_HoDT;
+                            line.API_D_MinhHoa = item.CalculatorValue.API_D_MinhHoa;
+                            line.API_D_MinhTam = item.CalculatorValue.API_D_MinhTam;
+                            line.API_D_LocThien = item.CalculatorValue.API_D_LocThien;
+                            line.API_D_LocNinh = item.CalculatorValue.API_D_LocNinh;
+                            line.API_D_LocThanh = item.CalculatorValue.API_D_LocThanh;
+                            line.API_D_ThanhLuong = item.CalculatorValue.API_D_ThanhLuong;
+                            line.API_D_TanHoa1 = item.CalculatorValue.API_D_TanHoa1;
+                            line.API_D_TanHoa2 = item.CalculatorValue.API_D_TanHoa2;
+                            line.API_D_KaTum = item.CalculatorValue.API_D_KaTum;
+                            line.API_D_TanThanh = item.CalculatorValue.API_D_TanThanh;
+                            line.API_D_DongBan = item.CalculatorValue.API_D_DongBan;
+                            line.API_D_TanHa = item.CalculatorValue.API_D_TanHa;
+                            line.API_D_Doi95 = item.CalculatorValue.API_D_Doi95;
 
-                            line.Q_i = item.CalculatorValue.Q_i;
+                            //    line.Q_i = item.CalculatorValue.Q_i;
+
                             line.Q_den = item.CalculatorValue.Q_den;
                             line.Q_di = item.CalculatorValue.Q_di;
                             line.W1_ho = item.CalculatorValue.W1_ho;
@@ -442,7 +396,7 @@ namespace RegistrationForm1
                             line.W_cs3 = item.CalculatorValue.W_cs3;
 
                             //   line.LuuLuong = item.CalculatorValue.lu;
-                           //    line.LuuLuongTong = item.CalculatorValue.LuuLuongTong;
+                            //    line.LuuLuongTong = item.CalculatorValue.LuuLuongTong;
 
                             line.StationId = itemStation.StationId;
                             line.StationName = itemStation.StationName;
@@ -493,10 +447,10 @@ namespace RegistrationForm1
 
                     if (dataLogs.Count == 0)
                         return;
-
-                    using var dbContext = new ApplicationDbContext();
-                    dbContext.FT03s.AddRange(dataLogs);
-                    dbContext.SaveChanges();//Luu thay doi vao db
+                  //  Lưu vào database
+                    //using var dbContext = new ApplicationDbContext();
+                    //dbContext.FT03s.AddRange(dataLogs);
+                    //dbContext.SaveChanges();//Luu thay doi vao db
 
                     _startTime = DateTime.Now;
                 }
@@ -561,7 +515,7 @@ namespace RegistrationForm1
                 //    GT.ToString("0.00"),
                 //    WritePiority.High);
                 Globalvariable.RealtimeDisplays.FirstOrDefault(loc => loc.LocationId == 1)
-                .CalculatorValue.Fllow_TL_CDD = GT;
+                .CalculatorValue.API_Fllow_TL_CDD = GT;
 
 
             }
@@ -882,18 +836,18 @@ namespace RegistrationForm1
                         {
                             _stationIdToNameMap.Add(station.Code, station.Name);
                             // Debug: In ra các trạm được thêm vào map
-                            Console.WriteLine($"Debug (LoadStationsData): Added station to map: Code={station.Code}, Name={station.Name}");
+                       //     Console.WriteLine($"Debug (LoadStationsData): Added station to map: Code={station.Code}, Name={station.Name}");
                         }
                         else if (string.IsNullOrEmpty(station.Code))
                         {
-                            Console.WriteLine($"Debug (LoadStationsData): Station with Uuid={station.Uuid} has empty/null Code. Skipping for name map.");
+                     //       Console.WriteLine($"Debug (LoadStationsData): Station with Uuid={station.Uuid} has empty/null Code. Skipping for name map.");
                         }
                         else if (_stationIdToNameMap.ContainsKey(station.Code))
                         {
-                            Console.WriteLine($"Debug (LoadStationsData): Duplicate Code '{station.Code}' found for station Uuid={station.Uuid}. Skipping this entry for name map.");
+                    //        Console.WriteLine($"Debug (LoadStationsData): Duplicate Code '{station.Code}' found for station Uuid={station.Uuid}. Skipping this entry for name map.");
                         }
                     }
-                    Console.WriteLine($"Debug (LoadStationsData): _stationIdToNameMap populated with {_stationIdToNameMap.Count} entries.");
+                 //   Console.WriteLine($"Debug (LoadStationsData): _stationIdToNameMap populated with {_stationIdToNameMap.Count} entries.");
                 }
                 else
                 {
@@ -908,49 +862,39 @@ namespace RegistrationForm1
             }
             catch (JsonException e)
             {
-                MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON cho trạm: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          //      MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON cho trạm: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Đã xảy ra lỗi không mong muốn khi tải trạm: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     //           MessageBox.Show($"Đã xảy ra lỗi không mong muốn khi tải trạm: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
         }
-        private async Task<double> GetLastAccumulatedDepthForStation(string stationId, DateTime sevenAmCycleStart)
+        private async Task<CalculatorValueModel?> GetLatestApiDataForStation(string stationId, DateTime sevenAmCycleStart)
         {
-            double lastAccumulatedDepth = 0;
-            try
+            using var dbContext = new ApplicationDbContext();
+
+            if (!int.TryParse(stationId, out int stationIdInt))
             {
-                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+                Console.WriteLine($"Debug: stationId '{stationId}' không hợp lệ.");
+                return null;
+            }
+
+            return await dbContext.FT03s
+                .Where(x => x.StationId == stationIdInt
+                            && x.CreateAt >= sevenAmCycleStart
+                            && (x.IsDeleted ?? false) == false)
+                .OrderByDescending(x => x.CreateAt)
+                .Select(x => new CalculatorValueModel
                 {
-                    await connection.OpenAsync();
-                    string sql = @"SELECT TOP 1 AccumulatedDepth
-                                   FROM RealtimeQTM
-                                   WHERE StationId = @StationId AND TimePoint >= @SevenAmCycleStart
-                                   ORDER BY TimePoint DESC;"; // Lấy bản ghi mới nhất trong chu kỳ
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@StationId", stationId);
-                        command.Parameters.AddWithValue("@SevenAmCycleStart", sevenAmCycleStart);
-                        object result = await command.ExecuteScalarAsync();
-                        if (result != null && result != DBNull.Value)
-                        {
-                            lastAccumulatedDepth = Convert.ToDouble(result);
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Debug (GetLastAccumulatedDepth): Lỗi SQL khi lấy AccumulatedDepth cho trạm {stationId}: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Debug (GetLastAccumulatedDepth): Lỗi không mong muốn khi lấy AccumulatedDepth cho trạm {stationId}: {ex.Message}");
-            }
-            return lastAccumulatedDepth;
+                    API_D_DM_HoDT = x.API_D_DM_HoDT,
+                    API_D_MinhHoa = x.API_D_MinhHoa,
+                   // API_D_TT = x.API_D_TT
+                })
+                .FirstOrDefaultAsync();
         }
+
         private async Task LoadRainfallStatsData()
         {
             DateTime now = DateTime.Now;
@@ -1008,7 +952,7 @@ namespace RegistrationForm1
                 // Kiểm tra xem _stationIdToNameMap đã được điền chưa
                 if (_stationIdToNameMap == null || _stationIdToNameMap.Count == 0)
                 {
-                    Console.WriteLine("Debug (LoadRainfallStatsData): WARNING! _stationIdToNameMap is empty or null. Attempting to re-load station data.");
+                //    Console.WriteLine("Debug (LoadRainfallStatsData): WARNING! _stationIdToNameMap is empty or null. Attempting to re-load station data.");
                     await LoadStationsData(); // Thử tải lại dữ liệu trạm nếu map trống
                 }
 
@@ -1021,7 +965,7 @@ namespace RegistrationForm1
                     {
                         if (!initialAccumulatedDepths.ContainsKey(measurement.StationId))
                         {
-                            initialAccumulatedDepths.Add(measurement.StationId, await GetLastAccumulatedDepthForStation(measurement.StationId, sevenAmCycleStart));
+                     //      initialAccumulatedDepths.Add(measurement.StationId, await GetLastAccumulatedDepthForStation(measurement.StationId, sevenAmCycleStart));
                         }
                     }
 
@@ -1152,8 +1096,8 @@ namespace RegistrationForm1
                 {
                     try
                     {
-                        await WriteQTM(latestDataPointsByStationFetched);
-                        await SaveRealtimeMeasurementsToSql(realTimeDataToSave);
+                               await WriteQTM(latestDataPointsByStationFetched);
+                        //       await SaveRealtimeMeasurementsToSql(realTimeDataToSave);
                         saveStatusMessage += $"Đã lưu {realTimeDataToSave.Count} bản ghi tức thời mới nhất vào SQL (bao gồm tổng lượng mưa tích lũy từ 7h sáng và Tên trạm).";
                         realtimeSaveSuccess = true;
                     }
@@ -1196,80 +1140,89 @@ namespace RegistrationForm1
         }
         private async Task SaveRealtimeMeasurementsToSql(List<RealtimeRainfallData> realtimeData)
         {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
-                {
-                    await connection.OpenAsync();
+            //try
+            //{
+            //    using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            //    {
+            //        await connection.OpenAsync();
 
-                    foreach (var data in realtimeData)
-                    {
-                        // Ghi log giá trị Unit và Name trước khi thêm vào tham số
-                        Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): Trying to save Realtime data for StationId={data.StationId}, Name='{data.Name}', TimePoint={data.TimePoint}, Depth={data.Depth}, Unit='{data.Unit}', AccumulatedDepth={data.AccumulatedDepth}, RecordedAt={data.RecordedAt}");
+            //        foreach (var data in realtimeData)
+            //        {
+            //            // Ghi log giá trị Unit và Name trước khi thêm vào tham số
+            //            Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): Trying to save Realtime data for StationId={data.StationId}, Name='{data.Name}', TimePoint={data.TimePoint}, Depth={data.Depth}, Unit='{data.Unit}', AccumulatedDepth={data.AccumulatedDepth}, RecordedAt={data.RecordedAt}");
 
-                        // Kiểm tra xem bản ghi cho StationId và TimePoint đã tồn tại chưa
-                        string checkSql = @"SELECT COUNT(1) FROM RealtimeQTM
-                                            WHERE StationId = @StationId AND TimePoint = @TimePoint;";
+            //            // Kiểm tra xem bản ghi cho StationId và TimePoint đã tồn tại chưa
+            //            string checkSql = @"SELECT COUNT(1) FROM RealtimeQTM
+            //                                WHERE StationId = @StationId AND TimePoint = @TimePoint;";
 
-                        using (SqlCommand checkCommand = new SqlCommand(checkSql, connection))
-                        {
-                            checkCommand.Parameters.AddWithValue("@StationId", data.StationId);
-                            checkCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
-                            int existingCount = (int)await checkCommand.ExecuteScalarAsync();
+            //            using (SqlCommand checkCommand = new SqlCommand(checkSql, connection))
+            //            {
+            //                checkCommand.Parameters.AddWithValue("@StationId", data.StationId);
+            //                checkCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
+            //                int existingCount = (int)await checkCommand.ExecuteScalarAsync();
 
-                            if (existingCount > 0)
-                            {
-                                string updateSql = @"UPDATE RealtimeQTM
-                                                     SET Depth = @Depth,
-                                                         Unit = @Unit,
-                                                         AccumulatedDepth = @AccumulatedDepth,
-                                                         Name = @Name,
-                                                         RecordedAt = @RecordedAt
-                                                     WHERE StationId = @StationId AND TimePoint = @TimePoint;";
-                                using (SqlCommand updateCommand = new SqlCommand(updateSql, connection))
-                                {
-                                    updateCommand.Parameters.AddWithValue("@Depth", data.Depth);
-                                    updateCommand.Parameters.AddWithValue("@Unit", (object)data.Unit ?? DBNull.Value);
-                                    updateCommand.Parameters.AddWithValue("@AccumulatedDepth", (object)data.AccumulatedDepth ?? DBNull.Value);
-                                    updateCommand.Parameters.AddWithValue("@Name", (object)data.Name ?? DBNull.Value);
-                                    updateCommand.Parameters.AddWithValue("@RecordedAt", data.RecordedAt);
-                                    updateCommand.Parameters.AddWithValue("@StationId", data.StationId);
-                                    updateCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
-                                    int rowsAffected = await updateCommand.ExecuteNonQueryAsync();
-                                    Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): UPDATE affected {rowsAffected} rows for Realtime data StationId={data.StationId}, TimePoint={data.TimePoint}.");
-                                }
-                            }
-                            else
-                            {
-                                string insertSql = @"INSERT INTO RealtimeQTM (StationId, TimePoint, Depth, Unit, AccumulatedDepth, Name, RecordedAt)
-                                                     VALUES (@StationId, @TimePoint, @Depth, @Unit, @AccumulatedDepth, @Name, @RecordedAt);";
-                                using (SqlCommand insertCommand = new SqlCommand(insertSql, connection))
-                                {
-                                    insertCommand.Parameters.AddWithValue("@StationId", data.StationId);
-                                    insertCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
-                                    insertCommand.Parameters.AddWithValue("@Depth", data.Depth);
-                                    insertCommand.Parameters.AddWithValue("@Unit", (object)data.Unit ?? DBNull.Value);
-                                    insertCommand.Parameters.AddWithValue("@AccumulatedDepth", (object)data.AccumulatedDepth ?? DBNull.Value);
-                                    insertCommand.Parameters.AddWithValue("@Name", (object)data.Name ?? DBNull.Value);
-                                    insertCommand.Parameters.AddWithValue("@RecordedAt", data.RecordedAt);
-                                    int rowsAffected = await insertCommand.ExecuteNonQueryAsync();
-                                    Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): INSERT affected {rowsAffected} rows for Realtime data StationId={data.StationId}, TimePoint={data.TimePoint}.");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Lỗi SQL khi lưu dữ liệu tức thời: {ex.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi không mong muốn khi lưu dữ liệu tức thời vào SQL: {ex.Message}");
-                throw;
-            }
+            //                if (existingCount > 0)
+            //                {
+            //                    string updateSql = @"UPDATE RealtimeQTM
+            //                                         SET Depth = @Depth,
+            //                                             Unit = @Unit,
+            //                                             AccumulatedDepth = @AccumulatedDepth,
+            //                                             Name = @Name,
+            //                                             RecordedAt = @RecordedAt
+            //                                         WHERE StationId = @StationId AND TimePoint = @TimePoint;";
+            //                    using (SqlCommand updateCommand = new SqlCommand(updateSql, connection))
+            //                    {
+            //                        updateCommand.Parameters.AddWithValue("@Depth", data.Depth);
+            //                        updateCommand.Parameters.AddWithValue("@Unit", (object)data.Unit ?? DBNull.Value);
+            //                        updateCommand.Parameters.AddWithValue("@AccumulatedDepth", (object)data.AccumulatedDepth ?? DBNull.Value);
+            //                        updateCommand.Parameters.AddWithValue("@Name", (object)data.Name ?? DBNull.Value);
+            //                        updateCommand.Parameters.AddWithValue("@RecordedAt", data.RecordedAt);
+            //                        updateCommand.Parameters.AddWithValue("@StationId", data.StationId);
+            //                        updateCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
+            //                        int rowsAffected = await updateCommand.ExecuteNonQueryAsync();
+            //                        Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): UPDATE affected {rowsAffected} rows for Realtime data StationId={data.StationId}, TimePoint={data.TimePoint}.");
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    string insertSql = @"INSERT INTO RealtimeQTM (StationId, TimePoint, Depth, Unit, AccumulatedDepth, Name, RecordedAt)
+            //                                         VALUES (@StationId, @TimePoint, @Depth, @Unit, @AccumulatedDepth, @Name, @RecordedAt);";
+            //                    using (SqlCommand insertCommand = new SqlCommand(insertSql, connection))
+            //                    {
+            //                        insertCommand.Parameters.AddWithValue("@StationId", data.StationId);
+            //                        insertCommand.Parameters.AddWithValue("@TimePoint", data.TimePoint);
+            //                        insertCommand.Parameters.AddWithValue("@Depth", data.Depth);
+            //                        insertCommand.Parameters.AddWithValue("@Unit", (object)data.Unit ?? DBNull.Value);
+            //                        insertCommand.Parameters.AddWithValue("@AccumulatedDepth", (object)data.AccumulatedDepth ?? DBNull.Value);
+            //                        insertCommand.Parameters.AddWithValue("@Name", (object)data.Name ?? DBNull.Value);
+            //                        insertCommand.Parameters.AddWithValue("@RecordedAt", data.RecordedAt);
+            //                        int rowsAffected = await insertCommand.ExecuteNonQueryAsync();
+            //                        Console.WriteLine($"Debug (SaveRealtimeMeasurementsToSql): INSERT affected {rowsAffected} rows for Realtime data StationId={data.StationId}, TimePoint={data.TimePoint}.");
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (SqlException ex)
+            //{
+            //    Console.WriteLine($"Lỗi SQL khi lưu dữ liệu tức thời: {ex.Message}");
+            //    throw;
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Lỗi không mong muốn khi lưu dữ liệu tức thời vào SQL: {ex.Message}");
+            //    throw;
+            //}
+            using var dbContext = new ApplicationDbContext();
+            // Lấy bản ghi mới nhất cho từng loại cảnh báo tại các trạm "Station_1", "Station_2" và "Station_3"
+            var latestAlarms = dbContext.FT04s
+                .Where(x => x.IsDeleted == false && (x.StationName == "Station_1" || x.StationName == "Station_2" || x.StationName == "Station_3"))
+             
+                .AsEnumerable() // Chuyển sang xử lý trong bộ nhớ để group by
+                .GroupBy(x => new { x.StationName, x }) //  nhóm theo cả StationName và TagName
+                .Select(g => g.OrderByDescending(x => x.CreateAt).FirstOrDefault())
+                .ToList();
         }
         // Khu vực tạo Class Quan trắc mưa 
         // Định nghĩa lớp Station để ánh xạ dữ liệu JSON từ API /v1/station
@@ -1426,21 +1379,21 @@ namespace RegistrationForm1
             {
                 // Định dạng số với 2 chữ số thập phân
                 double formattedwp1 = Math.Round(wp1, 2);
-                    double formattedwp2 = Math.Round(wp2, 2);
+                double formattedwp2 = Math.Round(wp2, 2);
 
                 //await ahdDriverConnector1.WriteTagAsync(
                 //    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham",
                 //    wp1.ToString("0.00"),
                 //    WritePiority.High);
                 Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
-                    .CalculatorValue.Fllow_BinhNham = formattedwp1;
+                    .CalculatorValue.API_Fllow_BinhNham = formattedwp1;
 
                 //await ahdDriverConnector1.WriteTagAsync(
                 //    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham2",
                 //    wp2.ToString("0.00"),
                 //    WritePiority.High);
                 Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
-                    .CalculatorValue.Fllow_BinhNham2 = formattedwp2;
+                    .CalculatorValue.API_Fllow_BinhNham2 = formattedwp2;
             }
             catch (Exception ex)
             {
@@ -1506,14 +1459,14 @@ namespace RegistrationForm1
                                 processedDecimalValue = processFlowValue(rawValue);
                                 // ghi xuống Model
                                 Globalvariable.RealtimeDisplays.First(x => x.LocationId == 1)?
-                               .CalculatorValue.Fllow_SonDai = (double)processedDecimalValue;
+                               .CalculatorValue.API_Fllow_SonDai = (double)processedDecimalValue;
                                 AppendLog($"✅ Cập nhật PLC: {tagName} = {processedDecimalValue} (Từ API: {rawValue})");
                                 break;
                             case "F01203": // Fllow_BenSuc
                                 tagName = "Fllow_BenSuc";
                                 processedDecimalValue = processFlowValue(rawValue);
                                 Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
-                                .CalculatorValue.Fllow_BenSuc = (double)processedDecimalValue;
+                                .CalculatorValue.API_Fllow_BenSuc = (double)processedDecimalValue;
                                 AppendLog($"✅ Cập nhật PLC: {tagName} = {processedDecimalValue} (Từ API: {rawValue})");
                                 break;
                             case "F01849": // Fllow_DauTieng
@@ -1521,7 +1474,7 @@ namespace RegistrationForm1
                                 processedDecimalValue = processFlowValue(rawValue);
 
                                 Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
-                                    .CalculatorValue.Fllow_DauTieng = (double)processedDecimalValue;
+                                    .CalculatorValue.API_Fllow_DauTieng = (double)processedDecimalValue;
                                 AppendLog($"✅ Ghi PLC: {tagName} = {processedDecimalValue} (Từ API: {rawValue})");
                                 break;
                             // Thêm các case khác nếu có các stationCode khác cần xử lý
@@ -1557,41 +1510,82 @@ namespace RegistrationForm1
         {
             try
             {
-                // Xác định các ID trạm (hoặc các phần cuối của tag ID) mà bạn muốn ghi
-
-                string[] stationIdsToProcess = { "610001", "610002", "610003", "610004", "610005", "610006", "610007", "610008", "610009", "610010", "610011", "610012", "610013" };
-
-                // Lặp qua từng StationId mong muốn
-                foreach (string stationId in stationIdsToProcess)
+                var calc = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?.CalculatorValue;
+                if (calc == null)
                 {
-                    // Tạo đường dẫn tag hoàn chỉnh
-                    string tagPath = $"Local Station/DauTieng/S71500/API/{stationId}";
+                    Console.WriteLine("Không tìm thấy CalculatorValue để ghi dữ liệu mưa.");
+                    return;
+                }
 
-                    // Kiểm tra xem có dữ liệu mới nhất cho StationId này không
-                    if (latestApiData.TryGetValue(stationId, out RealtimeRainfallData data))
+                // Duyệt qua danh sách stationId có trong latestApiData
+                foreach (var kvp in latestApiData)
+                {
+                    string stationId = kvp.Key;
+                    double depth = kvp.Value.Depth;
+
+                    switch (stationId)
                     {
-                        // Lấy giá trị 'Depth' (lượng mưa) từ dữ liệu tức thời và định dạng
-                        string valueToWrite = data.Depth.ToString("0.00");
+                        case "610001":
+                            calc.API_D_DM_HoDT = depth;
 
-                       Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
-                        .CalculatorValue.API_DM_HoDT = data.Depth;
-                       
+                            break;
 
+                        case "610002":
+                            calc.API_D_MinhHoa = depth;
+                            break;
 
-                        // Ghi log thành công
-                        Console.WriteLine($"✅ Ghi PLC thành công: Tag '{tagPath}' = {valueToWrite} (Từ API: StationId={data.StationId}, TimePoint={data.TimePoint})");
-                    }
-                    else
-                    {
-                        // Xử lý trường hợp không tìm thấy dữ liệu cho một trạm cụ thể
-                        // Bạn có thể ghi log, thông báo lỗi, hoặc bỏ qua nếu không cần thiết
-                        Console.WriteLine($"Cảnh báo: Không tìm thấy dữ liệu tức thời cho trạm '{stationId}' để ghi.");
+                        case "610003":
+                            calc.API_D_MinhTam = depth;
+                            break;
+
+                        case "610004":
+                            calc.API_D_LocThien = depth;
+                            break;
+
+                        case "610005":
+                            calc.API_D_LocNinh = depth;
+                            break;
+
+                        case "610006":
+                            calc.API_D_LocThanh = depth;
+                            break;
+
+                        case "610007":
+                            calc.API_D_ThanhLuong = depth;
+                            break;
+
+                        case "610008":
+                            calc.API_D_TanHoa1 = depth;
+                            break;
+
+                        case "610009":
+                            calc.API_D_TanHoa2 = depth;
+                            break;
+
+                        case "610010":
+                            calc.API_D_KaTum = depth;
+                            break;
+
+                        case "610011":
+                            calc.API_D_TanThanh = depth;
+                            break;
+
+                        case "610012":
+                            calc.API_D_DongBan = depth;
+                            break;
+
+                        case "610013":
+                            calc.API_D_TanHa = depth;
+                            break;
+
+                        default:
+                            Console.WriteLine($"Cảnh báo: Không có property tương ứng cho trạm {stationId}");
+                            break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi nếu có bất kỳ ngoại lệ nào xảy ra trong quá trình ghi PLC
                 Console.WriteLine($"Lỗi khi ghi giá trị tức thời vào PLC: {ex.Message}");
             }
         }
@@ -4596,7 +4590,7 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
-        // Door1_Aperture
+
         private void Door1_Aperture_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -4611,7 +4605,32 @@ namespace RegistrationForm1
                     station.Door1_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
                     station.Door1_Aperture_Final = Math.Round(station.Door1_Aperture + station.Door1_Aperture_Offset ?? 0, 2);
-                   
+                    // Tính lưu lượng qua tràn Qtr và tổng lưu lượng Q
+                    double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
+                    double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ;
+                    double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
+                    int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
+                    double SumB = Math.Round(10.0 * c, 2);
+                    double h = Math.Round((double)station.Door1_Aperture/100 , 2);
+                    double aOverH = H0 != 0 ? Math.Round(h / H0, 3) : 0;
+                    double alpha1 = Math.Round(GetAlphaFromTable(aOverH),3);
+               //     double alpha1 = anpha1;
+                    double alphaTimesH1 = alpha1 * h;
+
+                    double insideSqrt = 2 * Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G * (H0 - alphaTimesH1);
+                        double sqrt = insideSqrt > 0 ? Math.Sqrt(insideSqrt) : 0;
+                    double Qi = insideSqrt > 0
+                        ? Math.Round((double)Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * alpha1 * h * SumB * sqrt, 1)
+                        : 0;
+
+                    station.Q_i_1 = Qi;
+
+                    // phi * alpha * h * sumB * sqrt;
+                    location.CalculatorValue.Q_i_total = (double)location.Stations.Sum(x => x.Q_i_1) + (double)location.Stations.Sum(x => x.Q_i_2);
+
+
+
+
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -4654,6 +4673,31 @@ namespace RegistrationForm1
                     station.Door2_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
                     station.Door2_Aperture_Final = Math.Round(station.Door2_Aperture + station.Door2_Aperture_Offset ?? 0, 2);
+
+
+                    // Tính lưu lượng qua tràn Qtr và tổng lưu lượng Q
+                    double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
+                    double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn;
+                    double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
+                    double SumB = Math.Round(10.0 * Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo, 2);
+                    int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
+                    double h = Math.Round((double)station.Door2_Aperture/100 ,2) ;
+                    double aOverH = H0 != 0 ? Math.Round(h / H0, 3) : 0;
+                    double alpha1 = Math.Round(GetAlphaFromTable(aOverH), 3);
+                //    double alpha1 = anpha1;
+                    double alphaTimesH1 = alpha1 * h;
+
+                    double insideSqrt = 2 * Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G * (H0 - alphaTimesH1);
+                    double sqrt = insideSqrt > 0 ? Math.Sqrt(insideSqrt) : 0;
+                    double Qi = insideSqrt > 0
+                        ? Math.Round((double)Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * alpha1 * h * SumB * Math.Sqrt(insideSqrt), 1)
+                        : 0;
+                   
+                    station.Q_i_2 = Qi;
+
+                    location.CalculatorValue.Q_i_total = (double)location.Stations.Sum(x => x.Q_i_1) + (double)location.Stations.Sum(x => x.Q_i_2);
+
+
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -4769,14 +4813,10 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
 
-
-
         private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
             {
-
-
                 var createAt = DateTime.Now;
                 var createOperatorId = "System";
                 var path = e.Tag.Parent.Path;
@@ -4784,14 +4824,14 @@ namespace RegistrationForm1
                 var station = location?.Stations.FirstOrDefault(x => x.Path == path);
                 if (station != null)
                 {
+                    // Cập nhật Fllow_Ho khi có giá trị mới
                     station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
-               //    station.Door1_Aperture = double.TryParse(e.NewValue.ToString(), out double newValueDoor1) ? Math.Round(newValueDoor1, 2) : 0;
-
+                    //    station.Door1_Aperture = double.TryParse(e.NewValue.ToString(), out double newValueDoor1) ? Math.Round(newValueDoor1, 2) : 0;
 
                     //tinh toans
 
                     station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
-                 
+
                     int selectedColumnIndex = 0; // mặc định chọn cột đầu tiên nếu không có combobox
 
                     double Z1 = ((double)station.Fllow_Ho); // Gán mực nước hồ
@@ -4800,28 +4840,12 @@ namespace RegistrationForm1
                     double Z2 = ((double)station.Fllow_Ho) + 0.01;
                     double NoisuyW2_Ho = InterpolateSingleValue(table, Z2, selectedColumnIndex);
                     // Tính Q tt và Wtt
-                    double TinhWtt = Math.Round((0.024 * (Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho + Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho)/2.0)/30.0,2) ;
-                    double TinhQtt = Math.Round((TinhWtt * 1000000.0) / (24.0 * 60.0 * 60.0),2); // 24*60*60 = 86400
-                    // Tính lưu lượng qua tràn Qtr và tổng lưu lượng Q
-                    double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
-                    double H0 = Math.Round(station.Fllow_Ho - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ?? 0, 2);
-                    double aOverH = Math.Round((Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h) / H0, 2);
-                    double anpha = Math.Round(GetAlphaFromTable(aOverH), 2);
-                    double alpha = anpha;
-                    double h = Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h;  
-                    // h gán bằng giá trị Tag Door1_Aperture            
-                //   double h = Globalvariable.RealtimeDisplays.FirstOrDefault().Stations.FirstOrDefault(x => x.Path == path).Door1_Aperture ?? 0;                
-                    double SumB = Math.Round(10.0 * Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo, 2);
-                    int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
-                    double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;                 
-                    double alphaTimesH = alpha * h;
-                    double insideSqrt = 2 * Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G * (H0 - alphaTimesH);
-                    double sqrt = Math.Sqrt(insideSqrt);       
-                    double Qi = Math.Round((double)Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * anpha * h * SumB * Math.Sqrt(insideSqrt), 1);
-                    // Qi = φ × α × h × Σb × √(2 × g × (Ho - α × h)) -> là của 1 cửa( Q_i)
-                    //  double Qtr = 6.0 * Qi; // Qtr = 6.0 x Qi (lưu lượng qua tràn)
-                    double Qtr = 20.0;
-                    double TinhWtr = Math.Round(Qtr * (86400.0 / 1000000.0),2); // *24*60*60/1000000)
+                    double TinhWtt = Math.Round((0.024 * (Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho + Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho) / 2.0) / 30.0, 2);
+                    double TinhQtt = Math.Round((TinhWtt * 1000000.0) / (24.0 * 60.0 * 60.0), 2); // 24*60*60 = 86400
+                                                                                                  // Tính lưu lượng qua tràn Qtr và tổng lưu lượng
+                                                                                                  //   double Qtr = 20.0;
+                    double Qtr = location.CalculatorValue.Q_i_total;
+                    double TinhWtr = Math.Round(Qtr * (86400.0 / 1000000.0), 2); // *24*60*60/1000000)
                     // Tính Q đên = [(W2-W1)*1000000/86400] + Qtr + Qcs1 + Qcs2 + Qcs3 +[(W2+W1)/2*2.4%/30*1000000/86400] 
                     double TinhQCs1 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1;
                     double TinhQCs2 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2;
@@ -4831,32 +4855,41 @@ namespace RegistrationForm1
                     double Qden1 = Math.Round((TinhHieuW * 1000000.0) / 86400.0, 2);
                     double Qden2 = Math.Round((TinhTongW / 2.0) * (0.024 / 30.0) * (1000000.0 / 86400.0), 2);
                     double Qden = Math.Round(Qden1 + Qden2 + Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3, 2);
-                    double TinhWden = Math.Round(Qden * (86400.0 / 1000000.0),2); //*24*60*60/1000000)
+                    double TinhWden = Math.Round(Qden * (86400.0 / 1000000.0), 2); //*24*60*60/1000000)
                     // Tính Q đi Qdi =QTr + QCs1 + QCs2 +QCs3 + QTt
-                    double TinhQdi = Math.Round(Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3 + TinhQtt,2);
-                    double TinhWdi = Math.Round(TinhQdi * (86400.0 / 1000000.0),2); // *24*60*60/1000000)
-                      //    location.CalculatorValue.W1_ho = value; // W_ho = φ × H0  (lưu lượng qua hồ)
-                      // ghi xuống SQL
+                    double TinhQdi = Math.Round(Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3 + TinhQtt, 2);
+                    double TinhWdi = Math.Round(TinhQdi * (86400.0 / 1000000.0), 2); // *24*60*60/1000000)
+                                                                                     //    location.CalculatorValue.W1_ho = value; // W_ho = φ × H0  (lưu lượng qua hồ)
+                                                                                     // ghi xuống SQL
+                                                                                     //Location_Info
 
-                    //    location.CalculatorValue.LuuLuongTong = Math.Round((double)station.Fllow_Ho_Final * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+                    foreach (var item in location.Stations.Where(x => !x.Path.Contains("Location_Info")))
+                    {
+                        Door1_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture")
+                                           , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture")
+                                           , "", ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture").Value));
+                        Door2_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture")
+                                               , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture")
+                                               , "", ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture").Value));
+                    }
 
-                    //     location.CalculatorValue.LuuLuongTong = TinhToan((double)station.Fllow_Ho_Final);
-
-                   location.CalculatorValue.W_di = TinhWdi;
+                    location.CalculatorValue.W_di = TinhWdi;
                     location.CalculatorValue.Q_di = TinhQdi;
                     location.CalculatorValue.W_den = TinhWden;
                     location.CalculatorValue.Q_den = Qden;
 
-                    location.CalculatorValue.Q_i = Qi;
-                   location.CalculatorValue.Q_tr = Qtr;  
+
+                    location.CalculatorValue.Q_tr = Qtr;
                     location.CalculatorValue.W_tr = TinhWtr;
-                    location.CalculatorValue.W1_ho = NoisuyW1_Ho;          
+                    location.CalculatorValue.W1_ho = NoisuyW1_Ho;
                     location.CalculatorValue.W2_ho = NoisuyW2_Ho;
                     location.CalculatorValue.W_tt = TinhWtt;
                     location.CalculatorValue.Q_tt = TinhQtt;
                     location.CalculatorValue.Q_cs1 = TinhQCs1;
                     location.CalculatorValue.Q_cs2 = TinhQCs2;
                     location.CalculatorValue.Q_cs3 = TinhQCs3;
+
+
 
 
                     using (var dbContext = new ApplicationDbContext())
@@ -4890,6 +4923,8 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
+
+
         private double TinhToan(double tagValue)
         {
             return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
@@ -4902,45 +4937,56 @@ namespace RegistrationForm1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmHochua mn = new FrmHochua();
             OpenFormInPanel(mn, "Hồ chứa");
             mn.UrlToLoad = "https://vrain.vn/61/overview?public_map=windy";
 
-            mn.Show();
+            //mn.Show();
 
         }
 
-        private async void button4_Click(object sender, EventArgs e)
-        {
-            await LoadRainfallStatsData();
-        }
+       
 
 
         private void bntNhaplieu_Click(object sender, EventArgs e)
         {
-            // Kiểm tra nếu chưa đăng nhập
-            if (string.IsNullOrEmpty(PermissionManager.CurrentUsername))
-            {
-                // Hiện form đăng nhập
-                FrmLogin frmLogin = new FrmLogin();
-                if (frmLogin.ShowDialog() != DialogResult.OK)
-                {
-                    MessageBox.Show("Bạn cần đăng nhập để sử dụng chức năng này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
+            //// Kiểm tra nếu chưa đăng nhập
+            //if (string.IsNullOrEmpty(PermissionManager.CurrentUsername))
+            //{
+            //    // Hiện form đăng nhập
+            //    FrmLogin frmLogin = new FrmLogin();
+            //    if (frmLogin.ShowDialog() != DialogResult.OK)
+            //    {
+            //        MessageBox.Show("Bạn cần đăng nhập để sử dụng chức năng này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //        return;
+            //    }
+            //}
 
-            // Sau khi đăng nhập xong, kiểm tra quyền
-            if (!PermissionManager.CheckPermissionWithMessage("edit_data"))
-                return;
+            //// Sau khi đăng nhập xong, kiểm tra quyền
+            //if (!PermissionManager.CheckPermissionWithMessage("edit_data"))
+            //    return;
 
             // Nếu đủ quyền, mở form nhập liệu
             FrmNhaplieu frm = new FrmNhaplieu();
             frm.ShowDialog();
         }
 
-        
 
+        private void ActivateMenuButton(Button btn)
+        {
+            if (btn == null) return;
+
+            // Nếu đã có nút được chọn trước đó, reset lại màu
+            if (currentButton != null)
+            {
+                currentButton.BackColor = Color.LightGray; // màu gốc
+            }
+
+            // Đổi màu nút mới
+            btn.BackColor = Color.LightGreen;
+            currentButton = btn; // Lưu lại nút đang được chọn
+        }
 
 
 
@@ -4994,30 +5040,36 @@ namespace RegistrationForm1
 
         private void bnt_Tran_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmTran data = new FrmTran();
             OpenFormInPanel(data, "Hệ thống tràn");
         }
 
         private void bnt_TramMN_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmMucnuoc mn = new FrmMucnuoc();
             OpenFormInPanel(mn, "Mức Nước");
         }
 
         private void bnt_TrangChu_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
+
             FrmHome H = new FrmHome();
             OpenFormInPanel(H, " GIÁM SÁT CỦA TRÀN HỒ DẦU TIẾNG");
         }
 
         private void bnt_CanhBao_Click(object sender, EventArgs e)
         {
-            FrmCanhBao canhBao = new FrmCanhBao(this);
+            ActivateMenuButton(sender as Button);
+            FrmCanhBao canhBao = new FrmCanhBao();
             OpenFormInPanel(canhBao, " Thông Tin Cảnh Báo");
         }
 
         private void bnt_BaoCao_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmBaoCao baocao = new FrmBaoCao();
             OpenFormInPanel(baocao, "Báo Cáo");
         }
@@ -5028,11 +5080,13 @@ namespace RegistrationForm1
         }
         private void bnt_CaiDat_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmCaiDat caiDat = new FrmCaiDat();
             OpenFormInPanel(caiDat, " CÀI ĐẶT");
         }
         private void bnt_LogIn_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             // Kiểm tra nếu đã đăng nhập thì không cần đăng nhập lại
             //if (!string.IsNullOrEmpty(PermissionManager.CurrentUsername))
             //{
@@ -5055,6 +5109,7 @@ namespace RegistrationForm1
 
         private void bnt_User_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmUserManager U = new FrmUserManager();
             OpenFormInPanel(U, "Hệ thống quản lý tài khoản");
         }
@@ -5079,6 +5134,7 @@ namespace RegistrationForm1
 
         private void bntThongtin_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmThongtin tt = new FrmThongtin();
             OpenFormInPanel(tt, " THÔNG TIN HỔ TRỢ VẬN HÀNH");
         }

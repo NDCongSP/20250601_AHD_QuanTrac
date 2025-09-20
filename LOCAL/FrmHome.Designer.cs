@@ -105,17 +105,12 @@
             this.ahdBar4 = new Ahd.Winforms.Controls.AhdBar();
             this.ahdBar5 = new Ahd.Winforms.Controls.AhdBar();
             this.ahdBar6 = new Ahd.Winforms.Controls.AhdBar();
-            this.ahdCDD = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel4 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel1 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel2 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel10 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel7 = new Ahd.Winforms.Controls.AhdLabel();
-            this.Fllow_BenSuc = new Ahd.Winforms.Controls.AhdLabel();
-            this.Fllow_DauTieng = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel33 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel30 = new Ahd.Winforms.Controls.AhdLabel();
-            this.Fllow_SonDai = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel25 = new Ahd.Winforms.Controls.AhdLabel();
             this._labFllow_ho = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -153,11 +148,11 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this._labAPICDD = new System.Windows.Forms.Label();
             this._labAPISondai = new System.Windows.Forms.Label();
             this._labAPIDautieng = new System.Windows.Forms.Label();
             this._labAPIBensuc = new System.Windows.Forms.Label();
             this._labAPIBinhnham = new System.Windows.Forms.Label();
-            this._labAPICDD = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua2)).BeginInit();
@@ -187,17 +182,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdCDD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_BenSuc)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_DauTieng)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_SonDai)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door2_Opening)).BeginInit();
@@ -1070,7 +1060,7 @@
             this.ahdBar2.Name = "ahdBar2";
             this.ahdBar2.Size = new System.Drawing.Size(161, 118);
             this.ahdBar2.TabIndex = 289;
-            this.ahdBar2.TagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
+            this.ahdBar2.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Aperture";
             this.ahdBar2.ValueStringFormat = "0.00";
             // 
             // ahdBar1
@@ -1085,7 +1075,7 @@
             this.ahdBar1.Name = "ahdBar1";
             this.ahdBar1.Size = new System.Drawing.Size(161, 118);
             this.ahdBar1.TabIndex = 290;
-            this.ahdBar1.TagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door2";
+            this.ahdBar1.TagPath = "Local Station/DauTieng/S71500/Station_1/Door2_Aperture";
             this.ahdBar1.ValueStringFormat = "0.00";
             // 
             // ahdBar3
@@ -1100,14 +1090,14 @@
             this.ahdBar3.Name = "ahdBar3";
             this.ahdBar3.Size = new System.Drawing.Size(161, 118);
             this.ahdBar3.TabIndex = 291;
-            this.ahdBar3.TagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door1";
+            this.ahdBar3.TagPath = "Local Station/DauTieng/S71500/Station_2/Door1_Aperture";
             this.ahdBar3.ValueStringFormat = "0.00";
             // 
             // ahdBar4
             // 
             this.ahdBar4.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdBar4.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar4.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Value;
+            this.ahdBar4.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
             this.ahdBar4.FillColor = System.Drawing.SystemColors.Highlight;
             this.ahdBar4.Location = new System.Drawing.Point(668, 572);
             this.ahdBar4.MaxValue = "510";
@@ -1115,7 +1105,7 @@
             this.ahdBar4.Name = "ahdBar4";
             this.ahdBar4.Size = new System.Drawing.Size(161, 118);
             this.ahdBar4.TabIndex = 292;
-            this.ahdBar4.TagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door2";
+            this.ahdBar4.TagPath = "Local Station/DauTieng/S71500/Station_2/Door2_Aperture";
             this.ahdBar4.ValueStringFormat = "0.00";
             // 
             // ahdBar5
@@ -1130,7 +1120,7 @@
             this.ahdBar5.Name = "ahdBar5";
             this.ahdBar5.Size = new System.Drawing.Size(161, 118);
             this.ahdBar5.TabIndex = 293;
-            this.ahdBar5.TagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door1";
+            this.ahdBar5.TagPath = "Local Station/DauTieng/S71500/Station_3/Door1_Aperture";
             this.ahdBar5.ValueStringFormat = "0.00";
             // 
             // ahdBar6
@@ -1145,24 +1135,8 @@
             this.ahdBar6.Name = "ahdBar6";
             this.ahdBar6.Size = new System.Drawing.Size(161, 118);
             this.ahdBar6.TabIndex = 294;
-            this.ahdBar6.TagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door2";
+            this.ahdBar6.TagPath = "Local Station/DauTieng/S71500/Station_3/Door2_Aperture";
             this.ahdBar6.ValueStringFormat = "0.00";
-            // 
-            // ahdCDD
-            // 
-            this.ahdCDD.BackColor = System.Drawing.SystemColors.Control;
-            this.ahdCDD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdCDD.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdCDD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdCDD.ForeColor = System.Drawing.Color.Red;
-            this.ahdCDD.Location = new System.Drawing.Point(1464, 61);
-            this.ahdCDD.Name = "ahdCDD";
-            this.ahdCDD.Size = new System.Drawing.Size(162, 30);
-            this.ahdCDD.StringFormat = "0.00";
-            this.ahdCDD.TabIndex = 322;
-            this.ahdCDD.TagPath = "Local Station/DauTieng/S71500/API/Fllow_TL_CDD";
-            this.ahdCDD.Text = "0.00";
-            this.ahdCDD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel4
             // 
@@ -1178,22 +1152,6 @@
             this.ahdLabel4.TagPath = null;
             this.ahdLabel4.Text = "MN HỒ (TL-CDD)   (m)";
             this.ahdLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ahdLabel1
-            // 
-            this.ahdLabel1.BackColor = System.Drawing.SystemColors.Control;
-            this.ahdLabel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdLabel1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel1.ForeColor = System.Drawing.Color.Red;
-            this.ahdLabel1.Location = new System.Drawing.Point(1511, 207);
-            this.ahdLabel1.Name = "ahdLabel1";
-            this.ahdLabel1.Size = new System.Drawing.Size(115, 30);
-            this.ahdLabel1.StringFormat = "0.00";
-            this.ahdLabel1.TabIndex = 320;
-            this.ahdLabel1.TagPath = "Local Station/DauTieng/S71500/API/Fllow_BinhNham";
-            this.ahdLabel1.Text = "0.00";
-            this.ahdLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel2
             // 
@@ -1240,38 +1198,6 @@
             this.ahdLabel7.Text = "MỰC NƯỚC SÔNG SÀI GÒN (m)";
             this.ahdLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Fllow_BenSuc
-            // 
-            this.Fllow_BenSuc.BackColor = System.Drawing.SystemColors.Control;
-            this.Fllow_BenSuc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Fllow_BenSuc.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.Fllow_BenSuc.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fllow_BenSuc.ForeColor = System.Drawing.Color.Red;
-            this.Fllow_BenSuc.Location = new System.Drawing.Point(1395, 207);
-            this.Fllow_BenSuc.Name = "Fllow_BenSuc";
-            this.Fllow_BenSuc.Size = new System.Drawing.Size(115, 30);
-            this.Fllow_BenSuc.StringFormat = "0.00";
-            this.Fllow_BenSuc.TabIndex = 315;
-            this.Fllow_BenSuc.TagPath = "Local Station/DauTieng/S71500/API/Fllow_BenSuc";
-            this.Fllow_BenSuc.Text = "0.00";
-            this.Fllow_BenSuc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Fllow_DauTieng
-            // 
-            this.Fllow_DauTieng.BackColor = System.Drawing.SystemColors.Control;
-            this.Fllow_DauTieng.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Fllow_DauTieng.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.Fllow_DauTieng.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fllow_DauTieng.ForeColor = System.Drawing.Color.Red;
-            this.Fllow_DauTieng.Location = new System.Drawing.Point(1279, 207);
-            this.Fllow_DauTieng.Name = "Fllow_DauTieng";
-            this.Fllow_DauTieng.Size = new System.Drawing.Size(115, 30);
-            this.Fllow_DauTieng.StringFormat = "0.00";
-            this.Fllow_DauTieng.TabIndex = 314;
-            this.Fllow_DauTieng.TagPath = "Local Station/DauTieng/S71500/API/Fllow_DauTieng";
-            this.Fllow_DauTieng.Text = "0.00";
-            this.Fllow_DauTieng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // ahdLabel33
             // 
             this.ahdLabel33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1301,22 +1227,6 @@
             this.ahdLabel30.TagPath = null;
             this.ahdLabel30.Text = "TRẠM TV DẦU TIẾNG ";
             this.ahdLabel30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Fllow_SonDai
-            // 
-            this.Fllow_SonDai.BackColor = System.Drawing.SystemColors.Control;
-            this.Fllow_SonDai.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Fllow_SonDai.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.Fllow_SonDai.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fllow_SonDai.ForeColor = System.Drawing.Color.Red;
-            this.Fllow_SonDai.Location = new System.Drawing.Point(1163, 207);
-            this.Fllow_SonDai.Name = "Fllow_SonDai";
-            this.Fllow_SonDai.Size = new System.Drawing.Size(115, 30);
-            this.Fllow_SonDai.StringFormat = "0.00";
-            this.Fllow_SonDai.TabIndex = 311;
-            this.Fllow_SonDai.TagPath = "Local Station/DauTieng/S71500/API/Fllow_SonDai";
-            this.Fllow_SonDai.Text = "0.00";
-            this.Fllow_SonDai.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel25
             // 
@@ -1366,7 +1276,7 @@
             this.ahdLabel3.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel3.StringFormat = "0";
             this.ahdLabel3.TabIndex = 363;
-            this.ahdLabel3.TagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
+            this.ahdLabel3.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Aperture";
             this.ahdLabel3.Text = "0";
             this.ahdLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1499,7 +1409,7 @@
             this.ahdLabel11.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel11.StringFormat = "0";
             this.ahdLabel11.TabIndex = 395;
-            this.ahdLabel11.TagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door2";
+            this.ahdLabel11.TagPath = "Local Station/DauTieng/S71500/Station_1/Door2_Aperture";
             this.ahdLabel11.Text = "0";
             this.ahdLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1513,7 +1423,7 @@
             this.ahdLabel12.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel12.StringFormat = "0";
             this.ahdLabel12.TabIndex = 398;
-            this.ahdLabel12.TagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door1";
+            this.ahdLabel12.TagPath = "Local Station/DauTieng/S71500/Station_2/Door1_Aperture";
             this.ahdLabel12.Text = "0";
             this.ahdLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1527,7 +1437,7 @@
             this.ahdLabel13.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel13.StringFormat = "0";
             this.ahdLabel13.TabIndex = 401;
-            this.ahdLabel13.TagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door1";
+            this.ahdLabel13.TagPath = "Local Station/DauTieng/S71500/Station_2/Door2_Aperture";
             this.ahdLabel13.Text = "0";
             this.ahdLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1541,7 +1451,7 @@
             this.ahdLabel14.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel14.StringFormat = "0";
             this.ahdLabel14.TabIndex = 404;
-            this.ahdLabel14.TagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door1";
+            this.ahdLabel14.TagPath = "Local Station/DauTieng/S71500/Station_3/Door1_Aperture";
             this.ahdLabel14.Text = "0";
             this.ahdLabel14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1555,7 +1465,7 @@
             this.ahdLabel15.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel15.StringFormat = "0";
             this.ahdLabel15.TabIndex = 407;
-            this.ahdLabel15.TagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door2";
+            this.ahdLabel15.TagPath = "Local Station/DauTieng/S71500/Station_3/Door2_Aperture";
             this.ahdLabel15.Text = "0";
             this.ahdLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1821,50 +1731,60 @@
             this.label7.Text = "(cm)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // _labAPICDD
+            // 
+            this._labAPICDD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPICDD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPICDD.Location = new System.Drawing.Point(1464, 61);
+            this._labAPICDD.Name = "_labAPICDD";
+            this._labAPICDD.Size = new System.Drawing.Size(162, 30);
+            this._labAPICDD.TabIndex = 432;
+            this._labAPICDD.Text = "0.00";
+            this._labAPICDD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // _labAPISondai
             // 
-            this._labAPISondai.AutoSize = true;
-            this._labAPISondai.Location = new System.Drawing.Point(1178, 261);
+            this._labAPISondai.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPISondai.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPISondai.Location = new System.Drawing.Point(1163, 207);
             this._labAPISondai.Name = "_labAPISondai";
-            this._labAPISondai.Size = new System.Drawing.Size(41, 13);
-            this._labAPISondai.TabIndex = 428;
-            this._labAPISondai.Text = "label18";
+            this._labAPISondai.Size = new System.Drawing.Size(115, 30);
+            this._labAPISondai.TabIndex = 433;
+            this._labAPISondai.Text = "0.00";
+            this._labAPISondai.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _labAPIDautieng
             // 
-            this._labAPIDautieng.AutoSize = true;
-            this._labAPIDautieng.Location = new System.Drawing.Point(1306, 261);
+            this._labAPIDautieng.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPIDautieng.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPIDautieng.Location = new System.Drawing.Point(1279, 207);
             this._labAPIDautieng.Name = "_labAPIDautieng";
-            this._labAPIDautieng.Size = new System.Drawing.Size(41, 13);
-            this._labAPIDautieng.TabIndex = 429;
-            this._labAPIDautieng.Text = "label18";
+            this._labAPIDautieng.Size = new System.Drawing.Size(115, 30);
+            this._labAPIDautieng.TabIndex = 434;
+            this._labAPIDautieng.Text = "0.00";
+            this._labAPIDautieng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _labAPIBensuc
             // 
-            this._labAPIBensuc.AutoSize = true;
-            this._labAPIBensuc.Location = new System.Drawing.Point(1442, 261);
+            this._labAPIBensuc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPIBensuc.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPIBensuc.Location = new System.Drawing.Point(1395, 207);
             this._labAPIBensuc.Name = "_labAPIBensuc";
-            this._labAPIBensuc.Size = new System.Drawing.Size(41, 13);
-            this._labAPIBensuc.TabIndex = 430;
-            this._labAPIBensuc.Text = "label18";
+            this._labAPIBensuc.Size = new System.Drawing.Size(115, 30);
+            this._labAPIBensuc.TabIndex = 435;
+            this._labAPIBensuc.Text = "0.00";
+            this._labAPIBensuc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _labAPIBinhnham
             // 
-            this._labAPIBinhnham.AutoSize = true;
-            this._labAPIBinhnham.Location = new System.Drawing.Point(1547, 261);
+            this._labAPIBinhnham.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPIBinhnham.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPIBinhnham.Location = new System.Drawing.Point(1511, 207);
             this._labAPIBinhnham.Name = "_labAPIBinhnham";
-            this._labAPIBinhnham.Size = new System.Drawing.Size(41, 13);
-            this._labAPIBinhnham.TabIndex = 431;
-            this._labAPIBinhnham.Text = "label18";
-            // 
-            // _labAPICDD
-            // 
-            this._labAPICDD.AutoSize = true;
-            this._labAPICDD.Location = new System.Drawing.Point(1547, 109);
-            this._labAPICDD.Name = "_labAPICDD";
-            this._labAPICDD.Size = new System.Drawing.Size(41, 13);
-            this._labAPICDD.TabIndex = 432;
-            this._labAPICDD.Text = "label18";
+            this._labAPIBinhnham.Size = new System.Drawing.Size(115, 30);
+            this._labAPIBinhnham.TabIndex = 436;
+            this._labAPIBinhnham.Text = "0.00";
+            this._labAPIBinhnham.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FrmHome
             // 
@@ -1872,11 +1792,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::RegistrationForm1.Properties.Resources.Home;
             this.ClientSize = new System.Drawing.Size(1694, 848);
-            this.Controls.Add(this._labAPICDD);
             this.Controls.Add(this._labAPIBinhnham);
             this.Controls.Add(this._labAPIBensuc);
             this.Controls.Add(this._labAPIDautieng);
             this.Controls.Add(this._labAPISondai);
+            this.Controls.Add(this._labAPICDD);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label17);
@@ -1913,17 +1833,12 @@
             this.Controls.Add(this.ahdLabel3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this._labFllow_ho);
-            this.Controls.Add(this.ahdCDD);
             this.Controls.Add(this.ahdLabel4);
-            this.Controls.Add(this.ahdLabel1);
             this.Controls.Add(this.ahdLabel2);
             this.Controls.Add(this.ahdLabel10);
             this.Controls.Add(this.ahdLabel7);
-            this.Controls.Add(this.Fllow_BenSuc);
-            this.Controls.Add(this.Fllow_DauTieng);
             this.Controls.Add(this.ahdLabel33);
             this.Controls.Add(this.ahdLabel30);
-            this.Controls.Add(this.Fllow_SonDai);
             this.Controls.Add(this.ahdLabel25);
             this.Controls.Add(this.Pic_Doorlock5_2Open);
             this.Controls.Add(this.Pic_Doorlock5_2Close);
@@ -1980,17 +1895,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdCDD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_BenSuc)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_DauTieng)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel33)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Fllow_SonDai)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door2_Opening)).EndInit();
@@ -2058,17 +1968,12 @@
         private Ahd.Winforms.Controls.AhdBar ahdBar4;
         private Ahd.Winforms.Controls.AhdBar ahdBar5;
         private Ahd.Winforms.Controls.AhdBar ahdBar6;
-        private Ahd.Winforms.Controls.AhdLabel ahdCDD;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel4;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel1;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel2;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel10;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel7;
-        private Ahd.Winforms.Controls.AhdLabel Fllow_BenSuc;
-        private Ahd.Winforms.Controls.AhdLabel Fllow_DauTieng;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel33;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel30;
-        private Ahd.Winforms.Controls.AhdLabel Fllow_SonDai;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel25;
         private System.Windows.Forms.Label _labHT_Cylinder1_2;
         private System.Windows.Forms.Label _labHT_Cylinder1_1;
@@ -2141,10 +2046,10 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label _labAPICDD;
         private System.Windows.Forms.Label _labAPISondai;
         private System.Windows.Forms.Label _labAPIDautieng;
         private System.Windows.Forms.Label _labAPIBensuc;
         private System.Windows.Forms.Label _labAPIBinhnham;
-        private System.Windows.Forms.Label _labAPICDD;
     }
 }

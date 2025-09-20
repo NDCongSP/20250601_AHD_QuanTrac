@@ -52,82 +52,82 @@ namespace RegistrationForm1
 
         }
         
-        private void bntDataVanHanh_Click(object sender, EventArgs e)
-        {
-            //  string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
+        //private void bntDataVanHanh_Click(object sender, EventArgs e)
+        //{
+        //    //  string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
 
-            string selected = cbTimeRange.SelectedItem?.ToString() ?? "Tất cả";
-            DateTime fromPicker = dtFrom.Value;
-            DateTime toPicker = dtTo.Value;
+        //    string selected = cbTimeRange.SelectedItem?.ToString() ?? "Tất cả";
+        //    DateTime fromPicker = dtFrom.Value;
+        //    DateTime toPicker = dtTo.Value;
 
-            if (fromPicker >= toPicker)
-            {
-                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+        //    if (fromPicker >= toPicker)
+        //    {
+        //        MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
 
-            DateTime fromTime = fromPicker;
-            DateTime toTime = toPicker;
+        //    DateTime fromTime = fromPicker;
+        //    DateTime toTime = toPicker;
 
-            if (selected != "Tất cả")
-            {
-                int minutes = selected.Contains("1 Ngày") ? 1440 :
-                              selected.Contains("60") ? 60 :
-                              selected.Contains("30") ? 30 :
-                              selected.Contains("15") ? 15 :
-                              selected.Contains("10") ? 10 : 0;
+        //    if (selected != "Tất cả")
+        //    {
+        //        int minutes = selected.Contains("1 Ngày") ? 1440 :
+        //                      selected.Contains("60") ? 60 :
+        //                      selected.Contains("30") ? 30 :
+        //                      selected.Contains("15") ? 15 :
+        //                      selected.Contains("10") ? 10 : 0;
 
-                DateTime recentFrom = DateTime.Now.AddMinutes(-minutes);
-                DateTime recentTo = DateTime.Now;
+        //        DateTime recentFrom = DateTime.Now.AddMinutes(-minutes);
+        //        DateTime recentTo = DateTime.Now;
 
-                // Giới hạn từ recentFrom - recentTo nhưng không vượt ngoài fromPicker - toPicker
-                fromTime = recentFrom < fromPicker ? fromPicker : recentFrom;
-                toTime = recentTo > toPicker ? toPicker : recentTo;
+        //        // Giới hạn từ recentFrom - recentTo nhưng không vượt ngoài fromPicker - toPicker
+        //        fromTime = recentFrom < fromPicker ? fromPicker : recentFrom;
+        //        toTime = recentTo > toPicker ? toPicker : recentTo;
 
-                if (fromTime >= toTime)
-                {
-                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-            }
+        //        if (fromTime >= toTime)
+        //        {
+        //            MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            return;
+        //        }
+        //    }
 
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
 
-                    string query = @"
-                SELECT Id, CreateAt, Fllow_Ho,Fllow_DauTieng, Door1_Aperture, Door2_Aperture, Door3_Aperture, Door4_Aperture, Door5_Aperture,
-                        Door6_Aperture,Fllow_Door1,Fllow_Door2,Fllow_Door3,Fllow_Door4,Fllow_Door5,Fllow_Door6, Total_Fllow
-                FROM DataVanHanh
-                WHERE CreateAt BETWEEN @FromTime AND @ToTime
-                ORDER BY CreateAt DESC";
+        //            string query = @"
+        //        SELECT Id, CreateAt, Fllow_Ho,Fllow_DauTieng, Door1_Aperture, Door2_Aperture, Door3_Aperture, Door4_Aperture, Door5_Aperture,
+        //                Door6_Aperture,Fllow_Door1,Fllow_Door2,Fllow_Door3,Fllow_Door4,Fllow_Door5,Fllow_Door6, Total_Fllow
+        //        FROM DataVanHanh
+        //        WHERE CreateAt BETWEEN @FromTime AND @ToTime
+        //        ORDER BY CreateAt DESC";
 
-                    var data = conn.Query<Vanhanh>(query, new
-                    {
-                        FromTime = fromTime,
-                        ToTime = toTime
-                    }).ToList();
+        //            var data = conn.Query<Vanhanh>(query, new
+        //            {
+        //                FromTime = fromTime,
+        //                ToTime = toTime
+        //            }).ToList();
 
-                    dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = data;
+        //            dataGridView1.DataSource = null;
+        //            dataGridView1.DataSource = data;
 
-                    if (data.Count == 0)
-                    {
-                        MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        DrawChartFromVanHanhData();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi truy vấn dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //            if (data.Count == 0)
+        //            {
+        //                MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            }
+        //            else
+        //            {
+        //                DrawChartFromVanHanhData();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Lỗi truy vấn dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
         private void ExportDataGridViewToPDF(DataGridView dgv, string filePath)
         {
             if (dgv.Rows.Count == 0)

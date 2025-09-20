@@ -58,10 +58,13 @@ namespace RegistrationForm1
                         _labPressure_Oil_Door1.Text = dataDisplayStation1.Pressure_Oil_Door1.ToString();
                         _labPressure_Oil_Door2.Text = dataDisplayStation1.Pressure_Oil_Door2.ToString();
                         _lblTemp_Oil1.Text = dataDisplayStation1.S1_Temp_Oil.ToString();
-                       _labFllow_Door1.Text = dataDisplayStation1.Fllow_Door1.ToString();
-                        _labFllow_Door2.Text = dataDisplayStation1.Fllow_Door2.ToString();
+                      
+                       
                         _labDoor1_Aperture.Text = dataDisplayStation1.Door1_Aperture.ToString();
                         _labDoor2_Aperture.Text = dataDisplayStation1.Door2_Aperture.ToString();
+                        _labFllow_Door1.Text = dataDisplayStation1.Q_i_1.ToString();
+                        _labFllow_Door2.Text = dataDisplayStation1.Q_i_2.ToString();
+                       
 
                     }
                    
@@ -123,10 +126,11 @@ namespace RegistrationForm1
                         _labPressure_Oil_Door3.Text = dataDisplayStation2.Pressure_Oil_Door1.ToString();
                         _labPressure_Oil_Door4.Text = dataDisplayStation2.Pressure_Oil_Door2.ToString();
                         _lblTemp_Oil2.Text = dataDisplayStation2.S1_Temp_Oil.ToString();
-                        _labFllow_Door3.Text = dataDisplayStation2.Fllow_Door1.ToString();
-                        _labFllow_Door4.Text = dataDisplayStation2.Fllow_Door2.ToString();
+                        
                         _labDoor3_Aperture.Text = dataDisplayStation2.Door1_Aperture.ToString();
                         _labDoor4_Aperture.Text = dataDisplayStation2.Door2_Aperture.ToString();
+                        _labFllow_Door3.Text = dataDisplayStation2.Q_i_1.ToString();
+                        _labFllow_Door4.Text = dataDisplayStation2.Q_i_2.ToString();
                     }
 
 
@@ -225,11 +229,11 @@ namespace RegistrationForm1
                         _labPressure_Oil_Door5.Text = dataDisplayStation3.Pressure_Oil_Door1.ToString();
                         _labPressure_Oil_Door6.Text = dataDisplayStation3.Pressure_Oil_Door2.ToString();
                         _lblTemp_Oil3.Text = dataDisplayStation3.S1_Temp_Oil.ToString();
-                        _labFllow_Door5.Text = dataDisplayStation3.Fllow_Door1.ToString();
-                        _labFllow_Door6.Text = dataDisplayStation3.Fllow_Door2.ToString();
+                       
                         _labDoor5_Aperture.Text = dataDisplayStation3.Door1_Aperture.ToString();
                         _labDoor6_Aperture.Text = dataDisplayStation3.Door2_Aperture.ToString();
-
+                        _labFllow_Door5.Text = dataDisplayStation3.Q_i_1.ToString();
+                        _labFllow_Door6.Text = dataDisplayStation3.Q_i_2.ToString();
                     }
 
 
@@ -297,15 +301,17 @@ namespace RegistrationForm1
                     if (Location != null)
                     {
                         _labFllow_ho.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho.ToString();
+                        
                   //      _labTotal_Fllow.Text = location.CalculatorValue.Qtr.ToString();
-                        _labFllow_Door6.Text = location.CalculatorValue.Q_i.ToString();
-                        _labAPISondai.Text = location.CalculatorValue.Fllow_SonDai.ToString();
-                        _labAPIBensuc.Text = location.CalculatorValue.Fllow_BenSuc.ToString();
-                        _labAPIDautieng.Text = location.CalculatorValue.Fllow_DauTieng.ToString();
-                        _labAPIBinhnham.Text = location.CalculatorValue.Fllow_BinhNham.ToString();
+                  //    _labFllow_Door6.Text = location.CalculatorValue.Q_i.ToString();
+                        _labAPISondai.Text = location.CalculatorValue.API_Fllow_SonDai.ToString();
+                        _labAPIBensuc.Text = location.CalculatorValue.API_Fllow_BenSuc.ToString();
+                        _labAPIDautieng.Text = location.CalculatorValue.API_Fllow_DauTieng.ToString();
+                        _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
                         //  _labAPIBinhnham2.Text = location.CalculatorValue.Fllow_BinhNham2.ToString();
-                        _labAPICDD.Text = location.CalculatorValue.Fllow_TL_CDD.ToString();
-                    //    _labAPIHL_TXL.Text = location.CalculatorValue.Fllow_HL_TXL.ToString();
+                        _labAPICDD.Text = location.CalculatorValue.API_Fllow_TL_CDD.ToString();
+                        //    _labAPIHL_TXL.Text = location.CalculatorValue.Fllow_HL_TXL.ToString();
+                        _labTotal_Fllow.Text = location.CalculatorValue.Q_i_total.ToString();
 
                     }
 

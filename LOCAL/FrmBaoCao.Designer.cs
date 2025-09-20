@@ -116,7 +116,7 @@
             this.bntDataVanHanh.TabIndex = 25;
             this.bntDataVanHanh.Text = "Dữ liệu vận hành";
             this.bntDataVanHanh.UseVisualStyleBackColor = true;
-            this.bntDataVanHanh.Click += new System.EventHandler(this.bntDataVanHanh_Click);
+      //      this.bntDataVanHanh.Click += new System.EventHandler(this.bntDataVanHanh_Click);
             // 
             // bntDataMucNuoc
             // 

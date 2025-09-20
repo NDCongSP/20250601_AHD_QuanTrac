@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Configuration.Provider;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -25,6 +26,16 @@ namespace RegistrationForm1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+       //     Kiểm tra kết nối trước khi chạy form chính
+            if (!CheckSqlConnection())
+            {
+                MessageBox.Show("Không thể kết nối tới SQL Server.\nChương trình sẽ thoát.",
+                                "Lỗi kết nối",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
 
 
             using (var dbContext = new ApplicationDbContext())
@@ -36,6 +47,7 @@ namespace RegistrationForm1
                 {
                     MessageBox.Show("Cấu hình cơ sở dữ liệu không hợp lệ hoặc chưa được thiết lập. Vui lòng cấu hình.",
                                   "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                 //   Application.Exit();
                     return;
                 }
                 Globalvariable.ConfigSystem = JsonConvert.DeserializeObject<ConfigModel>(configTable.C000);
@@ -45,7 +57,7 @@ namespace RegistrationForm1
                 ////chinh tay cac thong so de test
                 Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi = 0.98;
                 Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 9.81;
-              Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 0.5;
+         //     Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 0.5;
                Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
                 Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
 
@@ -116,19 +128,30 @@ namespace RegistrationForm1
             Application.Run(new FrmLogin());
            // Application.Run(new FrmHochua());
         }
-        private static bool TestConnectionSilently(string connectionString)
+        private static bool CheckSqlConnection()
         {
-            if (string.IsNullOrEmpty(connectionString)) return false;
             try
             {
-                using (var connection = new System.Data.SqlClient.SqlConnection(connectionString))
+                // Chuỗi kết nối của bạn
+                //    string connectionString = "Server=.;Database=YourDB;User Id=sa;Password=123;";
+                string connectionString = "data source=phucthinhautomation.ddns.net,1433;initial catalog=ahd;Persist Security Info=True;User ID=dev1;Password=Dev@12345;";
+              
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    connection.Open();
+                    conn.Open(); // Nếu lỗi xảy ra sẽ vào catch
                     return true;
                 }
             }
-            catch
+            catch (SqlException ex)
             {
+                // Ghi log nếu cần
+                Console.WriteLine("Lỗi SQL: " + ex.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khác: " + ex.Message);
                 return false;
             }
         }
