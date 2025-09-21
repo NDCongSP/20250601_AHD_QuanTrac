@@ -27,41 +27,62 @@ namespace Domain.Entities
         /// CTĐĐ.
         /// </summary>
         [DisplayName("CTĐĐ")]
-        public double? CTDD { get; set; } = 0;
+        public double? L_CTDD { get; set; } = 0;
 
         /// <summary>
         /// Mức nước kiểm tra.
         /// </summary>
-        public double? MNKT { get; set; } = 0;
+        [DisplayName("MNKT")]
+        public double? L_MNKT { get; set; } = 0;
 
         /// <summary>
         /// Muc nước thiết kế.
         /// </summary>
-        public double? MNTK { get; set; } = 0;
+        public double? L_MNTK { get; set; } = 0;
 
         /// <summary>
         /// Mức nước dâng bình thường.
         /// </summary>
-        public double? MNDBT { get; set; } = 0;
+        [DisplayName("MNDBT")] 
+        public double? L_MNDBT { get; set; } = 0;
 
         /// <summary>
         /// Đường phòng lũ.
         /// ĐPL.
         /// </summary>
         [Display(Name = "ĐPL")]
-        public double? DPL { get; set; }
+        public double? L_DPL { get; set; }
 
         /// <summary>
         /// Đường phòng phá hoại.
         /// ĐPPH.
         /// </summary>
         [DisplayName("ĐPPH")]
-        public double? DPPH { get; set; }
+        public double? L_DPPH { get; set; }
 
         /// <summary>
         /// Hạn chế cấp nước.
         /// HCCN.
         /// </summary>
-        public double? HCCN { get; set; }
+        [DisplayName("HCCN")] 
+        public double? L_HCCN { get; set; }
+
+        /// <summary>
+        /// Vùng A: Vùng hạn chế cấp nước.
+        /// </summary>
+        [DisplayName("Vùng A: Vùng hạn chế cấp nước.")]
+        public double? A_VungA { get; set; }
+
+        /// <summary>
+        /// Vùng B: Cấp nước bình thường.
+        /// </summary>
+        [DisplayName("Vùng B: Cấp nước bình thường.")]
+        public double? A_VungB { get; set; }
+
+        /// <summary>
+        /// Vùng C: Cấp nước gia tăng.
+        /// </summary>
+        [DisplayName("Vùng C: Cấp nước gia tăng.")]
+        public double? A_VungC { get; set; }
     }
 }
