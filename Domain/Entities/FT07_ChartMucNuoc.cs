@@ -63,5 +63,10 @@ namespace Domain.Entities
         /// </summary>
         [DisplayName("Q=2800")]
         public double? Q2800 { get; set; } = 0;
+
+        /// <summary>
+        /// Tên biến API sẽ get value gán cho điểm Z_Thực.
+        /// </summary>
+        public string? Z_Thuc { get; set; }= string.Empty;
     }
 }

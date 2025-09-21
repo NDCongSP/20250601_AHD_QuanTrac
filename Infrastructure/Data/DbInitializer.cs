@@ -307,19 +307,81 @@ namespace Infrastructure.Data
                         Id = Guid.NewGuid(),
                         Index = index,
                         X_Value = formattedDate,
-                        CTDD = 28.00,
-                        MNKT = 26.92,
-                        MNTK = 25.00,
-                        MNDBT = 24.40,
-                        DPL = 0,
-                        DPPH = 0,
-                        HCCN = 17.00,
+                        L_CTDD = 28.00,
+                        L_MNKT = 26.92,
+                        L_MNTK = 25.00,
+                        L_MNDBT = 24.40,
+                        L_DPL = 0,
+                        L_DPPH = 0,
+                        L_HCCN = 17.00,
+                        A_VungA = 0,
+                        A_VungB = 0,
+                        A_VungC = 0,
                     });
 
                     index++;
                 }
 
                 await context.FT05s_ChartHoChua.AddRangeAsync(dInsert);
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.FT07s_ChartMucNuoc.Any())
+            {
+                List<FT07_ChartMucNuoc> dInsert = new List<FT07_ChartMucNuoc>();
+
+                Dictionary<string, double> prefix = new Dictionary<string, double>()
+                {
+                    { "Chân đập", 0 },
+                    { "Cầu Mới", 1.5 },
+                    { "Km", 3.5 },
+                    { "Cầu tàu", 8.5 },
+                     { "Trạm TV-DT", 9.5 },
+                };
+
+
+                int index = 1;
+                foreach (var d in prefix)
+                {
+                    var linr = new FT07_ChartMucNuoc()
+                    {
+                        Id = Guid.NewGuid(),
+                        Index = index,
+                        X_Prefix = d.Key,
+                        X_Value = d.Value,
+                        BoPhai = 24.4,
+                        BoTrai = 24.4,
+                        Q300 = 22.0,
+                        Q400 = 20.0,
+                        Q600 = 18.0,
+                        Q2800 = 15.0,
+                        Z_Thuc = null
+                    };
+
+                    dInsert.Add(linr);
+                    index++;
+                }
+
+                await context.FT07s_ChartMucNuoc.AddRangeAsync(dInsert);
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.FT06s_Interpolation.Any())
+            {
+                List<FT06_InterpolationTable> dInsert = new List<FT06_InterpolationTable>();
+
+                for (int i = 0; i < 14; i++)
+                {
+                    var line = new FT06_InterpolationTable()
+                    {
+                        Id = Guid.NewGuid(),
+                        Z = 13 + i,
+                    };
+
+                    dInsert.Add(line);
+                }
+
+                await context.FT06s_Interpolation.AddRangeAsync(dInsert);
                 await context.SaveChangesAsync();
             }
             #endregion

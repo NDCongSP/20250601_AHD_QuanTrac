@@ -83,5 +83,30 @@
             public const string BasePath = "api/FT02";
             public const string GetRealtimeDisplay = "GetRealtimeDisplay";
         }
+
+        public static class FT03
+        {
+            public const string BasePath = "api/FT03";
+        }
+
+        public static class FT04
+        {
+            public const string BasePath = "api/FT04";
+        }
+
+        public static class FT05
+        {
+            public const string BasePath = "api/FT05";
+        }
+
+        public static class FT06
+        {
+            public const string BasePath = "api/FT06";
+        }
+
+        public static class FT07
+        {
+            public const string BasePath = "api/FT07";
+        }
     }
 }
