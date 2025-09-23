@@ -379,12 +379,6 @@
     <Compile Include="PermissionManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tran1Model.cs" />
-    <Compile Include="Tran2Model.cs" />
-    <Compile Include="Tran3Model.cs" />
-    <Compile Include="Tran4Model.cs" />
-    <Compile Include="Tran5Model.cs" />
-    <Compile Include="Tran6Model.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="Vanhanh.cs" />
     <EmbeddedResource Include="Form2.resx">

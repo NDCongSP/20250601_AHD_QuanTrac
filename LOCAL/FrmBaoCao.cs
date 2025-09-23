@@ -26,7 +26,15 @@ namespace RegistrationForm1
 {       
     public partial class FrmBaoCao : Form
     {
-        public static string connectionString => ConfigurationHelper.GetConnectionString();
+        // --- Khai báo stationMapping ở đây để toàn bộ class dùng được ---
+        private readonly Dictionary<string, string> stationMapping = new Dictionary<string, string>
+    {
+        { "Station_1", "Trạm 1" },
+        { "Station_2", "Trạm 2" },
+        { "Station_3", "Trạm 3" }
+        // Thêm các trạm khác ở đây
+    };
+
         public FrmBaoCao()
         {
             InitializeComponent();
@@ -39,95 +47,79 @@ namespace RegistrationForm1
             cbxExportType.Items.AddRange(new string[] { "Excel", "PDF" });
             cbxExportType.SelectedIndex = 1;
 
-            cbTimeRange.Items.AddRange(new string[] { "10 phút", "15 phút", "30 phút", "60 phút", "1 Ngày", "Tất cả" });
-            cbTimeRange.SelectedIndex = 1;
-
             dtFrom.Format = DateTimePickerFormat.Custom;
-            dtFrom.CustomFormat = "dd/MM/yyyy HH:mm:ss";
+            dtFrom.CustomFormat = "dd/MM/yyyy HH:mm";
             dtTo.Format = DateTimePickerFormat.Custom;
-            dtTo.CustomFormat = "dd/MM/yyyy HH:mm:ss";
+            dtTo.CustomFormat = "dd/MM/yyyy HH:mm";
 
             dtTo.Value = DateTime.Now;
             dtFrom.Value = DateTime.Now.AddMinutes(-120);
 
+            using var dbContext = new ApplicationDbContext();
+
+            // Lấy danh sách các trạm từ DB (chỉ 3 trạm)
+            var stations = dbContext.FT03s
+                .Where(x => (x.IsDeleted ?? false) == false &&
+                            (x.StationName == "Station_1" ||
+                             x.StationName == "Station_2" ||
+                             x.StationName == "Station_3"))
+                .Select(x => x.StationName)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+
+            // Ánh xạ sang danh sách StationItem (hiển thị tiếng Việt)
+            var stationItems = new List<StationItem>
+    {
+        new StationItem { Code = null, DisplayName = "Tất cả" }
+    };
+
+            foreach (var st in stations)
+            {
+                stationItems.Add(new StationItem
+                {
+                    Code = st,
+                    DisplayName = st switch
+                    {
+                        "Station_1" => "Trạm 1",
+                        "Station_2" => "Trạm 2",
+                        "Station_3" => "Trạm 3",
+                        _ => st
+                    }
+                });
+            }
+
+            cbStation.DataSource = stationItems;
+            cbStation.DisplayMember = "DisplayName";
+            cbStation.ValueMember = "Code";
+            cbStation.SelectedIndex = 0;
+
+            // --- B3: Load tần suất ---
+            cbFrequency.Items.Clear();
+            cbFrequency.Items.AddRange(new string[]
+            {
+        "Tất cả",
+        "10 phút",
+        "15 phút",
+        "30 phút",
+        "60 phút",
+        "1 Ngày"
+            });
+            cbFrequency.SelectedIndex = 2;
+
         }
-        
-        //private void bntDataVanHanh_Click(object sender, EventArgs e)
-        //{
-        //    //  string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
 
-        //    string selected = cbTimeRange.SelectedItem?.ToString() ?? "Tất cả";
-        //    DateTime fromPicker = dtFrom.Value;
-        //    DateTime toPicker = dtTo.Value;
+        public class StationItem
+        {
+            public string Code { get; set; }        // Station_1, Station_2, ...
+            public string DisplayName { get; set; } // Tên tiếng Việt: Trạm 1, Trạm 2
 
-        //    if (fromPicker >= toPicker)
-        //    {
-        //        MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return;
-        //    }
+            public override string ToString()
+            {
+                return DisplayName;
+            }
+        }
 
-        //    DateTime fromTime = fromPicker;
-        //    DateTime toTime = toPicker;
-
-        //    if (selected != "Tất cả")
-        //    {
-        //        int minutes = selected.Contains("1 Ngày") ? 1440 :
-        //                      selected.Contains("60") ? 60 :
-        //                      selected.Contains("30") ? 30 :
-        //                      selected.Contains("15") ? 15 :
-        //                      selected.Contains("10") ? 10 : 0;
-
-        //        DateTime recentFrom = DateTime.Now.AddMinutes(-minutes);
-        //        DateTime recentTo = DateTime.Now;
-
-        //        // Giới hạn từ recentFrom - recentTo nhưng không vượt ngoài fromPicker - toPicker
-        //        fromTime = recentFrom < fromPicker ? fromPicker : recentFrom;
-        //        toTime = recentTo > toPicker ? toPicker : recentTo;
-
-        //        if (fromTime >= toTime)
-        //        {
-        //            MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //            return;
-        //        }
-        //    }
-
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(connectionString))
-        //        {
-        //            conn.Open();
-
-        //            string query = @"
-        //        SELECT Id, CreateAt, Fllow_Ho,Fllow_DauTieng, Door1_Aperture, Door2_Aperture, Door3_Aperture, Door4_Aperture, Door5_Aperture,
-        //                Door6_Aperture,Fllow_Door1,Fllow_Door2,Fllow_Door3,Fllow_Door4,Fllow_Door5,Fllow_Door6, Total_Fllow
-        //        FROM DataVanHanh
-        //        WHERE CreateAt BETWEEN @FromTime AND @ToTime
-        //        ORDER BY CreateAt DESC";
-
-        //            var data = conn.Query<Vanhanh>(query, new
-        //            {
-        //                FromTime = fromTime,
-        //                ToTime = toTime
-        //            }).ToList();
-
-        //            dataGridView1.DataSource = null;
-        //            dataGridView1.DataSource = data;
-
-        //            if (data.Count == 0)
-        //            {
-        //                MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //            }
-        //            else
-        //            {
-        //                DrawChartFromVanHanhData();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Lỗi truy vấn dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
         private void ExportDataGridViewToPDF(DataGridView dgv, string filePath)
         {
             if (dgv.Rows.Count == 0)
@@ -367,226 +359,192 @@ namespace RegistrationForm1
 
         private void DrawChartFromVanHanhData()
         {
-            if (dataGridView1.DataSource == null || dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("Không có dữ liệu để vẽ biểu đồ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Xóa cũ
+            if (dataGridView1.DataSource == null) return;
+
+            var data = ((IEnumerable<dynamic>)dataGridView1.DataSource).ToList();
+            if (data.Count == 0) return;
+
             chart1.Series.Clear();
-            chart1.ChartAreas.Clear();
-            chart1.Titles.Clear();
-            chart1.Legends.Clear(); // Đặt lại legends
+            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+            chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Hours;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
 
-            // Thêm legend trước khi gán vào Series
-            chart1.Legends.Add(new Legend("Legend"));
+            var distinctStations = data.Select(x => x.Trạm).Distinct().ToList();
 
-            // Thêm chart area
-            chart1.ChartAreas.Add("Main");
-            var area = chart1.ChartAreas["Main"];
-            area.AxisX.LabelStyle.Format = "HH:mm\ndd/MM";
-            area.AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-            area.AxisX.Title = "Thời gian";
-            area.AxisY.Title = "Giá trị (m)";
-            area.AxisX.MajorGrid.LineColor = Color.LightGray;
-            area.AxisY.MajorGrid.LineColor = Color.LightGray;
-
-            // Thêm tiêu đề
-            chart1.Titles.Add("Biểu đồ vận hành cánh cửa & mực nước hồ");
-            // Ánh xạ tên tiếng Anh → tiếng Việt
-            Dictionary<string, string> seriesLabels = new Dictionary<string, string>
+            if (distinctStations.Count > 1)
             {
-                { "Fllow_Ho", "Mực nước hồ" },
-                { "Fllow_DauTieng", "Mực nước TV dầu tiếng" },               
-                { "Door1_Aperture", "Độ mở cửa 1" },
-                { "Door2_Aperture", "Độ mở cửa 2" },
-                { "Door3_Aperture", "Độ mở cửa 3" },
-                { "Door4_Aperture", "Độ mở cửa 4" },
-                { "Door5_Aperture", "Độ mở cửa 5" },
-                { "Door6_Aperture", "Độ mở cửa 6" },
-                { "Total_Fllow", "Tổng lưu lượng" }
-
-            };
-
-                    string[] seriesNames = {
-                "Fllow_Ho", "Fllow_DauTieng",
-                "Door1_Aperture", "Door2_Aperture",
-                "Door3_Aperture", "Door4_Aperture",
-                "Door5_Aperture", "Door6_Aperture","Total_Fllow"
-             };
-
-            foreach (string seriesName in seriesNames)
-            {
-                if (!dataGridView1.Columns.Contains(seriesName)) continue; // Kiểm tra nếu cột không tồn tại
-                string seriesLabel = seriesLabels.ContainsKey(seriesName) ? seriesLabels[seriesName] : seriesName;
-                var series = new Series(seriesLabel) // gán tên tiếng Việt làm hiển thị
+                // --- Trường hợp chọn Tất cả: vẽ mỗi trạm 2 line (Cửa 1 & Cửa 2) ---
+                foreach (var station in distinctStations)
                 {
-                    ChartType = SeriesChartType.Line,
+                    var stationData = data.Where(x => x.Trạm == station).OrderBy(x => x.Thời_gian);
+
+                    // Series cho Cửa 1
+                    var seriesDoor1 = new System.Windows.Forms.DataVisualization.Charting.Series($"{station} - Độ mở cửa 1")
+                    {
+                        ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                        BorderWidth = 2,
+                        Color = Color.Blue,
+                        XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+                    };
+
+                    // Series cho Cửa 2
+                    var seriesDoor2 = new System.Windows.Forms.DataVisualization.Charting.Series($"{station} - Độ mở cửa 2")
+                    {
+                        ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                        BorderWidth = 2,
+                        Color = Color.Red,
+                        XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+                    };
+
+                    foreach (var row in stationData)
+                    {
+                        seriesDoor1.Points.AddXY(row.Thời_gian, row.Độ_mở_cửa_1 ?? 0);
+                        seriesDoor2.Points.AddXY(row.Thời_gian, row.Độ_mở_cửa_2 ?? 0);
+                    }
+
+                    chart1.Series.Add(seriesDoor1);
+                    chart1.Series.Add(seriesDoor2);
+                }
+
+                chart1.Titles.Clear();
+                chart1.Titles.Add("Biểu đồ độ mở cửa theo thời gian (Tất cả trạm)");
+            }
+            else
+            {
+                // --- Trường hợp chỉ 1 trạm: vẽ 2 series như trước ---
+                var stationName = distinctStations.First();
+
+                var series1 = new System.Windows.Forms.DataVisualization.Charting.Series($"{stationName} - Độ mở cửa 1")
+                {
+                    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
                     BorderWidth = 2,
-                    XValueType = ChartValueType.DateTime,
-                    MarkerStyle = MarkerStyle.Circle,
-                    MarkerSize = 4,
-                    Legend = "Legend"
+                    Color = Color.Blue,
+                    XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
                 };
 
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+                var series2 = new System.Windows.Forms.DataVisualization.Charting.Series($"{stationName} - Độ mở cửa 2")
                 {
-                    if (row.IsNewRow) continue;
+                    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                    BorderWidth = 2,
+                    Color = Color.Red,
+                    XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+                };
 
-                    var timeObj = row.Cells["CreateAt"].Value;
-                    var valueObj = row.Cells[seriesName].Value;
-                    if (DateTime.TryParse(timeObj?.ToString(), out DateTime time) &&
-                        double.TryParse(valueObj?.ToString(), out double value))
-                    {
-                        series.Points.AddXY(time, value);
-                    }
+                foreach (var row in data.OrderBy(x => x.Thời_gian))
+                {
+                    series1.Points.AddXY(row.Thời_gian, row.Độ_mở_cửa_1 ?? 0);
+                    series2.Points.AddXY(row.Thời_gian, row.Độ_mở_cửa_2 ?? 0);
                 }
-                chart1.Series.Add(series);
+
+                chart1.Series.Add(series1);
+                chart1.Series.Add(series2);
+
+                chart1.Titles.Clear();
+                chart1.Titles.Add($"Biểu đồ độ mở cửa theo thời gian ({stationName})");
             }
+
+            chart1.ChartAreas[0].RecalculateAxesScale();
         }
-        private void DrawChartFromMucNuoc()
+        private void DrawChartFromMucNuocData()
         {
-            if (dataGridView1.DataSource == null || dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("Không có dữ liệu để vẽ biểu đồ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Xóa cũ
+            if (dataGridView1.DataSource == null) return;
+
+            var data = ((IEnumerable<dynamic>)dataGridView1.DataSource).ToList();
+            if (data.Count == 0) return;
+
             chart1.Series.Clear();
-            chart1.ChartAreas.Clear();
             chart1.Titles.Clear();
-            chart1.Legends.Clear(); // Đặt lại legends
-            // Thêm legend trước khi gán vào Series
-            chart1.Legends.Add(new Legend("Legend"));
-            // Thêm chart area
-            chart1.ChartAreas.Add("Main");
-            var area = chart1.ChartAreas["Main"];
-            area.AxisX.LabelStyle.Format = "HH:mm\ndd/MM";
-            area.AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-            area.AxisX.Title = "Thời gian";
-            area.AxisY.Title = "Giá trị (m)";
-            area.AxisX.MajorGrid.LineColor = Color.LightGray;
-            area.AxisY.MajorGrid.LineColor = Color.LightGray;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+            chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Hours;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
 
-            // Thêm tiêu đề
-            chart1.Titles.Add("Biểu đồ  mực nước hồ");
-            // Ánh xạ tên tiếng Anh → tiếng Việt
-            Dictionary<string, string> seriesLabels = new Dictionary<string, string>
+            // --- Tạo series với màu sắc ---
+            var seriesHo = new System.Windows.Forms.DataVisualization.Charting.Series("Mực nước hồ")
             {
-                { "Fllow_Ho", "Mực nước hồ" },
-                { "Fllow_DauTieng", "Mực Nước TV Dầu Tiếng" },
-                { "Fllow_BenSuc", "Mực Nước Bến Súc" },
-                { "Fllow_SonDai", "Mực Nước Sơn Đài" },
-                 { "Fllow_BinhNham", "Mực Nước Bình Nhâm " }
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Blue,
+                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
             };
-                  string[] seriesNames = {
-                    "Fllow_Ho", "Fllow_DauTieng",
-                    "Fllow_BenSuc", "Fllow_SonDai","Fllow_BinhNham"
-              };
-            
 
-            foreach (string seriesName in seriesNames)
+            var seriesHoKQ = new System.Windows.Forms.DataVisualization.Charting.Series("Mực nước hồ KQ")
             {
-                if (!dataGridView1.Columns.Contains(seriesName)) continue; // Kiểm tra nếu cột không tồn tại
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.DarkBlue,
+                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+            };
 
-                string seriesLabel = seriesLabels.ContainsKey(seriesName) ? seriesLabels[seriesName] : seriesName;
+            var seriesBenSuc = new System.Windows.Forms.DataVisualization.Charting.Series("Mực nước Bến Súc")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Green,
+                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+            };
 
-                var series = new Series(seriesLabel) // gán tên tiếng Việt làm hiển thị
-                {
-                    ChartType = SeriesChartType.Line,
-                    BorderWidth = 2,
-                    XValueType = ChartValueType.DateTime,
-                    MarkerStyle = MarkerStyle.Circle,
-                    MarkerSize = 4,
-                    Legend = "Legend"
-                };
+            var seriesDauTieng = new System.Windows.Forms.DataVisualization.Charting.Series("Mực nước Dầu Tiếng")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Red,
+                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+            };
 
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    if (row.IsNewRow) continue;
+            var seriesSonDai = new System.Windows.Forms.DataVisualization.Charting.Series("Mực nước Sơn Đài")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Orange,
+                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+            };
 
-                    var timeObj = row.Cells["CreateAt"].Value;
-                    var valueObj = row.Cells[seriesName].Value;
+            var seriesBinhNham = new System.Windows.Forms.DataVisualization.Charting.Series("Mực nước Bình Nhâm")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Purple,
+                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+            };
 
-                    if (DateTime.TryParse(timeObj?.ToString(), out DateTime time) &&
-                        double.TryParse(valueObj?.ToString(), out double value))
-                    {
-                        series.Points.AddXY(time, value);
-                    }
-                }
+            var seriesTLCDD = new System.Windows.Forms.DataVisualization.Charting.Series("Mực nước TL CDD")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Brown,
+                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime
+            };
 
-                chart1.Series.Add(series);
+            foreach (var row in data.OrderBy(x => x.Thời_gian))
+            {
+                seriesHo.Points.AddXY(row.Thời_gian, row.Mực_nước_hồ ?? 0);
+                seriesHoKQ.Points.AddXY(row.Thời_gian, row.Mực_nước_hồKQ ?? 0);
+                seriesBenSuc.Points.AddXY(row.Thời_gian, row.Mực_nước_bến_súc ?? 0);
+                seriesDauTieng.Points.AddXY(row.Thời_gian, row.Mực_nước_đầu_tiếng ?? 0);
+                seriesSonDai.Points.AddXY(row.Thời_gian, row.Mực_nước_sơn_đài ?? 0);
+                seriesBinhNham.Points.AddXY(row.Thời_gian, row.Mực_nước_bình_nhâm ?? 0);
+                seriesTLCDD.Points.AddXY(row.Thời_gian, row.Mực_nước_tl_cdd ?? 0);
             }
+
+            chart1.Series.Add(seriesHo);
+            chart1.Series.Add(seriesHoKQ);
+            chart1.Series.Add(seriesBenSuc);
+            chart1.Series.Add(seriesDauTieng);
+            chart1.Series.Add(seriesSonDai);
+            chart1.Series.Add(seriesBinhNham);
+            chart1.Series.Add(seriesTLCDD);
+
+            chart1.Titles.Add("Biểu đồ mực nước theo thời gian");
+            chart1.ChartAreas[0].RecalculateAxesScale();
         }
 
-        
+
         //private void nbtTrend_Click(object sender, EventArgs e)
         //{
         //    DrawChartFromMucNuoc();
         //}
 
-        private void bntDataMucNuoc_Click(object sender, EventArgs e)
-        {
-       //     string connectionString = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;TrustServerCertificate=True";
 
-            string selected = cbTimeRange.SelectedItem?.ToString() ?? "Tất cả";
-            DateTime fromPicker = dtFrom.Value;
-            DateTime toPicker = dtTo.Value;
-
-            if (fromPicker >= toPicker)
-            {
-                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            DateTime fromTime = fromPicker;
-            DateTime toTime = toPicker;
-
-            // Nếu người dùng chọn "5 phút", "10 phút" v.v...
-            if (selected != "Tất cả")
-            {
-                int minutes = 0;
-                if (selected.Contains("10")) minutes = 10;
-                else if (selected.Contains("15")) minutes = 15;
-                else if (selected.Contains("30")) minutes = 30;
-                else if (selected.Contains("60")) minutes = 60;
-                else if (selected.Contains("1 Ngày")) minutes = 1440; // 1 ngày = 1440 phút
-
-                DateTime recentFrom = DateTime.Now.AddMinutes(-minutes);
-                DateTime recentTo = DateTime.Now;
-
-                // Giới hạn trong khoảng dtFrom - dtTo
-                fromTime = recentFrom < fromPicker ? fromPicker : recentFrom;
-                toTime = recentTo > toPicker ? toPicker : recentTo;
-
-                if (fromTime >= toTime)
-                {
-                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-            }
-
-            //using (SqlConnection conn = new SqlConnection(connectionString))
-            //{
-            //    conn.Open();
-
-            //    string query = "SELECT * FROM DataMucNuoc WHERE CreateAt BETWEEN @FromTime AND @ToTime ORDER BY CreateAt DESC";
-
-            //    var data = conn.Query<DataMucNuocModel>(query, new
-            //    {
-            //        FromTime = fromTime,
-            //        ToTime = toTime
-            //    }).ToList();
-
-            //    dataGridView1.DataSource = data;
-
-            //    if (data.Count == 0)
-            //    {
-            //        MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    }
-            //    DrawChartFromMucNuoc(); // Gọi hàm vẽ biểu đồ từ dữ liệu mực nước
-            //}
-        }
         private void ExportChartAsImage()
         {
             if (chart1.Series.Count == 0)
@@ -624,6 +582,414 @@ namespace RegistrationForm1
             ExportChartAsImage();
         }
 
-        
+        private void bntDataVanHanh_Click(object sender, EventArgs e)
+        {
+            var selectedItem = cbStation.SelectedItem as StationItem;
+            string selectedCode = selectedItem?.Code; // null = tất cả trạm
+
+            string selectedFrequency = cbFrequency.SelectedItem?.ToString() ?? "Tất cả";
+            DateTime fromTime = dtFrom.Value;
+            DateTime toTime = dtTo.Value;
+
+            if (fromTime >= toTime)
+            {
+                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                using var dbContext = new ApplicationDbContext();
+
+                // --- Lấy dữ liệu chỉ 3 trạm ---
+                var query = dbContext.FT03s
+                    .Where(x => (x.IsDeleted ?? false) == false
+                                && x.CreateAt.HasValue
+                                && x.CreateAt.Value >= fromTime
+                                && x.CreateAt.Value <= toTime
+                                && (x.StationName == "Station_1" ||
+                                    x.StationName == "Station_2" ||
+                                    x.StationName == "Station_3"));
+
+                if (!string.IsNullOrEmpty(selectedCode))
+                {
+                    query = query.Where(x => x.StationName == selectedCode);
+                }
+
+                var rawData = query
+                    .OrderBy(x => x.CreateAt)
+                    .Select(x => new
+                    {
+                        x.StationName,
+                        x.CreateAt,
+                        x.Door1_Aperture,
+                        x.Door2_Aperture
+                    })
+                    .ToList();
+
+                // Map sang tiếng Việt
+                var mappedData = rawData.Select(x => new
+                {
+                    Trạm = x.StationName switch
+                    {
+                        "Station_1" => "Trạm 1",
+                        "Station_2" => "Trạm 2",
+                        "Station_3" => "Trạm 3",
+                        _ => x.StationName
+                    },
+                    Thời_gian = x.CreateAt.Value,
+                    Độ_mở_cửa_1 = x.Door1_Aperture,
+                    Độ_mở_cửa_2 = x.Door2_Aperture
+                }).ToList();
+
+                // Lọc tần suất
+                int frequencyMinutes = selectedFrequency switch
+                {
+                    "10 phút" => 10,
+                    "15 phút" => 15,
+                    "30 phút" => 30,
+                    "60 phút" => 60,
+                    "1 Ngày" => 1440,
+                    _ => 0
+                };
+
+                var filteredData = new List<dynamic>();
+
+                if (frequencyMinutes > 0)
+                {
+                    // Nhóm theo Trạm trước
+                    var grouped = mappedData
+                        .GroupBy(x => x.Trạm)
+                        .OrderBy(g => g.Key);
+
+                    foreach (var group in grouped)
+                    {
+                        DateTime? lastTime = null;
+                        foreach (var row in group.OrderBy(x => x.Thời_gian))
+                        {
+                            if (lastTime == null || (row.Thời_gian - lastTime.Value).TotalMinutes >= frequencyMinutes)
+                            {
+                                filteredData.Add(row);
+                                lastTime = row.Thời_gian;
+                            }
+                        }
+                    }
+
+                    // Sắp xếp lại toàn bộ dữ liệu sau khi gộp
+                    filteredData = filteredData.OrderBy(x => x.Thời_gian).ToList();
+                }
+                else
+                {
+                    filteredData = mappedData.Cast<dynamic>().ToList();
+                }
+
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = filteredData;
+
+                // Đổi tiêu đề cột
+                if (dataGridView1.Columns.Contains("Trạm"))
+                    dataGridView1.Columns["Trạm"].HeaderText = "Tên trạm";
+                if (dataGridView1.Columns.Contains("Thời_gian"))
+                    dataGridView1.Columns["Thời_gian"].HeaderText = "Thời gian";
+                if (dataGridView1.Columns.Contains("Độ_mở_cửa_1"))
+                    dataGridView1.Columns["Độ_mở_cửa_1"].HeaderText = "Độ mở cửa 1 (cm)";
+                if (dataGridView1.Columns.Contains("Độ_mở_cửa_2"))
+                    dataGridView1.Columns["Độ_mở_cửa_2"].HeaderText = "Độ mở cửa 2 (cm)";
+
+                if (filteredData.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    DrawChartFromVanHanhData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi truy vấn dữ liệu: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void bntDataMucNuoc_Click(object sender, EventArgs e)
+        {
+       
+            string selectedFrequency = cbFrequency.SelectedItem?.ToString() ?? "Tất cả";
+            DateTime fromTime = dtFrom.Value;
+            DateTime toTime = dtTo.Value;
+
+            if (fromTime >= toTime)
+            {
+                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                using var dbContext = new ApplicationDbContext();
+
+                // --- Lấy dữ liệu chỉ 3 trạm ---
+                var query = dbContext.FT03s
+                    .Where(x => (x.IsDeleted ?? false) == false
+                                && x.CreateAt.HasValue
+                                && x.CreateAt.Value >= fromTime
+                                && x.CreateAt.Value <= toTime
+                                && (x.StationName == "Location_Info")); 
+
+               
+                var rawData = query
+                    .OrderBy(x => x.CreateAt)
+                    .Select(x => new
+                    {
+                        x.StationName,
+                        x.CreateAt,
+                        x.Fllow_Ho,
+                        x.Fllow_Ho_Final,
+                        x.API_Fllow_BenSuc,
+                        x.API_Fllow_DauTieng,
+                        x.API_Fllow_SonDai,
+                        x.API_Fllow_BinhNham,
+                        x.API_Fllow_TL_CDD
+                    })
+                    .ToList();
+
+                // Map sang tiếng Việt
+                var mappedData = rawData.Select(x => new
+                {
+                    Trạm = x.StationName switch
+                    {
+                        "Location_Info" => "Trạm mức nước",
+                        
+                        _ => x.StationName
+                    },
+                    Thời_gian = x.CreateAt.Value,
+                    Mực_nước_hồ = x.Fllow_Ho,
+                    Mực_nước_hồKQ = x.Fllow_Ho_Final,
+                    Mực_nước_bến_súc = x.API_Fllow_BenSuc,
+                    Mực_nước_đầu_tiếng = x.API_Fllow_DauTieng,
+                    Mực_nước_sơn_đài = x.API_Fllow_SonDai,
+                    Mực_nước_bình_nhâm = x.API_Fllow_BinhNham,
+                    Mực_nước_tl_cdd = x.API_Fllow_TL_CDD
+
+                }).ToList();
+
+                // Lọc tần suất
+                int frequencyMinutes = selectedFrequency switch
+                {
+                    "10 phút" => 10,
+                    "15 phút" => 15,
+                    "30 phút" => 30,
+                    "60 phút" => 60,
+                    "1 Ngày" => 1440,
+                    _ => 0
+                };
+
+                var filteredData = new List<dynamic>();
+
+                if (frequencyMinutes > 0)
+                {
+                    // Nhóm theo Trạm trước
+                    var grouped = mappedData
+                        .GroupBy(x => x.Trạm)
+                        .OrderBy(g => g.Key);
+
+                    foreach (var group in grouped)
+                    {
+                        DateTime? lastTime = null;
+                        foreach (var row in group.OrderBy(x => x.Thời_gian))
+                        {
+                            if (lastTime == null || (row.Thời_gian - lastTime.Value).TotalMinutes >= frequencyMinutes)
+                            {
+                                filteredData.Add(row);
+                                lastTime = row.Thời_gian;
+                            }
+                        }
+                    }
+
+                    // Sắp xếp lại toàn bộ dữ liệu sau khi gộp
+                    filteredData = filteredData.OrderBy(x => x.Thời_gian).ToList();
+                }
+                else
+                {
+                    filteredData = mappedData.Cast<dynamic>().ToList();
+                }
+
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = filteredData;
+
+                // Đổi tiêu đề cột
+                if (dataGridView1.Columns.Contains("Trạm"))
+                    dataGridView1.Columns["Trạm"].HeaderText = "Tên trạm";
+                if (dataGridView1.Columns.Contains("Thời_gian"))
+                    dataGridView1.Columns["Thời_gian"].HeaderText = "Thời gian";
+                if (dataGridView1.Columns.Contains("Mực_nước_hồ"))
+                    dataGridView1.Columns["Mực_nước_hồ"].HeaderText = "Mực nước hồ (cm)";
+                if (dataGridView1.Columns.Contains("Mực_nước_hồKQ"))
+                    dataGridView1.Columns["Mực_nước_hồKQ"].HeaderText = "Mực nước hồ KQ (cm)";
+                if (dataGridView1.Columns.Contains("Mực_nước_bến_súc"))
+                    dataGridView1.Columns["Mực_nước_bến_súc"].HeaderText = "Mực nước trạm bến súc (cm)";
+                if (dataGridView1.Columns.Contains("Mực_nước_đầu_tiếng"))
+                    dataGridView1.Columns["Mực_nước_đầu_tiếng"].HeaderText = "Mực nước trạm dầu tiếng (cm)";
+                if (dataGridView1.Columns.Contains("Mực_nước_sơn_đài"))
+                    dataGridView1.Columns["Mực_nước_sơn_đài"].HeaderText = "Mực nước trạm sơn đài (cm)";
+                if (dataGridView1.Columns.Contains("Mực_nước_bình_nhâm"))
+                    dataGridView1.Columns["Mực_nước_bình_nhâm"].HeaderText = "Mực nước trạm bình nhâm (cm)";
+                if (dataGridView1.Columns.Contains("Mực_nước_tl_cdd"))
+                    dataGridView1.Columns["Mực_nước_tl_cdd"].HeaderText = "Mực nước trạm tl cdd (cm)";
+
+
+                if (filteredData.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    DrawChartFromMucNuocData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi truy vấn dữ liệu: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void bntData_Click(object sender, EventArgs e)
+        {
+            string selectedFrequency = cbFrequency.SelectedItem?.ToString() ?? "Tất cả";
+            DateTime fromTime = dtFrom.Value;
+            DateTime toTime = dtTo.Value;
+
+            if (fromTime >= toTime)
+            {
+                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                using var dbContext = new ApplicationDbContext();
+
+                // --- Lấy dữ liệu chỉ 3 trạm ---
+                var query = dbContext.FT03s
+                    .Where(x => (x.IsDeleted ?? false) == false
+                                && x.CreateAt.HasValue
+                                && x.CreateAt.Value >= fromTime
+                                && x.CreateAt.Value <= toTime
+                                && (x.StationName == "Location_Info"));
+
+
+                var rawData = query
+                    .OrderBy(x => x.CreateAt)
+                    .Select(x => new
+                    {
+                        x.StationName,
+                        x.CreateAt,
+                        x.Q_cs1,
+                        x.Q_cs2,
+                        x.W1_ho,
+                        x.W2_ho
+                    })
+                    .ToList();
+
+                // Map sang tiếng Việt + làm tròn 2 chữ số thập phân
+                var mappedData = rawData.Select(x => new
+                {
+                    Trạm = x.StationName switch
+                    {
+                        "Location_Info" => "Trạm mức nước",
+                        _ => x.StationName
+                    },
+                    Thời_gian = x.CreateAt.Value,
+                    Q_Cống_Số_1 = Math.Round(x.Q_cs1, 2),
+                    Q_Cống_Số_2 = Math.Round(x.Q_cs2, 2),
+                    W1_Hồ = Math.Round(x.W1_ho, 2),
+                    W2_Hồ = Math.Round(x.W2_ho, 2)
+                }).ToList();
+
+                // Lọc tần suất
+                int frequencyMinutes = selectedFrequency switch
+                {
+                    "10 phút" => 10,
+                    "15 phút" => 15,
+                    "30 phút" => 30,
+                    "60 phút" => 60,
+                    "1 Ngày" => 1440,
+                    _ => 0
+                };
+
+                var filteredData = new List<dynamic>();
+
+                if (frequencyMinutes > 0)
+                {
+                    // Nhóm theo Trạm trước
+                    var grouped = mappedData
+                        .GroupBy(x => x.Trạm)
+                        .OrderBy(g => g.Key);
+
+                    foreach (var group in grouped)
+                    {
+                        DateTime? lastTime = null;
+                        foreach (var row in group.OrderBy(x => x.Thời_gian))
+                        {
+                            if (lastTime == null || (row.Thời_gian - lastTime.Value).TotalMinutes >= frequencyMinutes)
+                            {
+                                filteredData.Add(row);
+                                lastTime = row.Thời_gian;
+                            }
+                        }
+                    }
+
+                    // Sắp xếp lại toàn bộ dữ liệu sau khi gộp
+                    filteredData = filteredData.OrderBy(x => x.Thời_gian).ToList();
+                }
+                else
+                {
+                    filteredData = mappedData.Cast<dynamic>().ToList();
+                }
+
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = filteredData;
+
+                // Đổi tiêu đề cột
+                if (dataGridView1.Columns.Contains("Trạm"))
+                    dataGridView1.Columns["Trạm"].HeaderText = "Tên trạm";
+                if (dataGridView1.Columns.Contains("Thời_gian"))
+                    dataGridView1.Columns["Thời_gian"].HeaderText = "Thời gian";
+                if (dataGridView1.Columns.Contains("Q_Cống_Số_1"))
+                    dataGridView1.Columns["Q_Cống_Số_1"].HeaderText = "Q cống số 1";
+                if (dataGridView1.Columns.Contains("Q_Cống_Số_2"))
+                    dataGridView1.Columns["Q_Cống_Số_2"].HeaderText = "Q cống số 2";
+                if (dataGridView1.Columns.Contains("W1_Hồ"))
+                    dataGridView1.Columns["W1_Hồ"].HeaderText = "W1 hồ";
+                if (dataGridView1.Columns.Contains("W2_Hồ"))
+                    dataGridView1.Columns["W2_Hồ"].HeaderText = "W2 hồ";
+                
+
+
+                if (filteredData.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                 //   DrawChartFromMucNuocData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi truy vấn dữ liệu: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
+    
 }
+

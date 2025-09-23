@@ -29,6 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            Ahd.Winforms.Controls.SyncTarget syncTarget1 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget2 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget3 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget4 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget5 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget6 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget7 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget8 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget9 = new Ahd.Winforms.Controls.SyncTarget();
+            Ahd.Winforms.Controls.SyncTarget syncTarget10 = new Ahd.Winforms.Controls.SyncTarget();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -105,6 +115,7 @@
             this._labALDoor1_Station1 = new System.Windows.Forms.Label();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
+            this.ahdSyncTag1 = new Ahd.Winforms.Controls.AhdSyncTag(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -112,6 +123,7 @@
             this.panelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdSyncTag1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -532,6 +544,7 @@
             this.label9.Size = new System.Drawing.Size(66, 13);
             this.label9.TabIndex = 455;
             this.label9.Text = "Fllow_Door6";
+            this.label9.Visible = false;
             // 
             // label10
             // 
@@ -541,6 +554,7 @@
             this.label10.Size = new System.Drawing.Size(66, 13);
             this.label10.TabIndex = 454;
             this.label10.Text = "Fllow_Door5";
+            this.label10.Visible = false;
             // 
             // label12
             // 
@@ -550,6 +564,7 @@
             this.label12.Size = new System.Drawing.Size(66, 13);
             this.label12.TabIndex = 453;
             this.label12.Text = "Fllow_Door4";
+            this.label12.Visible = false;
             // 
             // label8
             // 
@@ -559,6 +574,7 @@
             this.label8.Size = new System.Drawing.Size(66, 13);
             this.label8.TabIndex = 452;
             this.label8.Text = "Fllow_Door3";
+            this.label8.Visible = false;
             // 
             // label2
             // 
@@ -568,6 +584,7 @@
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 451;
             this.label2.Text = "Fllow_Door2";
+            this.label2.Visible = false;
             // 
             // label21
             // 
@@ -577,6 +594,7 @@
             this.label21.Size = new System.Drawing.Size(26, 13);
             this.label21.TabIndex = 450;
             this.label21.Text = "Wdi";
+            this.label21.Visible = false;
             // 
             // label20
             // 
@@ -586,6 +604,7 @@
             this.label20.Size = new System.Drawing.Size(23, 13);
             this.label20.TabIndex = 449;
             this.label20.Text = "Qdi";
+            this.label20.Visible = false;
             // 
             // label19
             // 
@@ -595,6 +614,7 @@
             this.label19.Size = new System.Drawing.Size(24, 13);
             this.label19.TabIndex = 448;
             this.label19.Text = "Wtt";
+            this.label19.Visible = false;
             // 
             // label18
             // 
@@ -604,6 +624,7 @@
             this.label18.Size = new System.Drawing.Size(21, 13);
             this.label18.TabIndex = 447;
             this.label18.Text = "Qtt";
+            this.label18.Visible = false;
             // 
             // label17
             // 
@@ -613,6 +634,7 @@
             this.label17.Size = new System.Drawing.Size(42, 13);
             this.label17.TabIndex = 446;
             this.label17.Text = "W_den";
+            this.label17.Visible = false;
             // 
             // label16
             // 
@@ -622,6 +644,7 @@
             this.label16.Size = new System.Drawing.Size(33, 13);
             this.label16.TabIndex = 445;
             this.label16.Text = "Qden";
+            this.label16.Visible = false;
             // 
             // label15
             // 
@@ -631,6 +654,7 @@
             this.label15.Size = new System.Drawing.Size(24, 13);
             this.label15.TabIndex = 444;
             this.label15.Text = "Wtr";
+            this.label15.Visible = false;
             // 
             // label7
             // 
@@ -640,6 +664,7 @@
             this.label7.Size = new System.Drawing.Size(21, 13);
             this.label7.TabIndex = 443;
             this.label7.Text = "Qtr";
+            this.label7.Visible = false;
             // 
             // label6
             // 
@@ -649,6 +674,7 @@
             this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 442;
             this.label6.Text = "Fllow_Door1";
+            this.label6.Visible = false;
             // 
             // label4
             // 
@@ -658,6 +684,7 @@
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 441;
             this.label4.Text = "W2_ho";
+            this.label4.Visible = false;
             // 
             // label3
             // 
@@ -667,6 +694,7 @@
             this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 440;
             this.label3.Text = "W1_ho";
+            this.label3.Visible = false;
             // 
             // _labWtr
             // 
@@ -677,6 +705,7 @@
             this._labWtr.Size = new System.Drawing.Size(52, 24);
             this._labWtr.TabIndex = 439;
             this._labWtr.Text = "W_tr";
+            this._labWtr.Visible = false;
             // 
             // _labWdi
             // 
@@ -686,6 +715,7 @@
             this._labWdi.Size = new System.Drawing.Size(32, 13);
             this._labWdi.TabIndex = 438;
             this._labWdi.Text = "W_di";
+            this._labWdi.Visible = false;
             // 
             // _labWden
             // 
@@ -695,6 +725,7 @@
             this._labWden.Size = new System.Drawing.Size(42, 13);
             this._labWden.TabIndex = 437;
             this._labWden.Text = "W_den";
+            this._labWden.Visible = false;
             // 
             // _labQtt
             // 
@@ -704,6 +735,7 @@
             this._labQtt.Size = new System.Drawing.Size(27, 13);
             this._labQtt.TabIndex = 436;
             this._labQtt.Text = "Q_tt";
+            this._labQtt.Visible = false;
             // 
             // _labWtt
             // 
@@ -713,6 +745,7 @@
             this._labWtt.Size = new System.Drawing.Size(30, 13);
             this._labWtt.TabIndex = 435;
             this._labWtt.Text = "W_tt";
+            this._labWtt.Visible = false;
             // 
             // _LabQdi
             // 
@@ -722,6 +755,7 @@
             this._LabQdi.Size = new System.Drawing.Size(25, 13);
             this._LabQdi.TabIndex = 434;
             this._LabQdi.Text = "QDi";
+            this._LabQdi.Visible = false;
             // 
             // _labW2_ho
             // 
@@ -731,6 +765,7 @@
             this._labW2_ho.Size = new System.Drawing.Size(42, 13);
             this._labW2_ho.TabIndex = 433;
             this._labW2_ho.Text = "W2_ho";
+            this._labW2_ho.Visible = false;
             // 
             // _labQi1
             // 
@@ -750,6 +785,7 @@
             this._labW1_ho.Size = new System.Drawing.Size(42, 13);
             this._labW1_ho.TabIndex = 430;
             this._labW1_ho.Text = "W1_ho";
+            this._labW1_ho.Visible = false;
             // 
             // _labQden
             // 
@@ -759,12 +795,13 @@
             this._labQden.Size = new System.Drawing.Size(33, 13);
             this._labQden.TabIndex = 211;
             this._labQden.Text = "Qden";
+            this._labQden.Visible = false;
             // 
             // _labQtr
             // 
             this._labQtr.AutoSize = true;
             this._labQtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labQtr.Location = new System.Drawing.Point(302, 239);
+            this._labQtr.Location = new System.Drawing.Point(207, 135);
             this._labQtr.Name = "_labQtr";
             this._labQtr.Size = new System.Drawing.Size(49, 24);
             this._labQtr.TabIndex = 199;
@@ -778,6 +815,7 @@
             this._labALDoor2_Station3.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station3.TabIndex = 195;
             this._labALDoor2_Station3.Text = "label2";
+            this._labALDoor2_Station3.Visible = false;
             // 
             // _labALDoor2_Station2
             // 
@@ -787,6 +825,7 @@
             this._labALDoor2_Station2.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station2.TabIndex = 194;
             this._labALDoor2_Station2.Text = "label2";
+            this._labALDoor2_Station2.Visible = false;
             // 
             // _labALDoor2_Station1
             // 
@@ -796,6 +835,7 @@
             this._labALDoor2_Station1.Size = new System.Drawing.Size(35, 13);
             this._labALDoor2_Station1.TabIndex = 193;
             this._labALDoor2_Station1.Text = "label2";
+            this._labALDoor2_Station1.Visible = false;
             // 
             // dtpEndTime
             // 
@@ -839,6 +879,7 @@
             this._labFlowHoFinal.Size = new System.Drawing.Size(35, 13);
             this._labFlowHoFinal.TabIndex = 187;
             this._labFlowHoFinal.Text = "label2";
+            this._labFlowHoFinal.Visible = false;
             // 
             // _labFllowHo
             // 
@@ -848,6 +889,7 @@
             this._labFllowHo.Size = new System.Drawing.Size(55, 13);
             this._labFllowHo.TabIndex = 186;
             this._labFllowHo.Text = "Mức nước";
+            this._labFllowHo.Visible = false;
             // 
             // _labALDoor1_Station3
             // 
@@ -857,6 +899,7 @@
             this._labALDoor1_Station3.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station3.TabIndex = 185;
             this._labALDoor1_Station3.Text = "label2";
+            this._labALDoor1_Station3.Visible = false;
             // 
             // _labALDoor1_Station2
             // 
@@ -866,6 +909,7 @@
             this._labALDoor1_Station2.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station2.TabIndex = 184;
             this._labALDoor1_Station2.Text = "label2";
+            this._labALDoor1_Station2.Visible = false;
             // 
             // _labALDoor1_Station1
             // 
@@ -875,6 +919,7 @@
             this._labALDoor1_Station1.Size = new System.Drawing.Size(35, 13);
             this._labALDoor1_Station1.TabIndex = 183;
             this._labALDoor1_Station1.Text = "label2";
+            this._labALDoor1_Station1.Visible = false;
             // 
             // lblStationsTitle
             // 
@@ -884,6 +929,7 @@
             this.lblStationsTitle.Size = new System.Drawing.Size(35, 13);
             this.lblStationsTitle.TabIndex = 178;
             this.lblStationsTitle.Text = "label2";
+            this.lblStationsTitle.Visible = false;
             // 
             // lblStatusMessage
             // 
@@ -893,6 +939,43 @@
             this.lblStatusMessage.Size = new System.Drawing.Size(35, 13);
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
+            this.lblStatusMessage.Visible = false;
+            // 
+            // ahdSyncTag1
+            // 
+            this.ahdSyncTag1.Enabled = false;
+            this.ahdSyncTag1.SyncInterval = 200;
+            syncTarget1.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
+            syncTarget1.TargetTagPath = "Local Station/DauTieng/PLC1_2/Fllow_Door1";
+            syncTarget2.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door2";
+            syncTarget2.TargetTagPath = "Local Station/DauTieng/PLC1_2/Fllow_Door2";
+            syncTarget3.SourceTagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door1";
+            syncTarget3.TargetTagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door3";
+            syncTarget4.SourceTagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door2";
+            syncTarget4.TargetTagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door4";
+            syncTarget5.SourceTagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door1";
+            syncTarget5.TargetTagPath = "Local Station/DauTieng/PLC5_6/Fllow_Door5";
+            syncTarget6.SourceTagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door2";
+            syncTarget6.TargetTagPath = "Local Station/DauTieng/PLC5_6/Fllow_Door6";
+            syncTarget7.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Total_Fllow";
+            syncTarget7.TargetTagPath = "Local Station/DauTieng/PLC1_2/Total_Fllow";
+            syncTarget8.SourceTagPath = "Local Station/DauTieng/S71500/Station_2/Total_Fllow";
+            syncTarget8.TargetTagPath = "Local Station/DauTieng/PLC3_4/Total_Fllow";
+            syncTarget9.SourceTagPath = "Local Station/DauTieng/S71500/Station_3/Total_Fllow";
+            syncTarget9.TargetTagPath = "Local Station/DauTieng/PLC5_6/Total_Fllow";
+            syncTarget10.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
+            syncTarget10.TargetTagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door1";
+            this.ahdSyncTag1.Targets.AddRange(new Ahd.Winforms.Controls.SyncTarget[] {
+            syncTarget1,
+            syncTarget2,
+            syncTarget3,
+            syncTarget4,
+            syncTarget5,
+            syncTarget6,
+            syncTarget7,
+            syncTarget8,
+            syncTarget9,
+            syncTarget10});
             // 
             // FrmMain
             // 
@@ -924,6 +1007,7 @@
             this.panelDesktop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdSyncTag1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1005,5 +1089,6 @@
         private System.Windows.Forms.Label _labQi4;
         private System.Windows.Forms.Label _labQi3;
         private System.Windows.Forms.Label _labQi2;
+        private Ahd.Winforms.Controls.AhdSyncTag ahdSyncTag1;
     }
 }

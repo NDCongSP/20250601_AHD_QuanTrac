@@ -28,6 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand1 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand2 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand3 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand4 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand5 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand6 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand7 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand8 = new Ahd.Winforms.Controls.WriteTagCommand();
@@ -36,40 +41,40 @@
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand11 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand12 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand13 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand5 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand2 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand3 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand4 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand26 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand27 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand28 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand23 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand24 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand25 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand20 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand21 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand22 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand18 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand17 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand19 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand14 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand15 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand16 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand17 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand18 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand19 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand20 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand21 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand22 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand23 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand24 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand25 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand26 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand27 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand28 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand29 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand30 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand31 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand32 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand33 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand34 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand35 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand36 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand37 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand38 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand39 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand40 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand36 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand35 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand34 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand33 = new Ahd.Winforms.Controls.WriteTagCommand();
-            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand1 = new Ahd.Winforms.Controls.WriteTagCommand();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDieukhienscada));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ahdButton36 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton7 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton8 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton9 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton37 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdTextBox13 = new Ahd.Winforms.Controls.AhdTextBox();
             this.ahdTextBox12 = new Ahd.Winforms.Controls.AhdTextBox();
             this.ahdTextBox11 = new Ahd.Winforms.Controls.AhdTextBox();
@@ -91,6 +96,26 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ahdButton20 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton21 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton22 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton18 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton11 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton19 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdTextBox4 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.ahdButton12 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton13 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton14 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdTextBox3 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.ahdButton15 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton16 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton17 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdTextBox14 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.ahdTextBox15 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.ahdTextBox16 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.ahdButton38 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton39 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton40 = new Ahd.Winforms.Controls.AhdButton();
             this.button4 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -98,55 +123,35 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.ahdButton37 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton7 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton8 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton9 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdTextBox14 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.ahdTextBox15 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.ahdTextBox16 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.ahdButton38 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton39 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton40 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdTextBox3 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.ahdButton15 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton16 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton17 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdTextBox4 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.ahdButton12 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton13 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton14 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton11 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton18 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton19 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton20 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton21 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton22 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdButton23 = new Ahd.Winforms.Controls.AhdButton();
+            this.button15 = new System.Windows.Forms.Button();
             this.ahdButton25 = new Ahd.Winforms.Controls.AhdButton();
+            this.button17 = new System.Windows.Forms.Button();
             this.ahdButton26 = new Ahd.Winforms.Controls.AhdButton();
+            this.button16 = new System.Windows.Forms.Button();
             this.ahdButton27 = new Ahd.Winforms.Controls.AhdButton();
+            this.button14 = new System.Windows.Forms.Button();
             this.ahdTextBox5 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.button13 = new System.Windows.Forms.Button();
             this.ahdTextBox6 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.ahdButton35 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdTextBox17 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.ahdButton34 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton33 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdButton32 = new Ahd.Winforms.Controls.AhdButton();
+            this.button12 = new System.Windows.Forms.Button();
             this.ahdButton28 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdTextBox23 = new Ahd.Winforms.Controls.AhdTextBox();
             this.ahdButton29 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdTextBox22 = new Ahd.Winforms.Controls.AhdTextBox();
             this.ahdButton30 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdButton31 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdTextBox22 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.ahdTextBox23 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.button12 = new System.Windows.Forms.Button();
-            this.ahdButton32 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton33 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton34 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton35 = new Ahd.Winforms.Controls.AhdButton();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
-            this.ahdButton36 = new Ahd.Winforms.Controls.AhdButton();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton36)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton37)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox11)).BeginInit();
@@ -162,49 +167,44 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton1)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton37)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton21)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton22)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton38)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton39)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton40)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton21)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton22)).BeginInit();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton23)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton26)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton27)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton35)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton34)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton33)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton32)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton28)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox23)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton29)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton31)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox23)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton32)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton33)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton34)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton35)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton36)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -240,6 +240,106 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Trạm 1 - 2";
+            // 
+            // ahdButton36
+            // 
+            this.ahdButton36.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton36.BorderThickness = 2;
+            this.ahdButton36.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton36.Location = new System.Drawing.Point(673, 188);
+            this.ahdButton36.Name = "ahdButton36";
+            this.ahdButton36.Role = null;
+            this.ahdButton36.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton36.TabIndex = 387;
+            this.ahdButton36.Text = "Lock Status";
+            writeTagCommand1.AllowResetValue = true;
+            writeTagCommand1.ResetDelay = 500;
+            writeTagCommand1.ResetValue = "0";
+            writeTagCommand1.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
+            writeTagCommand1.WriteDelay = 10;
+            writeTagCommand1.WriteValue = "1";
+            this.ahdButton36.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand1});
+            // 
+            // ahdButton7
+            // 
+            this.ahdButton7.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton7.BorderThickness = 2;
+            this.ahdButton7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton7.Location = new System.Drawing.Point(535, 244);
+            this.ahdButton7.Name = "ahdButton7";
+            this.ahdButton7.Role = null;
+            this.ahdButton7.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton7.TabIndex = 386;
+            this.ahdButton7.Text = "Dừng chốt 2";
+            writeTagCommand2.AllowResetValue = true;
+            writeTagCommand2.ResetDelay = 500;
+            writeTagCommand2.ResetValue = "0";
+            writeTagCommand2.TagPath = "Local Station/DauTieng/PLC1_2/Stop_Door1";
+            writeTagCommand2.WriteDelay = 10;
+            writeTagCommand2.WriteValue = "1";
+            this.ahdButton7.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand2});
+            // 
+            // ahdButton8
+            // 
+            this.ahdButton8.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton8.BorderThickness = 2;
+            this.ahdButton8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton8.Location = new System.Drawing.Point(535, 189);
+            this.ahdButton8.Name = "ahdButton8";
+            this.ahdButton8.Role = null;
+            this.ahdButton8.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton8.TabIndex = 385;
+            this.ahdButton8.Text = "Đóng chốt 2";
+            writeTagCommand3.AllowResetValue = true;
+            writeTagCommand3.ResetDelay = 500;
+            writeTagCommand3.ResetValue = "0";
+            writeTagCommand3.TagPath = "Local Station/DauTieng/PLC1_2/Close_Door1";
+            writeTagCommand3.WriteDelay = 10;
+            writeTagCommand3.WriteValue = "1";
+            this.ahdButton8.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand3});
+            // 
+            // ahdButton9
+            // 
+            this.ahdButton9.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton9.BorderThickness = 2;
+            this.ahdButton9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton9.Location = new System.Drawing.Point(535, 134);
+            this.ahdButton9.Name = "ahdButton9";
+            this.ahdButton9.Role = null;
+            this.ahdButton9.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton9.TabIndex = 384;
+            this.ahdButton9.Text = "Mở chốt 2";
+            writeTagCommand4.AllowResetValue = true;
+            writeTagCommand4.ResetDelay = 500;
+            writeTagCommand4.ResetValue = "0";
+            writeTagCommand4.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
+            writeTagCommand4.WriteDelay = 10;
+            writeTagCommand4.WriteValue = "1";
+            this.ahdButton9.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand4});
+            // 
+            // ahdButton37
+            // 
+            this.ahdButton37.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton37.BorderThickness = 2;
+            this.ahdButton37.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton37.Location = new System.Drawing.Point(535, 402);
+            this.ahdButton37.Name = "ahdButton37";
+            this.ahdButton37.Role = null;
+            this.ahdButton37.Size = new System.Drawing.Size(187, 36);
+            this.ahdButton37.TabIndex = 383;
+            this.ahdButton37.Text = "Trạng thái tay OFF";
+            writeTagCommand5.AllowResetValue = false;
+            writeTagCommand5.ResetDelay = 500;
+            writeTagCommand5.ResetValue = "0";
+            writeTagCommand5.TagPath = "Local Station/DauTieng/PLC1_2/Man_Aperture";
+            writeTagCommand5.WriteDelay = 10;
+            writeTagCommand5.WriteValue = "0";
+            this.ahdButton37.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand5});
             // 
             // ahdTextBox13
             // 
@@ -631,186 +731,287 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Trạm 3 -4";
             // 
-            // button4
+            // ahdButton20
             // 
-            this.button4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.Navy;
-            this.button4.Location = new System.Drawing.Point(16, 365);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(205, 35);
-            this.button4.TabIndex = 369;
-            this.button4.Text = "Cài đặt độ mở cửa 4";
-            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.UseVisualStyleBackColor = true;
+            this.ahdButton20.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton20.BorderThickness = 2;
+            this.ahdButton20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton20.Location = new System.Drawing.Point(676, 243);
+            this.ahdButton20.Name = "ahdButton20";
+            this.ahdButton20.Role = null;
+            this.ahdButton20.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton20.TabIndex = 397;
+            this.ahdButton20.Text = "Dừng chốt 4";
+            writeTagCommand14.AllowResetValue = true;
+            writeTagCommand14.ResetDelay = 500;
+            writeTagCommand14.ResetValue = "0";
+            writeTagCommand14.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock4";
+            writeTagCommand14.WriteDelay = 10;
+            writeTagCommand14.WriteValue = "1";
+            this.ahdButton20.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand14});
             // 
-            // button6
+            // ahdButton21
             // 
-            this.button6.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button6.ForeColor = System.Drawing.Color.Blue;
-            this.button6.Location = new System.Drawing.Point(518, 12);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(204, 35);
-            this.button6.TabIndex = 357;
-            this.button6.Text = "Qtr (m³/s)";
-            this.button6.UseVisualStyleBackColor = false;
+            this.ahdButton21.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton21.BorderThickness = 2;
+            this.ahdButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton21.Location = new System.Drawing.Point(676, 188);
+            this.ahdButton21.Name = "ahdButton21";
+            this.ahdButton21.Role = null;
+            this.ahdButton21.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton21.TabIndex = 396;
+            this.ahdButton21.Text = "Đóng chốt 4";
+            writeTagCommand15.AllowResetValue = true;
+            writeTagCommand15.ResetDelay = 500;
+            writeTagCommand15.ResetValue = "0";
+            writeTagCommand15.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock4";
+            writeTagCommand15.WriteDelay = 10;
+            writeTagCommand15.WriteValue = "1";
+            this.ahdButton21.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand15});
             // 
-            // button7
+            // ahdButton22
             // 
-            this.button7.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button7.ForeColor = System.Drawing.Color.Blue;
-            this.button7.Location = new System.Drawing.Point(376, 12);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(110, 35);
-            this.button7.TabIndex = 355;
-            this.button7.Text = "CỬA 4";
-            this.button7.UseVisualStyleBackColor = false;
+            this.ahdButton22.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton22.BorderThickness = 2;
+            this.ahdButton22.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton22.Location = new System.Drawing.Point(676, 133);
+            this.ahdButton22.Name = "ahdButton22";
+            this.ahdButton22.Role = null;
+            this.ahdButton22.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton22.TabIndex = 395;
+            this.ahdButton22.Text = "Mở chốt 4";
+            writeTagCommand16.AllowResetValue = true;
+            writeTagCommand16.ResetDelay = 500;
+            writeTagCommand16.ResetValue = "0";
+            writeTagCommand16.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock4";
+            writeTagCommand16.WriteDelay = 10;
+            writeTagCommand16.WriteValue = "1";
+            this.ahdButton22.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand16});
             // 
-            // button9
+            // ahdButton18
             // 
-            this.button9.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button9.ForeColor = System.Drawing.Color.Blue;
-            this.button9.Location = new System.Drawing.Point(239, 12);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(110, 35);
-            this.button9.TabIndex = 354;
-            this.button9.Text = "CỬA 3";
-            this.button9.UseVisualStyleBackColor = false;
+            this.ahdButton18.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton18.BorderThickness = 2;
+            this.ahdButton18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton18.Location = new System.Drawing.Point(503, 402);
+            this.ahdButton18.Name = "ahdButton18";
+            this.ahdButton18.Role = null;
+            this.ahdButton18.Size = new System.Drawing.Size(187, 36);
+            this.ahdButton18.TabIndex = 385;
+            this.ahdButton18.Text = "Trạng thái tay OFF";
+            writeTagCommand17.AllowResetValue = false;
+            writeTagCommand17.ResetDelay = 500;
+            writeTagCommand17.ResetValue = "0";
+            writeTagCommand17.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
+            writeTagCommand17.WriteDelay = 10;
+            writeTagCommand17.WriteValue = "0";
+            this.ahdButton18.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand17});
             // 
-            // button10
+            // ahdButton11
             // 
-            this.button10.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button10.ForeColor = System.Drawing.Color.Navy;
-            this.button10.Location = new System.Drawing.Point(16, 76);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(205, 35);
-            this.button10.TabIndex = 5;
-            this.button10.Text = "Lưu lượng xả: Qi (m³/s)";
-            this.button10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button10.UseVisualStyleBackColor = true;
+            this.ahdButton11.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton11.BorderThickness = 2;
+            this.ahdButton11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton11.Location = new System.Drawing.Point(535, 303);
+            this.ahdButton11.Name = "ahdButton11";
+            this.ahdButton11.Role = null;
+            this.ahdButton11.Size = new System.Drawing.Size(134, 52);
+            this.ahdButton11.TabIndex = 387;
+            this.ahdButton11.Text = "Dừng khẩn 3 - 4";
+            writeTagCommand18.AllowResetValue = true;
+            writeTagCommand18.ResetDelay = 500;
+            writeTagCommand18.ResetValue = "0";
+            writeTagCommand18.TagPath = "Local Station/DauTieng/PLC3_4/Stop3_4";
+            writeTagCommand18.WriteDelay = 10;
+            writeTagCommand18.WriteValue = "1";
+            this.ahdButton11.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand18});
             // 
-            // button11
+            // ahdButton19
             // 
-            this.button11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.ForeColor = System.Drawing.Color.Navy;
-            this.button11.Location = new System.Drawing.Point(16, 303);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(205, 35);
-            this.button11.TabIndex = 2;
-            this.button11.Text = "Cài đặt độ mở cửa 3";
-            this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button11.UseVisualStyleBackColor = true;
+            this.ahdButton19.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton19.BorderThickness = 2;
+            this.ahdButton19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton19.Location = new System.Drawing.Point(503, 360);
+            this.ahdButton19.Name = "ahdButton19";
+            this.ahdButton19.Role = null;
+            this.ahdButton19.Size = new System.Drawing.Size(187, 36);
+            this.ahdButton19.TabIndex = 384;
+            this.ahdButton19.Text = "Trạng thái tay ON";
+            writeTagCommand19.AllowResetValue = false;
+            writeTagCommand19.ResetDelay = 500;
+            writeTagCommand19.ResetValue = "1";
+            writeTagCommand19.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
+            writeTagCommand19.WriteDelay = 10;
+            writeTagCommand19.WriteValue = "1";
+            this.ahdButton19.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand19});
             // 
-            // groupBox3
+            // ahdTextBox4
             // 
-            this.groupBox3.Controls.Add(this.ahdButton23);
-            this.groupBox3.Controls.Add(this.button15);
-            this.groupBox3.Controls.Add(this.ahdButton25);
-            this.groupBox3.Controls.Add(this.button17);
-            this.groupBox3.Controls.Add(this.ahdButton26);
-            this.groupBox3.Controls.Add(this.button16);
-            this.groupBox3.Controls.Add(this.ahdButton27);
-            this.groupBox3.Controls.Add(this.button14);
-            this.groupBox3.Controls.Add(this.ahdTextBox5);
-            this.groupBox3.Controls.Add(this.button13);
-            this.groupBox3.Controls.Add(this.ahdTextBox6);
-            this.groupBox3.Controls.Add(this.ahdButton35);
-            this.groupBox3.Controls.Add(this.ahdTextBox17);
-            this.groupBox3.Controls.Add(this.ahdButton34);
-            this.groupBox3.Controls.Add(this.ahdButton33);
-            this.groupBox3.Controls.Add(this.ahdButton32);
-            this.groupBox3.Controls.Add(this.button12);
-            this.groupBox3.Controls.Add(this.ahdButton28);
-            this.groupBox3.Controls.Add(this.ahdTextBox23);
-            this.groupBox3.Controls.Add(this.ahdButton29);
-            this.groupBox3.Controls.Add(this.ahdTextBox22);
-            this.groupBox3.Controls.Add(this.ahdButton30);
-            this.groupBox3.Controls.Add(this.ahdButton31);
-            this.groupBox3.Location = new System.Drawing.Point(12, 482);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(805, 442);
-            this.groupBox3.TabIndex = 373;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Trạm 5 - 6";
+            this.ahdTextBox4.DropDownBackColor = System.Drawing.SystemColors.Control;
+            this.ahdTextBox4.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ahdTextBox4.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
+            this.ahdTextBox4.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox4.DropDownForeColor = System.Drawing.SystemColors.ControlText;
+            this.ahdTextBox4.HightLightStatusTime = 3;
+            this.ahdTextBox4.Location = new System.Drawing.Point(535, 76);
+            this.ahdTextBox4.Multiline = true;
+            this.ahdTextBox4.Name = "ahdTextBox4";
+            this.ahdTextBox4.Role = null;
+            this.ahdTextBox4.Size = new System.Drawing.Size(112, 35);
+            this.ahdTextBox4.StringFormat = null;
+            this.ahdTextBox4.TabIndex = 394;
+            this.ahdTextBox4.TagPath = "Local Station/DauTieng/PLC3_4/Total_Fllow";
+            this.ahdTextBox4.Text = "ahdTextBox4";
+            this.ahdTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ahdTextBox4.WriteDelay = 200;
+            this.ahdTextBox4.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
             // 
-            // ahdButton37
+            // ahdButton12
             // 
-            this.ahdButton37.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton37.BorderThickness = 2;
-            this.ahdButton37.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton37.Location = new System.Drawing.Point(535, 402);
-            this.ahdButton37.Name = "ahdButton37";
-            this.ahdButton37.Role = null;
-            this.ahdButton37.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton37.TabIndex = 383;
-            this.ahdButton37.Text = "Trạng thái tay OFF";
-            writeTagCommand5.AllowResetValue = false;
-            writeTagCommand5.ResetDelay = 500;
-            writeTagCommand5.ResetValue = "0";
-            writeTagCommand5.TagPath = "Local Station/DauTieng/PLC1_2/Man_Aperture";
-            writeTagCommand5.WriteDelay = 10;
-            writeTagCommand5.WriteValue = "0";
-            this.ahdButton37.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand5});
+            this.ahdButton12.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton12.BorderThickness = 2;
+            this.ahdButton12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton12.Location = new System.Drawing.Point(535, 243);
+            this.ahdButton12.Name = "ahdButton12";
+            this.ahdButton12.Role = null;
+            this.ahdButton12.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton12.TabIndex = 393;
+            this.ahdButton12.Text = "Dừng chốt 3";
+            writeTagCommand20.AllowResetValue = true;
+            writeTagCommand20.ResetDelay = 500;
+            writeTagCommand20.ResetValue = "0";
+            writeTagCommand20.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock3";
+            writeTagCommand20.WriteDelay = 10;
+            writeTagCommand20.WriteValue = "1";
+            this.ahdButton12.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand20});
             // 
-            // ahdButton7
+            // ahdButton13
             // 
-            this.ahdButton7.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton7.BorderThickness = 2;
-            this.ahdButton7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton7.Location = new System.Drawing.Point(535, 244);
-            this.ahdButton7.Name = "ahdButton7";
-            this.ahdButton7.Role = null;
-            this.ahdButton7.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton7.TabIndex = 386;
-            this.ahdButton7.Text = "Dừng chốt 2";
-            writeTagCommand2.AllowResetValue = true;
-            writeTagCommand2.ResetDelay = 500;
-            writeTagCommand2.ResetValue = "0";
-            writeTagCommand2.TagPath = "Local Station/DauTieng/PLC1_2/Stop_Door1";
-            writeTagCommand2.WriteDelay = 10;
-            writeTagCommand2.WriteValue = "1";
-            this.ahdButton7.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand2});
+            this.ahdButton13.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton13.BorderThickness = 2;
+            this.ahdButton13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton13.Location = new System.Drawing.Point(535, 188);
+            this.ahdButton13.Name = "ahdButton13";
+            this.ahdButton13.Role = null;
+            this.ahdButton13.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton13.TabIndex = 392;
+            this.ahdButton13.Text = "Đóng chốt 3";
+            writeTagCommand21.AllowResetValue = true;
+            writeTagCommand21.ResetDelay = 500;
+            writeTagCommand21.ResetValue = "0";
+            writeTagCommand21.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock3";
+            writeTagCommand21.WriteDelay = 10;
+            writeTagCommand21.WriteValue = "1";
+            this.ahdButton13.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand21});
             // 
-            // ahdButton8
+            // ahdButton14
             // 
-            this.ahdButton8.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton8.BorderThickness = 2;
-            this.ahdButton8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton8.Location = new System.Drawing.Point(535, 189);
-            this.ahdButton8.Name = "ahdButton8";
-            this.ahdButton8.Role = null;
-            this.ahdButton8.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton8.TabIndex = 385;
-            this.ahdButton8.Text = "Đóng chốt 2";
-            writeTagCommand3.AllowResetValue = true;
-            writeTagCommand3.ResetDelay = 500;
-            writeTagCommand3.ResetValue = "0";
-            writeTagCommand3.TagPath = "Local Station/DauTieng/PLC1_2/Close_Door1";
-            writeTagCommand3.WriteDelay = 10;
-            writeTagCommand3.WriteValue = "1";
-            this.ahdButton8.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand3});
+            this.ahdButton14.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton14.BorderThickness = 2;
+            this.ahdButton14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton14.Location = new System.Drawing.Point(535, 133);
+            this.ahdButton14.Name = "ahdButton14";
+            this.ahdButton14.Role = null;
+            this.ahdButton14.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton14.TabIndex = 391;
+            this.ahdButton14.Text = "Mở chốt 3";
+            writeTagCommand22.AllowResetValue = true;
+            writeTagCommand22.ResetDelay = 500;
+            writeTagCommand22.ResetValue = "0";
+            writeTagCommand22.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock3";
+            writeTagCommand22.WriteDelay = 10;
+            writeTagCommand22.WriteValue = "1";
+            this.ahdButton14.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand22});
             // 
-            // ahdButton9
+            // ahdTextBox3
             // 
-            this.ahdButton9.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton9.BorderThickness = 2;
-            this.ahdButton9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton9.Location = new System.Drawing.Point(535, 134);
-            this.ahdButton9.Name = "ahdButton9";
-            this.ahdButton9.Role = null;
-            this.ahdButton9.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton9.TabIndex = 384;
-            this.ahdButton9.Text = "Mở chốt 2";
-            writeTagCommand4.AllowResetValue = true;
-            writeTagCommand4.ResetDelay = 500;
-            writeTagCommand4.ResetValue = "0";
-            writeTagCommand4.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
-            writeTagCommand4.WriteDelay = 10;
-            writeTagCommand4.WriteValue = "1";
-            this.ahdButton9.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand4});
+            this.ahdTextBox3.DropDownBackColor = System.Drawing.SystemColors.Control;
+            this.ahdTextBox3.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ahdTextBox3.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
+            this.ahdTextBox3.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox3.DropDownForeColor = System.Drawing.SystemColors.ControlText;
+            this.ahdTextBox3.HightLightStatusTime = 3;
+            this.ahdTextBox3.Location = new System.Drawing.Point(376, 76);
+            this.ahdTextBox3.Multiline = true;
+            this.ahdTextBox3.Name = "ahdTextBox3";
+            this.ahdTextBox3.Role = null;
+            this.ahdTextBox3.Size = new System.Drawing.Size(112, 35);
+            this.ahdTextBox3.StringFormat = null;
+            this.ahdTextBox3.TabIndex = 390;
+            this.ahdTextBox3.TagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door4";
+            this.ahdTextBox3.Text = "ahdTextBox3";
+            this.ahdTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ahdTextBox3.WriteDelay = 200;
+            this.ahdTextBox3.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            // 
+            // ahdButton15
+            // 
+            this.ahdButton15.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton15.BorderThickness = 2;
+            this.ahdButton15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton15.Location = new System.Drawing.Point(376, 243);
+            this.ahdButton15.Name = "ahdButton15";
+            this.ahdButton15.Role = null;
+            this.ahdButton15.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton15.TabIndex = 389;
+            this.ahdButton15.Text = "Dừng cửa 4";
+            writeTagCommand23.AllowResetValue = true;
+            writeTagCommand23.ResetDelay = 500;
+            writeTagCommand23.ResetValue = "0";
+            writeTagCommand23.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Door4";
+            writeTagCommand23.WriteDelay = 10;
+            writeTagCommand23.WriteValue = "1";
+            this.ahdButton15.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand23});
+            // 
+            // ahdButton16
+            // 
+            this.ahdButton16.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton16.BorderThickness = 2;
+            this.ahdButton16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton16.Location = new System.Drawing.Point(376, 188);
+            this.ahdButton16.Name = "ahdButton16";
+            this.ahdButton16.Role = null;
+            this.ahdButton16.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton16.TabIndex = 388;
+            this.ahdButton16.Text = "Đóng cửa 4";
+            writeTagCommand24.AllowResetValue = true;
+            writeTagCommand24.ResetDelay = 500;
+            writeTagCommand24.ResetValue = "0";
+            writeTagCommand24.TagPath = "Local Station/DauTieng/PLC3_4/Close_Door4";
+            writeTagCommand24.WriteDelay = 10;
+            writeTagCommand24.WriteValue = "1";
+            this.ahdButton16.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand24});
+            // 
+            // ahdButton17
+            // 
+            this.ahdButton17.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton17.BorderThickness = 2;
+            this.ahdButton17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton17.Location = new System.Drawing.Point(376, 133);
+            this.ahdButton17.Name = "ahdButton17";
+            this.ahdButton17.Role = null;
+            this.ahdButton17.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton17.TabIndex = 387;
+            this.ahdButton17.Text = "Mở cửa 4";
+            writeTagCommand25.AllowResetValue = true;
+            writeTagCommand25.ResetDelay = 500;
+            writeTagCommand25.ResetValue = "0";
+            writeTagCommand25.TagPath = "Local Station/DauTieng/PLC3_4/Open_Door4";
+            writeTagCommand25.WriteDelay = 10;
+            writeTagCommand25.WriteValue = "1";
+            this.ahdButton17.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand25});
             // 
             // ahdTextBox14
             // 
@@ -935,287 +1136,106 @@
             this.ahdButton40.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand28});
             // 
-            // ahdTextBox3
+            // button4
             // 
-            this.ahdTextBox3.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox3.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox3.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox3.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox3.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox3.HightLightStatusTime = 3;
-            this.ahdTextBox3.Location = new System.Drawing.Point(376, 76);
-            this.ahdTextBox3.Multiline = true;
-            this.ahdTextBox3.Name = "ahdTextBox3";
-            this.ahdTextBox3.Role = null;
-            this.ahdTextBox3.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox3.StringFormat = null;
-            this.ahdTextBox3.TabIndex = 390;
-            this.ahdTextBox3.TagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door4";
-            this.ahdTextBox3.Text = "ahdTextBox3";
-            this.ahdTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox3.WriteDelay = 200;
-            this.ahdTextBox3.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            this.button4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.Color.Navy;
+            this.button4.Location = new System.Drawing.Point(16, 365);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(205, 35);
+            this.button4.TabIndex = 369;
+            this.button4.Text = "Cài đặt độ mở cửa 4";
+            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button4.UseVisualStyleBackColor = true;
             // 
-            // ahdButton15
+            // button6
             // 
-            this.ahdButton15.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton15.BorderThickness = 2;
-            this.ahdButton15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton15.Location = new System.Drawing.Point(376, 243);
-            this.ahdButton15.Name = "ahdButton15";
-            this.ahdButton15.Role = null;
-            this.ahdButton15.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton15.TabIndex = 389;
-            this.ahdButton15.Text = "Dừng cửa 4";
-            writeTagCommand23.AllowResetValue = true;
-            writeTagCommand23.ResetDelay = 500;
-            writeTagCommand23.ResetValue = "0";
-            writeTagCommand23.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Door4";
-            writeTagCommand23.WriteDelay = 10;
-            writeTagCommand23.WriteValue = "1";
-            this.ahdButton15.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand23});
+            this.button6.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button6.ForeColor = System.Drawing.Color.Blue;
+            this.button6.Location = new System.Drawing.Point(518, 12);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(204, 35);
+            this.button6.TabIndex = 357;
+            this.button6.Text = "Qtr (m³/s)";
+            this.button6.UseVisualStyleBackColor = false;
             // 
-            // ahdButton16
+            // button7
             // 
-            this.ahdButton16.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton16.BorderThickness = 2;
-            this.ahdButton16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton16.Location = new System.Drawing.Point(376, 188);
-            this.ahdButton16.Name = "ahdButton16";
-            this.ahdButton16.Role = null;
-            this.ahdButton16.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton16.TabIndex = 388;
-            this.ahdButton16.Text = "Đóng cửa 4";
-            writeTagCommand24.AllowResetValue = true;
-            writeTagCommand24.ResetDelay = 500;
-            writeTagCommand24.ResetValue = "0";
-            writeTagCommand24.TagPath = "Local Station/DauTieng/PLC3_4/Close_Door4";
-            writeTagCommand24.WriteDelay = 10;
-            writeTagCommand24.WriteValue = "1";
-            this.ahdButton16.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand24});
+            this.button7.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button7.ForeColor = System.Drawing.Color.Blue;
+            this.button7.Location = new System.Drawing.Point(376, 12);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(110, 35);
+            this.button7.TabIndex = 355;
+            this.button7.Text = "CỬA 4";
+            this.button7.UseVisualStyleBackColor = false;
             // 
-            // ahdButton17
+            // button9
             // 
-            this.ahdButton17.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton17.BorderThickness = 2;
-            this.ahdButton17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton17.Location = new System.Drawing.Point(376, 133);
-            this.ahdButton17.Name = "ahdButton17";
-            this.ahdButton17.Role = null;
-            this.ahdButton17.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton17.TabIndex = 387;
-            this.ahdButton17.Text = "Mở cửa 4";
-            writeTagCommand25.AllowResetValue = true;
-            writeTagCommand25.ResetDelay = 500;
-            writeTagCommand25.ResetValue = "0";
-            writeTagCommand25.TagPath = "Local Station/DauTieng/PLC3_4/Open_Door4";
-            writeTagCommand25.WriteDelay = 10;
-            writeTagCommand25.WriteValue = "1";
-            this.ahdButton17.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand25});
+            this.button9.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button9.ForeColor = System.Drawing.Color.Blue;
+            this.button9.Location = new System.Drawing.Point(239, 12);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(110, 35);
+            this.button9.TabIndex = 354;
+            this.button9.Text = "CỬA 3";
+            this.button9.UseVisualStyleBackColor = false;
             // 
-            // ahdTextBox4
+            // button10
             // 
-            this.ahdTextBox4.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox4.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox4.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox4.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox4.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox4.HightLightStatusTime = 3;
-            this.ahdTextBox4.Location = new System.Drawing.Point(535, 76);
-            this.ahdTextBox4.Multiline = true;
-            this.ahdTextBox4.Name = "ahdTextBox4";
-            this.ahdTextBox4.Role = null;
-            this.ahdTextBox4.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox4.StringFormat = null;
-            this.ahdTextBox4.TabIndex = 394;
-            this.ahdTextBox4.TagPath = "Local Station/DauTieng/PLC3_4/Total_Fllow";
-            this.ahdTextBox4.Text = "ahdTextBox4";
-            this.ahdTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox4.WriteDelay = 200;
-            this.ahdTextBox4.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            this.button10.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.ForeColor = System.Drawing.Color.Navy;
+            this.button10.Location = new System.Drawing.Point(16, 76);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(205, 35);
+            this.button10.TabIndex = 5;
+            this.button10.Text = "Lưu lượng xả: Qi (m³/s)";
+            this.button10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button10.UseVisualStyleBackColor = true;
             // 
-            // ahdButton12
+            // button11
             // 
-            this.ahdButton12.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton12.BorderThickness = 2;
-            this.ahdButton12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton12.Location = new System.Drawing.Point(535, 243);
-            this.ahdButton12.Name = "ahdButton12";
-            this.ahdButton12.Role = null;
-            this.ahdButton12.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton12.TabIndex = 393;
-            this.ahdButton12.Text = "Dừng chốt 3";
-            writeTagCommand20.AllowResetValue = true;
-            writeTagCommand20.ResetDelay = 500;
-            writeTagCommand20.ResetValue = "0";
-            writeTagCommand20.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock3";
-            writeTagCommand20.WriteDelay = 10;
-            writeTagCommand20.WriteValue = "1";
-            this.ahdButton12.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand20});
+            this.button11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button11.ForeColor = System.Drawing.Color.Navy;
+            this.button11.Location = new System.Drawing.Point(16, 303);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(205, 35);
+            this.button11.TabIndex = 2;
+            this.button11.Text = "Cài đặt độ mở cửa 3";
+            this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button11.UseVisualStyleBackColor = true;
             // 
-            // ahdButton13
+            // groupBox3
             // 
-            this.ahdButton13.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton13.BorderThickness = 2;
-            this.ahdButton13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton13.Location = new System.Drawing.Point(535, 188);
-            this.ahdButton13.Name = "ahdButton13";
-            this.ahdButton13.Role = null;
-            this.ahdButton13.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton13.TabIndex = 392;
-            this.ahdButton13.Text = "Đóng chốt 3";
-            writeTagCommand21.AllowResetValue = true;
-            writeTagCommand21.ResetDelay = 500;
-            writeTagCommand21.ResetValue = "0";
-            writeTagCommand21.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock3";
-            writeTagCommand21.WriteDelay = 10;
-            writeTagCommand21.WriteValue = "1";
-            this.ahdButton13.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand21});
-            // 
-            // ahdButton14
-            // 
-            this.ahdButton14.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton14.BorderThickness = 2;
-            this.ahdButton14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton14.Location = new System.Drawing.Point(535, 133);
-            this.ahdButton14.Name = "ahdButton14";
-            this.ahdButton14.Role = null;
-            this.ahdButton14.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton14.TabIndex = 391;
-            this.ahdButton14.Text = "Mở chốt 3";
-            writeTagCommand22.AllowResetValue = true;
-            writeTagCommand22.ResetDelay = 500;
-            writeTagCommand22.ResetValue = "0";
-            writeTagCommand22.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock3";
-            writeTagCommand22.WriteDelay = 10;
-            writeTagCommand22.WriteValue = "1";
-            this.ahdButton14.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand22});
-            // 
-            // ahdButton11
-            // 
-            this.ahdButton11.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton11.BorderThickness = 2;
-            this.ahdButton11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton11.Location = new System.Drawing.Point(535, 303);
-            this.ahdButton11.Name = "ahdButton11";
-            this.ahdButton11.Role = null;
-            this.ahdButton11.Size = new System.Drawing.Size(134, 52);
-            this.ahdButton11.TabIndex = 387;
-            this.ahdButton11.Text = "Dừng khẩn 3 - 4";
-            writeTagCommand18.AllowResetValue = true;
-            writeTagCommand18.ResetDelay = 500;
-            writeTagCommand18.ResetValue = "0";
-            writeTagCommand18.TagPath = "Local Station/DauTieng/PLC3_4/Stop3_4";
-            writeTagCommand18.WriteDelay = 10;
-            writeTagCommand18.WriteValue = "1";
-            this.ahdButton11.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand18});
-            // 
-            // ahdButton18
-            // 
-            this.ahdButton18.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton18.BorderThickness = 2;
-            this.ahdButton18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton18.Location = new System.Drawing.Point(503, 402);
-            this.ahdButton18.Name = "ahdButton18";
-            this.ahdButton18.Role = null;
-            this.ahdButton18.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton18.TabIndex = 385;
-            this.ahdButton18.Text = "Trạng thái tay OFF";
-            writeTagCommand17.AllowResetValue = false;
-            writeTagCommand17.ResetDelay = 500;
-            writeTagCommand17.ResetValue = "0";
-            writeTagCommand17.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
-            writeTagCommand17.WriteDelay = 10;
-            writeTagCommand17.WriteValue = "0";
-            this.ahdButton18.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand17});
-            // 
-            // ahdButton19
-            // 
-            this.ahdButton19.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton19.BorderThickness = 2;
-            this.ahdButton19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton19.Location = new System.Drawing.Point(503, 360);
-            this.ahdButton19.Name = "ahdButton19";
-            this.ahdButton19.Role = null;
-            this.ahdButton19.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton19.TabIndex = 384;
-            this.ahdButton19.Text = "Trạng thái tay ON";
-            writeTagCommand19.AllowResetValue = false;
-            writeTagCommand19.ResetDelay = 500;
-            writeTagCommand19.ResetValue = "1";
-            writeTagCommand19.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
-            writeTagCommand19.WriteDelay = 10;
-            writeTagCommand19.WriteValue = "1";
-            this.ahdButton19.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand19});
-            // 
-            // ahdButton20
-            // 
-            this.ahdButton20.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton20.BorderThickness = 2;
-            this.ahdButton20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton20.Location = new System.Drawing.Point(676, 243);
-            this.ahdButton20.Name = "ahdButton20";
-            this.ahdButton20.Role = null;
-            this.ahdButton20.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton20.TabIndex = 397;
-            this.ahdButton20.Text = "Dừng chốt 4";
-            writeTagCommand14.AllowResetValue = true;
-            writeTagCommand14.ResetDelay = 500;
-            writeTagCommand14.ResetValue = "0";
-            writeTagCommand14.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock4";
-            writeTagCommand14.WriteDelay = 10;
-            writeTagCommand14.WriteValue = "1";
-            this.ahdButton20.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand14});
-            // 
-            // ahdButton21
-            // 
-            this.ahdButton21.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton21.BorderThickness = 2;
-            this.ahdButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton21.Location = new System.Drawing.Point(676, 188);
-            this.ahdButton21.Name = "ahdButton21";
-            this.ahdButton21.Role = null;
-            this.ahdButton21.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton21.TabIndex = 396;
-            this.ahdButton21.Text = "Đóng chốt 4";
-            writeTagCommand15.AllowResetValue = true;
-            writeTagCommand15.ResetDelay = 500;
-            writeTagCommand15.ResetValue = "0";
-            writeTagCommand15.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock4";
-            writeTagCommand15.WriteDelay = 10;
-            writeTagCommand15.WriteValue = "1";
-            this.ahdButton21.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand15});
-            // 
-            // ahdButton22
-            // 
-            this.ahdButton22.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton22.BorderThickness = 2;
-            this.ahdButton22.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton22.Location = new System.Drawing.Point(676, 133);
-            this.ahdButton22.Name = "ahdButton22";
-            this.ahdButton22.Role = null;
-            this.ahdButton22.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton22.TabIndex = 395;
-            this.ahdButton22.Text = "Mở chốt 4";
-            writeTagCommand16.AllowResetValue = true;
-            writeTagCommand16.ResetDelay = 500;
-            writeTagCommand16.ResetValue = "0";
-            writeTagCommand16.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock4";
-            writeTagCommand16.WriteDelay = 10;
-            writeTagCommand16.WriteValue = "1";
-            this.ahdButton22.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand16});
+            this.groupBox3.Controls.Add(this.ahdButton23);
+            this.groupBox3.Controls.Add(this.button15);
+            this.groupBox3.Controls.Add(this.ahdButton25);
+            this.groupBox3.Controls.Add(this.button17);
+            this.groupBox3.Controls.Add(this.ahdButton26);
+            this.groupBox3.Controls.Add(this.button16);
+            this.groupBox3.Controls.Add(this.ahdButton27);
+            this.groupBox3.Controls.Add(this.button14);
+            this.groupBox3.Controls.Add(this.ahdTextBox5);
+            this.groupBox3.Controls.Add(this.button13);
+            this.groupBox3.Controls.Add(this.ahdTextBox6);
+            this.groupBox3.Controls.Add(this.ahdButton35);
+            this.groupBox3.Controls.Add(this.ahdTextBox17);
+            this.groupBox3.Controls.Add(this.ahdButton34);
+            this.groupBox3.Controls.Add(this.ahdButton33);
+            this.groupBox3.Controls.Add(this.ahdButton32);
+            this.groupBox3.Controls.Add(this.button12);
+            this.groupBox3.Controls.Add(this.ahdButton28);
+            this.groupBox3.Controls.Add(this.ahdTextBox23);
+            this.groupBox3.Controls.Add(this.ahdButton29);
+            this.groupBox3.Controls.Add(this.ahdTextBox22);
+            this.groupBox3.Controls.Add(this.ahdButton30);
+            this.groupBox3.Controls.Add(this.ahdButton31);
+            this.groupBox3.Location = new System.Drawing.Point(12, 482);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(805, 442);
+            this.groupBox3.TabIndex = 373;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Trạm 5 - 6";
             // 
             // ahdButton23
             // 
@@ -1237,6 +1257,17 @@
             this.ahdButton23.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand29});
             // 
+            // button15
+            // 
+            this.button15.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button15.ForeColor = System.Drawing.Color.Blue;
+            this.button15.Location = new System.Drawing.Point(241, 16);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(110, 35);
+            this.button15.TabIndex = 389;
+            this.button15.Text = "CỬA 5";
+            this.button15.UseVisualStyleBackColor = false;
+            // 
             // ahdButton25
             // 
             this.ahdButton25.BorderColor = System.Drawing.SystemColors.Control;
@@ -1256,6 +1287,18 @@
             writeTagCommand30.WriteValue = "1";
             this.ahdButton25.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand30});
+            // 
+            // button17
+            // 
+            this.button17.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button17.ForeColor = System.Drawing.Color.Navy;
+            this.button17.Location = new System.Drawing.Point(18, 307);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(205, 35);
+            this.button17.TabIndex = 387;
+            this.button17.Text = "Cài đặt độ mở cửa 1";
+            this.button17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button17.UseVisualStyleBackColor = true;
             // 
             // ahdButton26
             // 
@@ -1277,6 +1320,18 @@
             this.ahdButton26.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand31});
             // 
+            // button16
+            // 
+            this.button16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button16.ForeColor = System.Drawing.Color.Navy;
+            this.button16.Location = new System.Drawing.Point(18, 80);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(205, 35);
+            this.button16.TabIndex = 388;
+            this.button16.Text = "Lưu lượng xả: Qi (m³/s)";
+            this.button16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button16.UseVisualStyleBackColor = true;
+            // 
             // ahdButton27
             // 
             this.ahdButton27.BorderColor = System.Drawing.SystemColors.Control;
@@ -1296,6 +1351,17 @@
             writeTagCommand32.WriteValue = "0";
             this.ahdButton27.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand32});
+            // 
+            // button14
+            // 
+            this.button14.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button14.ForeColor = System.Drawing.Color.Blue;
+            this.button14.Location = new System.Drawing.Point(378, 16);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(110, 35);
+            this.button14.TabIndex = 390;
+            this.button14.Text = "CỬA 6";
+            this.button14.UseVisualStyleBackColor = false;
             // 
             // ahdTextBox5
             // 
@@ -1318,6 +1384,17 @@
             this.ahdTextBox5.WriteDelay = 200;
             this.ahdTextBox5.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
             // 
+            // button13
+            // 
+            this.button13.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button13.ForeColor = System.Drawing.Color.Blue;
+            this.button13.Location = new System.Drawing.Point(520, 16);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(204, 35);
+            this.button13.TabIndex = 391;
+            this.button13.Text = "Qtr (m³/s)";
+            this.button13.UseVisualStyleBackColor = false;
+            // 
             // ahdTextBox6
             // 
             this.ahdTextBox6.DropDownBackColor = System.Drawing.SystemColors.Control;
@@ -1338,6 +1415,26 @@
             this.ahdTextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox6.WriteDelay = 200;
             this.ahdTextBox6.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            // 
+            // ahdButton35
+            // 
+            this.ahdButton35.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton35.BorderThickness = 2;
+            this.ahdButton35.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton35.Location = new System.Drawing.Point(241, 137);
+            this.ahdButton35.Name = "ahdButton35";
+            this.ahdButton35.Role = null;
+            this.ahdButton35.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton35.TabIndex = 392;
+            this.ahdButton35.Text = "Mở cửa 5";
+            writeTagCommand33.AllowResetValue = true;
+            writeTagCommand33.ResetDelay = 500;
+            writeTagCommand33.ResetValue = "0";
+            writeTagCommand33.TagPath = "Local Station/DauTieng/PLC5_6/Open_Door5";
+            writeTagCommand33.WriteDelay = 10;
+            writeTagCommand33.WriteValue = "1";
+            this.ahdButton35.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand33});
             // 
             // ahdTextBox17
             // 
@@ -1360,6 +1457,78 @@
             this.ahdTextBox17.WriteDelay = 200;
             this.ahdTextBox17.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
             // 
+            // ahdButton34
+            // 
+            this.ahdButton34.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton34.BorderThickness = 2;
+            this.ahdButton34.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton34.Location = new System.Drawing.Point(241, 192);
+            this.ahdButton34.Name = "ahdButton34";
+            this.ahdButton34.Role = null;
+            this.ahdButton34.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton34.TabIndex = 393;
+            this.ahdButton34.Text = "Đóng cửa 5";
+            writeTagCommand34.AllowResetValue = true;
+            writeTagCommand34.ResetDelay = 500;
+            writeTagCommand34.ResetValue = "0";
+            writeTagCommand34.TagPath = "Local Station/DauTieng/PLC5_6/Close_Door5";
+            writeTagCommand34.WriteDelay = 10;
+            writeTagCommand34.WriteValue = "1";
+            this.ahdButton34.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand34});
+            // 
+            // ahdButton33
+            // 
+            this.ahdButton33.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton33.BorderThickness = 2;
+            this.ahdButton33.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton33.Location = new System.Drawing.Point(241, 247);
+            this.ahdButton33.Name = "ahdButton33";
+            this.ahdButton33.Role = null;
+            this.ahdButton33.Size = new System.Drawing.Size(112, 36);
+            this.ahdButton33.TabIndex = 394;
+            this.ahdButton33.Text = "Dừng cửa 5";
+            writeTagCommand35.AllowResetValue = true;
+            writeTagCommand35.ResetDelay = 500;
+            writeTagCommand35.ResetValue = "0";
+            writeTagCommand35.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Door5";
+            writeTagCommand35.WriteDelay = 10;
+            writeTagCommand35.WriteValue = "1";
+            this.ahdButton33.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand35});
+            // 
+            // ahdButton32
+            // 
+            this.ahdButton32.BorderColor = System.Drawing.SystemColors.Control;
+            this.ahdButton32.BorderThickness = 2;
+            this.ahdButton32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ahdButton32.Location = new System.Drawing.Point(537, 306);
+            this.ahdButton32.Name = "ahdButton32";
+            this.ahdButton32.Role = null;
+            this.ahdButton32.Size = new System.Drawing.Size(134, 52);
+            this.ahdButton32.TabIndex = 395;
+            this.ahdButton32.Text = "Dừng khẩn 1 - 2 ";
+            writeTagCommand36.AllowResetValue = true;
+            writeTagCommand36.ResetDelay = 500;
+            writeTagCommand36.ResetValue = "0";
+            writeTagCommand36.TagPath = "Local Station/DauTieng/PLC5_6/Stop5_6";
+            writeTagCommand36.WriteDelay = 10;
+            writeTagCommand36.WriteValue = "1";
+            this.ahdButton32.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand36});
+            // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button12.ForeColor = System.Drawing.Color.Navy;
+            this.button12.Location = new System.Drawing.Point(18, 369);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(205, 35);
+            this.button12.TabIndex = 396;
+            this.button12.Text = "Cài đặt độ mở cửa 2";
+            this.button12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button12.UseVisualStyleBackColor = true;
+            // 
             // ahdButton28
             // 
             this.ahdButton28.BorderColor = System.Drawing.SystemColors.Control;
@@ -1380,6 +1549,27 @@
             this.ahdButton28.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand37});
             // 
+            // ahdTextBox23
+            // 
+            this.ahdTextBox23.DropDownBackColor = System.Drawing.SystemColors.Control;
+            this.ahdTextBox23.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ahdTextBox23.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
+            this.ahdTextBox23.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox23.DropDownForeColor = System.Drawing.SystemColors.ControlText;
+            this.ahdTextBox23.HightLightStatusTime = 3;
+            this.ahdTextBox23.Location = new System.Drawing.Point(241, 307);
+            this.ahdTextBox23.Multiline = true;
+            this.ahdTextBox23.Name = "ahdTextBox23";
+            this.ahdTextBox23.Role = null;
+            this.ahdTextBox23.Size = new System.Drawing.Size(112, 35);
+            this.ahdTextBox23.StringFormat = null;
+            this.ahdTextBox23.TabIndex = 397;
+            this.ahdTextBox23.TagPath = "Local Station/DauTieng/PLC5_6/Door5_Aperture";
+            this.ahdTextBox23.Text = "ahdTextBox23";
+            this.ahdTextBox23.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ahdTextBox23.WriteDelay = 200;
+            this.ahdTextBox23.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            // 
             // ahdButton29
             // 
             this.ahdButton29.BorderColor = System.Drawing.SystemColors.Control;
@@ -1399,6 +1589,27 @@
             writeTagCommand38.WriteValue = "1";
             this.ahdButton29.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand38});
+            // 
+            // ahdTextBox22
+            // 
+            this.ahdTextBox22.DropDownBackColor = System.Drawing.SystemColors.Control;
+            this.ahdTextBox22.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ahdTextBox22.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
+            this.ahdTextBox22.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox22.DropDownForeColor = System.Drawing.SystemColors.ControlText;
+            this.ahdTextBox22.HightLightStatusTime = 3;
+            this.ahdTextBox22.Location = new System.Drawing.Point(241, 369);
+            this.ahdTextBox22.Multiline = true;
+            this.ahdTextBox22.Name = "ahdTextBox22";
+            this.ahdTextBox22.Role = null;
+            this.ahdTextBox22.Size = new System.Drawing.Size(112, 35);
+            this.ahdTextBox22.StringFormat = null;
+            this.ahdTextBox22.TabIndex = 398;
+            this.ahdTextBox22.TagPath = "Local Station/DauTieng/PLC5_6/Door6_Aperture";
+            this.ahdTextBox22.Text = "ahdTextBox22";
+            this.ahdTextBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ahdTextBox22.WriteDelay = 200;
+            this.ahdTextBox22.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
             // 
             // ahdButton30
             // 
@@ -1440,217 +1651,6 @@
             this.ahdButton31.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand40});
             // 
-            // ahdTextBox22
-            // 
-            this.ahdTextBox22.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox22.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox22.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox22.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox22.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox22.HightLightStatusTime = 3;
-            this.ahdTextBox22.Location = new System.Drawing.Point(241, 369);
-            this.ahdTextBox22.Multiline = true;
-            this.ahdTextBox22.Name = "ahdTextBox22";
-            this.ahdTextBox22.Role = null;
-            this.ahdTextBox22.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox22.StringFormat = null;
-            this.ahdTextBox22.TabIndex = 398;
-            this.ahdTextBox22.TagPath = "Local Station/DauTieng/PLC5_6/Door6_Aperture";
-            this.ahdTextBox22.Text = "ahdTextBox22";
-            this.ahdTextBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox22.WriteDelay = 200;
-            this.ahdTextBox22.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
-            // 
-            // ahdTextBox23
-            // 
-            this.ahdTextBox23.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox23.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox23.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox23.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox23.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox23.HightLightStatusTime = 3;
-            this.ahdTextBox23.Location = new System.Drawing.Point(241, 307);
-            this.ahdTextBox23.Multiline = true;
-            this.ahdTextBox23.Name = "ahdTextBox23";
-            this.ahdTextBox23.Role = null;
-            this.ahdTextBox23.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox23.StringFormat = null;
-            this.ahdTextBox23.TabIndex = 397;
-            this.ahdTextBox23.TagPath = "Local Station/DauTieng/PLC5_6/Door5_Aperture";
-            this.ahdTextBox23.Text = "ahdTextBox23";
-            this.ahdTextBox23.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox23.WriteDelay = 200;
-            this.ahdTextBox23.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
-            // 
-            // button12
-            // 
-            this.button12.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.ForeColor = System.Drawing.Color.Navy;
-            this.button12.Location = new System.Drawing.Point(18, 369);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(205, 35);
-            this.button12.TabIndex = 396;
-            this.button12.Text = "Cài đặt độ mở cửa 2";
-            this.button12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button12.UseVisualStyleBackColor = true;
-            // 
-            // ahdButton32
-            // 
-            this.ahdButton32.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton32.BorderThickness = 2;
-            this.ahdButton32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton32.Location = new System.Drawing.Point(537, 306);
-            this.ahdButton32.Name = "ahdButton32";
-            this.ahdButton32.Role = null;
-            this.ahdButton32.Size = new System.Drawing.Size(134, 52);
-            this.ahdButton32.TabIndex = 395;
-            this.ahdButton32.Text = "Dừng khẩn 1 - 2 ";
-            writeTagCommand36.AllowResetValue = true;
-            writeTagCommand36.ResetDelay = 500;
-            writeTagCommand36.ResetValue = "0";
-            writeTagCommand36.TagPath = "Local Station/DauTieng/PLC5_6/Stop5_6";
-            writeTagCommand36.WriteDelay = 10;
-            writeTagCommand36.WriteValue = "1";
-            this.ahdButton32.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand36});
-            // 
-            // ahdButton33
-            // 
-            this.ahdButton33.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton33.BorderThickness = 2;
-            this.ahdButton33.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton33.Location = new System.Drawing.Point(241, 247);
-            this.ahdButton33.Name = "ahdButton33";
-            this.ahdButton33.Role = null;
-            this.ahdButton33.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton33.TabIndex = 394;
-            this.ahdButton33.Text = "Dừng cửa 5";
-            writeTagCommand35.AllowResetValue = true;
-            writeTagCommand35.ResetDelay = 500;
-            writeTagCommand35.ResetValue = "0";
-            writeTagCommand35.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Door5";
-            writeTagCommand35.WriteDelay = 10;
-            writeTagCommand35.WriteValue = "1";
-            this.ahdButton33.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand35});
-            // 
-            // ahdButton34
-            // 
-            this.ahdButton34.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton34.BorderThickness = 2;
-            this.ahdButton34.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton34.Location = new System.Drawing.Point(241, 192);
-            this.ahdButton34.Name = "ahdButton34";
-            this.ahdButton34.Role = null;
-            this.ahdButton34.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton34.TabIndex = 393;
-            this.ahdButton34.Text = "Đóng cửa 5";
-            writeTagCommand34.AllowResetValue = true;
-            writeTagCommand34.ResetDelay = 500;
-            writeTagCommand34.ResetValue = "0";
-            writeTagCommand34.TagPath = "Local Station/DauTieng/PLC5_6/Close_Door5";
-            writeTagCommand34.WriteDelay = 10;
-            writeTagCommand34.WriteValue = "1";
-            this.ahdButton34.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand34});
-            // 
-            // ahdButton35
-            // 
-            this.ahdButton35.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton35.BorderThickness = 2;
-            this.ahdButton35.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton35.Location = new System.Drawing.Point(241, 137);
-            this.ahdButton35.Name = "ahdButton35";
-            this.ahdButton35.Role = null;
-            this.ahdButton35.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton35.TabIndex = 392;
-            this.ahdButton35.Text = "Mở cửa 5";
-            writeTagCommand33.AllowResetValue = true;
-            writeTagCommand33.ResetDelay = 500;
-            writeTagCommand33.ResetValue = "0";
-            writeTagCommand33.TagPath = "Local Station/DauTieng/PLC5_6/Open_Door5";
-            writeTagCommand33.WriteDelay = 10;
-            writeTagCommand33.WriteValue = "1";
-            this.ahdButton35.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand33});
-            // 
-            // button13
-            // 
-            this.button13.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button13.ForeColor = System.Drawing.Color.Blue;
-            this.button13.Location = new System.Drawing.Point(520, 16);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(204, 35);
-            this.button13.TabIndex = 391;
-            this.button13.Text = "Qtr (m³/s)";
-            this.button13.UseVisualStyleBackColor = false;
-            // 
-            // button14
-            // 
-            this.button14.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button14.ForeColor = System.Drawing.Color.Blue;
-            this.button14.Location = new System.Drawing.Point(378, 16);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(110, 35);
-            this.button14.TabIndex = 390;
-            this.button14.Text = "CỬA 6";
-            this.button14.UseVisualStyleBackColor = false;
-            // 
-            // button15
-            // 
-            this.button15.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button15.ForeColor = System.Drawing.Color.Blue;
-            this.button15.Location = new System.Drawing.Point(241, 16);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(110, 35);
-            this.button15.TabIndex = 389;
-            this.button15.Text = "CỬA 5";
-            this.button15.UseVisualStyleBackColor = false;
-            // 
-            // button16
-            // 
-            this.button16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button16.ForeColor = System.Drawing.Color.Navy;
-            this.button16.Location = new System.Drawing.Point(18, 80);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(205, 35);
-            this.button16.TabIndex = 388;
-            this.button16.Text = "Lưu lượng xả: Qi (m³/s)";
-            this.button16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button16.UseVisualStyleBackColor = true;
-            // 
-            // button17
-            // 
-            this.button17.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button17.ForeColor = System.Drawing.Color.Navy;
-            this.button17.Location = new System.Drawing.Point(18, 307);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(205, 35);
-            this.button17.TabIndex = 387;
-            this.button17.Text = "Cài đặt độ mở cửa 1";
-            this.button17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button17.UseVisualStyleBackColor = true;
-            // 
-            // ahdButton36
-            // 
-            this.ahdButton36.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton36.BorderThickness = 2;
-            this.ahdButton36.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton36.Location = new System.Drawing.Point(673, 188);
-            this.ahdButton36.Name = "ahdButton36";
-            this.ahdButton36.Role = null;
-            this.ahdButton36.Size = new System.Drawing.Size(112, 36);
-            this.ahdButton36.TabIndex = 387;
-            this.ahdButton36.Text = "Lock Status";
-            writeTagCommand1.AllowResetValue = true;
-            writeTagCommand1.ResetDelay = 500;
-            writeTagCommand1.ResetValue = "0";
-            writeTagCommand1.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
-            writeTagCommand1.WriteDelay = 10;
-            writeTagCommand1.WriteValue = "1";
-            this.ahdButton36.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand1});
-            // 
             // FrmDieukhienscada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -1669,6 +1669,11 @@
             this.Text = "Điều khiển Scada";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton36)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton37)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox11)).EndInit();
@@ -1685,50 +1690,45 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton37)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton21)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton22)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton38)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton39)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton40)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton21)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton22)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton23)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton26)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton27)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton35)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton34)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton33)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdButton32)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton28)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox23)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton29)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton31)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox23)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton32)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton33)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton34)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton35)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton36)).EndInit();
             this.ResumeLayout(false);
 
         }

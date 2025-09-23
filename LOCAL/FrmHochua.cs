@@ -191,7 +191,9 @@ namespace RegistrationForm1
 
                     // Truyền đủ 4 tham số theo thứ tự
                     dt.Rows.Add("Đầu mối HDT", latest.API_D_DM_HoDT, 0, latest.CreateAt);
+                    dt.Rows.Add("Đầu mối HDT Total ", latest.API_D_DM_HoDT_Total, 0, latest.CreateAt);
                     dt.Rows.Add("Minh hòa", latest.API_D_MinhHoa, 0, latest.CreateAt);
+                    dt.Rows.Add("Minh hoà Total", latest.API_D_MinhHoa_Total, 0, latest.CreateAt);
                     dt.Rows.Add("Minh tâm", latest.API_D_MinhTam, 0, latest.CreateAt);
                     dt.Rows.Add("Lộc thiện", latest.API_D_LocThien, 0, latest.CreateAt);
                     dt.Rows.Add("Lộc ninh", latest.API_D_LocNinh, 0, latest.CreateAt);

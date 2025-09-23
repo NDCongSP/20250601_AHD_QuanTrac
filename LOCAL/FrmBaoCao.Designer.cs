@@ -40,7 +40,7 @@
             this.bntDataVanHanh = new System.Windows.Forms.Button();
             this.bntDataMucNuoc = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.cbTimeRange = new System.Windows.Forms.ComboBox();
+            this.cbFrequency = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -49,6 +49,9 @@
             this.bntExportExcelOrPdf = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.bntExportBieuDo = new System.Windows.Forms.Button();
+            this.cbStation = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.bntData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -59,7 +62,7 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(708, 47);
+            this.label1.Location = new System.Drawing.Point(578, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 43);
             this.label1.TabIndex = 22;
@@ -70,10 +73,10 @@
             this.dtTo.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtTo.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtTo.Location = new System.Drawing.Point(367, 108);
+            this.dtTo.Location = new System.Drawing.Point(295, 73);
             this.dtTo.Name = "dtTo";
             this.dtTo.ShowUpDown = true;
-            this.dtTo.Size = new System.Drawing.Size(310, 44);
+            this.dtTo.Size = new System.Drawing.Size(249, 44);
             this.dtTo.TabIndex = 16;
             this.dtTo.Value = new System.DateTime(2025, 7, 25, 23, 59, 0, 0);
             // 
@@ -82,17 +85,17 @@
             this.dtFrom.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtFrom.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtFrom.Location = new System.Drawing.Point(12, 108);
+            this.dtFrom.Location = new System.Drawing.Point(12, 73);
             this.dtFrom.Name = "dtFrom";
             this.dtFrom.ShowUpDown = true;
-            this.dtFrom.Size = new System.Drawing.Size(310, 44);
+            this.dtFrom.Size = new System.Drawing.Size(249, 44);
             this.dtFrom.TabIndex = 15;
             this.dtFrom.Value = new System.DateTime(2025, 7, 25, 0, 0, 0, 0);
             // 
             // lblToDate
             // 
             this.lblToDate.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblToDate.Location = new System.Drawing.Point(393, 47);
+            this.lblToDate.Location = new System.Drawing.Point(295, 12);
             this.lblToDate.Name = "lblToDate";
             this.lblToDate.Size = new System.Drawing.Size(228, 42);
             this.lblToDate.TabIndex = 14;
@@ -101,7 +104,7 @@
             // lblFromDate
             // 
             this.lblFromDate.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFromDate.Location = new System.Drawing.Point(66, 47);
+            this.lblFromDate.Location = new System.Drawing.Point(12, 12);
             this.lblFromDate.Name = "lblFromDate";
             this.lblFromDate.Size = new System.Drawing.Size(204, 42);
             this.lblFromDate.TabIndex = 13;
@@ -110,18 +113,18 @@
             // bntDataVanHanh
             // 
             this.bntDataVanHanh.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntDataVanHanh.Location = new System.Drawing.Point(921, 108);
+            this.bntDataVanHanh.Location = new System.Drawing.Point(1146, 106);
             this.bntDataVanHanh.Name = "bntDataVanHanh";
             this.bntDataVanHanh.Size = new System.Drawing.Size(180, 45);
             this.bntDataVanHanh.TabIndex = 25;
             this.bntDataVanHanh.Text = "Dữ liệu vận hành";
             this.bntDataVanHanh.UseVisualStyleBackColor = true;
-      //      this.bntDataVanHanh.Click += new System.EventHandler(this.bntDataVanHanh_Click);
+            this.bntDataVanHanh.Click += new System.EventHandler(this.bntDataVanHanh_Click);
             // 
             // bntDataMucNuoc
             // 
             this.bntDataMucNuoc.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntDataMucNuoc.Location = new System.Drawing.Point(921, 46);
+            this.bntDataMucNuoc.Location = new System.Drawing.Point(1146, 44);
             this.bntDataMucNuoc.Name = "bntDataMucNuoc";
             this.bntDataMucNuoc.Size = new System.Drawing.Size(180, 45);
             this.bntDataMucNuoc.TabIndex = 24;
@@ -139,14 +142,14 @@
             this.dataGridView1.Size = new System.Drawing.Size(1300, 581);
             this.dataGridView1.TabIndex = 28;
             // 
-            // cbTimeRange
+            // cbFrequency
             // 
-            this.cbTimeRange.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbTimeRange.FormattingEnabled = true;
-            this.cbTimeRange.Location = new System.Drawing.Point(696, 108);
-            this.cbTimeRange.Name = "cbTimeRange";
-            this.cbTimeRange.Size = new System.Drawing.Size(164, 44);
-            this.cbTimeRange.TabIndex = 29;
+            this.cbFrequency.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbFrequency.FormattingEnabled = true;
+            this.cbFrequency.Location = new System.Drawing.Point(578, 73);
+            this.cbFrequency.Name = "cbFrequency";
+            this.cbFrequency.Size = new System.Drawing.Size(249, 44);
+            this.cbFrequency.TabIndex = 29;
             // 
             // tabControl1
             // 
@@ -160,7 +163,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.tabPage1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -171,7 +174,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.MistyRose;
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage2.Controls.Add(this.chart1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -182,7 +185,7 @@
             // 
             // chart1
             // 
-            this.chart1.BackColor = System.Drawing.Color.LightSalmon;
+            this.chart1.BackColor = System.Drawing.SystemColors.Control;
             this.chart1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
@@ -202,15 +205,15 @@
             // 
             this.cbxExportType.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxExportType.FormattingEnabled = true;
-            this.cbxExportType.Location = new System.Drawing.Point(1372, 108);
+            this.cbxExportType.Location = new System.Drawing.Point(1535, 76);
             this.cbxExportType.Name = "cbxExportType";
-            this.cbxExportType.Size = new System.Drawing.Size(121, 44);
+            this.cbxExportType.Size = new System.Drawing.Size(159, 44);
             this.cbxExportType.TabIndex = 32;
             // 
             // bntExportExcelOrPdf
             // 
             this.bntExportExcelOrPdf.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntExportExcelOrPdf.Location = new System.Drawing.Point(1150, 46);
+            this.bntExportExcelOrPdf.Location = new System.Drawing.Point(1368, 44);
             this.bntExportExcelOrPdf.Name = "bntExportExcelOrPdf";
             this.bntExportExcelOrPdf.Size = new System.Drawing.Size(140, 45);
             this.bntExportExcelOrPdf.TabIndex = 33;
@@ -221,16 +224,16 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1332, 47);
+            this.label2.Location = new System.Drawing.Point(1535, 12);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(201, 42);
+            this.label2.Size = new System.Drawing.Size(175, 42);
             this.label2.TabIndex = 35;
             this.label2.Text = "Kiểu dữ liệu";
             // 
             // bntExportBieuDo
             // 
             this.bntExportBieuDo.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntExportBieuDo.Location = new System.Drawing.Point(1150, 108);
+            this.bntExportBieuDo.Location = new System.Drawing.Point(1368, 106);
             this.bntExportBieuDo.Name = "bntExportBieuDo";
             this.bntExportBieuDo.Size = new System.Drawing.Size(140, 45);
             this.bntExportBieuDo.TabIndex = 36;
@@ -238,18 +241,50 @@
             this.bntExportBieuDo.UseVisualStyleBackColor = true;
             this.bntExportBieuDo.Click += new System.EventHandler(this.bntExportBieuDo_Click);
             // 
+            // cbStation
+            // 
+            this.cbStation.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbStation.FormattingEnabled = true;
+            this.cbStation.Location = new System.Drawing.Point(861, 73);
+            this.cbStation.Name = "cbStation";
+            this.cbStation.Size = new System.Drawing.Size(249, 44);
+            this.cbStation.TabIndex = 37;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(861, 12);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(164, 43);
+            this.label3.TabIndex = 38;
+            this.label3.Text = "Chọn trạm";
+            // 
+            // bntData
+            // 
+            this.bntData.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntData.Location = new System.Drawing.Point(821, 142);
+            this.bntData.Name = "bntData";
+            this.bntData.Size = new System.Drawing.Size(180, 45);
+            this.bntData.TabIndex = 39;
+            this.bntData.Text = "Data tong";
+            this.bntData.UseVisualStyleBackColor = true;
+            this.bntData.Click += new System.EventHandler(this.bntData_Click);
+            // 
             // FrmBaoCao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(1710, 848);
+            this.Controls.Add(this.bntData);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cbStation);
             this.Controls.Add(this.bntExportBieuDo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bntExportExcelOrPdf);
             this.Controls.Add(this.cbxExportType);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.cbTimeRange);
+            this.Controls.Add(this.cbFrequency);
             this.Controls.Add(this.bntDataVanHanh);
             this.Controls.Add(this.bntDataMucNuoc);
             this.Controls.Add(this.label1);
@@ -278,7 +313,7 @@
         private System.Windows.Forms.Button bntDataVanHanh;
         private System.Windows.Forms.Button bntDataMucNuoc;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ComboBox cbTimeRange;
+        private System.Windows.Forms.ComboBox cbFrequency;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -287,5 +322,8 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button bntExportBieuDo;
+        private System.Windows.Forms.ComboBox cbStation;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button bntData;
     }
 }

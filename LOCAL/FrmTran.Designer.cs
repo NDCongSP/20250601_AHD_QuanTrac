@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTran));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ahdBar7 = new Ahd.Winforms.Controls.AhdBar();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.Pic_Al_Door1_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label103 = new System.Windows.Forms.Label();
@@ -567,9 +568,9 @@
             this.ahdLabel84 = new Ahd.Winforms.Controls.AhdLabel();
             this.label112 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.ahdBar7 = new Ahd.Winforms.Controls.AhdBar();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar7)).BeginInit();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door1_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door1)).BeginInit();
@@ -908,7 +909,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar7)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -975,6 +975,22 @@
             this.tabPage1.Size = new System.Drawing.Size(1718, 829);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "          CỬA 1          ";
+            // 
+            // ahdBar7
+            // 
+            this.ahdBar7.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ahdBar7.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
+            this.ahdBar7.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
+            this.ahdBar7.FillColor = System.Drawing.SystemColors.Highlight;
+            this.ahdBar7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdBar7.Location = new System.Drawing.Point(400, 49);
+            this.ahdBar7.MaxValue = "510";
+            this.ahdBar7.MinValue = "0";
+            this.ahdBar7.Name = "ahdBar7";
+            this.ahdBar7.Size = new System.Drawing.Size(333, 215);
+            this.ahdBar7.TabIndex = 428;
+            this.ahdBar7.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Aperture";
+            this.ahdBar7.ValueStringFormat = "0.00";
             // 
             // groupBox8
             // 
@@ -1299,7 +1315,7 @@
             this.ahdLabel23.Size = new System.Drawing.Size(71, 28);
             this.ahdLabel23.StringFormat = null;
             this.ahdLabel23.TabIndex = 212;
-            this.ahdLabel23.TagPath = "Local Station/DauTieng/S71500/Group1/Fllow_Door1";
+            this.ahdLabel23.TagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
             this.ahdLabel23.Text = "0.0";
             this.ahdLabel23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -8717,22 +8733,6 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(1745, 39);
             this.tableLayoutPanel12.TabIndex = 235;
             // 
-            // ahdBar7
-            // 
-            this.ahdBar7.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdBar7.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar7.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
-            this.ahdBar7.FillColor = System.Drawing.SystemColors.Highlight;
-            this.ahdBar7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdBar7.Location = new System.Drawing.Point(400, 49);
-            this.ahdBar7.MaxValue = "510";
-            this.ahdBar7.MinValue = "0";
-            this.ahdBar7.Name = "ahdBar7";
-            this.ahdBar7.Size = new System.Drawing.Size(333, 215);
-            this.ahdBar7.TabIndex = 428;
-            this.ahdBar7.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Aperture";
-            this.ahdBar7.ValueStringFormat = "0.00";
-            // 
             // FrmTran
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -8745,6 +8745,7 @@
             this.Text = "Tràn";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar7)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door1_Stop)).EndInit();
@@ -9111,7 +9112,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar7)).EndInit();
             this.ResumeLayout(false);
 
         }
