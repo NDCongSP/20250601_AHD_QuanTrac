@@ -54,6 +54,7 @@ namespace Domain.Entities
         public double? Pressure_Oil_Door2 { get; set; } = 0;
         public double? Fllow_Door1 { get; set; } = 0;
         public double? Fllow_Door2 { get; set; } = 0;
+        public double? Total_Fllow { get; set; } = 0;
         public double? HT_Cylinder1_1_Offset { get; set; } = 0;
         public double? HT_Cylinder1_2_Offset { get; set; } = 0;
         public double? HT_Cylinder2_1_Offset { get; set; } = 0;
