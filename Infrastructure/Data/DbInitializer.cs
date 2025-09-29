@@ -16,6 +16,18 @@ namespace Infrastructure.Data
     {
         public static async Task InitializeAsync(ApplicationDbContext context)
         {
+            #region Initial DB if not exist DB or any change entity
+            // Cách 1: Migration-based (khuyên dùng)
+            if (context.Database.GetPendingMigrations().Any())
+            {
+                context.Database.Migrate();
+            }
+
+            // Cách 2: Quick dev setup (chỉ bật khi cần)
+            // context.Database.EnsureCreated();
+
+            #endregion
+
             #region Sedding data if null
 
             // Check if there are any products already present
