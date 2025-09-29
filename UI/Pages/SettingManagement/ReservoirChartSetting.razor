@@ -1,0 +1,136 @@
+@page "/reservoir-chart-setting"
+@using Radzen
+@using Radzen.Blazor
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Domain
+@using Application.Services
+@inject IStringLocalizer<CommonResources> _localizer
+@inject NotificationService _notificationService
+@attribute [Authorize(Policy = "Admin")]
+
+<RadzenCard>
+    <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
+            <RadzenText Style="font-weight: 500; font-size: 1.25rem;">@_localizer["lbl_ReservoirChartSettings"]</RadzenText>
+            <RadzenButton Click="@HandleSaveClick" Variant="Variant.Flat" 
+                        Text="@_localizer["btn_Save"]" Icon="save" 
+                        ButtonStyle="ButtonStyle.Success" Disabled="@_isSaving" />
+        </RadzenStack>
+
+        @if (_isLoading)
+        {
+            <div class="text-center p-4">
+                <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 10px;" />
+                <p>@_localizer["msg_LoadingSettings"]</p>
+            </div>
+        }
+        else
+        {
+            <RadzenDataGrid @ref="_grid" Data="@_settings" TItem="FT05_ChartHoChua" Style="margin-top: 20px;">
+                <Columns>
+                    <RadzenDataGridColumn TItem="FT05_ChartHoChua" Property="X_Value" Title="X_Value" Width="150px" Readonly="true">
+                        <Template Context="setting">
+                            @setting.X_Value
+                        </Template>
+                    </RadzenDataGridColumn>
+                    
+                    @foreach (var column in _columns)
+                    {
+                        var currentColumn = column;
+                        <RadzenDataGridColumn TItem="FT05_ChartHoChua" Property="@column" Title="@column" Width="120px">
+                            <Template Context="setting">
+                                <RadzenNumeric TValue="double?" 
+                                            Value="@GetPropertyValue(setting, currentColumn)" 
+                                            ValueChanged="@((double? value) => OnCellValueChanged(setting, currentColumn, value))"
+                                            Style="width: 100%" 
+                                            FormatString="F2"
+                                            Change=@(args => { })
+                                            @onkeydown:preventDefault />
+                            </Template>
+                        </RadzenDataGridColumn>
+                    }
+                </Columns>
+            </RadzenDataGrid>
+        }
+    </RadzenStack>
+</RadzenCard>
+
+@code {
+    private List<FT05_ChartHoChua> _settings = new();
+    private List<string> _columns = new() { "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12" };
+    private bool _isLoading = true;
+    private bool _isSaving = false;
+    private RadzenDataGrid<FT05_ChartHoChua> _grid;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _settings = await _ft05Service.GetAllAsync();
+            _isLoading = false;
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to load reservoir chart settings.");
+            Console.Error.WriteLine(ex);
+        }
+    }
+
+    private double? GetPropertyValue(FT05_ChartHoChua setting, string propertyName)
+    {
+        var property = typeof(FT05_ChartHoChua).GetProperty(propertyName);
+        return property?.GetValue(setting) as double?;
+    }
+
+    private async Task OnCellValueChanged(FT05_ChartHoChua setting, string propertyName, double? value)
+    {
+        try
+        {
+            var property = typeof(FT05_ChartHoChua).GetProperty(propertyName);
+            if (property != null)
+            {
+                property.SetValue(setting, value);
+                
+                // Update the setting in the database
+                await _ft05Service.UpdateAsync(setting);
+                
+                // Refresh the grid to show updated values
+                await _grid.Reload();
+                
+                _notificationService.Notify(NotificationSeverity.Success, "Success", "Setting updated successfully.");
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to update setting.");
+            Console.Error.WriteLine(ex);
+        }
+    }
+
+    private async Task HandleSaveClick()
+    {
+        try
+        {
+            _isSaving = true;
+            await InvokeAsync(StateHasChanged);
+            
+            // Save all changes
+            foreach (var setting in _settings)
+            {
+                await _reservoirChartSettingService.UpdateAsync(setting);
+            }
+            
+            _notificationService.Notify(NotificationSeverity.Success, "Success", "All settings saved successfully.");
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to save settings.");
+            Console.Error.WriteLine(ex);
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+}
