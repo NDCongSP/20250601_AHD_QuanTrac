@@ -33,14 +33,14 @@ public class RepositoryFT05Services(ApplicationDbContext dbContext, IHttpContext
     {
         try
         {
-            var items = await dbContext.FT05_ChartHoChua
+            var items = await dbContext.FT05s_ChartHoChua
                 .OrderBy(x => x.X_Value)
                 .ToListAsync();
             return Result<List<FT05_ChartHoChua>>.Success(items);
         }
         catch (Exception ex)
         {
-            return Result<List<FT05_ChartHoChua>>.Failure($"Failed to retrieve FT05_ChartHoChua: {ex.Message}");
+            return Result<List<FT05_ChartHoChua>>.Fail($"Failed to retrieve FT05_ChartHoChua: {ex.Message}");
         }
     }
 
@@ -58,10 +58,10 @@ public class RepositoryFT05Services(ApplicationDbContext dbContext, IHttpContext
     {
         try
         {
-            var existingItem = await dbContext.FT05_ChartHoChua.FindAsync(model.Id);
+            var existingItem = await dbContext.FT05s_ChartHoChua.FindAsync(model.Id);
             if (existingItem == null)
             {
-                return Result<FT05_ChartHoChua>.Failure("Item not found");
+                return Result<FT05_ChartHoChua>.Fail("Item not found");
             }
 
             // Update all properties except Id and X_Value (since X_Value is read-only)
@@ -76,7 +76,7 @@ public class RepositoryFT05Services(ApplicationDbContext dbContext, IHttpContext
         }
         catch (Exception ex)
         {
-            return Result<FT05_ChartHoChua>.Failure($"Failed to update FT05_ChartHoChua: {ex.Message}");
+            return Result<FT05_ChartHoChua>.Fail($"Failed to update FT05_ChartHoChua: {ex.Message}");
         }
     }
 }
