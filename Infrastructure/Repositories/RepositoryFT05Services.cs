@@ -5,28 +5,51 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories;
 
 public class RepositoryFT05Services(ApplicationDbContext dbContext, IHttpContextAccessor contextAccessor) : IRepository<Guid, FT05_ChartHoChua>, IFT05
 {
-    Task<Result<List<FT05_ChartHoChua>>> IRepository<Guid, FT05_ChartHoChua>.AddRangeAsync(List<FT05_ChartHoChua> model)
+    public async Task<Result<List<FT05_ChartHoChua>>> AddRangeAsync(List<FT05_ChartHoChua> model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await dbContext.FT05s_ChartHoChua.AddRangeAsync(model);
+            await dbContext.SaveChangesAsync();
+            return Result<List<FT05_ChartHoChua>>.Success(model);
+        }
+        catch (Exception ex)
+        {
+            return Result<List<FT05_ChartHoChua>>.Fail($"Failed to add FT05_ChartHoChua: {ex.Message}");
+        }
     }
 
-    Task<Result<FT05_ChartHoChua>> IRepository<Guid, FT05_ChartHoChua>.DeleteAsync(FT05_ChartHoChua model)
+    public async Task<Result<FT05_ChartHoChua>> DeleteAsync(FT05_ChartHoChua model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            dbContext.FT05s_ChartHoChua.Remove(model);
+            await dbContext.SaveChangesAsync();
+            return Result<FT05_ChartHoChua>.Success(model);
+        }
+        catch (Exception ex)
+        {
+            return Result<FT05_ChartHoChua>.Fail($"Failed to delete FT05_ChartHoChua: {ex.Message}");
+        }
     }
 
-    Task<Result<FT05_ChartHoChua>> IRepository<Guid, FT05_ChartHoChua>.DeleteRangeAsync(List<FT05_ChartHoChua> model)
+    public async Task<Result<FT05_ChartHoChua>> DeleteRangeAsync(List<FT05_ChartHoChua> model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            dbContext.FT05s_ChartHoChua.RemoveRange(model);
+            await dbContext.SaveChangesAsync();
+            return Result<FT05_ChartHoChua>.Success("");
+        }
+        catch (Exception ex)
+        {
+            return Result<FT05_ChartHoChua>.Fail($"Failed to delete FT05_ChartHoChua: {ex.Message}");
+        }
     }
 
     public async Task<Result<List<FT05_ChartHoChua>>> GetAllAsync()
@@ -34,7 +57,7 @@ public class RepositoryFT05Services(ApplicationDbContext dbContext, IHttpContext
         try
         {
             var items = await dbContext.FT05s_ChartHoChua
-                .OrderBy(x => x.X_Value)
+                .OrderBy(x => x.Index)
                 .ToListAsync();
             return Result<List<FT05_ChartHoChua>>.Success(items);
         }
@@ -44,14 +67,35 @@ public class RepositoryFT05Services(ApplicationDbContext dbContext, IHttpContext
         }
     }
 
-    Task<Result<FT05_ChartHoChua>> IRepository<Guid, FT05_ChartHoChua>.GetByIdAsync(Guid id)
+    public async Task<Result<FT05_ChartHoChua>> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var item = await dbContext.FT05s_ChartHoChua.FindAsync(id);
+            if (item == null)
+            {
+                return Result<FT05_ChartHoChua>.Fail("Item not found");
+            }
+            return Result<FT05_ChartHoChua>.Success(item);
+        }
+        catch (Exception ex)
+        {
+            return Result<FT05_ChartHoChua>.Fail($"Failed to retrieve FT05_ChartHoChua: {ex.Message}");
+        }
     }
 
-    Task<Result<FT05_ChartHoChua>> IRepository<Guid, FT05_ChartHoChua>.InsertAsync(FT05_ChartHoChua model)
+    public async Task<Result<FT05_ChartHoChua>> InsertAsync(FT05_ChartHoChua model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await dbContext.FT05s_ChartHoChua.AddAsync(model);
+            await dbContext.SaveChangesAsync();
+            return Result<FT05_ChartHoChua>.Success(model);
+        }
+        catch (Exception ex)
+        {
+            return Result<FT05_ChartHoChua>.Fail($"Failed to insert FT05_ChartHoChua: {ex.Message}");
+        }
     }
 
     public async Task<Result<FT05_ChartHoChua>> UpdateAsync(FT05_ChartHoChua model)

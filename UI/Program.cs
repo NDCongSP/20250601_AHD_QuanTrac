@@ -98,7 +98,8 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IPermissions>()
     .UseWithRestEaseClient<IRoleToPermissions>()
     .UseWithRestEaseClient<IFT01>()
-    .UseWithRestEaseClient<IFT02>();
+    .UseWithRestEaseClient<IFT02>()
+    .UseWithRestEaseClient<IFT05>();
 var app = builder.Build();
 await GlobalVariable.InitializeConfigAsync(app.Services);
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));

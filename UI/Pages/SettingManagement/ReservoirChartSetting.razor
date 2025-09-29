@@ -62,12 +62,13 @@
     private bool _isLoading = true;
     private bool _isSaving = false;
     private RadzenDataGrid<FT05_ChartHoChua> _grid;
-    
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            _settings = await _ft05Service.GetAllAsync();
+            var result = await _ft05Service.GetAllAsync();
+            _settings = result.Data;
             _isLoading = false;
         }
         catch (Exception ex)
@@ -118,7 +119,7 @@
             // Save all changes
             foreach (var setting in _settings)
             {
-                await _reservoirChartSettingService.UpdateAsync(setting);
+                await _ft05Service.UpdateAsync(setting);
             }
             
             _notificationService.Notify(NotificationSeverity.Success, "Success", "All settings saved successfully.");
