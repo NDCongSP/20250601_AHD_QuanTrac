@@ -63,6 +63,14 @@ namespace Domain.Entities
         [DisplayName("HCCN")] 
         public double? L_HCCN { get; set; }
 
+
+        /// <summary>
+        /// cấp nước.
+        /// MNC.
+        /// </summary>
+        [DisplayName("MNC")]
+        public double? L_MNC { get; set; }
+
         /// <summary>
         /// Vùng A: Vùng hạn chế cấp nước.
         /// </summary>
