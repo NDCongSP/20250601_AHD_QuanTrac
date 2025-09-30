@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -20,6 +15,7 @@ namespace Domain.Entities
         /// <summary>
         /// Kiểu thời gian (dd/MM).
         /// </summary>
+        [DisplayName("X_Value")]
         public string? X_Value { get; set; }
 
         /// <summary>
