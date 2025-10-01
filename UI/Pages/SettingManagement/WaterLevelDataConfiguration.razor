@@ -5,138 +5,293 @@
 @using Microsoft.Extensions.Localization
 @using Domain
 @using Application.Services
-@inject IStringLocalizer<CommonResources> _localizer
-@inject NotificationService _notificationService
+@using System.Linq
+@using System.Reflection
 @attribute [Authorize(Policy = "Admin")]
+
+@inject IStringLocalizer<CommonResources> _localizer
+@inject DialogService _dialogService
+@inject NotificationService _notificationService
+@inject IFT07 _ft07Service
 
 <RadzenCard>
     <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
-        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
-            <RadzenText Style="font-weight: 500; font-size: 1.25rem;">@_localizer["lbl_ReservoirChartSettings"]</RadzenText>
-            <RadzenButton Click="@HandleSaveClick" Variant="Variant.Flat" 
-                        Text="@_localizer["btn_Save"]" Icon="save" 
-                        ButtonStyle="ButtonStyle.Success" Disabled="@_isSaving" />
-        </RadzenStack>
+        <RadzenText Style="font-weight: 500; font-size: 1.25rem;">@_localizer["WaterLevelConfig.Title"]</RadzenText>
 
         @if (_isLoading)
         {
             <div class="text-center p-4">
-                <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 10px;" />
-                <p>@_localizer["msg_LoadingSettings"]</p>
+                <p>@_localizer["Common.Loading"]</p>
             </div>
         }
         else
         {
-            <RadzenDataGrid @ref="_grid" Data="@_settings" TItem="FT05_ChartHoChua" Style="margin-top: 20px;">
-                <Columns>
-                    <RadzenDataGridColumn TItem="FT05_ChartHoChua" Property="X_Value" Title="X_Value" Width="150px">
-                        <Template Context="setting">
-                            @setting.X_Value
-                        </Template>
-                    </RadzenDataGridColumn>
-                    
-                    @foreach (var column in _columns)
-                    {
-                        var currentColumn = column;
-                        <RadzenDataGridColumn TItem="FT05_ChartHoChua" Property="@column" Title="@column" Width="120px">
+            <div class="table-responsive">
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Right" Gap="1rem">
+                    <RadzenButton Text="@_localizer["btn_AddNew"]" Variant="Variant.Flat" ButtonStyle="ButtonStyle.Success" Click="@(() => AddRow())" />
+                </RadzenStack>
+                <RadzenDataGrid TItem="FT07_ChartMucNuoc" @ref="_grid"
+                                Data="@(_settings.OrderBy(x => x.Index).ToList())"
+                                Style="width:100%"
+                                AllowPaging="true"
+                                PageSize="10"
+                                ShowPagingSummary="true"
+                                PagingSummaryFormat="@_localizer["PagingSummaryFormat"]">
+                    <Columns>
+                        <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
+                                              Title="@_localizer["WaterLevelConfig.X_Prefix"]"
+                                              Width="120px">
                             <Template Context="setting">
-                                <RadzenNumeric TValue="double?" 
-                                            Value="@GetPropertyValue(setting, currentColumn)" 
-                                            ValueChanged="@((double? value) => OnCellValueChanged(setting, currentColumn, value))"
-                                            Style="width: 100%" 
-                                            FormatString="F2"
-                                            Change=@(args => { })
-                                            @onkeydown:preventDefault />
+                                <RadzenTextBox Value="@GetPropertyValueString(setting, "X_Prefix")"
+                                               ValueChanged="@(value => OnCellValueChanged(setting, "X_Prefix", value))"
+                                               Style="width: 100%"/>
                             </Template>
                         </RadzenDataGridColumn>
-                    }
-                </Columns>
-            </RadzenDataGrid>
+                        <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
+                                              Title="@_localizer["WaterLevelConfig.X_Value"]"
+                                              Width="80px">
+                            <Template Context="setting">
+                                <RadzenNumeric TValue="double?"
+                                               Value="@GetPropertyValue(setting, "X_Value")"
+                                               ValueChanged="@(value => OnCellValueChanged(setting, "X_Value", value))"
+                                               Style="width: 100%"
+                                               @onkeydown:preventDefault />
+                            </Template>
+                        </RadzenDataGridColumn>
+                        @foreach (var column in _columns)
+                        {
+                            <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
+                                                  Title="@column"
+                                                  Width="120px">
+                                <Template Context="setting">
+                                    <RadzenNumeric TValue="double?"
+                                                   Value="@GetPropertyValue(setting, column)"
+                                                   ValueChanged="@(value => OnCellValueChanged(setting, column, value))"
+                                                   Style="width: 100%"
+                                                   @onkeydown:preventDefault />
+                                </Template>
+                            </RadzenDataGridColumn>
+                        }
+                        <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
+                                              Title="@_localizer["WaterLevelConfig.Z_Thuc"]"
+                                              Width="180px">
+                            <Template Context="setting">
+                                <RadzenDropDown TValue="string"
+                                                AllowClear=true
+                                                Data="@_dropdownDataZThuc"
+                                                Value="@GetPropertyValueString(setting, "Z_Thuc")"
+                                                ValueChanged="@(value => OnCellValueChanged(setting, "Z_Thuc", value))"
+                                                Style="width: 100%"
+                                                @onkeydown:preventDefault />
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
+                                              Title="@_localizer["Common.Actions"]"
+                                              Width="120px">
+                            <Template Context="setting">
+                                <RadzenButton Text="@_localizer["btn_Delete"]" Variant="Variant.Outlined" ButtonStyle="ButtonStyle.Danger" Click="@(() => DeleteRow(setting))" />
+                            </Template>
+                        </RadzenDataGridColumn>
+
+                    </Columns>
+                </RadzenDataGrid>
+            </div>
         }
     </RadzenStack>
 </RadzenCard>
 
 @code {
-    private List<FT05_ChartHoChua> _settings = new();
+    private List<FT07_ChartMucNuoc> _settings = new();
     private List<string> _columns = new();
     private bool _isLoading = true;
-    private bool _isSaving = false;
-    private RadzenDataGrid<FT05_ChartHoChua> _grid;
+    private List<string> _dropdownDataZThuc = new();
+    private RadzenDataGrid<FT07_ChartMucNuoc>? _grid;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var result = await _ft05Service.GetAllAsync();
+            var result = await _ft07Service.GetAllAsync();
             _settings = result.Data;
-            //column is name of property name  _setting, except Index and X_Value
-            _columns = typeof(FT05_ChartHoChua).GetProperties()
-                .Where(p => p.Name != "Index" && p.Name != "X_Value" && p.Name != "Id")
+
+            _columns = typeof(FT07_ChartMucNuoc).GetProperties()
+                .Where(p => p.Name != "X_Prefix" && p.Name != "Z_Thuc" && p.Name != "X_Value" && p.Name != "Index" && p.Name != "Id")
+                .Select(p => p.Name)
+                .ToList();
+            _dropdownDataZThuc = typeof(CalculatorValueModel).GetProperties()
+                .Where(p => p.Name.StartsWith("API_") && !p.Name.StartsWith("API_D"))
                 .Select(p => p.Name)
                 .ToList();
             _isLoading = false;
         }
         catch (Exception ex)
         {
-            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to load reservoir chart settings.");
+            _notificationService.Notify(NotificationSeverity.Error, "Lỗi", "Không thể tải dữ liệu.");
             Console.Error.WriteLine(ex);
         }
     }
 
-    private double? GetPropertyValue(FT05_ChartHoChua setting, string propertyName)
+    private double? GetPropertyValue(FT07_ChartMucNuoc setting, string propertyName)
     {
-        var property = typeof(FT05_ChartHoChua).GetProperty(propertyName);
-        return property?.GetValue(setting) as double?;
+        if (setting == null || string.IsNullOrEmpty(propertyName))
+            return null;
+
+        var property = typeof(FT07_ChartMucNuoc).GetProperty(propertyName);
+        if (property == null)
+            return null;
+
+        try
+        {
+            var value = property.GetValue(setting);
+            if (value == null)
+                return null;
+
+            if (value is double d)
+                return d;
+
+            if (double.TryParse(value.ToString(), out double result))
+                return result;
+
+            return null;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
-    private async Task OnCellValueChanged(FT05_ChartHoChua setting, string propertyName, double? value)
+    private string? GetPropertyValueString(FT07_ChartMucNuoc setting, string propertyName)
+    {
+        if (setting == null || string.IsNullOrEmpty(propertyName))
+            return null;
+
+        var property = typeof(FT07_ChartMucNuoc).GetProperty(propertyName);
+        if (property == null)
+            return null;
+
+        try
+        {
+            var value = property.GetValue(setting);
+            if (value == null)
+                return null;
+
+            if (value is string d)
+                return d;
+
+            return null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private async Task OnCellValueChanged(FT07_ChartMucNuoc setting, string propertyName, object? value)
     {
         try
         {
-            var property = typeof(FT05_ChartHoChua).GetProperty(propertyName);
+            if (propertyName == "Z_Thuc")
+            {
+                var stringValue = value?.ToString();
+                if (!string.IsNullOrEmpty(stringValue))
+                {
+                    foreach (var record in _settings)
+                    {
+                        if (record != setting && 
+                            !string.IsNullOrEmpty(record.Z_Thuc) && 
+                            record.Z_Thuc.Equals(stringValue, StringComparison.OrdinalIgnoreCase))
+                        {
+                            setting.Z_Thuc = "";
+                            if (_grid != null)
+                            {
+                                await _grid.UpdateRow(setting);
+                            }
+                            _notificationService.Notify(NotificationSeverity.Error, _localizer["Common.Error"], _localizer["WaterLevelConfig.DuplicateValue"]);
+                            return;
+                        }
+                    }
+                }
+            }
+            var property = typeof(FT07_ChartMucNuoc).GetProperty(propertyName);
             if (property != null)
             {
-                property.SetValue(setting, value);
-                
-                // Update the setting in the database
-                await _ft05Service.UpdateAsync(setting);
-                
-                // Refresh the grid to show updated values
-                await _grid.Reload();
-                
-                _notificationService.Notify(NotificationSeverity.Success, "Success", "Setting updated successfully.");
+                if (!new[] { "X_Prefix", "X_Value", "Z_Thuc" }.Contains(propertyName))
+                {
+                    foreach (var record in _settings)
+                    {
+                        property.SetValue(record, value);
+                        await _ft07Service.UpdateAsync(record);
+                    }
+                }
+                else
+                {
+                    property.SetValue(setting, value);
+                    await _ft07Service.UpdateAsync(setting);
+                }
+                _notificationService.Notify(NotificationSeverity.Success, _localizer["Common.Success"], _localizer["WaterLevelConfig.UpdateSuccess"]);
+                await InvokeAsync(StateHasChanged);
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to update setting.");
-            Console.Error.WriteLine(ex);
+            _notificationService.Notify(NotificationSeverity.Error, _localizer["Common.Error"], _localizer["Common.Error"]);
         }
     }
 
-    private async Task HandleSaveClick()
+    private async Task AddRow()
     {
         try
         {
-            _isSaving = true;
-            await InvokeAsync(StateHasChanged);
-            
-            // Save all changes
-            foreach (var setting in _settings)
+            var newSetting = new FT07_ChartMucNuoc();
+            newSetting.Id = Guid.NewGuid();
+            newSetting.X_Prefix = "Mới";
+            newSetting.X_Value = _settings.Max(s => s.X_Value) + 1;
+            newSetting.Index = _settings.Max(s => s.Index) + 1;
+            foreach (var property in typeof(FT07_ChartMucNuoc).GetProperties().Where(p => !new[] { "X_Prefix", "X_Value", "Z_Thuc", "Index", "Id" }.Contains(p.Name)))
             {
-                await _ft05Service.UpdateAsync(setting);
+                property.SetValue(newSetting, property.GetValue(_settings.FirstOrDefault()));
             }
-            
-            _notificationService.Notify(NotificationSeverity.Success, "Success", "All settings saved successfully.");
+            var addNew = await _ft07Service.InsertAsync(newSetting);
+            if (addNew.Succeeded)
+            {
+                _settings.Add(newSetting);
+                if (_grid != null)
+                {
+                    await _grid.InsertRow(newSetting);
+                }
+                _notificationService.Notify(NotificationSeverity.Success, _localizer["Common.Success"], _localizer["WaterLevelConfig.AddSuccess"]);
+            }
+            else
+            {
+                _notificationService.Notify(NotificationSeverity.Error, _localizer["Common.Error"], _localizer["WaterLevelConfig.AddError"]);
+            }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to save settings.");
-            Console.Error.WriteLine(ex);
+            _notificationService.Notify(NotificationSeverity.Error, _localizer["Common.Error"], _localizer["WaterLevelConfig.AddError"]);
         }
-        finally
+    }
+    private async Task DeleteRow(FT07_ChartMucNuoc setting)
+    {
+        try
         {
-            _isSaving = false;
+            if (await _dialogService.Confirm(_localizer["Common.Confirm"], _localizer["Common.ConfirmDelete"]) == true)
+            {
+                var deleteResult = await _ft07Service.DeleteAsync(setting);
+                if (deleteResult.Succeeded)
+                {
+                    _settings.Remove(setting);
+                    _notificationService.Notify(NotificationSeverity.Success, _localizer["Common.Success"], _localizer["WaterLevelConfig.DeleteSuccess"]);
+                }
+                else
+                {
+                    _notificationService.Notify(NotificationSeverity.Error, _localizer["Common.Error"], _localizer["WaterLevelConfig.DeleteError"]);
+                }
+            }
+        }
+        catch (Exception)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, _localizer["Common.Error"], _localizer["WaterLevelConfig.DeleteError"]);
         }
     }
 }

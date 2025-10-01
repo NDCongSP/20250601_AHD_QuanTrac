@@ -5,17 +5,51 @@
 @using Microsoft.Extensions.Localization
 @using Domain
 @using Application.Services
-@inject IStringLocalizer<CommonResources> _localizer
-@inject NotificationService _notificationService
 @attribute [Authorize(Policy = "Admin")]
+
+<style>
+    .interpolation-group-0 {
+        background-color: #f8f9fa;
+        color: black !important;
+    }
+    .interpolation-group-1 {
+        background-color: #e9ecef;
+        color: black !important;
+    }
+    .edit-cell {
+        background-color: #ffa500 !important; /* Orange color when clicked */
+        color: black !important;
+    }
+    .rz-textbox[disabled] {
+        opacity: 1;
+        color: black !important;
+        background-color: inherit;
+        cursor: default;
+        text-align: center;
+    }
+    .increment-helper {
+        font-size: 0.8em;
+        color: #666;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 2px 0;
+        border-radius: 3px;
+        text-align: center;
+        margin-top: 2px;
+    }
+
+    .rz-grid-table thead th .rz-column-title{
+        justify-content:center;
+    }
+
+    .rz-datatable-data td .rz-cell-data, .rz-grid-table td .rz-cell-data{
+        text-align: center;
+    }
+</style>
 
 <RadzenCard>
     <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
-            <RadzenText Style="font-weight: 500; font-size: 1.25rem;">@_localizer["lbl_InterpolationTableDataConfiguration"]</RadzenText>
-            <RadzenButton Click="@HandleSaveClick" Variant="Variant.Flat" 
-                        Text="@_localizer["btn_Save"]" Icon="save" 
-                        ButtonStyle="ButtonStyle.Success" Disabled="@_isSaving" />
+            <RadzenText Style="font-weight: 500; font-size: 1.25rem;">@_localizer["lbl_InterpolationTableConfig"]</RadzenText>
         </RadzenStack>
 
         @if (_isLoading)
@@ -27,26 +61,46 @@
         }
         else
         {
-            <RadzenDataGrid @ref="_grid" Data="@_settings" TItem="FT05_ChartHoChua" Style="margin-top: 20px;">
+            <RadzenDataGrid @ref="_grid" Data="@_settings" TItem="FT06_InterpolationTable" Style="margin-top: 20px;max-height: calc(100vh - 260px);">
                 <Columns>
-                    <RadzenDataGridColumn TItem="FT05_ChartHoChua" Property="X_Value" Title="X_Value" Width="150px">
+                    <RadzenDataGridColumn TItem="FT06_InterpolationTable" Property="Z" Title="Z" Width="50px">
                         <Template Context="setting">
-                            @setting.X_Value
+                            @setting.Z
                         </Template>
                     </RadzenDataGridColumn>
                     
                     @foreach (var column in _columns)
                     {
                         var currentColumn = column;
-                        <RadzenDataGridColumn TItem="FT05_ChartHoChua" Property="@column" Title="@column" Width="120px">
+                        var colNumber = int.Parse(currentColumn.Replace("Col", ""));
+                        var isEditable = colNumber % 10 == 0;
+                        var groupNumber = (colNumber / 10) % 2;
+                        <RadzenDataGridColumn TItem="FT06_InterpolationTable" Property="@column" Title="@colNumber.ToString().PadLeft(2,'0')" Width="120px">
                             <Template Context="setting">
-                                <RadzenNumeric TValue="double?" 
-                                            Value="@GetPropertyValue(setting, currentColumn)" 
-                                            ValueChanged="@((double? value) => OnCellValueChanged(setting, currentColumn, value))"
-                                            Style="width: 100%" 
-                                            FormatString="F2"
-                                            Change=@(args => { })
-                                            @onkeydown:preventDefault />
+                                <div class="interpolation-group-@(groupNumber) @(isEditable ? "edit-cell" : "")">
+                                    @{
+                                        var value = GetPropertyValue(setting, currentColumn);
+                                        var displayValue = value == Math.Floor(value) ? value.ToString("N0") : value.ToString("N2");
+                                    }
+                                    <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                        <RadzenTextBox Value="@displayValue" 
+                                                    @onclick="() => OnCellClick(setting, currentColumn)"
+                                                    Style="width: 100%; background: transparent; text-align: center;" 
+                                                    ReadOnly="true"/>
+                                    </div>
+                                    @if (isEditable)
+                                    {
+                                        var nextCol = int.Parse(currentColumn.Replace("Col", "")) + 1;
+                                        var nextColName = $"Col{nextCol:D2}";
+                                        var nextValue = GetPropertyValue(setting, nextColName);
+                                        var currentValue = GetPropertyValue(setting, currentColumn);
+                                        var increment = nextValue - currentValue;
+
+                                      <div class="increment-helper">
+                                          @_localizer["lbl_Increment"]: @(increment == Math.Floor(increment) ? increment.ToString("N0") : increment.ToString("N2"))
+                                      </div>
+                                    }
+                                </div>
                             </Template>
                         </RadzenDataGridColumn>
                     }
@@ -57,21 +111,20 @@
 </RadzenCard>
 
 @code {
-    private List<FT05_ChartHoChua> _settings = new();
+    private List<FT06_InterpolationTable> _settings = new();
     private List<string> _columns = new();
     private bool _isLoading = true;
     private bool _isSaving = false;
-    private RadzenDataGrid<FT05_ChartHoChua> _grid;
+    private RadzenDataGrid<FT06_InterpolationTable> _grid;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var result = await _ft05Service.GetAllAsync();
+            var result = await _ft06Service.GetAllAsync();
             _settings = result.Data;
-            //column is name of property name  _setting, except Index and X_Value
-            _columns = typeof(FT05_ChartHoChua).GetProperties()
-                .Where(p => p.Name != "Index" && p.Name != "X_Value" && p.Name != "Id")
+            _columns = typeof(FT06_InterpolationTable).GetProperties()
+                .Where(p => p.Name != "Z" && p.Name != "Id")
                 .Select(p => p.Name)
                 .ToList();
             _isLoading = false;
@@ -83,60 +136,72 @@
         }
     }
 
-    private double? GetPropertyValue(FT05_ChartHoChua setting, string propertyName)
+    private double GetPropertyValue(FT06_InterpolationTable setting, string propertyName)
     {
-        var property = typeof(FT05_ChartHoChua).GetProperty(propertyName);
-        return property?.GetValue(setting) as double?;
+        var property = typeof(FT06_InterpolationTable).GetProperty(propertyName);
+        return property?.GetValue(setting) as double? ?? 0;
     }
 
-    private async Task OnCellValueChanged(FT05_ChartHoChua setting, string propertyName, double? value)
+    private async Task OnCellClick(FT06_InterpolationTable setting, string propertyName)
     {
         try
         {
-            var property = typeof(FT05_ChartHoChua).GetProperty(propertyName);
-            if (property != null)
+            // Only allow editing the first column in each 10-column group (Col00, Col10, Col20, etc.)
+            if (int.TryParse(propertyName.Replace("Col", ""), out int colNumber) && colNumber % 10 == 0)
             {
-                property.SetValue(setting, value);
-                
-                // Update the setting in the database
-                await _ft05Service.UpdateAsync(setting);
-                
-                // Refresh the grid to show updated values
-                await _grid.Reload();
-                
-                _notificationService.Notify(NotificationSeverity.Success, "Success", "Setting updated successfully.");
+                var currentValue = GetPropertyValue(setting, propertyName);
+                double increment = 0;
+    
+                // Calculate initial increment based on next editable column's value
+                if (colNumber < 90) // Make sure we don't go out of bounds
+                {
+                    var nextCol = $"Col{colNumber + 1:D2}";
+                    var nextProperty = typeof(FT06_InterpolationTable).GetProperty(nextCol);
+                    if (nextProperty != null)
+                    {
+                        var nextValue = nextProperty.GetValue(setting) as double? ?? 0;
+                        increment = Math.Round(nextValue - currentValue, 2);
+                    }
+                }
+    
+                var result = await _dialogService.OpenAsync<InterpolationValueDialog>(
+                    _localizer["lbl_InterpolationValue"],
+                    new Dictionary<string, object>() { 
+                        { "CurrentValue", currentValue },
+                        { "Increment", increment }
+                    },
+                    new DialogOptions() { Width = "500px" });
+
+    
+                if (result != null)
+                {
+                    var values = (double[])result;
+                    var baseValue = values[0];
+                    var newIncrement = values[1];
+                    
+                    // Calculate values for the 10-column group
+                    for (int i = 0; i < 10; i++)
+                    {
+                        var currentCol = $"Col{colNumber + i:D2}";
+                        var property = typeof(FT06_InterpolationTable).GetProperty(currentCol);
+                        if (property != null)
+                        {
+                            var calculatedValue = baseValue + (newIncrement * i);
+                            property.SetValue(setting, calculatedValue);
+                        }
+                    }
+                    
+                    // Save changes
+                    await _ft06Service.UpdateAsync(setting);
+                    _notificationService.Notify(NotificationSeverity.Success, _localizer["lbl_Success"], _localizer["msg_UpdateSuccess"]);
+                    await InvokeAsync(StateHasChanged);
+                }
             }
         }
         catch (Exception ex)
         {
-            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to update setting.");
+            _notificationService.Notify(NotificationSeverity.Error, _localizer["lbl_Error"], _localizer["msg_UpdateError"]);
             Console.Error.WriteLine(ex);
-        }
-    }
-
-    private async Task HandleSaveClick()
-    {
-        try
-        {
-            _isSaving = true;
-            await InvokeAsync(StateHasChanged);
-            
-            // Save all changes
-            foreach (var setting in _settings)
-            {
-                await _ft05Service.UpdateAsync(setting);
-            }
-            
-            _notificationService.Notify(NotificationSeverity.Success, "Success", "All settings saved successfully.");
-        }
-        catch (Exception ex)
-        {
-            _notificationService.Notify(NotificationSeverity.Error, "Error", "Failed to save settings.");
-            Console.Error.WriteLine(ex);
-        }
-        finally
-        {
-            _isSaving = false;
         }
     }
 }

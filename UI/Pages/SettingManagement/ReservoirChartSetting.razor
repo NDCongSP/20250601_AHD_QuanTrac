@@ -20,38 +20,35 @@
         else
         {
             <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="width: 200px;">X_Value</th>
-                            @for (int i = 0; i < _settings.Count; i++)
-                            {
-                                <th style="min-width: 120px; text-align: center;">
-                                    @(_settings[i].X_Value)
-                                </th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
+                <RadzenDataGrid TItem="FT05_ChartHoChua" 
+                               Data="@_settings" 
+                               Style="width:100%"
+                               AllowPaging="true"
+                               PageSize="10"
+                               ShowPagingSummary="true"
+                               PagingSummaryFormat="@_localizer["PagingSummaryFormat"]">
+                    <Columns>
+                        <RadzenDataGridColumn TItem="FT05_ChartHoChua" 
+                                            Title="X_Value" 
+                                            Property="X_Value" 
+                                            Width="120px" />
+                        
                         @foreach (var column in _columns)
                         {
-                            <tr>
-                                <td>@column</td>
-                                @foreach (var setting in _settings)
-                                {
-                                    <td>
-                                        <RadzenNumeric TValue="double?"
-                                                     Value="@GetPropertyValue(setting, column)" 
-                                                     ValueChanged="@(value => OnCellValueChanged(setting, column, value))"
-                                                     Style="width: 100%" 
-                                                     Change=@(args => { })
-                                                     @onkeydown:preventDefault />
-                                    </td>
-                                }
-                            </tr>
+                            <RadzenDataGridColumn TItem="FT05_ChartHoChua" 
+                                                Title="@column"
+                                                Width="120px">
+                                <Template Context="setting">
+                                    <RadzenNumeric TValue="double?"
+                                                Value="@GetPropertyValue(setting, column)" 
+                                                ValueChanged="@(value => OnCellValueChanged(setting, column, value))"
+                                                Style="width: 100%" 
+                                                @onkeydown:preventDefault />
+                                </Template>
+                            </RadzenDataGridColumn>
                         }
-                    </tbody>
-                </table>
+                    </Columns>
+                </RadzenDataGrid>
             </div>
         }
     </RadzenStack>
@@ -132,7 +129,7 @@
                     property.SetValue(setting, value);
                     await _ft05Service.UpdateAsync(setting);
                 }
-                _notificationService.Notify(NotificationSeverity.Success, "Success", "Cập nhật dữ  liệu thành công!");
+                _notificationService.Notify(NotificationSeverity.Success, "Success", "Cập nhật dữ liệu thành công!");
                 await InvokeAsync(StateHasChanged);
             }
         }

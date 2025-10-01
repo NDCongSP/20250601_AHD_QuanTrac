@@ -1,0 +1,71 @@
+@using Radzen.Blazor
+@using Radzen
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<CommonResources> _localizer
+
+<div class="row">
+    <div class="col-md-12">
+        <RadzenTemplateForm TItem="InterpolationValues" Data=@values Submit="OnSubmit" Style="padding: 20px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="rz-form-label">@_localizer["lbl_BaseValue"]</label>
+                    <RadzenNumeric @bind-Value=@values.BaseValue 
+                                 Style="width: 100%" 
+                                 FormatString="F2" 
+                                 Class="mt-1" />
+                </div>
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <label class="rz-form-label">@_localizer["lbl_Increment"]</label>
+                    <RadzenNumeric @bind-Value=@values.Increment 
+                                 Style="width: 100%" 
+                                 FormatString="F2"
+                                 Class="mt-1" />
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-12" style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <RadzenButton ButtonType="ButtonType.Button" 
+                                Text=@_localizer["btn_Cancel"] 
+                                ButtonStyle="ButtonStyle.Light" 
+                                Click="@OnCancel" />
+                    <RadzenButton ButtonType="ButtonType.Submit" 
+                                Text=@_localizer["btn_Save"] 
+                                ButtonStyle="ButtonStyle.Primary" />
+                </div>
+            </div>
+        </RadzenTemplateForm>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public double CurrentValue { get; set; }
+    [Parameter]
+    public double Increment { get; set; }
+    [Inject]
+    public DialogService DialogService { get; set; }
+
+    private InterpolationValues values = new();
+
+    protected override void OnInitialized()
+    {
+        values.BaseValue = CurrentValue;
+        values.Increment = Increment;
+    }
+
+    private void OnSubmit()
+    {
+        DialogService.Close(new double[] { values.BaseValue, values.Increment });
+    }
+
+    private void OnCancel()
+    {
+        DialogService.Close();
+    }
+
+    public class InterpolationValues
+    {
+        public double BaseValue { get; set; }
+        public double Increment { get; set; }
+    }
+}

@@ -30,11 +30,11 @@ public class RepositoryFT07Services(ApplicationDbContext dbContext, IHttpContext
         {
             dbContext.FT07s_ChartMucNuoc.Remove(model);
             await dbContext.SaveChangesAsync();
-            return Result<FT07_ChartMucNuoc>.Success(model);
+            return await Result<FT07_ChartMucNuoc>.SuccessAsync(model);
         }
         catch (Exception ex)
         {
-            return Result<FT07_ChartMucNuoc>.Fail($"Failed to delete FT07_ChartMucNuoc: {ex.Message}");
+            return await Result<FT07_ChartMucNuoc>.FailAsync($"Failed to delete FT07_ChartMucNuoc: {ex.Message}");
         }
     }
 
@@ -44,11 +44,11 @@ public class RepositoryFT07Services(ApplicationDbContext dbContext, IHttpContext
         {
             dbContext.FT07s_ChartMucNuoc.RemoveRange(model);
             await dbContext.SaveChangesAsync();
-            return Result<FT07_ChartMucNuoc>.Success("");
+            return await Result<FT07_ChartMucNuoc>.SuccessAsync("");
         }
         catch (Exception ex)
         {
-            return Result<FT07_ChartMucNuoc>.Fail($"Failed to delete FT07_ChartMucNuoc: {ex.Message}");
+            return await Result<FT07_ChartMucNuoc>.FailAsync($"Failed to delete FT07_ChartMucNuoc: {ex.Message}");
         }
     }
 
@@ -74,13 +74,13 @@ public class RepositoryFT07Services(ApplicationDbContext dbContext, IHttpContext
             var item = await dbContext.FT07s_ChartMucNuoc.FindAsync(id);
             if (item == null)
             {
-                return Result<FT07_ChartMucNuoc>.Fail("Item not found");
+                return await Result<FT07_ChartMucNuoc>.FailAsync("Item not found");
             }
-            return Result<FT07_ChartMucNuoc>.Success(item);
+            return await Result<FT07_ChartMucNuoc>.SuccessAsync(item);
         }
         catch (Exception ex)
         {
-            return Result<FT07_ChartMucNuoc>.Fail($"Failed to retrieve FT07_ChartMucNuoc: {ex.Message}");
+            return await Result<FT07_ChartMucNuoc>.FailAsync($"Failed to retrieve FT07_ChartMucNuoc: {ex.Message}");
         }
     }
 
@@ -90,11 +90,11 @@ public class RepositoryFT07Services(ApplicationDbContext dbContext, IHttpContext
         {
             await dbContext.FT07s_ChartMucNuoc.AddAsync(model);
             await dbContext.SaveChangesAsync();
-            return Result<FT07_ChartMucNuoc>.Success(model);
+            return await Result<FT07_ChartMucNuoc>.SuccessAsync(model);
         }
         catch (Exception ex)
         {
-            return Result<FT07_ChartMucNuoc>.Fail($"Failed to insert FT07_ChartMucNuoc: {ex.Message}");
+            return await Result<FT07_ChartMucNuoc>.FailAsync($"Failed to insert FT07_ChartMucNuoc: {ex.Message}");
         }
     }
 
@@ -105,7 +105,7 @@ public class RepositoryFT07Services(ApplicationDbContext dbContext, IHttpContext
             var existingItem = await dbContext.FT07s_ChartMucNuoc.FindAsync(model.Id);
             if (existingItem == null)
             {
-                return Result<FT07_ChartMucNuoc>.Fail("Item not found");
+                return await Result<FT07_ChartMucNuoc>.FailAsync("Item not found");
             }
 
             // Update all properties except Id and X_Value (since X_Value is read-only)
@@ -116,11 +116,11 @@ public class RepositoryFT07Services(ApplicationDbContext dbContext, IHttpContext
             
             await dbContext.SaveChangesAsync();
             
-            return Result<FT07_ChartMucNuoc>.Success(existingItem);
+            return await Result<FT07_ChartMucNuoc>.SuccessAsync(existingItem);
         }
         catch (Exception ex)
         {
-            return Result<FT07_ChartMucNuoc>.Fail($"Failed to update FT07_ChartMucNuoc: {ex.Message}");
+            return await Result<FT07_ChartMucNuoc>.FailAsync($"Failed to update FT07_ChartMucNuoc: {ex.Message}");
         }
     }
 }

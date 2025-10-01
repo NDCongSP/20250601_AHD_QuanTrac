@@ -352,7 +352,7 @@
     <value>Lưu</value>
   </data>
   <data name="msg_LoadingSettings" xml:space="preserve">
-    <value>Đang tải cài đặt...</value>
+    <value>Đang tải cấu hình...</value>
   </data>
   <data name="lbl_FlowSettings" xml:space="preserve">
     <value>Cài đặt lưu lượng</value>
@@ -374,6 +374,9 @@
   </data>
   <data name="lbl_TimerInterval" xml:space="preserve">
     <value>Khoảng thời gian làm mới</value>
+  </data>
+  <data name="validation_Range" xml:space="preserve">
+    <value>{0} phải từ {1} đến {2}</value>
   </data>
   <data name="Operation" xml:space="preserve">
     <value>Vận Hành</value>
@@ -462,6 +465,15 @@
   <data name="Permissions" xml:space="preserve">
     <value>Quyền</value>
   </data>
+  <data name="ReservoirChartSetting" xml:space="preserve">
+    <value>Cấu hình chart hồ chứa</value>
+  </data>
+  <data name="WaterLevelDataConfiguration" xml:space="preserve">
+    <value>Cấu hình chart mực nước</value>
+  </data>
+  <data name="InterpolationTableDataConfiguration" xml:space="preserve">
+    <value>Cấu hình bảng nội suy</value>
+  </data>
   <data name="LakeWaterLevel" xml:space="preserve">
     <value>Mực nước hồ (MN hồ)</value>
   </data>
@@ -518,5 +530,65 @@
   </data>
   <data name="GateValveDiagram" xml:space="preserve">
     <value>Sơ đồ cửa van</value>
+  </data>
+  <data name="WaterLevelConfig.Title" xml:space="preserve">
+    <value>Cấu hình bảng tra mực nước hồ chứa</value>
+  </data>
+  <data name="WaterLevelConfig.X_Prefix" xml:space="preserve">
+    <value>Tiền tố</value>
+  </data>
+  <data name="WaterLevelConfig.X_Value" xml:space="preserve">
+    <value>Giá trị X</value>
+  </data>
+  <data name="WaterLevelConfig.Z_Thuc" xml:space="preserve">
+    <value>Z thực</value>
+  </data>
+  <data name="WaterLevelConfig.DuplicateValue" xml:space="preserve">
+    <value>Giá trị đã tồn tại</value>
+  </data>
+  <data name="WaterLevelConfig.UpdateSuccess" xml:space="preserve">
+    <value>Cập nhật dữ liệu thành công!</value>
+  </data>
+  <data name="WaterLevelConfig.AddSuccess" xml:space="preserve">
+    <value>Thêm dữ liệu thành công!</value>
+  </data>
+  <data name="WaterLevelConfig.AddError" xml:space="preserve">
+    <value>Thêm dữ liệu thất bại</value>
+  </data>
+  <data name="WaterLevelConfig.DeleteSuccess" xml:space="preserve">
+    <value>Xóa dữ liệu thành công!</value>
+  </data>
+  <data name="WaterLevelConfig.DeleteError" xml:space="preserve">
+    <value>Xóa dữ liệu thất bại</value>
+  </data>
+  <data name="Common.Actions" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
+  <data name="Common.Confirm" xml:space="preserve">
+    <value>Xác nhận</value>
+  </data>
+  <data name="Common.ConfirmDelete" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn xóa bản ghi này?</value>
+  </data>
+  <data name="lbl_InterpolationTableConfig" xml:space="preserve">
+    <value>Bảng cấu hình dữ liệu nội suy</value>
+  </data>
+  <data name="lbl_InterpolationValue" xml:space="preserve">
+    <value>Giá trị nội suy</value>
+  </data>
+  <data name="lbl_Increment" xml:space="preserve">
+    <value>Hệ số</value>
+  </data>
+  <data name="msg_UpdateSuccess" xml:space="preserve">
+    <value>Cập nhật dữ liệu nội suy thành công!</value>
+  </data>
+  <data name="msg_UpdateError" xml:space="preserve">
+    <value>Không thể cập nhật dữ liệu nội suy.</value>
+  </data>
+  <data name="lbl_BaseValue" xml:space="preserve">
+    <value>Giá trị cơ sở</value>
+  </data>
+  <data name="btn_Cancel" xml:space="preserve">
+    <value>Hủy</value>
   </data>
 </root>
