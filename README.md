@@ -9,7 +9,7 @@ Station  information:
             Pass: Dmc@5001
 - IP server local: 192.168.0.100
 
-- Ultra viewer: 121365864 - pass: kn@12345
+- Ultra viewer: 121365864 - pass: kn@123456
 
 - SQL server: sa - pass: FTCuAGnnB*Jyd%pW
             dev1  - pass: FTCuAGnnB*Jyd%pW
