@@ -26,7 +26,7 @@ namespace RegistrationForm1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-       //     Kiểm tra kết nối trước khi chạy form chính
+            //     Kiểm tra kết nối trước khi chạy form chính
             if (!CheckSqlConnection())
             {
                 MessageBox.Show("Không thể kết nối tới SQL Server.\nChương trình sẽ thoát.",
@@ -47,7 +47,7 @@ namespace RegistrationForm1
                 {
                     MessageBox.Show("Cấu hình cơ sở dữ liệu không hợp lệ hoặc chưa được thiết lập. Vui lòng cấu hình.",
                                   "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                 //   Application.Exit();
+                    //   Application.Exit();
                     return;
                 }
                 Globalvariable.ConfigSystem = JsonConvert.DeserializeObject<ConfigModel>(configTable.C000);
@@ -57,8 +57,8 @@ namespace RegistrationForm1
                 ////chinh tay cac thong so de test
                 Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi = 0.98;
                 Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 9.81;
-         //     Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 0.5;
-               Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
+                //     Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 0.5;
+                Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
                 Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
 
                 // Gia lập tính Q den
@@ -134,7 +134,7 @@ namespace RegistrationForm1
             {
                 // Chuỗi kết nối của bạn
                 //    string connectionString = "Server=.;Database=YourDB;User Id=sa;Password=123;";
-                string connectionString = "data source=phucthinhautomation.ddns.net,1433;initial catalog=ahd;Persist Security Info=True;User ID=dev1;Password=Dev@12345;";
+                string connectionString = "data source=14.224.229.6,9168;initial catalog=ahd;Persist Security Info=True;User ID=dev1;Password=pR*mBaG)@v(yn*Wc;";
               
 
                 using (SqlConnection conn = new SqlConnection(connectionString))

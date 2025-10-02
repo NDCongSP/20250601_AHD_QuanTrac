@@ -1082,7 +1082,7 @@
             // 
             this.ahdBar3.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdBar3.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar3.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Value;
+            this.ahdBar3.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
             this.ahdBar3.FillColor = System.Drawing.SystemColors.Highlight;
             this.ahdBar3.Location = new System.Drawing.Point(896, 572);
             this.ahdBar3.MaxValue = "510";
@@ -1112,7 +1112,7 @@
             // 
             this.ahdBar5.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdBar5.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar5.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Value;
+            this.ahdBar5.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
             this.ahdBar5.FillColor = System.Drawing.SystemColors.Highlight;
             this.ahdBar5.Location = new System.Drawing.Point(440, 572);
             this.ahdBar5.MaxValue = "510";
@@ -1127,7 +1127,7 @@
             // 
             this.ahdBar6.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdBar6.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar6.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.Value;
+            this.ahdBar6.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
             this.ahdBar6.FillColor = System.Drawing.SystemColors.Highlight;
             this.ahdBar6.Location = new System.Drawing.Point(212, 572);
             this.ahdBar6.MaxValue = "510";
@@ -1271,7 +1271,7 @@
             this.ahdLabel3.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdLabel3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel3.Location = new System.Drawing.Point(1404, 573);
+            this.ahdLabel3.Location = new System.Drawing.Point(1401, 573);
             this.ahdLabel3.Name = "ahdLabel3";
             this.ahdLabel3.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel3.StringFormat = "0";
@@ -1404,7 +1404,7 @@
             this.ahdLabel11.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdLabel11.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel11.Location = new System.Drawing.Point(1175, 572);
+            this.ahdLabel11.Location = new System.Drawing.Point(1170, 572);
             this.ahdLabel11.Name = "ahdLabel11";
             this.ahdLabel11.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel11.StringFormat = "0";
@@ -1418,7 +1418,7 @@
             this.ahdLabel12.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdLabel12.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel12.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel12.Location = new System.Drawing.Point(947, 572);
+            this.ahdLabel12.Location = new System.Drawing.Point(944, 572);
             this.ahdLabel12.Name = "ahdLabel12";
             this.ahdLabel12.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel12.StringFormat = "0";
@@ -1432,7 +1432,7 @@
             this.ahdLabel13.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdLabel13.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel13.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel13.Location = new System.Drawing.Point(717, 572);
+            this.ahdLabel13.Location = new System.Drawing.Point(713, 572);
             this.ahdLabel13.Name = "ahdLabel13";
             this.ahdLabel13.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel13.StringFormat = "0";
@@ -1446,7 +1446,7 @@
             this.ahdLabel14.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdLabel14.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel14.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel14.Location = new System.Drawing.Point(490, 572);
+            this.ahdLabel14.Location = new System.Drawing.Point(487, 572);
             this.ahdLabel14.Name = "ahdLabel14";
             this.ahdLabel14.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel14.StringFormat = "0";
@@ -1460,7 +1460,7 @@
             this.ahdLabel15.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ahdLabel15.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
             this.ahdLabel15.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel15.Location = new System.Drawing.Point(263, 572);
+            this.ahdLabel15.Location = new System.Drawing.Point(255, 572);
             this.ahdLabel15.Name = "ahdLabel15";
             this.ahdLabel15.Size = new System.Drawing.Size(59, 23);
             this.ahdLabel15.StringFormat = "0";
@@ -1603,7 +1603,7 @@
             this.label8.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(1239, 573);
+            this.label8.Location = new System.Drawing.Point(1235, 573);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(45, 21);
             this.label8.TabIndex = 418;
@@ -1628,7 +1628,7 @@
             this.label10.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.label10.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label10.Location = new System.Drawing.Point(1012, 573);
+            this.label10.Location = new System.Drawing.Point(1008, 573);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(45, 21);
             this.label10.TabIndex = 420;
@@ -1652,7 +1652,7 @@
             this.label12.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.label12.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label12.Location = new System.Drawing.Point(784, 573);
+            this.label12.Location = new System.Drawing.Point(780, 573);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(45, 21);
             this.label12.TabIndex = 422;
@@ -1676,7 +1676,7 @@
             this.label14.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.label14.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label14.Location = new System.Drawing.Point(556, 573);
+            this.label14.Location = new System.Drawing.Point(551, 573);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(45, 21);
             this.label14.TabIndex = 424;
@@ -1700,7 +1700,7 @@
             this.label16.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.label16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label16.Location = new System.Drawing.Point(328, 573);
+            this.label16.Location = new System.Drawing.Point(323, 573);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(45, 21);
             this.label16.TabIndex = 426;
@@ -1724,7 +1724,7 @@
             this.label7.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.label7.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(1465, 573);
+            this.label7.Location = new System.Drawing.Point(1464, 573);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 21);
             this.label7.TabIndex = 427;

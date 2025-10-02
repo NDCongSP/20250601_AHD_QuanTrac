@@ -93,22 +93,55 @@ namespace RegistrationForm1
                     }
                     else { Pic_Doorlock2_2Close.Visible = false; }
 
-                // Cửa 
-                if ((dataDisplayStation1?.Door1_Opening == true) && (dataDisplayStation1?.Door1_Closing != true))
-                {
-                    Pic_Door1_Opening.Visible = true; lblCua1.Text = "Đang mở"; lblCua1.ForeColor = Color.Green; lblCua1.BackColor = Color.YellowGreen;
-                }             
-                 else if ((dataDisplayStation1?.Door1_Closing == true) && (dataDisplayStation1?.Door1_Opening != true))
-                    {
-                        Pic_Door1_Closing.Visible = true; lblCua1.Text = "Đang đóng"; lblCua1.ForeColor = Color.Black; lblCua1.BackColor = Color.Red;
-                    }
-                else { Pic_Door1_Opening.Visible = false; Pic_Door1_Closing.Visible = false; lblCua1.Text = "Cửa 1"; lblCua1.ForeColor = Color.Black; lblCua1.BackColor = DefaultBackColor; }
+                    var s = dataDisplayStation1; // gọn hơn, đỡ phải viết nhiều lần
 
-                if ((dataDisplayStation1?.Door2_Opening == true) && (dataDisplayStation1?.Door2_Closing != true))
+                    if ((s?.Door1_Opening == true || s?.Door1_Open_Door == true) && s?.Door1_Closing != true)
+                    {
+                        // Cửa đang mở hoặc đã mở
+                        Pic_Door1_Opening.Visible = true;
+                        Pic_Door1_Closing.Visible = false;
+                        lblCua1.Text = "Đang mở";
+                        lblCua1.ForeColor = Color.Green;
+                        lblCua1.BackColor = Color.YellowGreen;
+                    }
+                    else if (s?.Door1_Closing == true && s?.Door1_Opening != true && s?.Door1_Open_Door != true)
+                    {
+                        // Cửa đang đóng
+                        Pic_Door1_Opening.Visible = false;
+                        Pic_Door1_Closing.Visible = true;
+                        lblCua1.Text = "Đang đóng";
+                        lblCua1.ForeColor = Color.Black;
+                        lblCua1.BackColor = Color.Red;
+                    }
+                    else
+                    {
+                        // Cửa ở trạng thái bình thường
+                        Pic_Door1_Opening.Visible = false;
+                        Pic_Door1_Closing.Visible = false;
+                        lblCua1.Text = "Cửa 1";
+                        lblCua1.ForeColor = Color.Black;
+                        lblCua1.BackColor = DefaultBackColor;
+                    }
+
+
+                    //    if (((dataDisplayStation1?.Door1_Opening == true) || (dataDisplayStation1?.Door1_Open_Door == true)) && (dataDisplayStation1?.Door1_Closing != true))
+
+                    //    {
+                    //    Pic_Door1_Opening.Visible = true; lblCua1.Text = "Đang mở"; lblCua1.ForeColor = Color.Green; lblCua1.BackColor = Color.YellowGreen;
+                    //}
+                    //    else if ((dataDisplayStation1?.Door1_Closing == true) && (dataDisplayStation1?.Door1_Opening != true) && (dataDisplayStation1?.Door1_Open_Door != true))
+                    //    {
+                    //        Pic_Door1_Closing.Visible = true; lblCua1.Text = "Đang đóng"; lblCua1.ForeColor = Color.Black; lblCua1.BackColor = Color.Red;
+                    //    }
+                    //else { Pic_Door1_Opening.Visible = false; Pic_Door1_Closing.Visible = false; lblCua1.Text = "Cửa 1"; lblCua1.ForeColor = Color.Black; lblCua1.BackColor = DefaultBackColor; }
+
+
+
+                    if (((dataDisplayStation1?.Door2_Opening == true)  || (dataDisplayStation1?.Door2_Open_Door == true) && (dataDisplayStation1?.Door2_Closing != true)))
                     {
                         Pic_Door2_Opening.Visible = true; lblCua2.Text = "Đang mở"; lblCua2.ForeColor = Color.Green; lblCua2.BackColor = Color.YellowGreen;
                     }
-                else if ((dataDisplayStation1?.Door2_Closing == true) && (dataDisplayStation1?.Door2_Opening != true))
+                else if (((dataDisplayStation1?.Door2_Closing == true) && (dataDisplayStation1?.Door2_Opening != true) && (dataDisplayStation1?.Door2_Open_Door != true)))
                     {
                         Pic_Door2_Closing.Visible = true; lblCua2.Text = "Đang đóng"; lblCua2.ForeColor = Color.Black; lblCua2.BackColor = Color.Red;
                     }
@@ -197,20 +230,21 @@ namespace RegistrationForm1
                     }
                     else { Pic_Door4_Closing.Visible = false; }
 
-                    if ((dataDisplayStation2?.Door1_Opening == true) && (dataDisplayStation2?.Door1_Closing != true))
+                   
+                        if (((dataDisplayStation2?.Door1_Opening == true) || (dataDisplayStation2?.Door1_Open_Door == true) && (dataDisplayStation2?.Door1_Closing != true)))
                     {
                        Pic_Door3_Opening.Visible = true ; lblCua3.Text = "Đang mở"; lblCua3.ForeColor = Color.Green; lblCua3.BackColor = Color.YellowGreen;
                     }
-                    else if ((dataDisplayStation2?.Door1_Closing == true) && (dataDisplayStation2?.Door1_Opening != true))
+                    else if (((dataDisplayStation2?.Door1_Closing == true) && (dataDisplayStation2?.Door1_Opening != true) && (dataDisplayStation2?.Door1_Open_Door != true)))
                     {
                         Pic_Door3_Closing.Visible = true; lblCua3.Text = "Đang đóng"; lblCua3.ForeColor = Color.Black; lblCua3.BackColor = Color.Red;
                     }
                     else { Pic_Door3_Opening.Visible = false; Pic_Door3_Closing.Visible = false; lblCua3.Text = "Cửa 3"; lblCua3.ForeColor = Color.Black; lblCua3.BackColor = DefaultBackColor; }
-                    if ((dataDisplayStation2?.Door2_Opening == true) && (dataDisplayStation2?.Door2_Closing != true))
+                    if (((dataDisplayStation2?.Door2_Opening == true) || (dataDisplayStation2?.Door2_Open_Door == true) && (dataDisplayStation2?.Door2_Closing != true)))
                     {
                         Pic_Door4_Opening.Visible = true; lblCua4.Text = "Đang mở"; lblCua4.ForeColor = Color.Green; lblCua4.BackColor = Color.YellowGreen;
                     }
-                    else if ((dataDisplayStation2?.Door2_Closing == true) && (dataDisplayStation2?.Door2_Opening != true))
+                    else if (((dataDisplayStation2?.Door2_Closing == true) && (dataDisplayStation2?.Door2_Opening != true) && (dataDisplayStation2?.Door2_Open_Door != true)))
                     {
                         Pic_Door4_Closing.Visible = true; lblCua4.Text = "Đang đóng"; lblCua4.ForeColor = Color.Black; lblCua4.BackColor = Color.Red;
                     }
@@ -278,20 +312,22 @@ namespace RegistrationForm1
                         Pic_Door6_Closing.Visible = true;
                     }
                     else { Pic_Door6_Closing.Visible = false; }
-                    if ((dataDisplayStation3?.Door1_Opening == true) && (dataDisplayStation3?.Door1_Closing != true))
+
+                  
+                    if (((dataDisplayStation3?.Door1_Opening == true) || (dataDisplayStation3?.Door1_Open_Door == true) && (dataDisplayStation3?.Door1_Closing != true)))
                     {
                         Pic_Door5_Opening.Visible = true; lblCua5.Text = "Đang mở"; lblCua5.ForeColor = Color.Green; lblCua5.BackColor = Color.YellowGreen;
                     }
-                    else if ((dataDisplayStation3?.Door1_Closing == true) && (dataDisplayStation3?.Door1_Opening != true))
+                    else if (((dataDisplayStation3?.Door1_Closing == true) && (dataDisplayStation3?.Door1_Opening != true) && (dataDisplayStation3?.Door1_Open_Door != true)))
                     {
                         Pic_Door5_Closing.Visible = true; lblCua5.Text = "Đang đóng"; lblCua5.ForeColor = Color.Black; lblCua5.BackColor = Color.Red;
                     }
                     else { Pic_Door5_Opening.Visible = false; Pic_Door5_Closing.Visible = false; lblCua5.Text = "Cửa 5"; lblCua5.ForeColor = Color.Black; lblCua5.BackColor = DefaultBackColor; }
-                    if ((dataDisplayStation3?.Door2_Opening == true) && (dataDisplayStation3?.Door2_Closing != true))
+                    if (((dataDisplayStation3?.Door2_Opening == true) || (dataDisplayStation3?.Door2_Open_Door == true) && (dataDisplayStation3?.Door2_Closing != true)))
                     {
                         Pic_Door6_Opening.Visible = true; lblCua6.Text = "Đang mở"; lblCua6.ForeColor = Color.Green; lblCua6.BackColor = Color.YellowGreen;
                     }
-                    else if ((dataDisplayStation3?.Door2_Closing == true) && (dataDisplayStation3?.Door2_Opening != true))
+                    else if (((dataDisplayStation3?.Door2_Closing == true) && (dataDisplayStation3?.Door2_Opening != true) && (dataDisplayStation3?.Door2_Open_Door != true)))
                     {
                         Pic_Door6_Closing.Visible = true; lblCua6.Text = "Đang đóng"; lblCua6.ForeColor = Color.Black; lblCua6.BackColor = Color.Red;
                     }

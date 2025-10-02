@@ -298,10 +298,7 @@ namespace RegistrationForm1
                                 _labALDoor2_Station1.Text = item.Al_Door2.ToString();
                                 _labQi1.Text = item.Q_i_1.ToString();
                                 _labQi2.Text = item.Q_i_2.ToString();
-                                
-
-
-
+                
                             }
                             else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
                             {
@@ -330,9 +327,6 @@ namespace RegistrationForm1
 
                         //      _labQi.Text = location.CalculatorValue.Q_i.ToString();
                         _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
-
-
-
 
                         _labWtt.Text = location.CalculatorValue.W_tt.ToString();
                         _labQtt.Text = location.CalculatorValue.Q_tt.ToString();
@@ -381,7 +375,9 @@ namespace RegistrationForm1
                             line.API_Fllow_BinhNham2 = item.CalculatorValue.API_Fllow_BinhNham2;
                             line.API_Fllow_TL_CDD = item.CalculatorValue.API_Fllow_TL_CDD;
                             line.API_Fllow_HL_TXL = item.CalculatorValue.API_Fllow_HL_TXL;
-                            //      line.Total_Fllow = item.CalculatorValue.Total_Fllow;
+
+                       //     line.Total_Fllow = item.CalculatorValue.Total_Fllow;
+
                             line.API_D_DM_HoDT = item.CalculatorValue.API_D_DM_HoDT;
                             line.API_D_MinhHoa = item.CalculatorValue.API_D_MinhHoa;
                             line.API_D_MinhTam = item.CalculatorValue.API_D_MinhTam;
@@ -469,9 +465,9 @@ namespace RegistrationForm1
                     if (dataLogs.Count == 0)
                         return;
                     ////     Lưu vào database
-                    //using var dbContext = new ApplicationDbContext();
-                    //dbContext.FT03s.AddRange(dataLogs);
-                    //dbContext.SaveChanges();//Luu thay doi vao db
+                    using var dbContext = new ApplicationDbContext();
+                    dbContext.FT03s.AddRange(dataLogs);
+                    dbContext.SaveChanges();//Luu thay doi vao db
 
                     _startTime = DateTime.Now;
                 }
@@ -560,7 +556,69 @@ namespace RegistrationForm1
             {
                 foreach (var station in item.Stations.Where(x => x.Path.Contains("/Station_")))
                 {
+                    //  // Tag mới thêm
 
+                    ahdDriverConnector1.GetTag($"{station.Path}/Lock2").ValueChanged += Lock2_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Lock2")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Lock2")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Lock2").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Lock1").ValueChanged += Lock1_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Lock1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Lock1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Lock1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open_Door").ValueChanged += Door1_Open_Door_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open_Door")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open_Door")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Door1_Open_Door").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open_Door").ValueChanged += Door2_Open_Door_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open_Door")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open_Door")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Door2_Open_Door").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door1").ValueChanged += Status_Open_Door1_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door2").ValueChanged += Status_Open_Door2_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door2")
+                        , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door2")
+                        , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Door2").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door1").ValueChanged += Status_Close_Door1_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door2").ValueChanged += Status_Close_Door2_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door2")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door2")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Door2").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock1").ValueChanged += Status_Open_Doorlock1_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock1").ValueChanged += Status_Close_Doorlock1_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock1")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock1")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock1").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock2").ValueChanged += Status_Open_Doorlock2_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock2")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock2")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Open_Doorlock2").Value));
+
+                    ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock2").ValueChanged += Status_Close_Doorlock2_ValueChanged;
+                    Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock2")
+                  , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock2")
+                  , "", ahdDriverConnector1.GetTag($"{station.Path}/Status_Close_Doorlock2").Value));
+
+                    // /////////////////
                     ahdDriverConnector1.GetTag($"{station.Path}/Remote").ValueChanged += Remote_ValueChanged;
                     Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Remote")
@@ -1571,6 +1629,873 @@ namespace RegistrationForm1
             }
 
             return results;
+        }
+        //Status_Open_Doorlock1_ValueChanged
+        private void Lock2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Lock2 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Lock2" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Lock2)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Lock2";
+                            Globalvariable.AlarmDataLog.Value = station.Lock2;
+                            Globalvariable.AlarmDataLog.Description = station.Lock2 == true ? "Khoá 2 đang đóng" : "Khoá 2 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Lock1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Lock1 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Lock1" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Lock1)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Lock1";
+                            Globalvariable.AlarmDataLog.Value = station.Lock1;
+                            Globalvariable.AlarmDataLog.Description = station.Lock1 == true ? "Khoá 1 đang đóng" : "Khoá 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+
+        private void Status_Close_Doorlock2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Close_Doorlock2 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Close_Doorlock2" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Close_Doorlock2)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Close_Doorlock2";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Close_Doorlock2;
+                            //              Globalvariable.AlarmDataLog.Description = station.Status_Close_Doorlock1 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Status_Close_Doorlock1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Close_Doorlock1 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Close_Doorlock1" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Close_Doorlock1)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Close_Doorlock1";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Close_Doorlock1;
+                            //              Globalvariable.AlarmDataLog.Description = station.Status_Close_Doorlock1 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Status_Open_Doorlock2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Open_Doorlock2 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Open_Doorlock2" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Open_Doorlock2)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Open_Doorlock2";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Open_Doorlock2;
+                            //              Globalvariable.AlarmDataLog.Description = station.Status_Open_Doorlock1 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Status_Open_Doorlock1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Open_Doorlock1 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Open_Doorlock1" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Open_Doorlock1)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Open_Doorlock1";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Open_Doorlock1;
+                            //              Globalvariable.AlarmDataLog.Description = station.Status_Open_Doorlock1 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Status_Close_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Close_Door2 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Close_Door2" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Close_Door2)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Close_Door2";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Close_Door2;
+                            //              Globalvariable.AlarmDataLog.Description = station.Status_Close_Door1 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Status_Open_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Open_Door2 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Open_Door2" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Open_Door2)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Open_Door2";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Open_Door2;
+                            //              Globalvariable.AlarmDataLog.Description = station.Status_Open_Door2 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+
+        private void Status_Close_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Close_Door1 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Close_Door1" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Close_Door1)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Close_Door1";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Close_Door1;
+                            //              Globalvariable.AlarmDataLog.Description = station.Status_Close_Door1 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Status_Open_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Status_Open_Door1 = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Status_Open_Door1" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Status_Open_Door1)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Status_Open_Door1";
+                            Globalvariable.AlarmDataLog.Value = station.Status_Open_Door1;
+              //              Globalvariable.AlarmDataLog.Description = station.Status_Open_Door1 == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door2_Open_Door_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Door2_Open_Door = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door2_Open_Door" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Door2_Open_Door)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Door2_Open_Door";
+                            Globalvariable.AlarmDataLog.Value = station.Door2_Open_Door;
+                            Globalvariable.AlarmDataLog.Description = station.Door2_Open_Door == true ? "Cửa 2 đang mở" : "Cửa 2 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
+        }
+        private void Door1_Open_Door_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                var createAt = DateTime.Now;
+                var createOperatorId = "System";
+
+                var path = e.Tag.Parent.Path;
+
+                var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                if (station != null)
+                {
+                    station.Door1_Open_Door = e.NewValue == "1" ? true : false;
+
+                    using (var dbContext = new ApplicationDbContext())
+                    {
+                        //Real time
+                        var check = dbContext.FT02s.FirstOrDefault();
+
+                        if (check != null)
+                        {
+                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+                            check.UpdateAt = createAt;
+                            check.UpdateOperatorId = createOperatorId;
+                        }
+                        else
+                        {
+                            var newLine = new FT02
+                            {
+                                Id = Guid.NewGuid(),
+                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+                                IsDeleted = false,
+                                CreateAt = createAt,
+                                CreateOperatorId = createOperatorId,
+                            };
+
+                            dbContext.FT02s.Add(newLine);
+                        }
+
+                        //alarms
+                        var checkExist = dbContext.FT04s
+                            .Where(x => x.Path == station.Path && x.TagName == "Door1_Open_Door" && x.IsDeleted != true)
+                            .OrderByDescending(x => x.CreateAt)
+                            .FirstOrDefault();
+
+                        if (checkExist == null || checkExist.Value != station.Door1_Open_Door)
+                        {
+                            Globalvariable.AlarmDataLog.Id = Guid.NewGuid();
+                            Globalvariable.AlarmDataLog.CreateAt = createAt;
+                            Globalvariable.AlarmDataLog.CreateOperatorId = createOperatorId;
+                            Globalvariable.AlarmDataLog.IsDeleted = false;
+                            Globalvariable.AlarmDataLog.LocationId = location.LocationId;
+                            Globalvariable.AlarmDataLog.LocationName = location.LocationName;
+                            Globalvariable.AlarmDataLog.StationId = station.StationId;
+                            Globalvariable.AlarmDataLog.StationName = station.StationName;
+                            Globalvariable.AlarmDataLog.Path = station.Path;
+                            Globalvariable.AlarmDataLog.TagName = "Door1_Open_Door";
+                            Globalvariable.AlarmDataLog.Value = station.Door1_Open_Door;
+                            Globalvariable.AlarmDataLog.Description = station.Door1_Open_Door == true ? "Cửa 1 đang mở" : "Cửa 1 bình thường.";
+
+                            dbContext.FT04s.Add(Globalvariable.AlarmDataLog);
+
+                            dbContext.SaveChanges();//Luu thay doi vao db
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+
         }
 
 
@@ -5129,70 +6054,7 @@ namespace RegistrationForm1
             FrmDieukhienscada frm = new FrmDieukhienscada();
             OpenFormInPanel(frm, "ĐIỀU KHIỂN SCADA TỪ XA");
         }
-        //private async Task WriteTagFromLabel()
-        //{
-        //    try
-        //    {
-        //        if (ahdDriverConnector1 == null)
-        //        {
-        //            MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
-        //            writeTagTimer.Stop();
-        //            return;
-        //        }
-        //        //    // Tạo danh sách các tag cần ghi
-        //        var tagsToWrite = new List<(string TagPath, string Value)>
-        //        {
-        //            //        // Ghi Qtr từ _labQtr.Text
-        //            ////("Local Station/DauTieng/S71500/Station_1/Fllow_Door1", ParseValue(_labQi1.Text)),
-        //            ////("Local Station/DauTieng/S71500/Station_1/Fllow_Door2", ParseValue(_labQi2.Text)),
 
-        //            ////("Local Station/DauTieng/S71500/Station_2/Fllow_Door1", ParseValue(_labQi3.Text)),
-        //            ////("Local Station/DauTieng/S71500/Station_2/Fllow_Door2", ParseValue(_labQi4.Text)),
-
-        //            ////("Local Station/DauTieng/S71500/Station_3/Fllow_Door1", ParseValue(_labQi5.Text)),
-        //            ////("Local Station/DauTieng/S71500/Station_3/Fllow_Door2", ParseValue(_labQi6.Text)),
-
-        //            ////("Local Station/DauTieng/S71500/Station_1/Total_Fllow", ParseValue(_labQtr.Text)),
-        //            ////("Local Station/DauTieng/S71500/Station_2/Total_Fllow", ParseValue(_labQtr.Text)),
-        //            ////("Local Station/DauTieng/S71500/Station_3/Total_Fllow", ParseValue(_labQtr.Text)),
-        //            ("Local Station/DauTieng/PLC12/Fllow_Door1", ParseValue(_labQi1.Text)),
-        //             ("Local Station/DauTieng/PLC12/Fllow_Door2", ParseValue(_labQi2.Text)),
-        //              ("Local Station/DauTieng/PLC34/Fllow_Door3", ParseValue(_labQi3.Text)),
-        //               ("Local Station/DauTieng/PLC34/Fllow_Door4", ParseValue(_labQi4.Text)),
-        //                ("Local Station/DauTieng/PLC56/Fllow_Door5", ParseValue(_labQi5.Text)),
-        //                  ("Local Station/DauTieng/PLC56/Fllow_Door6", ParseValue(_labQi6.Text)),
-
-        //                };
-        //        foreach (var tag in tagsToWrite)
-        //        {
-        //            if (tag.Value != null)
-        //            {
-        //                await ahdDriverConnector1.WriteTagAsync(tag.TagPath, tag.Value, WritePiority.High);
-        //                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Ghi {tag.Value} → {tag.TagPath}");
-        //            }
-        //        }
-        //        //// --- Lấy giá trị từ _labQtr.Text ---
-        //        //if (double.TryParse(_labQtr.Text, out double qValue))
-        //        //{
-        //        //    // Ghi giá trị xuống PLC
-        //        //    await ahdDriverConnector1.WriteTagAsync(
-        //        //        $"Local Station/DauTieng/S71500/Station_1/Fllow_Door1",
-        //        //        qValue.ToString("0.00"),   // format 2 số lẻ
-        //        //        WritePiority.High);
-
-        //        //    Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Đã ghi Q_i_total = {qValue:0.00}");
-        //        //}
-        //        //else
-        //        //{
-        //        //    Console.WriteLine($"Không đọc được giá trị hợp lệ từ _labQtr.Text: {_labQtr.Text}");
-        //        //}
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        writeTagTimer.Stop();
-        //        MessageBox.Show("Lỗi ghi PLC: " + ex.Message);
-        //    }
-        //}
         private async Task WriteTagFromLabel()
         {
             try
@@ -5204,39 +6066,51 @@ namespace RegistrationForm1
                     return;
                 }
 
-                // Nếu thư viện có IsConnected, check:
-                if (ahdDriverConnector1.GetType().GetProperty("IsConnected") != null)
-                {
-                    bool isConnected = (bool)ahdDriverConnector1.GetType().GetProperty("IsConnected")
-                        .GetValue(ahdDriverConnector1);
+                // Kiểm tra kết nối (nếu có property)
+                var connProp = ahdDriverConnector1.GetType().GetProperty("IsConnected")
+                             ?? ahdDriverConnector1.GetType().GetProperty("ConnectionState");
 
-                    if (!isConnected)
+                if (connProp != null)
+                {
+                    var state = connProp.GetValue(ahdDriverConnector1);
+                    if (state is bool b && !b)
                     {
-                        Console.WriteLine("PLC chưa kết nối, bỏ qua ghi tag.");
+                        Console.WriteLine("PLC chưa kết nối.");
+                        return;
+                    }
+                    else if (!(state is bool) && state?.ToString() != "Connected")
+                    {
+                        Console.WriteLine("PLC chưa kết nối.");
                         return;
                     }
                 }
 
                 var tagsToWrite = new List<(string TagPath, string Value)>
-        {
-            ("Local Station/DauTieng/PLC1_2/Fllow_Door1", _labQi1.Text),
-            ("Local Station/DauTieng/PLC1_2/Fllow_Door2", _labQi2.Text),
-            ("Local Station/DauTieng/PLC3_4/Fllow_Door3", _labQi3.Text),
-            ("Local Station/DauTieng/PLC3_4/Fllow_Door4", _labQi4.Text),
-            ("Local Station/DauTieng/PLC5_6/Fllow_Door5", _labQi5.Text),
-            ("Local Station/DauTieng/PLC5_6/Fllow_Door6", _labQi6.Text),
-           ("Local Station/DauTieng/PLC1_2/Total_Fllow", _labQtr.Text),
-             ("Local Station/DauTieng/PLC3_4/Total_Fllow", _labQtr.Text),
-               ("Local Station/DauTieng/PLC5_6/Total_Fllow", _labQtr.Text),
+{
+    ("Local Station/DauTieng/PLC1_2/Fllow_Door1", _labQi1.Text),
+    ("Local Station/DauTieng/PLC1_2/Fllow_Door2", _labQi2.Text),
+    ("Local Station/DauTieng/PLC3_4/Fllow_Door3", _labQi3.Text),
+    ("Local Station/DauTieng/PLC3_4/Fllow_Door4", _labQi4.Text),
+    ("Local Station/DauTieng/PLC5_6/Fllow_Door5", _labQi5.Text),
+    ("Local Station/DauTieng/PLC5_6/Fllow_Door6", _labQi6.Text),
 
-        };
+    ("Local Station/DauTieng/PLC1_2/Total_Fllow", _labQtr.Text),
+    ("Local Station/DauTieng/PLC3_4/Total_Fllow", _labQtr.Text),
+    ("Local Station/DauTieng/PLC5_6/Total_Fllow", _labQtr.Text),
+};
 
                 foreach (var (tagPath, valueStr) in tagsToWrite)
                 {
                     if (double.TryParse(valueStr, out double value))
                     {
-                        string formatted = value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+                        // Scale để giữ 2 số lẻ: nhân 100 rồi ép int
+                        int intValue = (int)(value * 100);
+
+                        // Chuyển thành string để ghi xuống PLC
+                        string formatted = intValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
                         var result = await ahdDriverConnector1.WriteTagAsync(tagPath, formatted, WritePiority.High);
+
                         Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Ghi {formatted} → {tagPath} (Kết quả: {result})");
                     }
                     else
@@ -5251,18 +6125,9 @@ namespace RegistrationForm1
                 MessageBox.Show("Lỗi ghi PLC: " + ex.Message);
             }
         }
+    
 
-        // Hàm helper để parse giá trị label về dạng string chuẩn
-        private string ParseValue(string text)
-        {
-            if (string.IsNullOrWhiteSpace(text))
-                return null;
 
-            if (double.TryParse(text, out double number))
-                return number.ToString("0.00"); // Format 2 số lẻ
-
-            return text; // Nếu không parse được thì trả về nguyên string
-        }
         private async Task WriteTagTimer_Tick(object sender, EventArgs e)
         {
             await WriteTagFromLabel();

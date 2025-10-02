@@ -38,7 +38,6 @@
             Ahd.Winforms.Controls.SyncTarget syncTarget7 = new Ahd.Winforms.Controls.SyncTarget();
             Ahd.Winforms.Controls.SyncTarget syncTarget8 = new Ahd.Winforms.Controls.SyncTarget();
             Ahd.Winforms.Controls.SyncTarget syncTarget9 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget10 = new Ahd.Winforms.Controls.SyncTarget();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -943,7 +942,7 @@
             // 
             // ahdSyncTag1
             // 
-            this.ahdSyncTag1.Enabled = false;
+            this.ahdSyncTag1.Enabled = true;
             this.ahdSyncTag1.SyncInterval = 200;
             syncTarget1.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
             syncTarget1.TargetTagPath = "Local Station/DauTieng/PLC1_2/Fllow_Door1";
@@ -963,8 +962,6 @@
             syncTarget8.TargetTagPath = "Local Station/DauTieng/PLC3_4/Total_Fllow";
             syncTarget9.SourceTagPath = "Local Station/DauTieng/S71500/Station_3/Total_Fllow";
             syncTarget9.TargetTagPath = "Local Station/DauTieng/PLC5_6/Total_Fllow";
-            syncTarget10.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
-            syncTarget10.TargetTagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door1";
             this.ahdSyncTag1.Targets.AddRange(new Ahd.Winforms.Controls.SyncTarget[] {
             syncTarget1,
             syncTarget2,
@@ -974,8 +971,7 @@
             syncTarget6,
             syncTarget7,
             syncTarget8,
-            syncTarget9,
-            syncTarget10});
+            syncTarget9});
             // 
             // FrmMain
             // 

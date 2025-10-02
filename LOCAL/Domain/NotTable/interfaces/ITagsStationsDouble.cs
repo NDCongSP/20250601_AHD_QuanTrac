@@ -8,6 +8,7 @@ namespace Domain
 {
     public interface ITagsStationsDouble
     {
+        //Tag device goc
         public double? HT_Cylinder1_1 { get; set; }
         public double? HT_Cylinder1_2 { get; set; }
         public double? HT_Cylinder2_1 { get; set; }
@@ -18,7 +19,8 @@ namespace Domain
         public double? Pressure_Oil_Door1 { get; set; } 
         public double? Pressure_Oil_Door2 { get; set; } 
         public double? Fllow_Door1 { get; set; } 
-        public double? Fllow_Door2 { get; set; } 
+        public double? Fllow_Door2 { get; set; }
+        public double? Total_Fllow { get; set; }
 
         //gia tri offset
         public double? HT_Cylinder1_1_Offset { get; set; } 

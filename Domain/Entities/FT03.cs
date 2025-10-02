@@ -1,58 +1,48 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain
+namespace Domain.Entities
 {
-    public class TagsStation : ITagsStationsDouble, ITagLocationInfo
+    /// <summary>
+    /// Data Log.
+    /// </summary>
+    [Table("FT03")]
+    public class FT03 : IGenericEntity, ITagsStationsDouble, ITagLocationInfo, ICalculatorValue
     {
-        public string Path { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// Báo data log theo event tag valuchange hay theo timer.
+        /// khi report thì where theo điều kiện này để lấy dữ liệu theo timer cho các giá trị value.
+        /// còn không thì lấy theo event tag valuechange cho các thông số trạng thái kiểu bool.
+        /// </summary>
+        public bool LogBaseInterval { get; set; } = true;
+
+        public int LocationId { get; set; }
+        public string LocationName { get; set; }
+
+        /// <summary>
+        /// Station Id.
+        /// StationInfoModel.Id.
+        /// </summary>
+        [Display(Name = "Station Id")]
         public int StationId { get; set; }
-        public string StationName { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Station name.
+        /// StationInfoModel.Name.
+        /// </summary>
+        [Display(Name = "Station Name")]
+        public string? StationName { get; set; }
+        public string? CreateOperatorId { get; set; }
+        public DateTime? CreateAt { get; set; }
+        public string? UpdateOperatorId { get; set; }
+        public DateTime? UpdateAt { get; set; }
+        public bool? IsDeleted { get; set; }
 
-        public bool? Remote { get; set; } = false;
-        public bool? Local { get; set; } = false;
-        public bool? Auto { get; set; } = false;
-        public bool? Man { get; set; } = false;
-        public bool? Local_Stop { get; set; } = false;
-        public bool? DC1_Running { get; set; } = false;
-        public bool? DC2_Running { get; set; } = false;
-        public bool? DC3_Running { get; set; } = false;
-        public bool? Door1_Opening { get; set; } = false;
-        public bool? Door1_Closing { get; set; } = false;
-        public bool? Door2_Opening { get; set; } = false;
-        public bool? Door2_Closing { get; set; } = false;
-        public bool? Doorlock1_Opening { get; set; } = false;
-        public bool? Doorlock1_Closing { get; set; } = false;
-        public bool? Doorlock2_Opening { get; set; } = false;
-        public bool? Doorlock2_Closing { get; set; } = false;
-        public bool? Door1_Open { get; set; } = false;
-        public bool? Door1_Close { get; set; } = false;
-        public bool? Door2_Open { get; set; } = false;
-        public bool? Door2_Close { get; set; } = false;
-        public bool? Doorlock1_1Open { get; set; } = false;
-        public bool? Doorlock1_1Close { get; set; } = false;
-        public bool? Doorlock1_2Open { get; set; } = false;
-        public bool? Doorlock1_2Close { get; set; } = false;
-        public bool? Doorlock2_1Open { get; set; } = false;
-        public bool? Doorlock2_1Close { get; set; } = false;
-        public bool? Doorlock2_2Open { get; set; } = false;
-        public bool? Doorlock2_2Close { get; set; } = false;
-        public bool? DC1_Over { get; set; } = false;
-        public bool? DC2_Over { get; set; } = false;
-        public bool? DC3_Over { get; set; } = false;
-        public bool? Door1_PressureHigh { get; set; } = false;
-        public bool? Door1_PressureLow { get; set; } = false;
-        public bool? Door2_PressureHigh { get; set; } = false;
-        public bool? Door2_PressureLow { get; set; } = false;
-        public bool? Al_Door1 { get; set; } = false;
-        public bool? Al_Door2 { get; set; } = false;
-        public bool? Temp_Oil_High { get; set; } = false;
-        public bool? Temp_Oil_Low { get; set; } = false;
-        public bool? Lock1 { get; set; } = false;
-        public bool? Lock2 { get; set; } = false;
-        public bool? Door1_Open_Door { get; set; } = false;
-        public bool? Door2_Open_Door { get; set; } = false;
-
+        //Tag station
         public double? HT_Cylinder1_1 { get; set; } = 0;
         public double? HT_Cylinder1_2 { get; set; } = 0;
         public double? HT_Cylinder2_1 { get; set; } = 0;
@@ -64,6 +54,7 @@ namespace Domain
         public double? Pressure_Oil_Door2 { get; set; } = 0;
         public double? Fllow_Door1 { get; set; } = 0;
         public double? Fllow_Door2 { get; set; } = 0;
+        public double? Total_Fllow { get; set; } = 0;
         public double? HT_Cylinder1_1_Offset { get; set; } = 0;
         public double? HT_Cylinder1_2_Offset { get; set; } = 0;
         public double? HT_Cylinder2_1_Offset { get; set; } = 0;
@@ -86,15 +77,15 @@ namespace Domain
         public double? Pressure_Oil_Door2_Final { get; set; } = 0;
         public double? Fllow_Door1_Final { get; set; } = 0;
         public double? Fllow_Door2_Final { get; set; } = 0;
+        public double? Q_i_1 { get; set; } = 0;
+        public double? Q_i_2 { get; set; } = 0;
+
+        //Tag location information
         public double? Fllow_Ho { get; set; } = 0;
         public double? Fllow_Ho_Offset { get; set; } = 0;
         public double? Fllow_Ho_Final { get; set; } = 0;
-        public double? Q_i_1 { get; set; } = 0;
-        public double? Q_i_2 { get; set; } = 0;
-    }
 
-    public class CalculatorValueModel : ICalculatorValue
-    {
+        //Tag calculator value
         public double? API_Fllow_DauTieng { get; set; } = 0;
         public double? API_Fllow_BenSuc { get; set; } = 0;
         public double? API_Fllow_SonDai { get; set; } = 0;
@@ -138,6 +129,7 @@ namespace Domain
         public double W2_ho_old { get; set; } = 0;
         public double Q_den { get; set; } = 0;
         public double W_den { get; set; } = 0;
+        public double Q_i_total { get; set; } = 0;
         public double Q_tr { get; set; } = 0;
         public double W_tr { get; set; } = 0;
         public double Q_cs1 { get; set; } = 0;
@@ -151,6 +143,5 @@ namespace Domain
         public double Q_di { get; set; } = 0;
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
-        public double Q_i_total { get; set; } = 0;
     }
 }

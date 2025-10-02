@@ -53,6 +53,14 @@ namespace Domain
         public bool? Lock2 { get; set; } = false;
         public bool? Door1_Open_Door { get; set; } = false;
         public bool? Door2_Open_Door { get; set; } = false;
+        public bool? Status_Open_Door1 { get; set; } = false;
+        public bool? Status_Close_Door1 { get; set; } = false;
+        public bool? Status_Open_Door2 { get; set; } = false;
+        public bool? Status_Close_Door2 { get; set; } = false;
+        public bool? Status_Open_Doorlock1 { get; set; } = false;
+        public bool? Status_Close_Doorlock1 { get; set; } = false;
+        public bool? Status_Open_Doorlock2 { get; set; } = false;
+        public bool? Status_Close_Doorlock2 { get; set; } = false;
 
         public double? HT_Cylinder1_1 { get; set; } = 0;
         public double? HT_Cylinder1_2 { get; set; } = 0;
@@ -65,6 +73,7 @@ namespace Domain
         public double? Pressure_Oil_Door2 { get; set; } = 0;
         public double? Fllow_Door1 { get; set; } = 0;
         public double? Fllow_Door2 { get; set; } = 0;
+        public double? Total_Fllow { get; set; } = 0;
         public double? HT_Cylinder1_1_Offset { get; set; } = 0;
         public double? HT_Cylinder1_2_Offset { get; set; } = 0;
         public double? HT_Cylinder2_1_Offset { get; set; } = 0;
