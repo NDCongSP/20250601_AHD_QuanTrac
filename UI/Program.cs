@@ -99,6 +99,7 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IRoleToPermissions>()
     .UseWithRestEaseClient<IFT01>()
     .UseWithRestEaseClient<IFT02>()
+    .UseWithRestEaseClient<IFT03>()
     .UseWithRestEaseClient<IFT05>()
     .UseWithRestEaseClient<IFT06>()
     .UseWithRestEaseClient<IFT07>();

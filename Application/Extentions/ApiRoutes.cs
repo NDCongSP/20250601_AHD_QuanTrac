@@ -87,6 +87,8 @@
         public static class FT03
         {
             public const string BasePath = "api/FT03";
+            public const string GetByFromDateToDateAsync = "GetByFromDateToDateAsync";
+
         }
 
         public static class FT04

@@ -29,7 +29,7 @@
 /* Bottom Section */
 .bottom-section {
     height: 40vh;
-    min-height: 200px;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
 }
@@ -157,7 +157,9 @@
     flex-direction: column;
     height: 100%;
 }
-
+.rz-legend-item {
+    text-wrap: nowrap !important;
+}
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
     .map-container {

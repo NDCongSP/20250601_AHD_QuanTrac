@@ -14,6 +14,7 @@ namespace Infrastructure.IoC.DependencyInjection
             services.AddScoped<IRoleToPermissions, RepositoryRoleToPermissionsServices>();
             services.AddScoped<IFT01, RepositoryFT01Services>();
             services.AddScoped<IFT02, RepositoryFT02Services>();
+            services.AddScoped<IFT03, RepositoryFT03Services>();
             services.AddScoped<IFT05, RepositoryFT05Services>();
             services.AddScoped<IFT06, RepositoryFT06Services>();
             services.AddScoped<IFT07, RepositoryFT07Services>();
