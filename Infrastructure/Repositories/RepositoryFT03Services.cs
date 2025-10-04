@@ -61,16 +61,17 @@ namespace Infrastructure.Repositories
                 }
 
                 var data = await dbContext.FT03s
-                    .Where(x => x.CreateAt.HasValue && 
-                              x.CreateAt.Value.Date >= fromDate.Value.Date && 
+                    .Where(x => x.CreateAt.HasValue && x.Fllow_Ho_Final > 0 &&
+                              x.CreateAt.Value.Date >= fromDate.Value.Date &&
                               x.CreateAt.Value.Date <= toDate.Value.Date)
-                    .OrderBy(x => x.CreateAt)
+                    //only take 1 record per day, dont check time
+                    .GroupBy(x => x.CreateAt.Value.Date)
                     .Select(x => new FT03DataPoint
                     {
-                        Date = x.CreateAt.Value,
-                        X_Value = x.CreateAt.Value.ToString("dd-MM", CultureInfo.InvariantCulture),
-                        Value = x.Fllow_Ho_Final
+                        Date = x.Key,
+                        Value = x.First().Fllow_Ho_Final
                     })
+                    .OrderBy(x => x.Date)
                     .ToListAsync();
 
                 return await Result<List<FT03DataPoint>>.SuccessAsync(data);
