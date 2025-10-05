@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reservoir Chart - Lấy giá trị Y theo vị trí chuột</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #chartContainer {
+            position: relative;
+            width: 1000px;
+            margin: auto;
+        }
+
+        .chart-label {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 3px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        #infoLine1 {
+            top: 5px;
+        }
+
+        #infoLine2 {
+            top: 25px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Biểu đồ mực nước hồ chứa (di chuột bất kỳ để xem Z)</h2>
+
+    <div id="chartContainer">
+        <div id="infoLine1" class="chart-label">
+            Mực nước hiện tại: 21.63m &nbsp;–&nbsp; Dung tích: 1040.69
+        </div>
+        <div id="infoLine2" class="chart-label">
+            X: 31/12/2025 00:54:37 &nbsp;–&nbsp; Z: 20.53m &nbsp;–&nbsp; W: 872.20×10⁶ m³ (Vùng A)
+        </div>
+        <canvas id="reservoirChart" height="400"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('reservoirChart').getContext('2d');
+        const infoLine2 = document.getElementById('infoLine2');
+
+        const currentLevel = 21.63;
+
+        const lineData = [
+            { x: "2025-07-01", y: 20.5 },
+            { x: "2025-07-10", y: 21.3 },
+            { x: "2025-07-20", y: 22.4 },
+            { x: "2025-07-30", y: 23.8 },
+            { x: "2025-08-10", y: 23.9 },
+            { x: "2025-08-20", y: 23.2 },
+            { x: "2025-08-30", y: 22.1 },
+            { x: "2025-09-10", y: 21.6 },
+            { x: "2025-09-20", y: 21.0 },
+            { x: "2025-09-30", y: 20.7 }
+        ];
+
+        const flowDots = [
+            { x: "2025-07-02", y: 19.8 },
+            { x: "2025-07-15", y: 21.5 },
+            { x: "2025-08-02", y: 22.3 },
+            { x: "2025-09-03", y: 22.6 }
+        ];
+
+        const data = {
+            datasets: [
+                {
+                    label: "Mực nước quan trắc",
+                    data: lineData,
+                    borderColor: "magenta",
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: "Flow_TL_CDD",
+                    data: flowDots,
+                    showLine: false,
+                    pointBackgroundColor: "blue",
+                    pointBorderColor: "blue",
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    order: 10
+                }
+            ]
+        };
+
+        const config = {
+            type: "line",
+            data: data,
+            options: {
+                responsive: true,
+                interaction: { mode: "nearest", intersect: true },
+                scales: {
+                    x: {
+                        type: "time",
+                        time: { unit: "day", displayFormats: { day: "dd/MM" } },
+                        grid: { display: true },
+                        ticks: { callback: val => luxon.DateTime.fromMillis(val).toFormat("dd/MM") },
+                        min: "2025-07-01",
+                        max: "2025-09-30"
+                    },
+                    y: {
+                        title: { display: true, text: "Mực nước (m)" },
+                        beginAtZero: false
+                    }
+                },
+                plugins: {
+                    legend: { position: "top" },
+                    tooltip: { enabled: false }, // tắt tooltip mặc định
+                    annotation: {
+                        annotations: {
+                            currentLine: {
+                                type: "line",
+                                yMin: currentLevel,
+                                yMax: currentLevel,
+                                borderColor: "red",
+                                borderWidth: 2,
+                                borderDash: [6, 6],
+                                label: {
+                                    enabled: true,
+                                    content: `Mực nước hiện tại: ${currentLevel} m`,
+                                    position: "end",
+                                    backgroundColor: "rgba(255,255,255,0.8)",
+                                    color: "red",
+                                    font: { weight: "bold" }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: [Chart.registry.getPlugin("annotation")]
+        };
+
+        const chart = new Chart(ctx, config);
+
+        // ✅ Lấy giá trị Y khi di chuột ở bất kỳ vị trí nào trên chart
+        chart.canvas.addEventListener('mousemove', (event) => {
+            const rect = chart.canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const yScale = chart.scales.y;
+            const xScale = chart.scales.x;
+
+            if (!xScale || !yScale) return;
+
+            const yValue = yScale.getValueForPixel(y);
+            const xValue = xScale.getValueForPixel(x);
+
+            // Hiển thị trên dòng infoLine2
+            if (yValue && xValue) {
+                const date = luxon.DateTime.fromMillis(xValue).toFormat("dd/MM/yyyy HH:mm");
+                infoLine2.innerHTML =
+                    `X: ${date} &nbsp;–&nbsp; Z: ${yValue.toFixed(2)}m &nbsp;–&nbsp; W: 872.20×10⁶ m³ (Vùng A)`;
+            }
+        });
+    </script>
+</body>
+
+</html>
