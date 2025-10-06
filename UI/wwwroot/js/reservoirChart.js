@@ -164,7 +164,7 @@ function updateChartWaterLevel(data) {
         { label: "Q400", field: "q400", borderColor: "#8E44AD", borderDash: [5, 5] },
         { label: "Q600", field: "q600", borderColor: "#F39C12", borderDash: [5, 5] },
         { label: "Q2800", field: "q2800", borderColor: "#B71C1C", borderDash: [5, 5] },
-        { label: "Z_Thực", field: "z_Thuc", borderColor: "blue", borderDash: [] },
+        { label: "Z_Thực", field: "z_Thuc", borderColor: "#0078D7", borderDash: [] },
       ].map(s => ({
         label: s.label,
         data: data.map(d => ({ x: d.x_Value, y: d[s.field], prefix: d.x_Prefix })),
@@ -187,7 +187,7 @@ function updateChartWaterLevel(data) {
           ...dataset,
           type: isZThuc ? 'line' : 'line',
           fill: isZThuc ? 'origin' : false,
-          backgroundColor: isZThuc ? '#D5FBFC' : dataset.borderColor + "33",
+          backgroundColor: isZThuc ? '#0078D733' : dataset.borderColor + "33",
           data: data.map((d, i) => ({
             x: d.x_Value,  // Use actual x_Value for positioning
             y: d[dataset.label === 'Bờ phải' ? 'boPhai' : 
