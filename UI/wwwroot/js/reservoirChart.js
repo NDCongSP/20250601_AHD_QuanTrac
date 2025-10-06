@@ -177,7 +177,7 @@ function updateChartWaterLevel(data) {
         pointRadius: 3,
         pointHoverRadius: 5
       }));
-      new Chart(ctx, {
+    new Chart(ctx, {
     type: 'line',
     data: { 
       labels: data.map(d => d.x_Prefix), // Use X_Prefix as labels
@@ -189,14 +189,14 @@ function updateChartWaterLevel(data) {
           fill: isZThuc ? 'origin' : false,
           backgroundColor: isZThuc ? '#D5FBFC' : dataset.borderColor + "33",
           data: data.map((d, i) => ({
-            x: i,  // Use index for positioning
+            x: d.x_Value,  // Use actual x_Value for positioning
             y: d[dataset.label === 'Bờ phải' ? 'boPhai' : 
                  dataset.label === 'Bờ trái' ? 'boTrai' : 
                  dataset.label === 'Q300' ? 'q300' : 
                  dataset.label === 'Q400' ? 'q400' : 
                  dataset.label === 'Q600' ? 'q600' :
                  dataset.label === 'Z_Thực' ? 'z_Thuc' : 'q2800'],
-            prefix: d.x_Value
+              prefix: d.x_Value
           }))
         };
       })
@@ -222,22 +222,25 @@ function updateChartWaterLevel(data) {
       },
       scales: {
         x: {
-          type: 'category',  // Use category scale for text labels
-          title: { 
-            display: true, 
-            text: 'Vị trí' 
-          },
-          grid: { 
-            display: false 
-          },
-          ticks: {
-            callback: function(value, index, values) {
-              return data[index].x_Prefix;
+            type: 'linear',
+            title: { display: true, text: 'Vị trí' },
+            grid: { display: false },
+            offset: false,
+            afterBuildTicks: axis => {
+              // Gán tick positions = danh sách x_Value thật
+              axis.ticks = data.map(d => ({ value: d.x_Value }));
             },
-            maxRotation: 90,
-            minRotation: 90
-          }
-        },
+            ticks: {
+              callback: function(value) {
+                // Tìm x_Prefix tương ứng với x_Value
+                const found = data.find(d => d.x_Value === value);
+                return found ? found.x_Prefix : '';
+              },
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 90
+            }
+          },
         y: {
           title: { 
             display: true, 
