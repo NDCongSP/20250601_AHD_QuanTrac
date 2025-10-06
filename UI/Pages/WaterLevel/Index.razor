@@ -2,6 +2,23 @@
 @using System.Timers
 @using UI.StaticClass
 @attribute [Authorize(Policy = "Admin")]
+<style>
+    h2 {
+        text-align: center;
+        color: #003366;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 70vh;
+        width: 100%;
+    }
+
+    #riverChart {
+        width: 100% !important;
+    }
+</style>
+
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
     <figure>
         <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
@@ -13,11 +30,18 @@
         </RadzenStack>
     </figure>
 </RadzenPanel>
-
+<RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
+    <div class="chart-container">
+        <canvas id="riverChart"></canvas>
+    </div>
+</RadzenPanel>
 @code {
     string _svg;
     private System.Timers.Timer _timer;
-    protected override void OnInitialized()
+    private List<FT07_ChartMucNuoc> _ft07ChartData = new();
+    private RealtimeDisplayModel realtimeData = new();
+    private static readonly Random _random = new Random();
+    protected override async Task OnInitializedAsync()
     {
         LayoutState.SetTitle(_localizer["Mực nước"]);
         using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.MNGG.svg");
@@ -37,9 +61,10 @@
     {
         try
         {
-            var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
+            realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             //var realtimeData = FakeDataGenerator.GenerateLocation();
             await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
+            await GetChartData();
             StateHasChanged();
         }
         catch { }
@@ -48,5 +73,34 @@
     public void Dispose()
     {
         _timer.Dispose();
+    }
+
+    public async Task GetChartData()
+    {
+        var data = await _ft07Service.GetAllAsync();
+        if (data?.Data != null)
+        {
+            _ft07ChartData = data.Data;
+            string? currentValue = "0";
+            foreach (var item in _ft07ChartData)
+            {
+                var propertyName = item.Z_Thuc?.ToString();
+                if (!string.IsNullOrEmpty(propertyName))
+                {
+                    var propInfo = realtimeData.CalculatorValue.GetType().GetProperty(propertyName);
+                    if (propInfo != null)
+                    {
+                        var value = propInfo.GetValue(realtimeData.CalculatorValue);
+                        @* item.Z_Thuc = currentValue =value?.ToString(); *@
+                        item.Z_Thuc = currentValue = _random.Next(1, 10).ToString();
+                    }
+                }
+                else
+                {
+                    item.Z_Thuc = currentValue;
+                }
+            }
+            await _jsRuntime.InvokeVoidAsync("updateChartWaterLevel", _ft07ChartData);
+        }
     }
 }
