@@ -29,7 +29,7 @@
 /* Bottom Section */
 .bottom-section {
     height: 40vh;
-    min-height: 200px;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
 }
@@ -157,7 +157,9 @@
     flex-direction: column;
     height: 100%;
 }
-
+.rz-legend-item {
+    text-wrap: nowrap !important;
+}
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
     .map-container {
@@ -247,4 +249,43 @@
     font-style: italic;
     padding: 2rem;
     text-align: center;
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+#chartContainer {
+    position: relative;
+    height: 500px; /* Fixed height for better control */
+    width: 100%;
+}
+
+.chart-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 100; /* Ensure it's above the chart */
+    pointer-events: none; /* Allow interaction with chart below */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Add shadow for better visibility */
+}
+
+#infoLine1 {
+    top: 10px;
+}
+
+#infoLine2 {
+    top: 40px;
+}
+
+#reservoirChart {
+    width: 100% !important;
 }

@@ -74,11 +74,11 @@
 @layout LoginLayout
 
 <RadzenRow style="min-height: 100vh; margin: 0;" Class="login-container">
-    <RadzenColumn Size="12" SizeLg="7" Class="rz-p-0 d-none d-lg-flex align-items-center justify-content-center" style="background-color: #2196F3;">
+    <RadzenColumn Size="12" SizeLG="7" Class="rz-p-0 d-none d-lg-flex align-items-center justify-content-center" style="background-color: #2196F3;">
         <!-- Logo for desktop -->
         <img src="~/images/generals/logo.png" alt="Logo" class="login-logo" />
     </RadzenColumn>
-    <RadzenColumn Size="12" SizeLg="5" Class="d-flex align-items-center justify-content-center rz-p-4">
+    <RadzenColumn Size="12" SizeLG="5" Class="d-flex align-items-center justify-content-center rz-p-4">
         <RadzenCard Class="login-card">
             @if (loginRequest == null)
             {

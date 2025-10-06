@@ -12,7 +12,8 @@ function updateElement(element, value, { decimals = 2, prefix = '', suffix = '' 
     if (element.id.includes('STT'))
         console.log(`${element} :${value}`)
     if (typeof value === 'number') {
-        const formattedValue = value.toFixed(decimals);
+        // Only show decimals if the number has a fractional part
+        const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(decimals);
         element.innerHTML = `${prefix}${formattedValue}${suffix}`;
         element.style.display = '';
         element.style.fill = value === 0 ? 'red' : '';

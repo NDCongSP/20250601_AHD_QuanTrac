@@ -16,6 +16,20 @@
         margin-bottom: 1rem;
     }
     
+    .btn-active, .btn-inactive, .btn-emergency {
+        pointer-events: none !important;
+        cursor: default !important;
+        opacity: 1 !important;
+    }
+    .btn-active:hover, .btn-inactive:hover, .btn-emergency:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    .btn-active:active, .btn-inactive:active, .btn-emergency:active {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
     .param-row {
         display: flex;
         align-items: center;

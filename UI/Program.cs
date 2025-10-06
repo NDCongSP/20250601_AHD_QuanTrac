@@ -2,6 +2,7 @@
 using Application.Services.Authen.UI;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -12,6 +13,7 @@ using RestEase.HttpClientFactory;
 using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using UI;
+using UI.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -99,11 +101,26 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IRoleToPermissions>()
     .UseWithRestEaseClient<IFT01>()
     .UseWithRestEaseClient<IFT02>()
+    .UseWithRestEaseClient<IFT03>()
     .UseWithRestEaseClient<IFT05>()
     .UseWithRestEaseClient<IFT06>()
     .UseWithRestEaseClient<IFT07>();
+
+// Register the initialization service
+builder.Services.AddScoped<AppInitializer>();
+
 var app = builder.Build();
-await GlobalVariable.InitializeConfigAsync(app.Services);
+
+// Get the navigation manager
+var navigationManager = app.Services.GetRequiredService<NavigationManager>();
+
+// Only initialize config if not on the login page
+if (!navigationManager.Uri.EndsWith("/login", StringComparison.OrdinalIgnoreCase) && 
+    !navigationManager.Uri.EndsWith("/login/", StringComparison.OrdinalIgnoreCase))
+{
+    await app.Services.GetRequiredService<AppInitializer>().InitializeConfigAsync();
+}
+
 builder.Services.AddScoped<HttpClient>(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UI"));
 builder.Services.AddBlazoredLocalStorage();
 

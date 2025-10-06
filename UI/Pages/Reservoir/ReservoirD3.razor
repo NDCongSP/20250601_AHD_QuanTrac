@@ -1,0 +1,415 @@
+@* @page "/reservoir-d3"
+@using System.Text.RegularExpressions
+@using System.Timers
+@using System.ComponentModel
+@using System.Globalization
+@using UI.StaticClass
+@using Application.Services
+@using Microsoft.Extensions.Localization
+@using Microsoft.JSInterop
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Authorization
+@using Radzen.Blazor
+@using Domain.Models
+@attribute [Authorize(Policy = "Admin")]
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+    }
+
+    #chartContainer {
+        position: relative;
+        height: 500px; /* Fixed height for better control */
+        width: 100%;
+    }
+
+    .chart-label {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 5px 10px;
+        border-radius: 4px;
+        white-space: nowrap;
+        z-index: 100; /* Ensure it's above the chart */
+        pointer-events: none; /* Allow interaction with chart below */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Add shadow for better visibility */
+    }
+
+    #infoLine1 {
+        top: 10px;
+    }
+
+    #infoLine2 {
+        top: 40px;
+    }
+
+    #reservoirChart {
+        width: 100% !important;
+    }
+</style>
+
+<div class="main-container">
+    <!-- Top Section with 3 columns -->
+    <div class="top-section">
+        <!-- First Column with SVG -->
+        <div class="column-container" style="flex: 1; min-width: 300px;">
+            <div class="column-header">
+                @_localizer["Hồ chứa"]
+            </div>
+            <div class="column-content">
+                <div class="svg-container">
+                    @((MarkupString)_svg)
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Column with Data Grid -->
+        <div class="column-container" style="flex: 0.8; min-width: 250px;">
+            <div class="column-header">
+                Dữ liệu
+            </div>
+            <div class="column-content">
+                <div id="data-grid" style="height: 100%; overflow: auto;">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vị trí</th>
+                                <th style="text-align: right;">Giá trị (m)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in apiData)
+                            {
+                                <tr>
+                                    <td>@item.Key</td>
+                                    <td style="text-align: right;">@item.Value.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Column with Map -->
+        <div class="column-container" style="flex: 1.2; min-width: 300px;">
+            <div class="column-header">
+                Bản đồ
+            </div>
+            <div class="column-content">
+                <div class="map-container">
+                    <iframe src="https://vrain.vn/61/overview?public_map=windy"
+                            style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Section with D3 Chart -->
+    <div class="bottom-section">
+        <div class="chart-header">
+            Zmndbt (m): 24.40 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wmndbt (10<sup>6</sup>m<sup>3</sup>): 1580.80
+        </div>
+        <div id="chartContainer">
+            <div id="infoLine1" class="chart-label">
+                Mực nước hiện tại: 21.63m &nbsp;–&nbsp; Dung tích: 1040.69
+            </div>
+            <div id="infoLine2" class="chart-label">
+                @_infoLine2
+            </div>
+            <canvas id="reservoirChart" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string _svg, _infoLine2;
+    private Dictionary<string, double> apiData = new();
+    private List<FT05_ChartHoChuaModel> chartData = new();
+    private List<FT03DataPoint> _ft03ChartData = new();
+    private Timer _refreshTimer;
+    private DotNetObjectReference<ReservoirD3> _dotNetHelper;
+    private bool _isInitialized = false;
+    private List<FT06_InterpolationTable> _ft06Data = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _dotNetHelper = DotNetObjectReference.Create(this);
+        await _jsRuntime.InvokeVoidAsync("setDotNetReference", _dotNetHelper);
+        await LoadData();
+        await LoadFT06Data();
+        _isInitialized = true;
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            var response = await _ft05Service.GetAllAsync();
+            if (response?.Data != null)
+            {
+                chartData = response.Data.Select(x => new FT05_ChartHoChuaModel
+                    {
+                        Id = x.Id,
+                        Index = x.Index,
+                        X_Value = x.X_Value,
+                        L_CTDD = x.L_CTDD,
+                        L_DPL = x.L_DPL,
+                        L_HCCN = x.L_HCCN,
+                        L_MNC = x.L_MNC,
+                        L_MNDBT = x.L_MNDBT,
+                        L_DPPH = x.L_DPPH,
+                        A_VungA = x.A_VungA,
+                        A_VungB = x.A_VungB,
+                        A_VungC = x.A_VungC,
+                    }).ToList();
+            }
+
+            var ft03Response = await _ft03Service.GetByFromDateToDateAsync();
+            if (ft03Response?.Data != null)
+            {
+                _ft03ChartData = ft03Response.Data;
+            }
+
+            await UpdateChart();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading data: {ex.Message}");
+        }
+    }
+
+    private async Task UpdateChart()
+    {
+        var lineProperties = typeof(FT05_ChartHoChuaModel)
+            .GetProperties()
+            .Where(p => p.Name.StartsWith("L_") && p.PropertyType == typeof(double?))
+            .ToList();
+
+        var areaProperties = typeof(FT05_ChartHoChuaModel)
+            .GetProperties()
+            .Where(p => p.Name.StartsWith("A_") && p.PropertyType == typeof(double?))
+            .ToList();
+
+        var lineDatasets = lineProperties.Select(prop => new
+        {
+            label = prop.Name.Replace("L_", ""),
+            data = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .OrderBy(x => x.Index)
+                .Select(x => new
+                {
+                    x = x.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    y = (double)prop.GetValue(x)
+                })
+                .ToList(),
+            borderColor = GetLineColor(prop.Name),
+            borderWidth = 2,
+            pointRadius = 3,
+            fill = false,
+            tension = 0.3,
+            order = 2
+
+        }).ToList();
+
+        var areaDatasets = areaProperties.Select(prop => new
+        {
+            label = prop.Name.Replace("A_", ""),
+            data = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .OrderBy(x => x.Index)
+                .Select(x => new
+                {
+                    x = x.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    y = (double)prop.GetValue(x)
+                })
+                .ToList(),
+            backgroundColor = GetAreaColor(prop.Name),
+            borderColor = GetLineColor(prop.Name),
+            borderWidth = 1,
+            pointRadius = 2,
+            fill = true,
+            tension = 0.1,
+            order = 3
+
+        }).ToList();
+
+        var ft03Dataset = new
+        {
+            label = "Flow_TL_CDD",
+            data = _ft03ChartData?
+                .Where(x => x.X_Value != null && x.Value != null)
+                .Select(x => new
+                {
+                    x = x.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    y = x.Value
+                })
+                .ToList(),
+            showLine = false,
+            pointBackgroundColor = "blue",
+            pointBorderColor = "blue",
+            pointRadius = 6,
+            pointHoverRadius = 8,
+            order = 1
+        };
+
+        var allDatasets = new List<object>();
+        allDatasets.AddRange(lineDatasets);
+        allDatasets.AddRange(areaDatasets);
+        allDatasets.Add(ft03Dataset);
+
+        var chartConfig = new
+        {
+            type = "line",
+            data = new { datasets = allDatasets },
+            options = new
+            {
+                responsive = true,
+                maintainAspectRatio = false,
+                interaction = new { mode = "nearest", intersect = true },
+                layout = new
+                {
+                    padding = new
+                    {
+                        top = 60
+                    }
+                },
+                scales = new
+                {
+                    x = new
+                    {
+                        type = "time",
+                        time = new
+                        {
+                            unit = "day",
+                            displayFormats = new { day = "dd-MM" },
+                            tooltipFormat = "dd/MM/yyyy HH:mm"
+                        },
+                        grid = new { display = true },
+                        ticks = new
+                        {
+                            maxRotation = 45,
+                            minRotation = 45
+                        },
+                        min = "2025-07-01",
+                        max = "2026-06-30"
+                    },
+                    y = new
+                    {
+                        title = new { display = true, text = "Mực nước (m)" },
+                        beginAtZero = false,
+                        afterFit = "function(scale) { scale.paddingTop = 30; }"
+                    }
+                },
+                plugins = new
+                {
+                    legend = new { position = "bottom" },
+                    tooltip = new
+                    {
+                        enabled = true,
+                        callbacks = new
+                        {
+                            label = new
+                            {
+                                label = "function(context) { return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'm'; }"
+                            }
+                        }
+                    },
+                    annotation = new
+                    {
+                        annotations = new
+                        {
+
+                        }
+                    }
+                }
+            }
+        };
+        await _jsRuntime.InvokeVoidAsync("updateChart", chartConfig);
+    }
+
+    private string GetLineColor(string propertyName)
+    {
+        var colors = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        { "L_CTDD", "red" },
+        { "L_DPL", "red" },
+        { "L_HCCN", "red" },
+        { "L_MNKT", "black" },
+        { "L_MNTK", "black" },
+        { "L_MNC", "black" },
+        { "L_MNDBT", "black" },
+        { "L_DPPH", "#FF49E7" },
+        { "Flow_TL_CDD", "blue" },
+        { "A_VungA", "red" },
+        { "A_VungB", "#FF49E7" },
+        { "A_VungC", "red" }
+    };
+        return colors.TryGetValue(propertyName, out var color) ? color : "#" + Guid.NewGuid().ToString("N").Substring(0, 6);
+    }
+
+    private string GetAreaColor(string propertyName)
+    {
+        var colors = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        { "A_VungA", "#C49078" },
+        { "A_VungB", "#ACD2AD" },
+        { "A_VungC", "#E0EFF6" }
+    };
+        return colors.TryGetValue(propertyName, out var color) ? color : $"rgba({new Random().Next(0, 255)}, {new Random().Next(0, 255)}, {new Random().Next(0, 255)}, 0.2)";
+    }
+
+    public void Dispose()
+    {
+        _refreshTimer?.Dispose();
+        _dotNetHelper?.Dispose();
+    }
+    private async Task LoadFT06Data()
+    {
+        var ft06 = await _ft06Service.GetAllAsync();
+        if (ft06?.Data != null)
+        {
+            _ft06Data = ft06.Data;
+        }
+    }
+    private object GetFT06DataByYValue(double yValue)
+    {
+        try
+        {
+            var integerPart = Math.Floor(yValue);
+            var decimalPart = Math.Round((yValue - integerPart) * 100, 0);
+            var data = _ft06Data.FirstOrDefault(x => x.Z == integerPart);
+            if (data == null)
+                return 0;
+            return data.GetType().GetProperty($"Col{decimalPart}")?.GetValue(data);
+        }
+        catch (Exception ex)
+        {
+            return 0;
+        }
+
+    }
+    [JSInvokable]
+    public async Task OnChartHover(string date, double yValue)
+    {
+        try
+        {
+            var Q = GetFT06DataByYValue(yValue);
+            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: {Q}×10⁶m³";
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: 0×10⁶m³";
+            Console.WriteLine($"Error in OnChartHover: {ex.Message}");
+        }
+    }
+} *@

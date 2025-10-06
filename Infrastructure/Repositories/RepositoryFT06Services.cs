@@ -20,7 +20,7 @@ public class RepositoryFT06Services(ApplicationDbContext dbContext, IHttpContext
         }
         catch (Exception ex)
         {
-            return Result<List<FT06_InterpolationTable>>.Fail($"Failed to add FT05_ChartHoChua: {ex.Message}");
+            return Result<List<FT06_InterpolationTable>>.Fail($"Failed to add FT06_InterpolationTable: {ex.Message}");
         }
     }
 
@@ -123,5 +123,7 @@ public class RepositoryFT06Services(ApplicationDbContext dbContext, IHttpContext
             return Result<FT06_InterpolationTable>.Fail($"Failed to update FT06_InterpolationTable: {ex.Message}");
         }
     }
+
+    
 }
 

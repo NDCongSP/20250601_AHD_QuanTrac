@@ -1,15 +1,33 @@
 @page "/reservoir"
 @using System.Text.RegularExpressions
 @using System.Timers
+@using System.ComponentModel
+@using System.Globalization
 @using UI.StaticClass
-@using Radzen.Blazor
+@using Application.Services
+@using Microsoft.Extensions.Localization
 @using Microsoft.JSInterop
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Authorization
+@using Radzen.Blazor
+@using Domain.Models
 @inject IJSRuntime JSRuntime
 @attribute [Authorize(Policy = "Admin")]
-@{
-    int i = 1;
-}
 
+<style>
+    .rz-legend-item {
+        text-wrap: nowrap !important;
+    }
+
+    .rz-series-data-label-fill {
+        font-size: small;
+    }
+
+    .rz-chart-series-marker[data-value='0'] {
+        display: none;
+    }
+</style>
 
 <div class="main-container">
     <!-- Top Section with 3 columns -->
@@ -34,15 +52,13 @@
             <!-- Second Column without Fieldset -->
             <RadzenColumn SizeXS="12" SizeLG="3" class="rz-mx-auto equal-height-column" Style="height: 365px;">
                 <RadzenDataGrid Data="@apiData" Style="height: 100%;"
-                    TItem="KeyValuePair<string, double>" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
-                    AllowPaging="false" ShowPagingSummary="false">
+                                TItem="KeyValuePair<string, double>" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
+                                AllowPaging="false" ShowPagingSummary="false">
                     <Columns>
-                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Vị trí" Property="Key"/>
+                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Vị trí" Property="Key" />
                         <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Giá trị (m)" Property="Value"
                                               FormatString="{0:N2}" TextAlign="TextAlign.Right" />
-                        
                     </Columns>
-                        
                     <EmptyTemplate>
                         <div class="rz-datatable-emptymessage" style="text-align: center; padding: 10px;">
                             @_localizer["Không có dữ liệu"]
@@ -55,7 +71,7 @@
             <RadzenColumn SizeXS="12" SizeLG="5" class="rz-mx-auto equal-height-column">
                 <div class="map-container" style="border-top: none;height: 365px;">
                     <iframe src="https://vrain.vn/61/overview?public_map=windy"
-                        style="width: 100%; height: 100%; border: none; border-radius: 0 0 4px 4px;" allowfullscreen>
+                            style="width: 100%; height: 100%; border: none; border-radius: 0 0 4px 4px;" allowfullscreen>
                     </iframe>
                 </div>
             </RadzenColumn>
@@ -65,101 +81,459 @@
     <!-- Bottom Section with Stacked Area Chart -->
     <div class="bottom-section">
         <div class="chart-wrapper">
-            <div class="chart-header">
-                Biểu đồ thống kê
+            <div class="chart-header" style="font-weight: bold;">
+                Zmndbt (m): 24.40 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wmndbt (10<sup>6</sup>m<sup>3</sup>): 1580.80
             </div>
-            <div class="chart-container">
+            <div id="chartContainer">
+                <div id="infoLine1" class="chart-label">
+                    @_infoLine1
+                </div>
+                <div id="infoLine2" class="chart-label">
+                    @_infoLine2
+                </div>
+                <canvas id="reservoirChart" height="400"></canvas>
+            </div>
+            @* <div class="chart-container">
                 <RadzenChart @ref="_chart" Style="width: 100%; height: 100%;">
-                    <RadzenStackedAreaSeries Smooth="true" Data="@chartData" CategoryProperty="Time" Title="Lộc Thiện"
-                                             ValueProperty="LocThien">
-                        <RadzenSeriesDataLabels Visible="false" Fill="#FB7185" />
-                    </RadzenStackedAreaSeries>
-                    <RadzenStackedAreaSeries Smooth="false" Data="@chartData" CategoryProperty="Time" Title="Lộc Ninh"
-                                             LineType="LineType.Dashed" ValueProperty="LocNinh">
-                        <RadzenSeriesDataLabels Visible="@false" />
-                    </RadzenStackedAreaSeries>
-                    <RadzenAreaSeries Data="@chartData" CategoryProperty="Time" Title="Lộc Thành"
-                                      ValueProperty="LocThanh" LineType="LineType.Solid" />
-                    <RadzenLegend Position="LegendPosition.Top" />
-                    <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" />
-                    <RadzenValueAxis />
+                    <!-- Line Series (L_*) -->
+                    @{
+                        var lineProps = typeof(FT05_ChartHoChuaModel).GetProperties()
+                        .Where(p => p.Name.StartsWith("L_") && p.PropertyType == typeof(double?))
+                        .ToList();
+
+                        foreach (var prop in lineProps)
+                        {
+                            var displayName = (prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
+                            .FirstOrDefault() as DisplayNameAttribute)?.DisplayName ?? prop.Name.Replace("L_", "");
+                            var strokeColor = displayName switch
+                            {
+                                string s when s.Contains("CTDD") => "#A31629",
+                                string s when s.Contains("DPL") => "#B5131E",
+                                string s when s.Contains("HCCN") => "#B5131E",
+                                string s when s.Contains("DPPH") => "#CB46C2",
+                                string s when s.Contains("Fllow_TL_CDD") => "blue",
+                                _ => "black"
+                            };
+
+                            <RadzenLineSeries Data="@chartData" CategoryProperty="X_Value"
+                                              Stroke="black" Title="@displayName" ValueProperty="@prop.Name"
+                                              LineType="LineType.Solid">
+                                <RadzenSeriesDataLabels Visible="false" />
+                                <RadzenMarkers Visible="true" Size="3" Fill="@strokeColor" MarkerType="MarkerType.Circle" />
+                                <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" Visible="true" />
+                                <RadzenValueAxis>
+                                    <RadzenGridLines Visible="true" />
+                                </RadzenValueAxis>
+                            </RadzenLineSeries>
+                        }
+
+                        <!-- FT03 Data Series -->
+                        @if (_ft03ChartData?.Any() == true)
+                        {
+                            // <RadzenLineSeries Data="@_ft03ChartData"
+                            //                   CategoryProperty="X_Value"
+                            //                   Stroke="blue"
+                            //                   Title="Fllow_TL_CDD"
+                            //                   ValueProperty="Value"
+                            //                   LineType="LineType.Solid">
+                            //     <RadzenSeriesDataLabels Visible="false" />
+                            //     <RadzenMarkers Visible="true" Size="3" Fill="blue" MarkerType="MarkerType.Circle" />
+                            // </RadzenLineSeries>
+
+                            <RadzenLineSeries Data="@_ft03ChartData"
+                                              CategoryProperty="X_Value"
+                                              ValueProperty="Value"
+                                              Title="Flow_TL_CDD"
+                                              LineType="LineType.Dotted"
+                                              Stroke="blue">
+                                <RadzenMarkers Visible="true" Size="3" Fill="blue" MarkerType="MarkerType.Circle" />
+                                <RadzenCategoryAxis Padding="20">
+                                </RadzenCategoryAxis>
+                            </RadzenLineSeries>
+                        }
+                    }
+
+                    <!-- Area Series (A_*) -->
+                    @{
+                        var areaProps = typeof(FT05_ChartHoChuaModel).GetProperties()
+                        .Where(p => p.Name.StartsWith("A_") && p.PropertyType == typeof(double?))
+                        .OrderByDescending(x => x.Name)
+                        .ToList();
+
+                        foreach (var prop in areaProps)
+                        {
+                            var displayName = (prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
+                            .FirstOrDefault() as DisplayNameAttribute)?.DisplayName ?? prop.Name.Replace("A_", "");
+
+                            var fillColor = displayName.Contains("A") ? "#C49078" : displayName.Contains("B") ? "#A9D1AE" : "#E0EFF6";
+                            var strokeColor = displayName.Contains("A") ? "#E51300" : displayName.Contains("B") ? "#DD10D9" : "#AB3130";
+                            var isVisible = displayName.Contains("C") || displayName.Contains("B");
+                            <RadzenAreaSeries Data="@chartData" CategoryProperty="X_Value"
+                                              Title="@displayName"
+                                              Fill="@fillColor"
+                                              Stroke="@strokeColor"
+                                              ValueProperty="@prop.Name">
+                                <RadzenSeriesDataLabels Visible="@isVisible" Fill="@strokeColor" />
+                                <RadzenMarkers Visible="true" Size="3" Fill="@strokeColor" MarkerType="MarkerType.Circle" />
+                                <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" Visible="true" />
+                                <RadzenValueAxis>
+                                    <RadzenGridLines Visible="true" />
+                                </RadzenValueAxis>
+                            </RadzenAreaSeries>
+                        }
+                    }
+
+                    <RadzenLegend Position="LegendPosition.Bottom" />
                 </RadzenChart>
-            </div>
+            </div> *@
         </div>
     </div>
 </div>
 
 @code {
     private RadzenChart? _chart;
-    string _svg;
-    private System.Timers.Timer _timer;
-    RealtimeDisplayModel realtimeData { get; set; } = new();
-    public class ChartDataPoint
-    {
-        public DateTime Time { get; set; }
-        public double LocThien { get; set; }
-        public double LocNinh { get; set; }
-        public double LocThanh { get; set; }
-    }
-
-    private List<ChartDataPoint> chartData = new List<ChartDataPoint>();
+    private string _svg, _infoLine1, _infoLine2;
+    private System.Timers.Timer _timer = new();
+    private List<FT05_ChartHoChuaModel> chartData = new();
     private List<KeyValuePair<string, double>> apiData = new();
+    private List<FT03DataPoint> _ft03ChartData = new();
+    private RealtimeDisplayModel realtimeData = new();
+    private DotNetObjectReference<Index> _dotNetHelper;
+    private bool _isInitialized = false;
+    private List<FT06_InterpolationTable> _ft06Data = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        LayoutState.SetTitle(_localizer["Hồ chứa"]);
-        using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.hochua.svg");
-        stream.Seek(0, SeekOrigin.Begin);
-        StreamReader reader = new StreamReader(stream);
-        _svg = reader.ReadToEnd();
-        base.OnInitialized();
-        RefreshData(null, null);
-        #region Timer refresh data
-        _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
-        _timer.Elapsed += RefreshData;
-        _timer.Enabled = true;
-        #endregion
-
-        // Initialize chart data (example data)
-        var now = DateTime.Now;
-        var rnd = new Random();
-        for (int i = 0; i < 10; i++)
+        try
         {
-            chartData.Add(new ChartDataPoint
+            LayoutState.SetTitle(_localizer["Hồ chứa"]);
+            await base.OnInitializedAsync();
+
+            // Load SVG
+            using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.hochua.svg");
+            if (stream != null)
             {
-                Time = now.AddHours(-i * 2),
-                LocThien = rnd.Next(10, 50),
-                LocNinh = rnd.Next(10, 50),
-                LocThanh = rnd.Next(10, 50)
-            });
+                stream.Seek(0, SeekOrigin.Begin);
+                using var reader = new StreamReader(stream);
+                _svg = await reader.ReadToEndAsync();
+            }
+
+            // Refresh data
+            RefreshDataAsync(null, null);
+
+            // Set up timer
+            _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
+            _timer.Elapsed += RefreshDataAsync;
+            _timer.Enabled = true;
+
+            _dotNetHelper = DotNetObjectReference.Create(this);
+            await _jsRuntime.InvokeVoidAsync("setDotNetReference", _dotNetHelper);
+            await LoadData();
+            await LoadFT06Data();
+            _isInitialized = true;
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in OnInitializedAsync: {ex.Message}");
         }
     }
 
-    private async void RefreshData(object? sender, ElapsedEventArgs? e)
+    private async void RefreshDataAsync(object? sender, ElapsedEventArgs? e)
     {
         try
         {
             realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
-            //realtimeData = FakeDataGenerator.GenerateLocation();
             GetAPIData();
-            await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
-            StateHasChanged();
+            await _jsRuntime.InvokeVoidAsync("updateSvgFillOverflow", realtimeData);
+            await InvokeAsync(StateHasChanged);
         }
-        catch { }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in RefreshData: {ex.Message}");
+        }
     }
 
     private void GetAPIData()
     {
         apiData = realtimeData.CalculatorValue?.GetType().GetProperties()
-                            .Where(p => p.Name.StartsWith("API_D_"))
-                            .Select(p => new KeyValuePair<string, double>(
-                            _localizer[p.Name.Replace("API_D_", "").Replace("_", " ")] ?? p.Name.Replace("API_D_", ""),
-                            Convert.ToDouble(p.GetValue(realtimeData.CalculatorValue) ?? 0)
-                            )).ToList();
+            .Where(p => p.Name.StartsWith("API_D_"))
+            .Select(p => new KeyValuePair<string, double>(
+                _localizer[p.Name.Replace("API_D_", "").Replace("_", " ")] ?? p.Name.Replace("API_D_", ""),
+                Convert.ToDouble(p.GetValue(realtimeData.CalculatorValue) ?? 0)
+            )).ToList();
+        var locationInfo = realtimeData.Stations.FirstOrDefault(x => x.StationId == 4) ?? new();
+        var Q = GetFT06DataByYValue(locationInfo.Fllow_Ho_Final ?? 0);
+
+        _infoLine1 = $"Mực nước hiện tại: {locationInfo.Fllow_Ho_Final:N2}m; Dung tích: {Q}";
+        StateHasChanged();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            var response = await _ft05Service.GetAllAsync();
+            if (response?.Data != null)
+            {
+                chartData = response.Data.Select(x => new FT05_ChartHoChuaModel
+                    {
+                        Id = x.Id,
+                        Index = x.Index,
+                        X_Value = x.X_Value,
+                        L_CTDD = x.L_CTDD,
+                        L_DPL = x.L_DPL,
+                        L_HCCN = x.L_HCCN,
+                        L_MNC = x.L_MNC,
+                        L_MNDBT = x.L_MNDBT,
+                        L_DPPH = x.L_DPPH,
+                        A_VungA = x.A_VungA,
+                        A_VungB = x.A_VungB,
+                        A_VungC = x.A_VungC,
+                    }).ToList();
+            }
+
+            var ft03Response = await _ft03Service.GetByFromDateToDateAsync();
+            if (ft03Response?.Data != null)
+            {
+                _ft03ChartData = ft03Response.Data;
+            }
+
+            await UpdateChart();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading data: {ex.Message}");
+        }
+    }
+
+    private async Task UpdateChart()
+    {
+        var lineProperties = typeof(FT05_ChartHoChuaModel)
+            .GetProperties()
+            .Where(p => p.Name.StartsWith("L_") && p.PropertyType == typeof(double?))
+            .ToList();
+
+        var areaProperties = typeof(FT05_ChartHoChuaModel)
+            .GetProperties()
+            .Where(p => p.Name.StartsWith("A_") && p.PropertyType == typeof(double?))
+            .ToList();
+
+        var lineDatasets = lineProperties.Select(prop => new
+        {
+            label = prop.Name.Replace("L_", ""),
+            data = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .OrderBy(x => x.Index)
+                .Select(x => new
+                {
+                    x = x.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    y = (double)prop.GetValue(x)
+                })
+                .ToList(),
+            borderColor = GetLineColor(prop.Name),
+            borderWidth = 2,
+            pointRadius = 3,
+            fill = false,
+            tension = 0.3,
+            order = 2
+
+        }).ToList();
+
+        var areaDatasets = areaProperties.Select(prop => new
+        {
+            label = prop.Name.Replace("A_", ""),
+            data = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .OrderBy(x => x.Index)
+                .Select(x => new
+                {
+                    x = x.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    y = (double)prop.GetValue(x)
+                })
+                .ToList(),
+            backgroundColor = GetAreaColor(prop.Name),
+            borderColor = GetLineColor(prop.Name),
+            borderWidth = 1,
+            pointRadius = 2,
+            fill = true,
+            tension = 0.1,
+            order = 3
+
+        }).ToList();
+
+        var ft03Dataset = new
+        {
+            label = "Flow_TL_CDD",
+            data = _ft03ChartData?
+                .Where(x => x.X_Value != null && x.Value != null)
+                .Select(x => new
+                {
+                    x = x.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    y = x.Value
+                })
+                .ToList(),
+            showLine = false,
+            pointBackgroundColor = "blue",
+            pointBorderColor = "blue",
+            pointRadius = 6,
+            pointHoverRadius = 8,
+            order = 1
+        };
+
+        var allDatasets = new List<object>();
+        allDatasets.AddRange(lineDatasets);
+        allDatasets.AddRange(areaDatasets);
+        allDatasets.Add(ft03Dataset);
+
+        var chartConfig = new
+        {
+            type = "line",
+            data = new { datasets = allDatasets },
+            options = new
+            {
+                responsive = true,
+                maintainAspectRatio = false,
+                interaction = new { mode = "nearest", intersect = true },
+                layout = new
+                {
+                    padding = new
+                    {
+                        top = 60
+                    }
+                },
+                scales = new
+                {
+                    x = new
+                    {
+                        type = "time",
+                        time = new
+                        {
+                            unit = "day",
+                            displayFormats = new { day = "dd-MM" },
+                            tooltipFormat = "dd/MM/yyyy HH:mm"
+                        },
+                        grid = new { display = true },
+                        ticks = new
+                        {
+                            maxRotation = 45,
+                            minRotation = 45
+                        },
+                        min = "2025-07-01",
+                        max = "2026-06-30"
+                    },
+                    y = new
+                    {
+                        title = new { display = true, text = "Mực nước (m)" },
+                        beginAtZero = false,
+                        afterFit = "function(scale) { scale.paddingTop = 30; }"
+                    }
+                },
+                plugins = new
+                {
+                    legend = new { position = "bottom" },
+                    tooltip = new
+                    {
+                        enabled = true,
+                        callbacks = new
+                        {
+                            label = new
+                            {
+                                label = "function(context) { return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'm'; }"
+                            }
+                        }
+                    },
+                    annotation = new
+                    {
+                        annotations = new
+                        {
+
+                        }
+                    }
+                }
+            }
+        };
+        await _jsRuntime.InvokeVoidAsync("updateChart", chartConfig);
+    }
+
+    private string GetLineColor(string propertyName)
+    {
+        var colors = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        { "L_CTDD", "red" },
+        { "L_DPL", "red" },
+        { "L_HCCN", "red" },
+        { "L_MNKT", "black" },
+        { "L_MNTK", "black" },
+        { "L_MNC", "black" },
+        { "L_MNDBT", "black" },
+        { "L_DPPH", "#FF49E7" },
+        { "Flow_TL_CDD", "blue" },
+        { "A_VungA", "red" },
+        { "A_VungB", "#FF49E7" },
+        { "A_VungC", "red" }
+    };
+        return colors.TryGetValue(propertyName, out var color) ? color : "#" + Guid.NewGuid().ToString("N").Substring(0, 6);
+    }
+
+    private string GetAreaColor(string propertyName)
+    {
+        var colors = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        { "A_VungA", "#C49078" },
+        { "A_VungB", "#ACD2AD" },
+        { "A_VungC", "#E0EFF6" },
+        { "Flow_TL_CDD", "blue" }
+    };
+        return colors.TryGetValue(propertyName, out var color) ? color : $"rgba({new Random().Next(0, 255)}, {new Random().Next(0, 255)}, {new Random().Next(0, 255)}, 0.2)";
     }
 
     public void Dispose()
     {
+        _timer.Elapsed -= RefreshDataAsync;
         _timer.Dispose();
+    }
+
+    private async Task LoadFT06Data()
+    {
+        var ft06 = await _ft06Service.GetAllAsync();
+        if (ft06?.Data != null)
+        {
+            _ft06Data = ft06.Data;
+        }
+    }
+
+    private object GetFT06DataByYValue(double yValue)
+    {
+        try
+        {
+            var integerPart = Math.Floor(yValue);
+            var decimalPart = Math.Round((yValue - integerPart) * 100, 0);
+            var data = _ft06Data.FirstOrDefault(x => x.Z == integerPart);
+            if (data == null)
+                return 0;
+            return data.GetType().GetProperty($"Col{decimalPart}")?.GetValue(data);
+        }
+        catch (Exception ex)
+        {
+            return 0;
+        }
+
+    }
+
+    [JSInvokable]
+    public async Task OnChartHover(string date, double yValue)
+    {
+        try
+        {
+            var Q = GetFT06DataByYValue(yValue);
+            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: {Q}×10⁶m³";
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: 0×10⁶m³";
+            Console.WriteLine($"Error in OnChartHover: {ex.Message}");
+        }
     }
 }
