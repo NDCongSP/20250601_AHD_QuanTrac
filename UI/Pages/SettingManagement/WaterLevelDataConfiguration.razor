@@ -44,7 +44,7 @@
                             <Template Context="setting">
                                 <RadzenTextBox Value="@GetPropertyValueString(setting, "X_Prefix")"
                                                ValueChanged="@(value => OnCellValueChanged(setting, "X_Prefix", value))"
-                                               Style="width: 100%"/>
+                                               Style="width: 100%" />
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
@@ -55,7 +55,7 @@
                                                Value="@GetPropertyValue(setting, "X_Value")"
                                                ValueChanged="@(value => OnCellValueChanged(setting, "X_Value", value))"
                                                Style="width: 100%"
-                                               @onkeydown:preventDefault />
+                                @onkeydown:preventDefault />
                             </Template>
                         </RadzenDataGridColumn>
                         @foreach (var column in _columns)
@@ -68,7 +68,7 @@
                                                    Value="@GetPropertyValue(setting, column)"
                                                    ValueChanged="@(value => OnCellValueChanged(setting, column, value))"
                                                    Style="width: 100%"
-                                                   @onkeydown:preventDefault />
+                                    @onkeydown:preventDefault />
                                 </Template>
                             </RadzenDataGridColumn>
                         }
@@ -82,7 +82,7 @@
                                                 Value="@GetPropertyValueString(setting, "Z_Thuc")"
                                                 ValueChanged="@(value => OnCellValueChanged(setting, "Z_Thuc", value))"
                                                 Style="width: 100%"
-                                                @onkeydown:preventDefault />
+                                @onkeydown:preventDefault />
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
@@ -197,8 +197,8 @@
                 {
                     foreach (var record in _settings)
                     {
-                        if (record != setting && 
-                            !string.IsNullOrEmpty(record.Z_Thuc) && 
+                        if (record != setting &&
+                            !string.IsNullOrEmpty(record.Z_Thuc) &&
                             record.Z_Thuc.Equals(stringValue, StringComparison.OrdinalIgnoreCase))
                         {
                             setting.Z_Thuc = "";
@@ -215,19 +215,19 @@
             var property = typeof(FT07_ChartMucNuoc).GetProperty(propertyName);
             if (property != null)
             {
-                if (!new[] { "X_Prefix", "X_Value", "Z_Thuc" }.Contains(propertyName))
-                {
-                    foreach (var record in _settings)
-                    {
-                        property.SetValue(record, value);
-                        await _ft07Service.UpdateAsync(record);
-                    }
-                }
-                else
-                {
-                    property.SetValue(setting, value);
-                    await _ft07Service.UpdateAsync(setting);
-                }
+                // if (!new[] { "X_Prefix", "X_Value", "Z_Thuc" }.Contains(propertyName))
+                // {
+                //     foreach (var record in _settings)
+                //     {
+                //         property.SetValue(record, value);
+                //         await _ft07Service.UpdateAsync(record);
+                //     }
+                // }
+                // else
+                // {
+                property.SetValue(setting, value);
+                await _ft07Service.UpdateAsync(setting);
+                // }
                 _notificationService.Notify(NotificationSeverity.Success, _localizer["Common.Success"], _localizer["WaterLevelConfig.UpdateSuccess"]);
                 await InvokeAsync(StateHasChanged);
             }
