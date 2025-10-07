@@ -9,10 +9,41 @@ namespace Domain
     public interface ICalculatorValue
     {
         #region API
+        /// <summary>
+        /// trạm Dầu Tiếng.
+        /// </summary>
         public double? API_Fllow_DauTieng { get; set; }
+
+        /// <summary>
+        /// trạm Bến Súc.
+        /// </summary>
         public double? API_Fllow_BenSuc { get; set; }
+
+        /// <summary>
+        /// trạm sơn đài.
+        /// </summary>
         public double? API_Fllow_SonDai { get; set; }
+
+        /// <summary>
+        /// Trạm bình nhâm.
+        /// </summary>
         public double? API_Fllow_BinhNham { get; set; }
+
+        //Giá trị tính toán từ API value
+
+        /// <summary>
+        /// Tinh toán dựa vào giá trị của API_Fllow_SonDai.
+        /// chân đập = Sơn đài + (8.4 x 0.00001 x 7500).
+        /// </summary>
+        public double? API_ChanDap { get; set; }
+
+        /// <summary>
+        /// tính toán dựa vào giá trị của API_Fllow_BenSuc và API_Fllow_BinhNham.
+        /// TH1 (bến súc > = bình nhâm : thanh an = bến súc + (8.4 x 0.00001 x 11150).
+        /// TH2 (bến súc < bình nhâm : thanh an = bến súc - (8.4 x 0.00001 x 11150).
+        /// </summary>
+        public double? API_ThanhAn { get; set; }
+
         public double? API_Fllow_BinhNham2 { get; set; }
         public double? API_Fllow_TL_CDD { get; set; }
         public double? API_Fllow_HL_TXL { get; set; }

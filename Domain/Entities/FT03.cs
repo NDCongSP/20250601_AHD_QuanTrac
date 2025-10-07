@@ -90,6 +90,10 @@ namespace Domain.Entities
         public double? API_Fllow_BenSuc { get; set; } = 0;
         public double? API_Fllow_SonDai { get; set; } = 0;
         public double? API_Fllow_BinhNham { get; set; } = 0;
+
+        public double? API_ChanDap { get; set; } = 0;
+        public double? API_ThanhAn { get; set; } = 0;
+
         public double? API_Fllow_BinhNham2 { get; set; } = 0;
         public double? API_Fllow_TL_CDD { get; set; } = 0;
         public double? API_Fllow_HL_TXL { get; set; } = 0;
