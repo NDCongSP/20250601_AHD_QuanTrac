@@ -61,6 +61,9 @@ namespace Domain
         public bool? Status_Open_Doorlock2 { get; set; } = false;
         public bool? Status_Close_Doorlock2 { get; set; } = false;
 
+        public bool? Door1_Status { get; set; } = false;
+        public bool? Door2_Status { get; set; } = false;
+
         public double? HT_Cylinder1_1 { get; set; } = 0;
         public double? HT_Cylinder1_2 { get; set; } = 0;
         public double? HT_Cylinder2_1 { get; set; } = 0;
