@@ -47,7 +47,7 @@ function updateSvgWaterLevel(data) {
     for (const [key, value] of Object.entries(data)) {
         const element = document.getElementById(key);
         if (element) {
-            updateElement(element, value);
+            updateElement(element, value, { decimals: 2 });
         }
     }
 }
