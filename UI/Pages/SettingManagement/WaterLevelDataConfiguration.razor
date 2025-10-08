@@ -34,9 +34,9 @@
                                 Data="@(_settings.OrderBy(x => x.Index).ToList())"
                                 Style="width:100%"
                                 AllowPaging="true"
-                                PageSize="10"
-                                ShowPagingSummary="true"
-                                PagingSummaryFormat="@_localizer["PagingSummaryFormat"]">
+                                PageSize="30"
+                                ShowPagingSummary="true" PageSizeOptions="@PageSizeOptions"
+                                PagingSummaryFormat="@_localizer["PagingSummaryFormat"]" PageSizeText="@_localizer["items per page"]">
                     <Columns>
                         <RadzenDataGridColumn TItem="FT07_ChartMucNuoc"
                                               Title="@_localizer["WaterLevelConfig.X_Prefix"]"
@@ -106,7 +106,7 @@
     private bool _isLoading = true;
     private List<string> _dropdownDataZThuc = new();
     private RadzenDataGrid<FT07_ChartMucNuoc>? _grid;
-
+    public static IEnumerable<int> PageSizeOptions = [20, 30, 100, 200];
     protected override async Task OnInitializedAsync()
     {
         try

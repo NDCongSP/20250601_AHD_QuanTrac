@@ -570,9 +570,6 @@
   <data name="lbl_InterpolationTableConfig" xml:space="preserve">
     <value>Interpolation Table Configuration</value>
   </data>
-  <data name="msg_LoadingSettings" xml:space="preserve">
-    <value>Loading settings...</value>
-  </data>
   <data name="lbl_InterpolationValue" xml:space="preserve">
     <value>Interpolation Value</value>
   </data>
@@ -586,15 +583,12 @@
     <value>Failed to update interpolation data.</value>
   </data>
   <data name="lbl_BaseValue" xml:space="preserve">
-  <value>Base Value</value>
-</data>
-<data name="lbl_Increment" xml:space="preserve">
-  <value>Increment</value>
-</data>
-<data name="btn_Cancel" xml:space="preserve">
-  <value>Cancel</value>
-</data>
-<data name="btn_Save" xml:space="preserve">
-  <value>Save</value>
-</data>
+    <value>Base Value</value>
+  </data>
+  <data name="btn_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="PagingSummaryFormat" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
 </root>

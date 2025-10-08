@@ -93,99 +93,6 @@
                 </div>
                 <canvas id="reservoirChart" height="400"></canvas>
             </div>
-            @* <div class="chart-container">
-                <RadzenChart @ref="_chart" Style="width: 100%; height: 100%;">
-                    <!-- Line Series (L_*) -->
-                    @{
-                        var lineProps = typeof(FT05_ChartHoChuaModel).GetProperties()
-                        .Where(p => p.Name.StartsWith("L_") && p.PropertyType == typeof(double?))
-                        .ToList();
-
-                        foreach (var prop in lineProps)
-                        {
-                            var displayName = (prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
-                            .FirstOrDefault() as DisplayNameAttribute)?.DisplayName ?? prop.Name.Replace("L_", "");
-                            var strokeColor = displayName switch
-                            {
-                                string s when s.Contains("CTDD") => "#A31629",
-                                string s when s.Contains("DPL") => "#B5131E",
-                                string s when s.Contains("HCCN") => "#B5131E",
-                                string s when s.Contains("DPPH") => "#CB46C2",
-                                string s when s.Contains("Fllow_TL_CDD") => "blue",
-                                _ => "black"
-                            };
-
-                            <RadzenLineSeries Data="@chartData" CategoryProperty="X_Value"
-                                              Stroke="black" Title="@displayName" ValueProperty="@prop.Name"
-                                              LineType="LineType.Solid">
-                                <RadzenSeriesDataLabels Visible="false" />
-                                <RadzenMarkers Visible="true" Size="3" Fill="@strokeColor" MarkerType="MarkerType.Circle" />
-                                <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" Visible="true" />
-                                <RadzenValueAxis>
-                                    <RadzenGridLines Visible="true" />
-                                </RadzenValueAxis>
-                            </RadzenLineSeries>
-                        }
-
-                        <!-- FT03 Data Series -->
-                        @if (_ft03ChartData?.Any() == true)
-                        {
-                            // <RadzenLineSeries Data="@_ft03ChartData"
-                            //                   CategoryProperty="X_Value"
-                            //                   Stroke="blue"
-                            //                   Title="Fllow_TL_CDD"
-                            //                   ValueProperty="Value"
-                            //                   LineType="LineType.Solid">
-                            //     <RadzenSeriesDataLabels Visible="false" />
-                            //     <RadzenMarkers Visible="true" Size="3" Fill="blue" MarkerType="MarkerType.Circle" />
-                            // </RadzenLineSeries>
-
-                            <RadzenLineSeries Data="@_ft03ChartData"
-                                              CategoryProperty="X_Value"
-                                              ValueProperty="Value"
-                                              Title="Flow_TL_CDD"
-                                              LineType="LineType.Dotted"
-                                              Stroke="blue">
-                                <RadzenMarkers Visible="true" Size="3" Fill="blue" MarkerType="MarkerType.Circle" />
-                                <RadzenCategoryAxis Padding="20">
-                                </RadzenCategoryAxis>
-                            </RadzenLineSeries>
-                        }
-                    }
-
-                    <!-- Area Series (A_*) -->
-                    @{
-                        var areaProps = typeof(FT05_ChartHoChuaModel).GetProperties()
-                        .Where(p => p.Name.StartsWith("A_") && p.PropertyType == typeof(double?))
-                        .OrderByDescending(x => x.Name)
-                        .ToList();
-
-                        foreach (var prop in areaProps)
-                        {
-                            var displayName = (prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
-                            .FirstOrDefault() as DisplayNameAttribute)?.DisplayName ?? prop.Name.Replace("A_", "");
-
-                            var fillColor = displayName.Contains("A") ? "#C49078" : displayName.Contains("B") ? "#A9D1AE" : "#E0EFF6";
-                            var strokeColor = displayName.Contains("A") ? "#E51300" : displayName.Contains("B") ? "#DD10D9" : "#AB3130";
-                            var isVisible = displayName.Contains("C") || displayName.Contains("B");
-                            <RadzenAreaSeries Data="@chartData" CategoryProperty="X_Value"
-                                              Title="@displayName"
-                                              Fill="@fillColor"
-                                              Stroke="@strokeColor"
-                                              ValueProperty="@prop.Name">
-                                <RadzenSeriesDataLabels Visible="@isVisible" Fill="@strokeColor" />
-                                <RadzenMarkers Visible="true" Size="3" Fill="@strokeColor" MarkerType="MarkerType.Circle" />
-                                <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" Visible="true" />
-                                <RadzenValueAxis>
-                                    <RadzenGridLines Visible="true" />
-                                </RadzenValueAxis>
-                            </RadzenAreaSeries>
-                        }
-                    }
-
-                    <RadzenLegend Position="LegendPosition.Bottom" />
-                </RadzenChart>
-            </div> *@
         </div>
     </div>
 </div>
@@ -279,14 +186,19 @@
                 chartData = response.Data.Select(x => new FT05_ChartHoChuaModel
                     {
                         Id = x.Id,
+
                         Index = x.Index,
                         X_Value = x.X_Value,
+
                         L_CTDD = x.L_CTDD,
                         L_DPL = x.L_DPL,
                         L_HCCN = x.L_HCCN,
                         L_MNC = x.L_MNC,
                         L_MNDBT = x.L_MNDBT,
                         L_DPPH = x.L_DPPH,
+                        L_MNKT = x.L_MNKT,
+                        L_MNTK = x.L_MNTK,
+
                         A_VungA = x.A_VungA,
                         A_VungB = x.A_VungB,
                         A_VungC = x.A_VungC,
