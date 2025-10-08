@@ -8,7 +8,7 @@ public class FT05_ChartHoChuaModel : FT05_ChartHoChua
     {
         get
         {
-            var date = DateTime.ParseExact(X_Value, "dd-MM", CultureInfo.InvariantCulture);
+            var date = DateTime.ParseExact(X_Value, "M/d", CultureInfo.InvariantCulture);
             var currentYear = DateTime.Now.Year;
 
             var targetYear = date.Month <= 6 ? currentYear + 1 : currentYear;
@@ -20,6 +20,6 @@ public class FT05_ChartHoChuaModel : FT05_ChartHoChua
 
             return new DateTime(targetYear, date.Month, date.Day);
         }
-        set => X_Value = value.ToString("dd-MM");
+        set => X_Value = value.ToString("M/d");
     }
 }

@@ -108,7 +108,142 @@ function initializeChart(currentLevel) {
 function updateChart(config) {
     const ctx = document.getElementById('reservoirChart').getContext('2d');
     const infoLine2 = document.getElementById('infoLine2');
-    const chart = new Chart(ctx, config);
+
+    // Ensure plugins are registered
+    if (window.ChartDataLabels && !Chart.registry.plugins.get('datalabels')) {
+        Chart.register(window.ChartDataLabels);
+    }
+    if (window['chartjs-plugin-annotation'] && !Chart.registry.plugins.get('annotation')) {
+        // Annotation plugin auto-registers when imported via CDN in Chart.js v4
+    }
+
+    // Convert function-like strings in options to real functions (for callbacks)
+    const reviveFunctions = (obj) => {
+        if (!obj || typeof obj !== 'object') return obj;
+        for (const k of Object.keys(obj)) {
+            const v = obj[k];
+            if (typeof v === 'string' && v.trim().startsWith('function')) {
+                try { obj[k] = eval('(' + v + ')'); } catch { /* ignore */ }
+            } else if (v && typeof v === 'object') {
+                reviveFunctions(v);
+            }
+        }
+        return obj;
+    };
+    reviveFunctions(config);
+
+    // Apply common visual tweaks: smaller points, span gaps, datalabels
+    if (config && config.data && Array.isArray(config.data.datasets)) {
+        config.data.datasets = config.data.datasets.map(ds => {
+            const clone = { ...ds };
+            // Reduce dot size uniformly for visual clarity
+            clone.pointRadius = 2;
+            clone.pointHoverRadius = 4;
+            clone.spanGaps = true; // allow gaps if there are nulls
+
+            // Convert y=0 to null to prevent dropping to X-axis, but keep 0 if it's the only value between non-zeros
+            if (Array.isArray(ds.data)) {
+                const hasNonZero = ds.data.some(p => (p && typeof p === 'object' ? (p.y ?? p) : p) > 0);
+                clone.data = ds.data.map(p => {
+                    if (p == null) return null;
+                    if (typeof p === 'object') {
+                        const y = p.y;
+                        if (y === 0 && hasNonZero) return { ...p, y: null };
+                        return p;
+                    }
+                    if (p === 0 && hasNonZero) return null;
+                    return p;
+                });
+            }
+
+            return clone;
+        });
+    }
+
+    // Custom value labels only for target datasets (e.g., VungB, VungC)
+    const meta = config.meta || {};
+    const labelTargets = Array.isArray(meta.valueLabelTargets) ? meta.valueLabelTargets : [];
+    // Register lightweight custom plugin for value labels (no external deps)
+    if (!window._valueLabelPluginRegistered) {
+        const valueLabelPlugin = {
+            id: 'valueLabelPlugin',
+            afterDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx, chartArea, scales } = chart;
+                const opts = pluginOptions || {};
+                const targets = opts.targets || [];
+                const color = opts.color || '#333';
+                const fontSize = opts.fontSize || 10;
+                const fontWeight = opts.fontWeight || '600';
+                const offset = opts.offset || 4;
+                ctx.save();
+                ctx.font = `${fontWeight} ${fontSize}px sans-serif`;
+                ctx.fillStyle = color;
+                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                    const label = dataset.label || '';
+                    if (!targets.includes(label)) return;
+                    const meta = chart.getDatasetMeta(datasetIndex);
+                    if (!meta || !meta.data) return;
+                    dataset.data.forEach((dp, i) => {
+                        const node = meta.data[i];
+                        if (!node) return;
+                        const raw = (typeof dp === 'object') ? (dp && dp.y) : dp;
+                        if (raw == null) return;
+                        const val = Number(raw);
+                        if (!isFinite(val)) return;
+                        const { x, y } = node.tooltipPosition(true);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillText(val.toFixed(2), x, y - offset);
+                    });
+                });
+                ctx.restore();
+            }
+        };
+        Chart.register(valueLabelPlugin);
+        window._valueLabelPluginRegistered = true;
+    }
+    // Provide plugin options
+    config.options = config.options || {};
+    config.options.plugins = config.options.plugins || {};
+    config.options.plugins.valueLabelPlugin = {
+        targets: labelTargets,
+        color: '#333',
+        fontSize: 10,
+        fontWeight: '600',
+        offset: 4
+    };
+
+    // Build region labels using annotation boxes if provided via config.meta.regions
+    if (meta.regions && Array.isArray(meta.regions)) {
+        config.options.plugins.annotation = config.options.plugins.annotation || { annotations: {} };
+        const anns = config.options.plugins.annotation.annotations || {};
+        meta.regions.forEach((r, idx) => {
+            anns['region_' + idx] = {
+                type: 'box',
+                xMin: r.xMin,
+                xMax: r.xMax,
+                yMin: (typeof r.yMin === 'number') ? r.yMin : undefined,
+                yMax: (typeof r.yMax === 'number') ? r.yMax : undefined,
+                backgroundColor: r.backgroundColor || 'rgba(180,180,180,0.12)',
+                borderWidth: 0,
+                label: {
+                    display: true,
+                    content: r.label || '',
+                    position: 'center',
+                    color: r.color || '#333',
+                    backgroundColor: r.labelBg || 'rgba(255,255,255,0.9)',
+                    padding: 4,
+                    font: { style: 'bold' }
+                }
+            };
+        });
+        config.options.plugins.annotation.annotations = anns;
+    }
+
+    if (chart) {
+        chart.destroy();
+    }
+    chart = new Chart(ctx, config);
     chart.canvas.addEventListener('mousemove', (event) => {
         const rect = chart.canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;

@@ -198,7 +198,7 @@
                         L_DPPH = x.L_DPPH,
                         L_MNKT = x.L_MNKT,
                         L_MNTK = x.L_MNTK,
-
+                        
                         A_VungA = x.A_VungA,
                         A_VungB = x.A_VungB,
                         A_VungC = x.A_VungC,
@@ -288,8 +288,8 @@
             showLine = false,
             pointBackgroundColor = "blue",
             pointBorderColor = "blue",
-            pointRadius = 6,
-            pointHoverRadius = 8,
+            pointRadius = 2,
+            pointHoverRadius = 4,
             order = 1
         };
 
@@ -297,6 +297,27 @@
         allDatasets.AddRange(lineDatasets);
         allDatasets.AddRange(areaDatasets);
         allDatasets.Add(ft03Dataset);
+
+        // X-axis range for region labels
+        var minDate = chartData.Where(d => d.Date != default).Min(d => d.Date);
+        var maxDate = chartData.Where(d => d.Date != default).Max(d => d.Date);
+        var xMinStr = minDate.ToString("yyyy-MM-dd");
+        var xMaxStr = maxDate.ToString("yyyy-MM-dd");
+
+        // Compute Y bands for areas A_VungA/B/C
+        var areaBands = areaProperties.Select(prop =>
+        {
+            var name = prop.Name.Replace("A_", "");
+            var values = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .Select(x => (double?)prop.GetValue(x))
+                .Where(v => v.HasValue)
+                .Select(v => v!.Value)
+                .ToList();
+            double? minY = values.Any() ? values.Min() : null;
+            double? maxY = values.Any() ? values.Max() : null;
+            return new { name, minY, maxY };
+        }).ToList();
 
         var chartConfig = new
         {
@@ -321,7 +342,7 @@
                         type = "time",
                         time = new
                         {
-                            unit = "day",
+                            unit = "month",
                             displayFormats = new { day = "dd-MM" },
                             tooltipFormat = "dd/MM/yyyy HH:mm"
                         },
@@ -365,7 +386,26 @@
                 }
             }
         };
-        await _jsRuntime.InvokeVoidAsync("updateChart", chartConfig);
+
+        // Regions and target datasets for value labels (for Vùng B, Vùng C lines)
+        var regions = new List<object>();
+        foreach (var band in areaBands)
+        {
+            var label = band.name switch { "VungA" => "Vùng A", "VungB" => "Vùng B", "VungC" => "Vùng C", _ => band.name };
+            var bg = band.name switch { "VungA" => "rgba(196,144,120,0.10)", "VungB" => "rgba(172,210,173,0.10)", "VungC" => "rgba(224,239,246,0.10)", _ => "rgba(180,180,180,0.10)" };
+            var color = band.name switch { "VungA" => "#7a6200", "VungB" => "#2e5930", "VungC" => "#2b5c73", _ => "#333" };
+            regions.Add(new { label, xMin = xMinStr, xMax = xMaxStr, yMin = band.minY, yMax = band.maxY, backgroundColor = bg, color });
+        }
+
+        var meta = new
+        {
+            regions = regions,
+            valueLabelTargets = new[] { "VungB", "VungC" }
+        };
+
+        // Attach meta to the config for JS to consume
+        var finalConfig = new { chartConfig.type, chartConfig.data, chartConfig.options, meta };
+        await _jsRuntime.InvokeVoidAsync("updateChart", finalConfig);
     }
 
     private string GetLineColor(string propertyName)
@@ -449,3 +489,4 @@
         }
     }
 }
+
