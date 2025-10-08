@@ -163,6 +163,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<double?>("API_ChanDap")
+                        .HasColumnType("float");
+
                     b.Property<double?>("API_D_DM_HoDT")
                         .HasColumnType("float");
 
@@ -266,6 +269,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<double?>("API_Fllow_TL_CDD")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("API_ThanhAn")
                         .HasColumnType("float");
 
                     b.Property<DateTime?>("CreateAt")
