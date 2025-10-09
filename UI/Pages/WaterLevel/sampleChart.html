@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>River Water Level Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+    }
+    h2 {
+      text-align: center;
+      color: #003366;
+    }
+    .chart-container {
+      position: relative;
+      height: 70vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>MỰC NƯỚC TRÊN SÔNG SÀI GÒN THEO KỊCH BẢN XẢ TRÀN HỒ DẦU TIẾNG</h2>
+  <div class="chart-container">
+    <canvas id="riverChart"></canvas>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('riverChart').getContext('2d');
+
+    // Dữ liệu mẫu dựa theo bảng bạn gửi
+    const data = [
+      { X_Prefix: "Chân đập", X_Value: 1, BoPhai: 7.26, BoTrai: 4.42, Q300: 4.52, Q400: 5.13, Q600: 5.94, Q2800: 9.7 },
+      { X_Prefix: "Cầu mới", X_Value: 1.5, BoPhai: 7.26, BoTrai: 4.42, Q300: 4.52, Q400: 5.13, Q600: 5.94, Q2800: 9.7 },
+      { X_Prefix: "Cầu tàu", X_Value: 8.5, BoPhai: 7.26, BoTrai: 4.42, Q300: 4.52, Q400: 5.13, Q600: 5.94, Q2800: 9.7 },
+      { X_Prefix: "Dầu Tiếng", X_Value: 11.5, BoPhai: 7.26, BoTrai: 4.42, Q300: 4.52, Q400: 5.13, Q600: 5.94, Q2800: 9.7 },
+      { X_Prefix: "Km 15", X_Value: 12.5, BoPhai: 7.26, BoTrai: 4.42, Q300: 4.52, Q400: 5.13, Q600: 5.94, Q2800: 9.7 },
+      { X_Prefix: "Km 17", X_Value: 13.5, BoPhai: 7.26, BoTrai: 4.42, Q300: 4.52, Q400: 5.13, Q600: 5.94, Q2800: 9.7 },
+      { X_Prefix: "Km 20", X_Value: 14.5, BoPhai: 7.26, BoTrai: 4.42, Q300: 4.52, Q400: 5.13, Q600: 5.94, Q2800: 9.7 },
+    ];
+
+    const datasets = [
+      { label: "Bờ phải", field: "BoPhai", borderColor: "#C44B3E" },
+      { label: "Bờ trái", field: "BoTrai", borderColor: "#3465A4" },
+      { label: "Q300", field: "Q300", borderColor: "#00796B" },
+      { label: "Q400", field: "Q400", borderColor: "#8E44AD" },
+      { label: "Q600", field: "Q600", borderColor: "#F39C12" },
+      { label: "Q2800", field: "Q2800", borderColor: "#B71C1C" },
+    ].map(s => ({
+      label: s.label,
+      data: data.map(d => ({ x: d.X_Value, y: d[s.field], prefix: d.X_Prefix })),
+      borderColor: s.borderColor,
+      backgroundColor: s.borderColor + "33",
+      fill: false,
+      tension: 0.3,
+      borderWidth: 2,
+      pointRadius: 3,
+      pointHoverRadius: 5
+    }));
+    new Chart(ctx, {
+  type: 'line',
+  data: { 
+    labels: data.map(d => d.X_Prefix), // Use X_Prefix as labels
+    datasets: datasets.map(dataset => ({
+      ...dataset,
+      data: data.map((d, i) => ({ 
+        x: i,  // Use index for positioning
+        y: d[dataset.label === 'Bờ phải' ? 'BoPhai' : 
+             dataset.label === 'Bờ trái' ? 'BoTrai' : 
+             dataset.label === 'Q300' ? 'Q300' : 
+             dataset.label === 'Q400' ? 'Q400' : 
+             dataset.label === 'Q600' ? 'Q600' : 'Q2800'],
+        prefix: d.X_Value
+      }))
+    }))
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      title: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          title: function(context) {
+            return context[0].raw.prefix;
+          },
+          label: function(context) {
+            return context.dataset.label + ": " + context.parsed.y + "";
+          }
+        }
+      },
+      legend: { position: 'top' }
+    },
+    scales: {
+      x: {
+        type: 'category',  // Use category scale for text labels
+        title: { 
+          display: true, 
+          text: 'Vị trí' 
+        },
+        grid: { 
+          display: false 
+        },
+        ticks: {
+          callback: function(value, index, values) {
+            return data[index].X_Prefix;
+          },
+          maxRotation: 90,
+          minRotation: 90
+        }
+      },
+      y: {
+        title: { 
+          display: true, 
+          text: 'Cao trình (m)' 
+        },
+        grid: { 
+          color: '#eee' 
+        },
+        beginAtZero: true
+      }
+    },
+    elements: {
+      line: { 
+        tension: 0.3 
+      }
+    }
+  }
+});
+  </script>
+</body>
+</html>
