@@ -47,7 +47,8 @@
         {
             foreach (var station in _gateData.Stations.OrderBy(s => s.StationId).Take(3))
             {
-                <GateInfo Station="@station" GateData="@_gateData" GateNo="@(station.StationId * 2 - 1)" />
+                var WaterLevelHeight = station.Fllow_Door1 / 510 * 100;
+                <GateInfo Station="@station" GateData="@_gateData" GateNo="@(station.StationId * 2 - 1)"/>
             }
         }
     </Tabs>

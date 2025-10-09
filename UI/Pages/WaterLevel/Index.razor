@@ -13,9 +13,9 @@
         width: 100%;
     }
 
-  /*   #riverChart{
+    #riverChart{
         width: 100% !important;
-    } */
+    }
 </style>
 
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
@@ -96,7 +96,7 @@
                 }
                 else
                 {
-                    item.Z_Thuc = currentValue;
+                    item.Z_Thuc = null;
                 }
             }
             await _jsRuntime.InvokeVoidAsync("updateChartWaterLevel", _ft07ChartData);

@@ -2,6 +2,8 @@
 @using System.Text.RegularExpressions
 @using System.Timers
 @using System.ComponentModel
+@using System.Reflection
+@using Domain.Entities
 @using System.Globalization
 @using UI.StaticClass
 @using Application.Services
@@ -231,9 +233,19 @@
             .Where(p => p.Name.StartsWith("A_") && p.PropertyType == typeof(double?))
             .ToList();
 
+        string GetDisplayName(string propertyName)
+        {
+            var propInfo = typeof(FT05_ChartHoChua).GetProperty(propertyName);
+            var dn = propInfo?.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+            if (!string.IsNullOrWhiteSpace(dn)) return dn!;
+            return propertyName.StartsWith("L_") || propertyName.StartsWith("A_")
+                ? propertyName.Substring(2)
+                : propertyName;
+        }
+
         var lineDatasets = lineProperties.Select(prop => new
         {
-            label = prop.Name.Replace("L_", ""),
+            label = GetDisplayName(prop.Name),
             data = chartData
                 .Where(x => x.X_Value != null && prop.GetValue(x) != null)
                 .OrderBy(x => x.Index)
@@ -254,7 +266,7 @@
 
         var areaDatasets = areaProperties.Select(prop => new
         {
-            label = prop.Name.Replace("A_", ""),
+            label = GetDisplayName(prop.Name),
             data = chartData
                 .Where(x => x.X_Value != null && prop.GetValue(x) != null)
                 .OrderBy(x => x.Index)
@@ -304,7 +316,7 @@
         var xMinStr = minDate.ToString("yyyy-MM-dd");
         var xMaxStr = maxDate.ToString("yyyy-MM-dd");
 
-        // Compute Y bands for areas A_VungA/B/C
+        // Compute representative thresholds for areas A_VungA/B/C
         var areaBands = areaProperties.Select(prop =>
         {
             var name = prop.Name.Replace("A_", "");
@@ -313,11 +325,51 @@
                 .Select(x => (double?)prop.GetValue(x))
                 .Where(v => v.HasValue)
                 .Select(v => v!.Value)
+                .OrderBy(v => v)
                 .ToList();
             double? minY = values.Any() ? values.Min() : null;
             double? maxY = values.Any() ? values.Max() : null;
-            return new { name, minY, maxY };
+            double? avgY = values.Any() ? values.Average() : null;
+            double? medianY = values.Any() ? values[values.Count / 2] : null;
+            // prefer median to avoid outliers; fallback average
+            var refY = medianY ?? avgY;
+            return new { name, minY, maxY, refY };
         }).ToList();
+
+        // Global Y min for axis (start ticks from min instead of 0)
+        var allYValues = new List<double>();
+        foreach (var prop in lineProperties)
+        {
+            var vals = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .Select(x => (double?)prop.GetValue(x))
+                .Where(v => v.HasValue)
+                .Select(v => v!.Value);
+            allYValues.AddRange(vals);
+        }
+        foreach (var prop in areaProperties)
+        {
+            var vals = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .Select(x => (double?)prop.GetValue(x))
+                .Where(v => v.HasValue)
+                .Select(v => v!.Value);
+            allYValues.AddRange(vals);
+        }
+        if (_ft03ChartData != null && _ft03ChartData.Any())
+        {
+            var vals = _ft03ChartData
+                .Where(x => x.Value != null)
+                .Select(x => x.Value!.Value);
+            allYValues.AddRange(vals);
+        }
+
+        // Use the smallest positive (> 0) value for Y min; ignore zeros
+        var positiveYValues = allYValues.Where(v => v > 0).ToList();
+        var yMinAll = positiveYValues.Any() ? positiveYValues.Min() : (allYValues.Any() ? allYValues.Min() : 0d);
+        var yMaxAll = allYValues.Any() ? allYValues.Max() : yMinAll + 10d;
+        var yMinTick = Math.Floor(yMinAll); // align ticks nicely with stepSize=1
+        var yMaxTick = Math.Ceiling(yMaxAll);
 
         var chartConfig = new
         {
@@ -343,14 +395,15 @@
                         time = new
                         {
                             unit = "month",
-                            displayFormats = new { day = "dd-MM" },
+                            displayFormats = new { day = "dd/MM" },
                             tooltipFormat = "dd/MM/yyyy HH:mm"
                         },
                         grid = new { display = true },
                         ticks = new
                         {
                             maxRotation = 45,
-                            minRotation = 45
+                            minRotation = 45,
+                            callback = "function(value){ return luxon.DateTime.fromMillis(value).toFormat('dd/MM'); }"
                         },
                         min = "2025-07-01",
                         max = "2026-06-30"
@@ -359,7 +412,17 @@
                     {
                         title = new { display = true, text = "Mực nước (m)" },
                         beginAtZero = false,
-                        afterFit = "function(scale) { scale.paddingTop = 30; }"
+                        min = yMinTick,
+                        ticks = new
+                        {
+                            stepSize = 1,
+                            autoSkip = false,
+                            padding = 12,
+                            font = new { size = 13 },
+                            callback = "function(value){ return Number(value).toFixed(1); }"
+                        },
+                        grace = "10%",
+                        afterFit = "function(scale) { scale.paddingTop = 30; scale.width = scale.width + 28; }"
                     }
                 },
                 plugins = new
@@ -388,19 +451,37 @@
         };
 
         // Regions and target datasets for value labels (for Vùng B, Vùng C lines)
-        var regions = new List<object>();
-        foreach (var band in areaBands)
+        // Determine thresholds using refY values
+        var yA = areaBands.FirstOrDefault(b => b.name.Equals("VungA", StringComparison.OrdinalIgnoreCase))?.refY;
+        var yB = areaBands.FirstOrDefault(b => b.name.Equals("VungB", StringComparison.OrdinalIgnoreCase))?.refY;
+        var yC = areaBands.FirstOrDefault(b => b.name.Equals("VungC", StringComparison.OrdinalIgnoreCase))?.refY;
+        // Sort thresholds ascending, ignore nulls
+        var thresholds = new List<double>();
+        if (yA.HasValue) thresholds.Add(yA.Value);
+        if (yB.HasValue) thresholds.Add(yB.Value);
+        if (yC.HasValue) thresholds.Add(yC.Value);
+        thresholds = thresholds.Distinct().OrderBy(v => v).ToList();
+
+        double lower1 = yMinTick;
+        double mid1 = thresholds.Count > 0 ? thresholds[0] : yMinTick + 1;
+        double mid2 = thresholds.Count > 1 ? thresholds[1] : mid1 + 1;
+        double upper = yMaxTick;
+
+        var regions = new List<object>
         {
-            var label = band.name switch { "VungA" => "Vùng A", "VungB" => "Vùng B", "VungC" => "Vùng C", _ => band.name };
-            var bg = band.name switch { "VungA" => "rgba(196,144,120,0.10)", "VungB" => "rgba(172,210,173,0.10)", "VungC" => "rgba(224,239,246,0.10)", _ => "rgba(180,180,180,0.10)" };
-            var color = band.name switch { "VungA" => "#7a6200", "VungB" => "#2e5930", "VungC" => "#2b5c73", _ => "#333" };
-            regions.Add(new { label, xMin = xMinStr, xMax = xMaxStr, yMin = band.minY, yMax = band.maxY, backgroundColor = bg, color });
-        }
+            new { label = "Vùng C", xMin = xMinStr, xMax = xMaxStr, yMin = lower1, yMax = mid1, backgroundColor = "rgba(224,239,246,0.10)", color = "#2b5c73", showLabel = true },
+            new { label = "Vùng A", xMin = xMinStr, xMax = xMaxStr, yMin = mid1, yMax = mid2, backgroundColor = "rgba(196,144,120,0.10)", color = "#7a6200", showLabel = true },
+            new { label = "Vùng B", xMin = xMinStr, xMax = xMaxStr, yMin = mid2, yMax = upper, backgroundColor = "rgba(172,210,173,0.10)", color = "#2e5930", showLabel = false }
+        };
+
+        var labelB = GetDisplayName("A_VungB");
+        var labelC = GetDisplayName("A_VungC");
 
         var meta = new
         {
             regions = regions,
-            valueLabelTargets = new[] { "VungB", "VungC" }
+            valueLabelTargets = new[] { labelB, labelC },
+            chartHeight = 560
         };
 
         // Attach meta to the config for JS to consume
