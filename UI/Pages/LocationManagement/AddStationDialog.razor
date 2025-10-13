@@ -1,0 +1,113 @@
+@using Domain
+@using Radzen
+@using Radzen.Blazor
+@inject DialogService DialogService
+
+<RadzenTemplateForm TItem="Domain.StationInfoModel" Data="@station" Submit="OnSubmit" Style="padding: 16px;">
+    <div class="row">
+        <div class="col-md-12">
+            <label class="rz-form-label">Name</label>
+            <RadzenTextBox @bind-Value="station.Name" Style="width:100%" />
+        </div>
+        <div class="col-md-12" style="margin-top:10px;">
+            <label class="rz-form-label">Path</label>
+            <RadzenTextBox @bind-Value="station.Path" Style="width:100%" />
+        </div>
+
+        <div class="col-md-12" style="margin-top:16px;">
+            <RadzenFieldset Text="Offset Config">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="rz-form-label">HT_Cylinder1_1</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.HT_Cylinder1_1" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="rz-form-label">HT_Cylinder1_2</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.HT_Cylinder1_2" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">HT_Cylinder2_1</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.HT_Cylinder2_1" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">HT_Cylinder2_2</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.HT_Cylinder2_2" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">Door1_Aperture</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.Door1_Aperture" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">Door2_Aperture</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.Door2_Aperture" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">S1_Temp_Oil</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.S1_Temp_Oil" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">Pressure_Oil_Door1</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.Pressure_Oil_Door1" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">Pressure_Oil_Door2</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.Pressure_Oil_Door2" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">Fllow_Door1</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.Fllow_Door1" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">Fllow_Door2</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.Fllow_Door2" Style="width:100%" />
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <label class="rz-form-label">Fllow_Ho</label>
+                        <RadzenNumeric TValue="double?" @bind-Value="station.OffsetConfig.Fllow_Ho" Style="width:100%" />
+                    </div>
+                </div>
+            </RadzenFieldset>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:16px;">
+        <div class="col-md-12" style="display:flex;justify-content:flex-end;gap:10px;">
+            <RadzenButton ButtonType="ButtonType.Button" Text="Cancel" ButtonStyle="ButtonStyle.Light" Click="OnCancel" />
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Save" ButtonStyle="ButtonStyle.Primary" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+@code {
+    [Parameter]
+    public StationInfoModel? Initial { get; set; }
+
+    private StationInfoModel station = new StationInfoModel();
+
+    protected override void OnInitialized()
+    {
+        if (Initial != null)
+        {
+            station = new StationInfoModel
+            {
+                Id = Initial.Id,
+                Name = Initial.Name,
+                Path = Initial.Path,
+                Tags = Initial.Tags,
+                OffsetConfig = Initial.OffsetConfig ?? new OffsetConfigModel()
+            };
+        }
+    }
+
+    private void OnSubmit()
+    {
+        DialogService.Close(station);
+    }
+
+    private void OnCancel()
+    {
+        DialogService.Close();
+    }
+}
+
+

@@ -28,7 +28,6 @@
 
 /* Bottom Section */
 .bottom-section {
-    height: 40vh;
     min-height: 500px;
     display: flex;
     flex-direction: column;
@@ -55,7 +54,6 @@
 .chart-container {
     flex: 1;
     padding: 1rem;
-    min-height: 200px;
 }
 
 /* Grid Layout */
@@ -258,7 +256,6 @@ body {
 
 #chartContainer {
     position: relative;
-    height: 500px; /* Fixed height for better control */
     width: 100%;
 }
 
@@ -288,4 +285,5 @@ body {
 
 #reservoirChart {
     width: 100% !important;
+    height: 800px !important;
 }

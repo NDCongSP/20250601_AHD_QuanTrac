@@ -108,7 +108,263 @@ function initializeChart(currentLevel) {
 function updateChart(config) {
     const ctx = document.getElementById('reservoirChart').getContext('2d');
     const infoLine2 = document.getElementById('infoLine2');
-    const chart = new Chart(ctx, config);
+
+    // Ensure plugins are registered
+    if (window.ChartDataLabels && !Chart.registry.plugins.get('datalabels')) {
+        Chart.register(window.ChartDataLabels);
+    }
+    if (window['chartjs-plugin-annotation'] && !Chart.registry.plugins.get('annotation')) {
+        // Annotation plugin auto-registers when imported via CDN in Chart.js v4
+    }
+    // Register region label plugin once
+    if (!window._regionLabelPluginRegistered) {
+        const regionLabelPlugin = {
+            id: 'regionLabel',
+            afterDatasetsDraw(chart, args, pluginOptions) {
+                if (pluginOptions && pluginOptions.enabled === false) {
+                    return; // allow disabling via options.plugins.regionLabel.enabled=false
+                }
+                const { ctx } = chart;
+                const opts = pluginOptions || {};
+                const get = (obj, path, fallback) => {
+                    try {
+                        return path.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : undefined), obj) ?? fallback;
+                    } catch { return fallback; }
+                };
+
+                // Use Chart.js internal order so top datasets draw last (higher z-order label wins visually)
+                const metas = chart.getSortedVisibleDatasetMetas();
+                ctx.save();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                metas.forEach((meta) => {
+                    const ds = chart.data.datasets[meta.index];
+                    if (!ds || !meta || !meta.data || meta.hidden || ds.hidden) return;
+                    const isFilled = get(ds, 'fill', false) || get(ds, 'options.fill', false);
+                    if (!isFilled) return; // only for filled areas
+
+                    const dsOpts = ds.regionLabel || {};
+                    const color = dsOpts.color ?? opts.color ?? '#2c3e50';
+                    const opacity = dsOpts.opacity ?? opts.opacity ?? 0.85;
+                    const padY = dsOpts.paddingY ?? opts.paddingY ?? 0;
+                    const shadow = dsOpts.shadow ?? opts.shadow ?? false;
+                    const font = {
+                        size: (dsOpts.font && dsOpts.font.size) ?? (opts.font && opts.font.size) ?? 12,
+                        weight: (dsOpts.font && dsOpts.font.weight) ?? (opts.font && opts.font.weight) ?? '600',
+                        family: (dsOpts.font && dsOpts.font.family) ?? (opts.font && opts.font.family) ?? 'sans-serif'
+                    };
+                    const text = (dsOpts.text != null ? dsOpts.text : (ds.label || '')) + '';
+
+                    const points = meta.data;
+                    if (!points || points.length < 2) return;
+
+                    const xs = [];
+                    const ysRaw = [];
+                    for (let i = 0; i < points.length; i++) {
+                        const p = points[i];
+                        if (!p || !isFinite(p.x) || !isFinite(p.y)) continue;
+                        xs.push(p.x);
+
+                        const raw = ds.data && ds.data[i];
+                        const yVal = raw != null && typeof raw === 'object' && raw.y != null ? Number(raw.y)
+                                     : typeof raw === 'number' ? Number(raw) : NaN;
+                        if (isFinite(yVal)) ysRaw.push(yVal);
+                    }
+                    if (xs.length < 2 || ysRaw.length === 0) return;
+
+                    const xMid = (Math.min(...xs) + Math.max(...xs)) / 2;
+                    const yAvgRaw = ysRaw.reduce((a, b) => a + b, 0) / ysRaw.length;
+                    const yMid = meta.yScale.getPixelForValue(yAvgRaw);
+
+                    const area = chart.chartArea;
+                    const yClamped = Math.max(area.top + font.size, Math.min(area.bottom - font.size, yMid + padY));
+
+                    ctx.save();
+                    ctx.globalAlpha = opacity;
+                    if (shadow) { ctx.shadowColor = 'rgba(255,255,255,0.9)'; ctx.shadowBlur = 3; }
+                    ctx.font = `${font.weight} ${font.size}px ${font.family}`;
+                    ctx.fillStyle = color;
+                    ctx.fillText(text, xMid, yClamped);
+                    ctx.restore();
+                });
+
+                ctx.restore();
+            }
+        };
+        Chart.register(regionLabelPlugin);
+        window._regionLabelPluginRegistered = true;
+    }
+
+    // Convert function-like strings in options to real functions (for callbacks)
+    const reviveFunctions = (obj) => {
+        if (!obj || typeof obj !== 'object') return obj;
+        for (const k of Object.keys(obj)) {
+            const v = obj[k];
+            if (typeof v === 'string' && v.trim().startsWith('function')) {
+                try { obj[k] = eval('(' + v + ')'); } catch { /* ignore */ }
+            } else if (v && typeof v === 'object') {
+                reviveFunctions(v);
+            }
+        }
+        return obj;
+    };
+    reviveFunctions(config);
+
+    // Apply common visual tweaks: smaller points, larger hit area, span gaps
+    if (config && config.data && Array.isArray(config.data.datasets)) {
+        config.data.datasets = config.data.datasets.map(ds => {
+            const clone = { ...ds };
+            // Reduce dot size uniformly for visual clarity
+            clone.pointRadius = 2;
+            clone.pointHoverRadius = 4;
+            clone.pointHitRadius = (typeof ds.pointHitRadius === 'number') ? ds.pointHitRadius : 8;
+            clone.spanGaps = true; // allow gaps if there are nulls
+
+            // Convert y<=0 to null to prevent dropping to X-axis and only connect points with value > 0
+            if (Array.isArray(ds.data)) {
+                clone.data = ds.data.map(p => {
+                    if (p == null) return null;
+                    if (typeof p === 'object') {
+                        const y = p.y;
+                        if (y == null || y <= 0) return { ...p, y: null };
+                        return p;
+                    }
+                    if (typeof p === 'number' && p <= 0) return null;
+                    return p;
+                });
+            }
+
+            return clone;
+        });
+    }
+
+    // Custom value labels only for target datasets (e.g., VungB, VungC)
+    const meta = config.meta || {};
+    const labelTargets = Array.isArray(meta.valueLabelTargets) ? meta.valueLabelTargets : [];
+    // Register lightweight custom plugin for value labels (no external deps)
+    if (!window._valueLabelPluginRegistered) {
+        const valueLabelPlugin = {
+            id: 'valueLabelPlugin',
+            afterDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx, chartArea, scales } = chart;
+                const opts = pluginOptions || {};
+                const targets = opts.targets || [];
+                const color = opts.color || '#333';
+                const fontSize = opts.fontSize || 10;
+                const fontWeight = opts.fontWeight || '600';
+                const offset = opts.offset || 4;
+                const minDistance = (typeof opts.minDistance === 'number') ? opts.minDistance : 18; // px between labels
+                const every = (typeof opts.every === 'number' && opts.every > 0) ? Math.floor(opts.every) : 1; // draw every N-th
+                ctx.save();
+                ctx.font = `${fontWeight} ${fontSize}px sans-serif`;
+                ctx.fillStyle = color;
+                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                    const label = dataset.label || '';
+                    const matchesTarget = Array.isArray(targets) && targets.some(t => label === t || (label && label.startsWith(t)));
+                    if (!matchesTarget) return;
+                    const meta = chart.getDatasetMeta(datasetIndex);
+                    // Respect dataset visibility (legend toggle)
+                    if (!meta || !meta.data || meta.hidden || dataset.hidden) return;
+                    let lastX = -Infinity;
+                    dataset.data.forEach((dp, i) => {
+                        if (every > 1 && (i % every) !== 0) return;
+                        const node = meta.data[i];
+                        if (!node) return;
+                        const raw = (typeof dp === 'object') ? (dp && dp.y) : dp;
+                        if (raw == null) return;
+                        const val = Number(raw);
+                        if (!isFinite(val)) return;
+                        const { x, y } = node.tooltipPosition(true);
+                        if (Math.abs(x - lastX) < minDistance) return;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillText(val.toFixed(2), x, y - offset);
+                        lastX = x;
+                    });
+                });
+                ctx.restore();
+            }
+        };
+        Chart.register(valueLabelPlugin);
+        window._valueLabelPluginRegistered = true;
+    }
+    // Provide plugin options
+    config.options = config.options || {};
+    config.options.plugins = config.options.plugins || {};
+    config.options.plugins.valueLabelPlugin = {
+        targets: labelTargets,
+        color: '#333',
+        fontSize: 10,
+        fontWeight: '600',
+        offset: 4,
+        minDistance: 22,
+        every: 2
+    };
+
+    // Global options for region labels (can be overridden by dataset.regionLabel)
+    config.options.plugins.regionLabel = config.options.plugins.regionLabel || {
+        color: '#2c3e50',
+        opacity: 0.85,
+        paddingY: 0,
+        shadow: false,
+        font: { size: 12, weight: '600', family: 'sans-serif' }
+    };
+    // Disable area labels per request
+    config.options.plugins.regionLabel.enabled = false;
+
+    // Ensure tooltip works well for both line points and filled areas
+    config.options.plugins.tooltip = config.options.plugins.tooltip || {};
+    const tt = config.options.plugins.tooltip;
+    tt.intersect = false; // easier to hover
+    tt.mode = 'nearest';
+    tt.filter = function(item) { return item.parsed && item.parsed.y != null; };
+    tt.callbacks = tt.callbacks || {};
+    if (!tt.callbacks.title) {
+        tt.callbacks.title = function(items) {
+            if (!items || !items.length) return '';
+            const ms = items[0].parsed.x || (items[0].raw && items[0].raw.x);
+            if (!ms) return '';
+            try { return luxon.DateTime.fromMillis(ms).toFormat('dd/MM/yyyy HH:mm'); } catch { return ''; }
+        };
+    }
+    tt.callbacks.label = function(context) {
+        const y = context.parsed && context.parsed.y != null ? context.parsed.y : (context.raw && context.raw.y);
+        const lab = context.dataset && context.dataset.label ? context.dataset.label : '';
+        return `${lab}: ${Number(y).toFixed(2)}m`;
+    };
+
+    // Build region labels using annotation boxes if provided via config.meta.regions
+    if (meta.regions && Array.isArray(meta.regions)) {
+        config.options.plugins.annotation = config.options.plugins.annotation || { annotations: {} };
+        const anns = config.options.plugins.annotation.annotations || {};
+        meta.regions.forEach((r, idx) => {
+            anns['region_' + idx] = {
+                type: 'box',
+                xMin: r.xMin,
+                xMax: r.xMax,
+                yMin: (typeof r.yMin === 'number') ? r.yMin : undefined,
+                yMax: (typeof r.yMax === 'number') ? r.yMax : undefined,
+                backgroundColor: r.backgroundColor || 'rgba(180,180,180,0.12)',
+                borderWidth: 0,
+                label: {
+                    display: (r.showLabel !== false),
+                    content: r.label || '',
+                    position: 'center',
+                    color: r.color || '#333',
+                    backgroundColor: r.labelBg || 'rgba(255,255,255,0.9)',
+                    padding: 4,
+                    font: { style: 'bold' }
+                }
+            };
+        });
+        config.options.plugins.annotation.annotations = anns;
+    }
+
+    if (chart) {
+        chart.destroy();
+    }
+    chart = new Chart(ctx, config);
     chart.canvas.addEventListener('mousemove', (event) => {
         const rect = chart.canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
@@ -174,9 +430,25 @@ function updateChartWaterLevel(data) {
         tension: 0.3,
         borderWidth: 2,
         borderDash: s.borderDash,
-        pointRadius: 3,
-        pointHoverRadius: 5
+        pointRadius: 2,
+        pointHoverRadius: 4
       }));
+// Convert y<=0 to null to prevent dropping to X-axis and only connect points with value > 0
+datasets.forEach(ds => {
+    ds.spanGaps = true;
+    if (Array.isArray(ds.data)) {
+        ds.data = ds.data.map(p => {
+            if (p == null) return null;
+            if (typeof p === 'object') {
+                const y = p.y;
+                if (y == null || y <= 0) return { ...p, y: null };
+                return p;
+            }
+            if (typeof p === 'number' && p <= 0) return null;
+            return p;
+        });
+    }
+});
     new Chart(ctx, {
     type: 'line',
     data: { 

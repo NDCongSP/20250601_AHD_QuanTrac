@@ -123,19 +123,55 @@ public partial class AddEditLocation : ComponentBase
         }
     }
 
-    private void AddStation()
+    private async Task AddStation()
     {
-        Model.Stations ??= new List<StationInfoModel>();
-        var newStation = new StationInfoModel();
-        Model.Stations.Add(newStation);
-        // Mark as inserting
-        _isInserting = true;
-        // If the grid is initialized, insert the row for immediate editing
-        if (_stationsGrid != null)
+        var result = await _dialogService.OpenAsync<AddStationDialog>(
+            "Thêm trạm",
+            new Dictionary<string, object>()
+            {
+            },
+            new DialogOptions
+            {
+                Width = "700px",
+                Height = "auto",
+                Resizable = true
+            }
+        );
+
+        if (result is StationInfoModel newStation)
         {
-            _stationsGrid.InsertRow(newStation);
+            if (string.IsNullOrWhiteSpace(newStation.Name) || string.IsNullOrWhiteSpace(newStation.Path))
+            {
+                _notificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = "Tên và đường dẫn không được để trống",
+                    Duration = 4000
+                });
+                return;
+            }
+
+            Model.Stations ??= new List<StationInfoModel>();
+            if (CheckDuplicateStation(newStation))
+            {
+                _notificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = "Đã tồn tại trạm có tên tương tự",
+                    Duration = 4000
+                });
+                return;
+            }
+
+            newStation.Id = Model.Stations.Any() ? (Model.Stations.Max(s => s.Id) ?? 0) + 1 : 1;
+            Model.Stations.Add(newStation);
+            if (_stationsGrid != null)
+            {
+                await _stationsGrid.Reload();
+            }
         }
-        StateHasChanged();
     }
 
     private async Task DeleteStation(StationInfoModel station)
@@ -164,13 +200,59 @@ public partial class AddEditLocation : ComponentBase
 
     private async Task EditRow(StationInfoModel station)
     {
-        // Mark as editing
-        _isEditing = true;
-        if (_stationsGrid != null)
+        var result = await _dialogService.OpenAsync<AddStationDialog>(
+            "Chỉnh sửa trạm",
+            new Dictionary<string, object>()
+            {
+                { nameof(AddStationDialog.Initial), station }
+            },
+            new DialogOptions
+            {
+                Width = "700px",
+                Height = "auto",
+                Resizable = true
+            }
+        );
+
+        if (result is StationInfoModel updated)
         {
-            await _stationsGrid.EditRow(station);
+            // Normalize and validate
+            updated.Id = station.Id;
+            if (string.IsNullOrWhiteSpace(updated.Name) || string.IsNullOrWhiteSpace(updated.Path))
+            {
+                _notificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = "Tên và đường dẫn không được để trống",
+                    Duration = 4000
+                });
+                return;
+            }
+
+            if (CheckDuplicateStation(updated))
+            {
+                _notificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = "Đã tồn tại trạm có tên tương tự",
+                    Duration = 4000
+                });
+                return;
+            }
+
+            // Apply updates
+            station.Name = updated.Name;
+            station.Path = updated.Path;
+            station.Tags = updated.Tags;
+            station.OffsetConfig = updated.OffsetConfig ?? new OffsetConfigModel();
+
+            if (_stationsGrid != null)
+            {
+                await _stationsGrid.Reload();
+            }
         }
-        StateHasChanged();
     }
 
     private async Task OnUpdateRow(StationInfoModel station)

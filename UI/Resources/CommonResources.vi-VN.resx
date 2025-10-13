@@ -591,4 +591,7 @@
   <data name="btn_Cancel" xml:space="preserve">
     <value>Hủy</value>
   </data>
+  <data name="PagingSummaryFormat" xml:space="preserve">
+    <value>{0} trong tổng {1}</value>
+  </data>
 </root>

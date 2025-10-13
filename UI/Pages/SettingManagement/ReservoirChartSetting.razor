@@ -24,9 +24,9 @@
                                Data="@_settings" 
                                Style="width:100%"
                                AllowPaging="true"
-                               PageSize="10"
-                               ShowPagingSummary="true"
-                               PagingSummaryFormat="@_localizer["PagingSummaryFormat"]">
+                               PageSize="30"
+                               ShowPagingSummary="true" PageSizeOptions="@PageSizeOptions"
+                               PagingSummaryFormat="@_localizer["PagingSummaryFormat"]" PageSizeText="@_localizer["items per page"]">
                     <Columns>
                         <RadzenDataGridColumn TItem="FT05_ChartHoChua" 
                                             Title="X_Value" 
@@ -58,7 +58,7 @@
     private List<FT05_ChartHoChua> _settings = new();
     private List<string> _columns = new();
     private bool _isLoading = true;
-
+    public static IEnumerable<int> PageSizeOptions = [30, 100, 200];
     protected override async Task OnInitializedAsync()
     {
         try

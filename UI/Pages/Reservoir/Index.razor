@@ -2,6 +2,8 @@
 @using System.Text.RegularExpressions
 @using System.Timers
 @using System.ComponentModel
+@using System.Reflection
+@using Domain.Entities
 @using System.Globalization
 @using UI.StaticClass
 @using Application.Services
@@ -50,14 +52,17 @@
             </RadzenColumn>
 
             <!-- Second Column without Fieldset -->
-            <RadzenColumn SizeXS="12" SizeLG="3" class="rz-mx-auto equal-height-column" Style="height: 365px;">
+            <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column" Style="height: 365px;">
                 <RadzenDataGrid Data="@apiData" Style="height: 100%;"
-                                TItem="KeyValuePair<string, double>" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
+                                TItem="ReservoirDataModel" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
                                 AllowPaging="false" ShowPagingSummary="false">
                     <Columns>
-                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Vị trí" Property="Key" />
-                        <RadzenDataGridColumn TItem="KeyValuePair<string, double>" Title="Giá trị (m)" Property="Value"
+                        <RadzenDataGridColumn TItem="ReservoirDataModel" Title="Tên" Property="Name" />
+                        <RadzenDataGridColumn TItem="ReservoirDataModel" Title="Tức thời" Property="Value"
                                               FormatString="{0:N2}" TextAlign="TextAlign.Right" />
+                        <RadzenDataGridColumn TItem="ReservoirDataModel" Title="Tổng tích luỹ" Property="Total"
+                                              FormatString="{0:N2}" TextAlign="TextAlign.Right" />
+                        <RadzenDataGridColumn TItem="ReservoirDataModel" Title="Thời gian" Property="CurrentDate" />
                     </Columns>
                     <EmptyTemplate>
                         <div class="rz-datatable-emptymessage" style="text-align: center; padding: 10px;">
@@ -68,7 +73,7 @@
             </RadzenColumn>
 
             <!-- Third Column without Fieldset -->
-            <RadzenColumn SizeXS="12" SizeLG="5" class="rz-mx-auto equal-height-column">
+            <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column">
                 <div class="map-container" style="border-top: none;height: 365px;">
                     <iframe src="https://vrain.vn/61/overview?public_map=windy"
                             style="width: 100%; height: 100%; border: none; border-radius: 0 0 4px 4px;" allowfullscreen>
@@ -93,99 +98,6 @@
                 </div>
                 <canvas id="reservoirChart" height="400"></canvas>
             </div>
-            @* <div class="chart-container">
-                <RadzenChart @ref="_chart" Style="width: 100%; height: 100%;">
-                    <!-- Line Series (L_*) -->
-                    @{
-                        var lineProps = typeof(FT05_ChartHoChuaModel).GetProperties()
-                        .Where(p => p.Name.StartsWith("L_") && p.PropertyType == typeof(double?))
-                        .ToList();
-
-                        foreach (var prop in lineProps)
-                        {
-                            var displayName = (prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
-                            .FirstOrDefault() as DisplayNameAttribute)?.DisplayName ?? prop.Name.Replace("L_", "");
-                            var strokeColor = displayName switch
-                            {
-                                string s when s.Contains("CTDD") => "#A31629",
-                                string s when s.Contains("DPL") => "#B5131E",
-                                string s when s.Contains("HCCN") => "#B5131E",
-                                string s when s.Contains("DPPH") => "#CB46C2",
-                                string s when s.Contains("Fllow_TL_CDD") => "blue",
-                                _ => "black"
-                            };
-
-                            <RadzenLineSeries Data="@chartData" CategoryProperty="X_Value"
-                                              Stroke="black" Title="@displayName" ValueProperty="@prop.Name"
-                                              LineType="LineType.Solid">
-                                <RadzenSeriesDataLabels Visible="false" />
-                                <RadzenMarkers Visible="true" Size="3" Fill="@strokeColor" MarkerType="MarkerType.Circle" />
-                                <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" Visible="true" />
-                                <RadzenValueAxis>
-                                    <RadzenGridLines Visible="true" />
-                                </RadzenValueAxis>
-                            </RadzenLineSeries>
-                        }
-
-                        <!-- FT03 Data Series -->
-                        @if (_ft03ChartData?.Any() == true)
-                        {
-                            // <RadzenLineSeries Data="@_ft03ChartData"
-                            //                   CategoryProperty="X_Value"
-                            //                   Stroke="blue"
-                            //                   Title="Fllow_TL_CDD"
-                            //                   ValueProperty="Value"
-                            //                   LineType="LineType.Solid">
-                            //     <RadzenSeriesDataLabels Visible="false" />
-                            //     <RadzenMarkers Visible="true" Size="3" Fill="blue" MarkerType="MarkerType.Circle" />
-                            // </RadzenLineSeries>
-
-                            <RadzenLineSeries Data="@_ft03ChartData"
-                                              CategoryProperty="X_Value"
-                                              ValueProperty="Value"
-                                              Title="Flow_TL_CDD"
-                                              LineType="LineType.Dotted"
-                                              Stroke="blue">
-                                <RadzenMarkers Visible="true" Size="3" Fill="blue" MarkerType="MarkerType.Circle" />
-                                <RadzenCategoryAxis Padding="20">
-                                </RadzenCategoryAxis>
-                            </RadzenLineSeries>
-                        }
-                    }
-
-                    <!-- Area Series (A_*) -->
-                    @{
-                        var areaProps = typeof(FT05_ChartHoChuaModel).GetProperties()
-                        .Where(p => p.Name.StartsWith("A_") && p.PropertyType == typeof(double?))
-                        .OrderByDescending(x => x.Name)
-                        .ToList();
-
-                        foreach (var prop in areaProps)
-                        {
-                            var displayName = (prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
-                            .FirstOrDefault() as DisplayNameAttribute)?.DisplayName ?? prop.Name.Replace("A_", "");
-
-                            var fillColor = displayName.Contains("A") ? "#C49078" : displayName.Contains("B") ? "#A9D1AE" : "#E0EFF6";
-                            var strokeColor = displayName.Contains("A") ? "#E51300" : displayName.Contains("B") ? "#DD10D9" : "#AB3130";
-                            var isVisible = displayName.Contains("C") || displayName.Contains("B");
-                            <RadzenAreaSeries Data="@chartData" CategoryProperty="X_Value"
-                                              Title="@displayName"
-                                              Fill="@fillColor"
-                                              Stroke="@strokeColor"
-                                              ValueProperty="@prop.Name">
-                                <RadzenSeriesDataLabels Visible="@isVisible" Fill="@strokeColor" />
-                                <RadzenMarkers Visible="true" Size="3" Fill="@strokeColor" MarkerType="MarkerType.Circle" />
-                                <RadzenCategoryAxis Padding="20" LabelAutoRotation="-45" Visible="true" />
-                                <RadzenValueAxis>
-                                    <RadzenGridLines Visible="true" />
-                                </RadzenValueAxis>
-                            </RadzenAreaSeries>
-                        }
-                    }
-
-                    <RadzenLegend Position="LegendPosition.Bottom" />
-                </RadzenChart>
-            </div> *@
         </div>
     </div>
 </div>
@@ -195,13 +107,20 @@
     private string _svg, _infoLine1, _infoLine2;
     private System.Timers.Timer _timer = new();
     private List<FT05_ChartHoChuaModel> chartData = new();
-    private List<KeyValuePair<string, double>> apiData = new();
+    private List<ReservoirDataModel> apiData = new();
+
     private List<FT03DataPoint> _ft03ChartData = new();
     private RealtimeDisplayModel realtimeData = new();
     private DotNetObjectReference<Index> _dotNetHelper;
     private bool _isInitialized = false;
     private List<FT06_InterpolationTable> _ft06Data = new();
-
+    public class ReservoirDataModel
+    {
+        public string Name { get; set; }
+        public double Value { get; set; }
+        public double Total { get; set; }
+        public string CurrentDate { get; set; }
+    }
     protected override async Task OnInitializedAsync()
     {
         try
@@ -256,12 +175,28 @@
 
     private void GetAPIData()
     {
+        var currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+
         apiData = realtimeData.CalculatorValue?.GetType().GetProperties()
-            .Where(p => p.Name.StartsWith("API_D_"))
-            .Select(p => new KeyValuePair<string, double>(
-                _localizer[p.Name.Replace("API_D_", "").Replace("_", " ")] ?? p.Name.Replace("API_D_", ""),
-                Convert.ToDouble(p.GetValue(realtimeData.CalculatorValue) ?? 0)
-            )).ToList();
+            .Where(p => p.Name.StartsWith("API_D_") && !p.Name.EndsWith("_Total"))
+            .Select(p =>
+            {
+                var name = _localizer[p.Name.Replace("API_D_", "").Replace("_", " ")] ?? p.Name.Replace("API_D_", "");
+                var value = Convert.ToDouble(p.GetValue(realtimeData.CalculatorValue) ?? 0);
+
+                // Tìm field tương ứng có _Total
+                var totalProperty = realtimeData.CalculatorValue.GetType().GetProperty(p.Name + "_Total");
+                var total = totalProperty != null ? Convert.ToDouble(totalProperty.GetValue(realtimeData.CalculatorValue) ?? 0) : 0;
+
+                return new ReservoirDataModel
+                    {
+                        Name = name,
+                        Value = value,
+                        Total = total,
+                        CurrentDate = currentDate
+                    };
+            }).ToList();
+
         var locationInfo = realtimeData.Stations.FirstOrDefault(x => x.StationId == 4) ?? new();
         var Q = GetFT06DataByYValue(locationInfo.Fllow_Ho_Final ?? 0);
 
@@ -279,14 +214,19 @@
                 chartData = response.Data.Select(x => new FT05_ChartHoChuaModel
                     {
                         Id = x.Id,
+
                         Index = x.Index,
                         X_Value = x.X_Value,
+
                         L_CTDD = x.L_CTDD,
                         L_DPL = x.L_DPL,
                         L_HCCN = x.L_HCCN,
                         L_MNC = x.L_MNC,
                         L_MNDBT = x.L_MNDBT,
                         L_DPPH = x.L_DPPH,
+                        L_MNKT = x.L_MNKT,
+                        L_MNTK = x.L_MNTK,
+
                         A_VungA = x.A_VungA,
                         A_VungB = x.A_VungB,
                         A_VungC = x.A_VungC,
@@ -319,9 +259,19 @@
             .Where(p => p.Name.StartsWith("A_") && p.PropertyType == typeof(double?))
             .ToList();
 
+        string GetDisplayName(string propertyName)
+        {
+            var propInfo = typeof(FT05_ChartHoChua).GetProperty(propertyName);
+            var dn = propInfo?.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+            if (!string.IsNullOrWhiteSpace(dn)) return dn!;
+            return propertyName.StartsWith("L_") || propertyName.StartsWith("A_")
+                ? propertyName.Substring(2)
+                : propertyName;
+        }
+
         var lineDatasets = lineProperties.Select(prop => new
         {
-            label = prop.Name.Replace("L_", ""),
+            label = GetDisplayName(prop.Name),
             data = chartData
                 .Where(x => x.X_Value != null && prop.GetValue(x) != null)
                 .OrderBy(x => x.Index)
@@ -342,7 +292,7 @@
 
         var areaDatasets = areaProperties.Select(prop => new
         {
-            label = prop.Name.Replace("A_", ""),
+            label = GetDisplayName(prop.Name),
             data = chartData
                 .Where(x => x.X_Value != null && prop.GetValue(x) != null)
                 .OrderBy(x => x.Index)
@@ -376,8 +326,8 @@
             showLine = false,
             pointBackgroundColor = "blue",
             pointBorderColor = "blue",
-            pointRadius = 6,
-            pointHoverRadius = 8,
+            pointRadius = 2,
+            pointHoverRadius = 4,
             order = 1
         };
 
@@ -385,6 +335,67 @@
         allDatasets.AddRange(lineDatasets);
         allDatasets.AddRange(areaDatasets);
         allDatasets.Add(ft03Dataset);
+
+        // X-axis range for region labels
+        var minDate = chartData.Where(d => d.Date != default).Min(d => d.Date);
+        var maxDate = chartData.Where(d => d.Date != default).Max(d => d.Date);
+        var xMinStr = minDate.ToString("yyyy-MM-dd");
+        var xMaxStr = maxDate.ToString("yyyy-MM-dd");
+
+        // Compute representative thresholds for areas A_VungA/B/C
+        var areaBands = areaProperties.Select(prop =>
+        {
+            var name = prop.Name.Replace("A_", "");
+            var values = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .Select(x => (double?)prop.GetValue(x))
+                .Where(v => v.HasValue)
+                .Select(v => v!.Value)
+                .OrderBy(v => v)
+                .ToList();
+            double? minY = values.Any() ? values.Min() : null;
+            double? maxY = values.Any() ? values.Max() : null;
+            double? avgY = values.Any() ? values.Average() : null;
+            double? medianY = values.Any() ? values[values.Count / 2] : null;
+            // prefer median to avoid outliers; fallback average
+            var refY = medianY ?? avgY;
+            return new { name, minY, maxY, refY };
+        }).ToList();
+
+        // Global Y min for axis (start ticks from min instead of 0)
+        var allYValues = new List<double>();
+        foreach (var prop in lineProperties)
+        {
+            var vals = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .Select(x => (double?)prop.GetValue(x))
+                .Where(v => v.HasValue)
+                .Select(v => v!.Value);
+            allYValues.AddRange(vals);
+        }
+        foreach (var prop in areaProperties)
+        {
+            var vals = chartData
+                .Where(x => x.X_Value != null && prop.GetValue(x) != null)
+                .Select(x => (double?)prop.GetValue(x))
+                .Where(v => v.HasValue)
+                .Select(v => v!.Value);
+            allYValues.AddRange(vals);
+        }
+        if (_ft03ChartData != null && _ft03ChartData.Any())
+        {
+            var vals = _ft03ChartData
+                .Where(x => x.Value != null)
+                .Select(x => x.Value!.Value);
+            allYValues.AddRange(vals);
+        }
+
+        // Use the smallest positive (> 0) value for Y min; ignore zeros
+        var positiveYValues = allYValues.Where(v => v > 0).ToList();
+        var yMinAll = positiveYValues.Any() ? positiveYValues.Min() : (allYValues.Any() ? allYValues.Min() : 0d);
+        var yMaxAll = allYValues.Any() ? allYValues.Max() : yMinAll + 10d;
+        var yMinTick = Math.Floor(yMinAll); // align ticks nicely with stepSize=1
+        var yMaxTick = Math.Ceiling(yMaxAll);
 
         var chartConfig = new
         {
@@ -409,15 +420,16 @@
                         type = "time",
                         time = new
                         {
-                            unit = "day",
-                            displayFormats = new { day = "dd-MM" },
+                            unit = "month",
+                            displayFormats = new { day = "dd/MM" },
                             tooltipFormat = "dd/MM/yyyy HH:mm"
                         },
                         grid = new { display = true },
                         ticks = new
                         {
                             maxRotation = 45,
-                            minRotation = 45
+                            minRotation = 45,
+                            callback = "function(value){ return luxon.DateTime.fromMillis(value).toFormat('dd/MM'); }"
                         },
                         min = "2025-07-01",
                         max = "2026-06-30"
@@ -426,7 +438,17 @@
                     {
                         title = new { display = true, text = "Mực nước (m)" },
                         beginAtZero = false,
-                        afterFit = "function(scale) { scale.paddingTop = 30; }"
+                        min = yMinTick,
+                        ticks = new
+                        {
+                            stepSize = 1,
+                            autoSkip = false,
+                            padding = 12,
+                            font = new { size = 13 },
+                            callback = "function(value){ return Number(value).toFixed(1); }"
+                        },
+                        grace = "10%",
+                        afterFit = "function(scale) { scale.paddingTop = 30; scale.width = scale.width + 28; }"
                     }
                 },
                 plugins = new
@@ -453,7 +475,44 @@
                 }
             }
         };
-        await _jsRuntime.InvokeVoidAsync("updateChart", chartConfig);
+
+        // Regions and target datasets for value labels (for Vùng B, Vùng C lines)
+        // Determine thresholds using refY values
+        var yA = areaBands.FirstOrDefault(b => b.name.Equals("VungA", StringComparison.OrdinalIgnoreCase))?.refY;
+        var yB = areaBands.FirstOrDefault(b => b.name.Equals("VungB", StringComparison.OrdinalIgnoreCase))?.refY;
+        var yC = areaBands.FirstOrDefault(b => b.name.Equals("VungC", StringComparison.OrdinalIgnoreCase))?.refY;
+        // Sort thresholds ascending, ignore nulls
+        var thresholds = new List<double>();
+        if (yA.HasValue) thresholds.Add(yA.Value);
+        if (yB.HasValue) thresholds.Add(yB.Value);
+        if (yC.HasValue) thresholds.Add(yC.Value);
+        thresholds = thresholds.Distinct().OrderBy(v => v).ToList();
+
+        double lower1 = yMinTick;
+        double mid1 = thresholds.Count > 0 ? thresholds[0] : yMinTick + 1;
+        double mid2 = thresholds.Count > 1 ? thresholds[1] : mid1 + 1;
+        double upper = yMaxTick;
+
+        var regions = new List<object>
+        {
+            new { label = "Vùng C", xMin = xMinStr, xMax = xMaxStr, yMin = lower1, yMax = mid1, backgroundColor = "rgba(224,239,246,0.10)", color = "#2b5c73", showLabel = true },
+            new { label = "Vùng A", xMin = xMinStr, xMax = xMaxStr, yMin = mid1, yMax = mid2, backgroundColor = "rgba(196,144,120,0.10)", color = "#7a6200", showLabel = true },
+            new { label = "Vùng B", xMin = xMinStr, xMax = xMaxStr, yMin = mid2, yMax = upper, backgroundColor = "rgba(172,210,173,0.10)", color = "#2e5930", showLabel = false }
+        };
+
+        var labelB = GetDisplayName("A_VungB");
+        var labelC = GetDisplayName("A_VungC");
+
+        var meta = new
+        {
+            regions = regions,
+            valueLabelTargets = new[] { labelB, labelC },
+            chartHeight = 560
+        };
+
+        // Attach meta to the config for JS to consume
+        var finalConfig = new { chartConfig.type, chartConfig.data, chartConfig.options, meta };
+        await _jsRuntime.InvokeVoidAsync("updateChart", finalConfig);
     }
 
     private string GetLineColor(string propertyName)
@@ -537,3 +596,4 @@
         }
     }
 }
+

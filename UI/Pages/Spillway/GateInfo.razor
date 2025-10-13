@@ -1,5 +1,9 @@
 @using Domain
 @using Radzen.Blazor
+@page "/spillway/gate-info"
+@using System.Timers
+@using UI.StaticClass
+@attribute [Authorize(Policy = "Admin")]
 
 <style>
     :root {
@@ -118,8 +122,8 @@
         margin-bottom: 0.5rem;
     }
     .btn-active{
-        background-color: green !important;
-        color: white !important;
+        background-color: #ADFF29 !important;
+        color: blue !important;
         width: 100%;
     }
 
@@ -134,6 +138,54 @@
         color: white !important;
         width: 100%;
     }
+    /* Water level visual */
+	.water-level-container {
+		position: relative;
+		width: 100%;
+        height: 100%;
+        background-color: #9CB5D6;
+	}
+	.water-level-fill {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		transition: height 300ms ease;
+        background-color: #4692D3;
+	}
+
+	/* Operation buttons */
+	.rz-button.btn-active {
+		background-color: #C6FF3D; /* lime highlight */
+		border: 1px solid #9ad62b;
+		color: #0f172a; /* slate-900 */
+		font-weight: 600;
+		box-shadow: inset 0 0 0 2px rgba(154, 214, 43, 0.15);
+	}
+	.rz-button.btn-active:hover { filter: brightness(0.98); }
+
+	.rz-button.btn-inactive {
+		background-color: #f8fafc; /* slate-50 */
+		border: 1px solid #e2e8f0; /* slate-200 */
+		font-weight: 600;
+	}
+	.rz-button.btn-inactive:hover { background-color: #f1f5f9; }
+
+	.rz-button.btn-emergency {
+		background-color: #fff5f5;
+		border: 1px solid #fca5a5;
+		color: #b91c1c;
+		font-weight: 700;
+	}
+	.rz-button.btn-emergency:hover { background-color: #fee2e2; }
+
+	/* Ensure full-width and spacing are consistent */
+	.rz-button.btn-active,
+	.rz-button.btn-inactive,
+	.rz-button.btn-emergency {
+		width: 100%;
+		border-radius: 6px;
+		padding: 0.65rem 0.75rem;
+	}
 </style>
 
 <RadzenTabsItem Text="@($"CỬA {GateNo}")">
@@ -143,10 +195,10 @@
                 CỬA @(GateNo)
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="4">
+        <RadzenColumn SizeXS="12" SizeMD="3">
             <div class="param-row">
                 <RadzenTextBox Value="Mực nước hồ (MN hồ):" Disabled="true" class="param-label-box" Style="width: 200px;" />
-                <span class="param-value">@($"{Station.Fllow_Ho:F2}")</span>
+                <span class="param-value">@($"{Station.Fllow_Ho:F0}")</span>
                 <span class="param-unit">m</span>
             </div>
             <div class="param-row">
@@ -156,16 +208,22 @@
             </div>
             <div class="param-row">
                 <RadzenTextBox Value="Hành trình xy lanh 1_1:" Disabled="true" class="param-label-box" Style="width: 200px;" />
-                <span class="param-value">@($"{Station.HT_Cylinder1_1 ?? 0:F2}")</span>
+                <span class="param-value">@($"{Station.HT_Cylinder1_1 ?? 0:F0}")</span>
                 <span class="param-unit">mm</span>
             </div>
             <div class="param-row">
                 <RadzenTextBox Value="Hành trình xy lanh 1_2:" Disabled="true" class="param-label-box" Style="width: 200px;" />
-                <span class="param-value">@($"{Station.HT_Cylinder1_2 ?? 0:F2}")</span>
+                <span class="param-value">@($"{Station.HT_Cylinder1_2 ?? 0:F0}")</span>
                 <span class="param-unit">mm</span>
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="4">
+        <RadzenColumn SizeXS="12" SizeMD="3">
+            @{var WaterLevelHeight = Math.Round((double)Station.Fllow_Door1 / 510 * 100, 0);}
+            <div class="water-level-container">
+                <div class="water-level-fill" style="height: @WaterLevelHeight%;"></div>
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="3">
             <div class="param-row">
                 <RadzenTextBox Value="Độ mở cửa (a):" Disabled="true" class="param-label-box" Style="width: 200px;" />
                 <span class="param-value">@($"{Station.Door1_Aperture ?? 0}")</span>
@@ -173,16 +231,16 @@
             </div>
             <div class="param-row">
                 <RadzenTextBox Value="Lưu lượng cửa 1 (Qi):" Disabled="true" class="param-label-box" Style="width: 200px;" />
-                <span class="param-value">@($"{Station.Fllow_Door1 ?? 0:F2}")</span>
+                <span class="param-value">@($"{Station.Fllow_Door1 ?? 0:F1}")</span>
                 <span class="param-unit">m³/s</span>
             </div>
             <div class="param-row">
                 <RadzenTextBox Value="Lưu lượng tổng (Qtr):" Disabled="true" class="param-label-box" Style="width: 200px;" />
-                <span class="param-value">@($"{GateData.CalculatorValue.Q_tr:F2}")</span>
+                <span class="param-value">@($"{GateData.CalculatorValue.Q_tr:F1}")</span>
                 <span class="param-unit">m³/s</span>
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="4">
+        <RadzenColumn SizeXS="12" SizeMD="3">
             <RadzenFieldset Text="Vận Hành">
                 <RadzenRow GutterSize="1rem">
                     <RadzenColumn Size="6">
@@ -207,7 +265,7 @@
         </RadzenColumn>
         <RadzenColumn SizeXS="12" SizeMD="12" class="mt-3">
             <div class="gate-header">
-                THÔNG TIN VẬN HÀNH CỬA @(GateNo + 1)
+                THÔNG TIN VẬN HÀNH CỬA @(GateNo)
             </div>
         </RadzenColumn>
         <RadzenColumn SizeXS="12" SizeMD="8" Class="operation-panel">
@@ -274,7 +332,7 @@
                 CỬA @(GateNo + 1)
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="4">
+        <RadzenColumn SizeXS="12" SizeMD="3">
             <div class="param-row">
                 <RadzenTextBox Value="Mực nước hồ (MN hồ):" Disabled="true" class="param-label-box" Style="width: 200px;" />
                 <span class="param-value">@($"{Station.Fllow_Ho:F2}")</span>
@@ -296,7 +354,13 @@
                 <span class="param-unit">mm</span>
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="4">
+          <RadzenColumn SizeXS="12" SizeMD="3">
+            @{var WaterLevelHeight = Math.Round((double)Station.Fllow_Door2 / 510 * 100, 0);}
+            <div class="water-level-container" >
+                <div class="water-level-fill" style="height: @WaterLevelHeight%;"></div>
+            </div>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeMD="3">
             <div class="param-row">
                 <RadzenTextBox Value="Độ mở cửa (a):" Disabled="true" class="param-label-box" Style="width: 200px;" />
                 <span class="param-value">@($"{Station.Door2_Aperture ?? 0}")</span>
@@ -313,7 +377,7 @@
                 <span class="param-unit">m³/s</span>
             </div>
         </RadzenColumn>
-        <RadzenColumn SizeXS="12" SizeMD="4">
+        <RadzenColumn SizeXS="12" SizeMD="3">
             <RadzenFieldset Text="Vận Hành">
                 <RadzenRow GutterSize="1rem">
                     <RadzenColumn Size="6">
@@ -337,7 +401,7 @@
         <RadzenColumn SizeXS="12" SizeMD="12" class="mt-3">
             <div class="gate-header">
 
-                THÔNG TIN VẬN HÀNH CỬA @(Station.StationId)
+                THÔNG TIN VẬN HÀNH CỬA @(GateNo + 1)
             </div>
         </RadzenColumn>
         <RadzenColumn SizeXS="12" SizeMD="8" Class="operation-panel">
