@@ -1,4 +1,5 @@
-﻿@page "/user-detail&id={Id}"
+﻿@page "/user-detail"
+@page "/user-detail/{Id}"
 
 @using Application.DTOs.Request.Account
 @using Application.DTOs.Response.Account
@@ -43,7 +44,7 @@ else
                                 </RadzenFormField>
                                 <RadzenRequiredValidator Component="_txtUserName" Popup="false" Style="position: absolute" />
                             </RadzenColumn>
-                            <RadzenColumn SizeXS="12" SizeSM="6" Visible="false">
+                            <RadzenColumn SizeXS="12" SizeSM="6" Visible="@(string.IsNullOrEmpty(Id) ? true : false)">
                                 <RadzenFormField Text="@_localizer["Password"]" Variant="Variant.Outlined" Style="display:flex;flex-direction:column;align-items:stretch;width:100%">
                                     <ChildContent>
                                         <RadzenTextBox Name="" @bind-Value="@_model.Password" Visible="@(!password)" />
@@ -51,6 +52,18 @@ else
                                     </ChildContent>
                                     <End>
                                         <RadzenButton Icon="@(password ? "visibility" : "visibility_off")" Click="TogglePassword"
+                                                      Variant="Variant.Text" Size="ButtonSize.Small" />
+                                    </End>
+                                </RadzenFormField>
+                            </RadzenColumn>
+                            <RadzenColumn SizeXS="12" SizeSM="6" Visible="@(string.IsNullOrEmpty(Id) ? true : false)">
+                                <RadzenFormField Text="@_localizer["ConfirmPassword"]" Variant="Variant.Outlined" Style="display:flex;flex-direction:column;align-items:stretch;width:100%">
+                                    <ChildContent>
+                                        <RadzenTextBox Name="" @bind-Value="@_model.ConfirmPassword" Visible="@(!confirmPassword)" />
+                                        <RadzenPassword @bind-Value="@_model.ConfirmPassword" Visible="@confirmPassword" />
+                                    </ChildContent>
+                                    <End>
+                                        <RadzenButton Icon="@(confirmPassword ? "visibility" : "visibility_off")" Click="ToggleConfirmPassword"
                                                       Variant="Variant.Text" Size="ButtonSize.Small" />
                                     </End>
                                 </RadzenFormField>
@@ -101,10 +114,10 @@ else
             <RadzenColumn Size="12" SizeSM="12">
                 <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem" Class="rz-mt-8 rz-mb-4">
                         <RadzenButton ButtonType="Radzen.ButtonType.Submit" Icon="save" Text="@_localizer["Save"]"
-                                      Disabled="@(!_visible||(_model.UserName.Contains("OMS") && GlobalVariable.UserAuthorizationInfo.UserName =="Admin"))" />
+                                      Disabled="@(!_visible)" />
                     <RadzenButton Click=@(args => ResetPass()) Variant="Variant.Flat"
                                   Text="@_localizer["Reset Password"]" Icon="lock_reset" ButtonStyle="ButtonStyle.Danger"
-                                  Disabled="@(!_visible||(_model.UserName.Contains("OMS") && GlobalVariable.UserAuthorizationInfo.UserName =="Admin"))"
+                                  Disabled="@(!_visible)"
                                   Visible="@_visibleResetBtn" />
                 </RadzenStack>
             </RadzenColumn>

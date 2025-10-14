@@ -22,9 +22,14 @@ public partial class UserDetail
     string _pagingSummaryFormat = "Displaying page {0} of {1} <b>(total {2} records)</b>";
 
     bool password = true;
+    bool confirmPassword = true;
     void TogglePassword()
     {
         password = !password;
+    }
+    void ToggleConfirmPassword()
+    {
+        confirmPassword = !confirmPassword;
     }
     bool _visible = true, _disable = false;
     bool _visibleResetBtn = false;
@@ -35,7 +40,6 @@ public partial class UserDetail
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        LayoutState.SetTitle("CHI TIẾT NGƯỜI DÙNG");
         await RefreshDataAsync();
     }
 
@@ -97,6 +101,8 @@ public partial class UserDetail
             }
             _selectStatus = EnumStatus.Activated;
 
+            LayoutState.SetTitle($"CHI TIẾT NGƯỜI DÙNG - {Title}");
+
             StateHasChanged();
         }
         catch (UnauthorizedAccessException) { }
@@ -113,6 +119,15 @@ public partial class UserDetail
         {
             if (Mode == "Create")
             {
+                // Validate password confirmation before any further actions
+                var passwordValue = arg.Password?.Trim() ?? string.Empty;
+                var confirmPasswordValue = _model.ConfirmPassword?.Trim() ?? string.Empty;
+                if (passwordValue != confirmPasswordValue)
+                {
+                    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"], _localizer["Confirm password does not match."]);
+                    return;
+                }
+
                 var confirm = await _dialogService.Confirm($"{_localizer["User"]}: {arg.UserName} {_localizer["Confirmation.Create"]}?", $"{_localizer["Create"]} {_localizer["User"]}", new ConfirmOptions()
                 {
                     OkButtonText = _localizer["Yes"],
@@ -151,7 +166,8 @@ public partial class UserDetail
             }
 
             arg.Status = _selectStatus;
-            arg.ConfirmPassword = arg.Password;
+            // Keep the confirm password as entered (already validated on create)
+            arg.ConfirmPassword = _model.ConfirmPassword;
             if (Mode == "Create")//Add
             {
                 var res = await _accountServices.CreateAccountAsync(arg);
@@ -216,8 +232,8 @@ public partial class UserDetail
         var response = await _accountServices.ChangePassAsync(new ChangePassRequestDTO()
         {
             Id = Id,
-            NewPassword = "wms@tealife.co.jp_RS1",
-            ConfirmNewPassword = "wms@tealife.co.jp_RS1"
+            NewPassword = "ahd123@gmail.com",
+            ConfirmNewPassword = "ahd123@gmail.com"
         });
 
         if (!response.Flag)

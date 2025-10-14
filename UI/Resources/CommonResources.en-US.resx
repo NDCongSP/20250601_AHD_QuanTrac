@@ -171,9 +171,6 @@
   <data name="Path" xml:space="preserve">
     <value>Path</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save button</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>

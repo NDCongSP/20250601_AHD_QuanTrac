@@ -16,34 +16,33 @@ public partial class RoleDetail
     List<PermissionsInRoleModel> _dataGrid = null;
     RadzenDataGrid<PermissionsInRoleModel> _profileGrid;
     IEnumerable<int> _pageSizeOptions = new int[] { 5, 10, 20, 30, 100, 200 };
-    bool _showPagerSummary = true;
-    string _pagingSummaryFormat = "Displaying page {0} of {1} <b>(total {2} records)</b>";
     bool allowRowSelectOnRowClick = false;
     IList<PermissionsInRoleModel> _gridSelected = [];
 
     bool _visibleBtnSubmit = true;
     bool _disable = false;
-    string _id = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         LayoutState.SetTitle("CHI TIẾT PHÂN QUYỀN");
-        _pagingSummaryFormat = _localizer["DisplayPage"] + " {0} " + _localizer["Of"] + " {1} <b>(" + _localizer["Total"] + " {2} " + _localizer["Records"] + ")</b>";
-
         await RefreshDataAsync();
     }
     
-    //protected override async Task OnParametersSetAsync()
-    //{
-    //    await RefreshDataAsync();
-    //}
-
     async Task RefreshDataAsync()
     {
         try
         {
-            if (!Title.Contains($"{_localizer["Detail.Create"]}")) _disable = true;
+            if (string.IsNullOrEmpty(Id))
+            {
+                _disable = true;
+                Title = _localizer["Detail.Create"];
+            }
+            else
+            {
+                Title = _localizer["Detail.Edit"];
+            }
+            LayoutState.SetTitle($"CHI TIẾT PHÂN QUYỀN - {Title}");
 
             #region Loading all permissions
             var p = await _permissionsServices.GetAllAsync();
@@ -58,16 +57,11 @@ public partial class RoleDetail
                 return;
             }
 
-            //_dataGrid = mapper.Map<List<PermissionsInRoleModel>>(p.Data);
             #endregion
 
-            if (Title.Contains("|"))
+            if (!string.IsNullOrEmpty(Id))
             {
-                var arr = Title.Split('|');
-                Title = arr[0];
-                _id = arr[1];
-
-                var roleResult = await _accountServices.RoleGetById(_id);
+                var roleResult = await _accountServices.RoleGetById(Id);
 
                 if (roleResult == null)
                 {
@@ -116,7 +110,6 @@ public partial class RoleDetail
                 {
                     if (p is null)
                     {
-                        //_model.Permissions.Add(mapper.Map<PermissionsInRoleModel>(item));
                     }
                 }
                 else
@@ -128,7 +121,7 @@ public partial class RoleDetail
             }
             #endregion
 
-            if (Title.Contains(_localizer["Detail.Edit"]))
+            if (!string.IsNullOrEmpty(Id))
             {
                 var confirm = await _dialogService.Confirm(_localizer["Confirmation.Update"] + _localizer["Role"] + $": {arg.Name} ", _localizer["Update"] + " " + _localizer["Role"], new ConfirmOptions()
                 {
@@ -141,10 +134,9 @@ public partial class RoleDetail
 
                 _model.Name = arg.Name;
 
-                //response = await _accountServices.UpdateRoleAsync(new UpdateDeleteRequestDTO() { Id = _model.Id, Name = _model.Name });
                 response = await _accountServices.UpdateRoleDTOAsync(_model);
             }
-            else if (Title.Contains(_localizer["Detail.Create"]))
+            else
             {
                 var confirm = await _dialogService.Confirm(_localizer["Confirmation.Create"] + _localizer["Role"] + $": {arg.Name}?", _localizer["Create"] + " " + _localizer["Role"], new ConfirmOptions()
                 {
@@ -155,7 +147,6 @@ public partial class RoleDetail
 
                 if (confirm == null || confirm == false) return;
 
-                //_model.Id = Guid.NewGuid().ToString();
                 _model.Name = arg.Name;
 
                 response = await _accountServices.CreateRoleAsync(_model);

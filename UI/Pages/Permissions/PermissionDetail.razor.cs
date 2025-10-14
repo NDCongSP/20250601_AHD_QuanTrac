@@ -17,9 +17,7 @@ namespace UI.Pages.Permissions
 
         protected override async Task OnInitializedAsync()
         {
-            LayoutState.SetTitle("CHI TIẾT CHỨC NĂNG");
             await base.OnInitializedAsync();
-
             await RefreshDataAsync();
         }
 
@@ -27,19 +25,14 @@ namespace UI.Pages.Permissions
         {
             try
             {
-                if (!Title.Contains($"{_localizer["Detail.Create"]}"))
+                if (string.IsNullOrEmpty(Id))
+                {
+                    Title = _localizer["Detail.Create"];
+                }else
                 {
                     _disable = true;
-                }
-
-                if (Title.Contains("|"))
-                {
-
-                    var arr = Title.Split('|');
-                    Title = arr[0];
-                    _id = arr[1];
-
-                    var resultPermision = await _permissionsServices.GetByIdAsync(Guid.Parse(_id));
+                    Title = _localizer["Detail.Edit"];
+                    var resultPermision = await _permissionsServices.GetByIdAsync(Guid.Parse(Id));
                     if (!resultPermision.Succeeded)
                     {
                         var error = JsonConvert.DeserializeObject<ErrorResponse>(resultPermision.Messages.FirstOrDefault())?.Errors.FirstOrDefault();
@@ -94,6 +87,8 @@ namespace UI.Pages.Permissions
                 }
                 #endregion
 
+                LayoutState.SetTitle($"CHI TIẾT CHỨC NĂNG - {Title}");
+
                 StateHasChanged();
             }
             catch (UnauthorizedAccessException) { }
@@ -108,12 +103,16 @@ namespace UI.Pages.Permissions
         {
             try
             {
-                var confirm = await _dialogService.Confirm(_localizer["Confirmation.Create"] + _localizer["Permission.Name"] + $": {arg.Name}?", _localizer["Create"] + " " + _localizer["Permission.Name"], new ConfirmOptions()
-                {
-                    OkButtonText = _localizer["Yes"],
-                    CancelButtonText = _localizer["No"],
-                    AutoFocusFirstElement = true,
-                });
+                bool isEdit = !string.IsNullOrEmpty(Id);
+                var confirm = await _dialogService.Confirm(
+                    (isEdit ? _localizer["Confirmation.Update"] : _localizer["Confirmation.Create"]) + _localizer["Permission.Name"] + $": {arg.Name}?",
+                    (isEdit ? _localizer["Update"] : _localizer["Create"]) + " " + _localizer["Permission.Name"],
+                    new ConfirmOptions()
+                    {
+                        OkButtonText = _localizer["Yes"],
+                        CancelButtonText = _localizer["No"],
+                        AutoFocusFirstElement = true,
+                    });
 
                 if (confirm == null || confirm == false) return;
 

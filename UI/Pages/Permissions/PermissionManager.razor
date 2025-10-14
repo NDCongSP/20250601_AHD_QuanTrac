@@ -22,7 +22,9 @@ else
                                           Text="@_localizer["Detail.Create"]" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
                         </RadzenStack>
                         <RadzenDataGrid @ref="_profileGrid" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
-                                        AllowPaging="true" PageSize="20" PageSizeText="@_localizer["items per page"]" AllowSorting="true" EmptyText="@_localizer["No records to display."]"
+                                        AllowPaging="true" PageSize="30"
+                                        ShowPagingSummary="true" PageSizeOptions="@PageSizeOptions"
+                                        PagingSummaryFormat="@_localizer["PagingSummaryFormat"]" PageSizeText="@_localizer["items per page"]"
                                         Data="@_dataGrid" TItem="PermissionsListResponseDTO" AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false"
                                         GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
                             <Columns>

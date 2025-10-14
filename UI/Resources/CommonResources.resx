@@ -171,9 +171,6 @@
   <data name="Path" xml:space="preserve">
     <value>URL</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Nút lưu</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Hủy bỏ</value>
   </data>
