@@ -1,4 +1,5 @@
-﻿@page "/role-detail&id={Id}"
+﻿@page "/role-detail"
+@page "/role-detail/{Id}"
 
 @using Application.DTOs.Request.Account
 @using Application.DTOs.Response.Account
@@ -53,7 +54,7 @@ else
                                         PageSizeText="@_localizer["items per page"]" EmptyText="@_localizer["No records to display."]"
                                         AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false"
                                         GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false"
-                                        ShowPagingSummary=@_showPagerSummary PagingSummaryFormat="@_pagingSummaryFormat" PageSizeOptions="@_pageSizeOptions"
+                                        ShowPagingSummary=true PagingSummaryFormat="@_localizer["PagingSummaryFormat"]" PageSizeOptions="@_pageSizeOptions"
                                         AllowRowSelectOnRowClick="@allowRowSelectOnRowClick" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                         SelectionMode="DataGridSelectionMode.Multiple" @bind-Value=@_gridSelected>
                             <Columns>

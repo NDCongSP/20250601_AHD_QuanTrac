@@ -10,6 +10,7 @@ public partial class UserManager
     List<GetUserWithRoleResponseDTO> _users = new List<GetUserWithRoleResponseDTO>();
     List<GetUserWithRoleResponseDTO> _userSearch = new List<GetUserWithRoleResponseDTO>();
     GetUserWithRoleResponseDTO _userModel = new GetUserWithRoleResponseDTO();
+    public static IEnumerable<int> PageSizeOptions = [20, 30, 100, 200];
 
     CreateAccountRequestDTO _registerModel = new CreateAccountRequestDTO();
     string _roleSelect;
@@ -23,7 +24,7 @@ public partial class UserManager
         if (true)
         {
             await base.OnInitializedAsync();
-            LayoutState.SetTitle("QUẢN LÝ NGƯỜI DÙNG");
+            LayoutState.SetTitle(_localizer["UserManager.Title"]);
             await RefreshDataAsync();
         }
     }
@@ -89,7 +90,7 @@ public partial class UserManager
 
     async Task EditItemAsync(string id)
     {
-        _navigation.NavigateTo($"/user-detail&id={id}");
+        _navigation.NavigateTo($"/user-detail/{id}");
     }
 
     async Task AddNewItemAsync()

@@ -10,13 +10,13 @@ public partial class RoleManager
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        LayoutState.SetTitle("QUẢN LÝ PHÂN QUYỀN");
+        LayoutState.SetTitle(_localizer["RoleManager.Title"]);
         await RefreshDataAsync();
     }
 
     async Task EditItemAsync(string id)
     {
-        _navigation.NavigateTo($"/role-detail&id={id}");
+        _navigation.NavigateTo($"/role-detail/{id}");
     }
 
     async Task AddNewItemAsync()

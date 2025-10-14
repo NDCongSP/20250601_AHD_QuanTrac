@@ -171,9 +171,6 @@
   <data name="Path" xml:space="preserve">
     <value>Path</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save button</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -590,5 +587,95 @@
   </data>
   <data name="PagingSummaryFormat" xml:space="preserve">
     <value>{0} of {1}</value>
+  </data>
+  <data name="PermissionManager.Title" xml:space="preserve">
+    <value>PERMISSIONS MANAGEMENT</value>
+  </data>
+  <data name="PermissionDetail.Title" xml:space="preserve">
+    <value>PERMISSION DETAIL</value>
+  </data>
+  <data name="RoleManager.Title" xml:space="preserve">
+    <value>ROLE MANAGEMENT</value>
+  </data>
+  <data name="RoleDetail.Title" xml:space="preserve">
+    <value>ROLE DETAIL</value>
+  </data>
+  <data name="ConfirmPasswordNotMatch" xml:space="preserve">
+    <value>Confirm password does not match.</value>
+  </data>
+  <data name="Change password user" xml:space="preserve">
+    <value>Change password for user</value>
+  </data>
+  <data name="Password requiments" xml:space="preserve">
+    <value>Password requirements</value>
+  </data>
+  <data name="Length: Between 8 and 100 characters." xml:space="preserve">
+    <value>Length: Between 8 and 100 characters.</value>
+  </data>
+  <data name="Contains at least one non - alphanumeric character(not a letter or number)." xml:space="preserve">
+    <value>Contains at least one non-alphanumeric character (not a letter or number).</value>
+  </data>
+  <data name="Contains at least one digit (0-9)." xml:space="preserve">
+    <value>Contains at least one digit (0-9).</value>
+  </data>
+  <data name="Contains at least one lowercase letter (a-z)." xml:space="preserve">
+    <value>Contains at least one lowercase letter (a-z).</value>
+  </data>
+  <data name="Contains at least one lowercase letter (A-Z)1." xml:space="preserve">
+    <value>Contains at least one uppercase letter (A-Z).</value>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="New password is required" xml:space="preserve">
+    <value>New password is required</value>
+  </data>
+  <data name="The password is not in the correct format" xml:space="preserve">
+    <value>The password is not in the correct format</value>
+  </data>
+  <data name="Confirm New Password" xml:space="preserve">
+    <value>Confirm New Password</value>
+  </data>
+  <data name="Confirm is required" xml:space="preserve">
+    <value>Confirm is required</value>
+  </data>
+  <data name="New Pass Dont Matching" xml:space="preserve">
+    <value>New password does not match</value>
+  </data>
+  <data name="Do you want to change password?" xml:space="preserve">
+    <value>Do you want to change password?</value>
+  </data>
+  <data name="Permission.List" xml:space="preserve">
+    <value>Permission list</value>
+  </data>
+  <data name="Permission.Name" xml:space="preserve">
+    <value>Permission name</value>
+  </data>
+  <data name="Permission.AssginedToRole" xml:space="preserve">
+    <value>Assigned to roles</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Created date</value>
+  </data>
+  <data name="RoleList" xml:space="preserve">
+    <value>Role list</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>Role name</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Something went wrong." xml:space="preserve">
+    <value>Something went wrong.</value>
+  </data>
+  <data name="Detail.Create" xml:space="preserve">
+    <value>Add new</value>
   </data>
 </root>
