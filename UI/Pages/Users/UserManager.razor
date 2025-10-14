@@ -69,9 +69,11 @@ else
                                           Text="@_localizer["Create"]" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
                         </RadzenStack>
                         <RadzenDataGrid Style="width: 100%;" @ref="_profileGrid" Data="@_userSearch" TItem="GetUserWithRoleResponseDTO" AllowFiltering="true"
-                                        FilterPopupRenderMode="PopupRenderMode.OnDemand" AllowPaging="true" PageSize="20" PageSizeText="@_localizer["items per page"]" AllowSorting="true"
-                                        AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false" EmptyText="@_localizer["No records to display."]"
-                                        GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
+                                        FilterPopupRenderMode="PopupRenderMode.OnDemand" AllowPaging="true" AllowSorting="true"
+                                    AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false" EmptyText="@_localizer["No records to display."]" PageSize="30"
+                                    ShowPagingSummary="true" PageSizeOptions="@PageSizeOptions"
+                                    PagingSummaryFormat="@_localizer["PagingSummaryFormat"]" PageSizeText="@_localizer["items per page"]"
+                                    GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
                             <Columns>
                                 <RadzenDataGridColumn Width="200px" Property="@nameof(GetUserWithRoleResponseDTO.UserName)" TextAlign="TextAlign.Center" CssClass="rz-grid-col-flex-start">
                                     <HeaderTemplate>

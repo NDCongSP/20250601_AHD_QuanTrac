@@ -7,11 +7,12 @@ public partial class PermissionManager
 {
     List<PermissionsListResponseDTO> _dataGrid = null;
     RadzenDataGrid<PermissionsListResponseDTO> _profileGrid;
+    public static IEnumerable<int> PageSizeOptions = [20, 30, 100, 200];
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        LayoutState.SetTitle("QUẢN LÝ CHỨC NĂNG");
+        LayoutState.SetTitle(_localizer["PermissionManager.Title"]);
         await RefreshDataAsync();
     }
 
@@ -69,7 +70,7 @@ public partial class PermissionManager
 
     async Task EditItemAsync(string id)
     {
-        _navigation.NavigateTo($"/permission-detail&id={id}");
+        _navigation.NavigateTo($"/permission-detail/{id}");
     }
 
     async Task AddNewItemAsync()

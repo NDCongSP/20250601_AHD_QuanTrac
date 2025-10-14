@@ -1,5 +1,6 @@
 ﻿@page "/water-level"
 @using System.Timers
+@using Domain.Models
 @using UI.StaticClass
 @attribute [Authorize(Policy = "Admin")]
 <style>
@@ -13,8 +14,9 @@
         width: 100%;
     }
 
-    #riverChart{
+    #riverChart {
         width: 100% !important;
+        max-height: 500px !important;
     }
 </style>
 
@@ -37,9 +39,8 @@
 @code {
     string _svg;
     private System.Timers.Timer _timer;
-    private List<FT07_ChartMucNuoc> _ft07ChartData = new();
+    private List<FT07_ChartMucNuocModel> _ft07ChartData = new();
     private RealtimeDisplayModel realtimeData = new();
-    private static readonly Random _random = new Random();
     protected override async Task OnInitializedAsync()
     {
         LayoutState.SetTitle(_localizer["Mực nước"]);
@@ -48,7 +49,8 @@
         StreamReader reader = new StreamReader(stream);
         _svg = reader.ReadToEnd();
         base.OnInitialized();
-        RefreshData(null, null);
+        await LoadRealtimeData();
+        await GetChartData();
         #region Timer refresh data
         _timer = new System.Timers.Timer(GlobalVariable.ConfigSystem.TimerInterval);
         _timer.Elapsed += RefreshData;
@@ -56,15 +58,22 @@
         #endregion
     }
 
-    private async void RefreshData(object? sender, ElapsedEventArgs? e)
+    private async Task LoadRealtimeData()
     {
         try
         {
             realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
-            //var realtimeData = FakeDataGenerator.GenerateLocation();
             await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
-            await GetChartData();
             StateHasChanged();
+        }
+        catch { }
+    }
+
+    private async void RefreshData(object? sender, ElapsedEventArgs? e)
+    {
+        try
+        {
+            await LoadRealtimeData();
         }
         catch { }
     }
@@ -79,27 +88,37 @@
         var data = await _ft07Service.GetAllAsync();
         if (data?.Data != null)
         {
-            _ft07ChartData = data.Data;
-            string? currentValue = "0";
-            foreach (var item in _ft07ChartData)
+            _ft07ChartData = data.Data.Select(item => new FT07_ChartMucNuocModel(item)).ToList();
+            await GetChartZThucData();
+        }
+    }
+
+    public async Task GetChartZThucData()
+    {
+        foreach (var itemModel in _ft07ChartData)
+        {
+            if (itemModel == _ft07ChartData.Last() && string.IsNullOrEmpty(itemModel.Z_Thuc))
             {
-                var propertyName = item.Z_Thuc?.ToString();
+                itemModel.Z_ThucValue = 1.717;
+            }
+            else
+            {
+                var propertyName = itemModel.Z_Thuc;
                 if (!string.IsNullOrEmpty(propertyName))
                 {
                     var propInfo = realtimeData.CalculatorValue.GetType().GetProperty(propertyName);
                     if (propInfo != null)
                     {
                         var value = propInfo.GetValue(realtimeData.CalculatorValue);
-                        @* item.Z_Thuc = currentValue =value?.ToString(); *@
-                        item.Z_Thuc = currentValue = _random.Next(1, 10).ToString();
+                        itemModel.Z_ThucValue = value == null ? null : Convert.ToDouble(value);
                     }
                 }
                 else
                 {
-                    item.Z_Thuc = null;
+                    itemModel.Z_ThucValue = null;
                 }
             }
-            await _jsRuntime.InvokeVoidAsync("updateChartWaterLevel", _ft07ChartData);
         }
+        await _jsRuntime.InvokeVoidAsync("updateChartWaterLevel", _ft07ChartData);
     }
 }

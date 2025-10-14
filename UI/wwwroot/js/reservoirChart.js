@@ -420,7 +420,7 @@ function updateChartWaterLevel(data) {
         { label: "Q400", field: "q400", borderColor: "#8E44AD", borderDash: [5, 5] },
         { label: "Q600", field: "q600", borderColor: "#F39C12", borderDash: [5, 5] },
         { label: "Q2800", field: "q2800", borderColor: "#B71C1C", borderDash: [5, 5] },
-        { label: "Z_Thực", field: "z_Thuc", borderColor: "#0078D7", borderDash: [] },
+        { label: "Z_Thực", field: "z_ThucValue", borderColor: "#0078D7", borderDash: [] },
       ].map(s => ({
         label: s.label,
         data: data.map(d => ({ x: d.x_Value, y: d[s.field], prefix: d.x_Prefix })),
@@ -449,6 +449,10 @@ datasets.forEach(ds => {
         });
     }
 });
+    // Compute precise x-range to avoid extra right padding
+    const minX = Math.min.apply(null, data.map(d => d.x_Value));
+    const maxX = Math.max.apply(null, data.map(d => d.x_Value));
+
     new Chart(ctx, {
     type: 'line',
     data: { 
@@ -467,7 +471,7 @@ datasets.forEach(ds => {
                  dataset.label === 'Q300' ? 'q300' : 
                  dataset.label === 'Q400' ? 'q400' : 
                  dataset.label === 'Q600' ? 'q600' :
-                 dataset.label === 'Z_Thực' ? 'z_Thuc' : 'q2800'],
+                 dataset.label === 'Z_Thực' ? 'z_ThucValue' : 'q2800'],
               prefix: d.x_Value
           }))
         };
@@ -475,6 +479,8 @@ datasets.forEach(ds => {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false, // allow canvas to use full container width/height
+      layout: { padding: { left: 0, right: 0 } },
       interaction: { mode: 'index', intersect: false },
       plugins: {
         title: {
@@ -495,6 +501,9 @@ datasets.forEach(ds => {
       scales: {
         x: {
             type: 'linear',
+            bounds: 'data', // fit exactly to data range
+            min: minX,
+            max: maxX,
             title: { display: true, text: 'Vị trí' },
             grid: { display: false },
             offset: false,
