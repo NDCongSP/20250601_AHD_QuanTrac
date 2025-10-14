@@ -24,7 +24,7 @@ public partial class UserManager
         if (true)
         {
             await base.OnInitializedAsync();
-            LayoutState.SetTitle("QUẢN LÝ NGƯỜI DÙNG");
+            LayoutState.SetTitle(_localizer["UserManager.Title"]);
             await RefreshDataAsync();
         }
     }

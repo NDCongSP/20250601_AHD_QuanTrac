@@ -55,12 +55,12 @@ public partial class UserDetail
             if (string.IsNullOrEmpty(Id)){
                 _visibleResetBtn = false;
                 Mode = "Create";
-                Title = "Tạo mới người dùng";
+                Title = _localizer["Detail.Create"];
             }
             else
             {
                 _visibleResetBtn = true;
-                Title = "Chỉnh sửa người dùng";
+                Title = _localizer["Detail.Edit"];
                 Mode = "Edit";
                 if (!_visible) _disable = true;
                 if (string.IsNullOrEmpty(Id))
@@ -101,7 +101,7 @@ public partial class UserDetail
             }
             _selectStatus = EnumStatus.Activated;
 
-            LayoutState.SetTitle($"CHI TIẾT NGƯỜI DÙNG - {Title}");
+            LayoutState.SetTitle($"{_localizer["UserDetail.Title"]} - {Title}");
 
             StateHasChanged();
         }
@@ -124,7 +124,7 @@ public partial class UserDetail
                 var confirmPasswordValue = _model.ConfirmPassword?.Trim() ?? string.Empty;
                 if (passwordValue != confirmPasswordValue)
                 {
-                    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"], _localizer["Confirm password does not match."]);
+                    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"], _localizer["ConfirmPasswordNotMatch"]);
                     return;
                 }
 
@@ -232,8 +232,8 @@ public partial class UserDetail
         var response = await _accountServices.ChangePassAsync(new ChangePassRequestDTO()
         {
             Id = Id,
-            NewPassword = "ahd123@gmail.com",
-            ConfirmNewPassword = "ahd123@gmail.com"
+            NewPassword = $"{_model.Email}P1",
+            ConfirmNewPassword = $"{_model.Email}P1"
         });
 
         if (!response.Flag)

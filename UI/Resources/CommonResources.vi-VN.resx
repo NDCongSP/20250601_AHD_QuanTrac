@@ -226,7 +226,7 @@
     <value>Email</value>
   </data>
   <data name="User.Search" xml:space="preserve">
-    <value>Tên đăng nhập</value>
+    <value>Tìm kiếm người dùng</value>
   </data>
   <data name="Keyword" xml:space="preserve">
     <value>Từ khóa</value>
@@ -590,5 +590,95 @@
   </data>
   <data name="PagingSummaryFormat" xml:space="preserve">
     <value>{0} trong tổng {1}</value>
+  </data>
+  <data name="PermissionManager.Title" xml:space="preserve">
+    <value>QUẢN LÝ CHỨC NĂNG</value>
+  </data>
+  <data name="PermissionDetail.Title" xml:space="preserve">
+    <value>CHI TIẾT CHỨC NĂNG</value>
+  </data>
+  <data name="RoleManager.Title" xml:space="preserve">
+    <value>QUẢN LÝ PHÂN QUYỀN</value>
+  </data>
+  <data name="RoleDetail.Title" xml:space="preserve">
+    <value>CHI TIẾT PHÂN QUYỀN</value>
+  </data>
+  <data name="ConfirmPasswordNotMatch" xml:space="preserve">
+    <value>Xác nhận mật khẩu không khớp.</value>
+  </data>
+  <data name="Change password user" xml:space="preserve">
+    <value>Đổi mật khẩu người dùng</value>
+  </data>
+  <data name="Password requiments" xml:space="preserve">
+    <value>Yêu cầu mật khẩu</value>
+  </data>
+  <data name="Length: Between 8 and 100 characters." xml:space="preserve">
+    <value>Độ dài: Từ 8 đến 100 ký tự.</value>
+  </data>
+  <data name="Contains at least one non - alphanumeric character(not a letter or number)." xml:space="preserve">
+    <value>Chứa ít nhất một ký tự đặc biệt (không phải chữ hoặc số).</value>
+  </data>
+  <data name="Contains at least one digit (0-9)." xml:space="preserve">
+    <value>Chứa ít nhất một chữ số (0-9).</value>
+  </data>
+  <data name="Contains at least one lowercase letter (a-z)." xml:space="preserve">
+    <value>Chứa ít nhất một chữ thường (a-z).</value>
+  </data>
+  <data name="Contains at least one lowercase letter (A-Z)1." xml:space="preserve">
+    <value>Chứa ít nhất một chữ hoa (A-Z).</value>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>Mật khẩu mới</value>
+  </data>
+  <data name="New password is required" xml:space="preserve">
+    <value>Bắt buộc nhập mật khẩu mới</value>
+  </data>
+  <data name="The password is not in the correct format" xml:space="preserve">
+    <value>Mật khẩu không đúng định dạng</value>
+  </data>
+  <data name="Confirm New Password" xml:space="preserve">
+    <value>Xác nhận mật khẩu mới</value>
+  </data>
+  <data name="Confirm is required" xml:space="preserve">
+    <value>Bắt buộc xác nhận</value>
+  </data>
+  <data name="New Pass Dont Matching" xml:space="preserve">
+    <value>Mật khẩu mới không trùng khớp</value>
+  </data>
+  <data name="Do you want to change password?" xml:space="preserve">
+    <value>Bạn có muốn đổi mật khẩu không?</value>
+  </data>
+  <data name="Permission.List" xml:space="preserve">
+    <value>Danh sách chức năng</value>
+  </data>
+  <data name="Permission.Name" xml:space="preserve">
+    <value>Tên chức năng</value>
+  </data>
+  <data name="Permission.AssginedToRole" xml:space="preserve">
+    <value>Gán cho vai trò</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="RoleList" xml:space="preserve">
+    <value>Danh sách vai trò</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>Tên vai trò</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Đã chọn</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Something went wrong." xml:space="preserve">
+    <value>Đã có lỗi xảy ra.</value>
+  </data>
+  <data name="Detail.Create" xml:space="preserve">
+    <value>Tạo mới</value>
   </data>
 </root>

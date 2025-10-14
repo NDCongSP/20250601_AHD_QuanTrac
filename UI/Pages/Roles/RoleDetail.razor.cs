@@ -1,8 +1,8 @@
 ﻿using Application.DTOs.Request.Account;
 using Application.DTOs.Response.Account;
+using AutoMapper;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
-using RestEase;
 
 namespace UI.Pages.Roles;
 
@@ -13,7 +13,7 @@ public partial class RoleDetail
     [Parameter] public CreateRoleRequestDTO _model { get; set; } = new CreateRoleRequestDTO();
     private GetRoleResponseDTO _roleInfo;
 
-    List<PermissionsInRoleModel> _dataGrid = null;
+    List<PermissionsInRoleModel> _dataGrid = new List<PermissionsInRoleModel>();
     RadzenDataGrid<PermissionsInRoleModel> _profileGrid;
     IEnumerable<int> _pageSizeOptions = new int[] { 5, 10, 20, 30, 100, 200 };
     bool allowRowSelectOnRowClick = false;
@@ -25,7 +25,7 @@ public partial class RoleDetail
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        LayoutState.SetTitle("CHI TIẾT PHÂN QUYỀN");
+            LayoutState.SetTitle(_localizer["RoleDetail.Title"]);
         await RefreshDataAsync();
     }
     
@@ -42,7 +42,7 @@ public partial class RoleDetail
             {
                 Title = _localizer["Detail.Edit"];
             }
-            LayoutState.SetTitle($"CHI TIẾT PHÂN QUYỀN - {Title}");
+            LayoutState.SetTitle($"{_localizer["RoleDetail.Title"]} - {Title}");
 
             #region Loading all permissions
             var p = await _permissionsServices.GetAllAsync();
@@ -56,7 +56,13 @@ public partial class RoleDetail
 
                 return;
             }
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Domain.Entities.Permissions, PermissionsInRoleModel>();
+            });
+            var mapper = config.CreateMapper();
 
+            _dataGrid = mapper.Map<List<PermissionsInRoleModel>>(p.Data);
             #endregion
 
             if (!string.IsNullOrEmpty(Id))

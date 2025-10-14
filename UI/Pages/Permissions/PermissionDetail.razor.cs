@@ -87,7 +87,7 @@ namespace UI.Pages.Permissions
                 }
                 #endregion
 
-                LayoutState.SetTitle($"CHI TIẾT CHỨC NĂNG - {Title}");
+                LayoutState.SetTitle($"{_localizer["PermissionDetail.Title"]} - {Title}");
 
                 StateHasChanged();
             }

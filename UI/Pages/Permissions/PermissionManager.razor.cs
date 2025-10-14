@@ -12,7 +12,7 @@ public partial class PermissionManager
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        LayoutState.SetTitle("QUẢN LÝ CHỨC NĂNG");
+        LayoutState.SetTitle(_localizer["PermissionManager.Title"]);
         await RefreshDataAsync();
     }
 

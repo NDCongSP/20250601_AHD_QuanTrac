@@ -10,7 +10,7 @@ public partial class RoleManager
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        LayoutState.SetTitle("QUẢN LÝ PHÂN QUYỀN");
+        LayoutState.SetTitle(_localizer["RoleManager.Title"]);
         await RefreshDataAsync();
     }
 
