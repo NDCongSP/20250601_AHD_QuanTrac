@@ -68,7 +68,12 @@ function updateSvgFillOverflow(location) {
     stations.forEach(station => {
         const { StationId: stationId } = station;
         const locationId = location.LocationId;
-        
+
+        station.Door1_Close = !station.Door1_Status;
+        station.Door1_Open = station.Door1_Status;
+        station.Door2_Close = !station.Door2_Status;
+        station.Door2_Open = station.Door2_Status;
+
         // Process all properties of the station
         for (const [key, value] of Object.entries(station)) {
             if (['StationId', 'StationName', 'Path'].includes(key)) continue;
