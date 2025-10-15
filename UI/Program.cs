@@ -104,7 +104,8 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IFT03>()
     .UseWithRestEaseClient<IFT05>()
     .UseWithRestEaseClient<IFT06>()
-    .UseWithRestEaseClient<IFT07>();
+    .UseWithRestEaseClient<IFT07>()
+    .UseWithRestEaseClient<IScadaUser>();
 
 // Register the initialization service
 builder.Services.AddScoped<AppInitializer>();

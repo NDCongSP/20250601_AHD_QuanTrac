@@ -433,25 +433,21 @@ function updateChartWaterLevel(data) {
         pointRadius: 2,
         pointHoverRadius: 4
       }));
-// Convert y<=0 to null to prevent dropping to X-axis and only connect points with value > 0
-datasets.forEach(ds => {
-    ds.spanGaps = true;
-    if (Array.isArray(ds.data)) {
-        ds.data = ds.data.map(p => {
-            if (p == null) return null;
-            if (typeof p === 'object') {
-                const y = p.y;
-                if (y == null || y <= 0) return { ...p, y: null };
-                return p;
-            }
-            if (typeof p === 'number' && p <= 0) return null;
-            return p;
-        });
-    }
-});
+// Keep original values (including <= 0) so the chart follows the true series
+datasets.forEach(ds => { ds.spanGaps = true; });
     // Compute precise x-range to avoid extra right padding
     const minX = Math.min.apply(null, data.map(d => d.x_Value));
     const maxX = Math.max.apply(null, data.map(d => d.x_Value));
+    // Compute global min Y across all datasets (ignoring nulls) to use as baseline
+    const allY = [];
+    datasets.forEach(ds => {
+        if (Array.isArray(ds.data)) {
+            ds.data.forEach(p => { if (p && p.y != null && isFinite(p.y)) allY.push(Number(p.y)); });
+        }
+    });
+    const minY = allY.length ? Math.min.apply(null, allY) : undefined;
+    const yStep = 2; // fixed tick step
+    const minYRounded = (minY !== undefined) ? Math.floor(minY / yStep) * yStep : undefined;
 
     new Chart(ctx, {
     type: 'line',
@@ -462,7 +458,8 @@ datasets.forEach(ds => {
         return {
           ...dataset,
           type: isZThuc ? 'line' : 'line',
-          fill: isZThuc ? 'origin' : false,
+          // Fill down to the minimum of Y scale instead of origin (0)
+          fill: isZThuc ? 'start' : false,
           backgroundColor: isZThuc ? '#0078D733' : dataset.borderColor + "33",
           data: data.map((d, i) => ({
             x: d.x_Value,  // Use actual x_Value for positioning
@@ -530,7 +527,11 @@ datasets.forEach(ds => {
           grid: { 
             color: '#eee' 
           },
-          beginAtZero: true
+          beginAtZero: false,
+          min: minYRounded,
+          ticks: {
+            stepSize: yStep
+          }
         }
       },
       elements: {

@@ -1,0 +1,81 @@
+@using Domain
+@using Domain.Entities
+@inject DialogService DialogService
+@inject IStringLocalizer<CommonResources> _localizer
+
+<RadzenTemplateForm TItem="ScadaUser" Data="@_model" Submit="@OnSubmit">
+    <RadzenRow Gap="1rem" Class="padding-body-content">
+        <RadzenColumn SizeXS="12" SizeSM="6">
+            <RadzenFormField Text="@_localizer["UserName"]" Variant="Variant.Outlined" Style="width:100%">
+                <RadzenTextBox Name="_txtUserName" @bind-Value="@_model.UserName" Placeholder="Typing..." />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="_txtUserName" Popup="false" Style="position: absolute" />
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeSM="6">
+            <RadzenFormField Text="@_localizer["Fullname"]" Variant="Variant.Outlined" Style="width:100%">
+                <RadzenTextBox Name="_txtFullName" @bind-Value="@_model.FullName" Placeholder="Typing..." />
+            </RadzenFormField>
+        </RadzenColumn>
+        <RadzenColumn SizeXS="12" SizeSM="6">
+            <RadzenFormField Text="@_localizer["Permission"]" Variant="Variant.Outlined" Style="width:100%">
+                <RadzenDropDown Name="_ddlPermission"
+                                Data="@PermissionOptions"
+                                TextProperty="Display"
+                                ValueProperty="Value"
+                                @bind-Value="@SelectedPermission"
+                                Style="width:100%" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="_ddlPermission" Popup="false" Style="position: absolute" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow Gap="1rem" Class="padding-body-content">
+        <RadzenColumn SizeXS="12" SizeSM="12" class="d-flex justify-content-end">
+            <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.Start" Gap="1rem">
+                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Icon="save" Text="@_localizer["Save"]" />
+                <RadzenButton Click="@(() => DialogService.Close(null))" Icon="cancel" Text="@_localizer["btn_Cancel"]" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenTemplateForm>
+
+@code {
+    [Parameter] public ScadaUser? Model { get; set; }
+    [Parameter] public bool IsEdit { get; set; }
+    [Parameter] public IEnumerable<object> PermissionOptions { get; set; } = Array.Empty<object>();
+    [Parameter] public EnumPermissionScada? SelectedPermission { get; set; }
+    [Parameter] public IEnumerable<string> ExistingUsernames { get; set; } = Array.Empty<string>();
+    [Parameter] public Guid? EditingId { get; set; }
+
+    private ScadaUser _model = new ScadaUser();
+
+    protected override void OnInitialized()
+    {
+        // Clone model to avoid mutating parent until submit
+        _model = new ScadaUser
+        {
+            Id = Model?.Id ?? Guid.NewGuid(),
+            UserName = Model?.UserName,
+            FullName = Model?.FullName,
+            PermissionScada = Model?.PermissionScada
+        };
+    }
+
+    Task OnSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(_model.UserName))
+        {
+            return Task.CompletedTask; // validators will show
+        }
+        var exists = ExistingUsernames != null && ExistingUsernames.Any(u => string.Equals(u, _model.UserName, StringComparison.OrdinalIgnoreCase) && (EditingId == null || EditingId != _model.Id));
+        if (exists)
+        {
+            // basic client check; parent can re-check if needed
+            return Task.CompletedTask;
+        }
+        _model.PermissionScada = SelectedPermission;
+        DialogService.Close(_model);
+        return Task.CompletedTask;
+    }
+}
+
+

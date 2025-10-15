@@ -152,6 +152,7 @@ namespace Infrastructure.Repositories
                 //RedirectUrl = 
             };
         }
+        
         private async Task<GeneralResponse> SaveRefreshTokenAsync(string userId, string token, string refreshToken, DateTime expiration, string refreshTokenCurrent = null)
         {
             try

@@ -13,9 +13,9 @@ public class Repository
     public IFT05 SFT05s { get; set; }
     public IFT06 SFT06s { get; set; }
     public IFT07 SFT07s { get; set; }
-
+    public IScadaUser SScadaUsers { get; set; }
     public Repository(IPermissions sPermissions = null, IRoleToPermissions sRoleToPermissions = null, IFT01 sFT01s = null, IFT02 sFT02s = null
-        , IFT03 sFT03s = null, IFT05 sFT05s = null, IFT06 sFT06s = null, IFT07 sFT07s = null)
+        , IFT03 sFT03s = null, IFT05 sFT05s = null, IFT06 sFT06s = null, IFT07 sFT07s = null, IScadaUser sScadaUsers = null)
     {
         SPermissions = sPermissions;
         SRoleToPermissions = sRoleToPermissions;
@@ -25,5 +25,6 @@ public class Repository
         SFT05s = sFT05s;
         SFT06s = sFT06s;
         SFT07s = sFT07s;
+        SScadaUsers = sScadaUsers;
     }
 }

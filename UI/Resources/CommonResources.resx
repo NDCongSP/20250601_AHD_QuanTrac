@@ -592,6 +592,24 @@
     <value>{0} trong tổng {1}</value>
     <comment>{0} trong tổng {1}</comment>
   </data>
+  <data name="ScadaUsers" xml:space="preserve">
+    <value>NGƯỜI DÙNG SCADA</value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>Quyền</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Mật khẩu hiện tại</value>
+  </data>
+  <data name="ScadaUser.NotFound" xml:space="preserve">
+    <value>Không tìm thấy người dùng SCADA.</value>
+  </data>
+  <data name="ScadaUser.OldPasswordNotFound" xml:space="preserve">
+    <value>Không tìm thấy mật khẩu cũ.</value>
+  </data>
+  <data name="ScadaUser.CurrentPasswordIncorrect" xml:space="preserve">
+    <value>Mật khẩu hiện tại không đúng.</value>
+  </data>
   <data name="PermissionManager.Title" xml:space="preserve">
     <value>QUẢN LÝ CHỨC NĂNG</value>
   </data>

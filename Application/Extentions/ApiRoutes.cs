@@ -110,5 +110,11 @@
         {
             public const string BasePath = "api/FT07";
         }
+
+        public static class ScadaUser
+        {
+            public const string BasePath = "api/ScadaUser";
+            public const string ChangePassword = "change-password";
+        }
     }
 }
