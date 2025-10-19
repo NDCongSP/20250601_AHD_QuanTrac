@@ -43,7 +43,7 @@
     private RealtimeDisplayModel realtimeData = new();
     protected override async Task OnInitializedAsync()
     {
-        LayoutState.SetTitle(_localizer["Mực nước"]);
+        LayoutState.SetTitle(_localizer["MucNuoc"]);
         using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.MNGG.svg");
         stream.Seek(0, SeekOrigin.Begin);
         StreamReader reader = new StreamReader(stream);

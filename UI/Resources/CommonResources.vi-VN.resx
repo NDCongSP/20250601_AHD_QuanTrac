@@ -268,16 +268,16 @@
     <value>Đăng nhập</value>
   </data>
   <data name="QuanLyTran" xml:space="preserve">
-    <value>Quản lý tràn</value>
+    <value>THÔNG TIN HỖ TRỢ VẬN HÀNH TRÀN XẢ LŨ HỒ DẦU TIẾNG</value>
   </data>
   <data name="HoChua" xml:space="preserve">
-    <value>Hồ chứa</value>
+    <value>THÔNG TIN GIÁM SÁT VẬN HÀNH HỒ DẦU TIẾNG</value>
   </data>
   <data name="HeThongTran" xml:space="preserve">
-    <value>Hệ thống tràn</value>
+    <value>GIÁM SÁT VẬN HÀNH TRÀN XẢ LŨ</value>
   </data>
   <data name="MucNuoc" xml:space="preserve">
-    <value>Mực nước</value>
+    <value>GIÁM SÁT MỰC NƯỚC HẠ LƯU SÔNG SÀI GÒN</value>
   </data>
   <data name="CauHinhThongSo" xml:space="preserve">
     <value>Cấu hình thông số</value>

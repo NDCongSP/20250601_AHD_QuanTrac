@@ -7,13 +7,14 @@
  * @param {string} [options.prefix=''] - Prefix for the value
  * @param {string} [options.suffix=''] - Suffix for the value
  */
-function updateElement(element, value, { decimals = 2, prefix = '', suffix = '' } = {}) {
+function updateElement(element, value, { decimals = 1, prefix = '', suffix = '' } = {}) {
     if (!element) return;
     if (element.id.includes('STT'))
         console.log(`${element} :${value}`)
     if (typeof value === 'number') {
         // Only show decimals if the number has a fractional part
-        const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(decimals);
+        //const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(decimals);
+        const formattedValue = value.toString();
         element.innerHTML = `${prefix}${formattedValue}${suffix}`;
         element.style.display = '';
         element.style.fill = value === 0 ? 'red' : '';
@@ -69,10 +70,12 @@ function updateSvgFillOverflow(location) {
         const { StationId: stationId } = station;
         const locationId = location.LocationId;
 
-        station.Door1_Close = !station.Door1_Status;
-        station.Door1_Open = station.Door1_Status;
-        station.Door2_Close = !station.Door2_Status;
-        station.Door2_Open = station.Door2_Status;
+        station.Door1_Close = station.Door1_Close;
+        station.Door1_Open = !station.Door1_Close;
+        station.Door2_Close = station.Door2_Close;
+        station.Door2_Open = !station.Door2_Close;
+        station.Fllow_Door1 = station.Door1_Aperture_Final;
+        station.Fllow_Door2 = station.Door2_Aperture_Final;
 
         // Process all properties of the station
         for (const [key, value] of Object.entries(station)) {
