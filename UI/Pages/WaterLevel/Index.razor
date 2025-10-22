@@ -74,7 +74,7 @@
         try
         {
             await LoadRealtimeData();
-            await GetChartZThucData();
+            await UpdateZThucValueOnly();
         }
         catch { }
     }
@@ -94,7 +94,7 @@
         }
     }
 
-    public async Task GetChartZThucData()
+    private void CalculateZThucValues()
     {
         foreach (var itemModel in _ft07ChartData)
         {
@@ -120,6 +120,17 @@
                 }
             }
         }
+    }
+
+    public async Task GetChartZThucData()
+    {
+        CalculateZThucValues();
         await _jsRuntime.InvokeVoidAsync("updateChartWaterLevel", _ft07ChartData);
+    }
+
+    public async Task UpdateZThucValueOnly()
+    {
+        CalculateZThucValues();
+        await _jsRuntime.InvokeVoidAsync("updateZThucValue", _ft07ChartData);
     }
 }

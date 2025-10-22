@@ -1,5 +1,16 @@
 let chart;
 
+function formatVietnameseNumber(value) {
+    const str = value.toString();
+    const parts = str.split('.');
+    
+    // Add commas to integer part
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    // Join with dot for decimal part
+    return parts.join('.');
+}
+
 function initializeChart(currentLevel) {
     const ctx = document.getElementById('reservoirChart');
     if (!ctx) return;
@@ -411,8 +422,41 @@ function updateInfoLine2(yValue, xValue) {
     }
 }
 
+function updateZThucValue(data) {
+    if (!window.riverChart) {
+        console.warn('Chart not initialized');
+        return;
+    }
+    
+    // Kiểm tra data và datasets tồn tại
+    if (!window.riverChart.data || !window.riverChart.data.datasets) {
+        console.warn('Chart data or datasets not available');
+        return;
+    }
+    
+    // Tìm dataset Z_Thực và update dữ liệu
+    const zThucDataset = window.riverChart.data.datasets.find(ds => ds.label === 'Z_Thực');
+    if (zThucDataset) {
+        // Update dữ liệu cho Z_Thực
+        zThucDataset.data = data.map(d => ({
+            x: d.x_Value,
+            y: d.z_ThucValue,
+            prefix: d.x_Prefix
+        }));
+        
+        // Update chart
+        window.riverChart.update('none'); // 'none' để không có animation
+    } else {
+        console.warn('Z_Thực dataset not found');
+    }
+}
+
 function updateChartWaterLevel(data) {
-    const ctx = document.getElementById('riverChart').getContext('2d');
+    const ctx = document.getElementById('riverChart');
+    if (!ctx) {
+        console.error('Canvas element riverChart not found');
+        return;
+    }
     const datasets = [
         { label: "Bờ phải", field: "boPhai", borderColor: "#C44B3E", borderDash: [] },
         { label: "Bờ trái", field: "boTrai", borderColor: "#3465A4", borderDash: [] },
@@ -449,7 +493,7 @@ datasets.forEach(ds => { ds.spanGaps = true; });
     const yStep = 2; // fixed tick step
     const minYRounded = (minY !== undefined) ? Math.floor(minY / yStep) * yStep : undefined;
 
-    new Chart(ctx, {
+    window.riverChart = new Chart(ctx.getContext('2d'), {
     type: 'line',
     data: { 
       labels: data.map(d => d.x_Prefix), // Use X_Prefix as labels
@@ -469,7 +513,7 @@ datasets.forEach(ds => { ds.spanGaps = true; });
                  dataset.label === 'Q400' ? 'q400' : 
                  dataset.label === 'Q600' ? 'q600' :
                  dataset.label === 'Z_Thực' ? 'z_ThucValue' : 'q2800'],
-              prefix: d.x_Value
+              prefix: d.x_Prefix
           }))
         };
       })
@@ -486,10 +530,13 @@ datasets.forEach(ds => { ds.spanGaps = true; });
         tooltip: {
           callbacks: {
             title: function(context) {
-              return context[0].raw.prefix;
+              const raw = context[0].raw;
+              return raw && raw.prefix ? raw.prefix : '';
             },
             label: function(context) {
-              return context.dataset.label + ": " + context.parsed.y + "";
+              const value = context.parsed.y;
+              const formattedValue = formatVietnameseNumber(value.toFixed(2));
+              return context.dataset.label + ": " + formattedValue + "m";
             }
           }
         },
@@ -548,6 +595,7 @@ window.updateChart = updateChart;
 window.updateInfoLine2 = updateInfoLine2;
 window.dotNetReference = null;
 window.updateChartWaterLevel = updateChartWaterLevel;
+window.updateZThucValue = updateZThucValue;
 
 window.setDotNetReference = function (dotNetReference) {
     window.dotNetReference = dotNetReference;

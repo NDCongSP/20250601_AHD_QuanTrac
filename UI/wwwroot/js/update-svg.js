@@ -14,7 +14,9 @@ function updateElement(element, value, { decimals = 2, prefix = '', suffix = '' 
     if (typeof value === 'number') {
         // Only show decimals if the number has a fractional part
         const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(decimals);
-        element.innerHTML = `${prefix}${formattedValue}${suffix}`;
+        // Format number with Vietnamese locale: comma for thousands separator, dot for decimal
+        const formattedNumber = formatVietnameseNumber(formattedValue);
+        element.innerHTML = `${prefix}${formattedNumber}${suffix}`;
         element.style.display = '';
         element.style.fill = value === 0 ? 'red' : '';
     } else if (typeof value === 'boolean') {
@@ -22,6 +24,17 @@ function updateElement(element, value, { decimals = 2, prefix = '', suffix = '' 
     } else {
         element.innerHTML = `${prefix}${value}${suffix}`;
     }
+}
+
+function formatVietnameseNumber(value) {
+    const str = value.toString();
+    const parts = str.split('.');
+    
+    // Add commas to integer part
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    // Join with dot for decimal part
+    return parts.join('.');
 }
 function setRectPercent(filledId, value) {
     const rect = document.getElementById(filledId);
