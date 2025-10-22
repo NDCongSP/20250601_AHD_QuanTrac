@@ -274,13 +274,13 @@
                             <RadzenFieldset Text="Bơm dầu">
                                 <RadzenRow>
                                     <RadzenColumn Size="6">
-                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm 1</span></div>
-                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm 2</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm @GateNo</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm @(GateNo + 1)</span></div>
                                         <div class="d-flex align-items-center"><span class="status-circle @(Station.DC3_Running == true ? "status-circle-green" : "")"></span> <span class="ml-1">Bơm chốt</span></div>
                                     </RadzenColumn>
                                     <RadzenColumn Size="6">
-                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm 1</span></div>
-                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm 2</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC1_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm @GateNo</span></div>
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.DC2_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm @(GateNo + 1)</span></div>
                                         <div class="d-flex align-items-center"><span class="status-circle @(Station.DC3_Over == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Lỗi bơm chốt</span></div>
                                     </RadzenColumn>
                                 </RadzenRow>
@@ -288,31 +288,55 @@
                         </RadzenColumn>
                         <RadzenColumn SizeXS="12" SizeMD="6">
                             <RadzenFieldset Text="Trạng thái cửa">
-                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Opening == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa 1 đang mở</span></div>
-                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Closing == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa 1 đang đóng</span></div>
-                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Open == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa 1 mở hoàn toàn</span></div>
-                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_Close == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa 1 đóng hoàn toàn</span></div>
+                                 <RadzenRow></RadzenRow>
+                                    <RadzenColumn Size="6">
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Opening == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa @GateNo đang mở</span></div>
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Closing == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa @GateNo đang đóng</span></div>
+                                </RadzenColumn>
+                                <RadzenColumn Size="6">
+                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_Open == true ? "status-circle-green" : "")"></span> <span class="ml-1">Cửa @GateNo mở hoàn toàn</span></div>
+                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_Close == true ? "status-circle-red" : "")"></span> <span class="ml-1">Cửa @GateNo đóng hoàn toàn</span></div>
+                                </RadzenColumn>
                             </RadzenFieldset>
                         </RadzenColumn>
                     </RadzenRow>
                 </RadzenColumn>
-
                 <RadzenColumn SizeXS="12" SizeMD="12">
                     <RadzenRow>
                         <RadzenColumn SizeXS="12" SizeMD="6">
-                            <RadzenFieldset Text="Áp dầu">
+                            <RadzenFieldset Text="Chốt cửa">
                                 <RadzenRow>
-                                    <RadzenColumn Size="12">
-                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_PressureHigh == true ? "status-circle-red" : "")"></span> <span class="ml-1">Áp dầu cửa 1 cao</span></div>
-                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_PressureLow == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Áp dầu cửa 1 thấp</span></div>
+                                    <RadzenColumn Size="6">
+                                        <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Status_Open_Door1 == true ? "status-circle-green" : "")"></span> <span class="ml-1">Chốt cửa @GateNo đang mở</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Status_Close_Door1 == true ? "status-circle-green" : "")"></span> <span class="ml-1">Chốt cửa @GateNo đang đóng</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Doorlock1_1Open == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Chốt @("{GateNo}_1") mở hết</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Doorlock1_2Close == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Chốt @("{GateNo}_2") đóng hết</span></div>
+                                    </RadzenColumn>
+                                    <RadzenColumn Size="6">
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Doorlock2_1Open == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Chốt @("{GateNo + 1}_1") mở hết</span></div>
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Doorlock2_1Close == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Chốt @("{GateNo + 1}_2") đóng hết</span></div>
                                     </RadzenColumn>
                                 </RadzenRow>
                             </RadzenFieldset>
                         </RadzenColumn>
                         <RadzenColumn SizeXS="12" SizeMD="6">
-                            <RadzenFieldset Text="Cửa">
-                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Al_Door1 == true ? "status-circle-red" : "")"></span> <span class="ml-1">Lỗi lệch cửa 1</span></div>
-                            </RadzenFieldset>
+                            <RadzenRow>
+                                <RadzenColumn Size="12">
+                                    <RadzenFieldset Text="Áp dầu">
+                                        <RadzenRow>
+                                            <RadzenColumn Size="12">
+                                                <div class="d-flex align-items-center mb-2"><span class="status-circle @(Station.Door1_PressureHigh == true ? "status-circle-red" : "")"></span> <span class="ml-1">Áp dầu cửa @GateNo cao</span></div>
+                                                <div class="d-flex align-items-center"><span class="status-circle @(Station.Door1_PressureLow == true ? "status-circle-yellow" : "")"></span> <span class="ml-1">Áp dầu cửa @GateNo thấp</span></div>
+                                            </RadzenColumn>
+                                        </RadzenRow>
+                                    </RadzenFieldset>
+                                </RadzenColumn>
+                                <RadzenColumn Size="12">
+                                    <RadzenFieldset Text="Cửa">
+                                        <div class="d-flex align-items-center"><span class="status-circle @(Station.Al_Door1 == true ? "status-circle-red" : "")"></span> <span class="ml-1">Lỗi lệch cửa @GateNo</span></div>
+                                    </RadzenFieldset>
+                                </RadzenColumn>
+                            </RadzenRow>
                         </RadzenColumn>
                     </RadzenRow>
                 </RadzenColumn>
