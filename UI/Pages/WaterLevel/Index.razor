@@ -43,7 +43,7 @@
     private RealtimeDisplayModel realtimeData = new();
     protected override async Task OnInitializedAsync()
     {
-        LayoutState.SetTitle(_localizer["MucNuoc"]);
+        LayoutState.SetTitle(_localizer["GIÁM SÁT MỰC NƯỚC HẠ LƯU SÔNG SÀI GÒN"]);
         using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.MNGG.svg");
         stream.Seek(0, SeekOrigin.Begin);
         StreamReader reader = new StreamReader(stream);
@@ -74,7 +74,7 @@
         try
         {
             await LoadRealtimeData();
-            await GetChartZThucData();
+            await UpdateZThucValueOnly();
         }
         catch { }
     }
@@ -94,7 +94,7 @@
         }
     }
 
-    public async Task GetChartZThucData()
+    private void CalculateZThucValues()
     {
         foreach (var itemModel in _ft07ChartData)
         {
@@ -120,6 +120,17 @@
                 }
             }
         }
+    }
+
+    public async Task GetChartZThucData()
+    {
+        CalculateZThucValues();
         await _jsRuntime.InvokeVoidAsync("updateChartWaterLevel", _ft07ChartData);
+    }
+
+    public async Task UpdateZThucValueOnly()
+    {
+        CalculateZThucValues();
+        await _jsRuntime.InvokeVoidAsync("updateZThucValue", _ft07ChartData);
     }
 }

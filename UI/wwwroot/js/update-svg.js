@@ -24,6 +24,17 @@ function updateElement(element, value, { decimals = 1, prefix = '', suffix = '' 
         element.innerHTML = `${prefix}${value}${suffix}`;
     }
 }
+
+function formatVietnameseNumber(value) {
+    const str = value.toString();
+    const parts = str.split('.');
+
+    // Add commas to integer part
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Join with dot for decimal part
+    return parts.join('.');
+}
 function setRectPercent(filledId, value) {
     const rect = document.getElementById(filledId);
     const bg = document.getElementById(filledId.replace('color', 'bgcolor'));
@@ -58,13 +69,13 @@ function updateSvgFillOverflow(location) {
     if (location && typeof location.getProperty === 'function') {
         location = JSON.parse(JSON.stringify(location));
     }
-    
+
     if (!location.Stations || !location.CalculatorValue) return;
-    
+
     // Process first 3 stations, sorted by StationId
     const stations = [...location.Stations]
         .sort((a, b) => a.StationId - b.StationId);
-    
+
     // Process each station
     stations.forEach(station => {
         const { StationId: stationId } = station;
@@ -80,7 +91,7 @@ function updateSvgFillOverflow(location) {
         // Process all properties of the station
         for (const [key, value] of Object.entries(station)) {
             if (['StationId', 'StationName', 'Path'].includes(key)) continue;
-            
+
             // Define elements to update
             const elements = [
                 document.getElementById(`Location${locationId}_Station${stationId}_${key}`),
@@ -88,7 +99,7 @@ function updateSvgFillOverflow(location) {
                 document.getElementById(`Location${locationId}_Station${stationId}_STT${key}`),
                 document.getElementById(`Location${locationId}_Station${stationId}_color${key}`)
             ];
-            
+
             // Update all elements
             elements.forEach(element => {
                 if (element && element.id.includes('_color')) {
@@ -102,7 +113,7 @@ function updateSvgFillOverflow(location) {
             });
         }
     });
-    
+
     // Process CalculatorValue
     for (const [key, value] of Object.entries(location.CalculatorValue)) {
         const element = document.getElementById(key);
