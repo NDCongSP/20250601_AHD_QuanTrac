@@ -8,7 +8,7 @@
    id="svg21"
    sodipodi:docname="hochua.svg"
    xml:space="preserve"
-   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -26,7 +26,7 @@
      inkscape:zoom="0.97698587"
      inkscape:cx="375.64515"
      inkscape:cy="353.63869"
-     inkscape:window-width="2560"
+     inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -44,8 +44,8 @@
      font-family="Arial, sans-serif"
      font-size="24px"
      fill="#0000ff"
-     id="Q_i"
-     inkscape:label="lblQ_i">0.00</text><text
+     id="Location1_Location_Info_Fllow_Ho_Final"
+     inkscape:label="lblLocation1_Location_Info_Fllow_Ho_Final">0.00</text><text
      x="450"
      y="80"
      font-family="Arial, sans-serif"
@@ -57,8 +57,8 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_tt"
-     inkscape:label="lblQ_tt">0.000</text><text
+     id="CalculatorValue.W1_ho"
+     inkscape:label="lblW1_ho">0.000</text><text
      x="50"
      y="240"
      font-family="Arial, sans-serif"
@@ -70,7 +70,7 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_den"
+     id="CalculatorValue.Q_den"
      inkscape:label="lblQ_den">0.0</text><text
      x="450"
      y="240"
@@ -83,7 +83,7 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_di"
+     id="CalculatorValue.Q_di"
      inkscape:label="lblQ_di">0.0</text><text
      x="50"
      y="400"
@@ -91,12 +91,12 @@
      font-size="18"
      fill="#000"
      id="text14">Qtr (m³/s)</text><text
-     x="50"
-     y="430"
+     x="56.141338"
+     y="432.04712"
      font-family="Arial, sans-serif"
-     font-size="24"
-     fill="#00F"
-     id="Q_tr"
+     font-size="24px"
+     fill="#0000ff"
+     id="CalculatorValue.Q_tr"
      inkscape:label="lblQ_tr">0.0</text><text
      x="250"
      y="400"
@@ -109,7 +109,7 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_cs1"
+     id="CalculatorValue.Q_cs1"
      inkscape:label="lblQ_cs1">0.0</text><text
      x="450"
      y="400"
@@ -122,7 +122,7 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_cs2"
+     id="CalculatorValue.Q_cs2"
      inkscape:label="lblQ_cs2">0.0</text><text
      x="650"
      y="400"
@@ -135,7 +135,7 @@
      font-family="Arial, sans-serif"
      font-size="24"
      fill="#00F"
-     id="Q_cs3"
+     id="CalculatorValue.Q_cs3"
      inkscape:label="lblQ_cs3">0.0</text><image
      width="175.83054"
      height="105.55243"

@@ -110,3 +110,72 @@ function updateSvgFillOverflow(location) {
     }
 }
 
+
+function updateSvgHoChua(location) {
+    // If location is a JsonElement, get the raw value
+    if (location && typeof location.getProperty === 'function') {
+        location = JSON.parse(JSON.stringify(location));
+    }
+
+    // Nếu location là mảng => lấy phần tử đầu tiên
+    if (Array.isArray(location)) {
+        location = location[0];
+    }
+
+    // Lấy ra StationId = 4
+    const station41 = location.stations.find(st => st.stationId === 4);
+
+    const station4 = location.stations[3];
+   
+
+    const calc = location.calculatorValue;
+
+    if (!station4 || !calc) {
+        console.warn("Không tìm thấy stationId=4 hoặc CalculatorValue:", { station4, calc });
+        return;
+    }
+
+    // Hiển thị lên HTML (ví dụ)
+    //$("#Location1_Location_Info_Fllow_Ho_Final").innerHTML(station4.fllow_Ho_Final); // Fllow_Ho_Final = 24.4
+    //$("#W1_ho").innerHTML(calc.w1_ho);        // API_Fllow_TL_CDD = 23.4
+
+    _elementId = document.getElementById("Location1_Location_Info_Fllow_Ho_Final");
+    if (_elementId) {
+        _elementId.innerHTML = station4.fllow_Ho_Final;
+    }
+
+    _elementId = document.getElementById("CalculatorValue.W1_ho");
+    if (_elementId) {
+        _elementId.innerHTML = calc.w1_ho;
+    }
+
+    _elementId = document.getElementById("CalculatorValue.Q_den");
+    if (_elementId) {
+        _elementId.innerHTML = calc.q_den;
+    }
+
+    _elementId = document.getElementById("CalculatorValue.Q_di");
+    if (_elementId) {
+        _elementId.innerHTML = calc.q_di;
+    }
+
+    _elementId = document.getElementById("CalculatorValue.Q_tr");
+    if (_elementId) {
+        _elementId.innerHTML = calc.q_tr;
+    }
+
+    _elementId = document.getElementById("CalculatorValue.Q_cs1");
+    if (_elementId) {
+        _elementId.innerHTML = calc.q_cs1;
+    }
+
+    _elementId = document.getElementById("CalculatorValue.Q_cs2");
+    if (_elementId) {
+        _elementId.innerHTML = calc.q_cs2;
+    }
+
+    _elementId = document.getElementById("CalculatorValue.Q_cs3");
+    if (_elementId) {
+        _elementId.innerHTML = calc.q_cs3;
+    }
+}
