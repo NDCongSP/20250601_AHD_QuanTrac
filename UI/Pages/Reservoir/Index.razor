@@ -164,7 +164,8 @@
         {
             realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             GetAPIData();
-            await _jsRuntime.InvokeVoidAsync("updateSvgFillOverflow", realtimeData);
+            // await _jsRuntime.InvokeVoidAsync("updateSvgFillOverflow", realtimeData);
+            await _jsRuntime.InvokeVoidAsync("updateSvgHoChua", realtimeData);
             await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)
