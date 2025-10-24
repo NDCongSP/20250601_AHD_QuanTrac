@@ -51,25 +51,28 @@ namespace Infrastructure.Repositories
                 if (!fromDate.HasValue || !toDate.HasValue)
                 {
                     var now = DateTime.Now;
-                    fromDate = now < new DateTime(now.Year, 7, 31) ? 
-                        new DateTime(now.Year - 1, 7, 1) : 
+                    fromDate = now < new DateTime(now.Year, 7, 31) ?
+                        new DateTime(now.Year - 1, 7, 1) :
                         new DateTime(now.Year, 7, 1);
-                    
-                    toDate = now < new DateTime(now.Year, 7, 31) ? 
-                        new DateTime(now.Year, 6, 30) : 
+
+                    toDate = now < new DateTime(now.Year, 7, 31) ?
+                        new DateTime(now.Year, 6, 30) :
                         new DateTime(now.Year + 1, 6, 30);
                 }
 
                 var data = await dbContext.FT03s
-                    .Where(x => x.CreateAt.HasValue && x.Fllow_Ho_Final > 0 &&
-                              x.CreateAt.Value.Date >= fromDate.Value.Date &&
-                              x.CreateAt.Value.Date <= toDate.Value.Date)
-                    //only take 1 record per day, dont check time
+                    .Where(x => x.CreateAt.HasValue
+                        && x.Fllow_Ho_Final > 0
+                        && x.CreateAt.Value.Date >= fromDate.Value.Date
+                        && x.CreateAt.Value.Date <= toDate.Value.Date)
                     .GroupBy(x => x.CreateAt.Value.Date)
+                    .SelectMany(g =>
+                        g.OrderBy(x => x.CreateAt).Take(1)               // earliest in day
+                         .Union(g.OrderByDescending(x => x.CreateAt).Take(1))) // latest in day (dedupes if only one row)
                     .Select(x => new FT03DataPoint
                     {
-                        Date = x.Key,
-                        Value = x.First().Fllow_Ho_Final
+                        Date = x.CreateAt.Value,     // full timestamp
+                        Value = x.Fllow_Ho_Final
                     })
                     .OrderBy(x => x.Date)
                     .ToListAsync();
