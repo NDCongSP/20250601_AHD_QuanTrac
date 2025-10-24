@@ -134,7 +134,7 @@
     }
 
     .btn-emergency{
-        background-color: !important;
+        background-color: red!important;
         color: white !important;
         width: 100%;
     }
@@ -208,7 +208,7 @@
                     CỬA @displayGateNo
                 </div>
             </RadzenColumn>
-            <RadzenColumn SizeXS="12" SizeMD="3">
+            <RadzenColumn SizeXS="12" SizeMD="3" class="display-flex flex-column align-items-center">
                 <div class="param-row">
                     <RadzenTextBox Value="Mực nước hồ (MN hồ):" Disabled="true" class="param-label-box" Style="width: 200px;" />
                     <span class="param-value">@($"{Station.Fllow_Ho:F0}")</span>
@@ -230,13 +230,13 @@
                     <span class="param-unit">mm</span>
                 </div>
             </RadzenColumn>
-            <RadzenColumn SizeXS="12" SizeMD="3">
+            <RadzenColumn SizeXS="12" SizeMD="3" class="display-flex flex-column align-items-center">
                 @{ var waterLevelHeight = Math.Round((double)(doorIndex == 1 ? (Station.Fllow_Door1 ?? 0) : (Station.Fllow_Door2 ?? 0)) / 510 * 100, 0); }
                 <div class="water-level-container">
                     <div class="water-level-fill" style="height: @waterLevelHeight%;"></div>
                 </div>
             </RadzenColumn>
-            <RadzenColumn SizeXS="12" SizeMD="3">
+            <RadzenColumn SizeXS="12" SizeMD="3" class="display-flex flex-column align-items-center">
                 <div class="param-row">
                     <RadzenTextBox Value="Độ mở cửa (a):" Disabled="true" class="param-label-box" Style="width: 200px;" />
                     <span class="param-value">@($"{(doorIndex == 1 ? Station.Door1_Aperture : Station.Door2_Aperture) ?? 0}")</span>
@@ -253,7 +253,7 @@
                     <span class="param-unit">m³/s</span>
                 </div>
             </RadzenColumn>
-            <RadzenColumn SizeXS="12" SizeMD="3">
+            <RadzenColumn SizeXS="12" SizeMD="3" class="display-flex flex-column align-items-center">
                 <RadzenFieldset Text="Vận Hành">
                     <RadzenRow GutterSize="1rem">
                         <RadzenColumn Size="6">
