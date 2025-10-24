@@ -766,7 +766,7 @@ pathDefaults:
 paths:
   # example:
   my_camera:
-     source: rtsp://admin:cam123456@113.187.148.168:554/onvif1
+     source: rtsp://admin:yourpass@113.187.148.168:554/onvif1
 
   # Settings under path "all_others" are applied to all paths that
   # do not match another entry.
