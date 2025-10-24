@@ -62,6 +62,9 @@ namespace Domain
         public bool? Status_Open_Doorlock2 { get; set; } = false;
         public bool? Status_Close_Doorlock2 { get; set; } = false;
 
+        public bool? Door1_Status { get; set; } = false;
+        public bool? Door2_Status { get; set; } = false;
+
         public double? HT_Cylinder1_1 { get; set; } = 0;
         public double? HT_Cylinder1_2 { get; set; } = 0;
         public double? HT_Cylinder2_1 { get; set; } = 0;
@@ -109,6 +112,10 @@ namespace Domain
         public double? API_Fllow_BenSuc { get; set; } = 0;
         public double? API_Fllow_SonDai { get; set; } = 0;
         public double? API_Fllow_BinhNham { get; set; } = 0;
+
+        public double? API_ChanDap { get; set; } = 0;
+        public double? API_ThanhAn { get; set; } = 0;
+
         public double? API_Fllow_BinhNham2 { get; set; } = 0;
         public double? API_Fllow_TL_CDD { get; set; } = 0;
         public double? API_Fllow_HL_TXL { get; set; } = 0;

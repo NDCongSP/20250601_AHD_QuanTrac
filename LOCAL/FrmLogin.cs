@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using Newtonsoft.Json;
 using System.Windows.Forms;
 
 namespace RegistrationForm1
@@ -44,27 +45,7 @@ namespace RegistrationForm1
             return Globalvariable.UserInfo != null && BCrypt.Net.BCrypt.Verify(password, Globalvariable.UserInfo.Password);
         }
 
-        //private void CreateTestUser()
-        //{
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-
-        //        string checkQuery = "SELECT COUNT(*) FROM Users WHERE Username = 'admin'";
-        //        SqlCommand checkCmd = new SqlCommand(checkQuery, conn);
-        //        int count = (int)checkCmd.ExecuteScalar();
-
-        //        if (count > 0) return;
-
-        //        string hashed = BCrypt.Net.BCrypt.HashPassword("123456");
-        //        string query = "INSERT INTO Users (Username, PasswordHash, Role) VALUES ('admin', @p, 'Admin')";
-        //        SqlCommand cmd = new SqlCommand(query, conn);
-        //        cmd.Parameters.AddWithValue("@p", hashed);
-        //        cmd.ExecuteNonQuery();
-
-        //        MessageBox.Show("Tài khoản test admin/123456 đã được tạo.");
-        //    }
-        //}
+       
         // Khi User thoát đăng nhập, lưu log đăng nhập
         protected override void OnFormClosing(FormClosingEventArgs e)
         {

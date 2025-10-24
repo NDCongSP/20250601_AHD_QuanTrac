@@ -36,8 +36,8 @@
             this.grpAuth = new System.Windows.Forms.GroupBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.lblPassword = new System.Windows.Forms.Label();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.lblUsername = new System.Windows.Forms.Label();
+            this.txtUser = new System.Windows.Forms.TextBox();
+            this.lblUser = new System.Windows.Forms.Label();
             this.rbSqlAuth = new System.Windows.Forms.RadioButton();
             this.rbWindowsAuth = new System.Windows.Forms.RadioButton();
             this.txtDatabase = new System.Windows.Forms.TextBox();
@@ -50,7 +50,7 @@
             // btnExit
             // 
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnExit.Location = new System.Drawing.Point(317, 264);
+            this.btnExit.Location = new System.Drawing.Point(329, 264);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(80, 28);
             this.btnExit.TabIndex = 17;
@@ -60,7 +60,7 @@
             // 
             // btnBackup
             // 
-            this.btnBackup.Location = new System.Drawing.Point(214, 264);
+            this.btnBackup.Location = new System.Drawing.Point(227, 264);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(80, 28);
             this.btnBackup.TabIndex = 16;
@@ -92,8 +92,8 @@
             // 
             this.grpAuth.Controls.Add(this.txtPassword);
             this.grpAuth.Controls.Add(this.lblPassword);
-            this.grpAuth.Controls.Add(this.txtUsername);
-            this.grpAuth.Controls.Add(this.lblUsername);
+            this.grpAuth.Controls.Add(this.txtUser);
+            this.grpAuth.Controls.Add(this.lblUser);
             this.grpAuth.Controls.Add(this.rbSqlAuth);
             this.grpAuth.Controls.Add(this.rbWindowsAuth);
             this.grpAuth.Location = new System.Drawing.Point(42, 118);
@@ -120,21 +120,21 @@
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Password:";
             // 
-            // txtUsername
+            // txtUser
             // 
-            this.txtUsername.Location = new System.Drawing.Point(109, 67);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(228, 20);
-            this.txtUsername.TabIndex = 3;
+            this.txtUser.Location = new System.Drawing.Point(109, 67);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(228, 20);
+            this.txtUser.TabIndex = 3;
             // 
-            // lblUsername
+            // lblUser
             // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(44, 70);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(61, 13);
-            this.lblUsername.TabIndex = 2;
-            this.lblUsername.Text = "User name:";
+            this.lblUser.AutoSize = true;
+            this.lblUser.Location = new System.Drawing.Point(44, 70);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(61, 13);
+            this.lblUser.TabIndex = 2;
+            this.lblUser.Text = "User name:";
             // 
             // rbSqlAuth
             // 
@@ -224,8 +224,8 @@
         private System.Windows.Forms.GroupBox grpAuth;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.RadioButton rbSqlAuth;
         private System.Windows.Forms.RadioButton rbWindowsAuth;
         private System.Windows.Forms.TextBox txtDatabase;

@@ -35,7 +35,6 @@
             this.btnOpenFileExternal = new System.Windows.Forms.Button();
             this.lblLoadDuration = new System.Windows.Forms.Label();
             this.lblFileName = new System.Windows.Forms.Label();
-            this.rtbFileContent = new System.Windows.Forms.RichTextBox();
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.trvFiles = new System.Windows.Forms.TreeView();
             this.btnUploadFile = new System.Windows.Forms.Button();
@@ -51,10 +50,9 @@
             this.pnlMainContent.Controls.Add(this.btnOpenFileExternal);
             this.pnlMainContent.Controls.Add(this.lblLoadDuration);
             this.pnlMainContent.Controls.Add(this.lblFileName);
-            this.pnlMainContent.Controls.Add(this.rtbFileContent);
-            this.pnlMainContent.Location = new System.Drawing.Point(280, -21);
+            this.pnlMainContent.Location = new System.Drawing.Point(1058, 111);
             this.pnlMainContent.Name = "pnlMainContent";
-            this.pnlMainContent.Size = new System.Drawing.Size(1418, 891);
+            this.pnlMainContent.Size = new System.Drawing.Size(621, 502);
             this.pnlMainContent.TabIndex = 10;
             // 
             // btnDeleteFile
@@ -65,7 +63,8 @@
             this.btnDeleteFile.TabIndex = 11;
             this.btnDeleteFile.Text = "Xoá file";
             this.btnDeleteFile.UseVisualStyleBackColor = true;
-           // this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
+            this.btnDeleteFile.Visible = false;
+            this.btnDeleteFile.Click += new System.EventHandler(this.btnDeleteFile_Click);
             // 
             // lblUploadTimestamp
             // 
@@ -78,7 +77,7 @@
             // 
             // btnDownloadFile
             // 
-            this.btnDownloadFile.Location = new System.Drawing.Point(416, 187);
+            this.btnDownloadFile.Location = new System.Drawing.Point(337, 172);
             this.btnDownloadFile.Name = "btnDownloadFile";
             this.btnDownloadFile.Size = new System.Drawing.Size(75, 23);
             this.btnDownloadFile.TabIndex = 8;
@@ -111,14 +110,6 @@
             this.lblFileName.Size = new System.Drawing.Size(47, 13);
             this.lblFileName.TabIndex = 0;
             this.lblFileName.Text = "Tên tệp:";
-            // 
-            // rtbFileContent
-            // 
-            this.rtbFileContent.Location = new System.Drawing.Point(3, 126);
-            this.rtbFileContent.Name = "rtbFileContent";
-            this.rtbFileContent.Size = new System.Drawing.Size(671, 452);
-            this.rtbFileContent.TabIndex = 0;
-            this.rtbFileContent.Text = "";
             // 
             // pnlSidebar
             // 
@@ -169,7 +160,6 @@
         private System.Windows.Forms.Button btnOpenFileExternal;
         private System.Windows.Forms.Label lblLoadDuration;
         private System.Windows.Forms.Label lblFileName;
-        private System.Windows.Forms.RichTextBox rtbFileContent;
         private System.Windows.Forms.Panel pnlSidebar;
         private System.Windows.Forms.TreeView trvFiles;
         private System.Windows.Forms.Button btnUploadFile;

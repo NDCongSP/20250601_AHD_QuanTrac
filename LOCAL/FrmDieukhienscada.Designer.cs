@@ -68,20 +68,23 @@
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand38 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand39 = new Ahd.Winforms.Controls.WriteTagCommand();
             Ahd.Winforms.Controls.WriteTagCommand writeTagCommand40 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand41 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand42 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand43 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand44 = new Ahd.Winforms.Controls.WriteTagCommand();
+            Ahd.Winforms.Controls.WriteTagCommand writeTagCommand45 = new Ahd.Winforms.Controls.WriteTagCommand();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDieukhienscada));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.AbntLock = new Ahd.Winforms.Controls.AhdButton();
             this.ahdButton7 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_CloseDoorlock2 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_OpenDoorlock2 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton37 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdTextBox13 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.AbntOFF1 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdTextBox12 = new Ahd.Winforms.Controls.AhdTextBox();
             this.ahdTextBox11 = new Ahd.Winforms.Controls.AhdTextBox();
             this.ahdButton4 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_CloseDoor2 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_OpenDoor2 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton24 = new Ahd.Winforms.Controls.AhdButton();
+            this.AbntON1 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdTextBox2 = new Ahd.Winforms.Controls.AhdTextBox();
             this.ahdTextBox1 = new Ahd.Winforms.Controls.AhdTextBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -89,23 +92,23 @@
             this.ahdButton3 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_CloseDoor1 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_OpenDoor1 = new Ahd.Winforms.Controls.AhdButton();
-            this.button8 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button29 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.ahdTextBox13 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.button8 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ahdButton20 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_CloseDoorlock4 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_OpenDoorlock4 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdTextBox3 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.ahdButton18 = new Ahd.Winforms.Controls.AhdButton();
+            this.AbntOFF2 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_OpenDoor4 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_CloseDoor4 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdButton11 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdButton15 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton19 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdTextBox4 = new Ahd.Winforms.Controls.AhdTextBox();
+            this.AbntON2 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdButton12 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_CloseDoorlock3 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_OpenDoorlock3 = new Ahd.Winforms.Controls.AhdButton();
@@ -116,7 +119,6 @@
             this.Abnt_CloseDoor3 = new Ahd.Winforms.Controls.AhdButton();
             this.Abnt_OpenDoor3 = new Ahd.Winforms.Controls.AhdButton();
             this.button4 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
@@ -128,10 +130,8 @@
             this.button17 = new System.Windows.Forms.Button();
             this.Abnt_OpenDoorlock5 = new Ahd.Winforms.Controls.AhdButton();
             this.button16 = new System.Windows.Forms.Button();
-            this.ahdButton27 = new Ahd.Winforms.Controls.AhdButton();
+            this.AbntOFF3 = new Ahd.Winforms.Controls.AhdButton();
             this.button14 = new System.Windows.Forms.Button();
-            this.ahdTextBox5 = new Ahd.Winforms.Controls.AhdTextBox();
-            this.button13 = new System.Windows.Forms.Button();
             this.ahdTextBox6 = new Ahd.Winforms.Controls.AhdTextBox();
             this.Abnt_OpenDoor5 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdTextBox17 = new Ahd.Winforms.Controls.AhdTextBox();
@@ -144,38 +144,36 @@
             this.Abnt_CloseDoor6 = new Ahd.Winforms.Controls.AhdButton();
             this.ahdTextBox22 = new Ahd.Winforms.Controls.AhdTextBox();
             this.Abnt_OpenDoor6 = new Ahd.Winforms.Controls.AhdButton();
-            this.ahdButton31 = new Ahd.Winforms.Controls.AhdButton();
+            this.AbntON3 = new Ahd.Winforms.Controls.AhdButton();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AbntLock)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton37)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntOFF1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton24)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntON1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntOFF2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntON2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock3)).BeginInit();
@@ -189,8 +187,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton23)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton27)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntOFF3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox17)).BeginInit();
@@ -202,23 +199,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton31)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntON3)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.AbntLock);
             this.groupBox1.Controls.Add(this.ahdButton7);
             this.groupBox1.Controls.Add(this.Abnt_CloseDoorlock2);
             this.groupBox1.Controls.Add(this.Abnt_OpenDoorlock2);
-            this.groupBox1.Controls.Add(this.ahdButton37);
-            this.groupBox1.Controls.Add(this.ahdTextBox13);
+            this.groupBox1.Controls.Add(this.AbntOFF1);
             this.groupBox1.Controls.Add(this.ahdTextBox12);
             this.groupBox1.Controls.Add(this.ahdTextBox11);
             this.groupBox1.Controls.Add(this.ahdButton4);
             this.groupBox1.Controls.Add(this.Abnt_CloseDoor2);
             this.groupBox1.Controls.Add(this.Abnt_OpenDoor2);
-            this.groupBox1.Controls.Add(this.ahdButton24);
+            this.groupBox1.Controls.Add(this.AbntON1);
             this.groupBox1.Controls.Add(this.ahdTextBox2);
             this.groupBox1.Controls.Add(this.ahdTextBox1);
             this.groupBox1.Controls.Add(this.button3);
@@ -226,37 +221,16 @@
             this.groupBox1.Controls.Add(this.ahdButton3);
             this.groupBox1.Controls.Add(this.Abnt_CloseDoor1);
             this.groupBox1.Controls.Add(this.Abnt_OpenDoor1);
-            this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.button29);
             this.groupBox1.Controls.Add(this.button5);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(805, 438);
+            this.groupBox1.Size = new System.Drawing.Size(805, 416);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Trạm 1 - 2";
-            // 
-            // AbntLock
-            // 
-            this.AbntLock.BorderColor = System.Drawing.SystemColors.Control;
-            this.AbntLock.BorderThickness = 2;
-            this.AbntLock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AbntLock.Location = new System.Drawing.Point(655, 189);
-            this.AbntLock.Name = "AbntLock";
-            this.AbntLock.Role = null;
-            this.AbntLock.Size = new System.Drawing.Size(134, 36);
-            this.AbntLock.TabIndex = 387;
-            this.AbntLock.Text = "Lock Status";
-            writeTagCommand1.AllowResetValue = true;
-            writeTagCommand1.ResetDelay = 500;
-            writeTagCommand1.ResetValue = "0";
-            writeTagCommand1.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
-            writeTagCommand1.WriteDelay = 10;
-            writeTagCommand1.WriteValue = "1";
-            this.AbntLock.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand1});
+            this.groupBox1.Text = "Trạm (Cửa 1 & Cửa 2)";
             // 
             // ahdButton7
             // 
@@ -269,14 +243,14 @@
             this.ahdButton7.Size = new System.Drawing.Size(112, 36);
             this.ahdButton7.TabIndex = 386;
             this.ahdButton7.Text = "Dừng chốt 2";
-            writeTagCommand2.AllowResetValue = true;
-            writeTagCommand2.ResetDelay = 500;
-            writeTagCommand2.ResetValue = "0";
-            writeTagCommand2.TagPath = "Local Station/DauTieng/PLC1_2/Stop_Door1";
-            writeTagCommand2.WriteDelay = 10;
-            writeTagCommand2.WriteValue = "1";
+            writeTagCommand1.AllowResetValue = true;
+            writeTagCommand1.ResetDelay = 500;
+            writeTagCommand1.ResetValue = "0";
+            writeTagCommand1.TagPath = "Local Station/DauTieng/PLC1_2/Stop_Door1";
+            writeTagCommand1.WriteDelay = 10;
+            writeTagCommand1.WriteValue = "1";
             this.ahdButton7.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand2});
+            writeTagCommand1});
             // 
             // Abnt_CloseDoorlock2
             // 
@@ -289,14 +263,14 @@
             this.Abnt_CloseDoorlock2.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoorlock2.TabIndex = 385;
             this.Abnt_CloseDoorlock2.Text = "Đóng chốt 2";
-            writeTagCommand3.AllowResetValue = true;
-            writeTagCommand3.ResetDelay = 500;
-            writeTagCommand3.ResetValue = "0";
-            writeTagCommand3.TagPath = "Local Station/DauTieng/PLC1_2/Close_Door1";
-            writeTagCommand3.WriteDelay = 10;
-            writeTagCommand3.WriteValue = "1";
+            writeTagCommand2.AllowResetValue = true;
+            writeTagCommand2.ResetDelay = 500;
+            writeTagCommand2.ResetValue = "0";
+            writeTagCommand2.TagPath = "Local Station/DauTieng/PLC1_2/Close_Door1";
+            writeTagCommand2.WriteDelay = 10;
+            writeTagCommand2.WriteValue = "1";
             this.Abnt_CloseDoorlock2.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand3});
+            writeTagCommand2});
             // 
             // Abnt_OpenDoorlock2
             // 
@@ -309,55 +283,41 @@
             this.Abnt_OpenDoorlock2.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoorlock2.TabIndex = 384;
             this.Abnt_OpenDoorlock2.Text = "Mở chốt 2";
-            writeTagCommand4.AllowResetValue = true;
+            writeTagCommand3.AllowResetValue = true;
+            writeTagCommand3.ResetDelay = 500;
+            writeTagCommand3.ResetValue = "0";
+            writeTagCommand3.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
+            writeTagCommand3.WriteDelay = 10;
+            writeTagCommand3.WriteValue = "1";
+            this.Abnt_OpenDoorlock2.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand3});
+            // 
+            // AbntOFF1
+            // 
+            this.AbntOFF1.BorderColor = System.Drawing.SystemColors.Control;
+            this.AbntOFF1.BorderThickness = 2;
+            this.AbntOFF1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AbntOFF1.Location = new System.Drawing.Point(378, 360);
+            this.AbntOFF1.Name = "AbntOFF1";
+            this.AbntOFF1.Role = null;
+            this.AbntOFF1.Size = new System.Drawing.Size(187, 36);
+            this.AbntOFF1.TabIndex = 383;
+            this.AbntOFF1.Text = "Trạng thái tay OFF";
+            writeTagCommand4.AllowResetValue = false;
             writeTagCommand4.ResetDelay = 500;
             writeTagCommand4.ResetValue = "0";
-            writeTagCommand4.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
+            writeTagCommand4.TagPath = "Local Station/DauTieng/PLC1_2/Man_Aperture";
             writeTagCommand4.WriteDelay = 10;
-            writeTagCommand4.WriteValue = "1";
-            this.Abnt_OpenDoorlock2.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand4});
-            // 
-            // ahdButton37
-            // 
-            this.ahdButton37.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton37.BorderThickness = 2;
-            this.ahdButton37.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton37.Location = new System.Drawing.Point(378, 360);
-            this.ahdButton37.Name = "ahdButton37";
-            this.ahdButton37.Role = null;
-            this.ahdButton37.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton37.TabIndex = 383;
-            this.ahdButton37.Text = "Trạng thái tay OFF";
+            writeTagCommand4.WriteValue = "0";
             writeTagCommand5.AllowResetValue = false;
             writeTagCommand5.ResetDelay = 500;
             writeTagCommand5.ResetValue = "0";
-            writeTagCommand5.TagPath = "Local Station/DauTieng/PLC1_2/Man_Aperture";
+            writeTagCommand5.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Open_Door";
             writeTagCommand5.WriteDelay = 10;
             writeTagCommand5.WriteValue = "0";
-            this.ahdButton37.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            this.AbntOFF1.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand4,
             writeTagCommand5});
-            // 
-            // ahdTextBox13
-            // 
-            this.ahdTextBox13.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox13.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox13.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox13.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox13.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox13.HightLightStatusTime = 3;
-            this.ahdTextBox13.Location = new System.Drawing.Point(517, 76);
-            this.ahdTextBox13.Multiline = true;
-            this.ahdTextBox13.Name = "ahdTextBox13";
-            this.ahdTextBox13.Role = null;
-            this.ahdTextBox13.Size = new System.Drawing.Size(204, 35);
-            this.ahdTextBox13.StringFormat = null;
-            this.ahdTextBox13.TabIndex = 382;
-            this.ahdTextBox13.TagPath = "Local Station/DauTieng/PLC1_2/Total_Fllow";
-            this.ahdTextBox13.Text = "ahdTextBox13";
-            this.ahdTextBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox13.WriteDelay = 200;
-            this.ahdTextBox13.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
             // 
             // ahdTextBox12
             // 
@@ -372,10 +332,10 @@
             this.ahdTextBox12.Name = "ahdTextBox12";
             this.ahdTextBox12.Role = null;
             this.ahdTextBox12.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox12.StringFormat = null;
+            this.ahdTextBox12.StringFormat = "0.0";
             this.ahdTextBox12.TabIndex = 381;
             this.ahdTextBox12.TagPath = "Local Station/DauTieng/PLC1_2/Fllow_Door2";
-            this.ahdTextBox12.Text = "ahdTextBox12";
+            this.ahdTextBox12.Text = "0.0";
             this.ahdTextBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox12.WriteDelay = 200;
             this.ahdTextBox12.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -393,10 +353,10 @@
             this.ahdTextBox11.Name = "ahdTextBox11";
             this.ahdTextBox11.Role = null;
             this.ahdTextBox11.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox11.StringFormat = null;
+            this.ahdTextBox11.StringFormat = "0.0";
             this.ahdTextBox11.TabIndex = 380;
             this.ahdTextBox11.TagPath = "Local Station/DauTieng/PLC1_2/Fllow_Door1";
-            this.ahdTextBox11.Text = "ahdTextBox11";
+            this.ahdTextBox11.Text = "0.0";
             this.ahdTextBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox11.WriteDelay = 200;
             this.ahdTextBox11.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -461,25 +421,32 @@
             this.Abnt_OpenDoor2.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
             writeTagCommand8});
             // 
-            // ahdButton24
+            // AbntON1
             // 
-            this.ahdButton24.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton24.BorderThickness = 2;
-            this.ahdButton24.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton24.Location = new System.Drawing.Point(378, 303);
-            this.ahdButton24.Name = "ahdButton24";
-            this.ahdButton24.Role = null;
-            this.ahdButton24.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton24.TabIndex = 372;
-            this.ahdButton24.Text = "Trạng thái tay ON";
+            this.AbntON1.BorderColor = System.Drawing.SystemColors.Control;
+            this.AbntON1.BorderThickness = 2;
+            this.AbntON1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AbntON1.Location = new System.Drawing.Point(378, 303);
+            this.AbntON1.Name = "AbntON1";
+            this.AbntON1.Role = null;
+            this.AbntON1.Size = new System.Drawing.Size(187, 36);
+            this.AbntON1.TabIndex = 372;
+            this.AbntON1.Text = "Trạng thái tay ON";
             writeTagCommand9.AllowResetValue = false;
             writeTagCommand9.ResetDelay = 500;
             writeTagCommand9.ResetValue = "1";
             writeTagCommand9.TagPath = "Local Station/DauTieng/PLC1_2/Man_Aperture";
             writeTagCommand9.WriteDelay = 10;
             writeTagCommand9.WriteValue = "1";
-            this.ahdButton24.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand9});
+            writeTagCommand10.AllowResetValue = false;
+            writeTagCommand10.ResetDelay = 500;
+            writeTagCommand10.ResetValue = "1";
+            writeTagCommand10.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Open_Door";
+            writeTagCommand10.WriteDelay = 10;
+            writeTagCommand10.WriteValue = "1";
+            this.AbntON1.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand9,
+            writeTagCommand10});
             // 
             // ahdTextBox2
             // 
@@ -494,10 +461,10 @@
             this.ahdTextBox2.Name = "ahdTextBox2";
             this.ahdTextBox2.Role = null;
             this.ahdTextBox2.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox2.StringFormat = null;
+            this.ahdTextBox2.StringFormat = "0.0";
             this.ahdTextBox2.TabIndex = 371;
             this.ahdTextBox2.TagPath = "Local Station/DauTieng/PLC1_2/Door2_Aperture";
-            this.ahdTextBox2.Text = "ahdTextBox2";
+            this.ahdTextBox2.Text = "0.0";
             this.ahdTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox2.WriteDelay = 200;
             this.ahdTextBox2.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -515,10 +482,10 @@
             this.ahdTextBox1.Name = "ahdTextBox1";
             this.ahdTextBox1.Role = null;
             this.ahdTextBox1.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox1.StringFormat = null;
+            this.ahdTextBox1.StringFormat = "0.0";
             this.ahdTextBox1.TabIndex = 370;
             this.ahdTextBox1.TagPath = "Local Station/DauTieng/PLC1_2/Door1_Aperture";
-            this.ahdTextBox1.Text = "ahdTextBox1";
+            this.ahdTextBox1.Text = "0.0";
             this.ahdTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox1.WriteDelay = 200;
             this.ahdTextBox1.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -546,14 +513,14 @@
             this.ahdButton10.Size = new System.Drawing.Size(134, 36);
             this.ahdButton10.TabIndex = 368;
             this.ahdButton10.Text = "Dừng khẩn 1 - 2 ";
-            writeTagCommand10.AllowResetValue = true;
-            writeTagCommand10.ResetDelay = 500;
-            writeTagCommand10.ResetValue = "0";
-            writeTagCommand10.TagPath = "Local Station/DauTieng/PLC1_2/Stop1_2";
-            writeTagCommand10.WriteDelay = 10;
-            writeTagCommand10.WriteValue = "1";
+            writeTagCommand11.AllowResetValue = true;
+            writeTagCommand11.ResetDelay = 500;
+            writeTagCommand11.ResetValue = "0";
+            writeTagCommand11.TagPath = "Local Station/DauTieng/PLC1_2/Stop1_2";
+            writeTagCommand11.WriteDelay = 10;
+            writeTagCommand11.WriteValue = "1";
             this.ahdButton10.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand10});
+            writeTagCommand11});
             // 
             // ahdButton3
             // 
@@ -566,14 +533,14 @@
             this.ahdButton3.Size = new System.Drawing.Size(112, 36);
             this.ahdButton3.TabIndex = 361;
             this.ahdButton3.Text = "Dừng cửa 1";
-            writeTagCommand11.AllowResetValue = true;
-            writeTagCommand11.ResetDelay = 500;
-            writeTagCommand11.ResetValue = "0";
-            writeTagCommand11.TagPath = "Local Station/DauTieng/PLC1_2/Stop_Door1";
-            writeTagCommand11.WriteDelay = 10;
-            writeTagCommand11.WriteValue = "1";
+            writeTagCommand12.AllowResetValue = true;
+            writeTagCommand12.ResetDelay = 500;
+            writeTagCommand12.ResetValue = "0";
+            writeTagCommand12.TagPath = "Local Station/DauTieng/PLC1_2/Stop_Door1";
+            writeTagCommand12.WriteDelay = 10;
+            writeTagCommand12.WriteValue = "1";
             this.ahdButton3.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand11});
+            writeTagCommand12});
             // 
             // Abnt_CloseDoor1
             // 
@@ -586,14 +553,14 @@
             this.Abnt_CloseDoor1.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoor1.TabIndex = 360;
             this.Abnt_CloseDoor1.Text = "Đóng cửa 1";
-            writeTagCommand12.AllowResetValue = true;
-            writeTagCommand12.ResetDelay = 500;
-            writeTagCommand12.ResetValue = "0";
-            writeTagCommand12.TagPath = "Local Station/DauTieng/PLC1_2/Close_Door1";
-            writeTagCommand12.WriteDelay = 10;
-            writeTagCommand12.WriteValue = "1";
+            writeTagCommand13.AllowResetValue = true;
+            writeTagCommand13.ResetDelay = 500;
+            writeTagCommand13.ResetValue = "0";
+            writeTagCommand13.TagPath = "Local Station/DauTieng/PLC1_2/Close_Door1";
+            writeTagCommand13.WriteDelay = 10;
+            writeTagCommand13.WriteValue = "1";
             this.Abnt_CloseDoor1.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand12});
+            writeTagCommand13});
             // 
             // Abnt_OpenDoor1
             // 
@@ -606,25 +573,14 @@
             this.Abnt_OpenDoor1.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoor1.TabIndex = 359;
             this.Abnt_OpenDoor1.Text = "Mở cửa 1";
-            writeTagCommand13.AllowResetValue = true;
-            writeTagCommand13.ResetDelay = 500;
-            writeTagCommand13.ResetValue = "0";
-            writeTagCommand13.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
-            writeTagCommand13.WriteDelay = 10;
-            writeTagCommand13.WriteValue = "1";
+            writeTagCommand14.AllowResetValue = true;
+            writeTagCommand14.ResetDelay = 500;
+            writeTagCommand14.ResetValue = "0";
+            writeTagCommand14.TagPath = "Local Station/DauTieng/PLC1_2/Open_Door1";
+            writeTagCommand14.WriteDelay = 10;
+            writeTagCommand14.WriteValue = "1";
             this.Abnt_OpenDoor1.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand13});
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button8.ForeColor = System.Drawing.Color.Blue;
-            this.button8.Location = new System.Drawing.Point(517, 12);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(204, 35);
-            this.button8.TabIndex = 357;
-            this.button8.Text = "Qtr (m³/s)";
-            this.button8.UseVisualStyleBackColor = false;
+            writeTagCommand14});
             // 
             // button1
             // 
@@ -672,19 +628,53 @@
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // ahdTextBox13
+            // 
+            this.ahdTextBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ahdTextBox13.DropDownBackColor = System.Drawing.SystemColors.Control;
+            this.ahdTextBox13.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ahdTextBox13.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
+            this.ahdTextBox13.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox13.DropDownForeColor = System.Drawing.SystemColors.ControlText;
+            this.ahdTextBox13.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox13.HightLightStatusTime = 3;
+            this.ahdTextBox13.Location = new System.Drawing.Point(1055, 616);
+            this.ahdTextBox13.Name = "ahdTextBox13";
+            this.ahdTextBox13.Role = null;
+            this.ahdTextBox13.Size = new System.Drawing.Size(263, 41);
+            this.ahdTextBox13.StringFormat = "0.0";
+            this.ahdTextBox13.TabIndex = 382;
+            this.ahdTextBox13.TagPath = "Local Station/DauTieng/PLC1_2/Total_Fllow";
+            this.ahdTextBox13.Text = "0.0";
+            this.ahdTextBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ahdTextBox13.WriteDelay = 200;
+            this.ahdTextBox13.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button8.ForeColor = System.Drawing.Color.Blue;
+            this.button8.Location = new System.Drawing.Point(1055, 552);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(263, 35);
+            this.button8.TabIndex = 357;
+            this.button8.Text = "Qtr (m³/s)";
+            this.button8.UseVisualStyleBackColor = false;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.ahdButton20);
             this.groupBox2.Controls.Add(this.Abnt_CloseDoorlock4);
             this.groupBox2.Controls.Add(this.Abnt_OpenDoorlock4);
             this.groupBox2.Controls.Add(this.ahdTextBox3);
-            this.groupBox2.Controls.Add(this.ahdButton18);
+            this.groupBox2.Controls.Add(this.AbntOFF2);
             this.groupBox2.Controls.Add(this.Abnt_OpenDoor4);
             this.groupBox2.Controls.Add(this.Abnt_CloseDoor4);
             this.groupBox2.Controls.Add(this.ahdButton11);
             this.groupBox2.Controls.Add(this.ahdButton15);
-            this.groupBox2.Controls.Add(this.ahdButton19);
-            this.groupBox2.Controls.Add(this.ahdTextBox4);
+            this.groupBox2.Controls.Add(this.AbntON2);
             this.groupBox2.Controls.Add(this.ahdButton12);
             this.groupBox2.Controls.Add(this.Abnt_CloseDoorlock3);
             this.groupBox2.Controls.Add(this.Abnt_OpenDoorlock3);
@@ -695,7 +685,6 @@
             this.groupBox2.Controls.Add(this.Abnt_CloseDoor3);
             this.groupBox2.Controls.Add(this.Abnt_OpenDoor3);
             this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button6);
             this.groupBox2.Controls.Add(this.button7);
             this.groupBox2.Controls.Add(this.button9);
             this.groupBox2.Controls.Add(this.button10);
@@ -705,7 +694,7 @@
             this.groupBox2.Size = new System.Drawing.Size(805, 438);
             this.groupBox2.TabIndex = 372;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Trạm 3 -4";
+            this.groupBox2.Text = "Trạm (Cửa 3 & Cửa 4)";
             // 
             // ahdButton20
             // 
@@ -718,14 +707,14 @@
             this.ahdButton20.Size = new System.Drawing.Size(112, 36);
             this.ahdButton20.TabIndex = 397;
             this.ahdButton20.Text = "Dừng chốt 4";
-            writeTagCommand14.AllowResetValue = true;
-            writeTagCommand14.ResetDelay = 500;
-            writeTagCommand14.ResetValue = "0";
-            writeTagCommand14.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock4";
-            writeTagCommand14.WriteDelay = 10;
-            writeTagCommand14.WriteValue = "1";
+            writeTagCommand15.AllowResetValue = true;
+            writeTagCommand15.ResetDelay = 500;
+            writeTagCommand15.ResetValue = "0";
+            writeTagCommand15.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock4";
+            writeTagCommand15.WriteDelay = 10;
+            writeTagCommand15.WriteValue = "1";
             this.ahdButton20.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand14});
+            writeTagCommand15});
             // 
             // Abnt_CloseDoorlock4
             // 
@@ -738,14 +727,14 @@
             this.Abnt_CloseDoorlock4.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoorlock4.TabIndex = 396;
             this.Abnt_CloseDoorlock4.Text = "Đóng chốt 4";
-            writeTagCommand15.AllowResetValue = true;
-            writeTagCommand15.ResetDelay = 500;
-            writeTagCommand15.ResetValue = "0";
-            writeTagCommand15.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock4";
-            writeTagCommand15.WriteDelay = 10;
-            writeTagCommand15.WriteValue = "1";
+            writeTagCommand16.AllowResetValue = true;
+            writeTagCommand16.ResetDelay = 500;
+            writeTagCommand16.ResetValue = "0";
+            writeTagCommand16.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock4";
+            writeTagCommand16.WriteDelay = 10;
+            writeTagCommand16.WriteValue = "1";
             this.Abnt_CloseDoorlock4.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand15});
+            writeTagCommand16});
             // 
             // Abnt_OpenDoorlock4
             // 
@@ -758,14 +747,14 @@
             this.Abnt_OpenDoorlock4.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoorlock4.TabIndex = 395;
             this.Abnt_OpenDoorlock4.Text = "Mở chốt 4";
-            writeTagCommand16.AllowResetValue = true;
-            writeTagCommand16.ResetDelay = 500;
-            writeTagCommand16.ResetValue = "0";
-            writeTagCommand16.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock4";
-            writeTagCommand16.WriteDelay = 10;
-            writeTagCommand16.WriteValue = "1";
+            writeTagCommand17.AllowResetValue = true;
+            writeTagCommand17.ResetDelay = 500;
+            writeTagCommand17.ResetValue = "0";
+            writeTagCommand17.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock4";
+            writeTagCommand17.WriteDelay = 10;
+            writeTagCommand17.WriteValue = "1";
             this.Abnt_OpenDoorlock4.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand16});
+            writeTagCommand17});
             // 
             // ahdTextBox3
             // 
@@ -775,38 +764,45 @@
             this.ahdTextBox3.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdTextBox3.DropDownForeColor = System.Drawing.SystemColors.ControlText;
             this.ahdTextBox3.HightLightStatusTime = 3;
-            this.ahdTextBox3.Location = new System.Drawing.Point(517, 76);
+            this.ahdTextBox3.Location = new System.Drawing.Point(515, 76);
             this.ahdTextBox3.Multiline = true;
             this.ahdTextBox3.Name = "ahdTextBox3";
             this.ahdTextBox3.Role = null;
-            this.ahdTextBox3.Size = new System.Drawing.Size(204, 35);
-            this.ahdTextBox3.StringFormat = null;
+            this.ahdTextBox3.Size = new System.Drawing.Size(112, 35);
+            this.ahdTextBox3.StringFormat = "0.0";
             this.ahdTextBox3.TabIndex = 390;
             this.ahdTextBox3.TagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door4";
-            this.ahdTextBox3.Text = "ahdTextBox3";
+            this.ahdTextBox3.Text = "0.0";
             this.ahdTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox3.WriteDelay = 200;
             this.ahdTextBox3.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
             // 
-            // ahdButton18
+            // AbntOFF2
             // 
-            this.ahdButton18.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton18.BorderThickness = 2;
-            this.ahdButton18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton18.Location = new System.Drawing.Point(378, 363);
-            this.ahdButton18.Name = "ahdButton18";
-            this.ahdButton18.Role = null;
-            this.ahdButton18.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton18.TabIndex = 385;
-            this.ahdButton18.Text = "Trạng thái tay OFF";
-            writeTagCommand17.AllowResetValue = false;
-            writeTagCommand17.ResetDelay = 500;
-            writeTagCommand17.ResetValue = "0";
-            writeTagCommand17.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
-            writeTagCommand17.WriteDelay = 10;
-            writeTagCommand17.WriteValue = "0";
-            this.ahdButton18.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand17});
+            this.AbntOFF2.BorderColor = System.Drawing.SystemColors.Control;
+            this.AbntOFF2.BorderThickness = 2;
+            this.AbntOFF2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AbntOFF2.Location = new System.Drawing.Point(378, 363);
+            this.AbntOFF2.Name = "AbntOFF2";
+            this.AbntOFF2.Role = null;
+            this.AbntOFF2.Size = new System.Drawing.Size(187, 36);
+            this.AbntOFF2.TabIndex = 385;
+            this.AbntOFF2.Text = "Trạng thái tay OFF";
+            writeTagCommand18.AllowResetValue = false;
+            writeTagCommand18.ResetDelay = 500;
+            writeTagCommand18.ResetValue = "0";
+            writeTagCommand18.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
+            writeTagCommand18.WriteDelay = 10;
+            writeTagCommand18.WriteValue = "0";
+            writeTagCommand19.AllowResetValue = false;
+            writeTagCommand19.ResetDelay = 500;
+            writeTagCommand19.ResetValue = "0";
+            writeTagCommand19.TagPath = "Local Station/DauTieng/S71500/Station_2/Door1_Open_Door";
+            writeTagCommand19.WriteDelay = 10;
+            writeTagCommand19.WriteValue = "0";
+            this.AbntOFF2.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand18,
+            writeTagCommand19});
             // 
             // Abnt_OpenDoor4
             // 
@@ -819,14 +815,14 @@
             this.Abnt_OpenDoor4.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoor4.TabIndex = 387;
             this.Abnt_OpenDoor4.Text = "Mở cửa 4";
-            writeTagCommand18.AllowResetValue = true;
-            writeTagCommand18.ResetDelay = 500;
-            writeTagCommand18.ResetValue = "0";
-            writeTagCommand18.TagPath = "Local Station/DauTieng/PLC3_4/Open_Door4";
-            writeTagCommand18.WriteDelay = 10;
-            writeTagCommand18.WriteValue = "1";
+            writeTagCommand20.AllowResetValue = true;
+            writeTagCommand20.ResetDelay = 500;
+            writeTagCommand20.ResetValue = "0";
+            writeTagCommand20.TagPath = "Local Station/DauTieng/PLC3_4/Open_Door4";
+            writeTagCommand20.WriteDelay = 10;
+            writeTagCommand20.WriteValue = "1";
             this.Abnt_OpenDoor4.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand18});
+            writeTagCommand20});
             // 
             // Abnt_CloseDoor4
             // 
@@ -839,14 +835,14 @@
             this.Abnt_CloseDoor4.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoor4.TabIndex = 388;
             this.Abnt_CloseDoor4.Text = "Đóng cửa 4";
-            writeTagCommand19.AllowResetValue = true;
-            writeTagCommand19.ResetDelay = 500;
-            writeTagCommand19.ResetValue = "0";
-            writeTagCommand19.TagPath = "Local Station/DauTieng/PLC3_4/Close_Door4";
-            writeTagCommand19.WriteDelay = 10;
-            writeTagCommand19.WriteValue = "1";
+            writeTagCommand21.AllowResetValue = true;
+            writeTagCommand21.ResetDelay = 500;
+            writeTagCommand21.ResetValue = "0";
+            writeTagCommand21.TagPath = "Local Station/DauTieng/PLC3_4/Close_Door4";
+            writeTagCommand21.WriteDelay = 10;
+            writeTagCommand21.WriteValue = "1";
             this.Abnt_CloseDoor4.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand19});
+            writeTagCommand21});
             // 
             // ahdButton11
             // 
@@ -859,14 +855,14 @@
             this.ahdButton11.Size = new System.Drawing.Size(134, 36);
             this.ahdButton11.TabIndex = 387;
             this.ahdButton11.Text = "Dừng khẩn 3 - 4";
-            writeTagCommand20.AllowResetValue = true;
-            writeTagCommand20.ResetDelay = 500;
-            writeTagCommand20.ResetValue = "0";
-            writeTagCommand20.TagPath = "Local Station/DauTieng/PLC3_4/Stop3_4";
-            writeTagCommand20.WriteDelay = 10;
-            writeTagCommand20.WriteValue = "1";
+            writeTagCommand22.AllowResetValue = true;
+            writeTagCommand22.ResetDelay = 500;
+            writeTagCommand22.ResetValue = "0";
+            writeTagCommand22.TagPath = "Local Station/DauTieng/PLC3_4/Stop3_4";
+            writeTagCommand22.WriteDelay = 10;
+            writeTagCommand22.WriteValue = "1";
             this.ahdButton11.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand20});
+            writeTagCommand22});
             // 
             // ahdButton15
             // 
@@ -879,55 +875,41 @@
             this.ahdButton15.Size = new System.Drawing.Size(112, 36);
             this.ahdButton15.TabIndex = 389;
             this.ahdButton15.Text = "Dừng cửa 4";
-            writeTagCommand21.AllowResetValue = true;
-            writeTagCommand21.ResetDelay = 500;
-            writeTagCommand21.ResetValue = "0";
-            writeTagCommand21.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Door4";
-            writeTagCommand21.WriteDelay = 10;
-            writeTagCommand21.WriteValue = "1";
+            writeTagCommand23.AllowResetValue = true;
+            writeTagCommand23.ResetDelay = 500;
+            writeTagCommand23.ResetValue = "0";
+            writeTagCommand23.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Door4";
+            writeTagCommand23.WriteDelay = 10;
+            writeTagCommand23.WriteValue = "1";
             this.ahdButton15.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand21});
+            writeTagCommand23});
             // 
-            // ahdButton19
+            // AbntON2
             // 
-            this.ahdButton19.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton19.BorderThickness = 2;
-            this.ahdButton19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton19.Location = new System.Drawing.Point(378, 306);
-            this.ahdButton19.Name = "ahdButton19";
-            this.ahdButton19.Role = null;
-            this.ahdButton19.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton19.TabIndex = 384;
-            this.ahdButton19.Text = "Trạng thái tay ON";
-            writeTagCommand22.AllowResetValue = false;
-            writeTagCommand22.ResetDelay = 500;
-            writeTagCommand22.ResetValue = "1";
-            writeTagCommand22.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
-            writeTagCommand22.WriteDelay = 10;
-            writeTagCommand22.WriteValue = "1";
-            this.ahdButton19.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand22});
-            // 
-            // ahdTextBox4
-            // 
-            this.ahdTextBox4.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox4.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox4.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox4.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox4.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox4.HightLightStatusTime = 3;
-            this.ahdTextBox4.Location = new System.Drawing.Point(378, 76);
-            this.ahdTextBox4.Multiline = true;
-            this.ahdTextBox4.Name = "ahdTextBox4";
-            this.ahdTextBox4.Role = null;
-            this.ahdTextBox4.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox4.StringFormat = null;
-            this.ahdTextBox4.TabIndex = 394;
-            this.ahdTextBox4.TagPath = "Local Station/DauTieng/PLC3_4/Total_Fllow";
-            this.ahdTextBox4.Text = "ahdTextBox4";
-            this.ahdTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox4.WriteDelay = 200;
-            this.ahdTextBox4.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            this.AbntON2.BorderColor = System.Drawing.SystemColors.Control;
+            this.AbntON2.BorderThickness = 2;
+            this.AbntON2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AbntON2.Location = new System.Drawing.Point(378, 306);
+            this.AbntON2.Name = "AbntON2";
+            this.AbntON2.Role = null;
+            this.AbntON2.Size = new System.Drawing.Size(187, 36);
+            this.AbntON2.TabIndex = 384;
+            this.AbntON2.Text = "Trạng thái tay ON";
+            writeTagCommand24.AllowResetValue = false;
+            writeTagCommand24.ResetDelay = 500;
+            writeTagCommand24.ResetValue = "1";
+            writeTagCommand24.TagPath = "Local Station/DauTieng/PLC3_4/Man_Aperture";
+            writeTagCommand24.WriteDelay = 10;
+            writeTagCommand24.WriteValue = "1";
+            writeTagCommand25.AllowResetValue = false;
+            writeTagCommand25.ResetDelay = 500;
+            writeTagCommand25.ResetValue = "1";
+            writeTagCommand25.TagPath = "Local Station/DauTieng/S71500/Station_2/Door1_Open_Door";
+            writeTagCommand25.WriteDelay = 10;
+            writeTagCommand25.WriteValue = "1";
+            this.AbntON2.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand24,
+            writeTagCommand25});
             // 
             // ahdButton12
             // 
@@ -940,14 +922,14 @@
             this.ahdButton12.Size = new System.Drawing.Size(112, 36);
             this.ahdButton12.TabIndex = 393;
             this.ahdButton12.Text = "Dừng chốt 3";
-            writeTagCommand23.AllowResetValue = true;
-            writeTagCommand23.ResetDelay = 500;
-            writeTagCommand23.ResetValue = "0";
-            writeTagCommand23.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock3";
-            writeTagCommand23.WriteDelay = 10;
-            writeTagCommand23.WriteValue = "1";
+            writeTagCommand26.AllowResetValue = true;
+            writeTagCommand26.ResetDelay = 500;
+            writeTagCommand26.ResetValue = "0";
+            writeTagCommand26.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Doorlock3";
+            writeTagCommand26.WriteDelay = 10;
+            writeTagCommand26.WriteValue = "1";
             this.ahdButton12.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand23});
+            writeTagCommand26});
             // 
             // Abnt_CloseDoorlock3
             // 
@@ -960,14 +942,14 @@
             this.Abnt_CloseDoorlock3.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoorlock3.TabIndex = 392;
             this.Abnt_CloseDoorlock3.Text = "Đóng chốt 3";
-            writeTagCommand24.AllowResetValue = true;
-            writeTagCommand24.ResetDelay = 500;
-            writeTagCommand24.ResetValue = "0";
-            writeTagCommand24.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock3";
-            writeTagCommand24.WriteDelay = 10;
-            writeTagCommand24.WriteValue = "1";
+            writeTagCommand27.AllowResetValue = true;
+            writeTagCommand27.ResetDelay = 500;
+            writeTagCommand27.ResetValue = "0";
+            writeTagCommand27.TagPath = "Local Station/DauTieng/PLC3_4/Close_Doorlock3";
+            writeTagCommand27.WriteDelay = 10;
+            writeTagCommand27.WriteValue = "1";
             this.Abnt_CloseDoorlock3.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand24});
+            writeTagCommand27});
             // 
             // Abnt_OpenDoorlock3
             // 
@@ -980,14 +962,14 @@
             this.Abnt_OpenDoorlock3.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoorlock3.TabIndex = 391;
             this.Abnt_OpenDoorlock3.Text = "Mở chốt 3";
-            writeTagCommand25.AllowResetValue = true;
-            writeTagCommand25.ResetDelay = 500;
-            writeTagCommand25.ResetValue = "0";
-            writeTagCommand25.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock3";
-            writeTagCommand25.WriteDelay = 10;
-            writeTagCommand25.WriteValue = "1";
+            writeTagCommand28.AllowResetValue = true;
+            writeTagCommand28.ResetDelay = 500;
+            writeTagCommand28.ResetValue = "0";
+            writeTagCommand28.TagPath = "Local Station/DauTieng/PLC3_4/Open_Doorlock3";
+            writeTagCommand28.WriteDelay = 10;
+            writeTagCommand28.WriteValue = "1";
             this.Abnt_OpenDoorlock3.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand25});
+            writeTagCommand28});
             // 
             // ahdTextBox14
             // 
@@ -1002,10 +984,10 @@
             this.ahdTextBox14.Name = "ahdTextBox14";
             this.ahdTextBox14.Role = null;
             this.ahdTextBox14.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox14.StringFormat = null;
+            this.ahdTextBox14.StringFormat = "0.0";
             this.ahdTextBox14.TabIndex = 386;
             this.ahdTextBox14.TagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door3";
-            this.ahdTextBox14.Text = "ahdTextBox14";
+            this.ahdTextBox14.Text = "0.0";
             this.ahdTextBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox14.WriteDelay = 200;
             this.ahdTextBox14.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -1023,10 +1005,10 @@
             this.ahdTextBox15.Name = "ahdTextBox15";
             this.ahdTextBox15.Role = null;
             this.ahdTextBox15.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox15.StringFormat = null;
+            this.ahdTextBox15.StringFormat = "0.0";
             this.ahdTextBox15.TabIndex = 385;
             this.ahdTextBox15.TagPath = "Local Station/DauTieng/PLC3_4/Door4_Aperture";
-            this.ahdTextBox15.Text = "ahdTextBox15";
+            this.ahdTextBox15.Text = "0.0";
             this.ahdTextBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox15.WriteDelay = 200;
             this.ahdTextBox15.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -1044,10 +1026,10 @@
             this.ahdTextBox16.Name = "ahdTextBox16";
             this.ahdTextBox16.Role = null;
             this.ahdTextBox16.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox16.StringFormat = null;
+            this.ahdTextBox16.StringFormat = "0.0";
             this.ahdTextBox16.TabIndex = 384;
             this.ahdTextBox16.TagPath = "Local Station/DauTieng/PLC3_4/Door3_Aperture";
-            this.ahdTextBox16.Text = "ahdTextBox16";
+            this.ahdTextBox16.Text = "0.0";
             this.ahdTextBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox16.WriteDelay = 200;
             this.ahdTextBox16.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -1063,14 +1045,14 @@
             this.ahdButton38.Size = new System.Drawing.Size(112, 36);
             this.ahdButton38.TabIndex = 383;
             this.ahdButton38.Text = "Dừng cửa 3";
-            writeTagCommand26.AllowResetValue = true;
-            writeTagCommand26.ResetDelay = 500;
-            writeTagCommand26.ResetValue = "0";
-            writeTagCommand26.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Door3";
-            writeTagCommand26.WriteDelay = 10;
-            writeTagCommand26.WriteValue = "1";
+            writeTagCommand29.AllowResetValue = true;
+            writeTagCommand29.ResetDelay = 500;
+            writeTagCommand29.ResetValue = "0";
+            writeTagCommand29.TagPath = "Local Station/DauTieng/PLC3_4/Stop_Door3";
+            writeTagCommand29.WriteDelay = 10;
+            writeTagCommand29.WriteValue = "1";
             this.ahdButton38.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand26});
+            writeTagCommand29});
             // 
             // Abnt_CloseDoor3
             // 
@@ -1083,14 +1065,14 @@
             this.Abnt_CloseDoor3.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoor3.TabIndex = 382;
             this.Abnt_CloseDoor3.Text = "Đóng cửa 3";
-            writeTagCommand27.AllowResetValue = true;
-            writeTagCommand27.ResetDelay = 500;
-            writeTagCommand27.ResetValue = "0";
-            writeTagCommand27.TagPath = "Local Station/DauTieng/PLC3_4/Close_Door3";
-            writeTagCommand27.WriteDelay = 10;
-            writeTagCommand27.WriteValue = "1";
+            writeTagCommand30.AllowResetValue = true;
+            writeTagCommand30.ResetDelay = 500;
+            writeTagCommand30.ResetValue = "0";
+            writeTagCommand30.TagPath = "Local Station/DauTieng/PLC3_4/Close_Door3";
+            writeTagCommand30.WriteDelay = 10;
+            writeTagCommand30.WriteValue = "1";
             this.Abnt_CloseDoor3.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand27});
+            writeTagCommand30});
             // 
             // Abnt_OpenDoor3
             // 
@@ -1103,14 +1085,14 @@
             this.Abnt_OpenDoor3.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoor3.TabIndex = 381;
             this.Abnt_OpenDoor3.Text = "Mở cửa 3";
-            writeTagCommand28.AllowResetValue = true;
-            writeTagCommand28.ResetDelay = 500;
-            writeTagCommand28.ResetValue = "0";
-            writeTagCommand28.TagPath = "Local Station/DauTieng/PLC3_4/Open_Door3";
-            writeTagCommand28.WriteDelay = 10;
-            writeTagCommand28.WriteValue = "1";
+            writeTagCommand31.AllowResetValue = true;
+            writeTagCommand31.ResetDelay = 500;
+            writeTagCommand31.ResetValue = "0";
+            writeTagCommand31.TagPath = "Local Station/DauTieng/PLC3_4/Open_Door3";
+            writeTagCommand31.WriteDelay = 10;
+            writeTagCommand31.WriteValue = "1";
             this.Abnt_OpenDoor3.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand28});
+            writeTagCommand31});
             // 
             // button4
             // 
@@ -1124,22 +1106,11 @@
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button6.ForeColor = System.Drawing.Color.Blue;
-            this.button6.Location = new System.Drawing.Point(517, 12);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(204, 35);
-            this.button6.TabIndex = 357;
-            this.button6.Text = "Qtr (m³/s)";
-            this.button6.UseVisualStyleBackColor = false;
-            // 
             // button7
             // 
             this.button7.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.button7.ForeColor = System.Drawing.Color.Blue;
-            this.button7.Location = new System.Drawing.Point(378, 12);
+            this.button7.Location = new System.Drawing.Point(517, 12);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(110, 35);
             this.button7.TabIndex = 355;
@@ -1189,10 +1160,8 @@
             this.groupBox3.Controls.Add(this.button17);
             this.groupBox3.Controls.Add(this.Abnt_OpenDoorlock5);
             this.groupBox3.Controls.Add(this.button16);
-            this.groupBox3.Controls.Add(this.ahdButton27);
+            this.groupBox3.Controls.Add(this.AbntOFF3);
             this.groupBox3.Controls.Add(this.button14);
-            this.groupBox3.Controls.Add(this.ahdTextBox5);
-            this.groupBox3.Controls.Add(this.button13);
             this.groupBox3.Controls.Add(this.ahdTextBox6);
             this.groupBox3.Controls.Add(this.Abnt_OpenDoor5);
             this.groupBox3.Controls.Add(this.ahdTextBox17);
@@ -1205,13 +1174,13 @@
             this.groupBox3.Controls.Add(this.Abnt_CloseDoor6);
             this.groupBox3.Controls.Add(this.ahdTextBox22);
             this.groupBox3.Controls.Add(this.Abnt_OpenDoor6);
-            this.groupBox3.Controls.Add(this.ahdButton31);
-            this.groupBox3.Location = new System.Drawing.Point(12, 482);
+            this.groupBox3.Controls.Add(this.AbntON3);
+            this.groupBox3.Location = new System.Drawing.Point(12, 452);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(805, 438);
+            this.groupBox3.Size = new System.Drawing.Size(805, 422);
             this.groupBox3.TabIndex = 373;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Trạm 5 - 6";
+            this.groupBox3.Text = "Trạm (Cửa 5 & Cửa 6)";
             // 
             // ahdButton23
             // 
@@ -1224,14 +1193,14 @@
             this.ahdButton23.Size = new System.Drawing.Size(112, 36);
             this.ahdButton23.TabIndex = 413;
             this.ahdButton23.Text = "Dừng chốt 5";
-            writeTagCommand29.AllowResetValue = true;
-            writeTagCommand29.ResetDelay = 500;
-            writeTagCommand29.ResetValue = "0";
-            writeTagCommand29.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Doorlock5";
-            writeTagCommand29.WriteDelay = 10;
-            writeTagCommand29.WriteValue = "1";
+            writeTagCommand32.AllowResetValue = true;
+            writeTagCommand32.ResetDelay = 500;
+            writeTagCommand32.ResetValue = "0";
+            writeTagCommand32.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Doorlock5";
+            writeTagCommand32.WriteDelay = 10;
+            writeTagCommand32.WriteValue = "1";
             this.ahdButton23.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand29});
+            writeTagCommand32});
             // 
             // button15
             // 
@@ -1255,14 +1224,14 @@
             this.Abnt_CloseDoorlock5.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoorlock5.TabIndex = 412;
             this.Abnt_CloseDoorlock5.Text = "Đóng chốt 5";
-            writeTagCommand30.AllowResetValue = true;
-            writeTagCommand30.ResetDelay = 500;
-            writeTagCommand30.ResetValue = "0";
-            writeTagCommand30.TagPath = "Local Station/DauTieng/PLC5_6/Close_Doorlock5";
-            writeTagCommand30.WriteDelay = 10;
-            writeTagCommand30.WriteValue = "1";
+            writeTagCommand33.AllowResetValue = true;
+            writeTagCommand33.ResetDelay = 500;
+            writeTagCommand33.ResetValue = "0";
+            writeTagCommand33.TagPath = "Local Station/DauTieng/PLC5_6/Close_Doorlock5";
+            writeTagCommand33.WriteDelay = 10;
+            writeTagCommand33.WriteValue = "1";
             this.Abnt_CloseDoorlock5.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand30});
+            writeTagCommand33});
             // 
             // button17
             // 
@@ -1287,14 +1256,14 @@
             this.Abnt_OpenDoorlock5.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoorlock5.TabIndex = 411;
             this.Abnt_OpenDoorlock5.Text = "Mở chốt 5";
-            writeTagCommand31.AllowResetValue = true;
-            writeTagCommand31.ResetDelay = 500;
-            writeTagCommand31.ResetValue = "0";
-            writeTagCommand31.TagPath = "Local Station/DauTieng/PLC5_6/Open_Doorlock5";
-            writeTagCommand31.WriteDelay = 10;
-            writeTagCommand31.WriteValue = "1";
+            writeTagCommand34.AllowResetValue = true;
+            writeTagCommand34.ResetDelay = 500;
+            writeTagCommand34.ResetValue = "0";
+            writeTagCommand34.TagPath = "Local Station/DauTieng/PLC5_6/Open_Doorlock5";
+            writeTagCommand34.WriteDelay = 10;
+            writeTagCommand34.WriteValue = "1";
             this.Abnt_OpenDoorlock5.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand31});
+            writeTagCommand34});
             // 
             // button16
             // 
@@ -1308,68 +1277,43 @@
             this.button16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button16.UseVisualStyleBackColor = true;
             // 
-            // ahdButton27
+            // AbntOFF3
             // 
-            this.ahdButton27.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton27.BorderThickness = 2;
-            this.ahdButton27.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton27.Location = new System.Drawing.Point(378, 368);
-            this.ahdButton27.Name = "ahdButton27";
-            this.ahdButton27.Role = null;
-            this.ahdButton27.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton27.TabIndex = 410;
-            this.ahdButton27.Text = "Trạng thái tay OFF";
-            writeTagCommand32.AllowResetValue = false;
-            writeTagCommand32.ResetDelay = 500;
-            writeTagCommand32.ResetValue = "0";
-            writeTagCommand32.TagPath = "Local Station/DauTieng/PLC5_6/Man_Aperture";
-            writeTagCommand32.WriteDelay = 10;
-            writeTagCommand32.WriteValue = "0";
-            this.ahdButton27.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand32});
+            this.AbntOFF3.BorderColor = System.Drawing.SystemColors.Control;
+            this.AbntOFF3.BorderThickness = 2;
+            this.AbntOFF3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AbntOFF3.Location = new System.Drawing.Point(378, 368);
+            this.AbntOFF3.Name = "AbntOFF3";
+            this.AbntOFF3.Role = null;
+            this.AbntOFF3.Size = new System.Drawing.Size(187, 36);
+            this.AbntOFF3.TabIndex = 410;
+            this.AbntOFF3.Text = "Trạng thái tay OFF";
+            writeTagCommand35.AllowResetValue = false;
+            writeTagCommand35.ResetDelay = 500;
+            writeTagCommand35.ResetValue = "0";
+            writeTagCommand35.TagPath = "Local Station/DauTieng/PLC5_6/Man_Aperture";
+            writeTagCommand35.WriteDelay = 10;
+            writeTagCommand35.WriteValue = "0";
+            writeTagCommand36.AllowResetValue = false;
+            writeTagCommand36.ResetDelay = 500;
+            writeTagCommand36.ResetValue = "0";
+            writeTagCommand36.TagPath = "Local Station/DauTieng/S71500/Station_3/Door1_Open_Door";
+            writeTagCommand36.WriteDelay = 10;
+            writeTagCommand36.WriteValue = "0";
+            this.AbntOFF3.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand35,
+            writeTagCommand36});
             // 
             // button14
             // 
             this.button14.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.button14.ForeColor = System.Drawing.Color.Blue;
-            this.button14.Location = new System.Drawing.Point(378, 6);
+            this.button14.Location = new System.Drawing.Point(517, 16);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(110, 35);
             this.button14.TabIndex = 390;
             this.button14.Text = "CỬA 6";
             this.button14.UseVisualStyleBackColor = false;
-            // 
-            // ahdTextBox5
-            // 
-            this.ahdTextBox5.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox5.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox5.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox5.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox5.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox5.HightLightStatusTime = 3;
-            this.ahdTextBox5.Location = new System.Drawing.Point(517, 80);
-            this.ahdTextBox5.Multiline = true;
-            this.ahdTextBox5.Name = "ahdTextBox5";
-            this.ahdTextBox5.Role = null;
-            this.ahdTextBox5.Size = new System.Drawing.Size(204, 35);
-            this.ahdTextBox5.StringFormat = null;
-            this.ahdTextBox5.TabIndex = 409;
-            this.ahdTextBox5.TagPath = "Local Station/DauTieng/PLC5_6/Total_Fllow";
-            this.ahdTextBox5.Text = "ahdTextBox5";
-            this.ahdTextBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox5.WriteDelay = 200;
-            this.ahdTextBox5.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
-            // 
-            // button13
-            // 
-            this.button13.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button13.ForeColor = System.Drawing.Color.Blue;
-            this.button13.Location = new System.Drawing.Point(517, 6);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(204, 35);
-            this.button13.TabIndex = 391;
-            this.button13.Text = "Qtr (m³/s)";
-            this.button13.UseVisualStyleBackColor = false;
             // 
             // ahdTextBox6
             // 
@@ -1379,15 +1323,15 @@
             this.ahdTextBox6.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ahdTextBox6.DropDownForeColor = System.Drawing.SystemColors.ControlText;
             this.ahdTextBox6.HightLightStatusTime = 3;
-            this.ahdTextBox6.Location = new System.Drawing.Point(378, 80);
+            this.ahdTextBox6.Location = new System.Drawing.Point(515, 80);
             this.ahdTextBox6.Multiline = true;
             this.ahdTextBox6.Name = "ahdTextBox6";
             this.ahdTextBox6.Role = null;
             this.ahdTextBox6.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox6.StringFormat = null;
+            this.ahdTextBox6.StringFormat = "0.0";
             this.ahdTextBox6.TabIndex = 408;
             this.ahdTextBox6.TagPath = "Local Station/DauTieng/PLC5_6/Fllow_Door6";
-            this.ahdTextBox6.Text = "ahdTextBox6";
+            this.ahdTextBox6.Text = "0.0";
             this.ahdTextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox6.WriteDelay = 200;
             this.ahdTextBox6.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -1403,14 +1347,14 @@
             this.Abnt_OpenDoor5.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoor5.TabIndex = 392;
             this.Abnt_OpenDoor5.Text = "Mở cửa 5";
-            writeTagCommand33.AllowResetValue = true;
-            writeTagCommand33.ResetDelay = 500;
-            writeTagCommand33.ResetValue = "0";
-            writeTagCommand33.TagPath = "Local Station/DauTieng/PLC5_6/Open_Door5";
-            writeTagCommand33.WriteDelay = 10;
-            writeTagCommand33.WriteValue = "1";
+            writeTagCommand37.AllowResetValue = true;
+            writeTagCommand37.ResetDelay = 500;
+            writeTagCommand37.ResetValue = "0";
+            writeTagCommand37.TagPath = "Local Station/DauTieng/PLC5_6/Open_Door5";
+            writeTagCommand37.WriteDelay = 10;
+            writeTagCommand37.WriteValue = "1";
             this.Abnt_OpenDoor5.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand33});
+            writeTagCommand37});
             // 
             // ahdTextBox17
             // 
@@ -1425,10 +1369,10 @@
             this.ahdTextBox17.Name = "ahdTextBox17";
             this.ahdTextBox17.Role = null;
             this.ahdTextBox17.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox17.StringFormat = null;
+            this.ahdTextBox17.StringFormat = "0.0";
             this.ahdTextBox17.TabIndex = 407;
             this.ahdTextBox17.TagPath = "Local Station/DauTieng/PLC5_6/Fllow_Door5";
-            this.ahdTextBox17.Text = "ahdTextBox17";
+            this.ahdTextBox17.Text = "0.0";
             this.ahdTextBox17.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox17.WriteDelay = 200;
             this.ahdTextBox17.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -1444,14 +1388,14 @@
             this.Abnt_CloseDoor5.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoor5.TabIndex = 393;
             this.Abnt_CloseDoor5.Text = "Đóng cửa 5";
-            writeTagCommand34.AllowResetValue = true;
-            writeTagCommand34.ResetDelay = 500;
-            writeTagCommand34.ResetValue = "0";
-            writeTagCommand34.TagPath = "Local Station/DauTieng/PLC5_6/Close_Door5";
-            writeTagCommand34.WriteDelay = 10;
-            writeTagCommand34.WriteValue = "1";
+            writeTagCommand38.AllowResetValue = true;
+            writeTagCommand38.ResetDelay = 500;
+            writeTagCommand38.ResetValue = "0";
+            writeTagCommand38.TagPath = "Local Station/DauTieng/PLC5_6/Close_Door5";
+            writeTagCommand38.WriteDelay = 10;
+            writeTagCommand38.WriteValue = "1";
             this.Abnt_CloseDoor5.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand34});
+            writeTagCommand38});
             // 
             // ahdButton33
             // 
@@ -1464,14 +1408,14 @@
             this.ahdButton33.Size = new System.Drawing.Size(112, 36);
             this.ahdButton33.TabIndex = 394;
             this.ahdButton33.Text = "Dừng cửa 5";
-            writeTagCommand35.AllowResetValue = true;
-            writeTagCommand35.ResetDelay = 500;
-            writeTagCommand35.ResetValue = "0";
-            writeTagCommand35.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Door5";
-            writeTagCommand35.WriteDelay = 10;
-            writeTagCommand35.WriteValue = "1";
+            writeTagCommand39.AllowResetValue = true;
+            writeTagCommand39.ResetDelay = 500;
+            writeTagCommand39.ResetValue = "0";
+            writeTagCommand39.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Door5";
+            writeTagCommand39.WriteDelay = 10;
+            writeTagCommand39.WriteValue = "1";
             this.ahdButton33.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand35});
+            writeTagCommand39});
             // 
             // ahdButton32
             // 
@@ -1484,14 +1428,14 @@
             this.ahdButton32.Size = new System.Drawing.Size(134, 36);
             this.ahdButton32.TabIndex = 395;
             this.ahdButton32.Text = "Dừng khẩn 1 - 2 ";
-            writeTagCommand36.AllowResetValue = true;
-            writeTagCommand36.ResetDelay = 500;
-            writeTagCommand36.ResetValue = "0";
-            writeTagCommand36.TagPath = "Local Station/DauTieng/PLC5_6/Stop5_6";
-            writeTagCommand36.WriteDelay = 10;
-            writeTagCommand36.WriteValue = "1";
+            writeTagCommand40.AllowResetValue = true;
+            writeTagCommand40.ResetDelay = 500;
+            writeTagCommand40.ResetValue = "0";
+            writeTagCommand40.TagPath = "Local Station/DauTieng/PLC5_6/Stop5_6";
+            writeTagCommand40.WriteDelay = 10;
+            writeTagCommand40.WriteValue = "1";
             this.ahdButton32.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand36});
+            writeTagCommand40});
             // 
             // button12
             // 
@@ -1516,14 +1460,14 @@
             this.ahdButton28.Size = new System.Drawing.Size(112, 36);
             this.ahdButton28.TabIndex = 403;
             this.ahdButton28.Text = "Dừng cửa 6";
-            writeTagCommand37.AllowResetValue = true;
-            writeTagCommand37.ResetDelay = 500;
-            writeTagCommand37.ResetValue = "0";
-            writeTagCommand37.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Door6";
-            writeTagCommand37.WriteDelay = 10;
-            writeTagCommand37.WriteValue = "1";
+            writeTagCommand41.AllowResetValue = true;
+            writeTagCommand41.ResetDelay = 500;
+            writeTagCommand41.ResetValue = "0";
+            writeTagCommand41.TagPath = "Local Station/DauTieng/PLC5_6/Stop_Door6";
+            writeTagCommand41.WriteDelay = 10;
+            writeTagCommand41.WriteValue = "1";
             this.ahdButton28.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand37});
+            writeTagCommand41});
             // 
             // ahdTextBox23
             // 
@@ -1538,10 +1482,10 @@
             this.ahdTextBox23.Name = "ahdTextBox23";
             this.ahdTextBox23.Role = null;
             this.ahdTextBox23.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox23.StringFormat = null;
+            this.ahdTextBox23.StringFormat = "0.0";
             this.ahdTextBox23.TabIndex = 397;
             this.ahdTextBox23.TagPath = "Local Station/DauTieng/PLC5_6/Door5_Aperture";
-            this.ahdTextBox23.Text = "ahdTextBox23";
+            this.ahdTextBox23.Text = "0.0";
             this.ahdTextBox23.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox23.WriteDelay = 200;
             this.ahdTextBox23.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -1557,14 +1501,14 @@
             this.Abnt_CloseDoor6.Size = new System.Drawing.Size(112, 36);
             this.Abnt_CloseDoor6.TabIndex = 402;
             this.Abnt_CloseDoor6.Text = "Đóng cửa 6";
-            writeTagCommand38.AllowResetValue = true;
-            writeTagCommand38.ResetDelay = 500;
-            writeTagCommand38.ResetValue = "0";
-            writeTagCommand38.TagPath = "Local Station/DauTieng/PLC5_6/Close_Door6";
-            writeTagCommand38.WriteDelay = 10;
-            writeTagCommand38.WriteValue = "1";
+            writeTagCommand42.AllowResetValue = true;
+            writeTagCommand42.ResetDelay = 500;
+            writeTagCommand42.ResetValue = "0";
+            writeTagCommand42.TagPath = "Local Station/DauTieng/PLC5_6/Close_Door6";
+            writeTagCommand42.WriteDelay = 10;
+            writeTagCommand42.WriteValue = "1";
             this.Abnt_CloseDoor6.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand38});
+            writeTagCommand42});
             // 
             // ahdTextBox22
             // 
@@ -1579,10 +1523,10 @@
             this.ahdTextBox22.Name = "ahdTextBox22";
             this.ahdTextBox22.Role = null;
             this.ahdTextBox22.Size = new System.Drawing.Size(112, 35);
-            this.ahdTextBox22.StringFormat = null;
+            this.ahdTextBox22.StringFormat = "0.0";
             this.ahdTextBox22.TabIndex = 398;
             this.ahdTextBox22.TagPath = "Local Station/DauTieng/PLC5_6/Door6_Aperture";
-            this.ahdTextBox22.Text = "ahdTextBox22";
+            this.ahdTextBox22.Text = "0.0";
             this.ahdTextBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ahdTextBox22.WriteDelay = 200;
             this.ahdTextBox22.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
@@ -1598,34 +1542,41 @@
             this.Abnt_OpenDoor6.Size = new System.Drawing.Size(112, 36);
             this.Abnt_OpenDoor6.TabIndex = 401;
             this.Abnt_OpenDoor6.Text = "Mở cửa 6";
-            writeTagCommand39.AllowResetValue = true;
-            writeTagCommand39.ResetDelay = 500;
-            writeTagCommand39.ResetValue = "0";
-            writeTagCommand39.TagPath = "Local Station/DauTieng/PLC5_6/Open_Door6";
-            writeTagCommand39.WriteDelay = 10;
-            writeTagCommand39.WriteValue = "1";
+            writeTagCommand43.AllowResetValue = true;
+            writeTagCommand43.ResetDelay = 500;
+            writeTagCommand43.ResetValue = "0";
+            writeTagCommand43.TagPath = "Local Station/DauTieng/PLC5_6/Open_Door6";
+            writeTagCommand43.WriteDelay = 10;
+            writeTagCommand43.WriteValue = "1";
             this.Abnt_OpenDoor6.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand39});
+            writeTagCommand43});
             // 
-            // ahdButton31
+            // AbntON3
             // 
-            this.ahdButton31.BorderColor = System.Drawing.SystemColors.Control;
-            this.ahdButton31.BorderThickness = 2;
-            this.ahdButton31.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ahdButton31.Location = new System.Drawing.Point(378, 306);
-            this.ahdButton31.Name = "ahdButton31";
-            this.ahdButton31.Role = null;
-            this.ahdButton31.Size = new System.Drawing.Size(187, 36);
-            this.ahdButton31.TabIndex = 399;
-            this.ahdButton31.Text = "Trạng thái tay ON";
-            writeTagCommand40.AllowResetValue = false;
-            writeTagCommand40.ResetDelay = 500;
-            writeTagCommand40.ResetValue = "1";
-            writeTagCommand40.TagPath = "Local Station/DauTieng/PLC5_6/Man_Aperture";
-            writeTagCommand40.WriteDelay = 10;
-            writeTagCommand40.WriteValue = "1";
-            this.ahdButton31.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
-            writeTagCommand40});
+            this.AbntON3.BorderColor = System.Drawing.SystemColors.Control;
+            this.AbntON3.BorderThickness = 2;
+            this.AbntON3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AbntON3.Location = new System.Drawing.Point(378, 306);
+            this.AbntON3.Name = "AbntON3";
+            this.AbntON3.Role = null;
+            this.AbntON3.Size = new System.Drawing.Size(187, 36);
+            this.AbntON3.TabIndex = 399;
+            this.AbntON3.Text = "Trạng thái tay ON";
+            writeTagCommand44.AllowResetValue = false;
+            writeTagCommand44.ResetDelay = 500;
+            writeTagCommand44.ResetValue = "1";
+            writeTagCommand44.TagPath = "Local Station/DauTieng/PLC5_6/Man_Aperture";
+            writeTagCommand44.WriteDelay = 10;
+            writeTagCommand44.WriteValue = "1";
+            writeTagCommand45.AllowResetValue = false;
+            writeTagCommand45.ResetDelay = 500;
+            writeTagCommand45.ResetValue = "1";
+            writeTagCommand45.TagPath = "Local Station/DauTieng/S71500/Station_3/Door1_Open_Door";
+            writeTagCommand45.WriteDelay = 10;
+            writeTagCommand45.WriteValue = "1";
+            this.AbntON3.WriteTagCommands.AddRange(new Ahd.Winforms.Controls.WriteTagCommand[] {
+            writeTagCommand44,
+            writeTagCommand45});
             // 
             // FrmDieukhienscada
             // 
@@ -1635,6 +1586,8 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.ahdTextBox13);
+            this.Controls.Add(this.button8);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -1645,37 +1598,35 @@
             this.Text = "Điều khiển Scada";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AbntLock)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton37)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntOFF1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton24)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntON1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntOFF2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntON2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock3)).EndInit();
@@ -1690,8 +1641,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton23)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoorlock5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton27)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntOFF3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox17)).EndInit();
@@ -1703,8 +1653,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdButton31)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AbntON3)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1725,12 +1676,11 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
-        private Ahd.Winforms.Controls.AhdButton ahdButton24;
+        private Ahd.Winforms.Controls.AhdButton AbntON1;
         private System.Windows.Forms.GroupBox groupBox3;
         private Ahd.Winforms.Controls.AhdButton ahdButton4;
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoor2;
@@ -1738,7 +1688,7 @@
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox13;
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox12;
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox11;
-        private Ahd.Winforms.Controls.AhdButton ahdButton37;
+        private Ahd.Winforms.Controls.AhdButton AbntOFF1;
         private Ahd.Winforms.Controls.AhdButton ahdButton7;
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoorlock2;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoorlock2;
@@ -1748,7 +1698,6 @@
         private Ahd.Winforms.Controls.AhdButton ahdButton38;
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoor3;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoor3;
-        private Ahd.Winforms.Controls.AhdTextBox ahdTextBox4;
         private Ahd.Winforms.Controls.AhdButton ahdButton12;
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoorlock3;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoorlock3;
@@ -1759,19 +1708,17 @@
         private Ahd.Winforms.Controls.AhdButton ahdButton20;
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoorlock4;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoorlock4;
-        private Ahd.Winforms.Controls.AhdButton ahdButton18;
+        private Ahd.Winforms.Controls.AhdButton AbntOFF2;
         private Ahd.Winforms.Controls.AhdButton ahdButton11;
-        private Ahd.Winforms.Controls.AhdButton ahdButton19;
+        private Ahd.Winforms.Controls.AhdButton AbntON2;
         private Ahd.Winforms.Controls.AhdButton ahdButton23;
         private System.Windows.Forms.Button button15;
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoorlock5;
         private System.Windows.Forms.Button button17;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoorlock5;
         private System.Windows.Forms.Button button16;
-        private Ahd.Winforms.Controls.AhdButton ahdButton27;
+        private Ahd.Winforms.Controls.AhdButton AbntOFF3;
         private System.Windows.Forms.Button button14;
-        private Ahd.Winforms.Controls.AhdTextBox ahdTextBox5;
-        private System.Windows.Forms.Button button13;
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox6;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoor5;
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox17;
@@ -1784,7 +1731,6 @@
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoor6;
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox22;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoor6;
-        private Ahd.Winforms.Controls.AhdButton ahdButton31;
-        private Ahd.Winforms.Controls.AhdButton AbntLock;
+        private Ahd.Winforms.Controls.AhdButton AbntON3;
     }
 }

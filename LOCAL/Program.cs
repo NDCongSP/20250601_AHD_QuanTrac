@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
-using System.Configuration.Provider;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -21,21 +20,11 @@ namespace RegistrationForm1
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-      //   static async Task Main()
+        //   static async Task Main()
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //     Kiểm tra kết nối trước khi chạy form chính
-            if (!CheckSqlConnection())
-            {
-                MessageBox.Show("Không thể kết nối tới SQL Server.\nChương trình sẽ thoát.",
-                                "Lỗi kết nối",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                Application.Exit();
-                return;
-            }
 
 
             using (var dbContext = new ApplicationDbContext())
@@ -47,26 +36,23 @@ namespace RegistrationForm1
                 {
                     MessageBox.Show("Cấu hình cơ sở dữ liệu không hợp lệ hoặc chưa được thiết lập. Vui lòng cấu hình.",
                                   "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //   Application.Exit();
                     return;
                 }
                 Globalvariable.ConfigSystem = JsonConvert.DeserializeObject<ConfigModel>(configTable.C000);
                 Globalvariable.LocationsInfo = JsonConvert.DeserializeObject<LocationsInfo>(configTable.C001);
 
 
-                ////chinh tay cac thong so de test
+                //////chinh tay cac thong so de test
                 Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi = 0.98;
                 Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 9.81;
-                //     Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 0.5;
+                //Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 6;
                 Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
                 Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
 
-                // Gia lập tính Q den
+                Globalvariable.ConfigSystem.ParametterConfig.HeSoCoHep_ALpha = 0;
                 Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1 = 10.66;
                 Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2 = 10.80;
                 Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3 = 2.0;
-
-
 
                 ////////////////////////////
 
@@ -119,43 +105,32 @@ namespace RegistrationForm1
                         };
 
                     }
-                    dbContext.SaveChanges();
+            //        dbContext.SaveChanges();
 
                 }
             }
 
 
             Application.Run(new FrmLogin());
-           // Application.Run(new FrmHochua());
+            // Application.Run(new FrmHochua());
         }
-        private static bool CheckSqlConnection()
+        private static bool TestConnectionSilently(string connectionString)
         {
+            if (string.IsNullOrEmpty(connectionString)) return false;
             try
             {
-                // Chuỗi kết nối của bạn
-                //    string connectionString = "Server=.;Database=YourDB;User Id=sa;Password=123;";
-                string connectionString = "data source=14.224.229.6,9168;initial catalog=ahd;Persist Security Info=True;User ID=dev1;Password=pR*mBaG)@v(yn*Wc;";
-              
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (var connection = new System.Data.SqlClient.SqlConnection(connectionString))
                 {
-                    conn.Open(); // Nếu lỗi xảy ra sẽ vào catch
+                    connection.Open();
                     return true;
                 }
             }
-            catch (SqlException ex)
+            catch
             {
-                // Ghi log nếu cần
-                Console.WriteLine("Lỗi SQL: " + ex.Message);
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi khác: " + ex.Message);
                 return false;
             }
         }
     }
 
-    
+
 }

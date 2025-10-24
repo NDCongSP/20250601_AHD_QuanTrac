@@ -8,8 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Diagnostics;
+
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -45,9 +44,7 @@ namespace RegistrationForm1
         private const string API_KEY = "4c81eccdb524441ba52c390d5b96e233";
         private int _logTime;
         private DateTime _startTime = DateTime.Now;
-   //     private const string CONNECTION_STRING = "Data Source=ADMIN-PC\\SQLEXPRESS;Initial Catalog=DauTieng;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
-
+  
 
         // Bảng tra cứu α theo a/H
         private static Dictionary<double, double> alphaTable = new Dictionary<double, double>
@@ -103,10 +100,7 @@ namespace RegistrationForm1
 
         public double? AccumulatedDepth { get; private set; }
 
-        //public interface ICalculatableForm
-        //{
-        //    void PerformCalculations();
-        //}
+       
         private async Task _refreshTimer_Tick(object sender, EventArgs e)
         {
             dtpEndTime.Value = DateTime.Now;
@@ -122,7 +116,6 @@ namespace RegistrationForm1
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
 
             if (!driver.IsStarted)
-                // Change this line in FrmMain_Load:
                 driver.Started += Driver_Started;
             else
                 Driver_Started(driver, null);
@@ -131,40 +124,15 @@ namespace RegistrationForm1
             timer1.Enabled = true;
             _refreshTimer.Start();
 
-
-
             await LoadRainfallStatsData();
             await LoadStationsData();
 
-           
-
             int cmbX = 0; // Chỉ số cột X mặc định
             table = ParseCsvToDictionary(csvInterpolationData, out xValues);
-            //   InitializeDefaultValues();
-
-            //try
-            //{
-            //    int cmbX = 0; // Chỉ số cột X mặc định
-            //    table = ParseCsvToDictionary(csvInterpolationData, out xValues);
-
-            //    //// Điền giá trị X vào ComboBox
-            //    //foreach (var x in xValues)
-            //    //{
-            //    //    cmbX.Items.Add(x.ToString(CultureInfo.InvariantCulture));
-            //    //}
-            //    //if (cmbX.Items.Count > 0)
-            //    //{
-            //    //    cmbX.SelectedIndex = 0;
-            //    //}
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Lỗi khi đọc bảng nội suy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-
+            
 
         }
-        // Parse CSV thành dictionary<double, double[]>
+     
         private Dictionary<double, double[]> ParseCsvToDictionary(string csvData, out double[] xVals)
         {
             var result = new Dictionary<double, double[]>();
@@ -231,28 +199,28 @@ namespace RegistrationForm1
         private void InitializeTimer()
         { // Timer API dầu tiếng
             api_DTtimer = new Timer();
-            api_DTtimer.Interval = 60000; // mỗi 60 giây
+            api_DTtimer.Interval = 10 * 60 * 1000; // 10 phút
             api_DTtimer.Tick += async (s, ev) => await Api_DTtimer_Tick();
             api_DTtimer.Start();
 
 
-            // Timer Login dữ liệu Scada
+            // Timer hiển thị dữ liệu Scada
             _timer = new Timer();
             _timer.Interval = 1000; // 5 giây test, thực tế đặt 5 * 60 * 1000 = 5 phút
-                                    // Fix for the CS0029 error: Replace the incorrect line with the correct event handler assignment.
+                                  
             _timer.Tick += _timer_Tick;
             _timer.Start();
 
 
             // Timer API Bình Nhâm
             apiTimer = new Timer();
-            apiTimer.Interval = 60000; // mỗi 60 giây
+            apiTimer.Interval = 10 * 60 * 1000; // 10 phút
             apiTimer.Tick += async (s, ev) => await ApiTimer_Tick(s, ev);
             apiTimer.Start();
             // Timer API CDD
             api_CDDTimer = new Timer();
             api_CDDTimer.Tick += async (s, ev) => await api_CDDTimer_Tick(s, ev); // Gán đúng hàm xử lý
-            api_CDDTimer.Interval = 60000; // 60 giây
+            api_CDDTimer.Interval = 10 * 60 * 1000; // 10 phút
             api_CDDTimer.Start();
             // Timer để lấy dữ liệu Quan trắc mưa
             _refreshTimer = new Timer();
@@ -262,10 +230,10 @@ namespace RegistrationForm1
 
             client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
 
-            // Timer ghi tag về PLC
+            //// Timer ghi tag về PLC
             writeTagTimer = new Timer();
             writeTagTimer.Tick += async (s, ev) => await WriteTagTimer_Tick(s, ev);
-            writeTagTimer.Interval = 5000; // 5 giây
+            writeTagTimer.Interval = 6000; // 5 giây
             writeTagTimer.Start();
 
 
@@ -298,7 +266,7 @@ namespace RegistrationForm1
                                 _labALDoor2_Station1.Text = item.Al_Door2.ToString();
                                 _labQi1.Text = item.Q_i_1.ToString();
                                 _labQi2.Text = item.Q_i_2.ToString();
-                
+                                _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
                             }
                             else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
                             {
@@ -323,9 +291,6 @@ namespace RegistrationForm1
 
 
 
-                        //       _labFlowHoFinal.Text = location.CalculatorValue.LuuLuongTong.ToString();
-
-                        //      _labQi.Text = location.CalculatorValue.Q_i.ToString();
                         _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
 
                         _labWtt.Text = location.CalculatorValue.W_tt.ToString();
@@ -375,8 +340,10 @@ namespace RegistrationForm1
                             line.API_Fllow_BinhNham2 = item.CalculatorValue.API_Fllow_BinhNham2;
                             line.API_Fllow_TL_CDD = item.CalculatorValue.API_Fllow_TL_CDD;
                             line.API_Fllow_HL_TXL = item.CalculatorValue.API_Fllow_HL_TXL;
+                            line.API_ChanDap = item.CalculatorValue.API_ChanDap;
+                            line.API_ThanhAn = item.CalculatorValue.API_ThanhAn;
 
-                       //     line.Total_Fllow = item.CalculatorValue.Total_Fllow;
+                        
 
                             line.API_D_DM_HoDT = item.CalculatorValue.API_D_DM_HoDT;
                             line.API_D_MinhHoa = item.CalculatorValue.API_D_MinhHoa;
@@ -392,16 +359,33 @@ namespace RegistrationForm1
                             line.API_D_DongBan = item.CalculatorValue.API_D_DongBan;
                             line.API_D_TanHa = item.CalculatorValue.API_D_TanHa;
                             line.API_D_Doi95 = item.CalculatorValue.API_D_Doi95;
+                            line.API_D_DM_HoDT_Total = item.CalculatorValue.API_D_DM_HoDT_Total;
+                            line.API_D_MinhHoa_Total = item.CalculatorValue.API_D_MinhHoa_Total;
+                            line.API_D_MinhTam_Total = item.CalculatorValue.API_D_MinhTam_Total;
+                            line.API_D_LocThien_Total = item.CalculatorValue.API_D_LocThien_Total;
+                            line.API_D_LocNinh_Total = item.CalculatorValue.API_D_LocNinh_Total;
+                            line.API_D_LocThanh_Total = item.CalculatorValue.API_D_LocThanh_Total;
+                            line.API_D_ThanhLuong_Total = item.CalculatorValue.API_D_ThanhLuong_Total;
+                            line.API_D_TanHoa1_Total = item.CalculatorValue.API_D_TanHoa1_Total;
+                            line.API_D_TanHoa2_Total = item.CalculatorValue.API_D_TanHoa2_Total;
+                            line.API_D_KaTum_Total = item.CalculatorValue.API_D_KaTum_Total;
+                            line.API_D_TanThanh_Total = item.CalculatorValue.API_D_TanThanh_Total;
+                            line.API_D_DongBan_Total = item.CalculatorValue.API_D_DongBan_Total;
+                            line.API_D_TanHa_Total = item.CalculatorValue.API_D_TanHa_Total;
+                            line.API_D_Doi95_Total = item.CalculatorValue.API_D_Doi95_Total;
 
-                            //    line.Q_i = item.CalculatorValue.Q_i;
+                         
 
                             line.Q_den = item.CalculatorValue.Q_den;
+                            line.W_den = item.CalculatorValue.W_den;
                             line.Q_di = item.CalculatorValue.Q_di;
+                            line.W_di = item.CalculatorValue.W_di;
                             line.W1_ho = item.CalculatorValue.W1_ho;
                             line.W2_ho = item.CalculatorValue.W2_ho;
                             line.W1_ho_old = item.CalculatorValue.W1_ho_old;
                             line.W2_ho_old = item.CalculatorValue.W2_ho_old;
                             line.Q_tr = item.CalculatorValue.Q_tr;
+                            line.W_tr = item.CalculatorValue.W_tr;
                             line.Q_cs1 = item.CalculatorValue.Q_cs1;
                             line.Q_cs2 = item.CalculatorValue.Q_cs2;
                             line.Q_cs3 = item.CalculatorValue.Q_cs3;
@@ -411,9 +395,9 @@ namespace RegistrationForm1
                             line.W_cs1 = item.CalculatorValue.W_cs1;
                             line.W_cs2 = item.CalculatorValue.W_cs2;
                             line.W_cs3 = item.CalculatorValue.W_cs3;
+                           
 
-                            //   line.LuuLuong = item.CalculatorValue.lu;
-                            //    line.LuuLuongTong = item.CalculatorValue.LuuLuongTong;
+
 
                             line.StationId = itemStation.StationId;
                             line.StationName = itemStation.StationName;
@@ -457,14 +441,17 @@ namespace RegistrationForm1
                             line.Fllow_Door1_Final = itemStation.Fllow_Door1_Final;
                             line.Fllow_Door2_Final = itemStation.Fllow_Door2_Final;
                             line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
+                            line.Q_i_1 = itemStation.Q_i_1;
+                            line.Q_i_2 = itemStation.Q_i_2;
+                         
 
                             dataLogs.Add(line);
                         }
                     }
 
                     if (dataLogs.Count == 0)
-                        return;
-                    ////     Lưu vào database
+                      return;
+                    //////     Lưu vào database
                     using var dbContext = new ApplicationDbContext();
                     dbContext.FT03s.AddRange(dataLogs);
                     dbContext.SaveChanges();//Luu thay doi vao db
@@ -507,13 +494,13 @@ namespace RegistrationForm1
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Lỗi đọc API: " + ex.Message);
+                      //  Console.WriteLine("Lỗi đọc API: " + ex.Message);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
+              //  MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
             }
         }
         private async Task WriteAPI_CDDsync(double GT)
@@ -538,7 +525,7 @@ namespace RegistrationForm1
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi ghi PLC async: " + ex.Message);
+               // MessageBox.Show("Lỗi ghi PLC async: " + ex.Message);
             }
         }
         public class SoLieuAPICDDModel
@@ -896,7 +883,7 @@ namespace RegistrationForm1
                     string errorContent = await response.Content.ReadAsStringAsync();
                     if (!string.IsNullOrEmpty(errorContent))
                     {
-                        errorMessage += $"\nChi tiết: {errorContent}";
+                     //   errorMessage += $"\nChi tiết: {errorContent}";
                     }
                     //           MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error); 
                     dgvStations.DataSource = null;
@@ -950,46 +937,27 @@ namespace RegistrationForm1
 
             }
         }
-        private async Task<CalculatorValueModel?> GetLatestApiDataForStation(string stationId, DateTime sevenAmCycleStart)
-        {
-            using var dbContext = new ApplicationDbContext();
 
-            if (!int.TryParse(stationId, out int stationIdInt))
-            {
-                Console.WriteLine($"Debug: stationId '{stationId}' không hợp lệ.");
-                return null;
-            }
-
-            return await dbContext.FT03s
-                .Where(x => x.StationId == stationIdInt
-                            && x.CreateAt >= sevenAmCycleStart
-                            && (x.IsDeleted ?? false) == false)
-                .OrderByDescending(x => x.CreateAt)
-                .Select(x => new CalculatorValueModel
-                {
-                    API_D_DM_HoDT = x.API_D_DM_HoDT,
-                    API_D_MinhHoa = x.API_D_MinhHoa,
-                   // API_D_TT = x.API_D_TT
-                })
-                .FirstOrDefaultAsync();
-        }
 
         private async Task LoadRainfallStatsData()
         {
             DateTime now = DateTime.Now;
-            // Xác định thời điểm 7h sáng của chu kỳ tích lũy hiện tại
-            DateTime sevenAmCycleStart;
-            if (now.Hour < 7) // Nếu hiện tại trước 7h sáng, chu kỳ bắt đầu từ 7h sáng ngày hôm trước
+            // Xác định thời điểm 19h (7 giờ tối) của chu kỳ tích lũy hiện tại
+            DateTime sevenPmCycleStart;
+
+            // Nếu hiện tại trước 19h, chu kỳ bắt đầu từ 19h ngày hôm trước
+            if (now.Hour < 19)
             {
-                sevenAmCycleStart = now.Date.AddDays(-1).AddHours(7);
+                sevenPmCycleStart = now.Date.AddDays(-1).AddHours(19);
             }
-            else // Nếu hiện tại từ 7h sáng trở đi, chu kỳ bắt đầu từ 7h sáng ngày hiện tại
+            // Nếu hiện tại từ 19h trở đi, chu kỳ bắt đầu từ 19h ngày hiện tại
+            else
             {
-                sevenAmCycleStart = now.Date.AddHours(7);
+                sevenPmCycleStart = now.Date.AddHours(19);
             }
 
             // dtpStartTime và dtpEndTime được dùng để gọi API (lấy 10 phút gần nhất)
-            // nhưng logic tích lũy sẽ dùng sevenAmCycleStart
+            // nhưng logic tích lũy sẽ dùng sevenPmCycleStart
             DateTime apiQueryStartTime = dtpStartTime.Value;
             DateTime apiQueryEndTime = dtpEndTime.Value;
 
@@ -1015,7 +983,7 @@ namespace RegistrationForm1
                     {
                         errorMessage += $"\nChi tiết: {errorContent}";
                     }
-                    MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    MessageBox.Show(errorMessage, "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     dgvStats.DataSource = null;
 
                     return;
@@ -1031,20 +999,22 @@ namespace RegistrationForm1
                 // Kiểm tra xem _stationIdToNameMap đã được điền chưa
                 if (_stationIdToNameMap == null || _stationIdToNameMap.Count == 0)
                 {
-                    //    Console.WriteLine("Debug (LoadRainfallStatsData): WARNING! _stationIdToNameMap is empty or null. Attempting to re-load station data.");
+                    //    Console.WriteLine("Debug (LoadRainfallStatsData): WARNING! _stationIdToNameMap is empty or null. Attempting to re-load station data.");
                     await LoadStationsData(); // Thử tải lại dữ liệu trạm nếu map trống
                 }
 
                 if (statsResponse?.Data != null && statsResponse.Data.Count > 0)
                 {
-                    // Lấy AccumulatedDepth cuối cùng từ DB cho mỗi trạm trong chu kỳ 7h sáng hiện tại
+                    // Lấy AccumulatedDepth cuối cùng từ DB cho mỗi trạm trong chu kỳ 19h hiện tại
                     // Chỉ lấy một lần trước khi xử lý dữ liệu mới để có cơ sở tích lũy
                     var initialAccumulatedDepths = new Dictionary<string, double>();
                     foreach (var measurement in statsResponse.Data)
                     {
                         if (!initialAccumulatedDepths.ContainsKey(measurement.StationId))
                         {
-           //                initialAccumulatedDepths.Add(measurement.StationId, await GetLastAccumulatedDepthForStation(measurement.StationId, sevenAmCycleStart));
+                            // Đã thay sevenAmCycleStart bằng sevenPmCycleStart
+                            // Giả định hàm GetLastAccumulatedDepthForStation nhận tham số thời điểm bắt đầu chu kỳ
+                            // initialAccumulatedDepths.Add(measurement.StationId, await GetLastAccumulatedDepthForStation(measurement.StationId, sevenPmCycleStart));
                         }
                     }
 
@@ -1054,18 +1024,18 @@ namespace RegistrationForm1
                         {
                             string stationId = measurement.StationId;
                             // Debug: In ra StationId từ dữ liệu stats
-                            //          Console.WriteLine($"Debug (LoadRainfallStatsData): Processing rainfall data for StationId: {stationId}");
+                            //          Console.WriteLine($"Debug (LoadRainfallStatsData): Processing rainfall data for StationId: {stationId}");
 
                             // Sử dụng _stationIdToNameMap để tra cứu tên
                             string stationName = "Không xác định";
                             if (_stationIdToNameMap.ContainsKey(stationId))
                             {
                                 stationName = _stationIdToNameMap[stationId];
-                                //              Console.WriteLine($"Debug (LoadRainfallStatsData): Found name for StationId '{stationId}': '{stationName}'");
+                                //              Console.WriteLine($"Debug (LoadRainfallStatsData): Found name for StationId '{stationId}': '{stationName}'");
                             }
                             else
                             {
-                                //              Console.WriteLine($"Debug (LoadRainfallStatsData): Name NOT found in map for StationId '{stationId}'.");
+                                //              Console.WriteLine($"Debug (LoadRainfallStatsData): Name NOT found in map for StationId '{stationId}'.");
                             }
 
                             // Lấy giá trị tích lũy ban đầu cho trạm này trong chu kỳ hiện tại
@@ -1135,7 +1105,8 @@ namespace RegistrationForm1
                     if (accumulatedRainfallForDisplay.Any())
                     {
                         StringBuilder summaryBuilder = new StringBuilder();
-                        summaryBuilder.AppendLine("Tổng lượng mưa tích lũy theo trạm (Chu kỳ 7h sáng):");
+                        // Sửa mô tả để phản ánh đúng chu kỳ 19h
+                        summaryBuilder.AppendLine("Tổng lượng mưa tích lũy theo trạm (Chu kỳ 19h tối):");
                         foreach (var entry in accumulatedRainfallForDisplay)
                         {
                             string unit = statsResponse.Data.FirstOrDefault(m => m.StationId == entry.Key)?.Unit ?? "mm";
@@ -1166,7 +1137,7 @@ namespace RegistrationForm1
 
                 // Lấy danh sách các bản ghi mới nhất từ Dictionary để lưu dữ liệu tức thời vào SQL
                 List<RealtimeRainfallData> realTimeDataToSave = latestDataPointsByStationFetched.Values.ToList();
-                //         Console.WriteLine($"Debug: Số lượng bản ghi tức thời mới nhất cần lưu vào SQL: {realTimeDataToSave.Count}");
+                //         Console.WriteLine($"Debug: Số lượng bản ghi tức thời mới nhất cần lưu vào SQL: {realTimeDataToSave.Count}");
 
                 string saveStatusMessage = "";
                 bool realtimeSaveSuccess = false;
@@ -1176,18 +1147,16 @@ namespace RegistrationForm1
                     try
                     {
                         await WriteQTM(latestDataPointsByStationFetched);
-                        //       await SaveRealtimeMeasurementsToSql(realTimeDataToSave);
-                        //           saveStatusMessage += $"Đã lưu {realTimeDataToSave.Count} bản ghi tức thời mới nhất vào SQL (bao gồm tổng lượng mưa tích lũy từ 7h sáng và Tên trạm).";
-                        //          realtimeSaveSuccess = true;
+                       
                     }
                     catch (Exception ex)
                     {
-                        //        saveStatusMessage += $"Lỗi lưu tức thời vào SQL: {ex.Message}.";
+                        //        saveStatusMessage += $"Lỗi lưu tức thời vào SQL: {ex.Message}.";
                     }
                 }
                 else
                 {
-                    //          saveStatusMessage += "Không có dữ liệu tức thời mới nhất để lưu vào SQL.";
+                    //          saveStatusMessage += "Không có dữ liệu tức thời mới nhất để lưu vào SQL.";
                 }
 
                 if (realtimeSaveSuccess)
@@ -1203,21 +1172,21 @@ namespace RegistrationForm1
             }
             catch (HttpRequestException e)
             {
-                //      MessageBox.Show($"Lỗi HTTP khi tải thống kê mưa: {e.Message}\nVui lòng kiểm tra kết nối internet hoặc URL API stats.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //      MessageBox.Show($"Lỗi HTTP khi tải thống kê mưa: {e.Message}\nVui lòng kiểm tra kết nối internet hoặc URL API stats.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             catch (JsonException e)
             {
-                //      MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON cho thống kê mưa: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //      MessageBox.Show($"Lỗi khi phân tích dữ liệu JSON cho thống kê mưa: {e.Message}\nCấu trúc dữ liệu nhận được có thể không khớp.", "Lỗi JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             catch (Exception e)
             {
-                //     MessageBox.Show($"Đã xảy ra lỗi không mong muốn khi tải thống kê mưa: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //     MessageBox.Show($"Đã xảy ra lỗi không mong muốn khi tải thống kê mưa: {e.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
         }
-        
+
 
         // Khu vực tạo Class Quan trắc mưa 
         // Định nghĩa lớp Station để ánh xạ dữ liệu JSON từ API /v1/station
@@ -1445,62 +1414,95 @@ namespace RegistrationForm1
                         string rawValue = entry.Value; // Giá trị thô từ API
 
                         string tagName = "";
-                        decimal processedDecimalValue = 0m; // Biến để lưu giá trị đã xử lý
+                        decimal processedDecimalValue = 0m;
 
                         switch (stationCode)
                         {
                             case "F01877": // Fllow_SonDai
                                 tagName = "Fllow_SonDai";
                                 processedDecimalValue = processFlowValue(rawValue);
-                                // ghi xuống Model
-                                Globalvariable.RealtimeDisplays.First(x => x.LocationId == 1)?
-                               .CalculatorValue.API_Fllow_SonDai = (double)processedDecimalValue;
+
+                                double anpha = 0.63;//(8.4*0.00001*7500)
+                                var display1 = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                                if (display1 != null)
+                                {
+                                    display1.CalculatorValue.API_Fllow_SonDai = (double)processedDecimalValue;
+                                    display1.CalculatorValue.API_ChanDap = (double)(processedDecimalValue + (decimal)anpha);
+                                }
+
                                 AppendLog($"✅ Cập nhật PLC: {tagName} = {processedDecimalValue} (Từ API: {rawValue})");
                                 break;
+
                             case "F01203": // Fllow_BenSuc
                                 tagName = "Fllow_BenSuc";
                                 processedDecimalValue = processFlowValue(rawValue);
-                                Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
-                                .CalculatorValue.API_Fllow_BenSuc = (double)processedDecimalValue;
+
+                                double anpha1 = 0.094;//(8.4 x 0.000001 x 11150)
+                                var display2 = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                                if (display2 != null)
+                                {
+                                    display2.CalculatorValue.API_Fllow_BenSuc = (double)processedDecimalValue;
+
+                                    // --- Đọc giá trị tham chiếu từ label
+                                    double binhNhamValue = 0;
+                           
+                                    if (double.TryParse(_labAPIBinhnham.Text, out binhNhamValue))
+                                    {
+                                        // So sánh và cộng/trừ hệ số α1
+                                        if (display2.CalculatorValue.API_Fllow_BenSuc >= binhNhamValue)
+                                            display2.CalculatorValue.API_ThanhAn = (double)(processedDecimalValue + (decimal)anpha1);
+                                        else
+                                            display2.CalculatorValue.API_ThanhAn = (double)(processedDecimalValue - (decimal)anpha1);
+                                    }
+                                    else
+                                    {
+                                        AppendLog("⚠️ Không thể parse _labAPIBinhnham.Text sang double.");
+                                    }
+                                }
+
                                 AppendLog($"✅ Cập nhật PLC: {tagName} = {processedDecimalValue} (Từ API: {rawValue})");
                                 break;
+
                             case "F01849": // Fllow_DauTieng
                                 tagName = "Fllow_DauTieng";
                                 processedDecimalValue = processFlowValue(rawValue);
 
-                                Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
-                                    .CalculatorValue.API_Fllow_DauTieng = (double)processedDecimalValue;
+                                var display3 = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+                                if (display3 != null)
+                                    display3.CalculatorValue.API_Fllow_DauTieng = (double)processedDecimalValue;
+
                                 AppendLog($"✅ Ghi PLC: {tagName} = {processedDecimalValue} (Từ API: {rawValue})");
                                 break;
-                            // Thêm các case khác nếu có các stationCode khác cần xử lý
+
                             default:
-                                AppendLog($"Thông tin: Station Code '{stationCode}' không được mapping, bỏ qua xử lý.");
-                                continue; // Bỏ qua entry này nếu không có mapping
+                                AppendLog($"ℹ️ Station Code '{stationCode}' không được mapping, bỏ qua xử lý.");
+                                continue;
                         }
 
                         if (!string.IsNullOrEmpty(tagName))
                         {
-                            //  Ghi xuống PLC.Convert decimal thành string lại vì WriteTagAsync có lẽ mong đợi string.
-                            //await ahdDriverConnector1.WriteTagAsync(
-                            //    $"Local Station/DauTieng/S71500/API/{tagName}",
-                            //    processedDecimalValue.ToString(), // Chuyển đổi decimal đã xử lý thành string
-                            //    WritePiority.High
-                            //);
+                            // Nếu cần ghi xuống PLC:
+                            // await ahdDriverConnector1.WriteTagAsync(
+                            //     $"Local Station/DauTieng/S71500/API/{tagName}",
+                            //     processedDecimalValue.ToString(CultureInfo.InvariantCulture),
+                            //     WritePiority.High
+                            // );
                         }
                     }
+
                 }
             }
             catch (HttpRequestException ex)
             {
                 // Bắt lỗi cụ thể khi có vấn đề về HTTP (ví dụ: không kết nối được API)
-                AppendLog($"❌ Lỗi đọc API: An error occurred while sending the request. {ex.Message}");
+             //   AppendLog($"❌ Lỗi đọc API: An error occurred while sending the request. {ex.Message}");
             }
             catch (Exception ex)
             {
-                AppendLog($"❌ Lỗi Timer_Tick: {ex.Message}");
+              //  AppendLog($"❌ Lỗi Timer_Tick: {ex.Message}");
             }
         }
-        // Phương thức để ghi dữ liệu lượng mưa từ API xuống mô hình
+        
         private async Task WriteQTM(Dictionary<string, RealtimeRainfallData> latestApiData)
         {
             try
@@ -1516,75 +1518,86 @@ namespace RegistrationForm1
                 foreach (var kvp in latestApiData)
                 {
                     string stationId = kvp.Key;
-                    // double depth = kvp.Value.Depth;
                     var data = kvp.Value;
+
+                    // Ép kiểu data.AccumulatedDepth từ double? sang double (nếu là null thì gán 0)
+                    double accumulatedDepthValue = data.AccumulatedDepth ?? 0;
+
                     switch (stationId)
                     {
                         case "610001":
                             calc.API_D_DM_HoDT = data.Depth;
-                            calc.API_D_DM_HoDT_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
-
+                            // Dữ liệu đã là TỔNG tích lũy, chỉ cần GÁN
+                            calc.API_D_DM_HoDT_Total = accumulatedDepthValue;
                             break;
 
                         case "610002":
                             calc.API_D_MinhHoa = data.Depth;
-                            calc.API_D_MinhHoa_Total += AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            // SỬA LỖI: Thay thế 'AccumulatedDepth' bằng 'data.AccumulatedDepth' và '+= ' bằng '='
+                            calc.API_D_MinhHoa_Total = accumulatedDepthValue;
                             break;
 
                         case "610003":
                             calc.API_D_MinhTam = data.Depth;
-                            calc.API_D_MinhTam_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_MinhTam_Total = accumulatedDepthValue;
                             break;
 
                         case "610004":
                             calc.API_D_LocThien = data.Depth;
-                            calc.API_D_LocThien_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_LocThien_Total = accumulatedDepthValue;
                             break;
 
                         case "610005":
                             calc.API_D_LocNinh = data.Depth;
-                            calc.API_D_LocNinh_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_LocNinh_Total = accumulatedDepthValue;
                             break;
 
                         case "610006":
                             calc.API_D_LocThanh = data.Depth;
-                            calc.API_D_LocThanh_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_LocThanh_Total = accumulatedDepthValue;
                             break;
 
                         case "610007":
                             calc.API_D_ThanhLuong = data.Depth;
-                            calc.API_D_ThanhLuong_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_ThanhLuong_Total = accumulatedDepthValue;
                             break;
 
                         case "610008":
                             calc.API_D_TanHoa1 = data.Depth;
-                            calc.API_D_TanHoa1_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_TanHoa1_Total = accumulatedDepthValue;
                             break;
 
                         case "610009":
                             calc.API_D_TanHoa2 = data.Depth;
-                            calc.API_D_TanHoa2_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_TanHoa2_Total = accumulatedDepthValue;
                             break;
 
                         case "610010":
                             calc.API_D_KaTum = data.Depth;
-                            calc.API_D_KaTum_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_KaTum_Total = accumulatedDepthValue;
                             break;
 
                         case "610011":
                             calc.API_D_TanThanh = data.Depth;
-                            calc.API_D_TanThanh_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_TanThanh_Total = accumulatedDepthValue;
                             break;
 
                         case "610012":
                             calc.API_D_DongBan = data.Depth;
-                            calc.API_D_DongBan_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_DongBan_Total = accumulatedDepthValue;
                             break;
 
                         case "610013":
                             calc.API_D_TanHa = data.Depth;
-                            calc.API_D_TanHa_Total = data.AccumulatedDepth; // Cộng dồn tổng lượng mưa
+                            calc.API_D_TanHa_Total = accumulatedDepthValue;
                             break;
+
+                        // Bổ sung các case còn thiếu (nếu có: ví dụ 610014 cho Đồi 95)
+                        /* case "610014":
+                            calc.API_D_Doi95 = data.Depth;
+                            calc.API_D_Doi95_Total = accumulatedDepthValue;
+                            break; 
+                        */
 
                         default:
                             Console.WriteLine($"Cảnh báo: Không có property tương ứng cho trạm {stationId}");
@@ -1594,7 +1607,8 @@ namespace RegistrationForm1
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi ghi giá trị tức thời vào PLC: {ex.Message}");
+                // Đã đổi tên log cho rõ ràng hơn
+                Console.WriteLine($"Lỗi khi ghi dữ liệu mưa vào CalculatorValue: {ex.Message}");
             }
         }
 
@@ -5735,9 +5749,10 @@ namespace RegistrationForm1
                     // Tính Q đi Qdi =QTr + QCs1 + QCs2 +QCs3 + QTt
                     double TinhQdi = Math.Round(Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3 + TinhQtt, 2);
                     double TinhWdi = Math.Round(TinhQdi * (86400.0 / 1000000.0), 2); // *24*60*60/1000000)
-                                                                                     //    location.CalculatorValue.W1_ho = value; // W_ho = φ × H0  (lưu lượng qua hồ)
-                                                                                     // ghi xuống SQL
-                                                                                     //Location_Info
+                                                                                     // Tính W_Cs1,W_Cs2,W_Cs3       R23*24*60*60/1000000)                                                     
+                    double TinhWcs1 = Math.Round(TinhQCs1* (86400.0 / 1000000.0), 2);
+                    double TinhWcs2 = Math.Round(TinhQCs2 * (86400.0 / 1000000.0), 2);
+                    double TinhWcs3 = Math.Round(TinhQCs3 * (86400.0 / 1000000.0), 2);
 
                     foreach (var item in location.Stations.Where(x => !x.Path.Contains("Location_Info")))
                     {
@@ -5762,8 +5777,11 @@ namespace RegistrationForm1
                     location.CalculatorValue.W_tt = TinhWtt;
                     location.CalculatorValue.Q_tt = TinhQtt;
                     location.CalculatorValue.Q_cs1 = TinhQCs1;
+                    location.CalculatorValue.W_cs1 = TinhWcs1;
                     location.CalculatorValue.Q_cs2 = TinhQCs2;
+                    location.CalculatorValue.W_cs2 = TinhWcs2;
                     location.CalculatorValue.Q_cs3 = TinhQCs3;
+                    location.CalculatorValue.W_cs3 = TinhWcs3;
 
 
 
@@ -5815,8 +5833,8 @@ namespace RegistrationForm1
         {
             ActivateMenuButton(sender as Button);
             FrmHochua mn = new FrmHochua();
-            OpenFormInPanel(mn, "Hồ chứa");
-            mn.UrlToLoad = "https://vrain.vn/61/overview?public_map=windy";
+            OpenFormInPanel(mn, "THÔNG TIN GIÁM SÁT VẬN HÀNH HỒ DẦU TIẾNG");
+            mn.UrlToLoad = "https://www.google.com/maps/d/u/1/embed?mid=12o126XU18Zr1liEdZJloJQNs359En9o&ehbc=2E312F&ll=11.587056362884539%2C106.3739345&z=11";
 
             //mn.Show();
 
@@ -5918,14 +5936,14 @@ namespace RegistrationForm1
         {
             ActivateMenuButton(sender as Button);
             FrmTran data = new FrmTran();
-            OpenFormInPanel(data, "Hệ thống tràn");
+            OpenFormInPanel(data, "GIÁM SÁT VẬN HÀNH TRÀN XẢ LŨ");
         }
 
         private void bnt_TramMN_Click(object sender, EventArgs e)
         {
             ActivateMenuButton(sender as Button);
             FrmMucnuoc mn = new FrmMucnuoc();
-            OpenFormInPanel(mn, "Mức Nước");
+            OpenFormInPanel(mn, "GIÁM SÁT MỰC NƯỚC HẠ LƯU SÔNG SÀI GÒN");
         }
 
         private void bnt_TrangChu_Click(object sender, EventArgs e)
@@ -5933,21 +5951,21 @@ namespace RegistrationForm1
             ActivateMenuButton(sender as Button);
 
             FrmHome H = new FrmHome();
-            OpenFormInPanel(H, " GIÁM SÁT CỦA TRÀN HỒ DẦU TIẾNG");
+            OpenFormInPanel(H, " THÔNG TIN HỔ TRỢ VẬN HÀNH TRÀN XẢ LŨ HỒ DẦU TIẾNG");
         }
 
         private void bnt_CanhBao_Click(object sender, EventArgs e)
         {
             ActivateMenuButton(sender as Button);
             FrmCanhBao canhBao = new FrmCanhBao();
-            OpenFormInPanel(canhBao, " Thông Tin Cảnh Báo");
+            OpenFormInPanel(canhBao, " THÔNG TIN CẢNH BÁO VẬN HÀNH TRÀN XẢ LŨ");
         }
 
         private void bnt_BaoCao_Click(object sender, EventArgs e)
         {
             ActivateMenuButton(sender as Button);
             FrmBaoCao baocao = new FrmBaoCao();
-            OpenFormInPanel(baocao, "Báo Cáo");
+            OpenFormInPanel(baocao, "BÁO CÁO GIÁM SÁT VẬN HÀNH TRÀN XẢ LŨ");
         }
 
         private void bnt_Exit_Click(object sender, EventArgs e)
@@ -5957,7 +5975,7 @@ namespace RegistrationForm1
         private void bnt_CaiDat_Click(object sender, EventArgs e)
         {
             ActivateMenuButton(sender as Button);
-            FrmCaiDat caiDat = new FrmCaiDat();
+            FrmConfigSQL caiDat = new FrmConfigSQL();
             OpenFormInPanel(caiDat, " CÀI ĐẶT");
         }
         private void bnt_LogIn_Click(object sender, EventArgs e)
@@ -6086,18 +6104,18 @@ namespace RegistrationForm1
                 }
 
                 var tagsToWrite = new List<(string TagPath, string Value)>
-{
-    ("Local Station/DauTieng/PLC1_2/Fllow_Door1", _labQi1.Text),
-    ("Local Station/DauTieng/PLC1_2/Fllow_Door2", _labQi2.Text),
-    ("Local Station/DauTieng/PLC3_4/Fllow_Door3", _labQi3.Text),
-    ("Local Station/DauTieng/PLC3_4/Fllow_Door4", _labQi4.Text),
-    ("Local Station/DauTieng/PLC5_6/Fllow_Door5", _labQi5.Text),
-    ("Local Station/DauTieng/PLC5_6/Fllow_Door6", _labQi6.Text),
+        {
+            ("Local Station/DauTieng/PLC1_2/Fllow_Door1", _labQi1.Text),
+            ("Local Station/DauTieng/PLC1_2/Fllow_Door2", _labQi2.Text),
+            ("Local Station/DauTieng/PLC3_4/Fllow_Door3", _labQi3.Text),
+            ("Local Station/DauTieng/PLC3_4/Fllow_Door4", _labQi4.Text),
+            ("Local Station/DauTieng/PLC5_6/Fllow_Door5", _labQi5.Text),
+            ("Local Station/DauTieng/PLC5_6/Fllow_Door6", _labQi6.Text),
 
-    ("Local Station/DauTieng/PLC1_2/Total_Fllow", _labQtr.Text),
-    ("Local Station/DauTieng/PLC3_4/Total_Fllow", _labQtr.Text),
-    ("Local Station/DauTieng/PLC5_6/Total_Fllow", _labQtr.Text),
-};
+            ("Local Station/DauTieng/PLC1_2/Total_Fllow", _labQtr.Text),
+            ("Local Station/DauTieng/PLC3_4/Total_Fllow", _labQtr.Text),
+            ("Local Station/DauTieng/PLC5_6/Total_Fllow", _labQtr.Text),
+        };
 
                 foreach (var (tagPath, valueStr) in tagsToWrite)
                 {
@@ -6125,7 +6143,7 @@ namespace RegistrationForm1
                 MessageBox.Show("Lỗi ghi PLC: " + ex.Message);
             }
         }
-    
+
 
 
         private async Task WriteTagTimer_Tick(object sender, EventArgs e)

@@ -29,15 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Ahd.Winforms.Controls.SyncTarget syncTarget1 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget2 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget3 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget4 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget5 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget6 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget7 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget8 = new Ahd.Winforms.Controls.SyncTarget();
-            Ahd.Winforms.Controls.SyncTarget syncTarget9 = new Ahd.Winforms.Controls.SyncTarget();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -48,17 +39,17 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.bntEditdata = new System.Windows.Forms.Button();
-            this.bntNhaplieu = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.bnt_User = new System.Windows.Forms.Button();
             this.bnt_TrangChu = new System.Windows.Forms.Button();
+            this.bnt_User = new System.Windows.Forms.Button();
             this.bnt_BaoCao = new System.Windows.Forms.Button();
-            this.bnt_CaiDat = new System.Windows.Forms.Button();
-            this.bnt_Exit = new System.Windows.Forms.Button();
-            this.bnt_LogIn = new System.Windows.Forms.Button();
             this.bnt_TramMN = new System.Windows.Forms.Button();
             this.bnt_CanhBao = new System.Windows.Forms.Button();
+            this.bnt_LogIn = new System.Windows.Forms.Button();
+            this.bnt_Exit = new System.Windows.Forms.Button();
             this.bnt_Tran = new System.Windows.Forms.Button();
+            this.bnt_CaiDat = new System.Windows.Forms.Button();
+            this.bntNhaplieu = new System.Windows.Forms.Button();
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblWelcome = new System.Windows.Forms.Label();
@@ -68,6 +59,7 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labAPIBinhnham = new System.Windows.Forms.Label();
             this._labQi6 = new System.Windows.Forms.Label();
             this._labQi5 = new System.Windows.Forms.Label();
             this._labQi4 = new System.Windows.Forms.Label();
@@ -114,7 +106,6 @@
             this._labALDoor1_Station1 = new System.Windows.Forms.Label();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
-            this.ahdSyncTag1 = new Ahd.Winforms.Controls.AhdSyncTag(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -122,7 +113,6 @@
             this.panelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdSyncTag1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -186,17 +176,16 @@
             this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.bntEditdata);
-            this.panel2.Controls.Add(this.bntNhaplieu);
             this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.bnt_User);
             this.panel2.Controls.Add(this.bnt_TrangChu);
+            this.panel2.Controls.Add(this.bnt_User);
             this.panel2.Controls.Add(this.bnt_BaoCao);
-            this.panel2.Controls.Add(this.bnt_CaiDat);
-            this.panel2.Controls.Add(this.bnt_Exit);
-            this.panel2.Controls.Add(this.bnt_LogIn);
             this.panel2.Controls.Add(this.bnt_TramMN);
             this.panel2.Controls.Add(this.bnt_CanhBao);
+            this.panel2.Controls.Add(this.bnt_LogIn);
+            this.panel2.Controls.Add(this.bnt_Exit);
             this.panel2.Controls.Add(this.bnt_Tran);
+            this.panel2.Controls.Add(this.bnt_CaiDat);
             this.panel2.Location = new System.Drawing.Point(-10, 151);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(200, 887);
@@ -205,18 +194,18 @@
             // bntThongtin
             // 
             this.bntThongtin.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntThongtin.Location = new System.Drawing.Point(-1, 61);
+            this.bntThongtin.Location = new System.Drawing.Point(6, 61);
             this.bntThongtin.Name = "bntThongtin";
             this.bntThongtin.Size = new System.Drawing.Size(196, 50);
             this.bntThongtin.TabIndex = 193;
-            this.bntThongtin.Text = "Thông tin tổng hợp";
+            this.bntThongtin.Text = "Bảng tin vận hành";
             this.bntThongtin.UseVisualStyleBackColor = true;
             this.bntThongtin.Click += new System.EventHandler(this.bntThongtin_Click);
             // 
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(-1, 803);
+            this.button3.Location = new System.Drawing.Point(6, 351);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(196, 50);
             this.button3.TabIndex = 18;
@@ -226,7 +215,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(-1, 747);
+            this.button2.Location = new System.Drawing.Point(6, 293);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(196, 50);
             this.button2.TabIndex = 17;
@@ -236,29 +225,18 @@
             // bntEditdata
             // 
             this.bntEditdata.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntEditdata.Location = new System.Drawing.Point(-1, 689);
+            this.bntEditdata.Location = new System.Drawing.Point(6, 525);
             this.bntEditdata.Name = "bntEditdata";
             this.bntEditdata.Size = new System.Drawing.Size(196, 50);
             this.bntEditdata.TabIndex = 16;
-            this.bntEditdata.Text = "Điều khiển";
+            this.bntEditdata.Text = "Điều khiển từ xa";
             this.bntEditdata.UseVisualStyleBackColor = true;
             this.bntEditdata.Click += new System.EventHandler(this.bntEditdata_Click);
-            // 
-            // bntNhaplieu
-            // 
-            this.bntNhaplieu.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntNhaplieu.Location = new System.Drawing.Point(-1, 632);
-            this.bntNhaplieu.Name = "bntNhaplieu";
-            this.bntNhaplieu.Size = new System.Drawing.Size(196, 50);
-            this.bntNhaplieu.TabIndex = 15;
-            this.bntNhaplieu.Text = "CT Q";
-            this.bntNhaplieu.UseVisualStyleBackColor = true;
-            this.bntNhaplieu.Click += new System.EventHandler(this.bntNhaplieu_Click);
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(-1, 119);
+            this.button1.Location = new System.Drawing.Point(6, 119);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(196, 50);
             this.button1.TabIndex = 14;
@@ -266,21 +244,10 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // bnt_User
-            // 
-            this.bnt_User.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_User.Location = new System.Drawing.Point(-1, 404);
-            this.bnt_User.Name = "bnt_User";
-            this.bnt_User.Size = new System.Drawing.Size(196, 50);
-            this.bnt_User.TabIndex = 13;
-            this.bnt_User.Text = "Người dùng";
-            this.bnt_User.UseVisualStyleBackColor = true;
-            this.bnt_User.Click += new System.EventHandler(this.bnt_User_Click);
-            // 
             // bnt_TrangChu
             // 
             this.bnt_TrangChu.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_TrangChu.Location = new System.Drawing.Point(-1, 3);
+            this.bnt_TrangChu.Location = new System.Drawing.Point(6, 3);
             this.bnt_TrangChu.Name = "bnt_TrangChu";
             this.bnt_TrangChu.Size = new System.Drawing.Size(196, 50);
             this.bnt_TrangChu.TabIndex = 12;
@@ -288,10 +255,21 @@
             this.bnt_TrangChu.UseVisualStyleBackColor = true;
             this.bnt_TrangChu.Click += new System.EventHandler(this.bnt_TrangChu_Click);
             // 
+            // bnt_User
+            // 
+            this.bnt_User.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bnt_User.Location = new System.Drawing.Point(6, 699);
+            this.bnt_User.Name = "bnt_User";
+            this.bnt_User.Size = new System.Drawing.Size(196, 50);
+            this.bnt_User.TabIndex = 13;
+            this.bnt_User.Text = "Người dùng";
+            this.bnt_User.UseVisualStyleBackColor = true;
+            this.bnt_User.Click += new System.EventHandler(this.bnt_User_Click);
+            // 
             // bnt_BaoCao
             // 
             this.bnt_BaoCao.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_BaoCao.Location = new System.Drawing.Point(-1, 347);
+            this.bnt_BaoCao.Location = new System.Drawing.Point(6, 467);
             this.bnt_BaoCao.Name = "bnt_BaoCao";
             this.bnt_BaoCao.Size = new System.Drawing.Size(196, 50);
             this.bnt_BaoCao.TabIndex = 11;
@@ -299,43 +277,10 @@
             this.bnt_BaoCao.UseVisualStyleBackColor = true;
             this.bnt_BaoCao.Click += new System.EventHandler(this.bnt_BaoCao_Click);
             // 
-            // bnt_CaiDat
-            // 
-            this.bnt_CaiDat.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_CaiDat.Location = new System.Drawing.Point(-1, 461);
-            this.bnt_CaiDat.Name = "bnt_CaiDat";
-            this.bnt_CaiDat.Size = new System.Drawing.Size(196, 50);
-            this.bnt_CaiDat.TabIndex = 10;
-            this.bnt_CaiDat.Text = "Cài đặt";
-            this.bnt_CaiDat.UseVisualStyleBackColor = true;
-            this.bnt_CaiDat.Click += new System.EventHandler(this.bnt_CaiDat_Click);
-            // 
-            // bnt_Exit
-            // 
-            this.bnt_Exit.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Exit.Location = new System.Drawing.Point(-1, 575);
-            this.bnt_Exit.Name = "bnt_Exit";
-            this.bnt_Exit.Size = new System.Drawing.Size(196, 50);
-            this.bnt_Exit.TabIndex = 9;
-            this.bnt_Exit.Text = "Thoát";
-            this.bnt_Exit.UseVisualStyleBackColor = true;
-            this.bnt_Exit.Click += new System.EventHandler(this.bnt_Exit_Click);
-            // 
-            // bnt_LogIn
-            // 
-            this.bnt_LogIn.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_LogIn.Location = new System.Drawing.Point(-1, 518);
-            this.bnt_LogIn.Name = "bnt_LogIn";
-            this.bnt_LogIn.Size = new System.Drawing.Size(196, 50);
-            this.bnt_LogIn.TabIndex = 8;
-            this.bnt_LogIn.Text = "Đăng nhập";
-            this.bnt_LogIn.UseVisualStyleBackColor = true;
-            this.bnt_LogIn.Click += new System.EventHandler(this.bnt_LogIn_Click);
-            // 
             // bnt_TramMN
             // 
             this.bnt_TramMN.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_TramMN.Location = new System.Drawing.Point(-1, 233);
+            this.bnt_TramMN.Location = new System.Drawing.Point(6, 235);
             this.bnt_TramMN.Name = "bnt_TramMN";
             this.bnt_TramMN.Size = new System.Drawing.Size(196, 50);
             this.bnt_TramMN.TabIndex = 7;
@@ -346,7 +291,7 @@
             // bnt_CanhBao
             // 
             this.bnt_CanhBao.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_CanhBao.Location = new System.Drawing.Point(-1, 290);
+            this.bnt_CanhBao.Location = new System.Drawing.Point(6, 409);
             this.bnt_CanhBao.Name = "bnt_CanhBao";
             this.bnt_CanhBao.Size = new System.Drawing.Size(196, 50);
             this.bnt_CanhBao.TabIndex = 6;
@@ -354,16 +299,61 @@
             this.bnt_CanhBao.UseVisualStyleBackColor = true;
             this.bnt_CanhBao.Click += new System.EventHandler(this.bnt_CanhBao_Click);
             // 
+            // bnt_LogIn
+            // 
+            this.bnt_LogIn.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bnt_LogIn.Location = new System.Drawing.Point(6, 641);
+            this.bnt_LogIn.Name = "bnt_LogIn";
+            this.bnt_LogIn.Size = new System.Drawing.Size(196, 50);
+            this.bnt_LogIn.TabIndex = 8;
+            this.bnt_LogIn.Text = "Đăng nhập";
+            this.bnt_LogIn.UseVisualStyleBackColor = true;
+            this.bnt_LogIn.Click += new System.EventHandler(this.bnt_LogIn_Click);
+            // 
+            // bnt_Exit
+            // 
+            this.bnt_Exit.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bnt_Exit.Location = new System.Drawing.Point(6, 757);
+            this.bnt_Exit.Name = "bnt_Exit";
+            this.bnt_Exit.Size = new System.Drawing.Size(196, 50);
+            this.bnt_Exit.TabIndex = 9;
+            this.bnt_Exit.Text = "Thoát";
+            this.bnt_Exit.UseVisualStyleBackColor = true;
+            this.bnt_Exit.Click += new System.EventHandler(this.bnt_Exit_Click);
+            // 
             // bnt_Tran
             // 
             this.bnt_Tran.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Tran.Location = new System.Drawing.Point(-1, 175);
+            this.bnt_Tran.Location = new System.Drawing.Point(6, 177);
             this.bnt_Tran.Name = "bnt_Tran";
             this.bnt_Tran.Size = new System.Drawing.Size(196, 50);
             this.bnt_Tran.TabIndex = 0;
             this.bnt_Tran.Text = "Tràn xả lũ";
             this.bnt_Tran.UseVisualStyleBackColor = true;
             this.bnt_Tran.Click += new System.EventHandler(this.bnt_Tran_Click);
+            // 
+            // bnt_CaiDat
+            // 
+            this.bnt_CaiDat.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bnt_CaiDat.Location = new System.Drawing.Point(6, 583);
+            this.bnt_CaiDat.Name = "bnt_CaiDat";
+            this.bnt_CaiDat.Size = new System.Drawing.Size(196, 50);
+            this.bnt_CaiDat.TabIndex = 10;
+            this.bnt_CaiDat.Text = "Cài đặt";
+            this.bnt_CaiDat.UseVisualStyleBackColor = true;
+            this.bnt_CaiDat.Click += new System.EventHandler(this.bnt_CaiDat_Click);
+            // 
+            // bntNhaplieu
+            // 
+            this.bntNhaplieu.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntNhaplieu.Location = new System.Drawing.Point(53, 614);
+            this.bntNhaplieu.Name = "bntNhaplieu";
+            this.bntNhaplieu.Size = new System.Drawing.Size(196, 50);
+            this.bntNhaplieu.TabIndex = 15;
+            this.bntNhaplieu.Text = "CT Q";
+            this.bntNhaplieu.UseVisualStyleBackColor = true;
+            this.bntNhaplieu.Visible = false;
+            this.bntNhaplieu.Click += new System.EventHandler(this.bntNhaplieu_Click);
             // 
             // ahdDriverConnector1
             // 
@@ -434,9 +424,11 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labAPIBinhnham);
             this.panelDesktop.Controls.Add(this._labQi6);
             this.panelDesktop.Controls.Add(this._labQi5);
             this.panelDesktop.Controls.Add(this._labQi4);
+            this.panelDesktop.Controls.Add(this.bntNhaplieu);
             this.panelDesktop.Controls.Add(this._labQi3);
             this.panelDesktop.Controls.Add(this._labQi2);
             this.panelDesktop.Controls.Add(this.label9);
@@ -485,6 +477,16 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
+            // _labAPIBinhnham
+            // 
+            this._labAPIBinhnham.AutoSize = true;
+            this._labAPIBinhnham.Location = new System.Drawing.Point(383, 147);
+            this._labAPIBinhnham.Name = "_labAPIBinhnham";
+            this._labAPIBinhnham.Size = new System.Drawing.Size(53, 13);
+            this._labAPIBinhnham.TabIndex = 461;
+            this._labAPIBinhnham.Text = "binhnham";
+            this._labAPIBinhnham.Visible = false;
+            // 
             // _labQi6
             // 
             this._labQi6.AutoSize = true;
@@ -494,6 +496,7 @@
             this._labQi6.Size = new System.Drawing.Size(53, 24);
             this._labQi6.TabIndex = 460;
             this._labQi6.Text = "Q_i6";
+            this._labQi6.Visible = false;
             // 
             // _labQi5
             // 
@@ -504,6 +507,7 @@
             this._labQi5.Size = new System.Drawing.Size(53, 24);
             this._labQi5.TabIndex = 459;
             this._labQi5.Text = "Q_i5";
+            this._labQi5.Visible = false;
             // 
             // _labQi4
             // 
@@ -514,6 +518,7 @@
             this._labQi4.Size = new System.Drawing.Size(53, 24);
             this._labQi4.TabIndex = 458;
             this._labQi4.Text = "Q_i4";
+            this._labQi4.Visible = false;
             // 
             // _labQi3
             // 
@@ -524,6 +529,7 @@
             this._labQi3.Size = new System.Drawing.Size(53, 24);
             this._labQi3.TabIndex = 457;
             this._labQi3.Text = "Q_i3";
+            this._labQi3.Visible = false;
             // 
             // _labQi2
             // 
@@ -534,6 +540,7 @@
             this._labQi2.Size = new System.Drawing.Size(53, 24);
             this._labQi2.TabIndex = 456;
             this._labQi2.Text = "Q_i2";
+            this._labQi2.Visible = false;
             // 
             // label9
             // 
@@ -775,6 +782,7 @@
             this._labQi1.Size = new System.Drawing.Size(53, 24);
             this._labQi1.TabIndex = 431;
             this._labQi1.Text = "Q_i1";
+            this._labQi1.Visible = false;
             // 
             // _labW1_ho
             // 
@@ -805,6 +813,7 @@
             this._labQtr.Size = new System.Drawing.Size(49, 24);
             this._labQtr.TabIndex = 199;
             this._labQtr.Text = "Q_tr";
+            this._labQtr.Visible = false;
             // 
             // _labALDoor2_Station3
             // 
@@ -940,39 +949,6 @@
             this.lblStatusMessage.Text = "label2";
             this.lblStatusMessage.Visible = false;
             // 
-            // ahdSyncTag1
-            // 
-            this.ahdSyncTag1.Enabled = true;
-            this.ahdSyncTag1.SyncInterval = 200;
-            syncTarget1.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
-            syncTarget1.TargetTagPath = "Local Station/DauTieng/PLC1_2/Fllow_Door1";
-            syncTarget2.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door2";
-            syncTarget2.TargetTagPath = "Local Station/DauTieng/PLC1_2/Fllow_Door2";
-            syncTarget3.SourceTagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door1";
-            syncTarget3.TargetTagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door3";
-            syncTarget4.SourceTagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door2";
-            syncTarget4.TargetTagPath = "Local Station/DauTieng/PLC3_4/Fllow_Door4";
-            syncTarget5.SourceTagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door1";
-            syncTarget5.TargetTagPath = "Local Station/DauTieng/PLC5_6/Fllow_Door5";
-            syncTarget6.SourceTagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door2";
-            syncTarget6.TargetTagPath = "Local Station/DauTieng/PLC5_6/Fllow_Door6";
-            syncTarget7.SourceTagPath = "Local Station/DauTieng/S71500/Station_1/Total_Fllow";
-            syncTarget7.TargetTagPath = "Local Station/DauTieng/PLC1_2/Total_Fllow";
-            syncTarget8.SourceTagPath = "Local Station/DauTieng/S71500/Station_2/Total_Fllow";
-            syncTarget8.TargetTagPath = "Local Station/DauTieng/PLC3_4/Total_Fllow";
-            syncTarget9.SourceTagPath = "Local Station/DauTieng/S71500/Station_3/Total_Fllow";
-            syncTarget9.TargetTagPath = "Local Station/DauTieng/PLC5_6/Total_Fllow";
-            this.ahdSyncTag1.Targets.AddRange(new Ahd.Winforms.Controls.SyncTarget[] {
-            syncTarget1,
-            syncTarget2,
-            syncTarget3,
-            syncTarget4,
-            syncTarget5,
-            syncTarget6,
-            syncTarget7,
-            syncTarget8,
-            syncTarget9});
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1003,7 +979,6 @@
             this.panelDesktop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStations)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdSyncTag1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1036,8 +1011,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button bntNhaplieu;
         private System.Windows.Forms.Button bntEditdata;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label lblStatusMessage;
         private System.Windows.Forms.Label lblStationsTitle;
         private System.Windows.Forms.Label _labALDoor1_Station3;
@@ -1085,6 +1058,8 @@
         private System.Windows.Forms.Label _labQi4;
         private System.Windows.Forms.Label _labQi3;
         private System.Windows.Forms.Label _labQi2;
-        private Ahd.Winforms.Controls.AhdSyncTag ahdSyncTag1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label _labAPIBinhnham;
     }
 }

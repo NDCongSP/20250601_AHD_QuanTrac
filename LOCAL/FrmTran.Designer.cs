@@ -108,6 +108,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ahdBar1 = new Ahd.Winforms.Controls.AhdBar();
             this.label145 = new System.Windows.Forms.Label();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
             this.Pic_Al_Door2_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -203,6 +204,7 @@
             this.ahdLabel17 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdPictureBox3 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ahdBar2 = new Ahd.Winforms.Controls.AhdBar();
             this.groupBox31 = new System.Windows.Forms.GroupBox();
             this.Pic_Al_Door3_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label143 = new System.Windows.Forms.Label();
@@ -298,6 +300,7 @@
             this.label55 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.ahdBar3 = new Ahd.Winforms.Controls.AhdBar();
             this.groupBox32 = new System.Windows.Forms.GroupBox();
             this.Pic_Al_Door4_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label144 = new System.Windows.Forms.Label();
@@ -393,6 +396,7 @@
             this.label74 = new System.Windows.Forms.Label();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.ahdBar4 = new Ahd.Winforms.Controls.AhdBar();
             this.groupBox33 = new System.Windows.Forms.GroupBox();
             this.Pic_Al_Door5_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label146 = new System.Windows.Forms.Label();
@@ -488,6 +492,7 @@
             this.label93 = new System.Windows.Forms.Label();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.ahdBar5 = new Ahd.Winforms.Controls.AhdBar();
             this.groupBox34 = new System.Windows.Forms.GroupBox();
             this.Pic_Al_Door6_Stop = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label147 = new System.Windows.Forms.Label();
@@ -563,11 +568,6 @@
             this.ahdLabel84 = new Ahd.Winforms.Controls.AhdLabel();
             this.label112 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.ahdBar1 = new Ahd.Winforms.Controls.AhdBar();
-            this.ahdBar2 = new Ahd.Winforms.Controls.AhdBar();
-            this.ahdBar3 = new Ahd.Winforms.Controls.AhdBar();
-            this.ahdBar4 = new Ahd.Winforms.Controls.AhdBar();
-            this.ahdBar5 = new Ahd.Winforms.Controls.AhdBar();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdBar7)).BeginInit();
@@ -618,6 +618,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel19)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar1)).BeginInit();
             this.groupBox28.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door2_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door2)).BeginInit();
@@ -678,6 +679,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox3)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar2)).BeginInit();
             this.groupBox31.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door3_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door3)).BeginInit();
@@ -738,6 +740,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel37)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel38)).BeginInit();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar3)).BeginInit();
             this.groupBox32.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door4_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door4)).BeginInit();
@@ -798,6 +801,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel55)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel56)).BeginInit();
             this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).BeginInit();
             this.groupBox33.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door5_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door5)).BeginInit();
@@ -858,6 +862,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel69)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel70)).BeginInit();
             this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).BeginInit();
             this.groupBox34.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door6_Stop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door6)).BeginInit();
@@ -904,11 +909,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -2066,6 +2066,22 @@
             this.tabPage2.Text = "       CỬA 2       ";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // ahdBar1
+            // 
+            this.ahdBar1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ahdBar1.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
+            this.ahdBar1.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
+            this.ahdBar1.FillColor = System.Drawing.SystemColors.Highlight;
+            this.ahdBar1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdBar1.Location = new System.Drawing.Point(393, 56);
+            this.ahdBar1.MaxValue = "510";
+            this.ahdBar1.MinValue = "0";
+            this.ahdBar1.Name = "ahdBar1";
+            this.ahdBar1.Size = new System.Drawing.Size(333, 215);
+            this.ahdBar1.TabIndex = 429;
+            this.ahdBar1.TagPath = "Local Station/DauTieng/S71500/Station_1/Door2_Aperture";
+            this.ahdBar1.ValueStringFormat = "0.00";
+            // 
             // label145
             // 
             this.label145.BackColor = System.Drawing.Color.LightSeaGreen;
@@ -2761,6 +2777,7 @@
             // 
             // bnt_Hand_T2
             // 
+            this.bnt_Hand_T2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Hand_T2.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Hand_T2.Location = new System.Drawing.Point(51, 28);
             this.bnt_Hand_T2.Name = "bnt_Hand_T2";
@@ -2771,6 +2788,7 @@
             // 
             // bnt_Estop_T2
             // 
+            this.bnt_Estop_T2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Estop_T2.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Estop_T2.Location = new System.Drawing.Point(162, 172);
             this.bnt_Estop_T2.Name = "bnt_Estop_T2";
@@ -2781,6 +2799,7 @@
             // 
             // bnt_Auto_T2
             // 
+            this.bnt_Auto_T2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Auto_T2.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Auto_T2.Location = new System.Drawing.Point(271, 28);
             this.bnt_Auto_T2.Name = "bnt_Auto_T2";
@@ -2791,8 +2810,9 @@
             // 
             // bnt_Remote_T2
             // 
+            this.bnt_Remote_T2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Remote_T2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T2.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T2.Location = new System.Drawing.Point(271, 100);
             this.bnt_Remote_T2.Name = "bnt_Remote_T2";
             this.bnt_Remote_T2.Size = new System.Drawing.Size(140, 55);
             this.bnt_Remote_T2.TabIndex = 203;
@@ -2801,8 +2821,9 @@
             // 
             // bnt_Local_T2
             // 
+            this.bnt_Local_T2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Local_T2.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T2.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T2.Location = new System.Drawing.Point(51, 100);
             this.bnt_Local_T2.Name = "bnt_Local_T2";
             this.bnt_Local_T2.Size = new System.Drawing.Size(140, 55);
             this.bnt_Local_T2.TabIndex = 204;
@@ -3452,6 +3473,22 @@
             this.tabPage3.Text = "       CỬA 3       ";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // ahdBar2
+            // 
+            this.ahdBar2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ahdBar2.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
+            this.ahdBar2.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
+            this.ahdBar2.FillColor = System.Drawing.SystemColors.Highlight;
+            this.ahdBar2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdBar2.Location = new System.Drawing.Point(398, 56);
+            this.ahdBar2.MaxValue = "510";
+            this.ahdBar2.MinValue = "0";
+            this.ahdBar2.Name = "ahdBar2";
+            this.ahdBar2.Size = new System.Drawing.Size(333, 215);
+            this.ahdBar2.TabIndex = 430;
+            this.ahdBar2.TagPath = "Local Station/DauTieng/S71500/Station_2/Door1_Aperture";
+            this.ahdBar2.ValueStringFormat = "0.00";
+            // 
             // groupBox31
             // 
             this.groupBox31.Controls.Add(this.Pic_Al_Door3_Stop);
@@ -3815,6 +3852,7 @@
             // 
             // bnt_Hand_T3
             // 
+            this.bnt_Hand_T3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Hand_T3.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Hand_T3.Location = new System.Drawing.Point(51, 28);
             this.bnt_Hand_T3.Name = "bnt_Hand_T3";
@@ -3825,6 +3863,7 @@
             // 
             // bnt_Estop_T3
             // 
+            this.bnt_Estop_T3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Estop_T3.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Estop_T3.Location = new System.Drawing.Point(162, 172);
             this.bnt_Estop_T3.Name = "bnt_Estop_T3";
@@ -3835,6 +3874,7 @@
             // 
             // bnt_Auto_T3
             // 
+            this.bnt_Auto_T3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Auto_T3.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Auto_T3.Location = new System.Drawing.Point(271, 28);
             this.bnt_Auto_T3.Name = "bnt_Auto_T3";
@@ -3845,8 +3885,9 @@
             // 
             // bnt_Remote_T3
             // 
+            this.bnt_Remote_T3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Remote_T3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T3.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T3.Location = new System.Drawing.Point(271, 97);
             this.bnt_Remote_T3.Name = "bnt_Remote_T3";
             this.bnt_Remote_T3.Size = new System.Drawing.Size(140, 55);
             this.bnt_Remote_T3.TabIndex = 203;
@@ -3855,8 +3896,9 @@
             // 
             // bnt_Local_T3
             // 
+            this.bnt_Local_T3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Local_T3.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T3.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T3.Location = new System.Drawing.Point(51, 97);
             this.bnt_Local_T3.Name = "bnt_Local_T3";
             this.bnt_Local_T3.Size = new System.Drawing.Size(140, 55);
             this.bnt_Local_T3.TabIndex = 204;
@@ -4838,6 +4880,22 @@
             this.tabPage4.Text = "       CỬA 4       ";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // ahdBar3
+            // 
+            this.ahdBar3.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ahdBar3.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
+            this.ahdBar3.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
+            this.ahdBar3.FillColor = System.Drawing.SystemColors.Highlight;
+            this.ahdBar3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdBar3.Location = new System.Drawing.Point(393, 56);
+            this.ahdBar3.MaxValue = "510";
+            this.ahdBar3.MinValue = "0";
+            this.ahdBar3.Name = "ahdBar3";
+            this.ahdBar3.Size = new System.Drawing.Size(333, 215);
+            this.ahdBar3.TabIndex = 431;
+            this.ahdBar3.TagPath = "Local Station/DauTieng/S71500/Station_2/Door2_Aperture";
+            this.ahdBar3.ValueStringFormat = "0.00";
+            // 
             // groupBox32
             // 
             this.groupBox32.Controls.Add(this.Pic_Al_Door4_Stop);
@@ -5201,6 +5259,7 @@
             // 
             // bnt_Hand_T4
             // 
+            this.bnt_Hand_T4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Hand_T4.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Hand_T4.Location = new System.Drawing.Point(51, 28);
             this.bnt_Hand_T4.Name = "bnt_Hand_T4";
@@ -5211,6 +5270,7 @@
             // 
             // bnt_Estop_T4
             // 
+            this.bnt_Estop_T4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Estop_T4.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Estop_T4.Location = new System.Drawing.Point(162, 172);
             this.bnt_Estop_T4.Name = "bnt_Estop_T4";
@@ -5221,6 +5281,7 @@
             // 
             // bnt_Auto_T4
             // 
+            this.bnt_Auto_T4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Auto_T4.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Auto_T4.Location = new System.Drawing.Point(271, 28);
             this.bnt_Auto_T4.Name = "bnt_Auto_T4";
@@ -5231,8 +5292,9 @@
             // 
             // bnt_Remote_T4
             // 
+            this.bnt_Remote_T4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Remote_T4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T4.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T4.Location = new System.Drawing.Point(271, 104);
             this.bnt_Remote_T4.Name = "bnt_Remote_T4";
             this.bnt_Remote_T4.Size = new System.Drawing.Size(140, 55);
             this.bnt_Remote_T4.TabIndex = 203;
@@ -5241,8 +5303,9 @@
             // 
             // bnt_Local_T4
             // 
+            this.bnt_Local_T4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Local_T4.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T4.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T4.Location = new System.Drawing.Point(51, 103);
             this.bnt_Local_T4.Name = "bnt_Local_T4";
             this.bnt_Local_T4.Size = new System.Drawing.Size(140, 55);
             this.bnt_Local_T4.TabIndex = 204;
@@ -6223,6 +6286,22 @@
             this.tabPage5.Text = "       CỬA 5       ";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // ahdBar4
+            // 
+            this.ahdBar4.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ahdBar4.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
+            this.ahdBar4.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
+            this.ahdBar4.FillColor = System.Drawing.SystemColors.Highlight;
+            this.ahdBar4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdBar4.Location = new System.Drawing.Point(391, 55);
+            this.ahdBar4.MaxValue = "510";
+            this.ahdBar4.MinValue = "0";
+            this.ahdBar4.Name = "ahdBar4";
+            this.ahdBar4.Size = new System.Drawing.Size(333, 215);
+            this.ahdBar4.TabIndex = 432;
+            this.ahdBar4.TagPath = "Local Station/DauTieng/S71500/Station_3/Door1_Aperture";
+            this.ahdBar4.ValueStringFormat = "0.00";
+            // 
             // groupBox33
             // 
             this.groupBox33.Controls.Add(this.Pic_Al_Door5_Stop);
@@ -6586,6 +6665,7 @@
             // 
             // bnt_Hand_T5
             // 
+            this.bnt_Hand_T5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Hand_T5.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Hand_T5.Location = new System.Drawing.Point(51, 28);
             this.bnt_Hand_T5.Name = "bnt_Hand_T5";
@@ -6596,6 +6676,7 @@
             // 
             // bnt_Estop_T5
             // 
+            this.bnt_Estop_T5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Estop_T5.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Estop_T5.Location = new System.Drawing.Point(162, 172);
             this.bnt_Estop_T5.Name = "bnt_Estop_T5";
@@ -6606,6 +6687,7 @@
             // 
             // bnt_Auto_T5
             // 
+            this.bnt_Auto_T5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Auto_T5.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Auto_T5.Location = new System.Drawing.Point(271, 28);
             this.bnt_Auto_T5.Name = "bnt_Auto_T5";
@@ -6616,8 +6698,9 @@
             // 
             // bnt_Remote_T5
             // 
+            this.bnt_Remote_T5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Remote_T5.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T5.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T5.Location = new System.Drawing.Point(271, 99);
             this.bnt_Remote_T5.Name = "bnt_Remote_T5";
             this.bnt_Remote_T5.Size = new System.Drawing.Size(140, 55);
             this.bnt_Remote_T5.TabIndex = 203;
@@ -6626,8 +6709,9 @@
             // 
             // bnt_Local_T5
             // 
+            this.bnt_Local_T5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Local_T5.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T5.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T5.Location = new System.Drawing.Point(51, 99);
             this.bnt_Local_T5.Name = "bnt_Local_T5";
             this.bnt_Local_T5.Size = new System.Drawing.Size(140, 55);
             this.bnt_Local_T5.TabIndex = 204;
@@ -7607,6 +7691,22 @@
             this.tabPage6.Text = "       CỬA 6       ";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // ahdBar5
+            // 
+            this.ahdBar5.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ahdBar5.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
+            this.ahdBar5.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
+            this.ahdBar5.FillColor = System.Drawing.SystemColors.Highlight;
+            this.ahdBar5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdBar5.Location = new System.Drawing.Point(388, 53);
+            this.ahdBar5.MaxValue = "510";
+            this.ahdBar5.MinValue = "0";
+            this.ahdBar5.Name = "ahdBar5";
+            this.ahdBar5.Size = new System.Drawing.Size(333, 215);
+            this.ahdBar5.TabIndex = 433;
+            this.ahdBar5.TagPath = "Local Station/DauTieng/S71500/Station_3/Door2_Aperture";
+            this.ahdBar5.ValueStringFormat = "0.00";
+            // 
             // groupBox34
             // 
             this.groupBox34.Controls.Add(this.Pic_Al_Door6_Stop);
@@ -7970,6 +8070,7 @@
             // 
             // bnt_Hand_T6
             // 
+            this.bnt_Hand_T6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Hand_T6.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Hand_T6.Location = new System.Drawing.Point(51, 28);
             this.bnt_Hand_T6.Name = "bnt_Hand_T6";
@@ -7980,6 +8081,7 @@
             // 
             // bnt_Estop_T6
             // 
+            this.bnt_Estop_T6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Estop_T6.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Estop_T6.Location = new System.Drawing.Point(162, 172);
             this.bnt_Estop_T6.Name = "bnt_Estop_T6";
@@ -7990,6 +8092,7 @@
             // 
             // bnt_Auto_T6
             // 
+            this.bnt_Auto_T6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Auto_T6.ForeColor = System.Drawing.Color.DarkBlue;
             this.bnt_Auto_T6.Location = new System.Drawing.Point(271, 28);
             this.bnt_Auto_T6.Name = "bnt_Auto_T6";
@@ -8000,8 +8103,9 @@
             // 
             // bnt_Remote_T6
             // 
+            this.bnt_Remote_T6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Remote_T6.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Remote_T6.Location = new System.Drawing.Point(51, 101);
+            this.bnt_Remote_T6.Location = new System.Drawing.Point(271, 100);
             this.bnt_Remote_T6.Name = "bnt_Remote_T6";
             this.bnt_Remote_T6.Size = new System.Drawing.Size(140, 55);
             this.bnt_Remote_T6.TabIndex = 203;
@@ -8010,8 +8114,9 @@
             // 
             // bnt_Local_T6
             // 
+            this.bnt_Local_T6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bnt_Local_T6.ForeColor = System.Drawing.Color.DarkBlue;
-            this.bnt_Local_T6.Location = new System.Drawing.Point(271, 101);
+            this.bnt_Local_T6.Location = new System.Drawing.Point(51, 100);
             this.bnt_Local_T6.Name = "bnt_Local_T6";
             this.bnt_Local_T6.Size = new System.Drawing.Size(140, 55);
             this.bnt_Local_T6.TabIndex = 204;
@@ -8658,86 +8763,6 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(1745, 39);
             this.tableLayoutPanel12.TabIndex = 235;
             // 
-            // ahdBar1
-            // 
-            this.ahdBar1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdBar1.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar1.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
-            this.ahdBar1.FillColor = System.Drawing.SystemColors.Highlight;
-            this.ahdBar1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdBar1.Location = new System.Drawing.Point(393, 56);
-            this.ahdBar1.MaxValue = "510";
-            this.ahdBar1.MinValue = "0";
-            this.ahdBar1.Name = "ahdBar1";
-            this.ahdBar1.Size = new System.Drawing.Size(333, 215);
-            this.ahdBar1.TabIndex = 429;
-            this.ahdBar1.TagPath = "Local Station/DauTieng/S71500/Station_1/Door2_Aperture";
-            this.ahdBar1.ValueStringFormat = "0.00";
-            // 
-            // ahdBar2
-            // 
-            this.ahdBar2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdBar2.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar2.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
-            this.ahdBar2.FillColor = System.Drawing.SystemColors.Highlight;
-            this.ahdBar2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdBar2.Location = new System.Drawing.Point(398, 56);
-            this.ahdBar2.MaxValue = "510";
-            this.ahdBar2.MinValue = "0";
-            this.ahdBar2.Name = "ahdBar2";
-            this.ahdBar2.Size = new System.Drawing.Size(333, 215);
-            this.ahdBar2.TabIndex = 430;
-            this.ahdBar2.TagPath = "Local Station/DauTieng/S71500/Station_2/Door1_Aperture";
-            this.ahdBar2.ValueStringFormat = "0.00";
-            // 
-            // ahdBar3
-            // 
-            this.ahdBar3.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdBar3.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar3.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
-            this.ahdBar3.FillColor = System.Drawing.SystemColors.Highlight;
-            this.ahdBar3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdBar3.Location = new System.Drawing.Point(393, 56);
-            this.ahdBar3.MaxValue = "510";
-            this.ahdBar3.MinValue = "0";
-            this.ahdBar3.Name = "ahdBar3";
-            this.ahdBar3.Size = new System.Drawing.Size(333, 215);
-            this.ahdBar3.TabIndex = 431;
-            this.ahdBar3.TagPath = "Local Station/DauTieng/S71500/Station_2/Door2_Aperture";
-            this.ahdBar3.ValueStringFormat = "0.00";
-            // 
-            // ahdBar4
-            // 
-            this.ahdBar4.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdBar4.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar4.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
-            this.ahdBar4.FillColor = System.Drawing.SystemColors.Highlight;
-            this.ahdBar4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdBar4.Location = new System.Drawing.Point(391, 55);
-            this.ahdBar4.MaxValue = "510";
-            this.ahdBar4.MinValue = "0";
-            this.ahdBar4.Name = "ahdBar4";
-            this.ahdBar4.Size = new System.Drawing.Size(333, 215);
-            this.ahdBar4.TabIndex = 432;
-            this.ahdBar4.TagPath = "Local Station/DauTieng/S71500/Station_3/Door1_Aperture";
-            this.ahdBar4.ValueStringFormat = "0.00";
-            // 
-            // ahdBar5
-            // 
-            this.ahdBar5.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdBar5.Direction = Ahd.Winforms.Controls.BarDirection.BottomToTop;
-            this.ahdBar5.DisplayMode = Ahd.Winforms.Controls.BarDisplayMode.None;
-            this.ahdBar5.FillColor = System.Drawing.SystemColors.Highlight;
-            this.ahdBar5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdBar5.Location = new System.Drawing.Point(388, 53);
-            this.ahdBar5.MaxValue = "510";
-            this.ahdBar5.MinValue = "0";
-            this.ahdBar5.Name = "ahdBar5";
-            this.ahdBar5.Size = new System.Drawing.Size(333, 215);
-            this.ahdBar5.TabIndex = 433;
-            this.ahdBar5.TagPath = "Local Station/DauTieng/S71500/Station_3/Door2_Aperture";
-            this.ahdBar5.ValueStringFormat = "0.00";
-            // 
             // FrmTran
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -8802,6 +8827,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel19)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar1)).EndInit();
             this.groupBox28.ResumeLayout(false);
             this.groupBox28.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door2_Stop)).EndInit();
@@ -8867,6 +8893,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox3)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar2)).EndInit();
             this.groupBox31.ResumeLayout(false);
             this.groupBox31.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door3_Stop)).EndInit();
@@ -8932,6 +8959,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel37)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel38)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar3)).EndInit();
             this.groupBox32.ResumeLayout(false);
             this.groupBox32.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door4_Stop)).EndInit();
@@ -8997,6 +9025,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel55)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel56)).EndInit();
             this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).EndInit();
             this.groupBox33.ResumeLayout(false);
             this.groupBox33.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door5_Stop)).EndInit();
@@ -9062,6 +9091,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel69)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel70)).EndInit();
             this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).EndInit();
             this.groupBox34.ResumeLayout(false);
             this.groupBox34.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Al_Door6_Stop)).EndInit();
@@ -9112,11 +9142,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel82)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel83)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel84)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdBar5)).EndInit();
             this.ResumeLayout(false);
 
         }

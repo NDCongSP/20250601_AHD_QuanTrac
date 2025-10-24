@@ -24,5 +24,6 @@ namespace Domain.Entities
         public string? UpdateOperatorId { get; set; }
         public DateTime? UpdateAt { get; set; }
         public bool? IsDeleted { get; set; }
+        public double X_Value { get;  set; }
     }
 }

@@ -28,8 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.ahdLabel6 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this._labAPICDD = new System.Windows.Forms.Label();
+            this.bntMap = new System.Windows.Forms.Button();
+            this._labAPIBinhnham = new System.Windows.Forms.Label();
+            this._labAPIBensuc = new System.Windows.Forms.Label();
+            this._labAPIDautieng = new System.Windows.Forms.Label();
+            this._labAPISondai = new System.Windows.Forms.Label();
+            this._labFllow_ho = new System.Windows.Forms.Label();
             this.ahdPictureBox2 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.ahdPictureBox12 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,12 +61,7 @@
             this.ahdLabel25 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.ahdLabel30 = new Ahd.Winforms.Controls.AhdLabel();
-            this._labFllow_ho = new System.Windows.Forms.Label();
-            this._labAPISondai = new System.Windows.Forms.Label();
-            this._labAPIDautieng = new System.Windows.Forms.Label();
-            this._labAPIBensuc = new System.Windows.Forms.Label();
-            this._labAPIBinhnham = new System.Windows.Forms.Label();
-            this._labAPICDD = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel6)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox2)).BeginInit();
@@ -76,6 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // ahdLabel6
@@ -99,6 +105,7 @@
             this.groupBox1.BackgroundImage = global::RegistrationForm1.Properties.Resources.MNGG;
             this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.groupBox1.Controls.Add(this._labAPICDD);
+            this.groupBox1.Controls.Add(this.bntMap);
             this.groupBox1.Controls.Add(this._labAPIBinhnham);
             this.groupBox1.Controls.Add(this._labAPIBensuc);
             this.groupBox1.Controls.Add(this._labAPIDautieng);
@@ -130,6 +137,82 @@
             this.groupBox1.Size = new System.Drawing.Size(1701, 356);
             this.groupBox1.TabIndex = 305;
             this.groupBox1.TabStop = false;
+            // 
+            // _labAPICDD
+            // 
+            this._labAPICDD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPICDD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPICDD.Location = new System.Drawing.Point(140, 325);
+            this._labAPICDD.Name = "_labAPICDD";
+            this._labAPICDD.Size = new System.Drawing.Size(125, 30);
+            this._labAPICDD.TabIndex = 439;
+            this._labAPICDD.Text = "0.00";
+            this._labAPICDD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // bntMap
+            // 
+            this.bntMap.Location = new System.Drawing.Point(1, 331);
+            this.bntMap.Name = "bntMap";
+            this.bntMap.Size = new System.Drawing.Size(75, 23);
+            this.bntMap.TabIndex = 306;
+            this.bntMap.Text = "Map";
+            this.bntMap.UseVisualStyleBackColor = true;
+            this.bntMap.Click += new System.EventHandler(this.bntMap_Click);
+            // 
+            // _labAPIBinhnham
+            // 
+            this._labAPIBinhnham.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPIBinhnham.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPIBinhnham.Location = new System.Drawing.Point(1539, 49);
+            this._labAPIBinhnham.Name = "_labAPIBinhnham";
+            this._labAPIBinhnham.Size = new System.Drawing.Size(115, 30);
+            this._labAPIBinhnham.TabIndex = 438;
+            this._labAPIBinhnham.Text = "0.00";
+            this._labAPIBinhnham.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labAPIBensuc
+            // 
+            this._labAPIBensuc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPIBensuc.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPIBensuc.Location = new System.Drawing.Point(681, 45);
+            this._labAPIBensuc.Name = "_labAPIBensuc";
+            this._labAPIBensuc.Size = new System.Drawing.Size(123, 30);
+            this._labAPIBensuc.TabIndex = 437;
+            this._labAPIBensuc.Text = "0.00";
+            this._labAPIBensuc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labAPIDautieng
+            // 
+            this._labAPIDautieng.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPIDautieng.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPIDautieng.Location = new System.Drawing.Point(342, 45);
+            this._labAPIDautieng.Name = "_labAPIDautieng";
+            this._labAPIDautieng.Size = new System.Drawing.Size(123, 30);
+            this._labAPIDautieng.TabIndex = 436;
+            this._labAPIDautieng.Text = "0.00";
+            this._labAPIDautieng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labAPISondai
+            // 
+            this._labAPISondai.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labAPISondai.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labAPISondai.Location = new System.Drawing.Point(216, 45);
+            this._labAPISondai.Name = "_labAPISondai";
+            this._labAPISondai.Size = new System.Drawing.Size(123, 30);
+            this._labAPISondai.TabIndex = 435;
+            this._labAPISondai.Text = "0.00";
+            this._labAPISondai.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labFllow_ho
+            // 
+            this._labFllow_ho.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._labFllow_ho.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_ho.Location = new System.Drawing.Point(89, 45);
+            this._labFllow_ho.Name = "_labFllow_ho";
+            this._labFllow_ho.Size = new System.Drawing.Size(123, 30);
+            this._labFllow_ho.TabIndex = 434;
+            this._labFllow_ho.Text = "0.00";
+            this._labFllow_ho.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdPictureBox2
             // 
@@ -442,77 +525,28 @@
             this.ahdLabel30.Text = "MN HỒ(TL_TXL) (m)";
             this.ahdLabel30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // _labFllow_ho
+            // chart1
             // 
-            this._labFllow_ho.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labFllow_ho.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labFllow_ho.Location = new System.Drawing.Point(89, 45);
-            this._labFllow_ho.Name = "_labFllow_ho";
-            this._labFllow_ho.Size = new System.Drawing.Size(123, 30);
-            this._labFllow_ho.TabIndex = 434;
-            this._labFllow_ho.Text = "0.00";
-            this._labFllow_ho.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labAPISondai
-            // 
-            this._labAPISondai.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labAPISondai.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labAPISondai.Location = new System.Drawing.Point(216, 45);
-            this._labAPISondai.Name = "_labAPISondai";
-            this._labAPISondai.Size = new System.Drawing.Size(123, 30);
-            this._labAPISondai.TabIndex = 435;
-            this._labAPISondai.Text = "0.00";
-            this._labAPISondai.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labAPIDautieng
-            // 
-            this._labAPIDautieng.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labAPIDautieng.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labAPIDautieng.Location = new System.Drawing.Point(342, 45);
-            this._labAPIDautieng.Name = "_labAPIDautieng";
-            this._labAPIDautieng.Size = new System.Drawing.Size(123, 30);
-            this._labAPIDautieng.TabIndex = 436;
-            this._labAPIDautieng.Text = "0.00";
-            this._labAPIDautieng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labAPIBensuc
-            // 
-            this._labAPIBensuc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labAPIBensuc.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labAPIBensuc.Location = new System.Drawing.Point(681, 45);
-            this._labAPIBensuc.Name = "_labAPIBensuc";
-            this._labAPIBensuc.Size = new System.Drawing.Size(123, 30);
-            this._labAPIBensuc.TabIndex = 437;
-            this._labAPIBensuc.Text = "0.00";
-            this._labAPIBensuc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labAPIBinhnham
-            // 
-            this._labAPIBinhnham.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labAPIBinhnham.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labAPIBinhnham.Location = new System.Drawing.Point(1539, 49);
-            this._labAPIBinhnham.Name = "_labAPIBinhnham";
-            this._labAPIBinhnham.Size = new System.Drawing.Size(115, 30);
-            this._labAPIBinhnham.TabIndex = 438;
-            this._labAPIBinhnham.Text = "0.00";
-            this._labAPIBinhnham.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _labAPICDD
-            // 
-            this._labAPICDD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._labAPICDD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._labAPICDD.Location = new System.Drawing.Point(140, 325);
-            this._labAPICDD.Name = "_labAPICDD";
-            this._labAPICDD.Size = new System.Drawing.Size(125, 30);
-            this._labAPICDD.TabIndex = 439;
-            this._labAPICDD.Text = "0.00";
-            this._labAPICDD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(6, 364);
+            this.chart1.Name = "chart1";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(1699, 513);
+            this.chart1.TabIndex = 307;
+            this.chart1.Text = "chart1";
             // 
             // FrmMucnuoc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1710, 848);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.ahdLabel6);
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmMucnuoc";
@@ -537,6 +571,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -571,5 +606,7 @@
         private System.Windows.Forms.Label _labAPIBensuc;
         private System.Windows.Forms.Label _labAPIBinhnham;
         private System.Windows.Forms.Label _labAPICDD;
+        private System.Windows.Forms.Button bntMap;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

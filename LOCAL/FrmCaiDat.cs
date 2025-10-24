@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Configuration;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RegistrationForm1
@@ -22,25 +16,15 @@ namespace RegistrationForm1
 
         private void FrmCaiDat_Load(object sender, EventArgs e)
         {
-            // Khi form load, đọc cấu hình hiện tại (nếu có)
-            LoadCurrentConfig();
-            // Cập nhật trạng thái UI
-            rbWindowsAuth_CheckedChanged(null, null);
+            // Đọc cấu hình cũ nếu có
+            txtServer.Text = ConfigurationManager.AppSettings["ServerName"] ?? @".\SQLEXPRESS";
+            txtDatabase.Text = ConfigurationManager.AppSettings["DatabaseName"] ?? "MyDatabase";
+            txtUser.Text = ConfigurationManager.AppSettings["UserId"] ?? "sa";
+            txtPassword.Text = ConfigurationManager.AppSettings["Password"] ?? "";
+
 
         }
-        private void rbWindowsAuth_CheckedChanged(object sender, EventArgs e)
-        {
-            bool isSqlAuth = rbSqlAuth.Checked;
-            txtUsername.Enabled = isSqlAuth;
-            txtPassword.Enabled = isSqlAuth;
-
-            // Clear username/password khi chuyển sang Windows Authentication
-            if (!isSqlAuth)
-            {
-                txtUsername.Clear();
-                txtPassword.Clear();
-            }
-        }
+        
         private string BuildConnectionString()
         {
             // Validate input
@@ -60,10 +44,10 @@ namespace RegistrationForm1
 
             if (rbSqlAuth.Checked)
             {
-                if (string.IsNullOrWhiteSpace(txtUsername.Text))
+                if (string.IsNullOrWhiteSpace(txtUser.Text))
                 {
                     MessageBox.Show("Vui lòng nhập Username!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtUsername.Focus();
+                    txtUser.Focus();
                     return null;
                 }
 
@@ -88,7 +72,7 @@ namespace RegistrationForm1
             else
             {
                 builder.IntegratedSecurity = false;
-                builder.UserID = txtUsername.Text.Trim();
+                builder.UserID = txtUser.Text.Trim();
                 builder.Password = txtPassword.Text;
             }
             // Thêm các tham số cần thiết khác
@@ -114,7 +98,7 @@ namespace RegistrationForm1
                     else
                     {
                         rbSqlAuth.Checked = true;
-                        txtUsername.Text = builder.UserID;
+                        txtUser.Text = builder.UserID;
                         txtPassword.Text = builder.Password;
                     }
                 }
@@ -267,51 +251,44 @@ namespace RegistrationForm1
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            string connStr = BuildConnectionString();
-            if (connStr == null) return; // Validation failed
-
-            // Show waiting cursor
-            Cursor = Cursors.WaitCursor;
-
-            try
+            string connStr = $"Server={txtServer.Text};Database={txtDatabase.Text};User Id={txtUser.Text};Password={txtPassword.Text};";
+            using (var conn = new SqlConnection(connStr))
             {
-                if (ConfigurationHelper.TestConnection(connStr))
+                try
                 {
-                    MessageBox.Show("Kết nối thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    conn.Open();
+                    MessageBox.Show("✅ Kết nối SQL Server thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
+                catch (Exception ex)
+                {
+                    MessageBox.Show("❌ Kết nối thất bại!\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string connStr = BuildConnectionString();
-            if (connStr == null) return; // Validation failed
-
-            // Show waiting cursor
-            Cursor = Cursors.WaitCursor;
-
             try
             {
-                // Kiểm tra lại kết nối trước khi lưu
-                if (TestConnectionSilently(connStr))
-                {
-                    ConfigurationHelper.SaveConnectionString(connStr);
-                    this.DialogResult = DialogResult.OK; // Báo hiệu lưu thành công
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Không thể kết nối với cơ sở dữ liệu. Vui lòng kiểm tra lại thông tin.",
-                                  "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.AppSettings.Settings.Remove("ServerName");
+                config.AppSettings.Settings.Remove("DatabaseName");
+                config.AppSettings.Settings.Remove("UserId");
+                config.AppSettings.Settings.Remove("Password");
+
+                config.AppSettings.Settings.Add("ServerName", txtServer.Text);
+                config.AppSettings.Settings.Add("DatabaseName", txtDatabase.Text);
+                config.AppSettings.Settings.Add("UserId", txtUser.Text);
+                config.AppSettings.Settings.Add("Password", txtPassword.Text);
+
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+
+                MessageBox.Show("💾 Đã lưu cấu hình SQL thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            finally
+            catch (Exception ex)
             {
-                Cursor = Cursors.Default;
+                MessageBox.Show("Lỗi khi lưu cấu hình:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

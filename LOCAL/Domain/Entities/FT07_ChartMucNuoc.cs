@@ -16,16 +16,19 @@ namespace Domain.Entities
         [Key]
         public Guid Id { get; set; }
 
+        [DisplayName("Index")]
         public int? Index { get; set; } = 0;
 
         /// <summary>
         /// thông tin hiển thị của trục X = X_Prefix + X_Value.
         /// </summary>
+        [DisplayName("X_Prefix")]
         public string? X_Prefix { get; set; } = string.Empty;
 
         /// <summary>
         /// thông tin hiển thị của trục X = X_Prefix + X_Value.
         /// </summary>
+        [DisplayName("X_Value")]
         public double? X_Value { get; set; } = 0;
 
         /// <summary>

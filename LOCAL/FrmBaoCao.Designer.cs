@@ -39,30 +39,29 @@
             this.lblFromDate = new System.Windows.Forms.Label();
             this.bntDataVanHanh = new System.Windows.Forms.Button();
             this.bntDataMucNuoc = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cbFrequency = new System.Windows.Forms.ComboBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbxExportType = new System.Windows.Forms.ComboBox();
             this.bntExportExcelOrPdf = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.bntExportBieuDo = new System.Windows.Forms.Button();
-            this.cbStation = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.bntData = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.bntQTM = new System.Windows.Forms.Button();
+            this.tabMucNuoc = new System.Windows.Forms.TabPage();
+            this.Dgv = new System.Windows.Forms.DataGridView();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ChartMucnuoc = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabMucNuoc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Dgv)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChartMucnuoc)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(578, 12);
+            this.label1.Location = new System.Drawing.Point(574, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 43);
             this.label1.TabIndex = 22;
@@ -113,7 +112,7 @@
             // bntDataVanHanh
             // 
             this.bntDataVanHanh.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntDataVanHanh.Location = new System.Drawing.Point(1146, 106);
+            this.bntDataVanHanh.Location = new System.Drawing.Point(1146, 57);
             this.bntDataVanHanh.Name = "bntDataVanHanh";
             this.bntDataVanHanh.Size = new System.Drawing.Size(180, 45);
             this.bntDataVanHanh.TabIndex = 25;
@@ -124,7 +123,7 @@
             // bntDataMucNuoc
             // 
             this.bntDataMucNuoc.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntDataMucNuoc.Location = new System.Drawing.Point(1146, 44);
+            this.bntDataMucNuoc.Location = new System.Drawing.Point(1146, 7);
             this.bntDataMucNuoc.Name = "bntDataMucNuoc";
             this.bntDataMucNuoc.Size = new System.Drawing.Size(180, 45);
             this.bntDataMucNuoc.TabIndex = 24;
@@ -132,74 +131,14 @@
             this.bntDataMucNuoc.UseVisualStyleBackColor = true;
             this.bntDataMucNuoc.Click += new System.EventHandler(this.bntDataMucNuoc_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(210, 45);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 82;
-            this.dataGridView1.Size = new System.Drawing.Size(1300, 581);
-            this.dataGridView1.TabIndex = 28;
-            // 
             // cbFrequency
             // 
             this.cbFrequency.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbFrequency.FormattingEnabled = true;
-            this.cbFrequency.Location = new System.Drawing.Point(578, 73);
+            this.cbFrequency.Location = new System.Drawing.Point(574, 73);
             this.cbFrequency.Name = "cbFrequency";
             this.cbFrequency.Size = new System.Drawing.Size(249, 44);
             this.cbFrequency.TabIndex = 29;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(2, 193);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1800, 655);
-            this.tabControl1.TabIndex = 31;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1792, 629);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Dữ liệu";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage2.Controls.Add(this.chart1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1792, 629);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Biểu đồ ";
-            // 
-            // chart1
-            // 
-            this.chart1.BackColor = System.Drawing.SystemColors.Control;
-            this.chart1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(17, 18);
-            this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(1684, 608);
-            this.chart1.TabIndex = 30;
-            this.chart1.Text = "chart1";
             // 
             // cbxExportType
             // 
@@ -241,34 +180,87 @@
             this.bntExportBieuDo.UseVisualStyleBackColor = true;
             this.bntExportBieuDo.Click += new System.EventHandler(this.bntExportBieuDo_Click);
             // 
-            // cbStation
-            // 
-            this.cbStation.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbStation.FormattingEnabled = true;
-            this.cbStation.Location = new System.Drawing.Point(861, 73);
-            this.cbStation.Name = "cbStation";
-            this.cbStation.Size = new System.Drawing.Size(249, 44);
-            this.cbStation.TabIndex = 37;
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(861, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(164, 43);
-            this.label3.TabIndex = 38;
-            this.label3.Text = "Chọn trạm";
-            // 
             // bntData
             // 
             this.bntData.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntData.Location = new System.Drawing.Point(821, 142);
+            this.bntData.Location = new System.Drawing.Point(1146, 157);
             this.bntData.Name = "bntData";
             this.bntData.Size = new System.Drawing.Size(180, 45);
             this.bntData.TabIndex = 39;
-            this.bntData.Text = "Data tong";
+            this.bntData.Text = "Hồ chứa";
             this.bntData.UseVisualStyleBackColor = true;
             this.bntData.Click += new System.EventHandler(this.bntData_Click);
+            // 
+            // bntQTM
+            // 
+            this.bntQTM.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntQTM.Location = new System.Drawing.Point(1146, 107);
+            this.bntQTM.Name = "bntQTM";
+            this.bntQTM.Size = new System.Drawing.Size(180, 45);
+            this.bntQTM.TabIndex = 40;
+            this.bntQTM.Text = "Quan trắc mưa";
+            this.bntQTM.UseVisualStyleBackColor = true;
+            this.bntQTM.Click += new System.EventHandler(this.bntQTM_Click);
+            // 
+            // tabMucNuoc
+            // 
+            this.tabMucNuoc.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.tabMucNuoc.Controls.Add(this.Dgv);
+            this.tabMucNuoc.Location = new System.Drawing.Point(4, 22);
+            this.tabMucNuoc.Name = "tabMucNuoc";
+            this.tabMucNuoc.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMucNuoc.Size = new System.Drawing.Size(1642, 602);
+            this.tabMucNuoc.TabIndex = 0;
+            this.tabMucNuoc.Text = "Dữ liệu";
+            // 
+            // Dgv
+            // 
+            this.Dgv.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.Dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Dgv.Location = new System.Drawing.Point(13, 76);
+            this.Dgv.Name = "Dgv";
+            this.Dgv.RowHeadersWidth = 82;
+            this.Dgv.Size = new System.Drawing.Size(1181, 472);
+            this.Dgv.TabIndex = 28;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabMucNuoc);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Location = new System.Drawing.Point(1, 208);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1650, 628);
+            this.tabControl1.TabIndex = 31;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.ChartMucnuoc);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1642, 507);
+            this.tabPage1.TabIndex = 1;
+            this.tabPage1.Text = "Biểu đồ";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ChartMucnuoc
+            // 
+            this.ChartMucnuoc.BackColor = System.Drawing.SystemColors.Control;
+            this.ChartMucnuoc.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
+            chartArea1.Name = "ChartArea1";
+            this.ChartMucnuoc.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ChartMucnuoc.Legends.Add(legend1);
+            this.ChartMucnuoc.Location = new System.Drawing.Point(11, 6);
+            this.ChartMucnuoc.Name = "ChartMucnuoc";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.ChartMucnuoc.Series.Add(series1);
+            this.ChartMucnuoc.Size = new System.Drawing.Size(1443, 495);
+            this.ChartMucnuoc.TabIndex = 32;
+            this.ChartMucnuoc.Text = "chart1";
             // 
             // FrmBaoCao
             // 
@@ -276,9 +268,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(1710, 848);
+            this.Controls.Add(this.bntQTM);
             this.Controls.Add(this.bntData);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.cbStation);
             this.Controls.Add(this.bntExportBieuDo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bntExportExcelOrPdf);
@@ -295,11 +286,11 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmBaoCao";
             this.Text = "Báo cáo";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabMucNuoc.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Dgv)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChartMucnuoc)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -312,18 +303,17 @@
         private System.Windows.Forms.Label lblFromDate;
         private System.Windows.Forms.Button bntDataVanHanh;
         private System.Windows.Forms.Button bntDataMucNuoc;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox cbFrequency;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox cbxExportType;
         private System.Windows.Forms.Button bntExportExcelOrPdf;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button bntExportBieuDo;
-        private System.Windows.Forms.ComboBox cbStation;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button bntData;
+        private System.Windows.Forms.Button bntQTM;
+        private System.Windows.Forms.TabPage tabMucNuoc;
+        private System.Windows.Forms.DataGridView Dgv;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ChartMucnuoc;
     }
 }

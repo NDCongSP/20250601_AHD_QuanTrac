@@ -69,11 +69,26 @@ namespace RegistrationForm1
                     Abnt_CloseDoorlock2.BackColor = Color.Red;
                 }
                 else { Abnt_CloseDoorlock2.BackColor = DefaultBackColor; }
-                if (dataDisplayStation1?.Lock1 == true)
+                //if (dataDisplayStation1?.Lock1 == true)
+                //{
+                //    AbntLock.BackColor = Color.Red;
+                //}
+                //else { AbntLock.BackColor = DefaultBackColor; }
+
+                // khai báo trạng thái on/off cho điều khiển . Dùng Tag value change Door1_Open_Door
+                if (dataDisplayStation1?.Door1_Open_Door == true)
                 {
-                    AbntLock.BackColor = Color.Red;
+                    AbntON1.BackColor = Color.GreenYellow;
+                    AbntOFF1.BackColor = DefaultBackColor;
                 }
-                else { AbntLock.BackColor = DefaultBackColor; }
+                else { AbntON1.BackColor = DefaultBackColor;AbntOFF1.BackColor = Color.Red; }
+               
+
+                if (dataDisplayStation1?.Lock2 == true)
+                {
+                    Abnt_OpenDoorlock2.BackColor = Color.YellowGreen; Abnt_CloseDoorlock2.BackColor = Color.YellowGreen;
+                }
+                else { Abnt_OpenDoorlock2.BackColor = DefaultBackColor; Abnt_CloseDoorlock2.BackColor = DefaultBackColor; }
 
                 var dataDisplayStation2 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_2");
                 if (dataDisplayStation2?.Status_Open_Door1 == true)
@@ -116,6 +131,25 @@ namespace RegistrationForm1
                     Abnt_CloseDoorlock4.BackColor = Color.Red;
                 }
                 else { Abnt_CloseDoorlock4.BackColor = DefaultBackColor; }
+               
+                if (dataDisplayStation2?.Lock1 == true)
+                    {
+                    Abnt_OpenDoorlock3.BackColor = Color.YellowGreen; Abnt_CloseDoorlock3.BackColor = Color.YellowGreen;
+                }
+                else { Abnt_OpenDoorlock3.BackColor = DefaultBackColor; Abnt_CloseDoorlock3.BackColor = DefaultBackColor; }
+                if (dataDisplayStation2?.Lock2 == true)
+                    {
+                    Abnt_OpenDoorlock4.BackColor = Color.YellowGreen; Abnt_CloseDoorlock4.BackColor = Color.YellowGreen;
+                }
+                else { Abnt_OpenDoorlock4.BackColor = DefaultBackColor; Abnt_CloseDoorlock4.BackColor = DefaultBackColor; }
+
+                // khai báo trạng thái on/off cho điều khiển . Dùng Tag value change Door1_Open_Door
+                if (dataDisplayStation2?.Door1_Open_Door == true)
+                {
+                    AbntON2.BackColor = Color.GreenYellow;
+                    AbntOFF2.BackColor = DefaultBackColor;
+                }
+                else { AbntON2.BackColor = DefaultBackColor; AbntOFF2.BackColor = Color.Red; }
 
                 var dataDisplayStation3 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_3");
                 if (dataDisplayStation3?.Status_Open_Door1 == true)
@@ -148,6 +182,19 @@ namespace RegistrationForm1
                     Abnt_CloseDoorlock5.BackColor = Color.Red;
                 }
                 else { Abnt_CloseDoorlock5.BackColor = DefaultBackColor; }
+                if (dataDisplayStation3?.Lock1 == true)
+                    {
+                    Abnt_OpenDoorlock5.BackColor = Color.YellowGreen; Abnt_CloseDoorlock5.BackColor = Color.YellowGreen;
+                }
+                else { Abnt_OpenDoorlock5.BackColor = DefaultBackColor; Abnt_CloseDoorlock5.BackColor = DefaultBackColor; }
+
+                // khai báo trạng thái on/off cho điều khiển . Dùng Tag value change Door1_Open_Door
+                if (dataDisplayStation3?.Door1_Open_Door == true)
+                {
+                    AbntON3.BackColor = Color.GreenYellow;
+                    AbntOFF3.BackColor = DefaultBackColor;
+                }
+                else { AbntON3.BackColor = DefaultBackColor; AbntOFF3.BackColor = Color.Red; }
 
 
             }

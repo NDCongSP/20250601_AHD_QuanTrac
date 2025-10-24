@@ -328,7 +328,7 @@
             this.dataGridViewRainData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewRainData.Location = new System.Drawing.Point(491, 3);
             this.dataGridViewRainData.Name = "dataGridViewRainData";
-            this.dataGridViewRainData.Size = new System.Drawing.Size(567, 296);
+            this.dataGridViewRainData.Size = new System.Drawing.Size(410, 296);
             this.dataGridViewRainData.TabIndex = 184;
             // 
             // webView22
@@ -336,10 +336,10 @@
             this.webView22.AllowExternalDrop = true;
             this.webView22.CreationProperties = null;
             this.webView22.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView22.Location = new System.Drawing.Point(1059, 3);
+            this.webView22.Location = new System.Drawing.Point(902, 3);
             this.webView22.Margin = new System.Windows.Forms.Padding(6);
             this.webView22.Name = "webView22";
-            this.webView22.Size = new System.Drawing.Size(650, 296);
+            this.webView22.Size = new System.Drawing.Size(807, 296);
             this.webView22.TabIndex = 185;
             this.webView22.ZoomFactor = 1D;
             this.webView22.Click += new System.EventHandler(this.webView22_Click);
@@ -348,7 +348,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(18, 322);
+            this.label17.Location = new System.Drawing.Point(7, 322);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(134, 19);
             this.label17.TabIndex = 186;
@@ -358,7 +358,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(197, 323);
+            this.label18.Location = new System.Drawing.Point(186, 323);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(182, 19);
             this.label18.TabIndex = 187;

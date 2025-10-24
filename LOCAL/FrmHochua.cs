@@ -11,6 +11,7 @@ using System.Globalization; // Để sử dụng CultureInfo.InvariantCulture ch
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Threading.Tasks;
 
 
 
@@ -160,7 +161,7 @@ namespace RegistrationForm1
         }
 
 
-        private void LoadAllRainDataWithTimestamp()
+        private async void LoadAllRainDataWithTimestamp()
         {
             try
             {
@@ -169,50 +170,65 @@ namespace RegistrationForm1
 
                 using var dbContext = new ApplicationDbContext();
 
-                // Lấy bản ghi mới nhất
-                var latest = dbContext.FT03s
+                // Lấy bản ghi mới nhất 
+                var latest = await Task.Run(() => dbContext.FT03s
                     .Where(x => x.IsDeleted == false)
                     .OrderByDescending(x => x.CreateAt)
-                    .FirstOrDefault();
+                    .FirstOrDefault());
 
                 if (latest == null)
                 {
-                    dataGridViewRainData.DataSource = null;
+                    dataGridViewRainData.Invoke((MethodInvoker)(() =>
+                    {
+                        dataGridViewRainData.DataSource = null;
+                    }));
                     return;
                 }
 
+                //  Chuyển kiểu dữ liệu an toàn sang double
+                double ToDouble(object? value)
+                {
+                    if (value == null || value == DBNull.Value) return 0;
+                    try { return Convert.ToDouble(value); }
+                    catch { return 0; }
+                }
+
+                // Danh sách trạm mưa (tuple với ép kiểu an toàn)
+                var rainDataList = new List<(string Name, double Value, double Total, DateTime? Time)>();
+                rainDataList.Add(("Đầu mối HDT", ToDouble(latest.API_D_DM_HoDT), ToDouble(latest.API_D_DM_HoDT_Total), latest.CreateAt));
+                rainDataList.Add(("Minh hòa", ToDouble(latest.API_D_MinhHoa), ToDouble(latest.API_D_MinhHoa_Total), latest.CreateAt));
+                rainDataList.Add(("Minh tâm", ToDouble(latest.API_D_MinhTam), ToDouble(latest.API_D_MinhTam_Total), latest.CreateAt));
+                rainDataList.Add(("Lộc thiện", ToDouble(latest.API_D_LocThien), ToDouble(latest.API_D_LocThien_Total), latest.CreateAt));
+                rainDataList.Add(("Lộc ninh", ToDouble(latest.API_D_LocNinh), ToDouble(latest.API_D_LocNinh_Total), latest.CreateAt));
+                rainDataList.Add(("Lộc thành", ToDouble(latest.API_D_LocThanh), ToDouble(latest.API_D_LocThanh_Total), latest.CreateAt));
+                rainDataList.Add(("Thanh lương", ToDouble(latest.API_D_ThanhLuong), ToDouble(latest.API_D_ThanhLuong_Total), latest.CreateAt));
+                rainDataList.Add(("Tân hoà 1", ToDouble(latest.API_D_TanHoa1), ToDouble(latest.API_D_TanHoa1_Total), latest.CreateAt));
+                rainDataList.Add(("Tân hoà 2", ToDouble(latest.API_D_TanHoa2), ToDouble(latest.API_D_TanHoa2_Total), latest.CreateAt));
+                rainDataList.Add(("Kà tum", ToDouble(latest.API_D_KaTum), ToDouble(latest.API_D_KaTum_Total), latest.CreateAt));
+                rainDataList.Add(("Tân thành", ToDouble(latest.API_D_TanThanh), ToDouble(latest.API_D_TanThanh_Total), latest.CreateAt));
+                rainDataList.Add(("Đồng ban", ToDouble(latest.API_D_DongBan), ToDouble(latest.API_D_DongBan_Total), latest.CreateAt));
+                rainDataList.Add(("Tân hà", ToDouble(latest.API_D_TanHa), ToDouble(latest.API_D_TanHa_Total), latest.CreateAt));
+
+                // Tạo DataTable hiển thị
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Tên", typeof(string));
+                dt.Columns.Add("Tức thời", typeof(double));
+                dt.Columns.Add("Tổng tích luỹ", typeof(double));
+                dt.Columns.Add("Thời gian", typeof(DateTime));
+
+                foreach (var item in rainDataList)
+                {
+                    dt.Rows.Add(item.Name, item.Value, item.Total, item.Time);
+                }
+
+                //  Cập nhật giao diện
                 Globalvariable.InvokeIfRequired(this, () =>
                 {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("Tên", typeof(string));
-                    dt.Columns.Add("Tức thời", typeof(double));
-                    dt.Columns.Add("Tổng tích luỹ", typeof(double));
-                    dt.Columns.Add("Thời gian", typeof(DateTime));
-
-                    // Truyền đủ 4 tham số theo thứ tự
-                    dt.Rows.Add("Đầu mối HDT", latest.API_D_DM_HoDT, 0, latest.CreateAt);
-                    dt.Rows.Add("Đầu mối HDT Total ", latest.API_D_DM_HoDT_Total, 0, latest.CreateAt);
-                    dt.Rows.Add("Minh hòa", latest.API_D_MinhHoa, 0, latest.CreateAt);
-                    dt.Rows.Add("Minh hoà Total", latest.API_D_MinhHoa_Total, 0, latest.CreateAt);
-                    dt.Rows.Add("Minh tâm", latest.API_D_MinhTam, 0, latest.CreateAt);
-                    dt.Rows.Add("Lộc thiện", latest.API_D_LocThien, 0, latest.CreateAt);
-                    dt.Rows.Add("Lộc ninh", latest.API_D_LocNinh, 0, latest.CreateAt);
-                    dt.Rows.Add("Lộc thành", latest.API_D_LocThanh, 0, latest.CreateAt);
-                    dt.Rows.Add("Thanh lương", latest.API_D_ThanhLuong, 0, latest.CreateAt);
-                    dt.Rows.Add("Tân hoà 1", latest.API_D_TanHoa1, 0, latest.CreateAt);
-                    dt.Rows.Add("Tân hoà 2", latest.API_D_TanHoa2, 0, latest.CreateAt);
-                    dt.Rows.Add("Kà tum", latest.API_D_KaTum, 0, latest.CreateAt);
-                    dt.Rows.Add("Tân thành", latest.API_D_TanThanh, 0, latest.CreateAt);
-                    dt.Rows.Add("Đồng ban", latest.API_D_DongBan, 0, latest.CreateAt);
-                    dt.Rows.Add("Tân hà", latest.API_D_TanHa, 0, latest.CreateAt);
-                    // Nếu bạn có thêm API khác, thêm dòng tương tự:
-
-
                     dataGridViewRainData.DataSource = dt;
 
                     dataGridViewRainData.Columns["Tức thời"].DefaultCellStyle.Format = "N2";
                     dataGridViewRainData.Columns["Tổng tích luỹ"].DefaultCellStyle.Format = "N2";
-                    dataGridViewRainData.Columns["Thời gian"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
+                //    dataGridViewRainData.Columns["Thời gian"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
 
                     dataGridViewRainData.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                     dataGridViewRainData.Refresh();
@@ -220,13 +236,14 @@ namespace RegistrationForm1
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Lỗi SQL: " + ex.Message, "Lỗi Cơ sở Dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi Cơ sở Dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
 
@@ -333,7 +350,6 @@ namespace RegistrationForm1
             chart.ChartAreas.Add(ca);
 
             // Cấu hình InnerPlotPosition để đảm bảo vùng vẽ dữ liệu có đủ không gian
-            // Giá trị là % của ChartArea (Left, Top, Right, Bottom)
             ca.InnerPlotPosition.Auto = false;
             ca.InnerPlotPosition.Width = 95;  // Tăng nhẹ chiều rộng để có thêm không gian cho nhãn cuối
             ca.InnerPlotPosition.Height = 80;
@@ -341,8 +357,6 @@ namespace RegistrationForm1
             ca.InnerPlotPosition.Y = 8;
             // Đặt màu nền cho ChartArea để đảm bảo masking layer hoạt động chính xác
             ca.BackColor = Color.GhostWhite;
-
-
             // Thêm sự kiện MouseMove cho chart để hiển thị giá trị Z/W và tọa độ khi rê chuột
             chart.MouseMove += chart_MouseMove;
             // Thêm sự kiện MouseLeave để ẩn hoặc reset nhãn khi chuột rời biểu đồ
@@ -372,15 +386,15 @@ namespace RegistrationForm1
             ca.AxisX.LineColor = Color.Gainsboro; // Làm mờ đường trục X
             ca.AxisX.LineDashStyle = ChartDashStyle.Dash; // Đặt nét đứt cho đường trục X
 
-            ca.AxisX.MajorGrid.IntervalType = DateTimeIntervalType.Days;
-            ca.AxisX.MajorGrid.Interval = 10;
+            ca.AxisX.MajorGrid.IntervalType = DateTimeIntervalType.Months;
+            ca.AxisX.MajorGrid.Interval = 1;
 
             ca.AxisX.MajorTickMark.Enabled = true;
-            ca.AxisX.MajorTickMark.IntervalType = DateTimeIntervalType.Days;
-            ca.AxisX.MajorTickMark.Interval = 10;
+            ca.AxisX.MajorTickMark.IntervalType = DateTimeIntervalType.Months;
+            ca.AxisX.MajorTickMark.Interval = 1;
 
-            ca.AxisX.LabelStyle.IntervalType = DateTimeIntervalType.Days;
-            ca.AxisX.LabelStyle.Interval = 10;
+            ca.AxisX.LabelStyle.IntervalType = DateTimeIntervalType.Months;
+            ca.AxisX.LabelStyle.Interval = 1;
             ca.AxisX.LabelStyle.IsStaggered = true;
             ca.AxisX.LabelStyle.Angle = -45;
             ca.AxisX.LabelStyle.Font = new Font("Arial", 8);
@@ -408,6 +422,9 @@ namespace RegistrationForm1
             legend.Alignment = StringAlignment.Center;
             chart.Legends.Add(legend);
 
+
+
+
             // Khởi tạo Dictionary để lưu trữ các Series và các thuộc tính gốc để ẩn/hiện đường
             chartSeries = new Dictionary<string, Series>();
             originalBorderWidths = new Dictionary<string, int>();
@@ -417,77 +434,65 @@ namespace RegistrationForm1
 
             // Dữ liệu trục X cho các series cứng (local copy)
             DateTime[] fixedDates = {
-                new DateTime(baseYear, 7, 1),  new DateTime(baseYear, 7, 16), new DateTime(baseYear, 7, 31),
-                new DateTime(baseYear, 8, 1), new DateTime(baseYear, 8, 16), new DateTime(baseYear, 8, 31),
-                new DateTime(baseYear, 9, 1),  new DateTime(baseYear, 9, 16), new DateTime(baseYear, 9, 30),
-                new DateTime(baseYear, 10, 1), new DateTime(baseYear, 10, 16), new DateTime(baseYear, 10, 31),
-                new DateTime(baseYear, 11, 1), new DateTime(baseYear, 12, 1), new DateTime(baseYear, 12, 11), new DateTime(baseYear, 12, 21),
-                new DateTime(baseYear + 1, 1, 1), new DateTime(baseYear + 1, 1, 11), new DateTime(baseYear + 1, 1, 21),
-                new DateTime(baseYear + 1, 2, 1), new DateTime(baseYear + 1, 2, 11), new DateTime(baseYear + 1, 2, 21),
-                new DateTime(baseYear + 1, 3, 1), new DateTime(baseYear + 1, 3, 11), new DateTime(baseYear + 1, 3, 21),
-                new DateTime(baseYear + 1, 4, 1), new DateTime(baseYear + 1, 4, 11), new DateTime(baseYear + 1, 4, 21),
-                new DateTime(baseYear + 1, 5, 1), new DateTime(baseYear + 1, 5, 11), new DateTime(baseYear + 1, 5, 21),
-                new DateTime(baseYear + 1, 6, 1), new DateTime(baseYear + 1, 6, 11), new DateTime(baseYear + 1, 6, 21), new DateTime(baseYear + 1, 6, 30)
+               
+                new DateTime(startDate.Year,7,1), new DateTime(startDate.Year,7,15), new DateTime(startDate.Year,7,16),
+            new DateTime(startDate.Year,7,31), new DateTime(startDate.Year,8,1), new DateTime(startDate.Year,8,15),
+            new DateTime(startDate.Year,8,16), new DateTime(startDate.Year,8,31), new DateTime(startDate.Year,9,1),
+            new DateTime(startDate.Year,9,15), new DateTime(startDate.Year,9,16), new DateTime(startDate.Year,9,30),
+            new DateTime(startDate.Year,10,1), new DateTime(startDate.Year,10,15), new DateTime(startDate.Year,10,16),
+            new DateTime(startDate.Year,10,31), new DateTime(startDate.Year,11,1), new DateTime(startDate.Year,12,1),
+            new DateTime(startDate.Year,12,11), new DateTime(startDate.Year,12,21), new DateTime(startDate.Year+1,1,1),
+            new DateTime(startDate.Year+1,1,11), new DateTime(startDate.Year+1,1,21), new DateTime(startDate.Year+1,2,1),
+            new DateTime(startDate.Year+1,2,11), new DateTime(startDate.Year+1,2,21), new DateTime(startDate.Year+1,3,1),
+            new DateTime(startDate.Year+1,3,11), new DateTime(startDate.Year+1,3,21), new DateTime(startDate.Year+1,4,1),
+            new DateTime(startDate.Year+1,4,11), new DateTime(startDate.Year+1,4,21), new DateTime(startDate.Year+1,5,1),
+            new DateTime(startDate.Year+1,5,11), new DateTime(startDate.Year+1,5,21), new DateTime(startDate.Year+1,6,1),
+            new DateTime(startDate.Year+1,6,11), new DateTime(startDate.Year+1,6,21), new DateTime(startDate.Year+1,6,30)
+
             };
-           
+
+
             // GÁN DỮ LIỆU TỪ CÁC MẢNG CỤC BỘ VÀO CÁC MẢNG CẤP LỚP
             fixedDatesForCurves = fixedDates; // Gán mảng DateTime
-                                              // Dữ liệu HCCN (35 phần tử)
-                                              // Dữ liệu HCCN (35 phần tử)
+                                             
             hccnValuesForCurves = new double[] {
-                17.00,17.17,17.33,17.33,17.57,17.80,17.80,18.68,19.56,19.56,
-                20.38,21.20,21.20,21.67,21.60,21.55,21.50,21.21,21.03,20.81,
-                20.51,20.21,19.97,19.46,19.03,18.59,18.28,17.98,17.70,17.48,
-                17.45,17.40,17.38,17.35,17.00
+                17,17.10,17.17,17.25,17.33,17.60,17.57,17.70,17.8,18.60,18.68,19.50,19.56,20.25,20.38,21.10,21.2,21.67,21.6,21.55,21.5,
+                21.21,21.03,20.81,20.51,20.21,19.97,19.46,19.03,18.59,18.28,17.98,17.7,17.48,17.45,17.4,17.38,17.35,17
             };
             // Dữ liệu DPPH (35 phần tử)
             dpphValuesForCurves = new double[] {
-                19.00,19.24,19.40,19.47,19.96,20.40,20.45,21.35,22.15,22.24,
-                23.09,23.80,23.93,24.40,24.40,24.40,24.40,24.19,23.99,23.80,
-                23.34,22.92,22.62,22.12,21.66,21.21,20.84,20.51,20.21,20.03,
-                19.86,19.69,19.44,19.21,19.00
+                19,19.20,19.24,19.40,19.47,19.90,19.96,20.40,20.45,21.30,21.35,22.15,22.24,23.00,23.09,23.80,23.93,24.4,24.4,24.4,24.4,
+                24.19,23.99,23.8,23.34,22.92,22.62,22.12,21.66,21.21,20.84,20.51,20.21,20.03,19.86,19.69,19.44,19.21,19
             };
             // Dữ liệu ĐPL (Đã điều chỉnh thành 39 phần tử)
             dplValuesForCurves = new double[] {
-                20.30,21.20,21.20,22.10,22.70,22.70,23.30,23.65,23.65,24.00,
-                24.00,24.30,24.40,24.40,24.40,
-                
-                // Corrected to 39 elements
+                20.30,20.30,21.20,21.20,22.10,22.10,22.70,22.70,23.30,23.30,23.65,23.65,
+                24.00,24.00,24.40,24.40,24.40,24.40
+
+
             };
             // Dữ liệu MNDBT (35 phần tử)
             double[] mndbtValues = {
-                24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,
-                24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,
-                24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,24.40,
-                24.40,24.40,24.40,24.40,24.40
+                24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,
+                24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4,24.4
             };
             // Dữ liệu MNTK (3 phần tử)
             double[] mntkValues = {
-                25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,
-                25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,
-                25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,25.10,
-                25.10,25.10,25.10,25.10,25.10
+                25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,
+                25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1,25.1
             };
             // Dữ liệu MNKT (35 phần tử)
             double[] mnktValues = {
-                26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,
-                26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,
-                26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,
-                26.92,26.92,26.92,26.92,26.92
+                26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,
+                26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92,26.92
             };
             // Dữ liệu CTĐĐ (35 phần tử)
             double[] ctddValues = {
-                28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,
-                28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,
-                28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,28.00,
-                28.00,28.00,28.00,28.00,28.00
+                28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28
             };
             // Dữ liệu MNC (35 phần tử)
             double[] mncValues = {
-                17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,
-                17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,
-                17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,17.00,
-                17.00,17.00,17.00,17.00,17.00
+                17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17
             };
             // Tính toán giá trị mực nước thấp nhất của đường HCCN (17.00m)
             double minHCCNValue = hccnValuesForCurves.Min();
@@ -583,7 +588,7 @@ namespace RegistrationForm1
                     areaSeriesCBlue.Points.Add(new DataPoint(fixedDatesForCurves[i].ToOADate(), new double[] { double.NaN }));
                 }
             }
-
+           
             // Thêm Series vào biểu đồ
             chart.Series.Add(areaSeriesCBlue);
             chartSeries.Add(areaSeriesCBlue.Name, areaSeriesCBlue);
@@ -596,8 +601,6 @@ namespace RegistrationForm1
             chart.Series.Add(areaSeriesARed); // Vùng A (Hạn chế cấp nước) - Bottommost
             chartSeries.Add(areaSeriesARed.Name, areaSeriesARed);
             originalColors.Add(areaSeriesARed.Name, Color.FromArgb(80, Color.Red)); // Lưu màu sắc gốc (trong suốt)
-
-
 
 
             // Thêm series MNC và lưu vào dictionary
@@ -640,30 +643,45 @@ namespace RegistrationForm1
             chart.Series.Add(dpph);
             chartSeries.Add(dpph.Name, dpph);
 
-            // Dữ liệu Fllow_TL_CDD sẽ chỉ được đọc một lần và hiển thị trên biểu đồ (Không hiển thị nhãn điểm trực tiếp)
-            var sqlData = GetFllowTlCddDataFromSql();
-            Series fllowTlCdd = CreateSeries("Fllow_TL_CDD", Color.Blue, MarkerStyle.Diamond, sqlData.Item1, sqlData.Item2.ToArray());
-            chart.Series.Add(fllowTlCdd);
-            chartSeries.Add(fllowTlCdd.Name, fllowTlCdd);
+            // Dữ liệu Fllow_Ho_Final sẽ chỉ được đọc một lần và hiển thị trên biểu đồ (Không hiển thị nhãn điểm trực tiếp)
 
 
-            // Cập nhật lblZ với giá trị Fllow_TL_CDD mới nhất và giá trị W tương ứng
-            if (sqlData.Item2.Any())
+            // --- Lấy dữ liệu gốc từ SQL
+            var sqlData = GetFllow_Ho_FinalDataFromSql();
+            Series Fllow_Ho_Final = CreateSeries("Fllow_Ho_Final", Color.Blue, MarkerStyle.Diamond, sqlData.Item1, sqlData.Item2.ToArray());
+
+            // BƯỚC SỬA LỖI QUAN TRỌNG: Kiểm tra xem có dữ liệu hợp lệ (khác NaN) không
+            bool hasValidData = sqlData.Item2.Any(v => !double.IsNaN(v));
+
+            if (!hasValidData)
             {
-                double latestZ = sqlData.Item2.Last(); // Lấy giá trị mực nước mới nhất
-                double interpolatedW = InterpolateW(latestZ); // Nội suy giá trị W
+                // Nếu toàn bộ series rỗng (chỉ có NaN), ẩn series và chú thích để ngăn nó vẽ tại Y=0
+                Fllow_Ho_Final.Enabled = false; // Tắt series
+                Fllow_Ho_Final.IsVisibleInLegend = false; // Ẩn chú thích
+                Console.WriteLine("⚠️ Fllow_Ho_Final chỉ có giá trị NaN. Series đã bị ẩn.");
+            }
+
+            chart.Series.Add(Fllow_Ho_Final);
+            chartSeries.Add(Fllow_Ho_Final.Name, Fllow_Ho_Final);
+
+            // Cập nhật lblZ cần xử lý NaN
+            if (hasValidData)
+            {
+                // Lấy giá trị mực nước mới nhất khác NaN
+                double latestZ = sqlData.Item2.Last(v => !double.IsNaN(v));
+                double interpolatedW = InterpolateW(latestZ);
                 lblZ.Text = $"Mực nước hiện tại: {latestZ:F2}m ⇄ Dung tích: {interpolatedW:F2}x10⁶m³";
             }
             else
             {
-                lblZ.Text = "Không có dữ liệu Fllow_TL_CDD từ SQL.";
+                lblZ.Text = "Không có dữ liệu Fllow_Ho_Final từ SQL.";
             }
 
             // --- Thêm Annotation cho Vùng A ---
             TextAnnotation annotationA = new TextAnnotation();
             annotationA.Text = "Vùng A";
             annotationA.ForeColor = Color.Black;
-            annotationA.Font = new Font("Arial", 9, FontStyle.Bold);
+            annotationA.Font = new Font("Arial", 14, FontStyle.Bold);
 
             // Tính toán vị trí X ở giữa trục thời gian
             double xPosA = fixedDatesForCurves[fixedDatesForCurves.Length / 2].ToOADate();
@@ -688,7 +706,7 @@ namespace RegistrationForm1
             TextAnnotation annotationB = new TextAnnotation();
             annotationB.Text = "Vùng B";
             annotationB.ForeColor = Color.Black;
-            annotationB.Font = new Font("Arial", 9, FontStyle.Bold);
+            annotationB.Font = new Font("Arial", 14, FontStyle.Bold);
 
             // Tính toán vị trí X ở giữa trục thời gian
             double xPosB = fixedDatesForCurves[fixedDatesForCurves.Length / 2].ToOADate();
@@ -713,7 +731,7 @@ namespace RegistrationForm1
             TextAnnotation annotationC1 = new TextAnnotation();
             annotationC1.Text = "Vùng C";
             annotationC1.ForeColor = Color.Black;
-            annotationC1.Font = new Font("Arial", 9, FontStyle.Bold);
+            annotationC1.Font = new Font("Arial", 14, FontStyle.Bold);
 
             // Tính toán vị trí X ở giữa một phần tư đầu tiên của trục thời gian
             double xPosC1 = fixedDatesForCurves[fixedDatesForCurves.Length / 8].ToOADate();
@@ -739,7 +757,7 @@ namespace RegistrationForm1
             TextAnnotation annotationC2 = new TextAnnotation();
             annotationC2.Text = "Vùng C";
             annotationC2.ForeColor = Color.Black;
-            annotationC2.Font = new Font("Arial", 9, FontStyle.Bold);
+            annotationC2.Font = new Font("Arial", 14, FontStyle.Bold);
 
             // Tính toán vị trí X ở giữa một phần tư cuối cùng của trục thời gian
             double xPosC2 = fixedDatesForCurves[fixedDatesForCurves.Length * 3 / 4].ToOADate();
@@ -763,7 +781,11 @@ namespace RegistrationForm1
 
 
         }
-        
+       
+
+       
+
+
         private void chart_MouseClick(object sender, MouseEventArgs e)
         {
             // Thực hiện HitTest để xác định phần tử được click
@@ -999,7 +1021,7 @@ namespace RegistrationForm1
 
 
                         // Cập nhật Label lblToaDo với tọa độ X, Y, W nội suy và thông tin vùng
-                        lblToaDo.Text = $"X: {xDate:dd/MM/yyyy HH:mm:ss} Z: {zValue:F2}m ⇄ W:{interpolatedW:F2}x10⁶m³{regionInfo}";
+                        lblToaDo.Text = $"Ngày: {xDate:dd/MM/yyyy HH:mm:ss} Z: {zValue:F2}m ⇄ W:{interpolatedW:F2}x10⁶m³{regionInfo}";
                     }
                     else
                     {
@@ -1027,81 +1049,60 @@ namespace RegistrationForm1
             lblToaDo.BringToFront();
         }
 
-        private Tuple<List<DateTime>, List<double>> GetFllowTlCddDataFromSql()
+        // Thay đổi trả về để sử dụng double.NaN (giúp biểu đồ ngắt đường)
+        private Tuple<List<DateTime>, List<double>> GetFllow_Ho_FinalDataFromSql()
         {
+            List<DateTime> dates = new List<DateTime>();
+            List<double> values = new List<double>();
+
+            // Đặt ngưỡng epsilon cho việc so sánh số thực
+            const double EPSILON = 0.000001;
+
             try
             {
-                using var dbContext = new ApplicationDbContext();
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    // 1. TRUY VẤN TẤT CẢ các bản ghi (không lọc theo Fllow_Ho_Final.Value)
+                    var allRecords = dbContext.FT03s
+                        .Where(x =>
+                            x.IsDeleted == false &&
+                            x.StationName == "Location_Info")
+                        .OrderBy(x => x.CreateAt)
+                        .AsEnumerable() // Chuyển sang xử lý trên bộ nhớ để dùng Math.Abs nếu cần
+                        .ToList();
 
-                var query = dbContext.FT03s
-                    .Where(x =>
-                        x.IsDeleted == false &&   // ✅ sửa: so sánh rõ ràng với false
-                        x.StationName == "Location_Info" &&
-                        x.API_Fllow_TL_CDD.HasValue &&
-                        x.API_Fllow_TL_CDD.Value != 0)
-                    .OrderBy(x => x.CreateAt)
-                    .Select(x => new
+                    // 2. XỬ LÝ TRONG C# (CHUYỂN 0 HOẶC NULL THÀNH double.NaN)
+                    foreach (var item in allRecords)
                     {
-                        Date = x.CreateAt,
-                        Value = x.API_Fllow_TL_CDD.Value
-                    })
-                    .ToList();
+                        dates.Add(item.CreateAt ?? DateTime.MinValue);
 
-                var dates = query.Select(x => x.Date ?? DateTime.MinValue).ToList();
-                var values = query.Select(x => x.Value).ToList();
+                        // Kiểm tra: Nếu có giá trị và giá trị đó khác 0 (vượt ngưỡng EPSILON)
+                        if (item.Fllow_Ho.HasValue && Math.Abs(item.Fllow_Ho.Value) > EPSILON)
+                        {
+                            values.Add(item.Fllow_Ho.Value);
+                        }
+                        else
+                        {
+                            // Trường hợp này bao gồm: 
+                            // a) Fllow_Ho_Final == NULL
+                            // b) Fllow_Ho_Final == 0 (hoặc rất gần 0)
+                            // -> Dùng double.NaN để biểu đồ ngắt đường
+                            values.Add(double.NaN);
+                        }
+                    }
 
-                return Tuple.Create(dates, values);
+                    Console.WriteLine($"✅ Đọc được {values.Count} bản ghi. {values.Count(v => !double.IsNaN(v))} điểm hợp lệ (khác 0/NULL).");
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi đọc dữ liệu 'Fllow_TL_CDD' từ SQL: {ex.Message}");
-                return Tuple.Create(new List<DateTime>(), new List<double>());
+                Console.WriteLine($"❌ Lỗi khi đọc dữ liệu Fllow_Ho_Final: {ex.Message}");
+                // dates và values giữ lại danh sách rỗng
             }
+
+            // 3. TRẢ VỀ GIÁ TRỊ CUỐI CÙNG
+            return Tuple.Create(dates, values);
         }
-
-
-        //private Tuple<List<DateTime>, List<double>> GetFllowTlCddDataFromSql()
-        //{
-        //    List<DateTime> dates = new List<DateTime>();
-        //    List<double> values = new List<double>();
-
-        //    try
-        //    {
-        //        using var dbContext = new ApplicationDbContext();
-
-        //        // Lấy tất cả các bản ghi thỏa mãn điều kiện và sắp xếp chúng theo thời gian.
-        //        // Biểu đồ xu hướng cần dữ liệu được sắp xếp theo thời gian.
-        //        var records = dbContext.FT03s
-        //            .Where(x => x.IsDeleted == false &&
-        //                       (x.StationName == "Station_1" || x.StationName == "Station_2" ||
-        //                        x.StationName == "Station_3" || x.StationName == "Location_Info"))
-        //            .OrderBy(x => x.CreateAt) // Sắp xếp theo thời gian để tạo chuỗi dữ liệu cho biểu đồ
-        //            .ToList();
-
-        //        // Lặp qua các bản ghi và điền dữ liệu vào danh sách.
-        //        foreach (var record in records)
-        //        {
-        //            // Kiểm tra nếu giá trị không phải là null và khác 0 trước khi thêm vào danh sách.
-        //            if (!(!record.API_Fllow_TL_CDD.HasValue || record.API_Fllow_TL_CDD.Value == 0))
-        //            {
-        //                dates.Add((DateTime)record.CreateAt);
-        //                values.Add(record.API_Fllow_TL_CDD.Value);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Xử lý lỗi trong trường hợp có vấn đề khi truy vấn database.
-        //        // Có thể ghi log lỗi thay vì hiển thị MessageBox trong môi trường thực tế.
-        //        Console.WriteLine($"Lỗi khi đọc dữ liệu 'Fllow_TL_CDD' từ SQL: {ex.Message}");
-        //        // Trả về danh sách rỗng để tránh lỗi NullReferenceException.
-        //        return Tuple.Create(new List<DateTime>(), new List<double>());
-        //    }
-
-        //    return Tuple.Create(dates, values);
-        //}
-
-
 
         private double InterpolateW(double zValue)
         {
