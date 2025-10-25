@@ -1,0 +1,83 @@
+@page "/camera"
+@using Domain
+@inject IFT01 _ft01Service
+@inject IJSRuntime _jsRuntime
+
+@if (_isLoading)
+{
+                 <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 10px;" />
+                 <p class="rz-text-center">Đang tải cấu hình...</p>
+}
+else if ((_cameraConfigs?.Count ?? 0) == 0)
+{
+                 <RadzenAlert Severity="AlertSeverity.Info">Chưa có cấu hình camera nào (hoặc tất cả đang tắt).</RadzenAlert>
+}
+else
+{
+                 <div class="row">
+                     @foreach (var cam in _cameraConfigs!)
+                     {
+                                     var vidId = GetVideoId(cam);
+                                     <div class="col-12 col-md-6 col-lg-4 rz-mb-3">
+                                         <RadzenCard Style="height: 100%;">
+                                             <RadzenStack Orientation="Orientation.Vertical" Gap="6px">
+                                                 <RadzenText TextStyle="TextStyle.Subtitle1" Class="rz-mb-1">@(!string.IsNullOrWhiteSpace(cam.CameraTital) ? cam.CameraTital : "Camera")</RadzenText>
+                                                 <video id="@vidId" controls autoplay muted style="width: 100%; height: 260px; background:#000;"></video>
+                                                 <RadzenText TextStyle="TextStyle.Caption" Class="rz-text-secondary rz-mt-1">@cam.HlsStreamUrl1</RadzenText>
+                                             </RadzenStack>
+                                         </RadzenCard>
+                                     </div>
+                     }
+                 </div>
+}
+
+@code {
+    private bool _isLoading = true;
+    private List<CameraConfigModel>? _cameraConfigs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            var result = await _ft01Service.GetConfigAsync();
+            if (result.Succeeded && result.Data != null)
+            {
+                _cameraConfigs = result.Data.CameraConfigs?
+                    .Where(c => c != null && c.Actived && !string.IsNullOrWhiteSpace(c.HlsStreamUrl1))
+                    .ToList() ?? new List<CameraConfigModel>();
+            }
+            else
+            {
+                _cameraConfigs = new List<CameraConfigModel>();
+            }
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && _cameraConfigs != null)
+        {
+            foreach (var cam in _cameraConfigs)
+            {
+                var id = GetVideoId(cam);
+                await _jsRuntime.InvokeVoidAsync("loadHlsPlayer", id, cam.HlsStreamUrl1);
+            }
+        }
+    }
+
+    private static string GetVideoId(CameraConfigModel cam)
+    {
+        var raw = cam.CameraTital;
+        var norm = string.IsNullOrWhiteSpace(raw)
+            ? Guid.NewGuid().ToString("N")
+            : new string(raw.Where(char.IsLetterOrDigit).ToArray());
+        return $"cam-video-{norm}";
+    }
+}
+
+

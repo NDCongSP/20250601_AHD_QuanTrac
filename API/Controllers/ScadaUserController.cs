@@ -21,5 +21,11 @@ namespace API.Controllers
             return await _repository.SScadaUsers.ChangePasswordAsync(model);
         }
 
+        [HttpPost(ApiRoutes.ScadaUser.ResetPassword)]
+        public async Task<Result<bool>> ResetPasswordAsync([Path] Guid id)
+        {
+            return await _repository.SScadaUsers.ResetPasswordAsync(id);
+        }
+
     }
 }

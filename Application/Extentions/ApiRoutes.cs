@@ -88,6 +88,7 @@
         {
             public const string BasePath = "api/FT03";
             public const string GetByFromDateToDateAsync = "GetByFromDateToDateAsync";
+            public const string GetSampled = "GetSampled";
 
         }
 
@@ -115,6 +116,7 @@
         {
             public const string BasePath = "api/ScadaUser";
             public const string ChangePassword = "change-password";
+            public const string ResetPassword = "reset-password/{id}";
         }
     }
 }

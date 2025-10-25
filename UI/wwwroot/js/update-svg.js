@@ -9,8 +9,6 @@
  */
 function updateElement(element, value, { decimals = 1, prefix = '', suffix = '' } = {}) {
     if (!element) return;
-    if (element.id.includes('STT'))
-        console.log(`${element} :${value}`)
     if (typeof value === 'number') {
         // Only show decimals if the number has a fractional part
         //const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(decimals);
@@ -190,3 +188,78 @@ function updateSvgHoChua(location) {
         _elementId.innerHTML = calc.q_cs3;
     }
 }
+
+// Dashboard interop helpers
+window.dashboardSetRef = function (ref) {
+    window.__dashboardRef = ref;
+};
+
+window.handleSvgClick = function (value) {
+    try {
+        if (window.__dashboardRef && typeof window.__dashboardRef.invokeMethodAsync === 'function') {
+            window.__dashboardRef.invokeMethodAsync('OnSvgClicked', value);
+        } else {
+            console.warn('dashboardSetRef not initialized yet');
+        }
+    } catch (err) {
+        console.error('handleSvgClick error', err);
+    }
+};
+
+// FT03 Report (Chart.js hourly chart)
+window.ft03Report = (function () {
+    let chart;
+    function renderHourlyChart(points) {
+        const el = document.getElementById('ft03HourlyChart');
+        if (!el) return;
+        const labels = (points || []).map(p => p.label);
+        const data = (points || []).map(p => (p && p.value != null && isFinite(p.value)) ? Number(p.value) : null);
+
+        if (chart) {
+            chart.destroy();
+        }
+
+        chart = new Chart(el.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Giá trị',
+                    data,
+                    borderColor: '#0078D7',
+                    backgroundColor: '#0078D733',
+                    borderWidth: 2,
+                    pointRadius: 2,
+                    pointHoverRadius: 4,
+                    tension: 0.3,
+                    spanGaps: true // nối qua các điểm null
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: ctx => ctx[0]?.label || '',
+                            label: ctx => `Giá trị: ${ctx.parsed.y?.toFixed(2)}`
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: '#eee' },
+                        title: { display: true, text: 'Giờ' }
+                    },
+                    y: {
+                        grid: { color: '#eee' },
+                        title: { display: true, text: 'Giá trị' }
+                    }
+                },
+                elements: { line: { tension: 0.3 } }
+            }
+        });
+    }
+    return { renderHourlyChart };
+})();

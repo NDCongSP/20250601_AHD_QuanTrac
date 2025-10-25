@@ -3,11 +3,12 @@
 @using UI.StaticClass
 @attribute [Authorize(Policy = "Admin")]
 <style>
-    body{
-        font-family:'Times New Roman' !important;
+    body {
+        font-family: 'Times New Roman' !important;
     }
 </style>
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
+
     <figure>
         <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
             <RadzenRow>
@@ -18,10 +19,11 @@
         </RadzenStack>
     </figure>
 </RadzenPanel>
-
 @code {
     string _svg;
     private System.Timers.Timer _timer;
+
+    private DotNetObjectReference<UI.Pages.Dashboard.Index> _selfRef;
 
     protected override void OnInitialized()
     {
@@ -40,6 +42,15 @@
         #endregion
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _selfRef = DotNetObjectReference.Create(this);
+            await _jsRuntime.InvokeVoidAsync("dashboardSetRef", _selfRef);
+        }
+    }
+
     private async void RefreshData(object? sender, ElapsedEventArgs? e)
     {
         try
@@ -51,9 +62,43 @@
         }
         catch { }
     }
+    [JSInvokable]
+    public async Task OnSvgClicked(string value)
+    {
+        Console.WriteLine($"Clicked: {value}");
+        await OpenFT03ReportAsync(value, 10);
+    }
 
     public void Dispose()
     {
         _timer.Dispose();
+        _selfRef?.Dispose();
+    }
+
+    public async Task OpenFT03ReportAsync(string paramName, int frequency = 10)
+    {
+        await _dialogService.OpenAsync<UI.Pages.Dashboard.FT03ReportDialog>(
+        $"Báo cáo {GetDisplayName(paramName)}",
+        new Dictionary<string, object>()
+        {
+{ nameof(FT03ReportDialog.ParamName), paramName },
+{ nameof(FT03ReportDialog.Frequency), frequency }
+        },
+        new DialogOptions() { Width = "1200px", Height = "700px" }
+        );
+    }
+
+    private static string GetDisplayName(string paramName)
+    {
+        return paramName switch
+        {
+            "API_Fllow_BinhNham" => "TRẠM BÌNH NHÂM",
+            "API_Fllow_BenSuc" => "TRẠM BẾN SÚC",
+            "API_Fllow_DauTieng" => "TRẠM TV DẦU TIẾNG",
+            "API_Fllow_SonDai" => "TRẠM SƠN ĐÀI",
+            "Fllow_Ho" => "MN HỒ (TL-TXL)",
+            "API_Fllow_TL_CDD" => "MN HỒ (TL-CDD)",
+            _ => paramName
+        };
     }
 }

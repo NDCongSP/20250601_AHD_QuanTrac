@@ -75,7 +75,7 @@ public class RepositoryScadaUserServices(ApplicationDbContext dbContext, IHttpCo
             var item = await dbContext.ScadaUsers.FindAsync(id);
             if (item == null)
             {
-            return await Result<ScadaUser>.FailAsync("ScadaUser.NotFound");
+                return await Result<ScadaUser>.FailAsync("ScadaUser.NotFound");
             }
             return await Result<ScadaUser>.SuccessAsync(item);
         }
@@ -92,7 +92,7 @@ public class RepositoryScadaUserServices(ApplicationDbContext dbContext, IHttpCo
             model.Password = BCryptHelper.HashPassword(model.Password);
             model.CreateAt = DateTime.Now;
             model.CreateOperatorId = contextAccessor.HttpContext.User.Identity.Name;
-            
+
             await dbContext.ScadaUsers.AddAsync(model);
             await dbContext.SaveChangesAsync();
             return await Result<ScadaUser>.SuccessAsync(model);
@@ -121,9 +121,9 @@ public class RepositoryScadaUserServices(ApplicationDbContext dbContext, IHttpCo
 
             dbContext.Entry(existingItem).CurrentValues.SetValues(model);
             dbContext.Entry(existingItem).State = EntityState.Modified;
-            
+
             await dbContext.SaveChangesAsync();
-            
+
             return await Result<ScadaUser>.SuccessAsync(existingItem);
         }
         catch (Exception ex)
@@ -139,7 +139,7 @@ public class RepositoryScadaUserServices(ApplicationDbContext dbContext, IHttpCo
             var user = await dbContext.ScadaUsers.FindAsync(Guid.Parse(model.Id));
             if (user == null)
             {
-            return await Result<ScadaUser>.FailAsync("ScadaUser.NotFound");
+                return await Result<ScadaUser>.FailAsync("ScadaUser.NotFound");
             }
             if (!BCryptHelper.VerifyPassword(model.CurrentPassword, user.Password))
             {
@@ -154,6 +154,30 @@ public class RepositoryScadaUserServices(ApplicationDbContext dbContext, IHttpCo
         catch (Exception ex)
         {
             return await Result<ScadaUser>.FailAsync($"Failed to change password: {ex.Message}");
+        }
+    }
+
+    public async Task<Result<bool>> ResetPasswordAsync(Guid id)
+    {
+        try
+        {
+            var user = await dbContext.ScadaUsers.FindAsync(id);
+            if (user == null)
+            {
+                return await Result<bool>.FailAsync("ScadaUser.NotFound");
+            }
+
+            user.Password = BCryptHelper.HashPassword("123@456");
+            user.UpdateAt = DateTime.Now;
+            user.UpdateOperatorId = contextAccessor.HttpContext.User.Identity.Name;
+
+            await dbContext.SaveChangesAsync();
+
+            return await Result<bool>.SuccessAsync(true, "Password reset successfully");
+        }
+        catch (Exception ex)
+        {
+            return await Result<bool>.FailAsync($"Failed to reset password: {ex.Message}");
         }
     }
 }

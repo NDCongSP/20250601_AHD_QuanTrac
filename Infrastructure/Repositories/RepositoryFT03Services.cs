@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using RestEase;
 using System.Globalization;
+using System.Reflection;
 
 namespace Infrastructure.Repositories
 {
@@ -84,6 +85,53 @@ namespace Infrastructure.Repositories
                 var err = new ErrorResponse();
                 err.Errors.Add("Error", $"{ex.Message} | {ex.InnerException}");
                 return await Result<List<FT03DataPoint>>.FailAsync(JsonConvert.SerializeObject(err));
+            }
+        }
+
+        public async Task<Result<List<TimeValueResponse>>> GetSampledAsync(string paramName, int frequency = 10)
+        {
+            try
+            {
+                if (frequency <= 0) frequency = 10;
+
+                var prop = typeof(FT03).GetProperty(paramName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                if (prop == null || (prop.PropertyType != typeof(double?) && prop.PropertyType != typeof(double)))
+                {
+                    return await Result<List<TimeValueResponse>>.FailAsync($"Invalid paramName: {paramName}");
+                }
+
+                var now = DateTime.Now;
+                var alignedNow = new DateTime(now.Year, now.Month, now.Day, now.Hour, (now.Minute / frequency) * frequency, 0);
+                var from = alignedNow.AddDays(-1);
+                var to = alignedNow.AddMinutes(-1);
+
+                var items = await dbContext.FT03s.AsNoTracking()
+                    .Where(x => x.CreateAt.HasValue && x.CreateAt.Value >= from && x.CreateAt.Value <= to)
+                    .Select(x => new { x.CreateAt, Value = (double?)prop.GetValue(x) })
+                    .ToListAsync();
+
+                var perMinuteLatest = items
+                    .Select(r => new
+                    {
+                        Timestamp = r.CreateAt!.Value,
+                        Minute = new DateTime(r.CreateAt.Value.Year, r.CreateAt.Value.Month, r.CreateAt.Value.Day, r.CreateAt.Value.Hour, r.CreateAt.Value.Minute, 0),
+                        r.Value
+                    })
+                    .Where(t => t.Value.HasValue)
+                    .GroupBy(t => t.Minute)
+                    .Select(g => g.OrderByDescending(z => z.Timestamp).First())
+                    .Where(t => ((int)(t.Minute - from).TotalMinutes % frequency) == 0)
+                    .OrderBy(t => t.Timestamp)
+                    .Select(t => new TimeValueResponse { CreatedAt = t.Timestamp, Value = t.Value.HasValue ? Math.Round(t.Value.Value, 2) : null })
+                    .ToList();
+
+                return await Result<List<TimeValueResponse>>.SuccessAsync(perMinuteLatest);
+            }
+            catch (Exception ex)
+            {
+                var err = new ErrorResponse();
+                err.Errors.Add("Error", $"{ex.Message} | {ex.InnerException}");
+                return await Result<List<TimeValueResponse>>.FailAsync(JsonConvert.SerializeObject(err));
             }
         }
         public async Task<Result<FT03>> GetByIdAsync([Path] Guid id)

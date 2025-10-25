@@ -228,12 +228,12 @@
                 var total = totalProperty != null ? Convert.ToDouble(totalProperty.GetValue(realtimeData.CalculatorValue) ?? 0) : 0;
 
                 return new ReservoirDataModel
-                    {
-                        Name = name,
-                        Value = value,
-                        Total = total,
-                        CurrentDate = currentDate
-                    };
+                {
+                    Name = name,
+                    Value = value,
+                    Total = total,
+                    CurrentDate = currentDate
+                };
             }).ToList();
 
         var locationInfo = realtimeData.Stations.FirstOrDefault(x => x.StationId == 4) ?? new();
@@ -251,25 +251,25 @@
             if (response?.Data != null)
             {
                 chartData = response.Data.Select(x => new FT05_ChartHoChuaModel
-                    {
-                        Id = x.Id,
+                {
+                    Id = x.Id,
 
-                        Index = x.Index,
-                        X_Value = x.X_Value,
+                    Index = x.Index,
+                    X_Value = x.X_Value,
 
-                        L_CTDD = x.L_CTDD,
-                        L_DPL = x.L_DPL,
-                        L_HCCN = x.L_HCCN,
-                        L_MNC = x.L_MNC,
-                        L_MNDBT = x.L_MNDBT,
-                        L_DPPH = x.L_DPPH,
-                        L_MNKT = x.L_MNKT,
-                        L_MNTK = x.L_MNTK,
+                    L_CTDD = x.L_CTDD,
+                    L_DPL = x.L_DPL,
+                    L_HCCN = x.L_HCCN,
+                    L_MNC = x.L_MNC,
+                    L_MNDBT = x.L_MNDBT,
+                    L_DPPH = x.L_DPPH,
+                    L_MNKT = x.L_MNKT,
+                    L_MNTK = x.L_MNTK,
 
-                        A_VungA = x.A_VungA,
-                        A_VungB = x.A_VungB,
-                        A_VungC = x.A_VungC,
-                    }).ToList();
+                    A_VungA = x.A_VungA,
+                    A_VungB = x.A_VungB,
+                    A_VungC = x.A_VungC,
+                }).ToList();
             }
 
             var ft03Response = await _ft03Service.GetByFromDateToDateAsync();
@@ -353,7 +353,7 @@
 
         var ft03Dataset = new
         {
-            label = "Flow_TL_CDD",
+            label = "Flow_Ho_Final",
             data = _ft03ChartData?
                 .Where(x => x.X_Value != null && x.Value != null)
                 .Select(x => new
@@ -566,7 +566,7 @@
         { "L_MNC", "black" },
         { "L_MNDBT", "black" },
         { "L_DPPH", "#FF49E7" },
-        { "Flow_TL_CDD", "blue" },
+        { "Flow_Ho_Final", "blue" },
         { "A_VungA", "red" },
         { "A_VungB", "#FF49E7" },
         { "A_VungC", "red" }
@@ -581,7 +581,7 @@
         { "A_VungA", "#C49078" },
         { "A_VungB", "#ACD2AD" },
         { "A_VungC", "#E0EFF6" },
-        { "Flow_TL_CDD", "blue" }
+        { "Flow_Ho_Final", "blue" }
     };
         return colors.TryGetValue(propertyName, out var color) ? color : $"rgba({new Random().Next(0, 255)}, {new Random().Next(0, 255)}, {new Random().Next(0, 255)}, 0.2)";
     }
