@@ -3,6 +3,7 @@
 
 <h3>Camera Hồ Dầu Tiếng</h3>
 
+@* <video id="my-camera-video1" controls autoplay muted style="width: 100%; max-width: 800px;"></video> *@
 <video id="my-camera-video1" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
 <video id="my-camera-video2" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
 <video id="my-camera-video3" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
@@ -43,7 +44,7 @@
             await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video7", hlsStreamUrl7);
             await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video8", hlsStreamUrl8);
             // await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video9", hlsStreamUrl9);
-            // await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video10", hlsStreamUrl10);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video10", hlsStreamUrl10);
         }
     }
 }
