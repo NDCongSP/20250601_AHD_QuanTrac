@@ -1,5 +1,4 @@
 ﻿@page "/report"
-@attribute [Authorize(Policy = "Admin")]
 @using Radzen.Blazor
 @using System.Globalization
 
@@ -10,37 +9,27 @@
         border-radius: 6px;
         margin-bottom: 12px;
     }
-
     .report-toolbar .label {
         font-weight: 600;
         margin-right: 6px;
         white-space: nowrap;
     }
-
     .report-toolbar .field {
         min-width: 200px;
     }
-
     .report-actions {
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
         justify-content: flex-end;
     }
-
     .report-tabs {
         background: #f7f9fc;
         border-radius: 6px;
         padding: 8px;
     }
-
-    .w-full {
-        width: 100%;
-    }
-
-    .text-right {
-        text-align: right;
-    }
+    .w-full { width: 100%; }
+    .text-right { text-align: right; }
 </style>
 
 <div class="report-toolbar">
@@ -51,52 +40,44 @@
                 <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="3">
                     <div>
                         <span class="label">Ngày bắt đầu:</span>
-                        <RadzenDatePicker @bind-Value="startDate" DateFormat="dd/MM/yyyy HH:mm" ShowTime="true"
-                            Style="width: 100%;" />
+                        <RadzenDatePicker @bind-Value="startDate" DateFormat="dd/MM/yyyy HH:mm" ShowTime="true" Style="width: 100%;" />
                     </div>
                 </RadzenColumn>
                 <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="3">
                     <div>
                         <span class="label">Ngày kết thúc:</span>
-                        <RadzenDatePicker @bind-Value="endDate" DateFormat="dd/MM/yyyy HH:mm" ShowTime="true"
-                            Style="width: 100%;" />
+                        <RadzenDatePicker @bind-Value="endDate" DateFormat="dd/MM/yyyy HH:mm" ShowTime="true" Style="width: 100%;" />
                     </div>
                 </RadzenColumn>
                 <RadzenColumn SizeXS="6" SizeSM="4" SizeMD="2">
                     <div>
                         <span class="label">Tần suất:</span>
-                        <RadzenDropDown TValue="int" Data="@frequencyOptions" TextProperty="Key" ValueProperty="Value"
-                            @bind-Value="selectedFrequency" Style="width: 100%;" />
+                        <RadzenDropDown Data="@frequencyOptions" TextProperty="Text" ValueProperty="Value" @bind-Value="selectedFrequency" Style="width: 100%;" />
                     </div>
                 </RadzenColumn>
                 <RadzenColumn SizeXS="6" SizeSM="4" SizeMD="2">
                     <div>
                         <span class="label">Chọn trạm</span>
-                        <RadzenDropDown TValue="int" Data="@stationOptions" TextProperty="Key" ValueProperty="Value"
-                            @bind-Value="selectedStation" Style="width: 100%;" />
+                        <RadzenDropDown Data="@stationOptions" TextProperty="Text" ValueProperty="Value" @bind-Value="selectedStation" Style="width: 100%;" />
                     </div>
                 </RadzenColumn>
                 <RadzenColumn SizeXS="12" SizeSM="4" SizeMD="2">
-                    <RadzenButton Text="LÀM MỚI" ButtonStyle="ButtonStyle.Danger" Click="@(_ => GenerateData())"
-                        Style="width: 100%;" />
+                    <RadzenButton Text="LÀM MỚI" ButtonStyle="ButtonStyle.Danger" Click="@(_ => GenerateData())" Style="width: 100%;" />
                 </RadzenColumn>
             </RadzenRow>
         </RadzenColumn>
-
+        
         <!-- Right side: Action Buttons -->
         <RadzenColumn SizeXS="12" SizeMD="4">
-            <div style="display:flex; flex-direction:column; gap:8px; align-items:stretch;">
-                <RadzenButton Text="DỮ LIỆU MỰC NƯỚC" ButtonStyle="ButtonStyle.Primary" Click="@(_ => GenerateData())"
-                    Style="width: 100%;" />
-                <RadzenButton Text="DỮ LIỆU VẬN HÀNH" ButtonStyle="ButtonStyle.Secondary" Disabled="true"
-                    Style="width: 100%;" />
-                <RadzenButton Text="QUAN TRẮC MƯA" ButtonStyle="ButtonStyle.Secondary" Disabled="true"
-                    Style="width: 100%;" />
-                <RadzenButton Text="HỒ CHỨA" ButtonStyle="ButtonStyle.Secondary" Disabled="true" Style="width: 100%;" />
+            <div class="report-actions" style="justify-content: flex-end;">
+                <RadzenButton Text="DỮ LIỆU MỰC NƯỚC" ButtonStyle="ButtonStyle.Primary" Click="@(_ => GenerateData())" />
+                <RadzenButton Text="DỮ LIỆU VẬN HÀNH" ButtonStyle="ButtonStyle.Secondary" Disabled="true" />
+                <RadzenButton Text="QUAN TRẮC MƯA" ButtonStyle="ButtonStyle.Secondary" Disabled="true" />
+                <RadzenButton Text="HỒ CHỨA" ButtonStyle="ButtonStyle.Secondary" Disabled="true" />
             </div>
         </RadzenColumn>
     </RadzenRow>
-
+    
     <RadzenRow class="rz-mt-3" AlignItems="AlignItems.Center">
         <RadzenColumn SizeXS="12" SizeMD="8">
             <!-- Empty space or additional filters -->
@@ -107,18 +88,15 @@
                     <span class="label">Kiểu dữ liệu</span>
                 </RadzenColumn>
                 <RadzenColumn SizeXS="6" SizeSM="4" SizeMD="4">
-                    <RadzenDropDown TValue="string" Data="@exportTypeOptions" @bind-Value="selectedExportType"
-                        Style="width: 100%;" />
+                    <RadzenDropDown Data="@exportTypeOptions" @bind-Value="selectedExportType" Style="width: 100%;" />
                 </RadzenColumn>
                 <RadzenColumn SizeXS="6" SizeSM="4" SizeMD="4" Style="text-align: right;">
-                    <RadzenButton Text="XUẤT BÁO CÁO" ButtonStyle="ButtonStyle.Success" Click="@ExportReport"
-                        Style="width: 100%;" />
+                    <RadzenButton Text="XUẤT BÁO CÁO" ButtonStyle="ButtonStyle.Success" Click="@ExportReport" Style="width: 100%;" />
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow class="rz-mt-2" AlignItems="AlignItems.Center" Gap="8px">
                 <RadzenColumn SizeXS="12" Offset="8">
-                    <RadzenButton Text="XUẤT BIỂU ĐỒ" ButtonStyle="ButtonStyle.Success" Click="@ExportChart"
-                        Style="width: 100%;" />
+                    <RadzenButton Text="XUẤT BIỂU ĐỒ" ButtonStyle="ButtonStyle.Success" Click="@ExportChart" Style="width: 100%;" />
                 </RadzenColumn>
             </RadzenRow>
         </RadzenColumn>
@@ -128,26 +106,20 @@
 <div class="report-tabs">
     <RadzenTabs>
         <RadzenTabsItem Text="Dữ liệu">
-            <RadzenDataGrid Data="@rows" TItem="ReportRow" AllowSorting="true" AllowPaging="true" PageSize="10"
-                AllowFiltering="true" Class="w-full">
+            <RadzenDataGrid Data="@rows" TItem="ReportRow" AllowSorting="true" AllowPaging="true" PageSize="10" AllowFiltering="true" Class="w-full">
                 <Columns>
                     <RadzenDataGridColumn TItem="ReportRow" Property="StationName" Title="Tên trạm" />
-                    <RadzenDataGridColumn TItem="ReportRow" Property="Time" Title="Thời gian"
-                        FormatString="{0:dd/MM/yyyy HH:mm}" />
-                    <RadzenDataGridColumn TItem="ReportRow" Property="WaterLevel" Title="Mực nước hồ (cm)"
-                        TextAlign="TextAlign.Right" FormatString="{0:N2}" />
-                    <RadzenDataGridColumn TItem="ReportRow" Property="DamUpstream" Title="Mực nước trạm đầu nguồn (cm)"
-                        TextAlign="TextAlign.Right" FormatString="{0:N2}" />
-                    <RadzenDataGridColumn TItem="ReportRow" Property="DamDownstream" Title="Mực nước trạm hạ lưu (cm)"
-                        TextAlign="TextAlign.Right" FormatString="{0:N2}" />
+                    <RadzenDataGridColumn TItem="ReportRow" Property="Time" Title="Thời gian" FormatString="{0:dd/MM/yyyy HH:mm}" />
+                    <RadzenDataGridColumn TItem="ReportRow" Property="WaterLevel" Title="Mực nước hồ (cm)" TextAlign="TextAlign.Right" FormatString="{0:N2}" />
+                    <RadzenDataGridColumn TItem="ReportRow" Property="DamUpstream" Title="Mực nước trạm đầu nguồn (cm)" TextAlign="TextAlign.Right" FormatString="{0:N2}" />
+                    <RadzenDataGridColumn TItem="ReportRow" Property="DamDownstream" Title="Mực nước trạm hạ lưu (cm)" TextAlign="TextAlign.Right" FormatString="{0:N2}" />
                 </Columns>
             </RadzenDataGrid>
         </RadzenTabsItem>
         <RadzenTabsItem Text="Biểu đồ">
             <RadzenChart Style="height:360px">
                 <RadzenLineSeries Data="@rows" CategoryProperty="Time" ValueProperty="WaterLevel" Title="Mực nước hồ">
-                    <Radzen.Blazor.Rendering.CategoryAxis FormatString="{0:HH:mm}">
-                    </Radzen.Blazor.Rendering.CategoryAxis>
+                    <Radzen.Blazor.Rendering.CategoryAxis FormatString="{0:HH:mm}"></Radzen.Blazor.Rendering.CategoryAxis>
                 </RadzenLineSeries>
                 <RadzenLineSeries Data="@rows" CategoryProperty="Time" ValueProperty="DamUpstream" Title="Đầu nguồn" />
                 <RadzenLineSeries Data="@rows" CategoryProperty="Time" ValueProperty="DamDownstream" Title="Hạ lưu" />
@@ -155,35 +127,33 @@
             </RadzenChart>
         </RadzenTabsItem>
     </RadzenTabs>
-
+    
 </div>
 
 @code {
     private DateTime startDate = DateTime.Now.AddHours(-2);
     private DateTime endDate = DateTime.Now;
-    private int selectedFrequency = 15;
+    private string selectedFrequency = "15 phút";
     private int selectedStation = 0; // 0 = Tất cả
     private string selectedExportType = "PDF";
 
-    //using dictionary
-    private Dictionary<string, int> frequencyOptions = new()
-{
-{"Tất cả", 0},
-{"10 phút", 10},
-{"15 phút", 15},
-{"30 phút", 30},
-{"1 giờ", 60},
-{"1 Ngày", 1440}
-};
+    private List<(string Text, string Value)> frequencyOptions = new()
+    {
+        ("Tất cả", "ALL"),
+        ("10 phút", "10"),
+        ("15 phút", "15"),
+        ("30 phút", "30"),
+        ("1 giờ", "60"),
+        ("1 Ngày", "1440")
+    };
 
-
-    private Dictionary<string, int> stationOptions = new()
-{
-{"Tất cả", 0},
-{"Trạm 1", 1},
-{"Trạm 2", 2},
-{"Trạm 3", 3}
-};
+    private List<(string Text, int Value)> stationOptions = new()
+    {
+        ("Tất cả", 0),
+        ("Trạm 1", 1),
+        ("Trạm 2", 2),
+        ("Trạm 3", 3)
+    };
 
     private List<string> exportTypeOptions = new() { "PDF", "Excel" };
 
@@ -222,9 +192,13 @@
         }
     }
 
-    private static int GetMinutesStep(int value)
+    private static int GetMinutesStep(string value)
     {
-        return value > 0 ? value : 15;
+        if (string.IsNullOrWhiteSpace(value) || value.Equals("ALL", StringComparison.OrdinalIgnoreCase))
+            return 15;
+        if (int.TryParse(value, out var m) && m > 0)
+            return m;
+        return 15;
     }
 
     private Task ExportReport()

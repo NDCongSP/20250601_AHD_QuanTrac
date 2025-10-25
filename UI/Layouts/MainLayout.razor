@@ -70,7 +70,7 @@
                     </ChildContent>
                 </RadzenProfileMenu>
                 <RadzenButton Icon="notifications" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
-                @if (GlobalVariable.UserAuthorizationInfo != null)
+                @if (GlobalVariable.UserAuthorizationInfo != null && GlobalVariable.UserAuthorizationInfo.UserId != null)
                 {
                     <RadzenProfileMenu Style="background-color:transparent" Click="OnParentClicked">
                         <Template>
@@ -92,7 +92,7 @@
                 }
                 else
                 {
-                    <RadzenButton Icon="account_circle" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Title="Login"
+                    <RadzenButton Icon="login" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Text="@_localizer["Login"]"
                         Click="@(() => _navigation.NavigateTo("/login"))" />
                 }
                 <RadzenButton Icon="settings" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
@@ -106,6 +106,7 @@
         Style="@(sidebarExpanded ? "width: 280px" : "width: 70px")">
         <RadzenPanelMenu DisplayStyle="@(sidebarExpanded? MenuItemDisplayStyle.IconAndText: MenuItemDisplayStyle.Icon)"
             ShowArrow="false">
+            <!-- Public Section - No Login Required -->
             <RadzenPanelMenuItem Path="/" Text="@_localizer["HomePage"]" Icon="dashboard" />
             <RadzenPanelMenuItem Path="/operation-board" Text="@_localizer["Bảng tin vận hành"]" Icon="folder" />
             <RadzenPanelMenuItem Path="/reservoir" Text="@_localizer["Reservoir"]" Icon="water_drop" />
@@ -113,26 +114,31 @@
             <RadzenPanelMenuItem Path="/congn1" Text="@_localizer["Cống 1"]" Icon="gate" />
             <RadzenPanelMenuItem Path="/congn2" Text="@_localizer["Cống 2"]" Icon="gate" />
             <RadzenPanelMenuItem Path="/camera" Text="@_localizer["Camera"]" Icon="camera" />
-
-            <RadzenPanelMenuItem Text="@_localizer["MasterData"]" Icon="build">
-                <RadzenPanelMenuItem Path="/location-management" Text="@_localizer["StationDeclaration"]"
-                    Icon="location_city" />
-                <RadzenPanelMenuItem Path="/setting-management" Text="@_localizer["CoefficientManagement"]"
-                    Icon="equalizer" />
-                <RadzenPanelMenuItem Path="/reservoir-chart-setting" Text="@_localizer["ReservoirChartSetting"]"
-                    Icon="equalizer" />
-                <RadzenPanelMenuItem Path="/water-level-data-configuration"
-                    Text="@_localizer["WaterLevelDataConfiguration"]" Icon="equalizer" />
-                <RadzenPanelMenuItem Path="/interpolation-table-data-configuration"
-                    Text="@_localizer["InterpolationTableDataConfiguration"]" Icon="equalizer" />
-                <!--add 1 line border phân tách 2 phần-->
-                <hr />
-                <RadzenPanelMenuItem Path="/users" Text="@_localizer["UserManagement"]" Icon="person" />
-                <RadzenPanelMenuItem Path="/roles" Text="@_localizer["Roles"]" Icon="lock_open" />
-                <RadzenPanelMenuItem Path="/permissions" Text="@_localizer["Permissions"]" Icon="gavel" />
-                <hr />
-                <RadzenPanelMenuItem Path="/scada-users" Text="@_localizer["ScadaUsers"]" Icon="person" />
-            </RadzenPanelMenuItem>
+            @if (GlobalVariable.UserAuthorizationInfo != null && GlobalVariable.UserAuthorizationInfo.UserId != null)
+            {
+                <RadzenPanelMenuItem Text="@_localizer["MasterData"]" Icon="build">
+                    <RadzenPanelMenuItem Path="/location-management" Text="@_localizer["StationDeclaration"]"
+                        Icon="location_city" />
+                    <RadzenPanelMenuItem Path="/setting-management" Text="@_localizer["CoefficientManagement"]"
+                        Icon="equalizer" />
+                    <RadzenPanelMenuItem Path="/reservoir-chart-setting" Text="@_localizer["ReservoirChartSetting"]"
+                        Icon="equalizer" />
+                    <RadzenPanelMenuItem Path="/water-level-data-configuration"
+                        Text="@_localizer["WaterLevelDataConfiguration"]" Icon="equalizer" />
+                    <RadzenPanelMenuItem Path="/interpolation-table-data-configuration"
+                        Text="@_localizer["InterpolationTableDataConfiguration"]" Icon="equalizer" />
+                    <hr />
+                    <RadzenPanelMenuItem Path="/users" Text="@_localizer["UserManagement"]" Icon="person" />
+                    <RadzenPanelMenuItem Path="/roles" Text="@_localizer["Roles"]" Icon="lock_open" />
+                    <RadzenPanelMenuItem Path="/permissions" Text="@_localizer["Permissions"]" Icon="gavel" />
+                    <hr />
+                    <RadzenPanelMenuItem Path="/scada-users" Text="@_localizer["ScadaUsers"]" Icon="person" />
+                </RadzenPanelMenuItem>
+            }
+            else
+            {
+                <RadzenPanelMenuItem Path="/login" Text="@_localizer["Login"]" Icon="login" />
+            }
         </RadzenPanelMenu>
     </RadzenSidebar>
     <RadzenBody>
@@ -256,7 +262,6 @@ document.body.style.overflow = arguments[0] ? 'hidden' : '';
             GlobalVariable.AuthenticationStateTask = null;
             GlobalVariable.UserAuthorizationInfo = null;
             GlobalVariable.UserAuthorizationInfo = new UserAuthorizationInfo();
-
             if (_authStateProvider is ApiAuthenticationStateProvider authProvider)
             {
                 authProvider.MarkUserAsLoggedOut();
@@ -264,8 +269,8 @@ document.body.style.overflow = arguments[0] ? 'hidden' : '';
 
             // Clear the authorization header
             _httpClient.DefaultRequestHeaders.Authorization = null;
-
-            _navigation.NavigateTo("/login");
+            //navigate to / then reload
+            _navigation.NavigateTo("/", true);
         }
     }
 

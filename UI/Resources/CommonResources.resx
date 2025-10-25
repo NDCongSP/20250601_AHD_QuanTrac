@@ -420,6 +420,21 @@
   <data name="ChangePassword" xml:space="preserve">
     <value>Đổi mật khẩu</value>
   </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset mật khẩu</value>
+  </data>
+  <data name="Confirmation.ResetPassword" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn reset mật khẩu cho</value>
+  </data>
+  <data name="DefaultPasswordWillBe" xml:space="preserve">
+    <value>Mật khẩu mặc định sẽ là</value>
+  </data>
+  <data name="PasswordResetSuccessfully" xml:space="preserve">
+    <value>Đặt lại mật khẩu thành công</value>
+  </data>
+  <data name="DefaultPassword" xml:space="preserve">
+    <value>Mật khẩu mặc định</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Đăng xuất</value>
   </data>

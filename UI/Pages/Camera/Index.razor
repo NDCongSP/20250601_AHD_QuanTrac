@@ -1,0 +1,92 @@
+@page "/camera"
+@using Domain
+@inject IFT01 _ft01Service
+@inject IJSRuntime _jsRuntime
+
+@if (_isLoading)
+{
+    <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 10px;" />
+    <p class="rz-text-center">Đang tải cấu hình...</p>
+}
+else if ((_cameraConfigs?.Count ?? 0) == 0)
+{
+    <RadzenAlert Severity="AlertSeverity.Info">Chưa có cấu hình camera nào (hoặc tất cả đang tắt).</RadzenAlert>
+}
+else
+{
+    <div class="row">
+        @{
+            var index = 0;
+        }
+        @foreach (var cam in _cameraConfigs!)
+        {
+            index++;
+            var vidId = $"cam-video-{index}";
+            <div class="col-12 col-md-6 col-lg-3 rz-mb-3">
+                <RadzenCard Style="height: 100%;">
+                    <RadzenStack Orientation="Orientation.Vertical" Gap="6px">
+                        <RadzenText TextStyle="TextStyle.Subtitle1" Class="rz-mb-1">@(!string.IsNullOrWhiteSpace(cam.CameraTital) ? cam.CameraTital : "Camera")</RadzenText>
+                        <video id="@vidId" controls autoplay muted style="width: 100%; height: 260px; background:#000;"></video>
+                    </RadzenStack>
+                </RadzenCard>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private bool _isLoading = true;
+    private bool _jsInitialized = false;
+    private List<CameraConfigModel>? _cameraConfigs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            var result = await _ft01Service.GetConfigAsync();
+            if (result.Succeeded && result.Data != null)
+            {
+                _cameraConfigs = result.Data.CameraConfigs?
+                    .Where(c => c != null && c.Actived && !string.IsNullOrWhiteSpace(c.HlsStreamUrl1))
+                    .ToList() ?? new List<CameraConfigModel>();
+            }
+            else
+            {
+                _cameraConfigs = new List<CameraConfigModel>();
+            }
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_jsInitialized && _cameraConfigs != null && _cameraConfigs.Count > 0)
+        {
+            _jsInitialized = true;
+            
+            // Wait a bit to ensure video elements are fully rendered
+            await Task.Delay(100);
+            
+            var index = 0;
+            foreach (var cam in _cameraConfigs)
+            {
+                index++;
+                var id = $"cam-video-{index}";
+                try
+                {
+                    await _jsRuntime.InvokeVoidAsync("loadHlsPlayer", id, cam.HlsStreamUrl1);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading HLS player for {id}: {ex.Message}");
+                }
+            }
+        }
+    }
+}
+
+

@@ -13,55 +13,57 @@
 
 @if (_dataGrid == null)
 {
-    <p><em>@_localizer["Loading"]...</em></p>
+            <p><em>@_localizer["Loading"]...</em></p>
 }
 else
 {
-    <RadzenRow Gap="1rem" Class="padding-body-content">
-        <RadzenColumn SizeXS="12" SizeMD="12">
-            <RadzenStack>
-                <RadzenFieldset Text="@_localizer["ScadaUsers"]">
-                    <RadzenStack Orientation=Radzen.Orientation.Vertical JustifyContent="Radzen.JustifyContent.Center" AlignItems="AlignItems.Stretch" Gap="10px">
-                        <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End"
-                                     AlignItems="AlignItems.Center" Gap="1rem" Wrap="Radzen.FlexWrap.Wrap">
-                            <RadzenButton Click=@(args => AddNew()) Variant="Variant.Flat" Shade="Shade.Dark"
-                                          Text="@_localizer["Create"]" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
-                        </RadzenStack>
+            <RadzenRow Gap="1rem" Class="padding-body-content">
+                <RadzenColumn SizeXS="12" SizeMD="12">
+                    <RadzenStack>
+                        <RadzenFieldset Text="@_localizer["ScadaUsers"]">
+                            <RadzenStack Orientation=Radzen.Orientation.Vertical JustifyContent="Radzen.JustifyContent.Center" AlignItems="AlignItems.Stretch" Gap="10px">
+                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End"
+                                             AlignItems="AlignItems.Center" Gap="1rem" Wrap="Radzen.FlexWrap.Wrap">
+                                    <RadzenButton Click=@(args => AddNew()) Variant="Variant.Flat" Shade="Shade.Dark"
+                                                  Text="@_localizer["Create"]" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
+                                </RadzenStack>
 
                         
 
-                        <RadzenDataGrid @ref="_profileGrid" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
-                                        AllowPaging="true" PageSize="20" PageSizeText="@_localizer["items per page"]"
-                                        AllowSorting="true" EmptyText="@_localizer["No records to display."]"
-                                        Data="@_dataGrid" TItem="ScadaUser" AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false"
-                                        GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
-                            <Columns>
-                                <RadzenDataGridColumn TItem="ScadaUser" Width="200px" TextAlign="TextAlign.Center" CssClass="rz-grid-col-flex-start">
-                                    <HeaderTemplate>
-                                        @_localizer["UserName"]
-                                    </HeaderTemplate>
-                                    <Template Context="data">
-                                        <a class="text-green" @onclick="@(() => EditItem(data))" style="cursor:pointer;">@data.UserName</a>
-                                    </Template>
-                                </RadzenDataGridColumn>
-                                <RadzenDataGridColumn TItem="ScadaUser" Width="200px" Property="FullName" Title="@_localizer["Fullname"]" />
-                                <RadzenDataGridColumn TItem="ScadaUser" Width="150px" Title="@_localizer["Permission"]">
-                                    <Template Context="data">@data.PermissionScada</Template>
-                                </RadzenDataGridColumn>
-                                <RadzenDataGridColumn TItem="ScadaUser" Width="260px" Title="@_localizer["Common.Actions"]" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
-                                    <Template Context="data">
-                                        <RadzenButton Size="ButtonSize.Small" Icon="edit" Text="@_localizer["Detail.Edit"]" Click="@(() => EditItem(data))" />
-                                        <RadzenButton Size="ButtonSize.Small" Icon="password" Text="@_localizer["ChangePassword"]" Click="@(() => OpenChangePassword(data))" ButtonStyle="ButtonStyle.Info" Class="rz-ml-2" />
-                                        <RadzenButton Size="ButtonSize.Small" Icon="delete" Text="@_localizer["Delete"]" Click="@(() => DeleteItemAsync(data))" ButtonStyle="ButtonStyle.Danger" Class="rz-ml-2" />
-                                    </Template>
-                                </RadzenDataGridColumn>
-                            </Columns>
-                        </RadzenDataGrid>
+                                <RadzenDataGrid @ref="_profileGrid" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                                                AllowPaging="true" PageSize="20" PageSizeText="@_localizer["items per page"]"
+                                                AllowSorting="true" EmptyText="@_localizer["No records to display."]"
+                                                Data="@_dataGrid" TItem="ScadaUser" AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false"
+                                                GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
+                                    <Columns>
+                                        <RadzenDataGridColumn TItem="ScadaUser" Width="200px" TextAlign="TextAlign.Center" CssClass="rz-grid-col-flex-start">
+                                            <HeaderTemplate>
+                                                @_localizer["UserName"]
+                                            </HeaderTemplate>
+                                            <Template Context="data">
+                                                <a class="text-green" @onclick="@(() => EditItem(data))" style="cursor:pointer;">@data.UserName</a>
+                                            </Template>
+                                        </RadzenDataGridColumn>
+                                        <RadzenDataGridColumn TItem="ScadaUser" Width="200px" Property="FullName" Title="@_localizer["Fullname"]" />
+                                        <RadzenDataGridColumn TItem="ScadaUser" Width="150px" Title="@_localizer["Permission"]">
+                                            <Template Context="data">@data.PermissionScada</Template>
+                                        </RadzenDataGridColumn>
+                                    <RadzenDataGridColumn TItem="ScadaUser" Width="350px" Title="@_localizer["Common.Actions"]" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+                                        <Template Context="data">
+                                            <RadzenButton Size="ButtonSize.Small" Icon="edit" Text="@_localizer["Detail.Edit"]" Click="@(() => EditItem(data))" />
+                                            <RadzenButton Size="ButtonSize.Small" Icon="password" Text="@_localizer["ChangePassword"]" Click="@(() => OpenChangePassword(data))" ButtonStyle="ButtonStyle.Info" Class="rz-ml-2" />
+                                            <br />
+                                            <RadzenButton Size="ButtonSize.Small" Icon="refresh" Text="@_localizer["ResetPassword"]" Click="@(() => ResetPasswordAsync(data))" ButtonStyle="ButtonStyle.Warning" Class="rz-mt-1" />
+                                            <RadzenButton Size="ButtonSize.Small" Icon="delete" Text="@_localizer["Delete"]" Click="@(() => DeleteItemAsync(data))" ButtonStyle="ButtonStyle.Danger" Class="rz-ml-2 rz-mt-1" />
+                                        </Template>
+                                    </RadzenDataGridColumn>
+                                    </Columns>
+                                </RadzenDataGrid>
+                            </RadzenStack>
+                        </RadzenFieldset>
                     </RadzenStack>
-                </RadzenFieldset>
-            </RadzenStack>
-        </RadzenColumn>
-    </RadzenRow>
+                </RadzenColumn>
+            </RadzenRow>
 }
 
 @code {
@@ -234,6 +236,40 @@ else
         }
         NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
         await RefreshDataAsync();
+    }
+
+    async Task ResetPasswordAsync(ScadaUser data)
+    {
+        var confirm = await _dialogService.Confirm(
+            $"{_localizer["Confirmation.ResetPassword"]} {_localizer["User"]}: {data.UserName}? {_localizer["DefaultPasswordWillBe"]}: 123@456",
+            _localizer["ResetPassword"],
+            new ConfirmOptions()
+            {
+                OkButtonText = _localizer["Yes"],
+                CancelButtonText = _localizer["No"],
+                AutoFocusFirstElement = true,
+            });
+        
+        if (confirm == null || confirm == false) return;
+
+        try
+        {
+            var res = await _scadaUserServices.ResetPasswordAsync(data.Id);
+            if (!res.Succeeded)
+            {
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error,
+                    _localizer["Error"], string.Join("; ", res.Messages ?? new List<string>()));
+                return;
+            }
+            
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success,
+                _localizer["Success"], $"{_localizer["PasswordResetSuccessfully"]}. {_localizer["DefaultPassword"]}: 123@456");
+        }
+        catch (Exception ex)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error,
+                _localizer["Error"], ex.Message);
+        }
     }
 
     async void OpenChangePassword(ScadaUser data)

@@ -29,7 +29,7 @@ function initializeChart(currentLevel) {
                     tension: 0.3
                 },
                 {
-                    label: 'Flow_TL_CDD',
+                    label: 'Flow_Ho_Final',
                     data: [],
                     showLine: false,
                     pointBackgroundColor: 'blue',
@@ -49,28 +49,50 @@ function initializeChart(currentLevel) {
             },
             scales: {
                 x: {
-                    type: 'time',
-                    time: {
-                        unit: 'day',
-                        displayFormats: {
-                            day: 'dd/MM'
-                        },
-                        tooltipFormat: 'dd/MM/yyyy HH:mm'
-                    },
-                    grid: {
-                        display: true
+                    type: 'linear',
+                    bounds: 'data',
+                    min: minX,
+                    max: maxX,
+                    title: { display: true, text: 'Vị trí' },
+                    grid: { 
+                        display: true,
+                        color: '#eee'
                     },
                     ticks: {
-                        maxRotation: 45,
-                        minRotation: 45
+                        stepSize: 2.4,   // ✅ tạo bước X đều 2.4 (giống Y)
+                        callback: function(value) {
+                            const found = data.find(d => Math.abs(d.x_Value - value) < 0.01);
+                            return found ? found.x_Prefix : '';
+                        },
+                        autoSkip: false,
+                        maxRotation: 90,
+                        minRotation: 90
                     }
                 },
                 y: {
-                    title: {
-                        display: true,
-                        text: 'Mực nước (m)'
+                    title: { 
+                        display: true, 
+                        text: 'Cao trình (m)' 
                     },
-                    beginAtZero: false
+                    grid: { 
+                        color: '#eee'
+                    },
+                    beginAtZero: false,
+                    min: -2,
+                    afterBuildTicks: axis => {
+                        // ✅ tạo tick Y bắt đầu từ -2, sau đó +2.4 cho đến max
+                        const ticks = [];
+                        let value = -2;
+                        const max = axis.max || 20;
+                        while (value <= max) {
+                            ticks.push({ value: Math.round(value * 10) / 10 });
+                            value = Math.round((value + 2.4) * 10) / 10;
+                        }
+                        axis.ticks = ticks;
+                    },
+                    ticks: {
+                        callback: value => value
+                    }
                 }
             },
             plugins: {
@@ -79,9 +101,7 @@ function initializeChart(currentLevel) {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function (context) {
-                            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)}m`;
-                        }
+                        label: context => `${context.dataset.label}: ${context.parsed.y.toFixed(2)}m`
                     }
                 },
                 annotation: {
@@ -108,6 +128,7 @@ function initializeChart(currentLevel) {
             }
         }
     };
+    
 
     chart = new Chart(ctx, config);
     window.reservoirChart = chart;
@@ -435,7 +456,7 @@ function updateZThucValue(data) {
     }
     
     // Tìm dataset Z_Thực và update dữ liệu
-    const zThucDataset = window.riverChart.data.datasets.find(ds => ds.label === 'Z_Thực');
+    const zThucDataset = window.riverChart.data.datasets.find(ds => ds.label === 'Mực nước trên sông Sài Gòn');
     if (zThucDataset) {
         // Update dữ liệu cho Z_Thực
         zThucDataset.data = data.map(d => ({
@@ -460,11 +481,11 @@ function updateChartWaterLevel(data) {
     const datasets = [
         { label: "Bờ phải", field: "boPhai", borderColor: "#C44B3E", borderDash: [] },
         { label: "Bờ trái", field: "boTrai", borderColor: "#3465A4", borderDash: [] },
-        { label: "Q300", field: "q300", borderColor: "#00796B", borderDash: [5, 5] },
-        { label: "Q400", field: "q400", borderColor: "#8E44AD", borderDash: [5, 5] },
-        { label: "Q600", field: "q600", borderColor: "#F39C12", borderDash: [5, 5] },
-        { label: "Q2800", field: "q2800", borderColor: "#B71C1C", borderDash: [5, 5] },
-        { label: "Z_Thực", field: "z_ThucValue", borderColor: "#0078D7", borderDash: [] },
+        // { label: "Q300", field: "q300", borderColor: "#00796B", borderDash: [5, 5] },
+        // { label: "Q400", field: "q400", borderColor: "#8E44AD", borderDash: [5, 5] },
+        // { label: "Q600", field: "q600", borderColor: "#F39C12", borderDash: [5, 5] },
+        // { label: "Q2800", field: "q2800", borderColor: "#B71C1C", borderDash: [5, 5] },
+        { label: "Mực nước trên sông Sài Gòn", field: "z_ThucValue", borderColor: "#0078D7", borderDash: [] },
       ].map(s => ({
         label: s.label,
         data: data.map(d => ({ x: d.x_Value, y: d[s.field], prefix: d.x_Prefix })),
@@ -490,7 +511,7 @@ datasets.forEach(ds => { ds.spanGaps = true; });
         }
     });
     const minY = allY.length ? Math.min.apply(null, allY) : undefined;
-    const yStep = 2; // fixed tick step
+    const yStep = 2.4; // fixed tick step
     const minYRounded = (minY !== undefined) ? Math.floor(minY / yStep) * yStep : undefined;
 
     window.riverChart = new Chart(ctx.getContext('2d'), {
@@ -498,7 +519,7 @@ datasets.forEach(ds => { ds.spanGaps = true; });
     data: { 
       labels: data.map(d => d.x_Prefix), // Use X_Prefix as labels
       datasets: datasets.map(dataset => {
-        const isZThuc = dataset.label === 'Z_Thực';
+        const isZThuc = dataset.label === 'Mực nước trên sông Sài Gòn';
         return {
           ...dataset,
           type: isZThuc ? 'line' : 'line',
@@ -512,7 +533,7 @@ datasets.forEach(ds => { ds.spanGaps = true; });
                  dataset.label === 'Q300' ? 'q300' : 
                  dataset.label === 'Q400' ? 'q400' : 
                  dataset.label === 'Q600' ? 'q600' :
-                 dataset.label === 'Z_Thực' ? 'z_ThucValue' : 'q2800'],
+                 dataset.label === 'Mực nước trên sông Sài Gòn' ? 'z_ThucValue' : 'q2800'],
               prefix: d.x_Prefix
           }))
         };
@@ -549,11 +570,11 @@ datasets.forEach(ds => { ds.spanGaps = true; });
             min: minX,
             max: maxX,
             title: { display: true, text: 'Vị trí' },
-            grid: { display: false },
+            grid: { display: true, color: '#eee' },
             offset: false,
             afterBuildTicks: axis => {
               // Gán tick positions = danh sách x_Value thật
-              axis.ticks = data.map(d => ({ value: d.x_Value }));
+              axis.ticks = data.map(d => ({ value: d.x_Value })).filter(t => t.value !== 0);
             },
             ticks: {
               callback: function(value) {
@@ -566,20 +587,23 @@ datasets.forEach(ds => { ds.spanGaps = true; });
               minRotation: 90
             }
           },
-        y: {
-          title: { 
-            display: true, 
-            text: 'Cao trình (m)' 
-          },
-          grid: { 
-            color: '#eee' 
-          },
-          beginAtZero: false,
-          min: minYRounded,
-          ticks: {
-            stepSize: yStep
+          y: {
+            title: { 
+              display: true, 
+              text: 'Cao trình (m)' 
+            },
+            grid: { 
+              color: '#eee' 
+            },
+            beginAtZero: false,
+            min: -2,
+            ticks: {
+              stepSize: 2.4,
+              callback: function(value) {
+                return value === 0 ? '' : value;
+              }
+            }
           }
-        }
       },
       elements: {
         line: { 
