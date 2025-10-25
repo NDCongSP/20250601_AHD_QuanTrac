@@ -765,8 +765,10 @@ pathDefaults:
 # for example "~^prefix" will match all paths that start with "prefix".
 paths:
   # example:
-  my_camera:
-     source: rtsp://admin:yourpass@113.187.148.168:554/onvif1
+  Cam1:
+     source: rtsp://admin:yourPass@113.187.148.168:554/onvif1
+  Cam2:
+     source: rtsp://admin:yourPass@113.187.148.169:554/onvif1
 
   # Settings under path "all_others" are applied to all paths that
   # do not match another entry.

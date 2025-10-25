@@ -4,19 +4,22 @@
 <h3>Camera Yoosee Của Tôi</h3>
 
 <video id="my-camera-video" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video2" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
 
 @code {
     // Đây là đường dẫn HLS từ MediaMTX (Bước 2)
     // Hãy thay thế 'localhost' bằng IP của máy chủ chạy MediaMTX
     // private string hlsStreamUrl = "rtsp://admin:yourPass@113.187.148.168:554/onvif1";
-    private string hlsStreamUrl = "http://localhost:8888/my_camera/index.m3u8";
+    private string hlsStreamUrl1 = "http://localhost:8888/Cam1/index.m3u8";
+    private string hlsStreamUrl2 = "http://localhost:8888/Cam2/index.m3u8";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             // Gọi hàm JavaScript để tải video
-            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video", hlsStreamUrl);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video", hlsStreamUrl1);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video2", hlsStreamUrl2);
         }
     }
 }
