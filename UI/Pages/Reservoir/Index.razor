@@ -29,6 +29,42 @@
     .rz-chart-series-marker[data-value='0'] {
         display: none;
     }
+
+    /* Equal height layout for top 3 columns */
+    :root {
+        --res-top-height: 365px;
+    }
+    .top-section .equal-height-column {
+        height: var(--res-top-height);
+        display: flex;
+        flex-direction: column;
+    }
+    .column-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0; /* allow children to shrink */
+    }
+    .column-header { /* keep existing styling from markup context if any */ }
+    .column-content {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden; /* no scroll for col 1 */
+    }
+    .svg-container {
+        height: 100%;
+    }
+    .svg-container svg {
+        width: 100%;
+        height: 100%;
+    }
+    .scroll-container { /* enable scroll for column 2 */
+        height: 100%;
+        overflow: auto;
+    }
+    .map-container {
+        height: 100%;
+    }
 </style>
 
 <div class="main-container">
@@ -42,8 +78,8 @@
                         @_localizer["Hồ chứa"]
                     </div>
                     <div class="column-content">
-                        <RadzenRow>
-                            <RadzenColumn SizeXS="12" SizeMD="12" class="svg-container">
+                        <RadzenRow class="h-100">
+                            <RadzenColumn SizeXS="12" SizeMD="12" class="svg-container h-100">
                                 @((MarkupString)_svg)
                             </RadzenColumn>
                         </RadzenRow>
@@ -52,8 +88,9 @@
             </RadzenColumn>
 
             <!-- Second Column without Fieldset -->
-            <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column" Style="height: 365px;">
-                <RadzenDataGrid Data="@apiData" Style="height: 100%;"
+            <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column">
+                <div class="scroll-container">
+                <RadzenDataGrid Data="@apiData"
                                 TItem="ReservoirDataModel" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
                                 AllowPaging="false" ShowPagingSummary="false">
                     <Columns>
@@ -70,11 +107,12 @@
                         </div>
                     </EmptyTemplate>
                 </RadzenDataGrid>
+                </div>
             </RadzenColumn>
 
             <!-- Third Column without Fieldset -->
             <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column">
-                <div class="map-container" style="border-top: none;height: 365px;">
+                <div class="map-container" style="border-top: none; height: 100%;">
                     <iframe src="https://vrain.vn/61/overview?public_map=windy"
                             style="width: 100%; height: 100%; border: none; border-radius: 0 0 4px 4px;" allowfullscreen>
                     </iframe>
@@ -496,9 +534,9 @@
 
         var regions = new List<object>
         {
-            new { label = "Vùng C", xMin = xMinStr, xMax = xMaxStr, yMin = lower1, yMax = mid1, backgroundColor = "rgba(224,239,246,0.10)", color = "#2b5c73", showLabel = true },
-            new { label = "Vùng A", xMin = xMinStr, xMax = xMaxStr, yMin = mid1, yMax = mid2, backgroundColor = "rgba(196,144,120,0.10)", color = "#7a6200", showLabel = true },
-            new { label = "Vùng B", xMin = xMinStr, xMax = xMaxStr, yMin = mid2, yMax = upper, backgroundColor = "rgba(172,210,173,0.10)", color = "#2e5930", showLabel = false }
+            new { label = "Vùng C", xMin = xMinStr, xMax = xMaxStr, yMin = lower1, yMax = mid1, backgroundColor = "rgba(224,239,246,0.10)", color = "red", showLabel = true },
+            new { label = "Vùng A", xMin = xMinStr, xMax = xMaxStr, yMin = mid1, yMax = mid2, backgroundColor = "rgba(196,144,120,0.10)", color = "red", showLabel = true },
+            new { label = "Vùng B", xMin = xMinStr, xMax = xMaxStr, yMin = mid2, yMax = upper, backgroundColor = "rgba(172,210,173,0.10)", color = "#2e5930", showLabel = true }
         };
 
         var labelB = GetDisplayName("A_VungB");
@@ -587,7 +625,7 @@
         try
         {
             var Q = GetFT06DataByYValue(yValue);
-            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: {Q}×10⁶m³";
+            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: {Q:N2}×10⁶m³";
             await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)
