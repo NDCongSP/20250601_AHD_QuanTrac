@@ -766,10 +766,25 @@ pathDefaults:
 paths:
   # example:
   Cam1:
-     source: rtsp://admin:yourPass@113.187.148.168:554/onvif1
+     source: rtsp://admin:abcd1234@14.224.229.6:6491/Streaming/Channels/101
   Cam2:
-     source: rtsp://admin:yourPass@113.187.148.169:554/onvif1
-
+     source: rtsp://admin:abcd1234@14.224.229.6:6492/Streaming/Channels/101
+  Cam3:
+     source: rtsp://admin:abcd1234@14.224.229.6:6493/Streaming/Channels/101
+  Cam4:
+     source: rtsp://admin:abcd1234@14.224.229.6:6494/Streaming/Channels/101
+  Cam5:
+     source: rtsp://admin:abcd1234@14.224.229.6:6495/Streaming/Channels/101
+  Cam6:
+     source: rtsp://admin:abcd1234@14.224.229.6:6496/Streaming/Channels/101
+  Cam7:
+     source: rtsp://admin:abcd1234@14.224.229.6:6497/Streaming/Channels/101
+  Cam8:
+     source: rtsp://admin:abcd1234@14.224.229.6:6498/Streaming/Channels/101
+  Cam9:
+     source: rtsp://admin:abcd1234@14.224.229.6:6499/Streaming/Channels/101
+  Cam10:
+     source: rtsp://admin:abcd1234@14.224.229.6:6500/Streaming/Channels/101
   # Settings under path "all_others" are applied to all paths that
   # do not match another entry.
   all_others:

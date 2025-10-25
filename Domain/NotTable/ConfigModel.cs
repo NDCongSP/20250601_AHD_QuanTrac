@@ -13,5 +13,7 @@
         /// Vhu kyf cuar timer (milisecond).
         /// </summary>
         public int TimerInterval { get; set; } = 5000;
+
+        public List<CameraConfigModel> MyProperty { get; set; } = new List<CameraConfigModel>();
     }
 }
