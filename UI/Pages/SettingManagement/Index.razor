@@ -21,14 +21,7 @@
                             Text="@_localizer["btn_Save"]" Icon="save" ButtonStyle="ButtonStyle.Success" />
             </RadzenStack>
 
-            @if (!IsLoggedIn)
-            {
-                <div class="text-center p-5">
-                    <RadzenText Text="@_localizer[\"PleaseLogin\"]" Class="rz-mb-2" />
-                    <RadzenButton Text="@_localizer[\"Login\"]" Icon="login" Click="@(() => _navigation.NavigateTo("/login"))" />
-                </div>
-            }
-            else if (_isLoading)
+            @if (_isLoading)
             {
                                     <div class="text-center p-4">
                                         <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 10px;" />
