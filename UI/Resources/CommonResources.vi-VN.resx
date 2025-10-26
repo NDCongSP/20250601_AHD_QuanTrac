@@ -121,7 +121,7 @@
     <value>Chào mừng</value>
   </data>
   <data name="Loading" xml:space="preserve">
-    <value>Đang tải</value>
+    <value>Đang tải...</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Mặt sau</value>
