@@ -7,3 +7,4 @@ global using Domain.Entities;
 global using Application.DTOs.Request;
 global using Application.DTOs.Response;
 global using Application.Services;
+global using Domain;
