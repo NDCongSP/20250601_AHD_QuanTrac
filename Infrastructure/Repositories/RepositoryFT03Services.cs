@@ -61,22 +61,32 @@ namespace Infrastructure.Repositories
                         new DateTime(now.Year + 1, 6, 30);
                 }
 
-                var data = await dbContext.FT03s
+                // Lấy tất cả dữ liệu trong khoảng ngày
+                var allData = await dbContext.FT03s
                     .Where(x => x.CreateAt.HasValue
                         && x.Fllow_Ho_Final > 0
                         && x.CreateAt.Value.Date >= fromDate.Value.Date
                         && x.CreateAt.Value.Date <= toDate.Value.Date)
-                    .GroupBy(x => x.CreateAt.Value.Date)
-                    .SelectMany(g =>
-                        g.OrderBy(x => x.CreateAt).Take(1)               // earliest in day
-                         .Union(g.OrderByDescending(x => x.CreateAt).Take(1))) // latest in day (dedupes if only one row)
+                    .OrderBy(x => x.CreateAt)
                     .Select(x => new FT03DataPoint
                     {
-                        Date = x.CreateAt.Value,     // full timestamp
+                        Date = x.CreateAt.Value,
                         Value = x.Fllow_Ho_Final
                     })
-                    .OrderBy(x => x.Date)
                     .ToListAsync();
+
+                // Lấy giá trị đầu và cuối mỗi ngày trên memory
+                var data = allData
+                    .GroupBy(x => x.Date.Date)
+                    .SelectMany<IGrouping<DateTime, FT03DataPoint>, FT03DataPoint>(g =>
+                    {
+                        var ordered = g.OrderBy(x => x.Date).ToList();
+                        if (ordered.Count == 1)
+                            return ordered; // Chỉ có 1 record thì lấy luôn
+                        return new List<FT03DataPoint> { ordered.First(), ordered.Last() }; // Lấy đầu và cuối
+                    })
+                    .OrderBy(x => x.Date)
+                    .ToList();
 
                 return await Result<List<FT03DataPoint>>.SuccessAsync(data);
             }

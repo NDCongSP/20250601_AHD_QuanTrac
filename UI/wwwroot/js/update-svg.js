@@ -202,7 +202,6 @@ window.handleSvgClick = function (value) {
         console.error('handleSvgClick error', err);
     }
 };
-
 window.ft03Report = (function () {
     let chart;
 
@@ -215,10 +214,8 @@ window.ft03Report = (function () {
     }
     function parseDdMMyyyyHHmm(label) {
         if (!label || typeof label !== 'string') return null;
-        // Try ISO/date-compatible first
         const iso = new Date(label);
         if (!isNaN(iso)) return iso;
-        // dd/MM/yyyy HH:mm
         const m = /^\s*(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})\s*$/.exec(label);
         if (!m) return null;
         const day = parseInt(m[1], 10);
@@ -230,22 +227,24 @@ window.ft03Report = (function () {
     }
 
     function renderHourlyChart(points) {
+        // Cho phép nhận hover trong Radzen dialog
+        document.querySelectorAll('.rz-dialog-overlay').forEach(o => o.style.pointerEvents = 'none');
+
         const el = document.getElementById('ft03HourlyChart');
         if (!el) return;
 
         if (chart) chart.destroy();
 
-        // ✅ Chuẩn hóa dữ liệu từ label dd/MM/yyyy HH:mm
         const data = (points || []).map(p => {
             const d = parseDdMMyyyyHHmm(p.label);
-            return d ? { x: d, y: p.value } : null;
+            return d ? { x: d.getTime(), y: p.value } : null;
         }).filter(p => p && !isNaN(p.x));
 
         if (!data.length) return;
 
         // ✅ Lấy min / max từ dữ liệu
-        const minTime = new Date(Math.min(...data.map(p => p.x.getTime())));
-        const maxTime = new Date(Math.max(...data.map(p => p.x.getTime())));
+        const minTime = new Date(Math.min(...data.map(p => p.x)));
+        const maxTime = new Date(Math.max(...data.map(p => p.x)));
 
         // ✅ Căn min về đầu giờ, max lên tròn giờ kế tiếp (nếu cần)
         const minAligned = new Date(minTime); minAligned.setMinutes(0, 0, 0);
@@ -263,7 +262,7 @@ window.ft03Report = (function () {
                 if (!scale || scale.axis !== 'x') return;
                 try {
                     const ticks = [];
-                    for (let t = minAligned.getTime(); t <= maxAligned.getTime(); t += 3600000) { // 1h
+                    for (let t = minAligned.getTime(); t <= maxAligned.getTime(); t += 3600000) {
                         ticks.push({ value: t, label: formatHHmm(new Date(t)) });
                     }
                     scale.ticks = ticks;
@@ -278,13 +277,13 @@ window.ft03Report = (function () {
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Giá trị (m)',
+                    label: 'Mực nước hồ',
                     data: data.sort((a, b) => a.x - b.x),
                     borderColor: '#0078D7',
                     backgroundColor: '#0078D733',
                     borderWidth: 2,
-                    pointRadius: 3,
-                    pointHoverRadius: 5,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
                     pointHitRadius: 10,
                     tension: 0.3,
                     spanGaps: true
@@ -294,6 +293,10 @@ window.ft03Report = (function () {
                 responsive: true,
                 maintainAspectRatio: false,
                 parsing: false,
+                interaction: {
+                    mode: 'nearest',
+                    intersect: false
+                },
                 scales: {
                     x: {
                         type: 'time',
@@ -305,7 +308,6 @@ window.ft03Report = (function () {
                             displayFormats: { hour: 'HH:mm' },
                             tooltipFormat: 'dd/MM/yyyy HH:mm'
                         },
-                        adapters: { date: { locale: 'vi' } },
                         ticks: {
                             autoSkip: false,
                             minRotation: 45,
@@ -321,7 +323,7 @@ window.ft03Report = (function () {
                         beginAtZero: false,
                         title: {
                             display: true,
-                            text: 'Giá trị'
+                            text: 'Giá trị (m)'
                         },
                         grid: {
                             color: '#eee'
@@ -329,22 +331,37 @@ window.ft03Report = (function () {
                     }
                 },
                 plugins: {
-                    legend: { display: false },
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
                     tooltip: {
+                        enabled: true,
                         mode: 'nearest',
                         intersect: false,
                         callbacks: {
-                            title: (ctx) => formatDdMMyyyyHHmm(new Date(ctx[0].parsed.x)),
-                            label: (ctx) => `Giá trị: ${ctx.parsed.y?.toFixed(2)}`
+                            title: (ctx) => {
+                                if (!ctx || !ctx[0]) return '';
+                                const date = new Date(ctx[0].parsed.x);
+                                return formatDdMMyyyyHHmm(date);
+                            },
+                            label: (ctx) => {
+                                if (!ctx || ctx.parsed.y == null) return '';
+                                const value = ctx.parsed.y.toFixed(2);
+                                return `${ctx.dataset.label}: ${value}m`;
+                            }
                         }
                     }
                 }
-            }
-        }, [hourlyTicks]);
+            },
+            plugins: [hourlyTicks]
+        });
     }
 
     return { renderHourlyChart };
 })();
+
+
 
 
 

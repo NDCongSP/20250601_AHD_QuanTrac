@@ -238,7 +238,7 @@
         var locationInfo = realtimeData.Stations.FirstOrDefault(x => x.StationId == 4) ?? new();
         var Q = GetFT06DataByYValue(locationInfo.Fllow_Ho_Final ?? 0);
 
-        _infoLine1 = $"Mực nước hiện tại: {locationInfo.Fllow_Ho_Final:N2}m; Dung tích: {Q}";
+        _infoLine1 = $"Mực nước hiện tại: {locationInfo.Fllow_Ho_Final:N2}m; Dung tích: {Q:N2}";
         StateHasChanged();
     }
 
@@ -525,17 +525,12 @@
         if (yB.HasValue) thresholds.Add(yB.Value);
         if (yC.HasValue) thresholds.Add(yC.Value);
         thresholds = thresholds.Distinct().OrderBy(v => v).ToList();
-
-        double lower1 = yMinTick;
-        double mid1 = thresholds.Count > 0 ? thresholds[0] : yMinTick + 1;
-        double mid2 = thresholds.Count > 1 ? thresholds[1] : mid1 + 1;
-        double upper = yMaxTick;
-
+        int curYear = minDate.Year;
         var regions = new List<object>
         {
-            new { label = "Vùng C", xMin = xMinStr, xMax = xMaxStr, yMin = lower1, yMax = mid1, backgroundColor = "rgba(224,239,246,0.10)", color = "red", showLabel = true },
-            new { label = "Vùng A", xMin = xMinStr, xMax = xMaxStr, yMin = mid1, yMax = mid2, backgroundColor = "rgba(196,144,120,0.10)", color = "red", showLabel = true },
-            new { label = "Vùng B", xMin = xMinStr, xMax = xMaxStr, yMin = mid2, yMax = upper, backgroundColor = "rgba(172,210,173,0.10)", color = "#2e5930", showLabel = true }
+            new { label = "Vùng A", xMin = $"{curYear}-12-01", xMax = $"{curYear + 1}-01-01", yMin = 18, yMax = 20, backgroundColor = "rgba(196,144,120,0.10)", color = "black", showLabel = true },
+            new { label = "Vùng B", xMin = $"{curYear}-12-01", xMax = $"{curYear + 1}-01-01", yMin = 22, yMax = 23, backgroundColor = "rgba(172,210,173,0.10)", color = "black", showLabel = true },
+            new { label = "Vùng C", xMin = $"{curYear}-08-15", xMax = $"{curYear}-09-05", yMin = 21, yMax = 22, backgroundColor = "rgba(224,239,246,0.10)", color = "black", showLabel = true },
         };
 
         var labelB = GetDisplayName("A_VungB");
