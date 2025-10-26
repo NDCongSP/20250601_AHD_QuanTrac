@@ -79,6 +79,9 @@ function updateSvgFillOverflow(location) {
         const { StationId: stationId } = station;
         const locationId = location.LocationId;
 
+        //station.Fllow_Door1 = station.Door1_Aperture_Final;
+        //station.Fllow_Door2 = station.Door2_Aperture_Final;
+
         // Process all properties of the station
         for (const [key, value] of Object.entries(station)) {
             if (['StationId', 'StationName', 'Path'].includes(key)) continue;
@@ -275,7 +278,7 @@ window.ft03Report = (function () {
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Giá trị',
+                    label: 'Giá trị (m)',
                     data: data.sort((a, b) => a.x - b.x),
                     borderColor: '#0078D7',
                     backgroundColor: '#0078D733',

@@ -57,19 +57,19 @@
             var data = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             if (data.Stations.Any() && realtimeData.Stations.Any())
             {
-                for (int i = 0; i < 3; i++)
+                foreach (var item in data.Stations)
                 {
-                    var oldStation = realtimeData.Stations[i];
-                    var newStation = data.Stations[i];
-
-                    if ((oldStation.Door1_Opening == true && newStation.Door1_Opening == false) || (oldStation.Door1_Closing == true && newStation.Door1_Closing == false))
+                    if (item.StationId < 4)
                     {
-                        newStation.Door1_Open = true;
-                    }
+                        if (item.Door1_Open == false && item.Door1_Opening == false && item.Door1_Closing == false && item.Door1_Close == false)
+                        {
+                            item.Door1_Open = true;
+                        }
 
-                    if ((oldStation.Door2_Opening == true && newStation.Door2_Opening == false) || (oldStation.Door2_Closing == true && newStation.Door2_Closing == false))
-                    {
-                        newStation.Door2_Open = true;
+                        if (item.Door2_Open == false && item.Door2_Opening == false && item.Door2_Closing == false && item.Door2_Close == false)
+                        {
+                            item.Door2_Open = true;
+                        }
                     }
                 }
             }
@@ -79,6 +79,7 @@
         }
         catch { }
     }
+
     [JSInvokable]
     public async Task OnSvgClicked(string value)
     {
