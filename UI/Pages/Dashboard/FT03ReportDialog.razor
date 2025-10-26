@@ -29,16 +29,16 @@
                     <tbody>
                         @if (_data?.Count > 0)
                         {
-                            var idx = 1;
-                            foreach (var it in _data)
-                            {
-                                <tr>
-                                    <td style="text-align:center">@idx</td>
-                                    <td style="text-align:center">@it.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
-                                    <td style="text-align:center">@(it.Value?.ToString("0.##"))</td>
-                                </tr>
-                                idx++;
-                            }
+                                    var idx = 1;
+                                    foreach (var it in _data)
+                                    {
+                                        <tr>
+                                            <td style="text-align:center">@idx</td>
+                                            <td style="text-align:center">@it.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td style="text-align:center">@(it.Value?.ToString("0.##"))</td>
+                                        </tr>
+                                        idx++;
+                                    }
                         }
                     </tbody>
                 </table>
@@ -46,6 +46,7 @@
         </div>
         <div class="col-12 col-md-8">
             <div style="height:550px">
+                <h5 class="text-center">Biểu đồ mực nước hồ (24 giờ gần nhất)</h5>
                 <canvas id="ft03HourlyChart" style="width:100%;height:100%"></canvas>
             </div>
         </div>
@@ -85,42 +86,14 @@ new FrequencyOption { Text = "1 ngày", Value = 1440 }
         ? res.Data.OrderBy(x => x.CreatedAt).ToList()
         : new List<TimeValueResponse>();
 
-        // Lọc 24 mốc cố định theo CreatedAt đúng HH:00:00 (không format lại Date để so sánh)
-        DateTime endHour;
-        if (_data.Count > 0)
+        // Dùng toàn bộ dữ liệu hiện có trong _data, nhãn HH:mm
+        _chartHourly = _data
+        .Select(d => new ChartPoint
         {
-            var last = _data.Max(d => d.CreatedAt);
-            endHour = new DateTime(last.Year, last.Month, last.Day, last.Hour, 0, 0);
-        }
-        else
-        {
-            var now = DateTime.Now;
-            endHour = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0);
-        }
-        var startHour = endHour.AddHours(-23);
-
-        // Chỉ nhận record đúng CreatedAt HH:00:00
-        var candidates = _data
-        .Where(d => d.CreatedAt.Minute == 0)
-        .ToDictionary(
-        d => new DateTime(d.CreatedAt.Year, d.CreatedAt.Month, d.CreatedAt.Day, d.CreatedAt.Hour, 0, 0),
-        d => d
-        );
-
-        var list = new List<ChartPoint>(24);
-        for (int i = 0; i < 24; i++)
-        {
-            var t = startHour.AddHours(i);
-            if (candidates.TryGetValue(t, out var point) && point.Value.HasValue && point.Value.Value > 0)
-            {
-                list.Add(new ChartPoint { Label = t.ToString("HH:00"), Value = point.Value });
-            }
-            else
-            {
-                list.Add(new ChartPoint { Label = t.ToString("HH:00"), Value = null });
-            }
-        }
-        _chartHourly = list;
+            Label = d.CreatedAt.ToString("dd/MM/yyyy HH:mm"),
+            Value = (d.Value.HasValue && d.Value.Value > 0) ? d.Value : (double?)null
+        })
+        .ToList();
 
         await _jsRuntime.InvokeVoidAsync("ft03Report.renderHourlyChart", _chartHourly);
     }

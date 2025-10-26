@@ -597,6 +597,17 @@ datasets.forEach(ds => { ds.spanGaps = true; });
             },
             beginAtZero: false,
             min: -2,
+            afterBuildTicks: axis => {
+              // Ensure ticks include 0.4 by stepping 2.4 from -2 up to axis.max
+              const ticks = [];
+              let value = -2;
+              const max = axis.max || 20;
+              while (value <= max) {
+                ticks.push({ value: Math.round(value * 10) / 10 });
+                value = Math.round((value + 2.4) * 10) / 10;
+              }
+              axis.ticks = ticks;
+            },
             ticks: {
               stepSize: 2.4,
               callback: function(value) {
