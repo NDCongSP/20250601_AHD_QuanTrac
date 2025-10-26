@@ -16,18 +16,7 @@
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-                <NotAuthorized>
-                    @if (!context.User.Claims.Any())
-                    {
-                        <UI.Pages.Authentications.RedirectToLogin/>
-                    }
-                    else
-                    {
-                        <p role="alert">@_localizer["Sorry, You do not have authorization."]</p>
-                    }
-                </NotAuthorized>
-            </AuthorizeRouteView>
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
