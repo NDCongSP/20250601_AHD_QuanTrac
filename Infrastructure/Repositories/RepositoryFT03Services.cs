@@ -116,7 +116,10 @@ namespace Infrastructure.Repositories
                 var to = now;
 
                 var items = await dbContext.FT03s.AsNoTracking()
-                    .Where(x => x.CreateAt.HasValue && x.CreateAt.Value >= from && x.CreateAt.Value <= to)
+                    .Where(x => 
+                        x.CreateAt.HasValue && x.CreateAt.Value >= from && x.CreateAt.Value <= to
+                        && x.StationId == 4
+                    )
                     .Select(x => new { x.CreateAt, Value = (double?)prop.GetValue(x) })
                     .ToListAsync();
 
