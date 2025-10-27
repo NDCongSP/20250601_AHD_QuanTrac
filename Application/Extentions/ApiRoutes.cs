@@ -118,5 +118,11 @@
             public const string ChangePassword = "change-password";
             public const string ResetPassword = "reset-password/{id}";
         }
+
+        public static class FT08
+        {
+            public const string BasePath = "api/FT08";
+            public const string GetPdfAsBase64Async = "GetPdfAsBase64Async/{pathFile}";
+        }
     }
 }
