@@ -19,7 +19,6 @@ namespace UI
                 .HandleResult(response => response.StatusCode == HttpStatusCode.Unauthorized)
                 .RetryAsync(async (_, __) =>
                 {
-                    var navigation = provider.GetRequiredService<NavigationManager>();
                     try
                     {
                         var _localStorage = provider.GetRequiredService<ILocalStorageService>();
@@ -28,15 +27,21 @@ namespace UI
                         var token = await _localStorage.GetItemAsync<string>(ConstantExtention.StorageConst.AuthToken);
                         var refreshToken = await _localStorage.GetItemAsync<string>(ConstantExtention.StorageConst.RefreshToken);
 
-                        if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(refreshToken))
+                        // Nếu không có refresh token → không thể refresh, xóa cache và fail
+                        if (string.IsNullOrEmpty(refreshToken))
                         {
-                            navigation.NavigateTo("/login");
-                            throw new Exception("Token hoặc RefreshToken bị thiếu.");
+                            // Xóa cache và throw exception để request fail
+                            // Component cần authentication sẽ tự redirect nếu cần
+                            await _authStateProvider.ClearCacheAsync();
+                            _authStateProvider.MarkUserAsLoggedOut();
+                            throw new Exception("RefreshToken bị thiếu, không thể làm mới token.");
                         }
 
+                        // Token có thể null (đã bị xóa do hết hạn), nhưng vẫn có refresh token
+                        // Thử refresh với token null hoặc token cũ
                         var model = new RefreshTokenRequestDTO()
                         {
-                            Token = token,
+                            Token = token ?? string.Empty,
                             RefreshToken = refreshToken,
                         };
 
@@ -44,10 +49,14 @@ namespace UI
 
                         if (loginResponse == null || string.IsNullOrEmpty(loginResponse.Token))
                         {
-                            navigation.NavigateTo("/login");
-                            throw new Exception("Không refresh được token mới.");
+                            // Refresh thất bại (có thể do refresh token cũng hết hạn)
+                            // Xóa cache và throw exception
+                            await _authStateProvider.ClearCacheAsync();
+                            _authStateProvider.MarkUserAsLoggedOut();
+                            throw new Exception("Không refresh được token mới. Refresh token có thể đã hết hạn.");
                         }
 
+                        // Refresh thành công
                         //Set local storage
                         await _authStateProvider.CacheAuthTokensAsync(loginResponse.Token, loginResponse.RefreshToken, string.Empty);
                         _authStateProvider.MarkUserAsAuthenticated();
@@ -58,8 +67,9 @@ namespace UI
                     }
                     catch
                     {
-                        // Redirect về trang login khi có lỗi
-                        navigation.NavigateTo("/login");
+                        // Không redirect, chỉ throw exception
+                        // Các trang cần authentication sẽ tự động redirect qua AuthorizeView
+                        throw;
                     }
                 });
         }

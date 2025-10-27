@@ -20,7 +20,7 @@
                 <NotAuthorized>
                     @if (!context.User.Claims.Any())
                     {
-                        <UI.Pages.Authentications.RedirectToLogin/>
+                        <UI.Pages.Authentication.RedirectToLogin/>
                     }
                     else
                     {

@@ -5,7 +5,6 @@ using Application.DTOs.Response;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FT03Controller : BaseController<Guid, FT03>, IFT03

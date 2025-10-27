@@ -37,8 +37,9 @@ public static class GlobalVariable
             }
             catch (ApiException ex) when (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                // Redirect to login page on 401
-                navigationManager.NavigateTo("/login", true);
+                // Không redirect, chỉ sử dụng config mặc định
+                // Các trang cần authentication sẽ tự động redirect qua AuthorizeView
+                Console.WriteLine($"Unauthorized khi tải config: {ex.Message}");
                 _configSystem = new ConfigModel();
                 return;
             }

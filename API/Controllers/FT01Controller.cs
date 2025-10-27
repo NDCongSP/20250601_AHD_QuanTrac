@@ -5,7 +5,6 @@ using Domain;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FT01Controller : BaseController<Guid, FT01>, IFT01

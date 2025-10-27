@@ -52,6 +52,14 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider, IAcce
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
 
+        // Kiểm tra token có hết hạn không
+        if (IsTokenExpired(cachedToken))
+        {
+            // Xóa token hết hạn
+            await ClearCacheAsync();
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+        }
+
         // Giải mã mã thông báo và thiết lập danh tính của người dùng
         //identity = new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt");
 
@@ -103,40 +111,62 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider, IAcce
 
     public async ValueTask<AccessTokenResult> RequestAccessToken()
     {
-        var authState = await GetAuthenticationStateAsync();
-        if (authState.User.Identity?.IsAuthenticated is not true)
-        {
-            return new AccessTokenResult(AccessTokenResultStatus.RequiresRedirect, null, "/login");
-        }
-
         // We make sure the access token is only refreshed by one thread at a time. The other ones have to wait.
         await _semaphore.WaitAsync();
         try
         {
             string token = await GetCachedAuthTokenAsync();
+            string refreshToken = await GetCachedRefreshTokenAsync();
 
+            // Nếu không có token và không có refresh token → chế độ không đăng nhập
+            if (string.IsNullOrWhiteSpace(token) && string.IsNullOrWhiteSpace(refreshToken))
+            {
+                // Return Success với null token để chạy mode không đăng nhập
+                return new AccessTokenResult(AccessTokenResultStatus.Success, new AccessToken() { Value = null }, string.Empty);
+            }
 
-            // Check if token needs to be refreshed (when its expiration time is less than 1 minute away)
-            //var expTime = GetExpiration(authState.User);
+            // Nếu có token, kiểm tra expiration
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                try
+                {
+                    if (IsTokenExpired(token))
+                    {
+                        // Token hết hạn
+                        // Nếu có refresh token, xóa token cũ và return null để trigger refresh
+                        if (!string.IsNullOrWhiteSpace(refreshToken))
+                        {
+                            // Xóa token hết hạn, giữ refresh token để RetryRefreshTokenHandler xử lý
+                            await _localStorage.RemoveItemAsync(ConstantExtention.StorageConst.AuthToken);
+                            // Return null token để API trả 401 và trigger refresh
+                            return new AccessTokenResult(AccessTokenResultStatus.Success, new AccessToken() { Value = null }, string.Empty);
+                        }
+                        else
+                        {
+                            // Không có refresh token, xóa hết và chạy mode không đăng nhập
+                            await ClearCacheAsync();
+                            MarkUserAsLoggedOut();
+                            return new AccessTokenResult(AccessTokenResultStatus.Success, new AccessToken() { Value = null }, string.Empty);
+                        }
+                    }
 
-            //var diff = expTime - DateTime.UtcNow;
-            //if (diff.TotalSeconds <= 5)
-            //{
-            //    //string refreshToken = await GetCachedRefreshTokenAsync();
-            //    //(bool succeeded, var response) = await TryRefreshTokenAsync(new RefreshTokenRequest { Token = token, RefreshToken = refreshToken });
-            //    //if (!succeeded)
-            //    //{
-            //    //    return new AccessTokenResult(AccessTokenResultStatus.RequiresRedirect, null, _authSettings.Value.LoginUrl);
-            //    //}
+                    // Token còn hạn, return token
+                    return new AccessTokenResult(AccessTokenResultStatus.Success, new AccessToken() { Value = token }, string.Empty);
+                }
+                catch (Exception)
+                {
+                    // Token không hợp lệ, xóa và xử lý như token hết hạn
+                    await ClearCacheAsync();
+                    MarkUserAsLoggedOut();
+                    return new AccessTokenResult(AccessTokenResultStatus.Success, new AccessToken() { Value = null }, string.Empty);
+                }
+            }
 
-            //    //token = response?.Token;
-            //}
-            //else if (diff.TotalSeconds < 0)
-            //{
-            //    return new AccessTokenResult(AccessTokenResultStatus.RequiresRedirect, new AccessToken() { Value = null }, "/login");
-            //}
-
-            return new AccessTokenResult(AccessTokenResultStatus.Success, new AccessToken() { Value = token }, string.Empty);
+            // Chỉ có refresh token mà không có token (trường hợp bất thường)
+            // Xóa refresh token cũ và chạy mode không đăng nhập
+            await ClearCacheAsync();
+            MarkUserAsLoggedOut();
+            return new AccessTokenResult(AccessTokenResultStatus.Success, new AccessToken() { Value = null }, string.Empty);
         }
         finally
         {
