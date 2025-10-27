@@ -32,6 +32,7 @@ namespace Infrastructure.Data
         public DbSet<FT05_ChartHoChua> FT05s_ChartHoChua { get; set; }
         public DbSet<FT06_InterpolationTable> FT06s_Interpolation { get; set; }
         public DbSet<FT07_ChartMucNuoc> FT07s_ChartMucNuoc { get; set; }
+        public DbSet<FT08_FilesManagement>  FT08_FilesManagements { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
