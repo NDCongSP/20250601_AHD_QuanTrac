@@ -15,7 +15,6 @@
 @using Radzen.Blazor
 @using Domain.Models
 @inject IJSRuntime JSRuntime
-@attribute [Authorize(Policy = "Admin")]
 
 <style>
     .rz-legend-item {
@@ -28,6 +27,42 @@
 
     .rz-chart-series-marker[data-value='0'] {
         display: none;
+    }
+
+    /* Equal height layout for top 3 columns */
+    :root {
+        --res-top-height: 365px;
+    }
+    .top-section .equal-height-column {
+        height: var(--res-top-height);
+        display: flex;
+        flex-direction: column;
+    }
+    .column-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0; /* allow children to shrink */
+    }
+    .column-header { /* keep existing styling from markup context if any */ }
+    .column-content {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden; /* no scroll for col 1 */
+    }
+    .svg-container {
+        height: 100%;
+    }
+    .svg-container svg {
+        width: 100%;
+        height: 100%;
+    }
+    .scroll-container { /* enable scroll for column 2 */
+        height: 100%;
+        overflow: auto;
+    }
+    .map-container {
+        height: 100%;
     }
 </style>
 
@@ -42,8 +77,8 @@
                         @_localizer["Hồ chứa"]
                     </div>
                     <div class="column-content">
-                        <RadzenRow>
-                            <RadzenColumn SizeXS="12" SizeMD="12" class="svg-container">
+                        <RadzenRow class="h-100">
+                            <RadzenColumn SizeXS="12" SizeMD="12" class="svg-container h-100">
                                 @((MarkupString)_svg)
                             </RadzenColumn>
                         </RadzenRow>
@@ -52,8 +87,9 @@
             </RadzenColumn>
 
             <!-- Second Column without Fieldset -->
-            <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column" Style="height: 365px;">
-                <RadzenDataGrid Data="@apiData" Style="height: 100%;"
+            <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column">
+                <div class="scroll-container">
+                <RadzenDataGrid Data="@apiData"
                                 TItem="ReservoirDataModel" AllowFiltering="false" AllowColumnResize="true" AllowSorting="false"
                                 AllowPaging="false" ShowPagingSummary="false">
                     <Columns>
@@ -70,12 +106,13 @@
                         </div>
                     </EmptyTemplate>
                 </RadzenDataGrid>
+                </div>
             </RadzenColumn>
 
             <!-- Third Column without Fieldset -->
             <RadzenColumn SizeXS="12" SizeLG="4" class="rz-mx-auto equal-height-column">
-                <div class="map-container" style="border-top: none;height: 365px;">
-                    <iframe src="https://vrain.vn/61/overview?public_map=windy"
+                <div class="map-container" style="border-top: none; height: 100%;">
+                    <iframe src="https://www.google.com/maps/d/u/1/embed?mid=12o126XU18Zr1liEdZJloJQNs359En9o&ehbc=2E312F"
                             style="width: 100%; height: 100%; border: none; border-radius: 0 0 4px 4px;" allowfullscreen>
                     </iframe>
                 </div>
@@ -125,7 +162,7 @@
     {
         try
         {
-            LayoutState.SetTitle(_localizer["Hồ chứa"]);
+            LayoutState.SetTitle(_localizer["HoChua"]);
             await base.OnInitializedAsync();
 
             // Load SVG
@@ -164,7 +201,8 @@
         {
             realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
             GetAPIData();
-            await _jsRuntime.InvokeVoidAsync("updateSvgFillOverflow", realtimeData);
+            // await _jsRuntime.InvokeVoidAsync("updateSvgFillOverflow", realtimeData);
+            await _jsRuntime.InvokeVoidAsync("updateSvgHoChua", realtimeData);
             await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)
@@ -189,18 +227,18 @@
                 var total = totalProperty != null ? Convert.ToDouble(totalProperty.GetValue(realtimeData.CalculatorValue) ?? 0) : 0;
 
                 return new ReservoirDataModel
-                    {
-                        Name = name,
-                        Value = value,
-                        Total = total,
-                        CurrentDate = currentDate
-                    };
+                {
+                    Name = name,
+                    Value = value,
+                    Total = total,
+                    CurrentDate = currentDate
+                };
             }).ToList();
 
         var locationInfo = realtimeData.Stations.FirstOrDefault(x => x.StationId == 4) ?? new();
         var Q = GetFT06DataByYValue(locationInfo.Fllow_Ho_Final ?? 0);
 
-        _infoLine1 = $"Mực nước hiện tại: {locationInfo.Fllow_Ho_Final:N2}m; Dung tích: {Q}";
+        _infoLine1 = $"Mực nước hiện tại: {locationInfo.Fllow_Ho_Final:N2}m; Dung tích: {Q:N2}";
         StateHasChanged();
     }
 
@@ -212,25 +250,25 @@
             if (response?.Data != null)
             {
                 chartData = response.Data.Select(x => new FT05_ChartHoChuaModel
-                    {
-                        Id = x.Id,
+                {
+                    Id = x.Id,
 
-                        Index = x.Index,
-                        X_Value = x.X_Value,
+                    Index = x.Index,
+                    X_Value = x.X_Value,
 
-                        L_CTDD = x.L_CTDD,
-                        L_DPL = x.L_DPL,
-                        L_HCCN = x.L_HCCN,
-                        L_MNC = x.L_MNC,
-                        L_MNDBT = x.L_MNDBT,
-                        L_DPPH = x.L_DPPH,
-                        L_MNKT = x.L_MNKT,
-                        L_MNTK = x.L_MNTK,
+                    L_CTDD = x.L_CTDD,
+                    L_DPL = x.L_DPL,
+                    L_HCCN = x.L_HCCN,
+                    L_MNC = x.L_MNC,
+                    L_MNDBT = x.L_MNDBT,
+                    L_DPPH = x.L_DPPH,
+                    L_MNKT = x.L_MNKT,
+                    L_MNTK = x.L_MNTK,
 
-                        A_VungA = x.A_VungA,
-                        A_VungB = x.A_VungB,
-                        A_VungC = x.A_VungC,
-                    }).ToList();
+                    A_VungA = x.A_VungA,
+                    A_VungB = x.A_VungB,
+                    A_VungC = x.A_VungC,
+                }).ToList();
             }
 
             var ft03Response = await _ft03Service.GetByFromDateToDateAsync();
@@ -314,7 +352,7 @@
 
         var ft03Dataset = new
         {
-            label = "Flow_TL_CDD",
+            label = "Flow_Ho_Final",
             data = _ft03ChartData?
                 .Where(x => x.X_Value != null && x.Value != null)
                 .Select(x => new
@@ -487,17 +525,12 @@
         if (yB.HasValue) thresholds.Add(yB.Value);
         if (yC.HasValue) thresholds.Add(yC.Value);
         thresholds = thresholds.Distinct().OrderBy(v => v).ToList();
-
-        double lower1 = yMinTick;
-        double mid1 = thresholds.Count > 0 ? thresholds[0] : yMinTick + 1;
-        double mid2 = thresholds.Count > 1 ? thresholds[1] : mid1 + 1;
-        double upper = yMaxTick;
-
+        int curYear = minDate.Year;
         var regions = new List<object>
         {
-            new { label = "Vùng C", xMin = xMinStr, xMax = xMaxStr, yMin = lower1, yMax = mid1, backgroundColor = "rgba(224,239,246,0.10)", color = "#2b5c73", showLabel = true },
-            new { label = "Vùng A", xMin = xMinStr, xMax = xMaxStr, yMin = mid1, yMax = mid2, backgroundColor = "rgba(196,144,120,0.10)", color = "#7a6200", showLabel = true },
-            new { label = "Vùng B", xMin = xMinStr, xMax = xMaxStr, yMin = mid2, yMax = upper, backgroundColor = "rgba(172,210,173,0.10)", color = "#2e5930", showLabel = false }
+            new { label = "Vùng A", xMin = $"{curYear}-12-01", xMax = $"{curYear + 1}-01-01", yMin = 18, yMax = 20, backgroundColor = "rgba(196,144,120,0.10)", color = "black", showLabel = true },
+            new { label = "Vùng B", xMin = $"{curYear}-12-01", xMax = $"{curYear + 1}-01-01", yMin = 22, yMax = 23, backgroundColor = "rgba(172,210,173,0.10)", color = "black", showLabel = true },
+            new { label = "Vùng C", xMin = $"{curYear}-08-15", xMax = $"{curYear}-09-05", yMin = 21, yMax = 22, backgroundColor = "rgba(224,239,246,0.10)", color = "black", showLabel = true },
         };
 
         var labelB = GetDisplayName("A_VungB");
@@ -527,7 +560,7 @@
         { "L_MNC", "black" },
         { "L_MNDBT", "black" },
         { "L_DPPH", "#FF49E7" },
-        { "Flow_TL_CDD", "blue" },
+        { "Flow_Ho_Final", "blue" },
         { "A_VungA", "red" },
         { "A_VungB", "#FF49E7" },
         { "A_VungC", "red" }
@@ -542,7 +575,7 @@
         { "A_VungA", "#C49078" },
         { "A_VungB", "#ACD2AD" },
         { "A_VungC", "#E0EFF6" },
-        { "Flow_TL_CDD", "blue" }
+        { "Flow_Ho_Final", "blue" }
     };
         return colors.TryGetValue(propertyName, out var color) ? color : $"rgba({new Random().Next(0, 255)}, {new Random().Next(0, 255)}, {new Random().Next(0, 255)}, 0.2)";
     }
@@ -586,7 +619,7 @@
         try
         {
             var Q = GetFT06DataByYValue(yValue);
-            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: {Q}×10⁶m³";
+            _infoLine2 = $"X: {date}; Z: {yValue:N2}m; W: {Q:N2}×10⁶m³";
             await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)

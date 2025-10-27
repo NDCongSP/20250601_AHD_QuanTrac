@@ -1,10 +1,10 @@
 using Application.Services;
 using Domain.Models;
 using Infrastructure.Repositories;
+using Application.DTOs.Response;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FT03Controller : BaseController<Guid, FT03>, IFT03
@@ -17,10 +17,18 @@ namespace API.Controllers
 
         [HttpGet(ApiRoutes.FT03.GetByFromDateToDateAsync)]
         public async Task<Result<List<FT03DataPoint>>> GetByFromDateToDateAsync(
-            [FromQuery] DateTime? fromDate = null, 
+            [FromQuery] DateTime? fromDate = null,
             [FromQuery] DateTime? toDate = null)
-        {   
+        {
             return await _repository.SFT03s.GetByFromDateToDateAsync(fromDate, toDate);
+        }
+
+        [HttpGet(ApiRoutes.FT03.GetSampled)]
+        public async Task<Result<List<TimeValueResponse>>> GetSampledAsync(
+            [FromQuery] string paramName,
+            [FromQuery] int frequency = 10)
+        {
+            return await _repository.SFT03s.GetSampledAsync(paramName, frequency);
         }
     }
 }

@@ -17,9 +17,8 @@ namespace UI
         {
             return Policy<HttpResponseMessage>
                 .HandleResult(response => response.StatusCode == HttpStatusCode.Unauthorized)
-                .RetryAsync(async (_, __) =>
+                .RetryAsync(1, async (outcome, retryNumber, context) =>
                 {
-                    var navigation = provider.GetRequiredService<NavigationManager>();
                     try
                     {
                         var _localStorage = provider.GetRequiredService<ILocalStorageService>();
@@ -28,15 +27,24 @@ namespace UI
                         var token = await _localStorage.GetItemAsync<string>(ConstantExtention.StorageConst.AuthToken);
                         var refreshToken = await _localStorage.GetItemAsync<string>(ConstantExtention.StorageConst.RefreshToken);
 
-                        if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(refreshToken))
+                        // Nếu không có refresh token → không thể refresh, xóa cache nhưng KHÔNG throw exception
+                        if (string.IsNullOrEmpty(refreshToken))
                         {
-                            navigation.NavigateTo("/login");
-                            throw new Exception("Token hoặc RefreshToken bị thiếu.");
+                            // Xóa cache để đảm bảo clean state
+                            await _authStateProvider.ClearCacheAsync();
+                            _authStateProvider.MarkUserAsLoggedOut();
+                            
+                            // KHÔNG throw exception, để request fail với 401 và component xử lý
+                            // Điều này cho phép trang public hoạt động bình thường
+                            Console.WriteLine("RefreshToken bị thiếu, không thể làm mới token. Chạy mode không đăng nhập.");
+                            return; // Exit gracefully
                         }
 
+                        // Token có thể null (đã bị xóa do hết hạn), nhưng vẫn có refresh token
+                        // Thử refresh với token null hoặc token cũ
                         var model = new RefreshTokenRequestDTO()
                         {
-                            Token = token,
+                            Token = token ?? string.Empty,
                             RefreshToken = refreshToken,
                         };
 
@@ -44,10 +52,15 @@ namespace UI
 
                         if (loginResponse == null || string.IsNullOrEmpty(loginResponse.Token))
                         {
-                            navigation.NavigateTo("/login");
-                            throw new Exception("Không refresh được token mới.");
+                            // Refresh thất bại (có thể do refresh token cũng hết hạn)
+                            // Xóa cache nhưng KHÔNG throw exception
+                            await _authStateProvider.ClearCacheAsync();
+                            _authStateProvider.MarkUserAsLoggedOut();
+                            Console.WriteLine("Không refresh được token mới. Refresh token có thể đã hết hạn.");
+                            return; // Exit gracefully
                         }
 
+                        // Refresh thành công
                         //Set local storage
                         await _authStateProvider.CacheAuthTokensAsync(loginResponse.Token, loginResponse.RefreshToken, string.Empty);
                         _authStateProvider.MarkUserAsAuthenticated();
@@ -56,10 +69,11 @@ namespace UI
                         await Task.Delay(10);
                         request.SetPolicyExecutionContext(new Context());
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Redirect về trang login khi có lỗi
-                        navigation.NavigateTo("/login");
+                        // Log lỗi nhưng KHÔNG throw để tránh unhandled exception
+                        Console.WriteLine($"Lỗi khi refresh token: {ex.Message}");
+                        // Request sẽ fail với 401, component tự xử lý
                     }
                 });
         }

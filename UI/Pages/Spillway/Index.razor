@@ -5,10 +5,9 @@
 @using Microsoft.Extensions.Localization
 @inject DialogService DialogService
 @inject NotificationService NotificationService
-@inject IStringLocalizer<Index> _localizer
+@* @inject IStringLocalizer<Index> _localizer *@
 @using Radzen.Blazor
 @using UI.Pages.Spillway
-@attribute [Authorize(Policy = "Admin")]
 
 <style>
     .param-row {
@@ -63,7 +62,7 @@
 
     protected override void OnInitialized()
     {
-        LayoutState.SetTitle(_localizer["Hệ thống tràn"]);
+        LayoutState.SetTitle(_localizer["HeThongTran"]);
         using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.hochua.svg");
         if (stream != null)
         {

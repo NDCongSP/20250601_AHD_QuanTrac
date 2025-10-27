@@ -3,7 +3,6 @@ using Infrastructure.Repositories;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FT02Controller : BaseController<Guid, FT02>, IFT02

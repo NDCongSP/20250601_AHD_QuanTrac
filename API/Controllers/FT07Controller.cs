@@ -3,7 +3,6 @@ using Infrastructure.Repositories;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FT07Controller : BaseController<Guid, FT07_ChartMucNuoc>, IFT07

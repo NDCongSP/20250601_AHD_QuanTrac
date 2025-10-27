@@ -1,0 +1,120 @@
+@using Application.DTOs.Response
+@using Radzen
+@using Radzen.Blazor
+@using Radzen.Blazor.Rendering
+@inject IFT03 _ft03Service
+@inject IJSRuntime _jsRuntime
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="10px" Style="min-width: 1000px; min-height: 600px;">
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween"
+        AlignItems="AlignItems.Center">
+        <div class="d-flex align-items-center">
+            <span class="rz-ml-2 rz-mr-2">Tần suất:</span>
+            <RadzenDropDown Data="@_frequencyOptions" TextProperty="Text" ValueProperty="Value" @bind-Value="_frequency"
+                Change="RefreshDataAsync" Style="width:160px" />
+        </div>
+    </RadzenStack>
+
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div style="max-height: 550px; overflow: auto; border: 1px solid #eee; border-radius: 4px;">
+                <table class="table table-sm table-striped rz-m-0">
+                    <thead style="position: sticky; top: 0; z-index: 1; background: #fff;">
+                        <tr>
+                            <th style="width:70px;text-align:center">STT</th>
+                            <th style="width:160px;text-align:center">Thời gian</th>
+                            <th style="width:80px;text-align:center">Giá trị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (_data?.Count > 0)
+                        {
+                                    var idx = 1;
+                                    foreach (var it in _data)
+                                    {
+                                        <tr>
+                                            <td style="text-align:center">@idx</td>
+                                            <td style="text-align:center">@it.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td style="text-align:center">@(it.Value?.ToString("0.##"))</td>
+                                        </tr>
+                                        idx++;
+                                    }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12 col-md-8">
+            <div style="height:550px">
+                <h5 class="text-center">Biểu đồ mực nước hồ (24 giờ gần nhất)</h5>
+                <canvas id="ft03HourlyChart" style="width:100%;height:100%"></canvas>
+            </div>
+        </div>
+    </div>
+</RadzenStack>
+
+@code {
+    [Parameter] public string ParamName { get; set; } = string.Empty;
+    [Parameter] public int Frequency { get; set; } = 10;
+
+    [CascadingParameter] public DialogService DialogService { get; set; } = default!;
+
+    private List<TimeValueResponse> _data = new();
+    private List<ChartPoint> _chartHourly = new();
+    private int _frequency;
+    private List<FrequencyOption> _frequencyOptions = new()
+{
+new FrequencyOption { Text = "10 phút", Value = 10 },
+new FrequencyOption { Text = "15 phút", Value = 15 },
+new FrequencyOption { Text = "30 phút", Value = 30 },
+new FrequencyOption { Text = "1 giờ", Value = 60 },
+new FrequencyOption { Text = "1 ngày", Value = 1440 }
+};
+
+    protected override async Task OnInitializedAsync()
+    {
+        _frequency = Frequency > 0 ? Frequency : 10;
+        await LoadDataAsync(_frequency);
+    }
+
+    private async Task LoadDataAsync(int freq)
+    {
+        if (string.IsNullOrWhiteSpace(ParamName)) return;
+
+        var res = await _ft03Service.GetSampledAsync(ParamName, freq);
+        _data = (res.Succeeded && res.Data != null)
+        ? res.Data.OrderBy(x => x.CreatedAt).ToList()
+        : new List<TimeValueResponse>();
+
+        // Dùng toàn bộ dữ liệu hiện có trong _data, nhãn HH:mm
+        _chartHourly = _data
+        .Select(d => new ChartPoint
+        {
+            Label = d.CreatedAt.ToString("dd/MM/yyyy HH:mm"),
+            Value = (d.Value.HasValue && d.Value.Value > 0) ? d.Value : (double?)null
+        })
+        .ToList();
+
+        await _jsRuntime.InvokeVoidAsync("ft03Report.renderHourlyChart", _chartHourly);
+    }
+
+    private async Task RefreshDataAsync()
+    {
+        if (_frequency <= 0) _frequency = 10;
+        await LoadDataAsync(_frequency);
+    }
+
+    void Close() => DialogService?.Close();
+
+    private class FrequencyOption
+    {
+        public string Text { get; set; } = string.Empty;
+        public int Value { get; set; }
+    }
+
+    private class ChartPoint
+    {
+        public string Label { get; set; } = string.Empty;
+        public double? Value { get; set; }
+    }
+}

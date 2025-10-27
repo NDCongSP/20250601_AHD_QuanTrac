@@ -274,7 +274,7 @@
     <value>Hồ chứa</value>
   </data>
   <data name="HeThongTran" xml:space="preserve">
-    <value>Hệ thống tràn</value>
+    <value>GIÁM SÁT VẬN HÀNH TRÀN XÃ LŨ</value>
   </data>
   <data name="MucNuoc" xml:space="preserve">
     <value>Mực nước</value>
@@ -419,6 +419,21 @@
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Đổi mật khẩu</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset mật khẩu</value>
+  </data>
+  <data name="Confirmation.ResetPassword" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn reset mật khẩu cho</value>
+  </data>
+  <data name="DefaultPasswordWillBe" xml:space="preserve">
+    <value>Mật khẩu mặc định sẽ là</value>
+  </data>
+  <data name="PasswordResetSuccessfully" xml:space="preserve">
+    <value>Đặt lại mật khẩu thành công</value>
+  </data>
+  <data name="DefaultPassword" xml:space="preserve">
+    <value>Mật khẩu mặc định</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Đăng xuất</value>
@@ -592,6 +607,24 @@
     <value>{0} trong tổng {1}</value>
     <comment>{0} trong tổng {1}</comment>
   </data>
+  <data name="ScadaUsers" xml:space="preserve">
+    <value>NGƯỜI DÙNG SCADA</value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>Quyền</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Mật khẩu hiện tại</value>
+  </data>
+  <data name="ScadaUser.NotFound" xml:space="preserve">
+    <value>Không tìm thấy người dùng SCADA.</value>
+  </data>
+  <data name="ScadaUser.OldPasswordNotFound" xml:space="preserve">
+    <value>Không tìm thấy mật khẩu cũ.</value>
+  </data>
+  <data name="ScadaUser.CurrentPasswordIncorrect" xml:space="preserve">
+    <value>Mật khẩu hiện tại không đúng.</value>
+  </data>
   <data name="PermissionManager.Title" xml:space="preserve">
     <value>QUẢN LÝ CHỨC NĂNG</value>
   </data>
@@ -681,5 +714,11 @@
   </data>
   <data name="Detail.Create" xml:space="preserve">
     <value>Tạo mới</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="OffsetAPI" xml:space="preserve">
+    <value>OffsetAPI</value>
   </data>
 </root>

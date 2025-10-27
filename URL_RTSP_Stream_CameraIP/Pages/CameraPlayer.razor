@@ -1,0 +1,50 @@
+﻿@page "/camera"
+@inject IJSRuntime JSRuntime
+
+<h3>Camera Hồ Dầu Tiếng</h3>
+
+@* <video id="my-camera-video1" controls autoplay muted style="width: 100%; max-width: 800px;"></video> *@
+<video id="my-camera-video1" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video2" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video3" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video4" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video5" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video6" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video7" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video8" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video9" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+<video id="my-camera-video10" controls autoplay muted style="width: 100%; max-width: 800px;"></video>
+
+@code {
+    // Đây là đường dẫn HLS từ MediaMTX (Bước 2)
+    // Hãy thay thế 'localhost' bằng IP của máy chủ chạy MediaMTX
+    // private string hlsStreamUrl = "rtsp://admin:yourPass@113.187.148.168:554/onvif1";
+    private string hlsStreamUrl1 = "http://14.224.229.6:8888/Cam1/index.m3u8";
+    private string hlsStreamUrl2 = "http://14.224.229.6:8888/Cam2/index.m3u8";
+    private string hlsStreamUrl3 = "http://14.224.229.6:8888/Cam3/index.m3u8";
+    private string hlsStreamUrl4 = "http://14.224.229.6:8888/Cam4/index.m3u8";
+    private string hlsStreamUrl5 = "http://14.224.229.6:8888/Cam5/index.m3u8";
+    private string hlsStreamUrl6 = "http://14.224.229.6:8888/Cam6/index.m3u8";
+    private string hlsStreamUrl7 = "http://14.224.229.6:8888/Cam7/index.m3u8";
+    private string hlsStreamUrl8 = "http://14.224.229.6:8888/Cam8/index.m3u8";
+    private string hlsStreamUrl9 = "http://14.224.229.6:8888/Cam9/index.m3u8";
+    private string hlsStreamUrl10 = "http://14.224.229.6:8888/Cam10/index.m3u8";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Gọi hàm JavaScript để tải video
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video1", hlsStreamUrl1);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video2", hlsStreamUrl2);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video3", hlsStreamUrl3);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video4", hlsStreamUrl4);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video5", hlsStreamUrl5);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video6", hlsStreamUrl6);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video7", hlsStreamUrl7);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video8", hlsStreamUrl8);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video9", hlsStreamUrl9);
+            await JSRuntime.InvokeVoidAsync("loadHlsPlayer", "my-camera-video10", hlsStreamUrl10);
+        }
+    }
+}

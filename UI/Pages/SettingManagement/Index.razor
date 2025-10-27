@@ -2,22 +2,23 @@
 @using Radzen
 @using Radzen.Blazor
 @using Radzen.Blazor.Rendering
+@using UI.StaticClass
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @using Domain
 @using Application.Services
 @inject IStringLocalizer<CommonResources> _localizer
 @inject NotificationService _notificationService
-@attribute [Authorize(Policy = "Admin")]
+
 
 <RadzenRow Gap="1rem" Class="padding-body-content">
     <RadzenColumn SizeXS="12" SizeMD="12">
         <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center"
-                   AlignItems="AlignItems.Stretch" Gap="5px">
+                     AlignItems="AlignItems.Stretch" Gap="5px">
             <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End"
-                       AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
+                         AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
                 <RadzenButton Click="@HandleSaveClick" Variant="Variant.Flat" Shade="Shade.Dark"
-                            Text="@_localizer["btn_Save"]" Icon="save" ButtonStyle="ButtonStyle.Success" />
+                              Text="@_localizer["btn_Save"]" Icon="save" ButtonStyle="ButtonStyle.Success" />
             </RadzenStack>
 
             @if (_isLoading)
@@ -33,59 +34,189 @@
                     <RadzenTabs>
                         <Tabs>
                             <RadzenTabsItem Text="@_localizer["lbl_GeneralSettings"]">
+                                <RadzenFieldset Text="@_localizer["Calculator"]">
+                                    <div class="row p-3">
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="@_localizer["lbl_HeSoLuuToc_Phi"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoLuuToc_Phi"
+                                                               Style="width: 100%">
+                                                    <RadzenRequiredValidator Component="HeSoLuuToc_Phi" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_HeSoLuuToc_Phi"])" Style="display: block" />
+                                                    <RadzenNumericRangeValidator Component="HeSoLuuToc_Phi" Min="0" Max="1" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_HeSoLuuToc_Phi"], 0, 1)" Style="display: block" />
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text='@(_localizer["lbl_GiaToc_G"] + " (m/s²)")' Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.GiaToc_G"
+                                                               Style="width: 100%">
+                                                    <RadzenRequiredValidator Component="GiaToc_G" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_GiaToc_G"])" Style="display: block" />
+                                                    <RadzenNumericRangeValidator Component="GiaToc_G" Min="0" Max="20" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_GiaToc_G"], 0, 20)" Style="display: block" />
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text='@(_localizer["lbl_CaoTrinhNguongTran_Zn"] + " (m)")' Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.CaoTrinhNguongTran_Zn"
+                                                               Style="width: 100%">
+                                                    <RadzenRequiredValidator Component="CaoTrinhNguongTran_Zn" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_CaoTrinhNguongTran_Zn"])" Style="display: block" />
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="@_localizer["lbl_SoCuaMo"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="int" @bind-Value="@_config.ParametterConfig.SoCuaMo"
+                                                               Style="width: 100%">
+                                                    <RadzenRequiredValidator Component="SoCuaMo" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_SoCuaMo"])" Style="display: block" />
+                                                    <RadzenNumericRangeValidator Component="SoCuaMo" Min="1" Max="10" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_SoCuaMo"], 1, 10)" Style="display: block" />
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="@_localizer["lbl_HeSoCoHep_ALpha"]" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoCoHep_ALpha"
+                                                               Style="width: 100%">
+                                                    <RadzenRequiredValidator Component="HeSoCoHep_ALpha" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_HeSoCoHep_ALpha"])" Style="display: block" />
+                                                    <RadzenNumericRangeValidator Component="HeSoCoHep_ALpha" Min="0" Max="1" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_HeSoCoHep_ALpha"], 0, 1)" Style="display: block" />
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                        </div>
+                                    </div>
+                                </RadzenFieldset>
+                                <RadzenFieldset Text="@_localizer["OffsetAPI"]">
+                                    <div class="row p-3">
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="API_Fllow_DauTieng (m)" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_Fllow_DauTieng"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            <RadzenRequiredValidator Component="API_Fllow_DauTieng" Popup="false" Min="0" Style="position: absolute" />
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="API_Fllow_BenSuc (m)" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_Fllow_BenSuc"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            <RadzenRequiredValidator Component="API_Fllow_BenSuc" Popup="false" Min="0" Style="position: absolute" />
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="API_Fllow_SonDai (m)" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_Fllow_SonDai"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            <RadzenRequiredValidator Component="API_Fllow_SonDai (m)" Popup="false" Min="0" Style="position: absolute" />
+                                        </div>
+                                         <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="API_Fllow_BinhNham (m)" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_Fllow_BinhNham"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            <RadzenRequiredValidator Component="API_Fllow_BinhNham" Popup="false" Min="0" Style="position: absolute" />
+                                        </div>
+                                         <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="API_Fllow_TL_CDD (m)" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_Fllow_TL_CDD"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            <RadzenRequiredValidator Component="API_Fllow_TL_CDD" Popup="false" Min="0" Style="position: absolute" />
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="API_ChanDap (m)" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_ChanDap"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            <RadzenRequiredValidator Component="API_ChanDap" Popup="false" Min="0" Style="position: absolute" />
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="API_ThanhAn (m)" Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_ThanhAn"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            <RadzenRequiredValidator Component="API_ThanhAn" Popup="false" Min="0" Style="position: absolute" />
+                                        </div>
+                                    </div>
+                                </RadzenFieldset>
+                            </RadzenTabsItem>
+
+                            <RadzenTabsItem Text="Cấu hình Camera">
                                 <div class="row p-3">
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_HeSoLuuToc_Phi"]" Variant="Variant.Outlined" Style="width:100%">
+                                    <div class="col-12">
+                                        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="0.5rem" Class="rz-mb-2">
+                                            <RadzenButton Icon="add" Text="Thêm camera" Click="@InsertCameraRow" />
+                                        </RadzenStack>
 
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoLuuToc_Phi" 
-                                                        Style="width: 100%" FormatString="F4">
-                                                <RadzenRequiredValidator Component="HeSoLuuToc_Phi" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_HeSoLuuToc_Phi"])" Style="display: block" />
-                                                <RadzenNumericRangeValidator Component="HeSoLuuToc_Phi" Min="0" Max="1" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_HeSoLuuToc_Phi"], 0, 1)" Style="display: block" />
-                                            </RadzenNumeric>
-                                        </RadzenFormField>
-                                    </div>
+                                        <RadzenDataGrid @ref="_cameraGrid"
+                                                        Data="@_config.CameraConfigs"
+                                                        TItem="CameraConfigModel"
+                                                        EditMode="DataGridEditMode.Single"
+                                                        AllowPaging="true" PageSize="10"
+                                                        AllowSorting="true"
+                                                        AllowFiltering="true"
+                                                        RowUpdate="@OnCameraUpdateRow"
+                                                        RowCreate="@OnCameraCreateRow">
+                                            <Columns>
+                                                <RadzenDataGridColumn TItem="CameraConfigModel" Title="Thao tác" Width="180px" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+                                                    <Template Context="data">
+                                                        <RadzenButton Icon="edit" Size="ButtonSize.Small" Click="@(() => EditCameraRow(data))" Class="rz-mr-2" />
+                                                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Click="@(() => DeleteCameraRow(data))" />
+                                                    </Template>
+                                                    <EditTemplate Context="data">
+                                                        <RadzenButton Icon="save" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Primary" Click="@(() => SaveCameraRow(data))" Class="rz-mr-2" />
+                                                        <RadzenButton Icon="close" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => CancelEditCameraRow(data))" />
+                                                    </EditTemplate>
+                                                </RadzenDataGridColumn>
 
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_GiaToc_G"]" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenDataGridColumn TItem="CameraConfigModel" Property="CameraId" Title="ID" Width="260px">
+                                                    <EditTemplate Context="data">
+                                                        <RadzenNumeric style="width:100%" @bind-Value="data.CameraId" />
+                                                    </EditTemplate>
+                                                </RadzenDataGridColumn>
 
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.GiaToc_G" 
-                                                        Style="width: 100%" FormatString="F2" Suffix=" m/s²">
-                                                <RadzenRequiredValidator Component="GiaToc_G" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_GiaToc_G"])" Style="display: block" />
-                                                <RadzenNumericRangeValidator Component="GiaToc_G" Min="0" Max="20" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_GiaToc_G"], 0, 20)" Style="display: block" />
-                                            </RadzenNumeric>
-                                        </RadzenFormField>
-                                    </div>
+                                                <RadzenDataGridColumn TItem="CameraConfigModel" Property="CameraTitle" Title="Tiêu đề" Width="260px">
+                                                    <EditTemplate Context="data">
+                                                        <RadzenTextBox style="width:100%" @bind-Value="data.CameraTitle" />
+                                                    </EditTemplate>
+                                                </RadzenDataGridColumn>
 
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_CaoTrinhNguongTran_Zn"]" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenDataGridColumn TItem="CameraConfigModel" Property="HlsStreamUrl" Title="HLS URL" Width="480px">
+                                                    <EditTemplate Context="data">
+                                                        <RadzenTextBox style="width:100%" @bind-Value="data.HlsStreamUrl" />
+                                                    </EditTemplate>
+                                                </RadzenDataGridColumn>
 
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.CaoTrinhNguongTran_Zn" 
-                                                        Style="width: 100%" FormatString="F2" Suffix=" m">
-                                                <RadzenRequiredValidator Component="CaoTrinhNguongTran_Zn" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_CaoTrinhNguongTran_Zn"])" Style="display: block" />
-                                            </RadzenNumeric>
-                                        </RadzenFormField>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_SoCuaMo"]" Variant="Variant.Outlined" Style="width:100%">
-
-                                            <RadzenNumeric TValue="int" @bind-Value="@_config.ParametterConfig.SoCuaMo" 
-                                                        Style="width: 100%" FormatString="F0">
-                                                <RadzenRequiredValidator Component="SoCuaMo" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_SoCuaMo"])" Style="display: block" />
-                                                <RadzenNumericRangeValidator Component="SoCuaMo" Min="1" Max="10" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_SoCuaMo"], 1, 10)" Style="display: block" />
-                                            </RadzenNumeric>
-                                        </RadzenFormField>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_HeSoCoHep_ALpha"]" Variant="Variant.Outlined" Style="width:100%">
-
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.HeSoCoHep_ALpha"
-                                                           Style="width: 100%" FormatString="F4">
-                                                <RadzenRequiredValidator Component="HeSoCoHep_ALpha" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_HeSoCoHep_ALpha"])" Style="display: block" />
-                                                <RadzenNumericRangeValidator Component="HeSoCoHep_ALpha" Min="0" Max="1" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_HeSoCoHep_ALpha"], 0, 1)" Style="display: block" />
-                                            </RadzenNumeric>
-                                        </RadzenFormField>
+                                                <RadzenDataGridColumn TItem="CameraConfigModel" Property="Actived" Title="Kích hoạt" Width="120px" TextAlign="TextAlign.Center">
+                                                    <Template Context="data">
+                                                        <RadzenSwitch Value="@data.Actived" Disabled="true" />
+                                                    </Template>
+                                                    <EditTemplate Context="data">
+                                                        <RadzenSwitch @bind-Value="data.Actived" />
+                                                    </EditTemplate>
+                                                </RadzenDataGridColumn>
+                                            </Columns>
+                                        </RadzenDataGrid>
+                                        <div class="rz-mt-2 rz-text-secondary">Nhấn Lưu ở trên cùng để lưu toàn bộ cấu hình.</div>
                                     </div>
                                 </div>
                             </RadzenTabsItem>
@@ -93,19 +224,19 @@
                             <RadzenTabsItem Text="@_localizer["lbl_FlowSettings"]">
                                 <div class="row p-3">
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_Q_CongSo1"]" Variant="Variant.Outlined" Style="width:100%">
+                                        <RadzenFormField Text='@(_localizer["lbl_Q_CongSo1"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
 
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo1" 
-                                                        Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo1"
+                                                           Style="width: 100%">
                                             </RadzenNumeric>
                                             <RadzenRequiredValidator Component="Q_CongSo1" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo1"])" Style="display: block" />
                                         </RadzenFormField>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_Fllow_HL_TXL"]" Variant="Variant.Outlined" Style="width:100%">
+                                        <RadzenFormField Text='@(_localizer["lbl_Fllow_HL_TXL"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
 
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Fllow_HL_TXL" 
-                                                        Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Fllow_HL_TXL"
+                                                           Style="width: 100%">
                                                 <RadzenRequiredValidator Component="Fllow_HL_TXL" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Fllow_HL_TXL"])" Style="display: block" />
                                                 <RadzenNumericRangeValidator Component="Fllow_HL_TXL" Min="0" Max="10000" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_Fllow_HL_TXL"], 0, 10000)" Style="display: block" />
                                             </RadzenNumeric>
@@ -113,19 +244,19 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_Q_CongSo2"]" Variant="Variant.Outlined" Style="width:100%">
+                                        <RadzenFormField Text='@(_localizer["lbl_Q_CongSo2"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
 
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo2"
-                                                           Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                                           Style="width: 100%">
                                                 <RadzenRequiredValidator Component="Q_CongSo2" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo2"])" Style="display: block" />
                                             </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_Q_CongSo3"]" Variant="Variant.Outlined" Style="width:100%">
+                                        <RadzenFormField Text='@(_localizer["lbl_Q_CongSo3"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
                                             <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo3"
-                                                           Style="width: 100%" FormatString="F2" Suffix='@(" " + _localizer["unit_M3s"])'>
+                                                           Style="width: 100%">
                                                 <RadzenRequiredValidator Component="Q_CongSo3" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo3"])" Style="display: block" />
                                             </RadzenNumeric>
                                         </RadzenFormField>
@@ -136,10 +267,10 @@
                             <RadzenTabsItem Text="@_localizer["lbl_SystemSettings"]">
                                 <div class="row p-3">
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_DataLogInterval"]" Variant="Variant.Outlined" Style="width:100%">
+                                        <RadzenFormField Text='@(_localizer["lbl_DataLogInterval"] + " (s)")' Variant="Variant.Outlined" Style="width:100%">
 
-                                            <RadzenNumeric TValue="int" @bind-Value="@_config.DataLogInterval" 
-                                                        Style="width: 100%" FormatString="F0" Suffix='@(" " + _localizer["unit_Seconds"])'>
+                                            <RadzenNumeric TValue="int" @bind-Value="@_config.DataLogInterval"
+                                                           Style="width: 100%">
                                                 <RadzenRequiredValidator Component="DataLogInterval" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_DataLogInterval"])" Style="display: block" />
                                                 <RadzenNumericRangeValidator Component="DataLogInterval" Min="1" Max="3600" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_DataLogInterval"], 1, 3600)" Style="display: block" />
                                             </RadzenNumeric>
@@ -147,10 +278,10 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text="@_localizer["lbl_TimerInterval"]" Variant="Variant.Outlined" Style="width:100%">
+                                        <RadzenFormField Text='@(_localizer["lbl_TimerInterval"] + " (ms)")' Variant="Variant.Outlined" Style="width:100%">
 
-                                            <RadzenNumeric TValue="int" @bind-Value="@_config.TimerInterval" 
-                                                        Style="width: 100%" FormatString="F0" Suffix='@(" " + _localizer["unit_MS"])'>
+                                            <RadzenNumeric TValue="int" @bind-Value="@_config.TimerInterval"
+                                                           Style="width: 100%">
                                                 <RadzenRequiredValidator Component="TimerInterval" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_TimerInterval"])" Style="display: block" />
                                                 <RadzenNumericRangeValidator Component="TimerInterval" Min="100" Max="60000" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_TimerInterval"], 100, 60000)" Style="display: block" />
                                             </RadzenNumeric>
@@ -169,6 +300,9 @@
 @code {
     private ConfigModel _config = new();
     private bool _isLoading = true;
+    private bool IsLoggedIn => GlobalVariable.UserAuthorizationInfo != null;
+    RadzenDataGrid<CameraConfigModel>? _cameraGrid;
+    CameraConfigModel? _cameraToInsert;
 
     protected override async Task OnInitializedAsync()
     {
@@ -217,6 +351,54 @@
         catch (Exception ex)
         {
             _notificationService.Notify(NotificationSeverity.Error, "Error", $"Error saving settings: {ex.Message}");
+        }
+    }
+
+    // Camera grid handlers
+    void InsertCameraRow()
+    {
+        _cameraToInsert = new CameraConfigModel();
+        _config.CameraConfigs ??= new List<CameraConfigModel>();
+        _cameraGrid?.InsertRow(_cameraToInsert);
+    }
+
+    void EditCameraRow(CameraConfigModel item)
+    {
+        _cameraGrid?.EditRow(item);
+    }
+
+    async Task SaveCameraRow(CameraConfigModel item)
+    {
+        await _cameraGrid!.UpdateRow(item);
+    }
+
+    void CancelEditCameraRow(CameraConfigModel item)
+    {
+        _cameraGrid?.CancelEditRow(item);
+        if (item == _cameraToInsert)
+        {
+            _cameraToInsert = null;
+        }
+    }
+
+    async Task OnCameraCreateRow(CameraConfigModel item)
+    {
+        _config.CameraConfigs.Add(item);
+        _cameraToInsert = null;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    async Task OnCameraUpdateRow(CameraConfigModel item)
+    {
+        // Data is already bound to list; just ensure UI refresh
+        await InvokeAsync(StateHasChanged);
+    }
+
+    void DeleteCameraRow(CameraConfigModel item)
+    {
+        if (_config.CameraConfigs.Contains(item))
+        {
+            _config.CameraConfigs.Remove(item);
         }
     }
 }

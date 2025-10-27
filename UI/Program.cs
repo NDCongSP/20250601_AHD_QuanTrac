@@ -26,13 +26,20 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Resources")
 var host = builder.Build();
 var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
 
-// Get the culture from localStorage or use default 'vi'
+// Get the culture from localStorage or use default 'vi-VN'
 var result = await jsInterop.InvokeAsync<string>("localStorage.getItem", "culture");
-var culture = result ?? "vi-VN";
+var cultureName = result ?? "vi-VN";
 
-// Set the culture for the application
-CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
-CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+// Lấy bản sao culture vi-VN
+var customCulture = new CultureInfo(cultureName);
+
+// Thay dấu thập phân sang "."
+customCulture.NumberFormat.NumberDecimalSeparator = ".";
+customCulture.NumberFormat.NumberGroupSeparator = ","; // nhóm hàng nghìn vẫn dùng dấu phẩy
+
+// Áp dụng culture này
+CultureInfo.DefaultThreadCurrentCulture = customCulture;
+CultureInfo.DefaultThreadCurrentUICulture = customCulture;
 
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<UI.Services.LayoutStateService>();
@@ -104,7 +111,8 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IFT03>()
     .UseWithRestEaseClient<IFT05>()
     .UseWithRestEaseClient<IFT06>()
-    .UseWithRestEaseClient<IFT07>();
+    .UseWithRestEaseClient<IFT07>()
+    .UseWithRestEaseClient<IScadaUser>();
 
 // Register the initialization service
 builder.Services.AddScoped<AppInitializer>();

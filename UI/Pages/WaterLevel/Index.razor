@@ -2,7 +2,6 @@
 @using System.Timers
 @using Domain.Models
 @using UI.StaticClass
-@attribute [Authorize(Policy = "Admin")]
 <style>
     h2 {
         text-align: center;
@@ -24,7 +23,8 @@
     <figure>
         <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
             <RadzenRow>
-                <RadzenColumn SizeXS="12" SizeMD="12" class="rz-mx-auto">
+                <RadzenColumn SizeXS="12" SizeMD="12" class="rz-mx-auto" style="position: relative;">
+                    <a href="https://bando.thuyloimiennam.vn/" target="_blank" class="rz-button rz-secondary" style="position: absolute; bottom: 10px; left: 10px; z-index: 2; background-color: white; color: black; border-radius: 4px; padding: 10px; text-decoration: none;">Map</a>
                     @((MarkupString)_svg)
                 </RadzenColumn>
             </RadzenRow>
@@ -32,6 +32,7 @@
     </figure>
 </RadzenPanel>
 <RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
+    <h4 class="text-center">Diễn biến mực nước trên sông Sài Gòn</h4>
     <div class="chart-container">
         <canvas id="riverChart"></canvas>
     </div>
@@ -43,7 +44,7 @@
     private RealtimeDisplayModel realtimeData = new();
     protected override async Task OnInitializedAsync()
     {
-        LayoutState.SetTitle(_localizer["Mực nước"]);
+        LayoutState.SetTitle(_localizer["GIÁM SÁT MỰC NƯỚC HẠ LƯU SÔNG SÀI GÒN"]);
         using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.MNGG.svg");
         stream.Seek(0, SeekOrigin.Begin);
         StreamReader reader = new StreamReader(stream);
@@ -74,6 +75,7 @@
         try
         {
             await LoadRealtimeData();
+            await UpdateZThucValueOnly();
         }
         catch { }
     }
@@ -93,7 +95,7 @@
         }
     }
 
-    public async Task GetChartZThucData()
+    private void CalculateZThucValues()
     {
         foreach (var itemModel in _ft07ChartData)
         {
@@ -119,6 +121,17 @@
                 }
             }
         }
+    }
+
+    public async Task GetChartZThucData()
+    {
+        CalculateZThucValues();
         await _jsRuntime.InvokeVoidAsync("updateChartWaterLevel", _ft07ChartData);
+    }
+
+    public async Task UpdateZThucValueOnly()
+    {
+        CalculateZThucValues();
+        await _jsRuntime.InvokeVoidAsync("updateZThucValue", _ft07ChartData);
     }
 }

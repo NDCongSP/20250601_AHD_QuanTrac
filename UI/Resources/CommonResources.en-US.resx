@@ -121,7 +121,7 @@
     <value>Welcome</value>
   </data>
   <data name="Loading" xml:space="preserve">
-    <value>Loading</value>
+    <value>Loading...</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
@@ -588,6 +588,24 @@
   <data name="PagingSummaryFormat" xml:space="preserve">
     <value>{0} of {1}</value>
   </data>
+  <data name="ScadaUsers" xml:space="preserve">
+    <value>SCADA USERS</value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>Permission</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="ScadaUser.NotFound" xml:space="preserve">
+    <value>SCADA user not found.</value>
+  </data>
+  <data name="ScadaUser.OldPasswordNotFound" xml:space="preserve">
+    <value>Old password not found.</value>
+  </data>
+  <data name="ScadaUser.CurrentPasswordIncorrect" xml:space="preserve">
+    <value>Current password is incorrect.</value>
+  </data>
   <data name="PermissionManager.Title" xml:space="preserve">
     <value>PERMISSIONS MANAGEMENT</value>
   </data>
@@ -677,5 +695,11 @@
   </data>
   <data name="Detail.Create" xml:space="preserve">
     <value>Add new</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Calculator Parametters</value>
+  </data>
+  <data name="OffsetAPI" xml:space="preserve">
+    <value>Offset API Parameters</value>
   </data>
 </root>

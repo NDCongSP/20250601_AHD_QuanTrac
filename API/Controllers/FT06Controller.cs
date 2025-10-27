@@ -3,7 +3,6 @@ using Infrastructure.Repositories;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FT06Controller : BaseController<Guid, FT06_InterpolationTable>, IFT06

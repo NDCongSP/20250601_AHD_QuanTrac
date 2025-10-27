@@ -30,6 +30,7 @@ namespace Application.Services.Authen.UI
                     var accessTokenResult = await _tokenProviderAccessor.TokenProvider.RequestAccessToken();
                     if (accessTokenResult.Status == AccessTokenResultStatus.RequiresRedirect)
                     {
+                        // Chỉ redirect khi RequiresRedirect (user chưa login và cần login)
                         _navigation.NavigateTo(accessTokenResult.RedirectUrl);
                     }
                     else if (accessTokenResult.Status == AccessTokenResultStatus.Success)
@@ -38,10 +39,7 @@ namespace Application.Services.Authen.UI
                         {
                             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken.Value);
                         }
-                        else
-                        {
-                            _navigation.NavigateTo("/login");
-                        }
+                        // Không redirect nếu không có token, API sẽ trả 401 và RetryRefreshTokenHandler xử lý
                     }
                 }
             }
@@ -51,11 +49,9 @@ namespace Application.Services.Authen.UI
             }
             var response = await base.SendAsync(request, cancellationToken);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {                
-                _navigation.NavigateTo("/login");
-            }
-
+            // Không redirect ở đây, để RetryRefreshTokenHandler xử lý 401
+            // Nếu refresh token thất bại, AuthorizeView sẽ tự động redirect khi cần
+            
             return response;
         }
     }

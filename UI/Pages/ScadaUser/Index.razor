@@ -1,0 +1,325 @@
+@page "/scada-users"
+@using Application.DTOs.Request.Account
+@using Application.Extentions
+@using Domain
+@using Domain.Entities
+@using UI.Pages.ScadaUser
+@attribute [Authorize(Policy = "Admin")]
+
+@inject IScadaUser _scadaUserServices
+@inject DialogService _dialogService
+@inject NotificationService _notificationService
+@inject IStringLocalizer<CommonResources> _localizer
+
+@if (_dataGrid == null)
+{
+            <p><em>@_localizer["Loading"]...</em></p>
+}
+else
+{
+            <RadzenRow Gap="1rem" Class="padding-body-content">
+                <RadzenColumn SizeXS="12" SizeMD="12">
+                    <RadzenStack>
+                        <RadzenFieldset Text="@_localizer["ScadaUsers"]">
+                            <RadzenStack Orientation=Radzen.Orientation.Vertical JustifyContent="Radzen.JustifyContent.Center" AlignItems="AlignItems.Stretch" Gap="10px">
+                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.End"
+                                             AlignItems="AlignItems.Center" Gap="1rem" Wrap="Radzen.FlexWrap.Wrap">
+                                    <RadzenButton Click=@(args => AddNew()) Variant="Variant.Flat" Shade="Shade.Dark"
+                                                  Text="@_localizer["Create"]" Icon="add_circle" ButtonStyle="ButtonStyle.Success" />
+                                </RadzenStack>
+
+                        
+
+                                <RadzenDataGrid @ref="_profileGrid" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                                                AllowPaging="true" PageSize="20" PageSizeText="@_localizer["items per page"]"
+                                                AllowSorting="true" EmptyText="@_localizer["No records to display."]"
+                                                Data="@_dataGrid" TItem="ScadaUser" AllowColumnPicking="false" AllowColumnResize="true" AllowGrouping="false"
+                                                GridLines="Radzen.DataGridGridLines.Both" AllowAlternatingRows="false">
+                                    <Columns>
+                                        <RadzenDataGridColumn TItem="ScadaUser" Width="200px" TextAlign="TextAlign.Center" CssClass="rz-grid-col-flex-start">
+                                            <HeaderTemplate>
+                                                @_localizer["UserName"]
+                                            </HeaderTemplate>
+                                            <Template Context="data">
+                                                <a class="text-green" @onclick="@(() => EditItem(data))" style="cursor:pointer;">@data.UserName</a>
+                                            </Template>
+                                        </RadzenDataGridColumn>
+                                        <RadzenDataGridColumn TItem="ScadaUser" Width="200px" Property="FullName" Title="@_localizer["Fullname"]" />
+                                        <RadzenDataGridColumn TItem="ScadaUser" Width="150px" Title="@_localizer["Permission"]">
+                                            <Template Context="data">@data.PermissionScada</Template>
+                                        </RadzenDataGridColumn>
+                                    <RadzenDataGridColumn TItem="ScadaUser" Width="350px" Title="@_localizer["Common.Actions"]" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+                                        <Template Context="data">
+                                            <RadzenButton Size="ButtonSize.Small" Icon="edit" Text="@_localizer["Detail.Edit"]" Click="@(() => EditItem(data))" />
+                                            <RadzenButton Size="ButtonSize.Small" Icon="password" Text="@_localizer["ChangePassword"]" Click="@(() => OpenChangePassword(data))" ButtonStyle="ButtonStyle.Info" Class="rz-ml-2" />
+                                            <br />
+                                            <RadzenButton Size="ButtonSize.Small" Icon="refresh" Text="@_localizer["ResetPassword"]" Click="@(() => ResetPasswordAsync(data))" ButtonStyle="ButtonStyle.Warning" Class="rz-mt-1" />
+                                            <RadzenButton Size="ButtonSize.Small" Icon="delete" Text="@_localizer["Delete"]" Click="@(() => DeleteItemAsync(data))" ButtonStyle="ButtonStyle.Danger" Class="rz-ml-2 rz-mt-1" />
+                                        </Template>
+                                    </RadzenDataGridColumn>
+                                    </Columns>
+                                </RadzenDataGrid>
+                            </RadzenStack>
+                        </RadzenFieldset>
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+}
+
+@code {
+    List<ScadaUser> _dataGrid = new List<ScadaUser>();
+    RadzenDataGrid<ScadaUser>? _profileGrid;
+
+    bool _showForm = false; // deprecated by dialog flags
+    bool _isEdit = false;
+    ScadaUser _editModel = new ScadaUser();
+
+    bool _showChangePassword = false; // deprecated by dialog flags
+    ChangePassRequestDTO _changePassModel = new ChangePassRequestDTO();
+
+    bool _openEditDialog = false;
+    bool _openChangePasswordDialog = false;
+
+    IEnumerable<object> _permissionOptions = Array.Empty<object>();
+    EnumPermissionScada? _selectedPermission;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        LayoutState.SetTitle("SCADA USERS");
+        _permissionOptions = Enum.GetValues(typeof(EnumPermissionScada))
+            .Cast<EnumPermissionScada>()
+            .Select(e => new { Display = e.ToString(), Value = e });
+        await RefreshDataAsync();
+    }
+
+    async Task RefreshDataAsync()
+    {
+        try
+        {
+            var res = await _scadaUserServices.GetAllAsync();
+            _dataGrid = res?.Data ?? new List<ScadaUser>();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
+        }
+    }
+
+    async void AddNew()
+    {
+        _isEdit = false;
+        _editModel = new ScadaUser() { Id = Guid.NewGuid() };
+        _selectedPermission = null;
+        var result = await _dialogService.OpenAsync<UI.Pages.ScadaUser.ScadaUserEditDialog>(
+            _localizer["Detail.Create"] + " SCADA User",
+            new Dictionary<string, object>() {
+                { "Model", _editModel },
+                { "IsEdit", false },
+                { "PermissionOptions", _permissionOptions },
+                { "SelectedPermission", _selectedPermission },
+                { "ExistingUsernames", _dataGrid.Select(u => u.UserName).ToList() },
+                { "EditingId", _editModel.Id }
+            },
+            new DialogOptions() { Width = "600px" }
+        );
+        if (result is ScadaUser submitted)
+        {
+            _editModel = submitted;
+            await SaveAsync();
+        }
+    }
+
+    async void EditItem(ScadaUser data)
+    {
+        _isEdit = true;
+        _editModel = new ScadaUser
+        {
+            Id = data.Id,
+            UserName = data.UserName,
+            FullName = data.FullName,
+            Password = data.Password,
+            PermissionScada = data.PermissionScada
+        };
+        _selectedPermission = data.PermissionScada;
+        var result = await _dialogService.OpenAsync<UI.Pages.ScadaUser.ScadaUserEditDialog>(
+            _localizer["Detail.Edit"] + " SCADA User",
+            new Dictionary<string, object>() {
+                { "Model", _editModel },
+                { "IsEdit", true },
+                { "PermissionOptions", _permissionOptions },
+                { "SelectedPermission", _selectedPermission },
+                { "ExistingUsernames", _dataGrid.Select(u => u.UserName).ToList() },
+                { "EditingId", _editModel.Id }
+            },
+            new DialogOptions() { Width = "600px" }
+        );
+        if (result is ScadaUser submitted)
+        {
+            _editModel = submitted;
+            _editModel.Password = data.Password;
+            await SaveAsync();
+        }
+    }
+
+    void CancelEdit()
+    {
+        _openEditDialog = false;
+        _isEdit = false;
+    }
+
+    async Task SaveAsync()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(_editModel.UserName))
+            {
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"], "User name is required");
+                return;
+            }
+
+            // Check username uniqueness (client-side) ignoring current record
+            if (_dataGrid.Any(u => u.UserName.Equals(_editModel.UserName, StringComparison.OrdinalIgnoreCase) && u.Id != _editModel.Id))
+            {
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"], "User name already exists");
+                return;
+            }
+
+            if (_isEdit)
+            {
+                var updateRes = await _scadaUserServices.UpdateAsync(_editModel);
+                if (!updateRes.Succeeded)
+                {
+                    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], string.Join("; ", updateRes.Messages ?? new List<string>()));
+                    return;
+                }
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
+            }
+            else
+            {
+                // default password on create
+                _editModel.Password = "123@456";
+                var insertRes = await _scadaUserServices.InsertAsync(_editModel);
+                if (!insertRes.Succeeded)
+                {
+                    NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], string.Join("; ", insertRes.Messages ?? new List<string>()));
+                    return;
+                }
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], "Default password: 123@456");
+            }
+
+            _openEditDialog = false;
+            await RefreshDataAsync();
+        }
+        catch (Exception ex)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], ex.Message);
+        }
+    }
+
+    async Task DeleteItemAsync(ScadaUser data)
+    {
+        var confirm = await _dialogService.Confirm(_localizer["Confirmation.Delete"] + $" {_localizer["User"]}: {data.UserName}?", _localizer["Delete"] + " SCADA User", new ConfirmOptions()
+        {
+            OkButtonText = _localizer["Yes"],
+            CancelButtonText = _localizer["No"],
+            AutoFocusFirstElement = true,
+        });
+        if (confirm == null || confirm == false) return;
+
+        var res = await _scadaUserServices.DeleteAsync(data);
+        if (!res.Succeeded)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], string.Join("; ", res.Messages ?? new List<string>()));
+            return;
+        }
+        NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
+        await RefreshDataAsync();
+    }
+
+    async Task ResetPasswordAsync(ScadaUser data)
+    {
+        var confirm = await _dialogService.Confirm(
+            $"{_localizer["Confirmation.ResetPassword"]} {_localizer["User"]}: {data.UserName}? {_localizer["DefaultPasswordWillBe"]}: 123@456",
+            _localizer["ResetPassword"],
+            new ConfirmOptions()
+            {
+                OkButtonText = _localizer["Yes"],
+                CancelButtonText = _localizer["No"],
+                AutoFocusFirstElement = true,
+            });
+        
+        if (confirm == null || confirm == false) return;
+
+        try
+        {
+            var res = await _scadaUserServices.ResetPasswordAsync(data.Id);
+            if (!res.Succeeded)
+            {
+                NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error,
+                    _localizer["Error"], string.Join("; ", res.Messages ?? new List<string>()));
+                return;
+            }
+            
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success,
+                _localizer["Success"], $"{_localizer["PasswordResetSuccessfully"]}. {_localizer["DefaultPassword"]}: 123@456");
+        }
+        catch (Exception ex)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error,
+                _localizer["Error"], ex.Message);
+        }
+    }
+
+    async void OpenChangePassword(ScadaUser data)
+    {
+        _changePassModel = new ChangePassRequestDTO
+        {
+            Id = data.Id.ToString(),
+            CurrentPassword = string.Empty,
+            NewPassword = string.Empty,
+            ConfirmNewPassword = string.Empty
+        };
+        var result = await _dialogService.OpenAsync<UI.Pages.ScadaUser.ScadaUserChangePasswordDialog>(
+            _localizer["ChangePassword"],
+            new Dictionary<string, object>() {
+                { "Model", _changePassModel }
+            },
+            new DialogOptions() { Width = "600px" }
+        );
+        if (result is ChangePassRequestDTO submitted)
+        {
+            _changePassModel = submitted;
+            await SubmitChangePasswordAsync();
+        }
+    }
+
+    void CancelChangePassword()
+    {
+        _openChangePasswordDialog = false;
+    }
+
+    async Task SubmitChangePasswordAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_changePassModel.NewPassword) || _changePassModel.NewPassword != _changePassModel.ConfirmNewPassword)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Warning, _localizer["Warning"], _localizer["ConfirmPasswordNotMatch"]);
+            return;
+        }
+
+        var res = await _scadaUserServices.ChangePasswordAsync(_changePassModel);
+        if (!res.Succeeded)
+        {
+            NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Error, _localizer["Error"], string.Join("; ", res.Messages ?? new List<string>()));
+            return;
+        }
+
+        NotificationHelper.ShowNotification(_notificationService, NotificationSeverity.Success, _localizer["Success"], _localizer["Success"]);
+        _openChangePasswordDialog = false;
+    }
+
+    void CloseEditDialog() => _openEditDialog = false;
+    void CloseChangePasswordDialog() => _openChangePasswordDialog = false;
+}
+
