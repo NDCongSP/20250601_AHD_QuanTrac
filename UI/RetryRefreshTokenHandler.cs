@@ -17,7 +17,7 @@ namespace UI
         {
             return Policy<HttpResponseMessage>
                 .HandleResult(response => response.StatusCode == HttpStatusCode.Unauthorized)
-                .RetryAsync(async (_, __) =>
+                .RetryAsync(1, async (outcome, retryNumber, context) =>
                 {
                     try
                     {
@@ -27,14 +27,17 @@ namespace UI
                         var token = await _localStorage.GetItemAsync<string>(ConstantExtention.StorageConst.AuthToken);
                         var refreshToken = await _localStorage.GetItemAsync<string>(ConstantExtention.StorageConst.RefreshToken);
 
-                        // Nếu không có refresh token → không thể refresh, xóa cache và fail
+                        // Nếu không có refresh token → không thể refresh, xóa cache nhưng KHÔNG throw exception
                         if (string.IsNullOrEmpty(refreshToken))
                         {
-                            // Xóa cache và throw exception để request fail
-                            // Component cần authentication sẽ tự redirect nếu cần
+                            // Xóa cache để đảm bảo clean state
                             await _authStateProvider.ClearCacheAsync();
                             _authStateProvider.MarkUserAsLoggedOut();
-                            throw new Exception("RefreshToken bị thiếu, không thể làm mới token.");
+                            
+                            // KHÔNG throw exception, để request fail với 401 và component xử lý
+                            // Điều này cho phép trang public hoạt động bình thường
+                            Console.WriteLine("RefreshToken bị thiếu, không thể làm mới token. Chạy mode không đăng nhập.");
+                            return; // Exit gracefully
                         }
 
                         // Token có thể null (đã bị xóa do hết hạn), nhưng vẫn có refresh token
@@ -50,10 +53,11 @@ namespace UI
                         if (loginResponse == null || string.IsNullOrEmpty(loginResponse.Token))
                         {
                             // Refresh thất bại (có thể do refresh token cũng hết hạn)
-                            // Xóa cache và throw exception
+                            // Xóa cache nhưng KHÔNG throw exception
                             await _authStateProvider.ClearCacheAsync();
                             _authStateProvider.MarkUserAsLoggedOut();
-                            throw new Exception("Không refresh được token mới. Refresh token có thể đã hết hạn.");
+                            Console.WriteLine("Không refresh được token mới. Refresh token có thể đã hết hạn.");
+                            return; // Exit gracefully
                         }
 
                         // Refresh thành công
@@ -65,11 +69,11 @@ namespace UI
                         await Task.Delay(10);
                         request.SetPolicyExecutionContext(new Context());
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Không redirect, chỉ throw exception
-                        // Các trang cần authentication sẽ tự động redirect qua AuthorizeView
-                        throw;
+                        // Log lỗi nhưng KHÔNG throw để tránh unhandled exception
+                        Console.WriteLine($"Lỗi khi refresh token: {ex.Message}");
+                        // Request sẽ fail với 401, component tự xử lý
                     }
                 });
         }

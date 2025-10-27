@@ -1,0 +1,92 @@
+﻿@page "/camera"
+@inject IStringLocalizer<CommonResources> _localizer
+
+@if (!_isDataLoaded)
+{
+    <RadzenText Text=@_localizer["Loading"]></RadzenText>
+}
+else
+{
+    @* <video id="my-camera-video10" controls autoplay muted style="width: 100%; max-width: 800px;"></video> *@
+    <div class="row">
+        @{
+            var index = 0;
+        }
+        @foreach (var cam in _cameraConfigs!)
+        {
+            <div class="col-12 col-md-6 col-lg-3 rz-mb-3">
+                <RadzenCard Style="height: 100%;">
+                    <RadzenStack Orientation="Orientation.Vertical" Gap="6px">
+                        <RadzenText TextStyle="TextStyle.Subtitle1" Class="rz-mb-1">@(!string.IsNullOrWhiteSpace(cam.CameraTitle) ? cam.CameraTitle : "Camera")</RadzenText>
+                        <video id="@($"Cam{cam.CameraId}")" controls autoplay muted style="width: 100%; height: 260px; background:#000;"></video>
+                    </RadzenStack>
+                </RadzenCard>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    // Đây là đường dẫn HLS từ MediaMTX (Bước 2)
+    // Hãy thay thế 'localhost' bằng IP của máy chủ chạy MediaMTX
+    // private string hlsStreamUrl = "rtsp://admin:yourPass@113.187.148.168:554/onvif1";
+    // private string hlsStreamUrl1 = "http://14.224.229.6:8888/Cam1/index.m3u8";
+    // private string hlsStreamUrl2 = "http://14.224.229.6:8888/Cam2/index.m3u8";
+    // private string hlsStreamUrl3 = "http://14.224.229.6:8888/Cam3/index.m3u8";
+    // private string hlsStreamUrl4 = "http://14.224.229.6:8888/Cam4/index.m3u8";
+    // private string hlsStreamUrl5 = "http://14.224.229.6:8888/Cam5/index.m3u8";
+    // private string hlsStreamUrl6 = "http://14.224.229.6:8888/Cam6/index.m3u8";
+    // private string hlsStreamUrl7 = "http://14.224.229.6:8888/Cam7/index.m3u8";
+    // private string hlsStreamUrl8 = "http://14.224.229.6:8888/Cam8/index.m3u8";
+    // private string hlsStreamUrl9 = "http://14.224.229.6:8888/Cam9/index.m3u8";
+    // private string hlsStreamUrl10 = "http://14.224.229.6:8888/Cam10/index.m3u8";
+
+    private bool _isDataLoaded = false;
+    private bool _jsInitialized = false;
+    private List<CameraConfigModel>? _cameraConfigs = new List<CameraConfigModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var result = await _ft01Service.GetConfigAsync();
+            if (result.Succeeded && result.Data != null)
+            {
+                _cameraConfigs = result.Data.CameraConfigs?
+                    .Where(c => c != null && c.Actived && !string.IsNullOrWhiteSpace(c.HlsStreamUrl))
+                    .ToList() ?? new List<CameraConfigModel>();
+
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Lỗi khi tải cấu hình camera: {ex.Message}");
+            _cameraConfigs = new List<CameraConfigModel>();
+        }
+
+        // BÁO LÀ ĐÃ TẢI XONG
+        _isDataLoaded = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Sửa điều kiện if ở đây
+        if (_isDataLoaded && !_jsInitialized)
+        {
+            // Đặt cờ này ngay lập tức để nó không chạy lại
+            _jsInitialized = true;
+
+            if (_cameraConfigs == null || !_cameraConfigs.Any())
+            {
+                Console.WriteLine("DEBUG: Data đã tải xong, nhưng _cameraConfigs RỖNG.");
+                return;
+            }
+
+            // Gọi hàm JavaScript để tải video
+            foreach (var item in _cameraConfigs)
+            {
+                await _jsRuntime.InvokeVoidAsync("loadHlsPlayer", $"Cam{item.CameraId}", item.HlsStreamUrl);
+            }
+        }
+    }
+}

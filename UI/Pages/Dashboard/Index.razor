@@ -21,9 +21,8 @@
 @code {
     string _svg;
     private System.Timers.Timer _timer;
-
     private DotNetObjectReference<UI.Pages.Dashboard.Index> _selfRef;
-
+    private RealtimeDisplayModel realtimeData = new();
     protected override void OnInitialized()
     {
         LayoutState.SetTitle(_localizer["QuanLyTran"]);
@@ -54,17 +53,35 @@
     {
         try
         {
-            var realtimeData = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
-            //var realtimeData = FakeDataGenerator.GenerateLocation();
+            var data = await _ft02Service.GetFirstOrDefaultRealTimeDisplay();
+            if (data.Stations.Any() && realtimeData.Stations.Any())
+            {
+                foreach (var item in data.Stations)
+                {
+                    if (item.StationId < 4)
+                    {
+                        if (item.Door1_Open == false && item.Door1_Opening == false && item.Door1_Closing == false && item.Door1_Close == false)
+                        {
+                            item.Door1_Open = true;
+                        }
+
+                        if (item.Door2_Open == false && item.Door2_Opening == false && item.Door2_Closing == false && item.Door2_Close == false)
+                        {
+                            item.Door2_Open = true;
+                        }
+                    }
+                }
+            }
+            realtimeData = data;
             await _jsRuntime.InvokeVoidWithOriginalCaseAsync("updateSvgFillOverflow", realtimeData);
             StateHasChanged();
         }
         catch { }
     }
+
     [JSInvokable]
     public async Task OnSvgClicked(string value)
     {
-        Console.WriteLine($"Clicked: {value}");
         await OpenFT03ReportAsync(value, 10);
     }
 

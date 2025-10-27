@@ -61,22 +61,32 @@ namespace Infrastructure.Repositories
                         new DateTime(now.Year + 1, 6, 30);
                 }
 
-                var data = await dbContext.FT03s
+                // Lấy tất cả dữ liệu trong khoảng ngày
+                var allData = await dbContext.FT03s
                     .Where(x => x.CreateAt.HasValue
                         && x.Fllow_Ho_Final > 0
                         && x.CreateAt.Value.Date >= fromDate.Value.Date
                         && x.CreateAt.Value.Date <= toDate.Value.Date)
-                    .GroupBy(x => x.CreateAt.Value.Date)
-                    .SelectMany(g =>
-                        g.OrderBy(x => x.CreateAt).Take(1)               // earliest in day
-                         .Union(g.OrderByDescending(x => x.CreateAt).Take(1))) // latest in day (dedupes if only one row)
+                    .OrderBy(x => x.CreateAt)
                     .Select(x => new FT03DataPoint
                     {
-                        Date = x.CreateAt.Value,     // full timestamp
+                        Date = x.CreateAt.Value,
                         Value = x.Fllow_Ho_Final
                     })
-                    .OrderBy(x => x.Date)
                     .ToListAsync();
+
+                // Lấy giá trị đầu và cuối mỗi ngày trên memory
+                var data = allData
+                    .GroupBy(x => x.Date.Date)
+                    .SelectMany<IGrouping<DateTime, FT03DataPoint>, FT03DataPoint>(g =>
+                    {
+                        var ordered = g.OrderBy(x => x.Date).ToList();
+                        if (ordered.Count == 1)
+                            return ordered; // Chỉ có 1 record thì lấy luôn
+                        return new List<FT03DataPoint> { ordered.First(), ordered.Last() }; // Lấy đầu và cuối
+                    })
+                    .OrderBy(x => x.Date)
+                    .ToList();
 
                 return await Result<List<FT03DataPoint>>.SuccessAsync(data);
             }
@@ -100,16 +110,20 @@ namespace Infrastructure.Repositories
                     return await Result<List<TimeValueResponse>>.FailAsync($"Invalid paramName: {paramName}");
                 }
 
+                // Lấy dữ liệu trong 24h đến thời điểm hiện tại
                 var now = DateTime.Now;
-                var alignedNow = new DateTime(now.Year, now.Month, now.Day, now.Hour, (now.Minute / frequency) * frequency, 0);
-                var from = alignedNow.AddDays(-1);
-                var to = alignedNow.AddMinutes(-1);
+                var from = now.AddDays(-1);
+                var to = now;
 
                 var items = await dbContext.FT03s.AsNoTracking()
-                    .Where(x => x.CreateAt.HasValue && x.CreateAt.Value >= from && x.CreateAt.Value <= to)
+                    .Where(x => 
+                        x.CreateAt.HasValue && x.CreateAt.Value >= from && x.CreateAt.Value <= to
+                        && x.StationId == 4
+                    )
                     .Select(x => new { x.CreateAt, Value = (double?)prop.GetValue(x) })
                     .ToListAsync();
 
+                // Gom theo phút, lấy record mới nhất mỗi phút
                 var perMinuteLatest = items
                     .Select(r => new
                     {
@@ -120,12 +134,26 @@ namespace Infrastructure.Repositories
                     .Where(t => t.Value.HasValue)
                     .GroupBy(t => t.Minute)
                     .Select(g => g.OrderByDescending(z => z.Timestamp).First())
-                    .Where(t => ((int)(t.Minute - from).TotalMinutes % frequency) == 0)
                     .OrderBy(t => t.Timestamp)
-                    .Select(t => new TimeValueResponse { CreatedAt = t.Timestamp, Value = t.Value.HasValue ? Math.Round(t.Value.Value, 2) : null })
                     .ToList();
 
-                return await Result<List<TimeValueResponse>>.SuccessAsync(perMinuteLatest);
+                if (perMinuteLatest.Count == 0)
+                {
+                    return await Result<List<TimeValueResponse>>.SuccessAsync(new List<TimeValueResponse>());
+                }
+
+                var startMinute = perMinuteLatest.First().Minute;
+                var sampled = perMinuteLatest
+                    .Where(t => ((int)(t.Minute - startMinute).TotalMinutes % frequency) == 0)
+                    .OrderBy(t => t.Timestamp)
+                    .Select(t => new TimeValueResponse
+                    {
+                        CreatedAt = t.Timestamp,
+                        Value = t.Value.HasValue ? Math.Round(t.Value.Value, 2) : null
+                    })
+                    .ToList();
+
+                return await Result<List<TimeValueResponse>>.SuccessAsync(sampled);
             }
             catch (Exception ex)
             {

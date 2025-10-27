@@ -119,15 +119,21 @@
                                                                         </EditTemplate>
                                                                     </RadzenDataGridColumn>
 
-                                                                    <RadzenDataGridColumn TItem="CameraConfigModel" Property="CameraTital" Title="Tiêu đề" Width="260px">
+                                                                    <RadzenDataGridColumn TItem="CameraConfigModel" Property="CameraId" Title="ID" Width="260px">
                                                                         <EditTemplate Context="data">
-                                                                            <RadzenTextBox style="width:100%" @bind-Value="data.CameraTital" />
+                                                                            <RadzenNumeric style="width:100%" @bind-Value="data.CameraId" />
                                                                         </EditTemplate>
                                                                     </RadzenDataGridColumn>
 
-                                                                    <RadzenDataGridColumn TItem="CameraConfigModel" Property="HlsStreamUrl1" Title="HLS URL" Width="480px">
+                                                                    <RadzenDataGridColumn TItem="CameraConfigModel" Property="CameraTitle" Title="Tiêu đề" Width="260px">
                                                                         <EditTemplate Context="data">
-                                                                            <RadzenTextBox style="width:100%" @bind-Value="data.HlsStreamUrl1" />
+                                                                            <RadzenTextBox style="width:100%" @bind-Value="data.CameraTitle" />
+                                                                        </EditTemplate>
+                                                                    </RadzenDataGridColumn>
+
+                                                                    <RadzenDataGridColumn TItem="CameraConfigModel" Property="HlsStreamUrl" Title="HLS URL" Width="480px">
+                                                                        <EditTemplate Context="data">
+                                                                            <RadzenTextBox style="width:100%" @bind-Value="data.HlsStreamUrl" />
                                                                         </EditTemplate>
                                                                     </RadzenDataGridColumn>
 
