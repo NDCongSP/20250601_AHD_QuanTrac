@@ -696,4 +696,10 @@
   <data name="Detail.Create" xml:space="preserve">
     <value>Add new</value>
   </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Calculator Parametters</value>
+  </data>
+  <data name="OffsetAPI" xml:space="preserve">
+    <value>Offset API Parameters</value>
+  </data>
 </root>
