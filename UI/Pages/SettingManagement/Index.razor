@@ -46,15 +46,6 @@
                                                 </RadzenNumeric>
                                             </RadzenFormField>
                                         </div>
-                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                            <RadzenFormField Text='@(_localizer["lbl_CaoTrinhNguongTran_Zn"] + " (m)")' Variant="Variant.Outlined" Style="width:100%">
-
-                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.CaoTrinhNguongTran_Zn"
-                                                               Style="width: 100%">
-                                                    <RadzenRequiredValidator Component="CaoTrinhNguongTran_Zn" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_CaoTrinhNguongTran_Zn"])" Style="display: block" />
-                                                </RadzenNumeric>
-                                            </RadzenFormField>
-                                        </div>
 
                                         <div class="col-12 col-md-6 col-lg-4 mb-3">
                                             <RadzenFormField Text="@_localizer["lbl_SoCuaMo"]" Variant="Variant.Outlined" Style="width:100%">
