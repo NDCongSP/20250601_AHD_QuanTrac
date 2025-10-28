@@ -46,18 +46,6 @@
                                                 </RadzenNumeric>
                                             </RadzenFormField>
                                         </div>
-
-                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                            <RadzenFormField Text='@(_localizer["lbl_GiaToc_G"] + " (m/s²)")' Variant="Variant.Outlined" Style="width:100%">
-
-                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.GiaToc_G"
-                                                               Style="width: 100%">
-                                                    <RadzenRequiredValidator Component="GiaToc_G" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_GiaToc_G"])" Style="display: block" />
-                                                    <RadzenNumericRangeValidator Component="GiaToc_G" Min="0" Max="20" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_GiaToc_G"], 0, 20)" Style="display: block" />
-                                                </RadzenNumeric>
-                                            </RadzenFormField>
-                                        </div>
-
                                         <div class="col-12 col-md-6 col-lg-4 mb-3">
                                             <RadzenFormField Text='@(_localizer["lbl_CaoTrinhNguongTran_Zn"] + " (m)")' Variant="Variant.Outlined" Style="width:100%">
 
@@ -120,7 +108,7 @@
                                             </RadzenFormField>
                                             <RadzenRequiredValidator Component="API_Fllow_SonDai (m)" Popup="false" Min="0" Style="position: absolute" />
                                         </div>
-                                         <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
                                             <RadzenFormField Text="API_Fllow_BinhNham (m)" Variant="Variant.Outlined" Style="width:100%">
 
                                                 <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_Fllow_BinhNham"
@@ -129,7 +117,7 @@
                                             </RadzenFormField>
                                             <RadzenRequiredValidator Component="API_Fllow_BinhNham" Popup="false" Min="0" Style="position: absolute" />
                                         </div>
-                                         <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
                                             <RadzenFormField Text="API_Fllow_TL_CDD (m)" Variant="Variant.Outlined" Style="width:100%">
 
                                                 <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.API_Offset.API_Fllow_TL_CDD"
@@ -224,14 +212,16 @@
                             <RadzenTabsItem Text="@_localizer["lbl_FlowSettings"]">
                                 <div class="row p-3">
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text='@(_localizer["lbl_Q_CongSo1"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
+                                        <RadzenFormField Text='@(_localizer["lbl_Fllow_HL_TXL"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
 
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo1"
+                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Fllow_HL_TXL"
                                                            Style="width: 100%">
+                                                <RadzenRequiredValidator Component="Fllow_HL_TXL" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Fllow_HL_TXL"])" Style="display: block" />
+                                                <RadzenNumericRangeValidator Component="Fllow_HL_TXL" Min="0" Max="10000" Text="@string.Format(_localizer["validation_Range"], _localizer["lbl_Fllow_HL_TXL"], 0, 10000)" Style="display: block" />
                                             </RadzenNumeric>
-                                            <RadzenRequiredValidator Component="Q_CongSo1" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo1"])" Style="display: block" />
                                         </RadzenFormField>
                                     </div>
+                                </div><div class="row p-3">
                                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                                         <RadzenFormField Text='@(_localizer["lbl_Fllow_HL_TXL"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
 
@@ -242,26 +232,118 @@
                                             </RadzenNumeric>
                                         </RadzenFormField>
                                     </div>
-
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text='@(_localizer["lbl_Q_CongSo2"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
-
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo2"
-                                                           Style="width: 100%">
-                                                <RadzenRequiredValidator Component="Q_CongSo2" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo2"])" Style="display: block" />
-                                            </RadzenNumeric>
-                                        </RadzenFormField>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                        <RadzenFormField Text='@(_localizer["lbl_Q_CongSo3"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
-                                            <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo3"
-                                                           Style="width: 100%">
-                                                <RadzenRequiredValidator Component="Q_CongSo3" Text="@string.Format(_localizer["validation_Required"], _localizer["lbl_Q_CongSo3"])" Style="display: block" />
-                                            </RadzenNumeric>
-                                        </RadzenFormField>
-                                    </div>
                                 </div>
+                                <RadzenFieldset Text="@_localizer["Cống Số 1"]">
+                                    <div class="row p-3">
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text='@(_localizer["Q"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo1"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="API_ThanhAn" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="Độ mở cửa (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.DoMoCua_a_CongSo1"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="MN Thượng Lưu (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.MNTL_CongSo1"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="MN Hạ Lưu (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.MNHL_CongSo1"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                    </div>
+                                </RadzenFieldset>
+                                <RadzenFieldset Text="@_localizer["Cống Số 2"]">
+                                    <div class="row p-3">
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text='@(_localizer["Q"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo2"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="API_ThanhAn" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="Độ mở cửa (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.DoMoCua_a_CongSo2"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="MN Thượng Lưu (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.MNTL_CongSo2"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="MN Hạ Lưu (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.MNHL_CongSo2"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                    </div>
+                                </RadzenFieldset>
+                                <RadzenFieldset Text="@_localizer["Cống Số 3"]">
+                                    <div class="row p-3">
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text='@(_localizer["Q"] + " (m³/s)")' Variant="Variant.Outlined" Style="width:100%">
+
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.Q_CongSo3"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="API_ThanhAn" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="Độ mở cửa (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.DoMoCua_a_CongSo3"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="MN Thượng Lưu (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.MNTL_CongSo3"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                            <RadzenFormField Text="MN Hạ Lưu (m)" Variant="Variant.Outlined" Style="width:100%">
+                                                <RadzenNumeric TValue="double" @bind-Value="@_config.ParametterConfig.MNHL_CongSo3"
+                                                               Style="width: 100%">
+                                                </RadzenNumeric>
+                                            </RadzenFormField>
+                                            @* <RadzenRequiredValidator Component="MNTL_CongSo1" Popup="false" Min="0" Style="position: absolute" /> *@
+                                        </div>
+                                    </div>
+                                </RadzenFieldset>
                             </RadzenTabsItem>
 
                             <RadzenTabsItem Text="@_localizer["lbl_SystemSettings"]">

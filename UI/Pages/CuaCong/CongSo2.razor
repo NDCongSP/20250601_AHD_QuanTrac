@@ -1,0 +1,38 @@
+﻿@page "/cong2"
+
+<style>
+    body {
+        font-family: 'Times New Roman' !important;
+    }
+</style>
+
+<RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
+
+    <figure>
+        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
+            <RadzenRow>
+                <RadzenColumn SizeXS="12" SizeMD="12" class="rz-mx-auto">
+                    @((MarkupString)_svg)
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </figure>
+</RadzenPanel>
+
+@code {
+    string _svg;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load SVG
+        using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.CuaCong1_2_3.CongSo2.svg");
+        if (stream != null)
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+            using var reader = new StreamReader(stream);
+            _svg = await reader.ReadToEndAsync();
+        }
+
+        base.OnInitialized();
+    }
+}
