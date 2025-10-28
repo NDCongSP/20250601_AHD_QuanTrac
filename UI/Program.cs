@@ -1,4 +1,4 @@
-﻿using Application.Services.Authen;
+using Application.Services.Authen;
 using Application.Services.Authen.UI;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
@@ -112,6 +112,7 @@ builder.Services.AddHttpClient("UI")
     .UseWithRestEaseClient<IFT05>()
     .UseWithRestEaseClient<IFT06>()
     .UseWithRestEaseClient<IFT07>()
+    .UseWithRestEaseClient<IFT08>()
     .UseWithRestEaseClient<IScadaUser>();
 
 // Register the initialization service

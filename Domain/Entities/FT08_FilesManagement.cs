@@ -18,8 +18,6 @@ namespace Domain.Entities
         public string? UpdateOperatorId { get; set; }
         public DateTime? UpdateAt { get; set; }
         public bool? IsDeleted { get; set; }
-
-        public string GroupFolder { get; set; } = "D";
         public string PathFile { get; set; } = string.Empty;
         public string FileName { get; set; } = string.Empty;
     }

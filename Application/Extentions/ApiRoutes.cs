@@ -1,4 +1,4 @@
-﻿namespace Application.Extentions
+namespace Application.Extentions
 {
     public static class ApiRoutes
     {

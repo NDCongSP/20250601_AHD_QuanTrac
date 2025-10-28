@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Response;
+using Application.DTOs.Response;
 using Application.Extentions;
 using Application.Services;
 using Domain.Entities;
@@ -31,9 +31,21 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Result<List<FT08_FilesManagement>>> GetAllAsync()
+        public async Task<Result<List<FT08_FilesManagement>>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var data = await Task.FromResult(
+                    dbContext.FT08_FilesManagements
+                        .OrderBy(x => x.PathFile)
+                        .ThenBy(x => x.FileName)
+                        .ToList());
+                return await Result<List<FT08_FilesManagement>>.SuccessAsync(data, "Successful");
+            }
+            catch (Exception ex)
+            {
+                return await Result<List<FT08_FilesManagement>>.FailAsync(new List<string> { ex.Message });
+            }
         }
 
         public Task<Result<FT08_FilesManagement>> GetByIdAsync([Path] Guid id)
