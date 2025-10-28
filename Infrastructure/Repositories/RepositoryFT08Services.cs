@@ -5,6 +5,7 @@ using Application.Services;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestEase;
 using System;
@@ -54,7 +55,7 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Result<string>> GetPdfAsBase64Async([Path] string pathFile)
+        public async Task<Result<string>> GetPdfAsBase64Async([FromQuery] string pathFile)
         {
             try
             {

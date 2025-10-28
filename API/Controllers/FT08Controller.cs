@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet(ApiRoutes.FT08.GetPdfAsBase64Async)]
-        public async Task<Result<string>> GetPdfAsBase64Async([Path] string pathFile)
+        public async Task<Result<string>> GetPdfAsBase64Async([FromQuery] string pathFile)
         {
             return await _repository.SFT08s.GetPdfAsBase64Async(pathFile);
         }
