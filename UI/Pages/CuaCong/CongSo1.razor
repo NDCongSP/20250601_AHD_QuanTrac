@@ -21,6 +21,8 @@
 
 @code {
     string _svg;
+    private ConfigModel _config = new();
+    private bool _isLoading = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,6 +35,34 @@
             _svg = await reader.ReadToEndAsync();
         }
 
+        await LoadConfigAsync();
+
         base.OnInitialized();
+    }
+
+    private async Task LoadConfigAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            StateHasChanged();
+
+            var result = await _ft01Service.GetConfigAsync();
+            if (result.Succeeded && result.Data != null)
+            {
+                _config = result.Data;
+
+                await _jsRuntime.InvokeVoidAsync("UpdateSvgCuaCong",1, _config);
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, "Error", $"Error loading settings: {ex.Message}");
+        }
+        finally
+        {
+            _isLoading = false;
+            StateHasChanged();
+        }
     }
 }
