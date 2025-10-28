@@ -21,139 +21,157 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
             System.IO.Directory.CreateDirectory(RootFolder);
         }
     }
-    public Task<Result<List<FT08_FilesManagement>>> AddRangeAsync([Body] List<FT08_FilesManagement> model)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result<FT08_FilesManagement>> DeleteAsync([Body] FT08_FilesManagement model)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result<FT08_FilesManagement>> DeleteRangeAsync([Body] List<FT08_FilesManagement> model)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Result<List<FT08_FilesManagement>>> GetAllAsync()
-    {
-        try
+        public Task<Result<List<FT08_FilesManagement>>> AddRangeAsync([Body] List<FT08_FilesManagement> model)
         {
-            var data = await Task.FromResult(
-                dbContext.FT08_FilesManagements
-                    .OrderBy(x => x.PathFile)
-                    .ThenBy(x => x.FileName)
-                    .ToList());
-            return await Result<List<FT08_FilesManagement>>.SuccessAsync(data, "Successful");
+            throw new NotImplementedException();
         }
-        catch (Exception ex)
-        {
-            return await Result<List<FT08_FilesManagement>>.FailAsync(new List<string> { ex.Message });
-        }
-    }
 
-    public Task<Result<FT08_FilesManagement>> GetByIdAsync([Path] Guid id)
-    {
-        throw new NotImplementedException();
-    }
+        public Task<Result<FT08_FilesManagement>> DeleteAsync([Body] FT08_FilesManagement model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result<FT08_FilesManagement>> DeleteRangeAsync([Body] List<FT08_FilesManagement> model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result<List<FT08_FilesManagement>>> GetAllAsync()
+        {
+            try
+            {
+                var data = await Task.FromResult(
+                    dbContext.FT08_FilesManagements
+                        .OrderBy(x => x.PathFile)
+                        .ThenBy(x => x.FileName)
+                        .ToList());
+                return await Result<List<FT08_FilesManagement>>.SuccessAsync(data, "Successful");
+            }
+            catch (Exception ex)
+            {
+                return await Result<List<FT08_FilesManagement>>.FailAsync(new List<string> { ex.Message });
+            }
+        }
+
+        public Task<Result<FT08_FilesManagement>> GetByIdAsync([Path] Guid id)
+        {
+            throw new NotImplementedException();
+        }
 
     public async Task<Result<string>> GetPdfAsBase64Async([Query] string pathFile)
-    {
-        try
         {
-            if (string.IsNullOrEmpty(pathFile) || !System.IO.File.Exists(pathFile))
+            try
             {
-                var err = new ErrorResponse();
-                err.Errors.Add("Warning", "File not found or path is invalid.");
-                return await Result<string>.FailAsync(JsonConvert.SerializeObject(err));
-            }
+                if (string.IsNullOrEmpty(pathFile) || !System.IO.File.Exists(pathFile))
+                {
+                    var err = new ErrorResponse();
+                    err.Errors.Add("Warning", "File not found or path is invalid.");
+                    return await Result<string>.FailAsync(JsonConvert.SerializeObject(err));
+                }
 
-            // Đọc file PDF
+                // Đọc file PDF
             byte[] pdfBytes = await System.IO.File.ReadAllBytesAsync(pathFile);
 
-            // Chuyển thành Base64
-            string base64String = Convert.ToBase64String(pdfBytes);
+                // Chuyển thành Base64
+                string base64String = Convert.ToBase64String(pdfBytes);
 
-            // Trả về kết quả
-            return await Result<string>.SuccessAsync(base64String, "Successful");
+                // Trả về kết quả
+                return await Result<string>.SuccessAsync(base64String, "Successful");
+            }
+            catch (Exception ex)
+            {
+                var err = new ErrorResponse();
+                err.Errors.Add("Error", $"{ex.Message} | {ex.InnerException}");
+                return await Result<string>.FailAsync(JsonConvert.SerializeObject(err));
+            }
         }
-        catch (Exception ex)
+
+        public Task<Result<FT08_FilesManagement>> InsertAsync([Body] FT08_FilesManagement model)
         {
-            var err = new ErrorResponse();
-            err.Errors.Add("Error", $"{ex.Message} | {ex.InnerException}");
-            return await Result<string>.FailAsync(JsonConvert.SerializeObject(err));
+            throw new NotImplementedException();
         }
-    }
 
-    public Task<Result<FT08_FilesManagement>> InsertAsync([Body] FT08_FilesManagement model)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result<FT08_FilesManagement>> UpdateAsync([Body] FT08_FilesManagement model)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Result<FT08_FilesManagement>> UploadPdfFileAsync([Body] UploadPdfFileRequest model)
-    {
-        try
+        public Task<Result<FT08_FilesManagement>> UpdateAsync([Body] FT08_FilesManagement model)
         {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result<FT08_FilesManagement>> UploadPdfFileAsync([Body] UploadPdfFileRequest model)
+        {
+        string? fullPath = null;
+            try
+            {
             EnsureRootFolderExists();
 
-            if (model == null)
-            {
-                return await Result<FT08_FilesManagement>.FailAsync("Request is null");
-            }
-            if (string.IsNullOrWhiteSpace(model.PathFile))
-            {
-                return await Result<FT08_FilesManagement>.FailAsync("PathFile is required");
-            }
-            if (string.IsNullOrWhiteSpace(model.FileName))
-            {
-                return await Result<FT08_FilesManagement>.FailAsync("FileName is required");
-            }
-            if (string.IsNullOrWhiteSpace(model.Base64))
-            {
-                return await Result<FT08_FilesManagement>.FailAsync("Base64 content is required");
-            }
+                if (model == null)
+                {
+                    return await Result<FT08_FilesManagement>.FailAsync("Request is null");
+                }
+                if (string.IsNullOrWhiteSpace(model.PathFile))
+                {
+                    return await Result<FT08_FilesManagement>.FailAsync("PathFile is required");
+                }
+                if (string.IsNullOrWhiteSpace(model.FileName))
+                {
+                    return await Result<FT08_FilesManagement>.FailAsync("FileName is required");
+                }
+                if (string.IsNullOrWhiteSpace(model.Base64))
+                {
+                    return await Result<FT08_FilesManagement>.FailAsync("Base64 content is required");
+                }
 
             // Normalize path
             var normalizedPath = NormalizePath(model.PathFile);
 
-            // Ensure directory exists
+                // Ensure directory exists
             if (!System.IO.Directory.Exists(normalizedPath))
-            {
+                {
                 System.IO.Directory.CreateDirectory(normalizedPath);
-            }
+                }
 
-            var fullPath = System.IO.Path.Combine(normalizedPath, model.FileName);
+            fullPath = System.IO.Path.Combine(normalizedPath, model.FileName);
 
-            // Handle possible data URL prefix
-            var base64 = model.Base64;
-            var commaIdx = base64.IndexOf(",");
-            if (commaIdx > -1)
+                // Handle possible data URL prefix
+                var base64 = model.Base64;
+                var commaIdx = base64.IndexOf(",");
+                if (commaIdx > -1)
+                {
+                    base64 = base64[(commaIdx + 1)..];
+                }
+
+            // 1. Create physical file first
+                byte[] bytes = Convert.FromBase64String(base64);
+                await System.IO.File.WriteAllBytesAsync(fullPath, bytes);
+
+            // 2. Save to database with transaction
+            await using var transaction = await dbContext.Database.BeginTransactionAsync();
+            try
             {
-                base64 = base64[(commaIdx + 1)..];
+                var entity = new FT08_FilesManagement
+                {
+                    Id = Guid.NewGuid(),
+                    PathFile = normalizedPath,
+                    FileName = model.FileName,
+                    CreateAt = DateTime.Now,
+                    IsDeleted = false
+                };
+
+                dbContext.FT08_FilesManagements.Add(entity);
+                await dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return await Result<FT08_FilesManagement>.SuccessAsync(entity, "Uploaded successfully");
             }
-
-            byte[] bytes = Convert.FromBase64String(base64);
-            await System.IO.File.WriteAllBytesAsync(fullPath, bytes);
-
-            var entity = new FT08_FilesManagement
+            catch
             {
-                Id = Guid.NewGuid(),
-                PathFile = normalizedPath,  // Use normalized path
-                FileName = model.FileName,
-                CreateAt = DateTime.Now,
-                IsDeleted = false
-            };
-
-            dbContext.FT08_FilesManagements.Add(entity);
-            await dbContext.SaveChangesAsync();
-
-            return await Result<FT08_FilesManagement>.SuccessAsync(entity, "Uploaded successfully");
+                await transaction.RollbackAsync();
+                // Rollback: Delete physical file if DB save failed
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+                throw;
+            }
         }
         catch (Exception ex)
         {
@@ -165,6 +183,7 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
 
         public async Task<Result<bool>> CreateFolderAsync([Body] CreateFolderRequest model)
         {
+            string? normalizedPath = null;
             try
             {
                 EnsureRootFolderExists();
@@ -175,31 +194,46 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                 }
 
                 // Normalize path
-                var normalizedPath = NormalizePath(model.FolderPath);
+                normalizedPath = NormalizePath(model.FolderPath);
 
                 if (System.IO.Directory.Exists(normalizedPath))
                 {
                     return await Result<bool>.FailAsync("Folder already exists");
                 }
 
-                // Create physical folder
+                // 1. Create physical folder first
                 System.IO.Directory.CreateDirectory(normalizedPath);
 
-                // Save to database
-                var folderName = System.IO.Path.GetFileName(normalizedPath);
-                var entity = new FT08_FilesManagement
+                // 2. Save to database with transaction
+                await using var transaction = await dbContext.Database.BeginTransactionAsync();
+                try
                 {
-                    Id = Guid.NewGuid(),
-                    PathFile = normalizedPath,  // Use normalized path
-                    FileName = folderName,
-                    CreateAt = DateTime.Now,
-                    IsDeleted = false
-                };
+                    var folderName = System.IO.Path.GetFileName(normalizedPath);
+                    var entity = new FT08_FilesManagement
+                    {
+                        Id = Guid.NewGuid(),
+                        PathFile = normalizedPath,
+                        FileName = folderName,
+                        CreateAt = DateTime.Now,
+                        IsDeleted = false
+                    };
 
-                dbContext.FT08_FilesManagements.Add(entity);
-                await dbContext.SaveChangesAsync();
+                    dbContext.FT08_FilesManagements.Add(entity);
+                    await dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
 
-                return await Result<bool>.SuccessAsync(true, "Folder created successfully");
+                    return await Result<bool>.SuccessAsync(true, "Folder created successfully");
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    // Rollback: Delete physical folder if DB save failed
+                    if (System.IO.Directory.Exists(normalizedPath))
+                    {
+                        System.IO.Directory.Delete(normalizedPath, true);
+                    }
+                    throw;
+                }
             }
             catch (Exception ex)
             {
@@ -211,6 +245,8 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
 
         public async Task<Result<bool>> RenameItemAsync([Body] RenameItemRequest model)
         {
+            string? oldPathNormalized = null;
+            string? newPath = null;
             try
             {
                 if (model == null || string.IsNullOrWhiteSpace(model.OldPath) || string.IsNullOrWhiteSpace(model.NewName))
@@ -219,14 +255,14 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                 }
 
                 // Normalize paths
-                var oldPathNormalized = NormalizePath(model.OldPath);
+                oldPathNormalized = NormalizePath(model.OldPath);
                 var directory = System.IO.Path.GetDirectoryName(oldPathNormalized);
                 if (string.IsNullOrWhiteSpace(directory))
                 {
                     return await Result<bool>.FailAsync("Invalid path");
                 }
 
-                var newPath = NormalizePath(System.IO.Path.Combine(directory, model.NewName));
+                newPath = NormalizePath(System.IO.Path.Combine(directory, model.NewName));
 
                 if (model.IsFolder)
                 {
@@ -235,34 +271,49 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                         return await Result<bool>.FailAsync("Folder not found");
                     }
                     
-                    // Rename physical folder
+                    // 1. Rename physical folder first
                     System.IO.Directory.Move(oldPathNormalized, newPath);
 
-                    // Update folder in database (normalize for comparison)
-                    var allItems = dbContext.FT08_FilesManagements.ToList();
-                    var folderEntity = allItems.FirstOrDefault(x => 
-                        NormalizePath(x.PathFile) == oldPathNormalized);
-                    
-                    if (folderEntity != null)
+                    // 2. Update database with transaction
+                    await using var transaction = await dbContext.Database.BeginTransactionAsync();
+                    try
                     {
-                        folderEntity.PathFile = newPath;
-                        folderEntity.FileName = model.NewName;
-                        folderEntity.UpdateAt = DateTime.Now;
-                    }
+                        var allItems = dbContext.FT08_FilesManagements.ToList();
+                        var folderEntity = allItems.FirstOrDefault(x => 
+                            NormalizePath(x.PathFile) == oldPathNormalized);
+                        
+                        if (folderEntity != null)
+                        {
+                            folderEntity.PathFile = newPath;
+                            folderEntity.FileName = model.NewName;
+                            folderEntity.UpdateAt = DateTime.Now;
+                        }
 
-                    // Update all subfolders and files in this folder
-                    var itemsInFolder = allItems.Where(x => 
-                        NormalizePath(x.PathFile).StartsWith(oldPathNormalized + "\\")).ToList();
-                    
-                    foreach (var item in itemsInFolder)
+                        // Update all subfolders and files in this folder
+                        var itemsInFolder = allItems.Where(x => 
+                            NormalizePath(x.PathFile).StartsWith(oldPathNormalized + "\\")).ToList();
+                        
+                        foreach (var item in itemsInFolder)
+                        {
+                            var normalizedItemPath = NormalizePath(item.PathFile);
+                            var relativePath = normalizedItemPath.Substring(oldPathNormalized.Length);
+                            item.PathFile = newPath + relativePath;
+                            item.UpdateAt = DateTime.Now;
+                        }
+
+                        await dbContext.SaveChangesAsync();
+                        await transaction.CommitAsync();
+                    }
+                    catch
                     {
-                        var normalizedItemPath = NormalizePath(item.PathFile);
-                        var relativePath = normalizedItemPath.Substring(oldPathNormalized.Length);
-                        item.PathFile = newPath + relativePath;
-                        item.UpdateAt = DateTime.Now;
+                        await transaction.RollbackAsync();
+                        // Rollback: Rename folder back to original name
+                        if (System.IO.Directory.Exists(newPath))
+                        {
+                            System.IO.Directory.Move(newPath, oldPathNormalized);
+                        }
+                        throw;
                     }
-
-                    await dbContext.SaveChangesAsync();
                 }
                 else
                 {
@@ -271,21 +322,62 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                         return await Result<bool>.FailAsync("File not found");
                     }
                     
-                    // Rename physical file
+                    // Validate and fix file extension for PDF files
+                    var oldFileName = System.IO.Path.GetFileName(oldPathNormalized);
+                    var oldExtension = System.IO.Path.GetExtension(oldFileName);
+                    var validatedNewName = model.NewName;
+                    
+                    // If old file is .pdf, ensure new name keeps .pdf extension
+                    if (oldExtension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var newExtension = System.IO.Path.GetExtension(validatedNewName);
+                        
+                        if (string.IsNullOrEmpty(newExtension))
+                        {
+                            // No extension provided, add .pdf
+                            validatedNewName = validatedNewName + ".pdf";
+                        }
+                        else if (!newExtension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Wrong extension provided, replace with .pdf
+                            validatedNewName = System.IO.Path.GetFileNameWithoutExtension(validatedNewName) + ".pdf";
+                        }
+                        // else: already has .pdf, keep as is
+                    }
+                    
+                    // Recalculate newPath with validated name
+                    newPath = NormalizePath(System.IO.Path.Combine(directory, validatedNewName));
+                    
+                    // 1. Rename physical file first
                     System.IO.File.Move(oldPathNormalized, newPath);
 
-                    // Update database - Files store PathFile as parent directory
-                    var allItems = dbContext.FT08_FilesManagements.ToList();
-                    var oldFileName = System.IO.Path.GetFileName(oldPathNormalized);
-                    var entity = allItems.FirstOrDefault(x => 
-                        NormalizePath(x.PathFile) == directory && 
-                        x.FileName == oldFileName);
-                    
-                    if (entity != null)
+                    // 2. Update database with transaction
+                    await using var transaction = await dbContext.Database.BeginTransactionAsync();
+                    try
                     {
-                        entity.FileName = model.NewName;
-                        entity.UpdateAt = DateTime.Now;
+                        var allItems = dbContext.FT08_FilesManagements.ToList();
+                        var entity = allItems.FirstOrDefault(x => 
+                            NormalizePath(x.PathFile) == directory && 
+                            x.FileName == oldFileName);
+                        
+                        if (entity != null)
+                        {
+                            entity.FileName = validatedNewName;
+                            entity.UpdateAt = DateTime.Now;
+                        }
+
                         await dbContext.SaveChangesAsync();
+                        await transaction.CommitAsync();
+                    }
+                    catch
+                    {
+                        await transaction.RollbackAsync();
+                        // Rollback: Rename file back to original name
+                        if (System.IO.File.Exists(newPath))
+                        {
+                            System.IO.File.Move(newPath, oldPathNormalized);
+                        }
+                        throw;
                     }
                 }
 
@@ -313,57 +405,82 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
 
             if (model.IsFolder)
             {
-                if (!System.IO.Directory.Exists(normalizedPath))
+                // 1. Delete physical folder first (if exists)
+                var folderExists = System.IO.Directory.Exists(normalizedPath);
+                if (folderExists)
                 {
-                    return await Result<bool>.FailAsync("Folder not found");
-                }
-                
-                // Delete physical folder
-                System.IO.Directory.Delete(normalizedPath, true);
-
-                // Delete folder from database (normalize for comparison)
-                var allItems = dbContext.FT08_FilesManagements.ToList();
-                var folderEntity = allItems.FirstOrDefault(x => 
-                    NormalizePath(x.PathFile) == normalizedPath);
-                
-                if (folderEntity != null)
-                {
-                    dbContext.FT08_FilesManagements.Remove(folderEntity);
+                    System.IO.Directory.Delete(normalizedPath, true);
                 }
 
-                // Delete all subfolders and files in this folder from database
-                var itemsInFolder = allItems.Where(x => 
-                    NormalizePath(x.PathFile).StartsWith(normalizedPath + "\\")).ToList();
-                
-                if (itemsInFolder.Any())
+                // 2. Delete from database with transaction (always delete from DB even if folder doesn't exist)
+                await using var transaction = await dbContext.Database.BeginTransactionAsync();
+                try
                 {
-                    dbContext.FT08_FilesManagements.RemoveRange(itemsInFolder);
-                }
+                    var allItems = dbContext.FT08_FilesManagements.ToList();
+                    
+                    // Delete all items related to this folder:
+                    // 1. Folder itself: PathFile == normalizedPath (e.g., "E:\SCADA\UploadFiles\Tram A")
+                    // 2. Files in this folder: PathFile == normalizedPath (e.g., PathFile="E:\SCADA\UploadFiles\Tram A", FileName="file.pdf")
+                    // 3. Subfolders: PathFile starts with normalizedPath + "\" (e.g., "E:\SCADA\UploadFiles\Tram A\Subfolder1")
+                    // 4. Files in subfolders: PathFile starts with normalizedPath + "\" (e.g., PathFile="E:\SCADA\UploadFiles\Tram A\Subfolder1")
+                    var itemsToDelete = allItems.Where(x => 
+                    {
+                        var itemPath = NormalizePath(x.PathFile);
+                        // Match exact path OR any path starting with folder path + "\"
+                        return itemPath == normalizedPath || 
+                               itemPath.StartsWith(normalizedPath + "\\");
+                    }).ToList();
+                    
+                    if (itemsToDelete.Any())
+                    {
+                        dbContext.FT08_FilesManagements.RemoveRange(itemsToDelete);
+                    }
 
-                await dbContext.SaveChangesAsync();
+                    await dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    // If DB delete failed and we deleted the physical folder, we can't rollback the folder deletion
+                    // This is acceptable as the folder is already gone
+                    throw;
+                }
             }
             else
             {
-                if (!System.IO.File.Exists(normalizedPath))
+                // 1. Delete physical file first (if exists)
+                var fileExists = System.IO.File.Exists(normalizedPath);
+                if (fileExists)
                 {
-                    return await Result<bool>.FailAsync("File not found");
+                    System.IO.File.Delete(normalizedPath);
                 }
-                
-                // Delete physical file
-                System.IO.File.Delete(normalizedPath);
 
-                // Delete from database - Files store PathFile as parent directory
-                var directory = System.IO.Path.GetDirectoryName(normalizedPath);
-                var fileName = System.IO.Path.GetFileName(normalizedPath);
-                var allItems = dbContext.FT08_FilesManagements.ToList();
-                var entity = allItems.FirstOrDefault(x => 
-                    NormalizePath(x.PathFile) == directory && 
-                    x.FileName == fileName);
-                
-                if (entity != null)
+                // 2. Delete from database with transaction (always delete from DB even if file doesn't exist)
+                await using var transaction = await dbContext.Database.BeginTransactionAsync();
+                try
                 {
-                    dbContext.FT08_FilesManagements.Remove(entity);
+                    var directory = System.IO.Path.GetDirectoryName(normalizedPath);
+                    var fileName = System.IO.Path.GetFileName(normalizedPath);
+                    var allItems = dbContext.FT08_FilesManagements.ToList();
+                    var entity = allItems.FirstOrDefault(x => 
+                        NormalizePath(x.PathFile) == directory && 
+                        x.FileName == fileName);
+                    
+                    if (entity != null)
+                    {
+                        dbContext.FT08_FilesManagements.Remove(entity);
+                    }
+
                     await dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    // If DB delete failed and we deleted the physical file, we can't rollback the file deletion
+                    // This is acceptable as the file is already gone
+                    throw;
                 }
             }
 
