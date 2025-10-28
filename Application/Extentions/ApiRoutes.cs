@@ -123,6 +123,7 @@ namespace Application.Extentions
         {
             public const string BasePath = "api/FT08";
             public const string GetPdfAsBase64Async = "GetPdfAsBase64Async/{pathFile}";
+            public const string UploadPdfFileAsync = "UploadPdfFileAsync";
         }
     }
 }

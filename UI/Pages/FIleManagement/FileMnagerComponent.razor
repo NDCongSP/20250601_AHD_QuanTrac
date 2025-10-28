@@ -1,6 +1,10 @@
 @page "/operation-board"
+@using Application.Services
 @using Domain.Entities
 <h3>FileMnagerComponent</h3>
+
+@inject IFT08 _ft08Service
+@using Microsoft.AspNetCore.Components.Forms
 
 <div class="d-flex" style="gap:12px;">
     <div style="width:320px; min-width:280px; max-width:420px; border:1px solid #ddd; border-radius:6px; padding:8px; height:82vh; overflow:auto;">
@@ -55,6 +59,23 @@
             }
         </div>
 
+        <div class="mb-3" style="border:1px dashed #bbb; padding:10px; border-radius:6px;">
+            <div class="fw-bold mb-2">Tải lên PDF</div>
+            <div class="d-flex" style="gap:8px;">
+                <InputFile OnChange="OnFileSelected" accept="application/pdf" />
+                <input @bind="uploadFolder" class="form-control" placeholder="Thư mục lưu (PathFile)" style="max-width:420px;" />
+                <button class="btn btn-success" @onclick="UploadSelectedFile" disabled="@(uploading || selectedFileData == null)">Tải lên</button>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(uploadError))
+            {
+                <div class="text-danger mt-2">@uploadError</div>
+            }
+            @if (!string.IsNullOrWhiteSpace(uploadInfo))
+            {
+                <div class="text-success mt-2">@uploadInfo</div>
+            }
+        </div>
+
         @if (!string.IsNullOrWhiteSpace(error))
         {
             <div class="text-danger">@error</div>
@@ -78,6 +99,15 @@
     bool loading;
     bool loadingList;
     string search;
+
+    // Upload state
+    IBrowserFile selectedFile;
+    string selectedFileName;
+    string selectedFileData; // base64
+    string uploadFolder;
+    bool uploading;
+    string uploadError;
+    string uploadInfo;
 
     List<FT08_FilesManagement> files = new();
     List<GroupItem> groups = new();
@@ -193,5 +223,78 @@
         if (string.IsNullOrEmpty(input)) return "(trống)";
         // Rút gọn cho dễ nhìn: lấy phần đuôi 50 ký tự
         return input.Length > 80 ? "…" + input[^80..] : input;
+    }
+
+    async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        uploadError = uploadInfo = null;
+        selectedFileData = null;
+        selectedFileName = null;
+        selectedFile = e.File;
+        if (selectedFile == null)
+        {
+            uploadError = "Chưa chọn file.";
+            return;
+        }
+        if (!string.Equals(selectedFile.ContentType, "application/pdf", StringComparison.OrdinalIgnoreCase))
+        {
+            uploadError = "Vui lòng chọn file PDF.";
+            return;
+        }
+        selectedFileName = selectedFile.Name;
+        try
+        {
+            using var ms = new MemoryStream();
+            await selectedFile.OpenReadStream(50 * 1024 * 1024).CopyToAsync(ms);
+            selectedFileData = Convert.ToBase64String(ms.ToArray());
+        }
+        catch (Exception ex)
+        {
+            uploadError = ex.Message;
+        }
+    }
+
+    async Task UploadSelectedFile()
+    {
+        uploadError = uploadInfo = null;
+        if (selectedFile == null || string.IsNullOrEmpty(selectedFileData))
+        {
+            uploadError = "Chưa chọn file PDF.";
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(uploadFolder))
+        {
+            uploadError = "Vui lòng nhập thư mục lưu (PathFile).";
+            return;
+        }
+        uploading = true;
+        try
+        {
+            var req = new Application.DTOs.Request.UploadPdfFileRequest
+            {
+                PathFile = uploadFolder,
+                FileName = selectedFileName,
+                Base64 = selectedFileData
+            };
+            var res = await _ft08Service.UploadPdfFileAsync(req);
+            if (res != null && res.Succeeded && res.Data != null)
+            {
+                uploadInfo = "Tải lên thành công.";
+                // Cập nhật UI danh sách
+                await Reload();
+            }
+            else
+            {
+                uploadError = res?.Messages?.FirstOrDefault() ?? "Tải lên thất bại.";
+            }
+        }
+        catch (Exception ex)
+        {
+            uploadError = ex.Message;
+        }
+        finally
+        {
+            uploading = false;
+        }
     }
 }
