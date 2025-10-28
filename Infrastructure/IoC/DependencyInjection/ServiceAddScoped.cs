@@ -1,4 +1,4 @@
-﻿using Application.Services;
+using Application.Services;
 using Application.Services.Authen;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +18,7 @@ namespace Infrastructure.IoC.DependencyInjection
             services.AddScoped<IFT05, RepositoryFT05Services>();
             services.AddScoped<IFT06, RepositoryFT06Services>();
             services.AddScoped<IFT07, RepositoryFT07Services>();
+            services.AddScoped<IFT08, RepositoryFT08Services>();
             services.AddScoped<IScadaUser, RepositoryScadaUserServices>();
         }
     }

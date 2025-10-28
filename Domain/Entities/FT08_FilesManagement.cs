@@ -19,7 +19,7 @@ namespace Domain.Entities
         public DateTime? UpdateAt { get; set; }
         public bool? IsDeleted { get; set; }
 
-        public string GroupFolder { get; set; } = string.Empty;
+        public string GroupFolder { get; set; } = "D";
         public string PathFile { get; set; } = string.Empty;
         public string FileName { get; set; } = string.Empty;
     }

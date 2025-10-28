@@ -1,6 +1,5 @@
 ﻿using Application.Services;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
