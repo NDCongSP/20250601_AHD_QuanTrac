@@ -12,7 +12,7 @@ namespace Infrastructure.Repositories;
 
 public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContextAccessor contextAccessor) : IFT08
 {
-    private const string RootFolder = @"E:\SCADA\UploadFiles";
+    private const string RootFolder = @"D:\SCADA\UploadFiles";
 
     private static void EnsureRootFolderExists()
     {
