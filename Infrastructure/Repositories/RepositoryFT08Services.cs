@@ -12,7 +12,7 @@ namespace Infrastructure.Repositories;
 
 public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContextAccessor contextAccessor) : IFT08
 {
-    private const string RootFolder = @"D:\SCADA\UploadFiles";
+    private const string RootFolder = @"E:\SCADA\UploadFiles";
 
     private static void EnsureRootFolderExists()
     {
@@ -129,7 +129,9 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                 System.IO.Directory.CreateDirectory(normalizedPath);
                 }
 
-            fullPath = System.IO.Path.Combine(normalizedPath, model.FileName);
+            // Get unique file name (adds (1), (2), etc. if duplicate)
+            var uniqueFileName = GetUniqueFileName(normalizedPath, model.FileName);
+            fullPath = System.IO.Path.Combine(normalizedPath, uniqueFileName);
 
                 // Handle possible data URL prefix
                 var base64 = model.Base64;
@@ -151,7 +153,7 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                 {
                     Id = Guid.NewGuid(),
                     PathFile = normalizedPath,
-                    FileName = model.FileName,
+                    FileName = uniqueFileName,  // Use unique file name
                     CreateAt = DateTime.Now,
                     IsDeleted = false
                 };
@@ -193,13 +195,19 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                     return await Result<bool>.FailAsync("FolderPath is required");
                 }
 
-                // Normalize path
-                normalizedPath = NormalizePath(model.FolderPath);
-
-                if (System.IO.Directory.Exists(normalizedPath))
+                // Normalize path and get unique folder name if duplicate exists
+                var requestedPath = NormalizePath(model.FolderPath);
+                var parentPath = System.IO.Path.GetDirectoryName(requestedPath);
+                var requestedName = System.IO.Path.GetFileName(requestedPath);
+                
+                if (string.IsNullOrWhiteSpace(parentPath) || string.IsNullOrWhiteSpace(requestedName))
                 {
-                    return await Result<bool>.FailAsync("Folder already exists");
+                    return await Result<bool>.FailAsync("Invalid folder path");
                 }
+
+                // Get unique name (adds (1), (2), etc. if duplicate)
+                var uniqueName = GetUniqueFolderName(parentPath, requestedName);
+                normalizedPath = System.IO.Path.Combine(parentPath, uniqueName);
 
                 // 1. Create physical folder first
                 System.IO.Directory.CreateDirectory(normalizedPath);
@@ -208,12 +216,12 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                 await using var transaction = await dbContext.Database.BeginTransactionAsync();
                 try
                 {
-                    var folderName = System.IO.Path.GetFileName(normalizedPath);
+                    // parentPath and uniqueName are already defined above
                     var entity = new FT08_FilesManagement
                     {
                         Id = Guid.NewGuid(),
-                        PathFile = normalizedPath,
-                        FileName = folderName,
+                        PathFile = NormalizePath(parentPath), // Parent directory path
+                        FileName = uniqueName,                 // Unique folder name
                         CreateAt = DateTime.Now,
                         IsDeleted = false
                     };
@@ -262,7 +270,44 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                     return await Result<bool>.FailAsync("Invalid path");
                 }
 
-                newPath = NormalizePath(System.IO.Path.Combine(directory, model.NewName));
+                // For files, validate PDF extension first
+                var requestedName = model.NewName;
+                if (!model.IsFolder)
+                {
+                    var oldFileName = System.IO.Path.GetFileName(oldPathNormalized);
+                    var oldExtension = System.IO.Path.GetExtension(oldFileName);
+                    
+                    // If old file is .pdf, ensure new name keeps .pdf extension
+                    if (oldExtension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var newExtension = System.IO.Path.GetExtension(requestedName);
+                        
+                        if (string.IsNullOrEmpty(newExtension))
+                        {
+                            // No extension provided, add .pdf
+                            requestedName = requestedName + ".pdf";
+                        }
+                        else if (!newExtension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Wrong extension provided, replace with .pdf
+                            requestedName = System.IO.Path.GetFileNameWithoutExtension(requestedName) + ".pdf";
+                        }
+                        // else: already has .pdf, keep as is
+                    }
+                }
+
+                // Get unique name (adds (1), (2), etc. if duplicate)
+                string finalName;
+                if (model.IsFolder)
+                {
+                    finalName = GetUniqueFolderName(directory, requestedName);
+                }
+                else
+                {
+                    finalName = GetUniqueFileName(directory, requestedName);
+                }
+                
+                newPath = NormalizePath(System.IO.Path.Combine(directory, finalName));
 
                 if (model.IsFolder)
                 {
@@ -279,25 +324,44 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                     try
                     {
                         var allItems = dbContext.FT08_FilesManagements.ToList();
+                        var parentPath = NormalizePath(System.IO.Path.GetDirectoryName(oldPathNormalized) ?? "");
+                        var oldFolderName = System.IO.Path.GetFileName(oldPathNormalized);
+                        
+                        // Find the folder entity by parent path + folder name
                         var folderEntity = allItems.FirstOrDefault(x => 
-                            NormalizePath(x.PathFile) == oldPathNormalized);
+                            NormalizePath(x.PathFile) == parentPath && 
+                            x.FileName == oldFolderName);
                         
                         if (folderEntity != null)
                         {
-                            folderEntity.PathFile = newPath;
-                            folderEntity.FileName = model.NewName;
+                            // Only update FileName, PathFile stays the same (parent path)
+                            folderEntity.FileName = finalName;  // Use unique name
                             folderEntity.UpdateAt = DateTime.Now;
                         }
 
-                        // Update all subfolders and files in this folder
+                        // Update PathFile for all items inside this folder (direct children and nested)
+                        // Their PathFile needs to change from oldPathNormalized to newPath
                         var itemsInFolder = allItems.Where(x => 
-                            NormalizePath(x.PathFile).StartsWith(oldPathNormalized + "\\")).ToList();
+                        {
+                            var itemPath = NormalizePath(x.PathFile);
+                            return itemPath == oldPathNormalized || 
+                                   itemPath.StartsWith(oldPathNormalized + "\\");
+                        }).ToList();
                         
                         foreach (var item in itemsInFolder)
                         {
                             var normalizedItemPath = NormalizePath(item.PathFile);
-                            var relativePath = normalizedItemPath.Substring(oldPathNormalized.Length);
-                            item.PathFile = newPath + relativePath;
+                            if (normalizedItemPath == oldPathNormalized)
+                            {
+                                // Direct child: PathFile is exactly the old folder path
+                                item.PathFile = newPath;
+                            }
+                            else
+                            {
+                                // Nested child: PathFile starts with old folder path
+                                var relativePath = normalizedItemPath.Substring(oldPathNormalized.Length);
+                                item.PathFile = newPath + relativePath;
+                            }
                             item.UpdateAt = DateTime.Now;
                         }
 
@@ -322,31 +386,7 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                         return await Result<bool>.FailAsync("File not found");
                     }
                     
-                    // Validate and fix file extension for PDF files
                     var oldFileName = System.IO.Path.GetFileName(oldPathNormalized);
-                    var oldExtension = System.IO.Path.GetExtension(oldFileName);
-                    var validatedNewName = model.NewName;
-                    
-                    // If old file is .pdf, ensure new name keeps .pdf extension
-                    if (oldExtension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var newExtension = System.IO.Path.GetExtension(validatedNewName);
-                        
-                        if (string.IsNullOrEmpty(newExtension))
-                        {
-                            // No extension provided, add .pdf
-                            validatedNewName = validatedNewName + ".pdf";
-                        }
-                        else if (!newExtension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
-                        {
-                            // Wrong extension provided, replace with .pdf
-                            validatedNewName = System.IO.Path.GetFileNameWithoutExtension(validatedNewName) + ".pdf";
-                        }
-                        // else: already has .pdf, keep as is
-                    }
-                    
-                    // Recalculate newPath with validated name
-                    newPath = NormalizePath(System.IO.Path.Combine(directory, validatedNewName));
                     
                     // 1. Rename physical file first
                     System.IO.File.Move(oldPathNormalized, newPath);
@@ -362,7 +402,7 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                         
                         if (entity != null)
                         {
-                            entity.FileName = validatedNewName;
+                            entity.FileName = finalName;  // Use unique name
                             entity.UpdateAt = DateTime.Now;
                         }
 
@@ -402,6 +442,13 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
 
             // Normalize path
             var normalizedPath = NormalizePath(model.Path);
+            
+            // Prevent deleting root folder (UploadFiles)
+            var normalizedRootFolder = NormalizePath(RootFolder);
+            if (normalizedPath.Equals(normalizedRootFolder, StringComparison.OrdinalIgnoreCase))
+            {
+                return await Result<bool>.FailAsync("Cannot delete root folder");
+            }
 
             if (model.IsFolder)
             {
@@ -417,16 +464,24 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                 try
                 {
                     var allItems = dbContext.FT08_FilesManagements.ToList();
+                    var parentPath = NormalizePath(System.IO.Path.GetDirectoryName(normalizedPath) ?? "");
+                    var folderName = System.IO.Path.GetFileName(normalizedPath);
                     
                     // Delete all items related to this folder:
-                    // 1. Folder itself: PathFile == normalizedPath (e.g., "E:\SCADA\UploadFiles\Tram A")
-                    // 2. Files in this folder: PathFile == normalizedPath (e.g., PathFile="E:\SCADA\UploadFiles\Tram A", FileName="file.pdf")
-                    // 3. Subfolders: PathFile starts with normalizedPath + "\" (e.g., "E:\SCADA\UploadFiles\Tram A\Subfolder1")
-                    // 4. Files in subfolders: PathFile starts with normalizedPath + "\" (e.g., PathFile="E:\SCADA\UploadFiles\Tram A\Subfolder1")
+                    // 1. Folder itself: PathFile == parent path && FileName == folder name
+                    // 2. Direct children (files/folders): PathFile == folder full path
+                    // 3. Nested children: PathFile starts with folder full path + "\"
                     var itemsToDelete = allItems.Where(x => 
                     {
                         var itemPath = NormalizePath(x.PathFile);
-                        // Match exact path OR any path starting with folder path + "\"
+                        
+                        // Case 1: This IS the folder entity
+                        if (itemPath == parentPath && x.FileName == folderName)
+                        {
+                            return true;
+                        }
+                        
+                        // Case 2 & 3: Items inside this folder (direct or nested)
                         return itemPath == normalizedPath || 
                                itemPath.StartsWith(normalizedPath + "\\");
                     }).ToList();
@@ -498,6 +553,7 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
     {
         try
         {
+            // Ensure root folder exists physically
             EnsureRootFolderExists();
 
             // Get all items from database
@@ -508,30 +564,31 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
                     .ThenBy(x => x.FileName)
                     .ToList());
 
-            // If no data, create default "New folder"
-            if (!allItems.Any())
-            {
-                var newFolderPath = System.IO.Path.Combine(RootFolder, "New folder");
+            // Ensure root folder entry exists in DB
+            var normalizedRootFolder = NormalizePath(RootFolder);
+            var rootParentPath = NormalizePath(System.IO.Path.GetDirectoryName(RootFolder) ?? "D:\\SCADA");
+            var rootFolderName = System.IO.Path.GetFileName(RootFolder); // "UploadFiles"
+            
+            var rootEntry = allItems.FirstOrDefault(x => 
+                NormalizePath(x.PathFile) == rootParentPath && 
+                x.FileName == rootFolderName);
                 
-                // Create physical folder
-                if (!System.IO.Directory.Exists(newFolderPath))
-                {
-                    System.IO.Directory.CreateDirectory(newFolderPath);
-                }
-
-                var newFolder = new FT08_FilesManagement
+            if (rootEntry == null)
+            {
+                // Create root folder entry in DB
+                rootEntry = new FT08_FilesManagement
                 {
                     Id = Guid.NewGuid(),
-                    PathFile = newFolderPath,
-                    FileName = "New folder",
+                    PathFile = rootParentPath, // "D:\SCADA"
+                    FileName = rootFolderName,  // "UploadFiles"
                     CreateAt = DateTime.Now,
                     IsDeleted = false
                 };
 
-                dbContext.FT08_FilesManagements.Add(newFolder);
+                dbContext.FT08_FilesManagements.Add(rootEntry);
                 await dbContext.SaveChangesAsync();
                 
-                allItems.Add(newFolder);
+                allItems.Add(rootEntry);
             }
 
             var tree = BuildFolderTreeFromDatabase(allItems);
@@ -564,50 +621,44 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
             file.PathFile = NormalizePath(file.PathFile);
         }
 
-        // Sort folders by path depth (parents first)
-        folders = folders.OrderBy(f => f.PathFile.Split('\\', StringSplitOptions.RemoveEmptyEntries).Length).ToList();
+        // Build folder full paths and sort by depth (parents first)
+        var foldersWithFullPath = folders.Select(f => new
+        {
+            Entity = f,
+            FullPath = NormalizePath(System.IO.Path.Combine(f.PathFile, f.FileName))
+        }).OrderBy(f => f.FullPath.Split('\\', StringSplitOptions.RemoveEmptyEntries).Length)
+        .ToList();
 
         // Build all folder items first
-        foreach (var folder in folders)
+        foreach (var folderData in foldersWithFullPath)
         {
             var folderItem = new FolderTreeItem
             {
-                Name = folder.FileName,
-                FullPath = folder.PathFile,
+                Name = folderData.Entity.FileName,
+                FullPath = folderData.FullPath,
                 IsFolder = true,
                 Children = new List<FolderTreeItem>()
             };
-            folderMap[folder.PathFile] = folderItem;
+            folderMap[folderData.FullPath] = folderItem;
         }
 
         // Build folder hierarchy
-        foreach (var folder in folders)
+        foreach (var folderData in foldersWithFullPath)
         {
-            var folderPath = folder.PathFile;
-            var folderItem = folderMap[folderPath];
+            var folderFullPath = folderData.FullPath;
+            var folderItem = folderMap[folderFullPath];
 
-            // Find parent folder - parent path is the directory containing this folder
-            var parentPath = System.IO.Path.GetDirectoryName(folderPath);
+            // The parent path is stored in PathFile
+            var parentPath = NormalizePath(folderData.Entity.PathFile);
             
-            if (!string.IsNullOrEmpty(parentPath))
+            if (folderMap.ContainsKey(parentPath))
             {
-                // Normalize parent path too
-                parentPath = NormalizePath(parentPath);
-                
-                if (folderMap.ContainsKey(parentPath))
-                {
-                    // Add to parent folder
-                    folderMap[parentPath].Children.Add(folderItem);
-                }
-                else
-                {
-                    // Parent not found in map - add to root level
-                    tree.Add(folderItem);
-                }
+                // Add to parent folder
+                folderMap[parentPath].Children.Add(folderItem);
             }
             else
             {
-                // No parent - this is root level
+                // Parent not found in map - add to root level
                 tree.Add(folderItem);
             }
         }
@@ -618,14 +669,15 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
             var fileItem = new FolderTreeItem
             {
                 Name = file.FileName,
-                FullPath = System.IO.Path.Combine(file.PathFile, file.FileName),
+                FullPath = NormalizePath(System.IO.Path.Combine(file.PathFile, file.FileName)),
                 IsFolder = false,
                 Children = new List<FolderTreeItem>()
             };
 
-            if (folderMap.ContainsKey(file.PathFile))
+            var parentFolderPath = NormalizePath(file.PathFile);
+            if (folderMap.ContainsKey(parentFolderPath))
             {
-                folderMap[file.PathFile].Children.Add(fileItem);
+                folderMap[parentFolderPath].Children.Add(fileItem);
             }
             else
             {
@@ -671,5 +723,58 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
 
         // Replace forward slashes with backslashes and remove trailing slashes
         return path.Replace('/', '\\').TrimEnd('\\');
+    }
+
+    /// <summary>
+    /// Generate unique folder name by appending (1), (2), etc. if name already exists
+    /// </summary>
+    private string GetUniqueFolderName(string parentPath, string baseName)
+    {
+        var normalizedParentPath = NormalizePath(parentPath);
+        var candidatePath = System.IO.Path.Combine(normalizedParentPath, baseName);
+        
+        if (!System.IO.Directory.Exists(candidatePath))
+        {
+            return baseName;
+        }
+        
+        int counter = 1;
+        string newName;
+        do
+        {
+            newName = $"{baseName} ({counter})";
+            candidatePath = System.IO.Path.Combine(normalizedParentPath, newName);
+            counter++;
+        } while (System.IO.Directory.Exists(candidatePath));
+        
+        return newName;
+    }
+
+    /// <summary>
+    /// Generate unique file name by appending (1), (2), etc. before extension if name already exists
+    /// </summary>
+    private string GetUniqueFileName(string parentPath, string baseFileName)
+    {
+        var normalizedParentPath = NormalizePath(parentPath);
+        var candidatePath = System.IO.Path.Combine(normalizedParentPath, baseFileName);
+        
+        if (!System.IO.File.Exists(candidatePath))
+        {
+            return baseFileName;
+        }
+        
+        var nameWithoutExt = System.IO.Path.GetFileNameWithoutExtension(baseFileName);
+        var extension = System.IO.Path.GetExtension(baseFileName);
+        
+        int counter = 1;
+        string newName;
+        do
+        {
+            newName = $"{nameWithoutExt} ({counter}){extension}";
+            candidatePath = System.IO.Path.Combine(normalizedParentPath, newName);
+            counter++;
+        } while (System.IO.File.Exists(candidatePath));
+        
+        return newName;
     }
 }
