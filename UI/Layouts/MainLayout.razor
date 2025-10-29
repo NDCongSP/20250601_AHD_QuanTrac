@@ -32,8 +32,8 @@
                 <RadzenStack Gap="0">
                     @if (!string.IsNullOrEmpty(LayoutState.Subtitle))
                     {
-                        <RadzenText Text="@LayoutState.Subtitle" TextStyle="TextStyle.Subtitle2" Class="rz-mb-0"
-                            Style="color: white; opacity: 0.8;" />
+                                <RadzenText Text="@LayoutState.Subtitle" TextStyle="TextStyle.Subtitle2" Class="rz-mb-0"
+                                    Style="color: white; opacity: 0.8;" />
                     }
                     <RadzenText Text="@LayoutState.Title" TextStyle="TextStyle.H6" Class="rz-mb-0"
                         Style="color: white;" />
@@ -73,28 +73,28 @@
                 <RadzenButton Icon="notifications" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
                 @if (GlobalVariable.UserAuthorizationInfo != null && GlobalVariable.UserAuthorizationInfo.UserId != null)
                 {
-                    <RadzenProfileMenu Style="background-color:transparent" Click="OnParentClicked">
-                        <Template>
-                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
-                                <RadzenIcon Icon="account_circle" />
-                                @if (sidebarExpanded)
-                                {
-                                    <span>@GlobalVariable.UserAuthorizationInfo.FullName</span>
-                                }
-                            </RadzenStack>
-                        </Template>
-                        <ChildContent>
-                            <RadzenProfileMenuItem Text="Profile" Icon="person" Path="/profile" />
-                            <RadzenProfileMenuItem Text="Settings" Icon="settings" Path="/settings" />
-                            <RadzenProfileMenuItem Text="Change Password" Icon="password" Path="/change-password" />
-                            <RadzenProfileMenuItem Text="Logout" Icon="logout" />
-                        </ChildContent>
-                    </RadzenProfileMenu>
+                            <RadzenProfileMenu Style="background-color:transparent" Click="OnParentClicked">
+                                <Template>
+                                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                                        <RadzenIcon Icon="account_circle" />
+                                        @if (sidebarExpanded)
+                                        {
+                                                    <span>@GlobalVariable.UserAuthorizationInfo.FullName</span>
+                                        }
+                                    </RadzenStack>
+                                </Template>
+                                <ChildContent>
+                                    <RadzenProfileMenuItem Text="Profile" Icon="person" Path="/profile" />
+                                    <RadzenProfileMenuItem Text="Settings" Icon="settings" Path="/settings" />
+                                    <RadzenProfileMenuItem Text="Change Password" Icon="password" Path="/change-password" />
+                                    <RadzenProfileMenuItem Text="Logout" Icon="logout" />
+                                </ChildContent>
+                            </RadzenProfileMenu>
                 }
                 else
                 {
-                    <RadzenButton Icon="login" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Text="@_localizer["Login"]"
-                        Click="@(() => _navigation.NavigateTo("/login"))" />
+                            <RadzenButton Icon="login" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Text="@_localizer["Login"]"
+                                Click="@(() => _navigation.NavigateTo("/login"))" />
                 }
                 <RadzenButton Icon="settings" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
                 <RadzenAppearanceToggle />
@@ -309,4 +309,5 @@ document.body.style.overflow = arguments[0] ? 'hidden' : '';
         // });
         // }
     }
+
 }
