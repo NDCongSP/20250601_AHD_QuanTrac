@@ -702,4 +702,19 @@
   <data name="OffsetAPI" xml:space="preserve">
     <value>Offset API Parameters</value>
   </data>
+  <data name="THÔNG TIN HỖ TRỢ VẬN HÀNH" xml:space="preserve">
+    <value>OPERATION SUPPORT INFORMATION</value>
+  </data>
+  <data name="Cống Số 1" xml:space="preserve">
+    <value>Gate No. 1</value>
+  </data>
+  <data name="Cống Số 2" xml:space="preserve">
+    <value>Gate No. 2</value>
+  </data>
+  <data name="Cống Số 3" xml:space="preserve">
+    <value>Gate No. 3</value>
+  </data>
+  <data name="Bản Tin Vận Hành" xml:space="preserve">
+    <value>Operation Bulletin</value>
+  </data>
 </root>

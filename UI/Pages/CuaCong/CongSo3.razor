@@ -1,0 +1,68 @@
+﻿@page "/cong3"
+
+<style>
+    body {
+        font-family: 'Times New Roman' !important;
+    }
+</style>
+
+<RadzenPanel class="rz-p-4 rz-border-radius-2 rz-mx-auto">
+
+    <figure>
+        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
+            <RadzenRow>
+                <RadzenColumn SizeXS="12" SizeMD="12" class="rz-mx-auto">
+                    @((MarkupString)_svg)
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </figure>
+</RadzenPanel>
+
+@code {
+    string _svg;
+    private ConfigModel _config = new();
+    private bool _isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load SVG
+        using var stream = this.GetType().Assembly.GetManifestResourceStream("UI.wwwroot.images.generals.CuaCong1_2_3.CongSo3.svg");
+        if (stream != null)
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+            using var reader = new StreamReader(stream);
+            _svg = await reader.ReadToEndAsync();
+        }
+
+        await LoadConfigAsync();
+
+        base.OnInitialized();
+    }
+
+    private async Task LoadConfigAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            StateHasChanged();
+
+            var result = await _ft01Service.GetConfigAsync();
+            if (result.Succeeded && result.Data != null)
+            {
+                _config = result.Data;
+
+                await _jsRuntime.InvokeVoidAsync("UpdateSvgCuaCong", 3, _config);
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.Notify(NotificationSeverity.Error, "Error", $"Error loading settings: {ex.Message}");
+        }
+        finally
+        {
+            _isLoading = false;
+            StateHasChanged();
+        }
+    }
+}
