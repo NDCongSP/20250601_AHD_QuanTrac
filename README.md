@@ -32,3 +32,4 @@ WebRTC → xem được trực tiếp, không độ trễ cao
 
 👉 Nói cách khác:
 Trình duyệt KHÔNG thể xem RTSP trực tiếp, nhưng MediaMTX có thể "chuyển" nó sang dạng xem được.
+Install mediaMTX vào windown service
