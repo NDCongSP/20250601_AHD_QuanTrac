@@ -33,45 +33,45 @@
 
         @if (loadingList)
         {
-                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
-                <RadzenText>Đang tải...</RadzenText>
+                    <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                    <RadzenText>Đang tải...</RadzenText>
             }
             else if (treeItems?.Count > 0)
             {
-                <div style="flex: 1; overflow-y: auto; overflow-x: hidden; min-height: 200px; padding-bottom: 150px;">
-                    <RadzenTree Data="@GetFilteredTree()" Style="width: 100%;min-height: 59vh;">
-                    <RadzenTreeLevel TextProperty="Text" ChildrenProperty="Children" 
-                                    HasChildren="@(e => e is TreeItem item && item.HasChildren)"
-                                    Expanded="@(e => e is TreeItem item && item.Expanded)">
-                        <Template>
-                            @{
-                                var treeItem = (TreeItem)context.Value;
-                            }
-                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.3rem"
-                                        Style="cursor: pointer; width: 100%; min-width: 0;">
-                                <RadzenIcon Icon="@(treeItem.IsFolder ? "folder" : "description")"
-                                                Style="@(treeItem.IsFolder ? "color: #FFA500; flex-shrink: 0;" : "color: #DC3545; flex-shrink: 0;")" />
-                                <div class="tree-item-text" title="@treeItem.Text" @onclick="@(() => OnItemClick(treeItem))">
-                                    @treeItem.Text
-                                </div>
-                                <RadzenButton Icon="more_vert" 
-                                              ButtonStyle="ButtonStyle.Light" 
-                                              Size="ButtonSize.ExtraSmall"
-                                              Variant="Variant.Flat"
-                                              Click="@((args) => ToggleMenu(treeItem))"
-                                              Style="padding: 0.25rem; flex-shrink: 0;" 
-                                              id="@($"menu-btn-{treeItem.Id}")" />
-                            </RadzenStack>
-                        </Template>
-                    </RadzenTreeLevel>
-                </RadzenTree>
-                </div>
+                    <div style="flex: 1; overflow-y: auto; overflow-x: hidden; min-height: 200px; padding-bottom: 150px;">
+                        <RadzenTree Data="@GetFilteredTree()" Style="width: 100%;min-height: 59vh;">
+                        <RadzenTreeLevel TextProperty="Text" ChildrenProperty="Children" 
+                                        HasChildren="@(e => e is TreeItem item && item.HasChildren)"
+                                        Expanded="@(e => e is TreeItem item && item.Expanded)">
+                            <Template>
+                                @{
+                                        var treeItem = (TreeItem)context.Value;
+                                }
+                                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.3rem"
+                                            Style="cursor: pointer; width: 100%; min-width: 0;">
+                                    <RadzenIcon Icon="@(treeItem.IsFolder ? "folder" : "description")"
+                                                    Style="@(treeItem.IsFolder ? "color: #FFA500; flex-shrink: 0;" : "color: #DC3545; flex-shrink: 0;")" />
+                                    <div class="tree-item-text" title="@treeItem.Text" @onclick="@(() => OnItemClick(treeItem))">
+                                        @treeItem.Text
+                                    </div>
+                                    <RadzenButton Icon="more_vert" 
+                                                  ButtonStyle="ButtonStyle.Light" 
+                                                  Size="ButtonSize.ExtraSmall"
+                                                  Variant="Variant.Flat"
+                                                  Click="@((args) => ToggleMenu(treeItem))"
+                                                  Style="padding: 0.25rem; flex-shrink: 0;" 
+                                                  id="@($"menu-btn-{treeItem.Id}")" />
+                                </RadzenStack>
+                            </Template>
+                        </RadzenTreeLevel>
+                    </RadzenTree>
+                    </div>
         }
         else
             {
-                <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
-                    Chưa có dữ liệu
-                </RadzenAlert>
+                    <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
+                        Chưa có dữ liệu
+                    </RadzenAlert>
             }
         </RadzenStack>
     </RadzenCard>
@@ -85,34 +85,34 @@
                 </RadzenText>
                 @if (loading)
                 {
-                    <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
                 }
             </RadzenStack>
 
         @if (!string.IsNullOrWhiteSpace(error))
         {
-                <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter">
-                    @error
-                </RadzenAlert>
+                    <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter">
+                        @error
+                    </RadzenAlert>
         }
 
         @if (!string.IsNullOrWhiteSpace(base64Pdf))
         {
-                <iframe style="width: 100%; height: 100%; border: 1px solid #dee2e6; border-radius: 4px;" 
-                        src="data:application/pdf;base64,@base64Pdf"></iframe>
+                    <iframe style="width: 100%; height: 100%; border: 1px solid #dee2e6; border-radius: 4px;" 
+                            src="data:application/pdf;base64,@base64Pdf"></iframe>
         }
         else
         {
-                <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" 
-                            Style="flex: 1; border: 2px dashed #dee2e6; border-radius: 8px;">
-                    <RadzenIcon Icon="picture_as_pdf" Style="font-size: 4rem; color: #adb5bd;" />
-                    <RadzenText TextStyle="TextStyle.Body1" Style="color: #6c757d;">
-                        Click vào nút 3 chấm để thêm folder/file
-                    </RadzenText>
-                    <RadzenText TextStyle="TextStyle.Body2" Style="color: #adb5bd;">
-                        Click vào file PDF để xem nội dung
-                    </RadzenText>
-                </RadzenStack>
+                    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" 
+                                Style="flex: 1; border: 2px dashed #dee2e6; border-radius: 8px;">
+                        <RadzenIcon Icon="picture_as_pdf" Style="font-size: 4rem; color: #adb5bd;" />
+                        <RadzenText TextStyle="TextStyle.Body1" Style="color: #6c757d;">
+                            Click vào nút 3 chấm để thêm folder/file
+                        </RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body2" Style="color: #adb5bd;">
+                            Click vào file PDF để xem nội dung
+                        </RadzenText>
+                    </RadzenStack>
             }
         </RadzenStack>
     </RadzenCard>
@@ -120,39 +120,39 @@
 
 @if (showMenu && currentMenuTreeItem != null)
 {
-    <div class="dropdown-menu-overlay" @onclick="@(() => { showMenu = false; })"></div>
-    <div class="dropdown-menu-custom" style="@GetMenuPosition()">
-        @if (currentMenuTreeItem.IsFolder)
-        {
-            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("add_folder"))">
-                <RadzenIcon Icon="create_new_folder" Style="margin-right: 0.5rem;" />
-                Thêm thư mục
-            </div>
-            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("add_file"))">
-                <RadzenIcon Icon="upload_file" Style="margin-right: 0.5rem;" />
-                Thêm file PDF
-            </div>
-            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("rename"))">
-                <RadzenIcon Icon="edit" Style="margin-right: 0.5rem;" />
-                Đổi tên
-            </div>
-            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("delete"))">
-                <RadzenIcon Icon="delete" Style="margin-right: 0.5rem;" />
-                Xóa
-            </div>
-        }
-        else
-        {
-            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("rename"))">
-                <RadzenIcon Icon="edit" Style="margin-right: 0.5rem;" />
-                Đổi tên
-            </div>
-            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("delete"))">
-                <RadzenIcon Icon="delete" Style="margin-right: 0.5rem;" />
-                Xóa
-            </div>
-        }
-    </div>
+        <div class="dropdown-menu-overlay" @onclick="@(() => { showMenu = false; })"></div>
+        <div class="dropdown-menu-custom" style="@GetMenuPosition()">
+            @if (currentMenuTreeItem.IsFolder)
+            {
+                    <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("add_folder"))">
+                        <RadzenIcon Icon="create_new_folder" Style="margin-right: 0.5rem;" />
+                        Thêm thư mục
+                    </div>
+                    <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("add_file"))">
+                        <RadzenIcon Icon="upload_file" Style="margin-right: 0.5rem;" />
+                        Thêm file PDF
+                    </div>
+                    <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("rename"))">
+                        <RadzenIcon Icon="edit" Style="margin-right: 0.5rem;" />
+                        Đổi tên
+                    </div>
+                    <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("delete"))">
+                        <RadzenIcon Icon="delete" Style="margin-right: 0.5rem;" />
+                        Xóa
+                    </div>
+            }
+            else
+            {
+                    <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("rename"))">
+                        <RadzenIcon Icon="edit" Style="margin-right: 0.5rem;" />
+                        Đổi tên
+                    </div>
+                    <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("delete"))">
+                        <RadzenIcon Icon="delete" Style="margin-right: 0.5rem;" />
+                        Xóa
+                    </div>
+            }
+        </div>
 }
 
 <style>
@@ -227,7 +227,8 @@
         animation: slideDown 0.15s ease-out;
     }
 
-    @@keyframes slideDown {
+    @@keyframes slideDown
+    {
         from {
             opacity: 0;
             transform: translateY(-10px);
@@ -320,7 +321,7 @@
                         <RadzenButton Text="Thêm" ButtonStyle="ButtonStyle.Primary" Click="() => ds.Close(true)" />
                     </RadzenStack>
                 </RadzenStack>
-            </div>
+</div>
         );
 
         if (result == true && !string.IsNullOrWhiteSpace(newFolderName))
@@ -516,7 +517,7 @@
                         <RadzenButton Text="Thêm" ButtonStyle="ButtonStyle.Primary" Click="() => ds.Close(true)" />
                     </RadzenStack>
                 </RadzenStack>
-            </div>
+</div>
         );
 
         if (result == true && !string.IsNullOrWhiteSpace(newFolderName) && contextMenuItem != null)
@@ -580,29 +581,30 @@
 
         var result = await DialogService.OpenAsync("Thêm file PDF", ds =>
             @<div style="width: 500px;">
-                <RadzenStack Gap="1rem">
-                    <RadzenFormField Text="Chọn file PDF:" Style="width: 100%;">
-                        <InputFile OnChange="@OnFileSelected" accept="application/pdf,.pdf" class="form-control" />
-                    </RadzenFormField>
-                    @if (!string.IsNullOrWhiteSpace(uploadFileName))
-                    {
-                        <RadzenText TextStyle="TextStyle.Body2" Style="color: green;">✓ File đã chọn: @uploadFileName</RadzenText>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(uploadError))
-                    {
-                        <RadzenAlert AlertStyle="AlertStyle.Danger">@uploadError</RadzenAlert>
-                    }
-                    @if (string.IsNullOrWhiteSpace(uploadError) && string.IsNullOrWhiteSpace(uploadFileName))
-                    {
-                        <RadzenText TextStyle="TextStyle.Body2" Style="color: #6c757d;">Vui lòng chọn file PDF để tải lên</RadzenText>
-                    }
+                        <RadzenStack Gap="1rem">
+                            <RadzenFormField Text="Chọn file PDF:" Style="width: 100%;">
+                                <InputFile OnChange="@OnFileSelected" accept="application/pdf,.pdf" class="form-control" />
+                            </RadzenFormField>
+                            <RadzenLabel  Text="@((contextMenuItem?.FullPath) ?? "(Chưa chọn thư mục)")" Style="color: var(--rz-text-color); font-style: italic; font-weight: normal;"/>
+                            @if (!string.IsNullOrWhiteSpace(uploadFileName))    
+                            {
+                                    <RadzenText TextStyle="TextStyle.Body2" Style="color: green;">✓ File đã chọn: @uploadFileName</RadzenText>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(uploadError))
+                            {
+                                    <RadzenAlert AlertStyle="AlertStyle.Danger">@uploadError</RadzenAlert>
+                            }
+                            @if (string.IsNullOrWhiteSpace(uploadError) && string.IsNullOrWhiteSpace(uploadFileName))
+                            {
+                                    <RadzenText TextStyle="TextStyle.Body2" Style="color: #6c757d;">Vui lòng chọn file PDF để tải lên</RadzenText>
+                            }
                     <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.End">
                         <RadzenButton Text="Hủy" ButtonStyle="ButtonStyle.Light" Click="() => ds.Close(false)" />
                         <RadzenButton Text="Tải lên" ButtonStyle="ButtonStyle.Success" 
                                      Click="() => ds.Close(true)" />
                     </RadzenStack>
                 </RadzenStack>
-            </div>
+</div>
         );
 
         if (result == true && !string.IsNullOrWhiteSpace(uploadFileData) && contextMenuItem != null)
@@ -689,7 +691,7 @@
         }
 
         // Check content type if available
-        if (!string.IsNullOrEmpty(file.ContentType) && 
+        if (!string.IsNullOrEmpty(file.ContentType) &&
             !file.ContentType.Equals("application/pdf", StringComparison.OrdinalIgnoreCase))
         {
             uploadError = "File không đúng định dạng PDF.";
@@ -705,7 +707,7 @@
             var bytes = ms.ToArray();
             
             // Validate PDF signature (PDF files start with %PDF)
-            if (bytes.Length < 5 || 
+            if (bytes.Length < 5 ||
                 bytes[0] != 0x25 || bytes[1] != 0x50 || bytes[2] != 0x44 || bytes[3] != 0x46)
             {
                 uploadError = "File không đúng định dạng PDF (file header không hợp lệ).";
@@ -743,7 +745,7 @@
                         <RadzenButton Text="Đổi tên" ButtonStyle="ButtonStyle.Primary" Click="() => ds.Close(true)" />
                     </RadzenStack>
                 </RadzenStack>
-            </div>
+</div>
         );
 
         if (result == true && !string.IsNullOrWhiteSpace(renameName) && renameName != oldName)
