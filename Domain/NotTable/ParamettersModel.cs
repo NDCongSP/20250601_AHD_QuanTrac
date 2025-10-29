@@ -17,6 +17,15 @@ namespace Domain
         public double Q_CongSo1 { get; set; } = 0;
         public double Q_CongSo2 { get; set; } = 0;
         public double Q_CongSo3 { get; set; } = 0;
+        public double MNTL_CongSo1 { get; set; } = 0;
+        public double MNTL_CongSo2 { get; set; } = 0;
+        public double MNTL_CongSo3 { get; set; } = 0;
+        public double MNHL_CongSo1 { get; set; } = 0;
+        public double MNHL_CongSo2 { get; set; } = 0;
+        public double MNHL_CongSo3 { get; set; } = 0;
+        public double DoMoCua_a_CongSo1 { get; set; } = 0;
+        public double DoMoCua_a_CongSo2 { get; set; } = 0;
+        public double DoMoCua_a_CongSo3 { get; set; } = 0;
 
         /// <summary>
         /// Giá trị mức nước nhập tay.

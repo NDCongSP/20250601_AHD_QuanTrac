@@ -420,9 +420,6 @@
   <data name="ChangePassword" xml:space="preserve">
     <value>Đổi mật khẩu</value>
   </data>
-  <data name="ResetPassword" xml:space="preserve">
-    <value>Reset mật khẩu</value>
-  </data>
   <data name="Confirmation.ResetPassword" xml:space="preserve">
     <value>Bạn có chắc chắn muốn reset mật khẩu cho</value>
   </data>
@@ -720,5 +717,20 @@
   </data>
   <data name="OffsetAPI" xml:space="preserve">
     <value>OffsetAPI</value>
+  </data>
+  <data name="THÔNG TIN HỖ TRỢ VẬN HÀNH" xml:space="preserve">
+    <value>THÔNG TIN HỖ TRỢ VẬN HÀNH</value>
+  </data>
+  <data name="Cống Số 1" xml:space="preserve">
+    <value>Cống Số 1</value>
+  </data>
+  <data name="Cống Số 2" xml:space="preserve">
+    <value>Cống Số 2</value>
+  </data>
+  <data name="Cống Số 3" xml:space="preserve">
+    <value>Cống Số 3</value>
+  </data>
+  <data name="Bản Tin Vận Hành" xml:space="preserve">
+    <value>Bản Tin Vận Hành</value>
   </data>
 </root>

@@ -361,6 +361,33 @@ window.ft03Report = (function () {
     return { renderHourlyChart };
 })();
 
+function UpdateSvgCuaCong(congNo, config) {
+    const params = config.parametterConfig;
+
+    // Danh sách các field cần cập nhật
+    const fields = [
+        "q_CongSo",
+        "mntL_CongSo",
+        "mnhL_CongSo",
+        "doMoCua_a_CongSo"
+    ];
+
+    fields.forEach(field => {
+        const element = document.getElementById(`${field}${congNo}`);
+        if (element) {
+            // Lấy giá trị theo tên thuộc tính động, ví dụ: params["Q_CongSo2"]
+            const value = params[`${field}${congNo}`];
+
+            // Format 2 chữ số thập phân nếu là số
+            const formatted = typeof value === "number"
+                ? value.toFixed(2)
+                : value ?? "";
+
+            element.innerHTML = formatted;
+        }
+    });
+}
+
 
 
 

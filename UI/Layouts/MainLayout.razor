@@ -7,6 +7,7 @@
 @using Microsoft.JSInterop
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components
+@using System.Collections.Generic
 @inject UI.Services.LayoutStateService LayoutState
 @inject UI.Services.ThemeService ThemeService
 @inject ILogger<MainLayout> Logger
@@ -31,8 +32,8 @@
                 <RadzenStack Gap="0">
                     @if (!string.IsNullOrEmpty(LayoutState.Subtitle))
                     {
-                        <RadzenText Text="@LayoutState.Subtitle" TextStyle="TextStyle.Subtitle2" Class="rz-mb-0"
-                            Style="color: white; opacity: 0.8;" />
+                                <RadzenText Text="@LayoutState.Subtitle" TextStyle="TextStyle.Subtitle2" Class="rz-mb-0"
+                                    Style="color: white; opacity: 0.8;" />
                     }
                     <RadzenText Text="@LayoutState.Title" TextStyle="TextStyle.H6" Class="rz-mb-0"
                         Style="color: white;" />
@@ -72,28 +73,28 @@
                 <RadzenButton Icon="notifications" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
                 @if (GlobalVariable.UserAuthorizationInfo != null && GlobalVariable.UserAuthorizationInfo.UserId != null)
                 {
-                    <RadzenProfileMenu Style="background-color:transparent" Click="OnParentClicked">
-                        <Template>
-                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
-                                <RadzenIcon Icon="account_circle" />
-                                @if (sidebarExpanded)
-                                {
-                                    <span>@GlobalVariable.UserAuthorizationInfo.FullName</span>
-                                }
-                            </RadzenStack>
-                        </Template>
-                        <ChildContent>
-                            <RadzenProfileMenuItem Text="Profile" Icon="person" Path="/profile" />
-                            <RadzenProfileMenuItem Text="Settings" Icon="settings" Path="/settings" />
-                            <RadzenProfileMenuItem Text="Change Password" Icon="password" Path="/change-password" />
-                            <RadzenProfileMenuItem Text="Logout" Icon="logout" />
-                        </ChildContent>
-                    </RadzenProfileMenu>
+                            <RadzenProfileMenu Style="background-color:transparent" Click="OnParentClicked">
+                                <Template>
+                                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                                        <RadzenIcon Icon="account_circle" />
+                                        @if (sidebarExpanded)
+                                        {
+                                                    <span>@GlobalVariable.UserAuthorizationInfo.FullName</span>
+                                        }
+                                    </RadzenStack>
+                                </Template>
+                                <ChildContent>
+                                    <RadzenProfileMenuItem Text="Profile" Icon="person" Path="/profile" />
+                                    <RadzenProfileMenuItem Text="Settings" Icon="settings" Path="/settings" />
+                                    <RadzenProfileMenuItem Text="Change Password" Icon="password" Path="/change-password" />
+                                    <RadzenProfileMenuItem Text="Logout" Icon="logout" />
+                                </ChildContent>
+                            </RadzenProfileMenu>
                 }
                 else
                 {
-                    <RadzenButton Icon="login" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Text="@_localizer["Login"]"
-                        Click="@(() => _navigation.NavigateTo("/login"))" />
+                            <RadzenButton Icon="login" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Text="@_localizer["Login"]"
+                                Click="@(() => _navigation.NavigateTo("/login"))" />
                 }
                 <RadzenButton Icon="settings" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" />
                 <RadzenAppearanceToggle />
@@ -107,37 +108,38 @@
         <RadzenPanelMenu DisplayStyle="@(sidebarExpanded? MenuItemDisplayStyle.IconAndText: MenuItemDisplayStyle.Icon)"
             ShowArrow="false">
             <!-- Public Section - No Login Required -->
-            <RadzenPanelMenuItem Path="/" Text="@_localizer["HomePage"]" Icon="dashboard" />
-            <RadzenPanelMenuItem Path="/operation-board" Text="@_localizer["Bảng tin vận hành"]" Icon="folder" />
-            <RadzenPanelMenuItem Path="/reservoir" Text="@_localizer["Reservoir"]" Icon="water_drop" />
-            <RadzenPanelMenuItem Path="/water-level" Text="@_localizer["WaterLevelHLSSG"]" Icon="water" />
-            <RadzenPanelMenuItem Path="/congn1" Text="@_localizer["Cống 1"]" Icon="gate" />
-            <RadzenPanelMenuItem Path="/congn2" Text="@_localizer["Cống 2"]" Icon="gate" />
-            <RadzenPanelMenuItem Path="/camera" Text="@_localizer["Camera"]" Icon="camera" />
+            <RadzenPanelMenuItem Path="/" Text="@_localizer["HomePage"]" Icon="dashboard" Attributes="@Tooltip(@_localizer["HomePage"])" />
+            <RadzenPanelMenuItem Path="/operation-board" Text="@_localizer["Bản Tin Vận Hành"]" Icon="folder" Attributes="@Tooltip(@_localizer["Bản Tin Vận Hành"])" />
+            <RadzenPanelMenuItem Path="/reservoir" Text="@_localizer["Reservoir"]" Icon="water_drop" Attributes="@Tooltip(@_localizer["Reservoir"])" />
+            <RadzenPanelMenuItem Path="/water-level" Text="@_localizer["WaterLevelHLSSG"]" Icon="water" Attributes="@Tooltip(@_localizer["WaterLevelHLSSG"])" />
+            <RadzenPanelMenuItem Path="/cong1" Text="@_localizer["Cống Số 1"]" Icon="gate" Attributes="@Tooltip(@_localizer["Cống Số 1"])" />
+            <RadzenPanelMenuItem Path="/cong2" Text="@_localizer["Cống Số 2"]" Icon="gate" Attributes="@Tooltip(@_localizer["Cống Số 2"])" />
+            <RadzenPanelMenuItem Path="/cong3" Text="@_localizer["Cống Số 3"]" Icon="gate" Attributes="@Tooltip(@_localizer["Cống Số 3"])" />
+            <RadzenPanelMenuItem Path="/camera" Text="@_localizer["Camera"]" Icon="camera" Attributes="@Tooltip(@_localizer["Camera"])" />
             @if (GlobalVariable.UserAuthorizationInfo != null && GlobalVariable.UserAuthorizationInfo.UserId != null)
             {
-                <RadzenPanelMenuItem Text="@_localizer["MasterData"]" Icon="build">
+                <RadzenPanelMenuItem Text="@_localizer["MasterData"]" Icon="build" Attributes="@Tooltip(@_localizer["MasterData"])">
                     <RadzenPanelMenuItem Path="/location-management" Text="@_localizer["StationDeclaration"]"
-                        Icon="location_city" />
+                        Icon="location_city" Attributes="@Tooltip(@_localizer["StationDeclaration"])" />
                     <RadzenPanelMenuItem Path="/setting-management" Text="@_localizer["CoefficientManagement"]"
-                        Icon="equalizer" />
+                        Icon="equalizer" Attributes="@Tooltip(@_localizer["CoefficientManagement"])" />
                     <RadzenPanelMenuItem Path="/reservoir-chart-setting" Text="@_localizer["ReservoirChartSetting"]"
-                        Icon="equalizer" />
+                        Icon="equalizer" Attributes="@Tooltip(@_localizer["ReservoirChartSetting"])" />
                     <RadzenPanelMenuItem Path="/water-level-data-configuration"
-                        Text="@_localizer["WaterLevelDataConfiguration"]" Icon="equalizer" />
+                        Text="@_localizer["WaterLevelDataConfiguration"]" Icon="equalizer" Attributes="@Tooltip(@_localizer["WaterLevelDataConfiguration"])" />
                     <RadzenPanelMenuItem Path="/interpolation-table-data-configuration"
-                        Text="@_localizer["InterpolationTableDataConfiguration"]" Icon="equalizer" />
+                        Text="@_localizer["InterpolationTableDataConfiguration"]" Icon="equalizer" Attributes="@Tooltip(@_localizer["InterpolationTableDataConfiguration"])" />
                     <hr />
-                    <RadzenPanelMenuItem Path="/users" Text="@_localizer["UserManagement"]" Icon="person" />
-                    <RadzenPanelMenuItem Path="/roles" Text="@_localizer["Roles"]" Icon="lock_open" />
-                    <RadzenPanelMenuItem Path="/permissions" Text="@_localizer["Permissions"]" Icon="gavel" />
+                    <RadzenPanelMenuItem Path="/users" Text="@_localizer["UserManagement"]" Icon="person" Attributes="@Tooltip(@_localizer["UserManagement"])" />
+                    <RadzenPanelMenuItem Path="/roles" Text="@_localizer["Roles"]" Icon="lock_open" Attributes="@Tooltip(@_localizer["Roles"])" />
+                    <RadzenPanelMenuItem Path="/permissions" Text="@_localizer["Permissions"]" Icon="gavel" Attributes="@Tooltip(@_localizer["Permissions"])" />
                     <hr />
-                    <RadzenPanelMenuItem Path="/scada-users" Text="@_localizer["ScadaUsers"]" Icon="person" />
+                    <RadzenPanelMenuItem Path="/scada-users" Text="@_localizer["ScadaUsers"]" Icon="person" Attributes="@Tooltip(@_localizer["ScadaUsers"])" />
                 </RadzenPanelMenuItem>
             }
             else
             {
-                <RadzenPanelMenuItem Path="/login" Text="@_localizer["Login"]" Icon="login" />
+                <RadzenPanelMenuItem Path="/login" Text="@_localizer["Login"]" Icon="login" Attributes="@Tooltip(@_localizer["Login"])" />
             }
         </RadzenPanelMenu>
     </RadzenSidebar>
@@ -156,6 +158,14 @@
     private string currentCulture = "vi";
     private RadzenSidebar? sidebar;
     private bool isMobile = false;
+
+    private IReadOnlyDictionary<string, object> Tooltip(string text)
+    {
+        return new Dictionary<string, object>
+        {
+            { "title", text }
+        };
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -299,4 +309,5 @@ document.body.style.overflow = arguments[0] ? 'hidden' : '';
         // });
         // }
     }
+
 }

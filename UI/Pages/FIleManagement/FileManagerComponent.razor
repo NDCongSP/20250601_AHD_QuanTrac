@@ -1,0 +1,918 @@
+@page "/operation-board"
+@using Application.Services
+@using Application.DTOs.Request
+@using Application.DTOs.Response
+@using Domain.Entities
+@using Microsoft.AspNetCore.Components.Forms
+@using Radzen
+@using Radzen.Blazor
+
+@inject IFT08 _ft08Service
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Quản lý File</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Style="height: 85vh;">
+    <!-- Cây thư mục bên trái -->
+    <RadzenCard Style="width: 380px; padding: 1rem; overflow: hidden; display: flex; flex-direction: column;">
+        <RadzenStack Gap="0.5rem" Style="flex: 1; overflow: hidden; display: flex; flex-direction: column;">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
+                <RadzenText TextStyle="TextStyle.H6" Style="margin: 0;">Thư mục</RadzenText>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
+                    <RadzenButton Icon="create_new_folder" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Small" 
+                                  Click="@AddRootLevelFolder" Disabled="@loadingList" 
+                                  title="Thêm thư mục mới" />
+                    <RadzenButton Icon="refresh" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" 
+                                  Click="@Reload" Disabled="@loadingList" />
+                </RadzenStack>
+            </RadzenStack>
+
+            <RadzenTextBox @bind-Value="@search" Placeholder="Tìm kiếm..." Style="width: 100%;" />
+
+        @if (loadingList)
+        {
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                <RadzenText>Đang tải...</RadzenText>
+            }
+            else if (treeItems?.Count > 0)
+            {
+                <div style="flex: 1; overflow-y: auto; overflow-x: hidden; min-height: 200px; padding-bottom: 150px;">
+                    <RadzenTree Data="@GetFilteredTree()" Style="width: 100%;min-height: 59vh;">
+                    <RadzenTreeLevel TextProperty="Text" ChildrenProperty="Children" 
+                                    HasChildren="@(e => e is TreeItem item && item.HasChildren)"
+                                    Expanded="@(e => e is TreeItem item && item.Expanded)">
+                        <Template>
+                            @{
+                                var treeItem = (TreeItem)context.Value;
+                            }
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.3rem"
+                                        Style="cursor: pointer; width: 100%; min-width: 0;">
+                                <RadzenIcon Icon="@(treeItem.IsFolder ? "folder" : "description")"
+                                                Style="@(treeItem.IsFolder ? "color: #FFA500; flex-shrink: 0;" : "color: #DC3545; flex-shrink: 0;")" />
+                                <div class="tree-item-text" title="@treeItem.Text" @onclick="@(() => OnItemClick(treeItem))">
+                                    @treeItem.Text
+                                </div>
+                                <RadzenButton Icon="more_vert" 
+                                              ButtonStyle="ButtonStyle.Light" 
+                                              Size="ButtonSize.ExtraSmall"
+                                              Variant="Variant.Flat"
+                                              Click="@((args) => ToggleMenu(treeItem))"
+                                              Style="padding: 0.25rem; flex-shrink: 0;" 
+                                              id="@($"menu-btn-{treeItem.Id}")" />
+                            </RadzenStack>
+                        </Template>
+                    </RadzenTreeLevel>
+                </RadzenTree>
+                </div>
+        }
+        else
+            {
+                <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
+                    Chưa có dữ liệu
+                </RadzenAlert>
+            }
+        </RadzenStack>
+    </RadzenCard>
+
+    <!-- Khung xem PDF bên phải -->
+    <RadzenCard Style="flex: 1; padding: 1rem; display: flex; flex-direction: column;">
+        <RadzenStack Gap="1rem" Style="height: 100%;">
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" AlignItems="AlignItems.Center">
+                <RadzenText TextStyle="TextStyle.H6" Style="margin: 0; flex: 1;">
+                    @(string.IsNullOrWhiteSpace(selectedFileName) ? "Chọn file để xem" : selectedFileName)
+                </RadzenText>
+                @if (loading)
+                {
+                    <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                }
+            </RadzenStack>
+
+        @if (!string.IsNullOrWhiteSpace(error))
+        {
+                <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter">
+                    @error
+                </RadzenAlert>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(base64Pdf))
+        {
+                <iframe style="width: 100%; height: 100%; border: 1px solid #dee2e6; border-radius: 4px;" 
+                        src="data:application/pdf;base64,@base64Pdf"></iframe>
+        }
+        else
+        {
+                <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" 
+                            Style="flex: 1; border: 2px dashed #dee2e6; border-radius: 8px;">
+                    <RadzenIcon Icon="picture_as_pdf" Style="font-size: 4rem; color: #adb5bd;" />
+                    <RadzenText TextStyle="TextStyle.Body1" Style="color: #6c757d;">
+                        Click vào nút 3 chấm để thêm folder/file
+                    </RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body2" Style="color: #adb5bd;">
+                        Click vào file PDF để xem nội dung
+                    </RadzenText>
+                </RadzenStack>
+            }
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+@if (showMenu && currentMenuTreeItem != null)
+{
+    <div class="dropdown-menu-overlay" @onclick="@(() => { showMenu = false; })"></div>
+    <div class="dropdown-menu-custom" style="@GetMenuPosition()">
+        @if (currentMenuTreeItem.IsFolder)
+        {
+            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("add_folder"))">
+                <RadzenIcon Icon="create_new_folder" Style="margin-right: 0.5rem;" />
+                Thêm thư mục
+            </div>
+            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("add_file"))">
+                <RadzenIcon Icon="upload_file" Style="margin-right: 0.5rem;" />
+                Thêm file PDF
+            </div>
+            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("rename"))">
+                <RadzenIcon Icon="edit" Style="margin-right: 0.5rem;" />
+                Đổi tên
+            </div>
+            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("delete"))">
+                <RadzenIcon Icon="delete" Style="margin-right: 0.5rem;" />
+                Xóa
+            </div>
+        }
+        else
+        {
+            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("rename"))">
+                <RadzenIcon Icon="edit" Style="margin-right: 0.5rem;" />
+                Đổi tên
+            </div>
+            <div class="menu-item" @onclick="@(async () => await ExecuteAndCloseMenu("delete"))">
+                <RadzenIcon Icon="delete" Style="margin-right: 0.5rem;" />
+                Xóa
+            </div>
+        }
+    </div>
+}
+
+<style>
+    /* Override Radzen tree node toggle width (giảm padding từ 2rem xuống 1rem) */
+    :root {
+        --rz-tree-node-toggle-width: 1rem;
+    }
+
+    .rz-tree-item {
+        user-select: none;
+    }
+
+    /* Giảm padding/indentation của tree level xuống 1/2 (từ 24px xuống 12px) */
+    .rz-tree-level {
+        padding-left: 12px !important;
+    }
+
+    /* Đảm bảo tree node cũng sử dụng variable mới */
+    .rz-treenode {
+        padding-inline-start: var(--rz-tree-node-toggle-width) !important;
+    }
+
+    /* Text truncation với tooltip */
+    .tree-item-text {
+        flex: 1;
+        overflow: hidden;
+        @* text-overflow: ellipsis;
+        white-space: nowrap; *@
+        cursor: pointer;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .tree-item-text:hover {
+        color: var(--rz-primary);
+    }
+
+    .menu-item {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.2s;
+        white-space: nowrap;
+    }
+
+    .menu-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .dropdown-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9998;
+        background: transparent;
+    }
+
+    .dropdown-menu-custom {
+        position: fixed;
+        z-index: 9999;
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        min-width: 180px;
+        padding: 0.5rem 0;
+        max-height: 300px;
+        overflow-y: auto;
+        animation: slideDown 0.15s ease-out;
+    }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+@code {
+    // Constants
+    private const string RootFolder = @"D:\SCADA\UploadFiles";
+
+    // State variables
+    string? base64Pdf;
+    string? error;
+    bool loading;
+    bool loadingList;
+    string search = "";
+    string? selectedFileName;
+
+    // Tree data
+    List<TreeItem> treeItems = new();
+    TreeItem? contextMenuItem;
+    TreeItem? currentMenuTreeItem;
+    bool showMenu = false;
+    string menuTop = "0px";
+    string menuLeft = "0px";
+
+    // Tree Item class
+    public class TreeItem
+    {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Text { get; set; } = "";
+        public string FullPath { get; set; } = "";
+        public bool IsFolder { get; set; }
+        public bool Expanded { get; set; } = true;
+        public List<TreeItem> Children { get; set; } = new();
+        public bool HasChildren => Children?.Count > 0;
+        public TreeItem? Parent { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        LayoutState.SetTitle(_localizer["THÔNG TIN HỖ TRỢ VẬN HÀNH"]);
+        await Reload();
+    }
+
+    async Task Reload()
+    {
+        loadingList = true;
+        error = null;
+        base64Pdf = null;
+        selectedFileName = null;
+        showMenu = false; // Close any open menu
+        
+        try
+        {
+            var res = await _ft08Service.GetFolderTreeAsync();
+            if (res != null && res.Succeeded && res.Data != null)
+            {
+                treeItems = ConvertToTreeItems(res.Data, null);
+            }
+            else
+            {
+                error = res?.Messages?.FirstOrDefault() ?? "Không tải được danh sách.";
+            }
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+        finally
+        {
+            loadingList = false;
+        }
+    }
+
+    async Task AddRootLevelFolder()
+    {
+        var result = await DialogService.OpenAsync("Thêm thư mục mới", ds =>
+            @<div>
+                <RadzenStack Gap="1rem">
+                    <RadzenFormField Text="Tên thư mục:" Style="width: 100%;">
+                        <RadzenTextBox @bind-Value="@newFolderName" Style="width: 100%;" Placeholder="Nhập tên thư mục..." />
+                    </RadzenFormField>
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.End">
+                        <RadzenButton Text="Hủy" ButtonStyle="ButtonStyle.Light" Click="() => ds.Close(false)" />
+                        <RadzenButton Text="Thêm" ButtonStyle="ButtonStyle.Primary" Click="() => ds.Close(true)" />
+                    </RadzenStack>
+                </RadzenStack>
+            </div>
+        );
+
+        if (result == true && !string.IsNullOrWhiteSpace(newFolderName))
+        {
+            try
+            {
+                // Create folder at root level (under UploadFiles)
+                var folderPath = System.IO.Path.Combine(RootFolder, newFolderName);
+                var request = new CreateFolderRequest { FolderPath = folderPath };
+                
+                var res = await _ft08Service.CreateFolderAsync(request);
+                
+                if (res.Succeeded)
+                {
+                    // Reload tree from server
+                    await Reload();
+                    
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Success,
+                        Summary = "Thành công",
+                        Detail = "Đã thêm thư mục mới",
+                        Duration = 3000
+                    });
+                }
+                else
+                {
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Error,
+                        Summary = "Lỗi",
+                        Detail = res.Messages?.FirstOrDefault() ?? "Không thể tạo thư mục",
+                        Duration = 5000
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = ex.Message,
+                    Duration = 5000
+                });
+            }
+            finally
+            {
+                newFolderName = "";
+            }
+        }
+    }
+
+    List<TreeItem> ConvertToTreeItems(List<FolderTreeItem> apiItems, TreeItem? parent)
+    {
+        var items = new List<TreeItem>();
+        
+        foreach (var apiItem in apiItems)
+        {
+            var treeItem = new TreeItem
+            {
+                Text = apiItem.Name,
+                FullPath = apiItem.FullPath,
+                IsFolder = apiItem.IsFolder,
+                Expanded = true,
+                Parent = parent
+            };
+
+            if (apiItem.Children?.Count > 0)
+            {
+                treeItem.Children = ConvertToTreeItems(apiItem.Children, treeItem);
+            }
+
+            items.Add(treeItem);
+        }
+
+        return items;
+    }
+
+    IEnumerable<TreeItem> GetFilteredTree()
+    {
+        if (string.IsNullOrWhiteSpace(search))
+            return treeItems;
+
+        var searchLower = search.ToLower();
+        return FilterTreeItems(treeItems, searchLower);
+    }
+
+    List<TreeItem> FilterTreeItems(List<TreeItem> items, string searchTerm)
+    {
+        var filtered = new List<TreeItem>();
+        
+        foreach (var item in items)
+        {
+            var clone = new TreeItem
+            {
+                Id = item.Id,
+                Text = item.Text,
+                FullPath = item.FullPath,
+                IsFolder = item.IsFolder,
+                Expanded = true,
+                Parent = item.Parent
+            };
+
+            if (item.IsFolder)
+            {
+                var filteredChildren = FilterTreeItems(item.Children, searchTerm);
+                if (filteredChildren.Any() || item.Text.ToLower().Contains(searchTerm))
+                {
+                    clone.Children = filteredChildren;
+                    filtered.Add(clone);
+                }
+            }
+            else
+            {
+                if (item.Text.ToLower().Contains(searchTerm))
+                {
+                    filtered.Add(clone);
+                }
+            }
+        }
+
+        return filtered;
+    }
+
+    void ToggleMenu(TreeItem treeItem)
+    {
+        if (currentMenuTreeItem?.Id == treeItem.Id && showMenu)
+        {
+            showMenu = false;
+            currentMenuTreeItem = null;
+        }
+        else
+        {
+            currentMenuTreeItem = treeItem;
+            contextMenuItem = treeItem;
+            showMenu = true;
+            StateHasChanged();
+        }
+    }
+
+    string GetMenuPosition()
+    {
+        if (currentMenuTreeItem == null) return "";
+        
+        // Return inline style for positioning
+        // Menu will be positioned by JavaScript after render
+        return $"top: {menuTop}; left: {menuLeft};";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (showMenu && currentMenuTreeItem != null)
+        {
+            await JSRuntime.InvokeVoidAsync("positionDropdownMenu", $"menu-btn-{currentMenuTreeItem.Id}");
+        }
+    }
+
+    async Task ExecuteAndCloseMenu(string action)
+    {
+        showMenu = false;
+        
+        switch (action)
+        {
+            case "add_folder":
+                await AddFolder();
+                break;
+            case "add_file":
+                await AddFile();
+                break;
+            case "rename":
+                if (contextMenuItem?.IsFolder == true)
+                    await RenameFolder();
+                else
+                    await RenameFile();
+                break;
+            case "delete":
+                await DeleteItem();
+                break;
+        }
+    }
+
+    async Task AddFolder()
+    {
+        var result = await DialogService.OpenAsync("Thêm thư mục", ds =>
+            @<div>
+                <RadzenStack Gap="1rem">
+                    <RadzenFormField Text="Tên thư mục:" Style="width: 100%;">
+                        <RadzenTextBox @bind-Value="@newFolderName" Style="width: 100%;" Placeholder="Nhập tên thư mục..." />
+                    </RadzenFormField>
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.End">
+                        <RadzenButton Text="Hủy" ButtonStyle="ButtonStyle.Light" Click="() => ds.Close(false)" />
+                        <RadzenButton Text="Thêm" ButtonStyle="ButtonStyle.Primary" Click="() => ds.Close(true)" />
+                    </RadzenStack>
+                </RadzenStack>
+            </div>
+        );
+
+        if (result == true && !string.IsNullOrWhiteSpace(newFolderName) && contextMenuItem != null)
+        {
+            try
+            {
+                var folderPath = contextMenuItem != null ? System.IO.Path.Combine(contextMenuItem.FullPath, newFolderName) : newFolderName;
+                var request = new CreateFolderRequest { FolderPath = folderPath };
+                
+                var res = await _ft08Service.CreateFolderAsync(request);
+                
+                if (res.Succeeded)
+                {
+                    // Reload tree from server
+                    await Reload();
+                    
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Success,
+                        Summary = "Thành công",
+                        Detail = "Đã thêm thư mục mới",
+                        Duration = 3000
+                    });
+                }
+                else
+                {
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Error,
+                        Summary = "Lỗi",
+                        Detail = res.Messages?.FirstOrDefault() ?? "Không thể tạo thư mục",
+                        Duration = 5000
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = ex.Message,
+                    Duration = 5000
+                });
+            }
+            finally
+            {
+                newFolderName = "";
+            }
+        }
+    }
+    string newFolderName = "";
+
+    async Task AddFile()
+    {
+        // Reset upload state
+        uploadFileName = "";
+        uploadFileData = "";
+        uploadError = "";
+        isValidPdfFile = false;
+
+        var result = await DialogService.OpenAsync("Thêm file PDF", ds =>
+            @<div style="width: 500px;">
+                <RadzenStack Gap="1rem">
+                    <RadzenFormField Text="Chọn file PDF:" Style="width: 100%;">
+                        <InputFile OnChange="@OnFileSelected" accept="application/pdf,.pdf" class="form-control" />
+                    </RadzenFormField>
+                    @if (!string.IsNullOrWhiteSpace(uploadFileName))
+                    {
+                        <RadzenText TextStyle="TextStyle.Body2" Style="color: green;">✓ File đã chọn: @uploadFileName</RadzenText>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(uploadError))
+                    {
+                        <RadzenAlert AlertStyle="AlertStyle.Danger">@uploadError</RadzenAlert>
+                    }
+                    @if (string.IsNullOrWhiteSpace(uploadError) && string.IsNullOrWhiteSpace(uploadFileName))
+                    {
+                        <RadzenText TextStyle="TextStyle.Body2" Style="color: #6c757d;">Vui lòng chọn file PDF để tải lên</RadzenText>
+                    }
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.End">
+                        <RadzenButton Text="Hủy" ButtonStyle="ButtonStyle.Light" Click="() => ds.Close(false)" />
+                        <RadzenButton Text="Tải lên" ButtonStyle="ButtonStyle.Success" 
+                                     Click="() => ds.Close(true)" />
+                    </RadzenStack>
+                </RadzenStack>
+            </div>
+        );
+
+        if (result == true && !string.IsNullOrWhiteSpace(uploadFileData) && contextMenuItem != null)
+        {
+            try
+            {
+                var request = new UploadPdfFileRequest
+                {
+                    PathFile = contextMenuItem?.FullPath ?? "",
+                    FileName = uploadFileName,
+                    Base64 = uploadFileData
+                };
+                
+                var res = await _ft08Service.UploadPdfFileAsync(request);
+                
+                if (res.Succeeded)
+                {
+                    // Reload tree from server
+                    await Reload();
+                    
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Success,
+                        Summary = "Thành công",
+                        Detail = "Đã tải lên file PDF",
+                        Duration = 3000
+                    });
+                }
+                else
+                {
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Error,
+                        Summary = "Lỗi",
+                        Detail = res.Messages?.FirstOrDefault() ?? "Không thể tải file",
+                        Duration = 5000
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = ex.Message,
+                    Duration = 5000
+                });
+            }
+            finally
+            {
+                uploadFileName = "";
+                uploadFileData = "";
+                uploadError = "";
+                isValidPdfFile = false;
+            }
+        }
+    }
+
+    string uploadFileName = "";
+    string uploadFileData = "";
+    string uploadError = "";
+    bool isValidPdfFile = false;
+
+    async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        uploadError = "";
+        uploadFileData = "";
+        uploadFileName = "";
+        isValidPdfFile = false;
+
+        var file = e.File;
+        if (file == null)
+        {
+            uploadError = "Chưa chọn file.";
+            return;
+        }
+
+        // Check file extension
+        if (!file.Name.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+        {
+            uploadError = "Vui lòng chọn file PDF (phải có đuôi .pdf).";
+            return;
+        }
+
+        // Check content type if available
+        if (!string.IsNullOrEmpty(file.ContentType) && 
+            !file.ContentType.Equals("application/pdf", StringComparison.OrdinalIgnoreCase))
+        {
+            uploadError = "File không đúng định dạng PDF.";
+            return;
+        }
+
+        uploadFileName = file.Name;
+
+        try
+        {
+            using var ms = new MemoryStream();
+            await file.OpenReadStream(50 * 1024 * 1024).CopyToAsync(ms);
+            var bytes = ms.ToArray();
+            
+            // Validate PDF signature (PDF files start with %PDF)
+            if (bytes.Length < 5 || 
+                bytes[0] != 0x25 || bytes[1] != 0x50 || bytes[2] != 0x44 || bytes[3] != 0x46)
+            {
+                uploadError = "File không đúng định dạng PDF (file header không hợp lệ).";
+                uploadFileData = "";
+                uploadFileName = "";
+                return;
+            }
+            
+            uploadFileData = Convert.ToBase64String(bytes);
+            isValidPdfFile = true;
+        }
+        catch (Exception ex)
+        {
+            uploadError = $"Lỗi đọc file: {ex.Message}";
+            isValidPdfFile = false;
+            uploadFileData = "";
+        }
+    }
+
+    async Task RenameFolder()
+    {
+        if (contextMenuItem == null) return;
+        
+        var oldName = contextMenuItem.Text;
+        renameName = oldName; // Pre-fill with current name
+        
+        var result = await DialogService.OpenAsync("Đổi tên thư mục", ds =>
+            @<div>
+                <RadzenStack Gap="1rem">
+                    <RadzenFormField Text="Tên mới:" Style="width: 100%;">
+                        <RadzenTextBox @bind-Value="@renameName" Style="width: 100%;" Placeholder="Nhập tên mới..." />
+                    </RadzenFormField>
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.End">
+                        <RadzenButton Text="Hủy" ButtonStyle="ButtonStyle.Light" Click="() => ds.Close(false)" />
+                        <RadzenButton Text="Đổi tên" ButtonStyle="ButtonStyle.Primary" Click="() => ds.Close(true)" />
+                    </RadzenStack>
+                </RadzenStack>
+            </div>
+        );
+
+        if (result == true && !string.IsNullOrWhiteSpace(renameName) && renameName != oldName)
+        {
+            try
+            {
+                var request = new RenameItemRequest
+                {
+                    OldPath = contextMenuItem.FullPath,
+                    NewName = renameName,
+                    IsFolder = contextMenuItem.IsFolder
+                };
+                
+                var res = await _ft08Service.RenameItemAsync(request);
+                
+                if (res.Succeeded)
+                {
+                    // Reload tree from server
+                    await Reload();
+                    
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Success,
+                        Summary = "Thành công",
+                        Detail = $"Đã đổi tên từ '{oldName}' thành '{renameName}'",
+                        Duration = 3000
+                    });
+                }
+                else
+                {
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Error,
+                        Summary = "Lỗi",
+                        Detail = res.Messages?.FirstOrDefault() ?? "Không thể đổi tên",
+                        Duration = 5000
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = ex.Message,
+                    Duration = 5000
+                });
+            }
+            finally
+            {
+                renameName = "";
+            }
+        }
+    }
+    string renameName = "";
+
+    async Task RenameFile()
+    {
+        await RenameFolder(); // Same logic
+    }
+
+    async Task DeleteItem()
+    {
+        if (contextMenuItem == null) return;
+        
+        var itemType = contextMenuItem.IsFolder ? "thư mục" : "file";
+        var confirmed = await DialogService.Confirm(
+            $"Bạn có chắc muốn xóa {itemType} '{contextMenuItem.Text}'?",
+            "Xác nhận xóa",
+            new ConfirmOptions { OkButtonText = "Xóa", CancelButtonText = "Hủy" }
+        );
+
+        if (confirmed == true)
+        {
+            try
+            {
+                var request = new DeleteItemRequest
+                {
+                    Path = contextMenuItem.FullPath,
+                    IsFolder = contextMenuItem.IsFolder
+                };
+                
+                var res = await _ft08Service.DeleteItemAsync(request);
+                
+                if (res.Succeeded)
+                {
+                    // Clear PDF viewer if deleting current file
+                    if (selectedFileName == contextMenuItem.Text)
+                    {
+                        base64Pdf = null;
+                        selectedFileName = null;
+                    }
+                    
+                    // Reload tree from server
+                    await Reload();
+                    
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Success,
+                        Summary = "Thành công",
+                        Detail = $"Đã xóa {itemType} thành công",
+                        Duration = 3000
+                    });
+                }
+                else
+                {
+                    NotificationService.Notify(new NotificationMessage
+                    {
+                        Severity = NotificationSeverity.Error,
+                        Summary = "Lỗi",
+                        Detail = res.Messages?.FirstOrDefault() ?? $"Không thể xóa {itemType}",
+                        Duration = 5000
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Lỗi",
+                    Detail = ex.Message,
+                    Duration = 5000
+                });
+            }
+        }
+    }
+
+    void OnItemClick(TreeItem item)
+    {
+        // Close menu if open
+        showMenu = false;
+        
+        if (!item.IsFolder)
+        {
+            LoadPdf(item.FullPath, item.Text);
+        }
+    }
+
+    async void LoadPdf(string fullPath, string fileName)
+    {
+        error = null;
+        base64Pdf = null;
+        selectedFileName = fileName;
+        loading = true;
+        StateHasChanged();
+
+        try
+        {
+            var res = await _ft08Service.GetPdfAsBase64Async(fullPath);
+            if (res != null && res.Succeeded && !string.IsNullOrEmpty(res.Data))
+            {
+                base64Pdf = res.Data;
+            }
+            else
+            {
+                error = res?.Messages?.FirstOrDefault() ?? "Không thể đọc PDF.";
+            }
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+        finally
+        {
+            loading = false;
+            StateHasChanged();
+        }
+    }
+}

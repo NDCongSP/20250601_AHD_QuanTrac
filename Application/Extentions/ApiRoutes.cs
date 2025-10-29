@@ -122,8 +122,12 @@ namespace Application.Extentions
         public static class FT08
         {
             public const string BasePath = "api/FT08";
-            public const string GetPdfAsBase64Async = "GetPdfAsBase64Async";
-            public const string UploadPdfFileAsync = "UploadPdfFileAsync";
+            public const string GetPdfAsBase64Async = "get-pdf-base64";
+            public const string UploadPdfFileAsync = "upload-pdf";
+            public const string CreateFolder = "create-folder";
+            public const string RenameItem = "rename-item";
+            public const string DeleteItem = "delete-item";
+            public const string GetFolderTree = "get-folder-tree";
         }
     }
 }
