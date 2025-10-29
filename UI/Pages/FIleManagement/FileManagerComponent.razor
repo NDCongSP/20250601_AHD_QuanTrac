@@ -586,7 +586,7 @@
                             <RadzenFormField Text="Chọn file PDF:" Style="width: 100%;">
                                 <InputFile OnChange="@OnFileSelected" accept="application/pdf,.pdf" class="form-control" />
                             </RadzenFormField>
-                            <RadzenLabel  Text="@((contextMenuItem?.FullPath) ?? "(Chưa chọn thư mục)")" Style="color: var(--rz-text-color); font-style: italic; font-weight: normal;"/>
+                            <RadzenLabel Text="@((contextMenuItem?.FullPath) ?? "(Chưa chọn thư mục)")" Style="color: var(--rz-text-color); font-weight: bold;"/>
                             @if (!string.IsNullOrWhiteSpace(uploadFileName))    
                             {
                                     <RadzenText TextStyle="TextStyle.Body2" Style="color: green;">✓ File đã chọn: @uploadFileName</RadzenText>
