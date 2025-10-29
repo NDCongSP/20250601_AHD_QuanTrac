@@ -697,15 +697,17 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
         foreach (var item in folderMap.Values)
         {
             item.Children = item.Children
-                .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)  // Name A-Z (culture-aware)
-                .ThenBy(x => x.CreatedAt)
+                .OrderBy(x => x.IsFolder ? 0 : 1) // Folders first, then files
+                .ThenBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase) // Name A-Z
+                .ThenByDescending(x => x.CreatedAt) // Newest to oldest
                 .ToList();
         }
 
-        // Sort root level items: Name A-Z then CreatedAt
+        // Sort root level items: Folders first, then files; Name A-Z; CreatedAt newest-to-oldest
         return tree
-            .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
-            .ThenBy(x => x.CreatedAt)
+            .OrderBy(x => x.IsFolder ? 0 : 1)
+            .ThenBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
+            .ThenByDescending(x => x.CreatedAt)
             .ToList();
     }
 
