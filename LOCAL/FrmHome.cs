@@ -52,9 +52,13 @@ namespace RegistrationForm1
                         _labHT_Cylinder2_2.Text = dataDisplayStation1.HT_Cylinder2_2.ToString();
                         _labPressure_Oil_Door1.Text = dataDisplayStation1.Pressure_Oil_Door1.ToString();
                         _labPressure_Oil_Door2.Text = dataDisplayStation1.Pressure_Oil_Door2.ToString();
-                     //   _lblTemp_Oil1.Text = dataDisplayStation1.S1_Temp_Oil.ToString();
-                     
-                        _labDoor1_Aperture.Text = dataDisplayStation1.Door1_Aperture.ToString();
+                        //   _lblTemp_Oil1.Text = dataDisplayStation1.S1_Temp_Oil.ToString();
+
+                        _labDoor1_Aperture.Text = dataDisplayStation1.Door1_Aperture_Final.ToString();
+                        _labDoor1_Aperture_1.Text = dataDisplayStation1.Door1_Aperture_Final.ToString();
+                        _labDoor2_Aperture.Text = dataDisplayStation1.Door2_Aperture_Final.ToString();
+                        _labDoor2_Aperture_1.Text = dataDisplayStation1.Door2_Aperture_Final.ToString();
+
                         _labDoor2_Aperture.Text = dataDisplayStation1.Door2_Aperture.ToString();
                         _labFllow_Door1.Text = dataDisplayStation1.Q_i_1.ToString();
                         _labFllow_Door2.Text = dataDisplayStation1.Q_i_2.ToString();
@@ -173,8 +177,10 @@ namespace RegistrationForm1
                         _labPressure_Oil_Door4.Text = dataDisplayStation2.Pressure_Oil_Door2.ToString();
                    //     _lblTemp_Oil2.Text = dataDisplayStation2.S1_Temp_Oil.ToString();
                         
-                        _labDoor3_Aperture.Text = dataDisplayStation2.Door1_Aperture.ToString();
-                        _labDoor4_Aperture.Text = dataDisplayStation2.Door2_Aperture.ToString();
+                        _labDoor3_Aperture.Text = dataDisplayStation2.Door1_Aperture_Final.ToString();
+                        _labDoor3_Aperture_1.Text = dataDisplayStation2.Door1_Aperture_Final.ToString();
+                        _labDoor4_Aperture.Text = dataDisplayStation2.Door2_Aperture_Final.ToString();
+                        _labDoor4_Aperture_1.Text = dataDisplayStation2.Door2_Aperture_Final.ToString();
                         _labFllow_Door3.Text = dataDisplayStation2.Q_i_1.ToString();
                         _labFllow_Door4.Text = dataDisplayStation2.Q_i_2.ToString();
                     }
@@ -312,8 +318,10 @@ namespace RegistrationForm1
                         _labPressure_Oil_Door6.Text = dataDisplayStation3.Pressure_Oil_Door2.ToString();
                       //  _lblTemp_Oil3.Text = dataDisplayStation3.S1_Temp_Oil.ToString();
                        
-                        _labDoor5_Aperture.Text = dataDisplayStation3.Door1_Aperture.ToString();
-                        _labDoor6_Aperture.Text = dataDisplayStation3.Door2_Aperture.ToString();
+                        _labDoor5_Aperture.Text = dataDisplayStation3.Door1_Aperture_Final.ToString();
+                        _labDoor5_Aperture_1.Text = dataDisplayStation3.Door1_Aperture_Final.ToString();
+                        _labDoor6_Aperture.Text = dataDisplayStation3.Door2_Aperture_Final.ToString();
+                        _labDoor6_Aperture_1.Text = dataDisplayStation3.Door2_Aperture_Final.ToString();
                         _labFllow_Door5.Text = dataDisplayStation3.Q_i_1.ToString();
                         _labFllow_Door6.Text = dataDisplayStation3.Q_i_2.ToString();
                     }

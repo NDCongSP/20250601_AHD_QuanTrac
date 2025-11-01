@@ -117,7 +117,6 @@
             this.ahdLabel25 = new Ahd.Winforms.Controls.AhdLabel();
             this._labFllow_ho = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.ahdLabel3 = new Ahd.Winforms.Controls.AhdLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -127,11 +126,6 @@
             this.Pic_Door2_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Door1_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Door1_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
-            this.ahdLabel11 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel12 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel13 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel14 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel15 = new Ahd.Winforms.Controls.AhdLabel();
             this.Pic_Door3_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Door3_Opening = new Ahd.Winforms.Controls.AhdPictureBox();
             this.Pic_Door4_Closing = new Ahd.Winforms.Controls.AhdPictureBox();
@@ -157,6 +151,12 @@
             this._labAPIBensuc = new System.Windows.Forms.Label();
             this._labAPIBinhnham = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
+            this._labDoor6_Aperture_1 = new System.Windows.Forms.Label();
+            this._labDoor5_Aperture_1 = new System.Windows.Forms.Label();
+            this._labDoor4_Aperture_1 = new System.Windows.Forms.Label();
+            this._labDoor3_Aperture_1 = new System.Windows.Forms.Label();
+            this._labDoor2_Aperture_1 = new System.Windows.Forms.Label();
+            this._labDoor1_Aperture_1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblCua2)).BeginInit();
@@ -193,16 +193,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door2_Opening)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door2_Closing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door1_Closing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door1_Opening)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Closing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Opening)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_Closing)).BeginInit();
@@ -1056,7 +1050,7 @@
             // Pic_Doorlock5_1Open
             // 
             this.Pic_Doorlock5_1Open.Image = global::RegistrationForm1.Properties.Resources.chotmohet;
-            this.Pic_Doorlock5_1Open.Location = new System.Drawing.Point(400, 526);
+            this.Pic_Doorlock5_1Open.Location = new System.Drawing.Point(400, 528);
             this.Pic_Doorlock5_1Open.Name = "Pic_Doorlock5_1Open";
             this.Pic_Doorlock5_1Open.Size = new System.Drawing.Size(77, 41);
             this.Pic_Doorlock5_1Open.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1313,20 +1307,6 @@
             this.label1.TabIndex = 362;
             this.label1.Text = " a :";
             // 
-            // ahdLabel3
-            // 
-            this.ahdLabel3.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdLabel3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel3.Location = new System.Drawing.Point(1401, 573);
-            this.ahdLabel3.Name = "ahdLabel3";
-            this.ahdLabel3.Size = new System.Drawing.Size(59, 23);
-            this.ahdLabel3.StringFormat = "0";
-            this.ahdLabel3.TabIndex = 363;
-            this.ahdLabel3.TagPath = "Local Station/DauTieng/S71500/Station_1/Door1_Aperture";
-            this.ahdLabel3.Text = "0";
-            this.ahdLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -1445,76 +1425,6 @@
             this.Pic_Door1_Opening.TabIndex = 392;
             this.Pic_Door1_Opening.TagPath = null;
             this.Pic_Door1_Opening.Text = "ahdPictureBox1";
-            // 
-            // ahdLabel11
-            // 
-            this.ahdLabel11.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdLabel11.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel11.Location = new System.Drawing.Point(1170, 572);
-            this.ahdLabel11.Name = "ahdLabel11";
-            this.ahdLabel11.Size = new System.Drawing.Size(59, 23);
-            this.ahdLabel11.StringFormat = "0";
-            this.ahdLabel11.TabIndex = 395;
-            this.ahdLabel11.TagPath = "Local Station/DauTieng/S71500/Station_1/Door2_Aperture";
-            this.ahdLabel11.Text = "0";
-            this.ahdLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ahdLabel12
-            // 
-            this.ahdLabel12.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdLabel12.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel12.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel12.Location = new System.Drawing.Point(944, 572);
-            this.ahdLabel12.Name = "ahdLabel12";
-            this.ahdLabel12.Size = new System.Drawing.Size(59, 23);
-            this.ahdLabel12.StringFormat = "0";
-            this.ahdLabel12.TabIndex = 398;
-            this.ahdLabel12.TagPath = "Local Station/DauTieng/S71500/Station_2/Door1_Aperture";
-            this.ahdLabel12.Text = "0";
-            this.ahdLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ahdLabel13
-            // 
-            this.ahdLabel13.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdLabel13.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel13.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel13.Location = new System.Drawing.Point(713, 572);
-            this.ahdLabel13.Name = "ahdLabel13";
-            this.ahdLabel13.Size = new System.Drawing.Size(59, 23);
-            this.ahdLabel13.StringFormat = "0";
-            this.ahdLabel13.TabIndex = 401;
-            this.ahdLabel13.TagPath = "Local Station/DauTieng/S71500/Station_2/Door2_Aperture";
-            this.ahdLabel13.Text = "0";
-            this.ahdLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ahdLabel14
-            // 
-            this.ahdLabel14.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdLabel14.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel14.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel14.Location = new System.Drawing.Point(487, 572);
-            this.ahdLabel14.Name = "ahdLabel14";
-            this.ahdLabel14.Size = new System.Drawing.Size(59, 23);
-            this.ahdLabel14.StringFormat = "0";
-            this.ahdLabel14.TabIndex = 404;
-            this.ahdLabel14.TagPath = "Local Station/DauTieng/S71500/Station_3/Door1_Aperture";
-            this.ahdLabel14.Text = "0";
-            this.ahdLabel14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ahdLabel15
-            // 
-            this.ahdLabel15.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ahdLabel15.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel15.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel15.Location = new System.Drawing.Point(255, 572);
-            this.ahdLabel15.Name = "ahdLabel15";
-            this.ahdLabel15.Size = new System.Drawing.Size(59, 23);
-            this.ahdLabel15.StringFormat = "0";
-            this.ahdLabel15.TabIndex = 407;
-            this.ahdLabel15.TagPath = "Local Station/DauTieng/S71500/Station_3/Door2_Aperture";
-            this.ahdLabel15.Text = "0";
-            this.ahdLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Pic_Door3_Closing
             // 
@@ -1851,12 +1761,84 @@
             this.label18.Text = "Quy mô thiết kế Tràn xả lũ: 6 khoang cửa (bxh=10x6)m, Qtk(p=0.1%) = 2800m³/s, Zn=" +
     "+14,00m;";
             // 
+            // _labDoor6_Aperture_1
+            // 
+            this._labDoor6_Aperture_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this._labDoor6_Aperture_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor6_Aperture_1.Location = new System.Drawing.Point(255, 572);
+            this._labDoor6_Aperture_1.Name = "_labDoor6_Aperture_1";
+            this._labDoor6_Aperture_1.Size = new System.Drawing.Size(59, 23);
+            this._labDoor6_Aperture_1.TabIndex = 438;
+            this._labDoor6_Aperture_1.Text = "0";
+            this._labDoor6_Aperture_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor5_Aperture_1
+            // 
+            this._labDoor5_Aperture_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this._labDoor5_Aperture_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor5_Aperture_1.Location = new System.Drawing.Point(487, 572);
+            this._labDoor5_Aperture_1.Name = "_labDoor5_Aperture_1";
+            this._labDoor5_Aperture_1.Size = new System.Drawing.Size(59, 23);
+            this._labDoor5_Aperture_1.TabIndex = 439;
+            this._labDoor5_Aperture_1.Text = "0";
+            this._labDoor5_Aperture_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor4_Aperture_1
+            // 
+            this._labDoor4_Aperture_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this._labDoor4_Aperture_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor4_Aperture_1.Location = new System.Drawing.Point(713, 572);
+            this._labDoor4_Aperture_1.Name = "_labDoor4_Aperture_1";
+            this._labDoor4_Aperture_1.Size = new System.Drawing.Size(59, 23);
+            this._labDoor4_Aperture_1.TabIndex = 440;
+            this._labDoor4_Aperture_1.Text = "0";
+            this._labDoor4_Aperture_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor3_Aperture_1
+            // 
+            this._labDoor3_Aperture_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this._labDoor3_Aperture_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor3_Aperture_1.Location = new System.Drawing.Point(944, 572);
+            this._labDoor3_Aperture_1.Name = "_labDoor3_Aperture_1";
+            this._labDoor3_Aperture_1.Size = new System.Drawing.Size(59, 23);
+            this._labDoor3_Aperture_1.TabIndex = 441;
+            this._labDoor3_Aperture_1.Text = "0";
+            this._labDoor3_Aperture_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor2_Aperture_1
+            // 
+            this._labDoor2_Aperture_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this._labDoor2_Aperture_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor2_Aperture_1.Location = new System.Drawing.Point(1170, 572);
+            this._labDoor2_Aperture_1.Name = "_labDoor2_Aperture_1";
+            this._labDoor2_Aperture_1.Size = new System.Drawing.Size(59, 23);
+            this._labDoor2_Aperture_1.TabIndex = 442;
+            this._labDoor2_Aperture_1.Text = "0";
+            this._labDoor2_Aperture_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _labDoor1_Aperture_1
+            // 
+            this._labDoor1_Aperture_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this._labDoor1_Aperture_1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labDoor1_Aperture_1.Location = new System.Drawing.Point(1401, 572);
+            this._labDoor1_Aperture_1.Name = "_labDoor1_Aperture_1";
+            this._labDoor1_Aperture_1.Size = new System.Drawing.Size(59, 23);
+            this._labDoor1_Aperture_1.TabIndex = 443;
+            this._labDoor1_Aperture_1.Text = "0";
+            this._labDoor1_Aperture_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FrmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::RegistrationForm1.Properties.Resources.Home;
             this.ClientSize = new System.Drawing.Size(1694, 848);
+            this.Controls.Add(this._labDoor1_Aperture_1);
+            this.Controls.Add(this._labDoor2_Aperture_1);
+            this.Controls.Add(this._labDoor3_Aperture_1);
+            this.Controls.Add(this._labDoor4_Aperture_1);
+            this.Controls.Add(this._labDoor5_Aperture_1);
+            this.Controls.Add(this._labDoor6_Aperture_1);
             this.Controls.Add(this.label18);
             this.Controls.Add(this._labAPIBinhnham);
             this.Controls.Add(this._labAPIBensuc);
@@ -1882,11 +1864,6 @@
             this.Controls.Add(this.Pic_Door4_Opening);
             this.Controls.Add(this.Pic_Door3_Closing);
             this.Controls.Add(this.Pic_Door3_Opening);
-            this.Controls.Add(this.ahdLabel15);
-            this.Controls.Add(this.ahdLabel14);
-            this.Controls.Add(this.ahdLabel13);
-            this.Controls.Add(this.ahdLabel12);
-            this.Controls.Add(this.ahdLabel11);
             this.Controls.Add(this.Pic_Door1_Closing);
             this.Controls.Add(this.Pic_Door1_Opening);
             this.Controls.Add(this.Pic_Door2_Closing);
@@ -1896,7 +1873,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.ahdLabel3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this._labFllow_ho);
             this.Controls.Add(this.ahdLabel4);
@@ -1968,16 +1944,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel33)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel25)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door2_Opening)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door2_Closing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door1_Closing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door1_Opening)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Closing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_Opening)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door4_Closing)).EndInit();
@@ -2075,7 +2045,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label _labFllow_ho;
         private System.Windows.Forms.Label label1;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -2085,11 +2054,6 @@
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door2_Closing;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door1_Closing;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door1_Opening;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel11;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel12;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel13;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel14;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel15;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door3_Closing;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door3_Opening;
         private Ahd.Winforms.Controls.AhdPictureBox Pic_Door4_Closing;
@@ -2121,5 +2085,11 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label _labDoor6_Aperture_1;
+        private System.Windows.Forms.Label _labDoor5_Aperture_1;
+        private System.Windows.Forms.Label _labDoor4_Aperture_1;
+        private System.Windows.Forms.Label _labDoor3_Aperture_1;
+        private System.Windows.Forms.Label _labDoor2_Aperture_1;
+        private System.Windows.Forms.Label _labDoor1_Aperture_1;
     }
 }

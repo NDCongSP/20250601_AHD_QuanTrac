@@ -32,10 +32,10 @@ namespace Domain
         public bool? Door2_Close { get; set; } = false;
         public bool? Doorlock1_1Open { get; set; } = false;
         public bool? Doorlock1_1Close { get; set; } = false;
-        public bool? Doorlock1_2Open { get; set; } = false;
+        public bool? Doorlock1_2Open { get; set; } = false;  public bool? Doorlock2_1Open { get; set; } = false;
+     
         public bool? Doorlock1_2Close { get; set; } = false;
-        public bool? Doorlock2_1Open { get; set; } = false;
-        public bool? Doorlock2_1Close { get; set; } = false;
+         public bool? Doorlock2_1Close { get; set; } = false;
         public bool? Doorlock2_2Open { get; set; } = false;
         public bool? Doorlock2_2Close { get; set; } = false;
         public bool? DC1_Over { get; set; } = false;
@@ -169,5 +169,7 @@ namespace Domain
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
         public double Q_i_total { get; set; } = 0;
+
+
     }
 }

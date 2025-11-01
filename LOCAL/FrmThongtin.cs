@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Diagnostics; // Dùng để đo thời gian bằng Stopwatch và Process.Start
-using System.IO;          // Dùng để làm việc với các file và thư mục
+using System.Drawing;
+using System.IO;   
+using System.Windows.Forms;
+using System.Linq;
+
+// Dùng để làm việc với các file và thư mục
 
 namespace RegistrationForm1
 {
@@ -11,8 +14,8 @@ namespace RegistrationForm1
 
     public partial class FrmThongtin : Form
     {
-          private string _appSaveDirectory; // Thư mục để lưu các tệp đã tải lên
-    //    private string _appSaveRootDirectory = "C:\\Data\\MyAppFiles"; // Ví dụ: Thư mục gốc để lưu trữ
+        private readonly string _appSaveDirectory = @"D:\SCADA\UploadedFiles"; // Thư mục để lưu các tệp đã tải lên
+                                                                               //    private string _appSaveRootDirectory = "C:\\Data\\MyAppFiles"; // Ví dụ: Thư mục gốc để lưu trữ
         private System.Windows.Forms.WebBrowser webBrowserContent; // 👈 CHỈ GIỮ LẠI WEB BROWSER
 
         public FrmThongtin()
@@ -25,24 +28,24 @@ namespace RegistrationForm1
             this.MinimumSize = new Size(800, 600); // Kích thước tối thiểu
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            // Thiết lập thư mục lưu trữ ứng dụng và đảm bảo nó tồn tại
-            _appSaveDirectory = Path.Combine(Application.StartupPath, "UploadedFiles");
-            if (!Directory.Exists(_appSaveDirectory))
-            {
-                Directory.CreateDirectory(_appSaveDirectory);
-            }
+            //// Thiết lập thư mục lưu trữ ứng dụng và đảm bảo nó tồn tại
+            //_appSaveDirectory = Path.Combine(Application.StartupPath, "UploadedFiles");
+            //if (!Directory.Exists(_appSaveDirectory))
+            //{
+            //    Directory.CreateDirectory(_appSaveDirectory);
+            //}
 
             // Cấu hình Panel Sidebar
             pnlSidebar.Dock = DockStyle.Left;
             pnlSidebar.Width = 280;
             pnlSidebar.BackColor = SystemColors.ControlLight;
 
-            // Cấu hình Nút tải tệp
-            btnUploadFile.Dock = DockStyle.Top;
-            btnUploadFile.Margin = new Padding(10);
-            btnUploadFile.Text = "➕ Quản lý tập tin...";
-            btnUploadFile.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            btnUploadFile.Height = 40;
+            //// Cấu hình Nút tải tệp
+            //btnUploadFile.Dock = DockStyle.Top;
+            //btnUploadFile.Margin = new Padding(10);
+            //btnUploadFile.Text = "➕ Quản lý tập tin...";
+            //btnUploadFile.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            //btnUploadFile.Height = 40;
 
             // Cấu hình TreeView hiển thị các thư mục và tệp
             trvFiles.Dock = DockStyle.Fill;
@@ -197,91 +200,158 @@ namespace RegistrationForm1
           // Tải các tệp đã lưu từ thư mục đĩa vào một node riêng
             LoadSavedFilesFromDisk();
         }
+        private void LoadSavedFilesFromDisk()
+        {
+            // Đảm bảo thư mục tồn tại
+            try
+            {
+                if (!Directory.Exists(_appSaveDirectory))
+                {
+                    Directory.CreateDirectory(_appSaveDirectory);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tạo thư mục lưu trữ:\n" + ex.Message);
+                return;
+            }
+
+            // Tìm node gốc
+            TreeNode uploadedFilesNode = trvFiles.Nodes
+                .Cast<TreeNode>()
+                .FirstOrDefault(n => n.Text == "📁 Tệp đã tải lên" && (string)n.Tag == "Folder");
+
+            if (uploadedFilesNode == null)
+            {
+                uploadedFilesNode = new TreeNode("📁 Tệp đã tải lên") { Tag = "Folder" };
+                trvFiles.Nodes.Add(uploadedFilesNode);
+            }
+
+            uploadedFilesNode.Nodes.Clear();
+            TreeNode firstFileNode = null;
+
+            try
+            {
+                var dateDirectories = Directory.GetDirectories(_appSaveDirectory)
+                    .OrderByDescending(dir => Directory.GetLastWriteTime(dir));
+
+                foreach (string dateDir in dateDirectories)
+                {
+                    string folderName = Path.GetFileName(dateDir);
+                    var dateNode = new TreeNode($"📅 {folderName}") { Tag = "Folder" };
+
+                    uploadedFilesNode.Nodes.Add(dateNode);
+
+                    var files = Directory.GetFiles(dateDir)
+                        .OrderByDescending(f => File.GetLastWriteTime(f));
+
+                    foreach (string filePath in files)
+                    {
+                        string fileName = Path.GetFileName(filePath);
+                        DateTime time = File.GetLastWriteTime(filePath);
+
+                        var entry = new FileEntry(fileName, filePath, time);
+                        TreeNode fileNode = new TreeNode(entry.DisplayName) { Tag = entry };
+                        dateNode.Nodes.Add(fileNode);
+
+                        firstFileNode ??= fileNode;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải danh sách tệp:\n" + ex.Message);
+            }
+
+            uploadedFilesNode.Expand();
+            trvFiles.SelectedNode = firstFileNode ?? uploadedFilesNode.Nodes.Cast<TreeNode>().FirstOrDefault();
+        }
 
         /// <summary>
         /// Tải các tệp đã được lưu trữ vật lý trong _appSaveDirectory vào TreeView.
         /// </summary>
-        private void LoadSavedFilesFromDisk()
-        {
-            // Tìm hoặc tạo node "Tệp đã tải lên"
-            TreeNode uploadedFilesNode = null;
-            foreach (TreeNode node in trvFiles.Nodes)
-            {
-                if (node.Text == "📁 Tệp đã tải lên" && node.Tag?.ToString() == "Folder")
-                {
-                    uploadedFilesNode = node;
-                    break;
-                }
-            }
+        //private void LoadSavedFilesFromDisk()
+        //{
+        //    // Tìm hoặc tạo node "📁 Tệp đã tải lên"
+        //    TreeNode uploadedFilesNode = null;
+        //    foreach (TreeNode node in trvFiles.Nodes)
+        //    {
+        //        if (node.Text == "📁 Tệp đã tải lên" && node.Tag?.ToString() == "Folder")
+        //        {
+        //            uploadedFilesNode = node;
+        //            break;
+        //        }
+        //    }
 
-            if (uploadedFilesNode == null)
-            {
-                uploadedFilesNode = new TreeNode("📁 Tệp đã tải lên");
-                uploadedFilesNode.Tag = "Folder";
-                trvFiles.Nodes.Add(uploadedFilesNode);
-            }
+        //    if (uploadedFilesNode == null)
+        //    {
+        //        uploadedFilesNode = new TreeNode("📁 Tệp đã tải lên");
+        //        uploadedFilesNode.Tag = "Folder";
+        //        trvFiles.Nodes.Add(uploadedFilesNode);
+        //    }
 
-            uploadedFilesNode.Nodes.Clear(); // Xóa các tệp cũ trong node này trước khi tải lại
+        //    uploadedFilesNode.Nodes.Clear(); // Xóa các tệp cũ trong node này
 
-            TreeNode firstFileNode = null; // Biến để theo dõi node file đầu tiên
+        //    TreeNode firstFileNode = null;
 
-            if (Directory.Exists(_appSaveDirectory))
-            {
-                // 1. Lấy danh sách TẤT CẢ THƯ MỤC CON (Thư mục ngày tháng) trong thư mục gốc
-                string[] dateDirectories = Directory.GetDirectories(_appSaveDirectory);
+        //    if (Directory.Exists(_appSaveDirectory))
+        //    {
+        //        // 1️⃣ Lấy danh sách tất cả thư mục con
+        //        string[] dateDirectories = Directory.GetDirectories(_appSaveDirectory);
 
-                // Duyệt qua các thư mục ngày tháng
-                foreach (string dateDirectoryPath in dateDirectories)
-                {
-                    // 2. Lấy tên thư mục (ví dụ: "2025-10-22")
-                    string folderName = Path.GetFileName(dateDirectoryPath);
+        //        // 2️⃣ Sắp xếp theo thời gian sửa đổi hoặc tạo mới nhất (descending)
+        //        var sortedDateDirs = dateDirectories
+        //            .OrderByDescending(dir => Directory.GetCreationTime(dir))
+        //            .ToArray();
 
-                    // 3. TẠO NODE THƯ MỤC NGÀY THÁNG (CHILD NODE của uploadedFilesNode)
-                    TreeNode dateFolderNode = new TreeNode($"📅 {folderName}");
-                    dateFolderNode.Tag = "Folder";
-                    uploadedFilesNode.Nodes.Add(dateFolderNode);
+        //        // 3️⃣ Duyệt qua các thư mục đã sắp xếp
+        //        foreach (string dateDirectoryPath in sortedDateDirs)
+        //        {
+        //            string folderName = Path.GetFileName(dateDirectoryPath);
 
-                    // 4. Lấy danh sách file trong THƯ MỤC NGÀY THÁNG đó
-                    string[] filesInDateFolder = Directory.GetFiles(dateDirectoryPath);
+        //            // Tạo node thư mục ngày tháng
+        //            TreeNode dateFolderNode = new TreeNode($"📅 {folderName}");
+        //            dateFolderNode.Tag = "Folder";
+        //            uploadedFilesNode.Nodes.Add(dateFolderNode);
 
-                    // Duyệt qua các file trong thư mục ngày tháng
-                    foreach (string savedFilePath in filesInDateFolder)
-                    {
-                        string fileName = Path.GetFileName(savedFilePath);
-                        DateTime creationTime = File.GetCreationTime(savedFilePath);
+        //            // Lấy danh sách file trong thư mục này
+        //            string[] filesInDateFolder = Directory.GetFiles(dateDirectoryPath);
 
-                        // Tạo FileEntry và TreeNode cho file
-                        // Giả định FileEntry và TreeNode hoạt động đúng
-                        FileEntry fileEntry = new FileEntry(fileName, savedFilePath, creationTime);
-                        TreeNode fileNode = new TreeNode(fileEntry.DisplayName);
-                        fileNode.Tag = fileEntry;
+        //            // Sắp xếp file theo thời gian tạo mới nhất trước
+        //            var sortedFiles = filesInDateFolder
+        //                .OrderByDescending(f => File.GetCreationTime(f))
+        //                .ToArray();
 
-                        // 5. THÊM FILE VÀO NODE THƯ MỤC NGÀY THÁNG
-                        dateFolderNode.Nodes.Add(fileNode);
+        //            foreach (string savedFilePath in sortedFiles)
+        //            {
+        //                string fileName = Path.GetFileName(savedFilePath);
+        //                DateTime creationTime = File.GetCreationTime(savedFilePath);
 
-                        // Ghi lại node file đầu tiên được tìm thấy
-                        if (firstFileNode == null)
-                        {
-                            firstFileNode = fileNode;
-                        }
-                    }
-                }
-            }
+        //                FileEntry fileEntry = new FileEntry(fileName, savedFilePath, creationTime);
+        //                TreeNode fileNode = new TreeNode(fileEntry.DisplayName);
+        //                fileNode.Tag = fileEntry;
 
-            uploadedFilesNode.Expand(); // Mở rộng thư mục để hiển thị các tệp
+        //                dateFolderNode.Nodes.Add(fileNode);
 
-            // Sửa logic chọn node: Ưu tiên chọn file đầu tiên nếu tìm thấy
-            if (firstFileNode != null)
-            {
-                // Chọn tệp đầu tiên
-                trvFiles.SelectedNode = firstFileNode;
-            }
-            else if (uploadedFilesNode.Nodes.Count > 0)
-            {
-                // Nếu không có file nào nhưng có thư mục ngày tháng, chọn thư mục ngày tháng đầu tiên
-                trvFiles.SelectedNode = uploadedFilesNode.Nodes[0];
-            }
-        }
+        //                // Lưu node file đầu tiên
+        //                firstFileNode ??= fileNode;
+        //            }
+        //        }
+        //    }
+
+        //    uploadedFilesNode.Expand();
+
+        //    // Chọn node hiển thị ban đầu
+        //    if (firstFileNode != null)
+        //    {
+        //        trvFiles.SelectedNode = firstFileNode;
+        //    }
+        //    else if (uploadedFilesNode.Nodes.Count > 0)
+        //    {
+        //        trvFiles.SelectedNode = uploadedFilesNode.Nodes[0];
+        //    }
+        //}
+
 
 
         /// <summary>

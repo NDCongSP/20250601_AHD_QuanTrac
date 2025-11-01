@@ -19,8 +19,6 @@ namespace RegistrationForm1
         {
             LoadUsers();
 
-           
-
         }
         private void LoadUsers()
         {
@@ -29,11 +27,11 @@ namespace RegistrationForm1
                 using (var dbContext = new ApplicationDbContext())
                 {
                     var users = dbContext.ScadaUsers
-                        .Where(u => u.IsDeleted == false)
+                        .Where(u => !u.IsDeleted.HasValue || u.IsDeleted == false)
                         .OrderByDescending(u => u.CreateAt)
                         .Select(u => new
                         {
-                            u.Id,
+                          //  u.Id,
                             u.UserName,
                             u.FullName,
                             u.PermissionScada,
@@ -44,31 +42,16 @@ namespace RegistrationForm1
                         })
                         .ToList();
 
+             //       MessageBox.Show($"Tổng số user lấy được: {users.Count}");
+
                     dgvUsers.DataSource = users;
+                    dgvUsers.ScrollBars = ScrollBars.Both;
                     dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                     dgvUsers.ReadOnly = true;
                     dgvUsers.RowHeadersVisible = false;
 
-                    // ✅ Đặt tiêu đề cột sang tiếng Việt
-                    dgvUsers.Columns["Id"].HeaderText = "Mã người dùng";
-                    dgvUsers.Columns["UserName"].HeaderText = "Tên đăng nhập";
-                    dgvUsers.Columns["FullName"].HeaderText = "Họ và tên";
-                    dgvUsers.Columns["PermissionScada"].HeaderText = "Quyền truy cập";
-                    dgvUsers.Columns["CreateOperatorId"].HeaderText = "Người tạo";
-                    dgvUsers.Columns["CreateAt"].HeaderText = "Ngày tạo";
-                    dgvUsers.Columns["UpdateOperatorId"].HeaderText = "Người cập nhật";
-                    dgvUsers.Columns["UpdateAt"].HeaderText = "Ngày cập nhật";
-                    // Căn giữa tiêu đề cột
                     dgvUsers.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // Căn giữa nội dung cho các cột số hoặc ngắn
-                    dgvUsers.Columns["Id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    dgvUsers.Columns["PermissionScada"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // Đặt định dạng ngày giờ đẹp
-                    dgvUsers.Columns["CreateAt"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
-                    dgvUsers.Columns["UpdateAt"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
                 }
             }
             catch (Exception ex)
@@ -76,6 +59,7 @@ namespace RegistrationForm1
                 MessageBox.Show("Lỗi tải người dùng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
 

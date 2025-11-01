@@ -237,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="CurrentUser.cs" />
     <Compile Include="DbConfig.cs" />
     <Compile Include="Domain\Entities\BaseEntity\GenericEntity.cs" />
     <Compile Include="Domain\Entities\IGenericEntity.cs" />
@@ -250,6 +251,8 @@
     <Compile Include="Domain\Entities\FT05.cs" />
     <Compile Include="Domain\Enums\EnumPermissionScada.cs" />
     <Compile Include="Domain\Enums\EnumStatus.cs" />
+    <Compile Include="Domain\NotTable\ApiOffsetModel.cs" />
+    <Compile Include="Domain\NotTable\CameraConfigModel.cs" />
     <Compile Include="Domain\NotTable\LocationsInfo.cs" />
     <Compile Include="Domain\NotTable\ConfigModel.cs" />
     <Compile Include="Domain\NotTable\ControlPlcModel.cs" />
@@ -282,6 +285,24 @@
     </Compile>
     <Compile Include="FrmConfigSQL.Designer.cs">
       <DependentUpon>FrmConfigSQL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCS1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCS1.Designer.cs">
+      <DependentUpon>FrmCS1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCS2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCS2.Designer.cs">
+      <DependentUpon>FrmCS2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCS3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCS3.Designer.cs">
+      <DependentUpon>FrmCS3.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmDangKyUser.cs">
       <SubType>Form</SubType>
@@ -454,6 +475,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmConfigSQL.resx">
       <DependentUpon>FrmConfigSQL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCS1.resx">
+      <DependentUpon>FrmCS1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCS2.resx">
+      <DependentUpon>FrmCS2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCS3.resx">
+      <DependentUpon>FrmCS3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDangKyUser.resx">
       <DependentUpon>FrmDangKyUser.cs</DependentUpon>
@@ -631,6 +661,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\cs1D.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\cs2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PIC\cs3.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\HarfBuzzSharp.NativeAssets.macOS.7.3.0.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets" Condition="Exists('packages\HarfBuzzSharp.NativeAssets.macOS.7.3.0.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets')" />

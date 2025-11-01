@@ -42,17 +42,17 @@ namespace RegistrationForm1
                 Globalvariable.LocationsInfo = JsonConvert.DeserializeObject<LocationsInfo>(configTable.C001);
 
 
-                //////chinh tay cac thong so de test
-                Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi = 0.98;
-                Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 9.81;
-                //Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 6;
-                Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
-                Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
+                ////////chinh tay cac thong so de test
+                //Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi = 0.98;
+                //Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 9.81;
+                ////Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 6;
+                //Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
+                //Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
 
-                Globalvariable.ConfigSystem.ParametterConfig.HeSoCoHep_ALpha = 0;
-                Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1 = 10.66;
-                Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2 = 10.80;
-                Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3 = 2.0;
+                //Globalvariable.ConfigSystem.ParametterConfig.HeSoCoHep_ALpha = 0;
+               // Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1 = 10.66;
+              //  Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2 = 10.80;
+             //   Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3 = 2.0;
 
                 ////////////////////////////
 
@@ -111,8 +111,8 @@ namespace RegistrationForm1
             }
 
 
-            Application.Run(new FrmLogin());
-            // Application.Run(new FrmHochua());
+           Application.Run(new FrmLogin());
+          //   Application.Run(new FrmCS1());
         }
         private static bool TestConnectionSilently(string connectionString)
         {

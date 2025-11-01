@@ -35,9 +35,10 @@
             this.ahdPictureBox1 = new Ahd.Winforms.Controls.AhdPictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.bntCS3 = new System.Windows.Forms.Button();
             this.bntThongtin = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bntCS2 = new System.Windows.Forms.Button();
+            this.bntCS1 = new System.Windows.Forms.Button();
             this.bntEditdata = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.bnt_TrangChu = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.bnt_Exit = new System.Windows.Forms.Button();
             this.bnt_Tran = new System.Windows.Forms.Button();
             this.bnt_CaiDat = new System.Windows.Forms.Button();
-            this.bntNhaplieu = new System.Windows.Forms.Button();
             this.ahdDriverConnector1 = new Ahd.Winforms.Controls.AhdDriverConnector(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblWelcome = new System.Windows.Forms.Label();
@@ -59,10 +59,17 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labOffsetThanhan = new System.Windows.Forms.Label();
+            this._labOffsetChandap = new System.Windows.Forms.Label();
+            this._labOffsetBensuc = new System.Windows.Forms.Label();
+            this._labOffsetTVdautieng = new System.Windows.Forms.Label();
+            this._labOffsetSondai = new System.Windows.Forms.Label();
+            this._labOffsetbinhnham = new System.Windows.Forms.Label();
             this._labAPIBinhnham = new System.Windows.Forms.Label();
             this._labQi6 = new System.Windows.Forms.Label();
             this._labQi5 = new System.Windows.Forms.Label();
             this._labQi4 = new System.Windows.Forms.Label();
+            this.bntNhaplieu = new System.Windows.Forms.Button();
             this._labQi3 = new System.Windows.Forms.Label();
             this._labQi2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -106,6 +113,15 @@
             this._labALDoor1_Station1 = new System.Windows.Forms.Label();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
+            this._labMNTLCS1 = new System.Windows.Forms.Label();
+            this._labMNTLCS2 = new System.Windows.Forms.Label();
+            this._labMNTLCS3 = new System.Windows.Forms.Label();
+            this._labMNHLCS1 = new System.Windows.Forms.Label();
+            this._labMNHLCS2 = new System.Windows.Forms.Label();
+            this._labMNHLCS3 = new System.Windows.Forms.Label();
+            this._labDOMOCS3 = new System.Windows.Forms.Label();
+            this._labDOMOCS2 = new System.Windows.Forms.Label();
+            this._labDOMOCS1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -172,9 +188,10 @@
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Highlight;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.bntCS3);
             this.panel2.Controls.Add(this.bntThongtin);
-            this.panel2.Controls.Add(this.button3);
-            this.panel2.Controls.Add(this.button2);
+            this.panel2.Controls.Add(this.bntCS2);
+            this.panel2.Controls.Add(this.bntCS1);
             this.panel2.Controls.Add(this.bntEditdata);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.bnt_TrangChu);
@@ -191,10 +208,21 @@
             this.panel2.Size = new System.Drawing.Size(200, 887);
             this.panel2.TabIndex = 6;
             // 
+            // bntCS3
+            // 
+            this.bntCS3.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntCS3.Location = new System.Drawing.Point(6, 374);
+            this.bntCS3.Name = "bntCS3";
+            this.bntCS3.Size = new System.Drawing.Size(196, 50);
+            this.bntCS3.TabIndex = 194;
+            this.bntCS3.Text = "Cống số 3";
+            this.bntCS3.UseVisualStyleBackColor = true;
+            this.bntCS3.Click += new System.EventHandler(this.bntCS3_Click);
+            // 
             // bntThongtin
             // 
             this.bntThongtin.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntThongtin.Location = new System.Drawing.Point(6, 61);
+            this.bntThongtin.Location = new System.Drawing.Point(6, 56);
             this.bntThongtin.Name = "bntThongtin";
             this.bntThongtin.Size = new System.Drawing.Size(196, 50);
             this.bntThongtin.TabIndex = 193;
@@ -202,30 +230,32 @@
             this.bntThongtin.UseVisualStyleBackColor = true;
             this.bntThongtin.Click += new System.EventHandler(this.bntThongtin_Click);
             // 
-            // button3
+            // bntCS2
             // 
-            this.button3.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(6, 351);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(196, 50);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Cống số 2";
-            this.button3.UseVisualStyleBackColor = true;
+            this.bntCS2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntCS2.Location = new System.Drawing.Point(6, 321);
+            this.bntCS2.Name = "bntCS2";
+            this.bntCS2.Size = new System.Drawing.Size(196, 50);
+            this.bntCS2.TabIndex = 18;
+            this.bntCS2.Text = "Cống số 2";
+            this.bntCS2.UseVisualStyleBackColor = true;
+            this.bntCS2.Click += new System.EventHandler(this.bntCS2_Click);
             // 
-            // button2
+            // bntCS1
             // 
-            this.button2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(6, 293);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(196, 50);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Cống số 1";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bntCS1.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntCS1.Location = new System.Drawing.Point(6, 268);
+            this.bntCS1.Name = "bntCS1";
+            this.bntCS1.Size = new System.Drawing.Size(196, 50);
+            this.bntCS1.TabIndex = 17;
+            this.bntCS1.Text = "Cống số 1";
+            this.bntCS1.UseVisualStyleBackColor = true;
+            this.bntCS1.Click += new System.EventHandler(this.bntCS1_Click);
             // 
             // bntEditdata
             // 
             this.bntEditdata.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntEditdata.Location = new System.Drawing.Point(6, 525);
+            this.bntEditdata.Location = new System.Drawing.Point(6, 533);
             this.bntEditdata.Name = "bntEditdata";
             this.bntEditdata.Size = new System.Drawing.Size(196, 50);
             this.bntEditdata.TabIndex = 16;
@@ -236,7 +266,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(6, 119);
+            this.button1.Location = new System.Drawing.Point(6, 109);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(196, 50);
             this.button1.TabIndex = 14;
@@ -258,7 +288,7 @@
             // bnt_User
             // 
             this.bnt_User.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_User.Location = new System.Drawing.Point(6, 699);
+            this.bnt_User.Location = new System.Drawing.Point(6, 692);
             this.bnt_User.Name = "bnt_User";
             this.bnt_User.Size = new System.Drawing.Size(196, 50);
             this.bnt_User.TabIndex = 13;
@@ -269,7 +299,7 @@
             // bnt_BaoCao
             // 
             this.bnt_BaoCao.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_BaoCao.Location = new System.Drawing.Point(6, 467);
+            this.bnt_BaoCao.Location = new System.Drawing.Point(6, 480);
             this.bnt_BaoCao.Name = "bnt_BaoCao";
             this.bnt_BaoCao.Size = new System.Drawing.Size(196, 50);
             this.bnt_BaoCao.TabIndex = 11;
@@ -280,7 +310,7 @@
             // bnt_TramMN
             // 
             this.bnt_TramMN.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_TramMN.Location = new System.Drawing.Point(6, 235);
+            this.bnt_TramMN.Location = new System.Drawing.Point(6, 215);
             this.bnt_TramMN.Name = "bnt_TramMN";
             this.bnt_TramMN.Size = new System.Drawing.Size(196, 50);
             this.bnt_TramMN.TabIndex = 7;
@@ -291,7 +321,7 @@
             // bnt_CanhBao
             // 
             this.bnt_CanhBao.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_CanhBao.Location = new System.Drawing.Point(6, 409);
+            this.bnt_CanhBao.Location = new System.Drawing.Point(6, 427);
             this.bnt_CanhBao.Name = "bnt_CanhBao";
             this.bnt_CanhBao.Size = new System.Drawing.Size(196, 50);
             this.bnt_CanhBao.TabIndex = 6;
@@ -302,7 +332,7 @@
             // bnt_LogIn
             // 
             this.bnt_LogIn.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_LogIn.Location = new System.Drawing.Point(6, 641);
+            this.bnt_LogIn.Location = new System.Drawing.Point(6, 639);
             this.bnt_LogIn.Name = "bnt_LogIn";
             this.bnt_LogIn.Size = new System.Drawing.Size(196, 50);
             this.bnt_LogIn.TabIndex = 8;
@@ -313,7 +343,7 @@
             // bnt_Exit
             // 
             this.bnt_Exit.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Exit.Location = new System.Drawing.Point(6, 757);
+            this.bnt_Exit.Location = new System.Drawing.Point(6, 745);
             this.bnt_Exit.Name = "bnt_Exit";
             this.bnt_Exit.Size = new System.Drawing.Size(196, 50);
             this.bnt_Exit.TabIndex = 9;
@@ -324,7 +354,7 @@
             // bnt_Tran
             // 
             this.bnt_Tran.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Tran.Location = new System.Drawing.Point(6, 177);
+            this.bnt_Tran.Location = new System.Drawing.Point(6, 162);
             this.bnt_Tran.Name = "bnt_Tran";
             this.bnt_Tran.Size = new System.Drawing.Size(196, 50);
             this.bnt_Tran.TabIndex = 0;
@@ -335,25 +365,13 @@
             // bnt_CaiDat
             // 
             this.bnt_CaiDat.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_CaiDat.Location = new System.Drawing.Point(6, 583);
+            this.bnt_CaiDat.Location = new System.Drawing.Point(6, 586);
             this.bnt_CaiDat.Name = "bnt_CaiDat";
             this.bnt_CaiDat.Size = new System.Drawing.Size(196, 50);
             this.bnt_CaiDat.TabIndex = 10;
             this.bnt_CaiDat.Text = "Cài đặt";
             this.bnt_CaiDat.UseVisualStyleBackColor = true;
             this.bnt_CaiDat.Click += new System.EventHandler(this.bnt_CaiDat_Click);
-            // 
-            // bntNhaplieu
-            // 
-            this.bntNhaplieu.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntNhaplieu.Location = new System.Drawing.Point(53, 614);
-            this.bntNhaplieu.Name = "bntNhaplieu";
-            this.bntNhaplieu.Size = new System.Drawing.Size(196, 50);
-            this.bntNhaplieu.TabIndex = 15;
-            this.bntNhaplieu.Text = "CT Q";
-            this.bntNhaplieu.UseVisualStyleBackColor = true;
-            this.bntNhaplieu.Visible = false;
-            this.bntNhaplieu.Click += new System.EventHandler(this.bntNhaplieu_Click);
             // 
             // ahdDriverConnector1
             // 
@@ -424,6 +442,21 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labDOMOCS3);
+            this.panelDesktop.Controls.Add(this._labDOMOCS2);
+            this.panelDesktop.Controls.Add(this._labDOMOCS1);
+            this.panelDesktop.Controls.Add(this._labMNHLCS3);
+            this.panelDesktop.Controls.Add(this._labMNHLCS2);
+            this.panelDesktop.Controls.Add(this._labMNHLCS1);
+            this.panelDesktop.Controls.Add(this._labMNTLCS3);
+            this.panelDesktop.Controls.Add(this._labMNTLCS2);
+            this.panelDesktop.Controls.Add(this._labMNTLCS1);
+            this.panelDesktop.Controls.Add(this._labOffsetThanhan);
+            this.panelDesktop.Controls.Add(this._labOffsetChandap);
+            this.panelDesktop.Controls.Add(this._labOffsetBensuc);
+            this.panelDesktop.Controls.Add(this._labOffsetTVdautieng);
+            this.panelDesktop.Controls.Add(this._labOffsetSondai);
+            this.panelDesktop.Controls.Add(this._labOffsetbinhnham);
             this.panelDesktop.Controls.Add(this._labAPIBinhnham);
             this.panelDesktop.Controls.Add(this._labQi6);
             this.panelDesktop.Controls.Add(this._labQi5);
@@ -477,6 +510,66 @@
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
             // 
+            // _labOffsetThanhan
+            // 
+            this._labOffsetThanhan.AutoSize = true;
+            this._labOffsetThanhan.Location = new System.Drawing.Point(519, 258);
+            this._labOffsetThanhan.Name = "_labOffsetThanhan";
+            this._labOffsetThanhan.Size = new System.Drawing.Size(78, 13);
+            this._labOffsetThanhan.TabIndex = 467;
+            this._labOffsetThanhan.Text = "OffsetThanhan";
+            this._labOffsetThanhan.Visible = false;
+            // 
+            // _labOffsetChandap
+            // 
+            this._labOffsetChandap.AutoSize = true;
+            this._labOffsetChandap.Location = new System.Drawing.Point(519, 224);
+            this._labOffsetChandap.Name = "_labOffsetChandap";
+            this._labOffsetChandap.Size = new System.Drawing.Size(78, 13);
+            this._labOffsetChandap.TabIndex = 466;
+            this._labOffsetChandap.Text = "OffsetChandap";
+            this._labOffsetChandap.Visible = false;
+            // 
+            // _labOffsetBensuc
+            // 
+            this._labOffsetBensuc.AutoSize = true;
+            this._labOffsetBensuc.Location = new System.Drawing.Point(519, 200);
+            this._labOffsetBensuc.Name = "_labOffsetBensuc";
+            this._labOffsetBensuc.Size = new System.Drawing.Size(71, 13);
+            this._labOffsetBensuc.TabIndex = 465;
+            this._labOffsetBensuc.Text = "OffsetBensuc";
+            this._labOffsetBensuc.Visible = false;
+            // 
+            // _labOffsetTVdautieng
+            // 
+            this._labOffsetTVdautieng.AutoSize = true;
+            this._labOffsetTVdautieng.Location = new System.Drawing.Point(519, 139);
+            this._labOffsetTVdautieng.Name = "_labOffsetTVdautieng";
+            this._labOffsetTVdautieng.Size = new System.Drawing.Size(92, 13);
+            this._labOffsetTVdautieng.TabIndex = 464;
+            this._labOffsetTVdautieng.Text = "OffsetTVDautieng";
+            this._labOffsetTVdautieng.Visible = false;
+            // 
+            // _labOffsetSondai
+            // 
+            this._labOffsetSondai.AutoSize = true;
+            this._labOffsetSondai.Location = new System.Drawing.Point(519, 171);
+            this._labOffsetSondai.Name = "_labOffsetSondai";
+            this._labOffsetSondai.Size = new System.Drawing.Size(68, 13);
+            this._labOffsetSondai.TabIndex = 463;
+            this._labOffsetSondai.Text = "OffsetSondai";
+            this._labOffsetSondai.Visible = false;
+            // 
+            // _labOffsetbinhnham
+            // 
+            this._labOffsetbinhnham.AutoSize = true;
+            this._labOffsetbinhnham.Location = new System.Drawing.Point(519, 84);
+            this._labOffsetbinhnham.Name = "_labOffsetbinhnham";
+            this._labOffsetbinhnham.Size = new System.Drawing.Size(84, 13);
+            this._labOffsetbinhnham.TabIndex = 462;
+            this._labOffsetbinhnham.Text = "OffsetBinhNham";
+            this._labOffsetbinhnham.Visible = false;
+            // 
             // _labAPIBinhnham
             // 
             this._labAPIBinhnham.AutoSize = true;
@@ -519,6 +612,18 @@
             this._labQi4.TabIndex = 458;
             this._labQi4.Text = "Q_i4";
             this._labQi4.Visible = false;
+            // 
+            // bntNhaplieu
+            // 
+            this.bntNhaplieu.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntNhaplieu.Location = new System.Drawing.Point(53, 614);
+            this.bntNhaplieu.Name = "bntNhaplieu";
+            this.bntNhaplieu.Size = new System.Drawing.Size(196, 50);
+            this.bntNhaplieu.TabIndex = 15;
+            this.bntNhaplieu.Text = "CT Q";
+            this.bntNhaplieu.UseVisualStyleBackColor = true;
+            this.bntNhaplieu.Visible = false;
+            this.bntNhaplieu.Click += new System.EventHandler(this.bntNhaplieu_Click);
             // 
             // _labQi3
             // 
@@ -882,7 +987,7 @@
             // _labFlowHoFinal
             // 
             this._labFlowHoFinal.AutoSize = true;
-            this._labFlowHoFinal.Location = new System.Drawing.Point(568, 329);
+            this._labFlowHoFinal.Location = new System.Drawing.Point(242, 198);
             this._labFlowHoFinal.Name = "_labFlowHoFinal";
             this._labFlowHoFinal.Size = new System.Drawing.Size(35, 13);
             this._labFlowHoFinal.TabIndex = 187;
@@ -948,6 +1053,96 @@
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
             this.lblStatusMessage.Visible = false;
+            // 
+            // _labMNTLCS1
+            // 
+            this._labMNTLCS1.AutoSize = true;
+            this._labMNTLCS1.Location = new System.Drawing.Point(670, 142);
+            this._labMNTLCS1.Name = "_labMNTLCS1";
+            this._labMNTLCS1.Size = new System.Drawing.Size(57, 13);
+            this._labMNTLCS1.TabIndex = 468;
+            this._labMNTLCS1.Text = "MNTLCS1";
+            this._labMNTLCS1.Visible = false;
+            // 
+            // _labMNTLCS2
+            // 
+            this._labMNTLCS2.AutoSize = true;
+            this._labMNTLCS2.Location = new System.Drawing.Point(670, 167);
+            this._labMNTLCS2.Name = "_labMNTLCS2";
+            this._labMNTLCS2.Size = new System.Drawing.Size(57, 13);
+            this._labMNTLCS2.TabIndex = 469;
+            this._labMNTLCS2.Text = "MNTLCS2";
+            this._labMNTLCS2.Visible = false;
+            // 
+            // _labMNTLCS3
+            // 
+            this._labMNTLCS3.AutoSize = true;
+            this._labMNTLCS3.Location = new System.Drawing.Point(670, 188);
+            this._labMNTLCS3.Name = "_labMNTLCS3";
+            this._labMNTLCS3.Size = new System.Drawing.Size(57, 13);
+            this._labMNTLCS3.TabIndex = 470;
+            this._labMNTLCS3.Text = "MNTLCS3";
+            this._labMNTLCS3.Visible = false;
+            // 
+            // _labMNHLCS1
+            // 
+            this._labMNHLCS1.AutoSize = true;
+            this._labMNHLCS1.Location = new System.Drawing.Point(753, 142);
+            this._labMNHLCS1.Name = "_labMNHLCS1";
+            this._labMNHLCS1.Size = new System.Drawing.Size(58, 13);
+            this._labMNHLCS1.TabIndex = 471;
+            this._labMNHLCS1.Text = "MNHLCS1";
+            this._labMNHLCS1.Visible = false;
+            // 
+            // _labMNHLCS2
+            // 
+            this._labMNHLCS2.AutoSize = true;
+            this._labMNHLCS2.Location = new System.Drawing.Point(753, 163);
+            this._labMNHLCS2.Name = "_labMNHLCS2";
+            this._labMNHLCS2.Size = new System.Drawing.Size(58, 13);
+            this._labMNHLCS2.TabIndex = 472;
+            this._labMNHLCS2.Text = "MNHLCS2";
+            this._labMNHLCS2.Visible = false;
+            // 
+            // _labMNHLCS3
+            // 
+            this._labMNHLCS3.AutoSize = true;
+            this._labMNHLCS3.Location = new System.Drawing.Point(753, 188);
+            this._labMNHLCS3.Name = "_labMNHLCS3";
+            this._labMNHLCS3.Size = new System.Drawing.Size(58, 13);
+            this._labMNHLCS3.TabIndex = 473;
+            this._labMNHLCS3.Text = "MNHLCS3";
+            this._labMNHLCS3.Visible = false;
+            // 
+            // _labDOMOCS3
+            // 
+            this._labDOMOCS3.AutoSize = true;
+            this._labDOMOCS3.Location = new System.Drawing.Point(852, 189);
+            this._labDOMOCS3.Name = "_labDOMOCS3";
+            this._labDOMOCS3.Size = new System.Drawing.Size(60, 13);
+            this._labDOMOCS3.TabIndex = 476;
+            this._labDOMOCS3.Text = "DOMOCS3";
+            this._labDOMOCS3.Visible = false;
+            // 
+            // _labDOMOCS2
+            // 
+            this._labDOMOCS2.AutoSize = true;
+            this._labDOMOCS2.Location = new System.Drawing.Point(852, 164);
+            this._labDOMOCS2.Name = "_labDOMOCS2";
+            this._labDOMOCS2.Size = new System.Drawing.Size(60, 13);
+            this._labDOMOCS2.TabIndex = 475;
+            this._labDOMOCS2.Text = "DOMOCS2";
+            this._labDOMOCS2.Visible = false;
+            // 
+            // _labDOMOCS1
+            // 
+            this._labDOMOCS1.AutoSize = true;
+            this._labDOMOCS1.Location = new System.Drawing.Point(852, 143);
+            this._labDOMOCS1.Name = "_labDOMOCS1";
+            this._labDOMOCS1.Size = new System.Drawing.Size(60, 13);
+            this._labDOMOCS1.TabIndex = 474;
+            this._labDOMOCS1.Text = "DOMOCS1";
+            this._labDOMOCS1.Visible = false;
             // 
             // FrmMain
             // 
@@ -1058,8 +1253,24 @@
         private System.Windows.Forms.Label _labQi4;
         private System.Windows.Forms.Label _labQi3;
         private System.Windows.Forms.Label _labQi2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bntCS2;
+        private System.Windows.Forms.Button bntCS1;
         private System.Windows.Forms.Label _labAPIBinhnham;
+        private System.Windows.Forms.Label _labOffsetbinhnham;
+        private System.Windows.Forms.Label _labOffsetBensuc;
+        private System.Windows.Forms.Label _labOffsetTVdautieng;
+        private System.Windows.Forms.Label _labOffsetSondai;
+        private System.Windows.Forms.Label _labOffsetChandap;
+        private System.Windows.Forms.Label _labOffsetThanhan;
+        private System.Windows.Forms.Button bntCS3;
+        private System.Windows.Forms.Label _labMNTLCS1;
+        private System.Windows.Forms.Label _labDOMOCS3;
+        private System.Windows.Forms.Label _labDOMOCS2;
+        private System.Windows.Forms.Label _labDOMOCS1;
+        private System.Windows.Forms.Label _labMNHLCS3;
+        private System.Windows.Forms.Label _labMNHLCS2;
+        private System.Windows.Forms.Label _labMNHLCS1;
+        private System.Windows.Forms.Label _labMNTLCS3;
+        private System.Windows.Forms.Label _labMNTLCS2;
     }
 }

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using BCrypt.Net;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Newtonsoft.Json;
+using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using Newtonsoft.Json;
 using System.Windows.Forms;
 
 namespace RegistrationForm1
@@ -18,23 +20,59 @@ namespace RegistrationForm1
             //    CreateTestUser(); // Tạo user test mặc định (admin / 123456)
         }
 
+        //private void btnLogin_Click(object sender, EventArgs e)
+        //{
+        //    //string username = txtUsername.Text.Trim();
+        //    //string password = txtPassword.Text;
+
+        //    //if (CheckLogin(username, password))
+        //    //{
+        //    //    FrmMain main = new FrmMain();
+        //    //    this.Hide();
+        //    //    main.ShowDialog();
+        //    //    this.Close();
+        //    //}
+        //    //else
+        //    //{
+        //    //    MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    //}
+
+        //}
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text;
+            string userName = txtUsername.Text.Trim();
+            string password = txtPassword.Text.Trim();
 
-            if (CheckLogin(username, password))
+            using (var db = new ApplicationDbContext())
             {
-                FrmMain main = new FrmMain();
-                this.Hide();
-                main.ShowDialog();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var user = db.ScadaUsers
+                    .FirstOrDefault(u => u.UserName == userName
+                                      && (u.IsDeleted == false || u.IsDeleted == null));
+
+                if (user == null)
+                {
+                    MessageBox.Show("Không tồn tại tài khoản!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // ✅ Kiểm tra mật khẩu bằng BCrypt
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+                if (isPasswordValid)
+                {
+                    // ✅ Gán thông tin người dùng vào biến toàn cục
+                    Globalvariable.UserInfo = user;
+
+                    MessageBox.Show($"Đăng nhập thành công!\nXin chào {user.FullName} ({user.PermissionScada})",
+                                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Hide();
+                    new FrmMain().Show();
+                }
             }
         }
+
 
 
         private bool CheckLogin(string username, string password)

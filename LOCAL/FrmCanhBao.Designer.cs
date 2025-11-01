@@ -36,8 +36,14 @@
             this.dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
             this.lblToDate = new System.Windows.Forms.Label();
             this.lblFromDate = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.DgvDeviceStatus = new System.Windows.Forms.DataGridView();
+            this.bntVh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAlarm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvHistory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvDeviceStatus)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewAlarm
@@ -45,7 +51,7 @@
             this.dataGridViewAlarm.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridViewAlarm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewAlarm.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridViewAlarm.Location = new System.Drawing.Point(4, 23);
+            this.dataGridViewAlarm.Location = new System.Drawing.Point(4, 68);
             this.dataGridViewAlarm.Margin = new System.Windows.Forms.Padding(5);
             this.dataGridViewAlarm.Name = "dataGridViewAlarm";
             this.dataGridViewAlarm.RowHeadersWidth = 82;
@@ -56,20 +62,20 @@
             // 
             this.DgvHistory.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.DgvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvHistory.Location = new System.Drawing.Point(4, 322);
+            this.DgvHistory.Location = new System.Drawing.Point(4, 418);
             this.DgvHistory.Margin = new System.Windows.Forms.Padding(5);
             this.DgvHistory.Name = "DgvHistory";
-            this.DgvHistory.Size = new System.Drawing.Size(1702, 524);
+            this.DgvHistory.Size = new System.Drawing.Size(757, 444);
             this.DgvHistory.TabIndex = 2;
             // 
             // bntLoad
             // 
-            this.bntLoad.Location = new System.Drawing.Point(1011, 154);
+            this.bntLoad.Location = new System.Drawing.Point(862, 156);
             this.bntLoad.Margin = new System.Windows.Forms.Padding(5);
             this.bntLoad.Name = "bntLoad";
             this.bntLoad.Size = new System.Drawing.Size(125, 37);
             this.bntLoad.TabIndex = 1;
-            this.bntLoad.Text = "Tìm Kiếm";
+            this.bntLoad.Text = "Tìm Kiếm Lỗi";
             this.bntLoad.UseVisualStyleBackColor = true;
             this.bntLoad.Click += new System.EventHandler(this.bntLoad_Click);
             // 
@@ -113,11 +119,64 @@
             this.lblFromDate.TabIndex = 19;
             this.lblFromDate.Text = "Ngày Bắt Đầu:";
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(240, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(204, 42);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Cảnh báo lỗi ";
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(240, 369);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(204, 42);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Nhật kí lỗi";
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(1123, 348);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(204, 42);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Nhật kí vận hành";
+            // 
+            // DgvDeviceStatus
+            // 
+            this.DgvDeviceStatus.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.DgvDeviceStatus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvDeviceStatus.Location = new System.Drawing.Point(833, 418);
+            this.DgvDeviceStatus.Margin = new System.Windows.Forms.Padding(5);
+            this.DgvDeviceStatus.Name = "DgvDeviceStatus";
+            this.DgvDeviceStatus.Size = new System.Drawing.Size(875, 444);
+            this.DgvDeviceStatus.TabIndex = 24;
+            // 
+            // bntVh
+            // 
+            this.bntVh.Location = new System.Drawing.Point(1129, 156);
+            this.bntVh.Margin = new System.Windows.Forms.Padding(5);
+            this.bntVh.Name = "bntVh";
+            this.bntVh.Size = new System.Drawing.Size(125, 37);
+            this.bntVh.TabIndex = 25;
+            this.bntVh.Text = "Tìm Kiếm VH";
+            this.bntVh.UseVisualStyleBackColor = true;
+            this.bntVh.Click += new System.EventHandler(this.bntVh_Click);
+            // 
             // FrmCanhBao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1710, 848);
+            this.Controls.Add(this.bntVh);
+            this.Controls.Add(this.DgvDeviceStatus);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblToDate);
             this.Controls.Add(this.lblFromDate);
             this.Controls.Add(this.dateTimePickerEnd);
@@ -134,6 +193,7 @@
             this.Text = "Cảnh Báo";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAlarm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvHistory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvDeviceStatus)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -147,5 +207,10 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerEnd;
         private System.Windows.Forms.Label lblToDate;
         private System.Windows.Forms.Label lblFromDate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridView DgvDeviceStatus;
+        private System.Windows.Forms.Button bntVh;
     }
 }

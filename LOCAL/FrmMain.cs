@@ -111,8 +111,12 @@ namespace RegistrationForm1
         }
         private async void FrmMain_Load(object sender, EventArgs e)
         {
+            lblWelcome.Text = $"Xin chào: {Globalvariable.UserInfo.UserName} ({Globalvariable.UserInfo.PermissionScada})";
+            ApplyPermission(Globalvariable.UserInfo.PermissionScada);
 
-            lblWelcome.Text = $"Xin chào: {Globalvariable.UserInfo.UserName} ({Globalvariable.UserInfo.PermissionScada.ToString()})";
+
+
+            //   lblWelcome.Text = $"Xin chào: {Globalvariable.UserInfo.UserName} ({Globalvariable.UserInfo.PermissionScada.ToString()})";
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
 
             if (!driver.IsStarted)
@@ -132,7 +136,49 @@ namespace RegistrationForm1
             
 
         }
-     
+        private void ApplyPermission(EnumPermissionScada? permission)
+        {
+            // Nếu chưa có quyền -> khóa hết
+            if (permission == null)
+            {
+                bntEditdata.Enabled = false;
+                bnt_CaiDat.Enabled = false;
+                bnt_User.Enabled = false;
+                bnt_BaoCao.Enabled = false;
+                return;
+            }
+
+            // Reset toàn bộ về false
+            bntEditdata.Enabled = false;
+            bnt_CaiDat.Enabled = false;
+            bnt_User.Enabled = false;
+            bnt_BaoCao.Enabled = false;
+
+            switch (permission.Value)
+            {
+                case EnumPermissionScada.Admin:
+                    // Toàn quyền
+                    bntEditdata.Enabled = true;
+                    bnt_CaiDat.Enabled = true;
+                    bnt_User.Enabled = true;
+                    bnt_BaoCao.Enabled = true;
+                    break;
+
+                case EnumPermissionScada.Operator:
+                    // Vận hành: được xem log, cấu hình
+                    //btnConfig.Enabled = true;
+                    //btnViewLog.Enabled = true;
+                    bntEditdata.Enabled = false;
+                    //btnReport.Enabled = true;
+                    break;
+
+                case EnumPermissionScada.Report:
+                    // Chỉ xem báo cáo
+                    bntEditdata.Enabled = true;
+                    break;
+            }
+        }
+
         private Dictionary<double, double[]> ParseCsvToDictionary(string csvData, out double[] xVals)
         {
             var result = new Dictionary<double, double[]>();
@@ -248,7 +294,7 @@ namespace RegistrationForm1
             {
                 _timer.Enabled = false;
 
-                if (Globalvariable.RealtimeDisplays == null || Globalvariable.RealtimeDisplays.Count == 0)
+                if (Globalvariable.RealtimeDisplays == null || Globalvariable.RealtimeDisplays.Count == 0 )
                     return;
 
                 #region hien thi UI
@@ -266,7 +312,7 @@ namespace RegistrationForm1
                                 _labALDoor2_Station1.Text = item.Al_Door2.ToString();
                                 _labQi1.Text = item.Q_i_1.ToString();
                                 _labQi2.Text = item.Q_i_2.ToString();
-                                _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
+                              
                             }
                             else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
                             {
@@ -286,8 +332,18 @@ namespace RegistrationForm1
                             else if (item.Path == "Local Station/DauTieng/S71500/Location_Info")
                             {
                                 _labFllowHo.Text = item.Fllow_Ho.ToString();
+
                             }
                         }
+
+                        _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
+                    //    _labOffsetbinhnham.Text = location.CalculatorValue.Domo
+                        //_labOffsetbinhnham.Text = location.Api.API_Fllow_BinhNham_Offset.ToString();
+                        //_labOffsetBensuc.Text = location.API_Offset.API_Fllow_BenSuc_Offset.ToString();
+                        //_labOffsetChandap.Text = location.API_Offset.API_ChanDap_Offset.ToString();
+                        //_labOffsetSondai.Text = location.API_Offset.API_Fllow_SonDai_Offset.ToString();
+                        //_labOffsetThanhan.Text= location.API_Offset.API_ThanhAn_Offset.ToString();
+                        //_labOffsetTVdautieng.Text = location.API_Offset.API_Fllow_DauTieng_Offset.ToString();
 
 
 
@@ -303,7 +359,11 @@ namespace RegistrationForm1
                         _labWtr.Text = location.CalculatorValue.W_tr.ToString();
                         _labWdi.Text = location.CalculatorValue.W_di.ToString();
                         _LabQdi.Text = location.CalculatorValue.Q_di.ToString();
-                       
+                        
+                        
+
+
+
 
                     }
                 });
@@ -334,6 +394,9 @@ namespace RegistrationForm1
                             line.LocationName = item.LocationName;
 
                             line.API_Fllow_DauTieng = item.CalculatorValue.API_Fllow_DauTieng;
+                           
+
+
                             line.API_Fllow_BenSuc = item.CalculatorValue.API_Fllow_BenSuc;
                             line.API_Fllow_SonDai = item.CalculatorValue.API_Fllow_SonDai;
                             line.API_Fllow_BinhNham = item.CalculatorValue.API_Fllow_BinhNham;
@@ -343,7 +406,7 @@ namespace RegistrationForm1
                             line.API_ChanDap = item.CalculatorValue.API_ChanDap;
                             line.API_ThanhAn = item.CalculatorValue.API_ThanhAn;
 
-                        
+                      
 
                             line.API_D_DM_HoDT = item.CalculatorValue.API_D_DM_HoDT;
                             line.API_D_MinhHoa = item.CalculatorValue.API_D_MinhHoa;
@@ -396,6 +459,7 @@ namespace RegistrationForm1
                             line.W_cs2 = item.CalculatorValue.W_cs2;
                             line.W_cs3 = item.CalculatorValue.W_cs3;
                            
+                           
 
 
 
@@ -443,7 +507,11 @@ namespace RegistrationForm1
                             line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
                             line.Q_i_1 = itemStation.Q_i_1;
                             line.Q_i_2 = itemStation.Q_i_2;
-                         
+                       //     line.MNTL_CongSo1 = itemStation.MNTL_CongSo1;
+
+
+
+
 
                             dataLogs.Add(line);
                         }
@@ -5491,16 +5559,16 @@ namespace RegistrationForm1
                 var station = location?.Stations.FirstOrDefault(x => x.Path == path);
                 if (station != null)
                 {
-                    station.Door1_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                   station.Door1_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
                     station.Door1_Aperture_Final = Math.Round(station.Door1_Aperture + station.Door1_Aperture_Offset ?? 0, 2);
                     // Tính lưu lượng qua tràn Qtr và tổng lưu lượng Q
                     double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
-                    double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ;
+                    double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ;
                     double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
                     int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
                     double SumB = Math.Round(10.0 * c, 2);
-                    double h = Math.Round((double)station.Door1_Aperture/100 , 2);
+                    double h = Math.Round((double)station.Door1_Aperture_Final / 100 , 2);
                     double aOverH = H0 != 0 ? Math.Round(h / H0, 3) : 0;
                     double alpha1 = Math.Round(GetAlphaFromTable(aOverH),3);
                //     double alpha1 = anpha1;
@@ -5515,7 +5583,7 @@ namespace RegistrationForm1
                     station.Q_i_1 = Qi;
 
                     // phi * alpha * h * sumB * sqrt;
-                    location.CalculatorValue.Q_i_total = (double)location.Stations.Sum(x => x.Q_i_1) + (double)location.Stations.Sum(x => x.Q_i_2);
+                    location.CalculatorValue.Q_i_total = Math.Round((double)location.Stations.Sum(x => x.Q_i_1) + (double)location.Stations.Sum(x => x.Q_i_2),2);
 
 
 
@@ -5566,11 +5634,11 @@ namespace RegistrationForm1
 
                     // Tính lưu lượng qua tràn Qtr và tổng lưu lượng Q
                     double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
-                    double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn;
+                    double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn;
                     double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
                     double SumB = Math.Round(10.0 * Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo, 2);
                     int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
-                    double h = Math.Round((double)station.Door2_Aperture/100 ,2) ;
+                    double h = Math.Round((double)station.Door2_Aperture_Final / 100 ,2) ;
                     double aOverH = H0 != 0 ? Math.Round(h / H0, 3) : 0;
                     double alpha1 = Math.Round(GetAlphaFromTable(aOverH), 3);
                 //    double alpha1 = anpha1;
@@ -5724,10 +5792,10 @@ namespace RegistrationForm1
 
                     int selectedColumnIndex = 0; // mặc định chọn cột đầu tiên nếu không có combobox
 
-                    double Z1 = ((double)station.Fllow_Ho); // Gán mực nước hồ
+                    double Z1 = ((double)station.Fllow_Ho_Final); // Gán mực nước hồ
                     double NoisuyW1_Ho = InterpolateSingleValue(table, Z1, selectedColumnIndex);
                     // tính toán các giá trị khác dựa trên Z và bảng nội suy 
-                    double Z2 = ((double)station.Fllow_Ho) + 0.01;
+                    double Z2 = ((double)station.Fllow_Ho_Final) + 0.01;
                     double NoisuyW2_Ho = InterpolateSingleValue(table, Z2, selectedColumnIndex);
                     // Tính Q tt và Wtt
                     double TinhWtt = Math.Round((0.024 * (Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho + Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho) / 2.0) / 30.0, 2);
@@ -5753,6 +5821,18 @@ namespace RegistrationForm1
                     double TinhWcs1 = Math.Round(TinhQCs1* (86400.0 / 1000000.0), 2);
                     double TinhWcs2 = Math.Round(TinhQCs2 * (86400.0 / 1000000.0), 2);
                     double TinhWcs3 = Math.Round(TinhQCs3 * (86400.0 / 1000000.0), 2);
+
+                    // Khu vực gán CS1, CS2 ,CS3
+                    double _MNTL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo1;
+                    double _MNTL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo2;
+                    double _MNTL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo3;
+                    double _MNHL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo1;
+                    double _MNHL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo2; 
+                    double _MNHL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo3;
+                    //DoMoCua_a_CongSo1
+                    double _DoMoCua_a_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo1;
+                    double _DoMoCua_a_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo2;
+                    double _DoMoCua_a_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo3;
 
                     foreach (var item in location.Stations.Where(x => !x.Path.Contains("Location_Info")))
                     {
@@ -5782,6 +5862,7 @@ namespace RegistrationForm1
                     location.CalculatorValue.W_cs2 = TinhWcs2;
                     location.CalculatorValue.Q_cs3 = TinhQCs3;
                     location.CalculatorValue.W_cs3 = TinhWcs3;
+                   
 
 
 
@@ -6151,5 +6232,25 @@ namespace RegistrationForm1
             await WriteTagFromLabel();
         }
 
+        private void bntCS1_Click(object sender, EventArgs e)
+        {
+            ActivateMenuButton(sender as Button);
+            FrmCS1 cs1 = new FrmCS1();
+            OpenFormInPanel(cs1, "CỐNG SỐ 1");
+        }
+
+        private void bntCS2_Click(object sender, EventArgs e)
+        {
+            ActivateMenuButton(sender as Button);
+            FrmCS2 cs2 = new FrmCS2();
+            OpenFormInPanel(cs2, "CỐNG SỐ 2");
+        }
+
+        private void bntCS3_Click(object sender, EventArgs e)
+        {
+            ActivateMenuButton(sender as Button);
+            FrmCS3 cs3 = new FrmCS3();
+            OpenFormInPanel(cs3, "CỐNG SỐ 3");
+        }
     }
 }
