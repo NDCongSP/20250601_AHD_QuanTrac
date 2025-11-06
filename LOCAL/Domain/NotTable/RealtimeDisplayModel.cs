@@ -12,5 +12,8 @@ namespace Domain
         public List<TagsStation> Stations { get; set; } = new List<TagsStation>();
 
         public CalculatorValueModel CalculatorValue { get; set; } = new CalculatorValueModel();
+        // mới thêm vào 
+        public ApiOffsetModel API_Offset { get; set; } = new ApiOffsetModel();
+       public ParamettersModel Parametters { get; set; } = new ParamettersModel();
     }
 }

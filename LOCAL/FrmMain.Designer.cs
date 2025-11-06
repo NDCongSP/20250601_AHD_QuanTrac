@@ -59,6 +59,15 @@
             this.tm_login = new System.Windows.Forms.Timer(this.components);
             this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labDOMOCS3 = new System.Windows.Forms.Label();
+            this._labDOMOCS2 = new System.Windows.Forms.Label();
+            this._labDOMOCS1 = new System.Windows.Forms.Label();
+            this._labMNHLCS3 = new System.Windows.Forms.Label();
+            this._labMNHLCS2 = new System.Windows.Forms.Label();
+            this._labMNHLCS1 = new System.Windows.Forms.Label();
+            this._labMNTLCS3 = new System.Windows.Forms.Label();
+            this._labMNTLCS2 = new System.Windows.Forms.Label();
+            this._labMNTLCS1 = new System.Windows.Forms.Label();
             this._labOffsetThanhan = new System.Windows.Forms.Label();
             this._labOffsetChandap = new System.Windows.Forms.Label();
             this._labOffsetBensuc = new System.Windows.Forms.Label();
@@ -113,15 +122,6 @@
             this._labALDoor1_Station1 = new System.Windows.Forms.Label();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
-            this._labMNTLCS1 = new System.Windows.Forms.Label();
-            this._labMNTLCS2 = new System.Windows.Forms.Label();
-            this._labMNTLCS3 = new System.Windows.Forms.Label();
-            this._labMNHLCS1 = new System.Windows.Forms.Label();
-            this._labMNHLCS2 = new System.Windows.Forms.Label();
-            this._labMNHLCS3 = new System.Windows.Forms.Label();
-            this._labDOMOCS3 = new System.Windows.Forms.Label();
-            this._labDOMOCS2 = new System.Windows.Forms.Label();
-            this._labDOMOCS1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -509,6 +509,96 @@
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
+            // 
+            // _labDOMOCS3
+            // 
+            this._labDOMOCS3.AutoSize = true;
+            this._labDOMOCS3.Location = new System.Drawing.Point(852, 189);
+            this._labDOMOCS3.Name = "_labDOMOCS3";
+            this._labDOMOCS3.Size = new System.Drawing.Size(60, 13);
+            this._labDOMOCS3.TabIndex = 476;
+            this._labDOMOCS3.Text = "DOMOCS3";
+            this._labDOMOCS3.Visible = false;
+            // 
+            // _labDOMOCS2
+            // 
+            this._labDOMOCS2.AutoSize = true;
+            this._labDOMOCS2.Location = new System.Drawing.Point(852, 164);
+            this._labDOMOCS2.Name = "_labDOMOCS2";
+            this._labDOMOCS2.Size = new System.Drawing.Size(60, 13);
+            this._labDOMOCS2.TabIndex = 475;
+            this._labDOMOCS2.Text = "DOMOCS2";
+            this._labDOMOCS2.Visible = false;
+            // 
+            // _labDOMOCS1
+            // 
+            this._labDOMOCS1.AutoSize = true;
+            this._labDOMOCS1.Location = new System.Drawing.Point(852, 143);
+            this._labDOMOCS1.Name = "_labDOMOCS1";
+            this._labDOMOCS1.Size = new System.Drawing.Size(60, 13);
+            this._labDOMOCS1.TabIndex = 474;
+            this._labDOMOCS1.Text = "DOMOCS1";
+            this._labDOMOCS1.Visible = false;
+            // 
+            // _labMNHLCS3
+            // 
+            this._labMNHLCS3.AutoSize = true;
+            this._labMNHLCS3.Location = new System.Drawing.Point(753, 188);
+            this._labMNHLCS3.Name = "_labMNHLCS3";
+            this._labMNHLCS3.Size = new System.Drawing.Size(58, 13);
+            this._labMNHLCS3.TabIndex = 473;
+            this._labMNHLCS3.Text = "MNHLCS3";
+            this._labMNHLCS3.Visible = false;
+            // 
+            // _labMNHLCS2
+            // 
+            this._labMNHLCS2.AutoSize = true;
+            this._labMNHLCS2.Location = new System.Drawing.Point(753, 163);
+            this._labMNHLCS2.Name = "_labMNHLCS2";
+            this._labMNHLCS2.Size = new System.Drawing.Size(58, 13);
+            this._labMNHLCS2.TabIndex = 472;
+            this._labMNHLCS2.Text = "MNHLCS2";
+            this._labMNHLCS2.Visible = false;
+            // 
+            // _labMNHLCS1
+            // 
+            this._labMNHLCS1.AutoSize = true;
+            this._labMNHLCS1.Location = new System.Drawing.Point(753, 142);
+            this._labMNHLCS1.Name = "_labMNHLCS1";
+            this._labMNHLCS1.Size = new System.Drawing.Size(58, 13);
+            this._labMNHLCS1.TabIndex = 471;
+            this._labMNHLCS1.Text = "MNHLCS1";
+            this._labMNHLCS1.Visible = false;
+            // 
+            // _labMNTLCS3
+            // 
+            this._labMNTLCS3.AutoSize = true;
+            this._labMNTLCS3.Location = new System.Drawing.Point(670, 188);
+            this._labMNTLCS3.Name = "_labMNTLCS3";
+            this._labMNTLCS3.Size = new System.Drawing.Size(57, 13);
+            this._labMNTLCS3.TabIndex = 470;
+            this._labMNTLCS3.Text = "MNTLCS3";
+            this._labMNTLCS3.Visible = false;
+            // 
+            // _labMNTLCS2
+            // 
+            this._labMNTLCS2.AutoSize = true;
+            this._labMNTLCS2.Location = new System.Drawing.Point(670, 167);
+            this._labMNTLCS2.Name = "_labMNTLCS2";
+            this._labMNTLCS2.Size = new System.Drawing.Size(57, 13);
+            this._labMNTLCS2.TabIndex = 469;
+            this._labMNTLCS2.Text = "MNTLCS2";
+            this._labMNTLCS2.Visible = false;
+            // 
+            // _labMNTLCS1
+            // 
+            this._labMNTLCS1.AutoSize = true;
+            this._labMNTLCS1.Location = new System.Drawing.Point(670, 142);
+            this._labMNTLCS1.Name = "_labMNTLCS1";
+            this._labMNTLCS1.Size = new System.Drawing.Size(57, 13);
+            this._labMNTLCS1.TabIndex = 468;
+            this._labMNTLCS1.Text = "MNTLCS1";
+            this._labMNTLCS1.Visible = false;
             // 
             // _labOffsetThanhan
             // 
@@ -1053,96 +1143,6 @@
             this.lblStatusMessage.TabIndex = 173;
             this.lblStatusMessage.Text = "label2";
             this.lblStatusMessage.Visible = false;
-            // 
-            // _labMNTLCS1
-            // 
-            this._labMNTLCS1.AutoSize = true;
-            this._labMNTLCS1.Location = new System.Drawing.Point(670, 142);
-            this._labMNTLCS1.Name = "_labMNTLCS1";
-            this._labMNTLCS1.Size = new System.Drawing.Size(57, 13);
-            this._labMNTLCS1.TabIndex = 468;
-            this._labMNTLCS1.Text = "MNTLCS1";
-            this._labMNTLCS1.Visible = false;
-            // 
-            // _labMNTLCS2
-            // 
-            this._labMNTLCS2.AutoSize = true;
-            this._labMNTLCS2.Location = new System.Drawing.Point(670, 167);
-            this._labMNTLCS2.Name = "_labMNTLCS2";
-            this._labMNTLCS2.Size = new System.Drawing.Size(57, 13);
-            this._labMNTLCS2.TabIndex = 469;
-            this._labMNTLCS2.Text = "MNTLCS2";
-            this._labMNTLCS2.Visible = false;
-            // 
-            // _labMNTLCS3
-            // 
-            this._labMNTLCS3.AutoSize = true;
-            this._labMNTLCS3.Location = new System.Drawing.Point(670, 188);
-            this._labMNTLCS3.Name = "_labMNTLCS3";
-            this._labMNTLCS3.Size = new System.Drawing.Size(57, 13);
-            this._labMNTLCS3.TabIndex = 470;
-            this._labMNTLCS3.Text = "MNTLCS3";
-            this._labMNTLCS3.Visible = false;
-            // 
-            // _labMNHLCS1
-            // 
-            this._labMNHLCS1.AutoSize = true;
-            this._labMNHLCS1.Location = new System.Drawing.Point(753, 142);
-            this._labMNHLCS1.Name = "_labMNHLCS1";
-            this._labMNHLCS1.Size = new System.Drawing.Size(58, 13);
-            this._labMNHLCS1.TabIndex = 471;
-            this._labMNHLCS1.Text = "MNHLCS1";
-            this._labMNHLCS1.Visible = false;
-            // 
-            // _labMNHLCS2
-            // 
-            this._labMNHLCS2.AutoSize = true;
-            this._labMNHLCS2.Location = new System.Drawing.Point(753, 163);
-            this._labMNHLCS2.Name = "_labMNHLCS2";
-            this._labMNHLCS2.Size = new System.Drawing.Size(58, 13);
-            this._labMNHLCS2.TabIndex = 472;
-            this._labMNHLCS2.Text = "MNHLCS2";
-            this._labMNHLCS2.Visible = false;
-            // 
-            // _labMNHLCS3
-            // 
-            this._labMNHLCS3.AutoSize = true;
-            this._labMNHLCS3.Location = new System.Drawing.Point(753, 188);
-            this._labMNHLCS3.Name = "_labMNHLCS3";
-            this._labMNHLCS3.Size = new System.Drawing.Size(58, 13);
-            this._labMNHLCS3.TabIndex = 473;
-            this._labMNHLCS3.Text = "MNHLCS3";
-            this._labMNHLCS3.Visible = false;
-            // 
-            // _labDOMOCS3
-            // 
-            this._labDOMOCS3.AutoSize = true;
-            this._labDOMOCS3.Location = new System.Drawing.Point(852, 189);
-            this._labDOMOCS3.Name = "_labDOMOCS3";
-            this._labDOMOCS3.Size = new System.Drawing.Size(60, 13);
-            this._labDOMOCS3.TabIndex = 476;
-            this._labDOMOCS3.Text = "DOMOCS3";
-            this._labDOMOCS3.Visible = false;
-            // 
-            // _labDOMOCS2
-            // 
-            this._labDOMOCS2.AutoSize = true;
-            this._labDOMOCS2.Location = new System.Drawing.Point(852, 164);
-            this._labDOMOCS2.Name = "_labDOMOCS2";
-            this._labDOMOCS2.Size = new System.Drawing.Size(60, 13);
-            this._labDOMOCS2.TabIndex = 475;
-            this._labDOMOCS2.Text = "DOMOCS2";
-            this._labDOMOCS2.Visible = false;
-            // 
-            // _labDOMOCS1
-            // 
-            this._labDOMOCS1.AutoSize = true;
-            this._labDOMOCS1.Location = new System.Drawing.Point(852, 143);
-            this._labDOMOCS1.Name = "_labDOMOCS1";
-            this._labDOMOCS1.Size = new System.Drawing.Size(60, 13);
-            this._labDOMOCS1.TabIndex = 474;
-            this._labDOMOCS1.Text = "DOMOCS1";
-            this._labDOMOCS1.Visible = false;
             // 
             // FrmMain
             // 

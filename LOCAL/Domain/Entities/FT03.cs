@@ -148,5 +148,12 @@ namespace Domain.Entities
         public double Q_di { get; set; } = 0;
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
+        // mới thêm
+        //public double? MNHL_CongSo1 { get; set; } = 0;
+        //public double? MNHL_CongSo2 { get; set; } = 0;
+        //public double? MNHL_CongSo3 { get; set; } = 0;
+        //public double DoMoCua_a_CongSo1 { get; set; } = 0;
+        //public double DoMoCua_a_CongSo2 { get; set; } = 0;
+        //public double DoMoCua_a_CongSo3 { get; set; } = 0;
     }
 }

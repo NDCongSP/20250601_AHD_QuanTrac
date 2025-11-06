@@ -25,8 +25,6 @@ namespace RegistrationForm1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-
             using (var dbContext = new ApplicationDbContext())
             {
                 //   var configTable = await dbContext.FT01s.FirstOrDefaultAsync();
@@ -50,9 +48,9 @@ namespace RegistrationForm1
                 //Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
 
                 //Globalvariable.ConfigSystem.ParametterConfig.HeSoCoHep_ALpha = 0;
-               // Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1 = 10.66;
-              //  Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2 = 10.80;
-             //   Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3 = 2.0;
+                // Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1 = 10.66;
+                //  Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2 = 10.80;
+                //   Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3 = 2.0;
 
                 ////////////////////////////
 
@@ -105,11 +103,12 @@ namespace RegistrationForm1
                         };
 
                     }
-            //        dbContext.SaveChanges();
+                    //        dbContext.SaveChanges();
 
                 }
             }
 
+            Globalvariable.GetConfig();
 
            Application.Run(new FrmLogin());
           //   Application.Run(new FrmCS1());

@@ -166,15 +166,17 @@ namespace RegistrationForm1
 
                 case EnumPermissionScada.Operator:
                     // Vận hành: được xem log, cấu hình
-                    //btnConfig.Enabled = true;
-                    //btnViewLog.Enabled = true;
+                    bnt_BaoCao.Enabled = true;
+                    bnt_CanhBao.Enabled = true;
                     bntEditdata.Enabled = false;
-                    //btnReport.Enabled = true;
+                    bnt_User.Enabled = true;
                     break;
 
                 case EnumPermissionScada.Report:
                     // Chỉ xem báo cáo
-                    bntEditdata.Enabled = true;
+                    bnt_BaoCao.Enabled = true;
+                    bnt_CanhBao.Enabled = true;
+                    bntEditdata.Enabled = false;
                     break;
             }
         }
@@ -332,21 +334,25 @@ namespace RegistrationForm1
                             else if (item.Path == "Local Station/DauTieng/S71500/Location_Info")
                             {
                                 _labFllowHo.Text = item.Fllow_Ho.ToString();
+                               
 
                             }
                         }
+                            
+                       _labMNHLCS1.Text = location.Parametters.MNHL_CongSo1.ToString();
+                        _labMNHLCS2.Text = location.Parametters.MNHL_CongSo2.ToString();
+                        _labMNHLCS3.Text= location.Parametters.MNHL_CongSo3.ToString();
+
+
+
+                        _labOffsetbinhnham.Text = location.API_Offset.API_Fllow_BinhNham.ToString();
+                        _labOffsetBensuc.Text = location.API_Offset.API_Fllow_BenSuc.ToString();
+                        _labOffsetChandap.Text = location.API_Offset.API_ChanDap.ToString();
+                        _labOffsetSondai.Text = location.API_Offset.API_Fllow_SonDai.ToString();
+                        _labOffsetThanhan.Text= location.API_Offset.API_ThanhAn.ToString();
+                        _labOffsetTVdautieng.Text = location.API_Offset.API_Fllow_DauTieng.ToString();
 
                         _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
-                    //    _labOffsetbinhnham.Text = location.CalculatorValue.Domo
-                        //_labOffsetbinhnham.Text = location.Api.API_Fllow_BinhNham_Offset.ToString();
-                        //_labOffsetBensuc.Text = location.API_Offset.API_Fllow_BenSuc_Offset.ToString();
-                        //_labOffsetChandap.Text = location.API_Offset.API_ChanDap_Offset.ToString();
-                        //_labOffsetSondai.Text = location.API_Offset.API_Fllow_SonDai_Offset.ToString();
-                        //_labOffsetThanhan.Text= location.API_Offset.API_ThanhAn_Offset.ToString();
-                        //_labOffsetTVdautieng.Text = location.API_Offset.API_Fllow_DauTieng_Offset.ToString();
-
-
-
                         _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
 
                         _labWtt.Text = location.CalculatorValue.W_tt.ToString();
@@ -359,9 +365,9 @@ namespace RegistrationForm1
                         _labWtr.Text = location.CalculatorValue.W_tr.ToString();
                         _labWdi.Text = location.CalculatorValue.W_di.ToString();
                         _LabQdi.Text = location.CalculatorValue.Q_di.ToString();
-                        
-                        
 
+
+                  
 
 
 
@@ -392,11 +398,10 @@ namespace RegistrationForm1
                             line.LogBaseInterval = false;
                             line.LocationId = item.LocationId;
                             line.LocationName = item.LocationName;
-
+                         
                             line.API_Fllow_DauTieng = item.CalculatorValue.API_Fllow_DauTieng;
-                           
-
-
+                   //        line.API_Fllow_BinhNham = item.API_Offset.API_Fllow_BinhNham;
+  
                             line.API_Fllow_BenSuc = item.CalculatorValue.API_Fllow_BenSuc;
                             line.API_Fllow_SonDai = item.CalculatorValue.API_Fllow_SonDai;
                             line.API_Fllow_BinhNham = item.CalculatorValue.API_Fllow_BinhNham;
@@ -405,8 +410,6 @@ namespace RegistrationForm1
                             line.API_Fllow_HL_TXL = item.CalculatorValue.API_Fllow_HL_TXL;
                             line.API_ChanDap = item.CalculatorValue.API_ChanDap;
                             line.API_ThanhAn = item.CalculatorValue.API_ThanhAn;
-
-                      
 
                             line.API_D_DM_HoDT = item.CalculatorValue.API_D_DM_HoDT;
                             line.API_D_MinhHoa = item.CalculatorValue.API_D_MinhHoa;
@@ -437,8 +440,6 @@ namespace RegistrationForm1
                             line.API_D_TanHa_Total = item.CalculatorValue.API_D_TanHa_Total;
                             line.API_D_Doi95_Total = item.CalculatorValue.API_D_Doi95_Total;
 
-                         
-
                             line.Q_den = item.CalculatorValue.Q_den;
                             line.W_den = item.CalculatorValue.W_den;
                             line.Q_di = item.CalculatorValue.Q_di;
@@ -458,15 +459,20 @@ namespace RegistrationForm1
                             line.W_cs1 = item.CalculatorValue.W_cs1;
                             line.W_cs2 = item.CalculatorValue.W_cs2;
                             line.W_cs3 = item.CalculatorValue.W_cs3;
-                           
-                           
 
+                            //line.MNHL_CongSo1 = item.Parametters.MNHL_CongSo1;
+                            //line.MNHL_CongSo2 = item.Parametters.MNHL_CongSo2;
+                            //line.MNHL_CongSo3 = item.Parametters.MNHL_CongSo3;
+                            //line.DoMoCua_a_CongSo1 = item.Parametters.DoMoCua_a_CongSo1;
+                            //line.DoMoCua_a_CongSo2 = item.Parametters.DoMoCua_a_CongSo2;
+                            //line.DoMoCua_a_CongSo3 = item.Parametters.DoMoCua_a_CongSo3;
 
 
                             line.StationId = itemStation.StationId;
                             line.StationName = itemStation.StationName;
                             line.Path = itemStation.Path;
 
+                            
                             line.HT_Cylinder1_1 = itemStation.HT_Cylinder1_1;
                             line.HT_Cylinder1_2 = itemStation.HT_Cylinder1_2;
                             line.HT_Cylinder2_1 = itemStation.HT_Cylinder2_1;
@@ -507,11 +513,9 @@ namespace RegistrationForm1
                             line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
                             line.Q_i_1 = itemStation.Q_i_1;
                             line.Q_i_2 = itemStation.Q_i_2;
-                       //     line.MNTL_CongSo1 = itemStation.MNTL_CongSo1;
-
-
-
-
+                            
+                           
+                          
 
                             dataLogs.Add(line);
                         }
@@ -527,6 +531,8 @@ namespace RegistrationForm1
                     _startTime = DateTime.Now;
                 }
                 #endregion
+
+                Globalvariable.GetConfig();
             }
             catch (Exception ex)
             {
@@ -580,12 +586,7 @@ namespace RegistrationForm1
                     MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
                     return;
                 }
-                //// Định dạng GT để chỉ lấy 2 số lẽ
-                //double formattedGT = Math.Round(GT, 0);
-                //await ahdDriverConnector1.WriteTagAsync(
-                //    $"Local Station/DauTieng/S71500/API/Fllow_TL_CDD",
-                //    GT.ToString("0.00"),
-                //    WritePiority.High);
+               
                 Globalvariable.RealtimeDisplays.FirstOrDefault(loc => loc.LocationId == 1)
                 .CalculatorValue.API_Fllow_TL_CDD = GT;
 
@@ -5583,10 +5584,7 @@ namespace RegistrationForm1
                     station.Q_i_1 = Qi;
 
                     // phi * alpha * h * sumB * sqrt;
-                    location.CalculatorValue.Q_i_total = Math.Round((double)location.Stations.Sum(x => x.Q_i_1) + (double)location.Stations.Sum(x => x.Q_i_2),2);
-
-
-
+                    location.CalculatorValue.Q_i_total =Math.Round( location.Stations.Sum(x => (x.Q_i_1 ?? 0) + (x.Q_i_2 ?? 0)),2);
 
                     using (var dbContext = new ApplicationDbContext())
                     {
@@ -5652,9 +5650,10 @@ namespace RegistrationForm1
                    
                     station.Q_i_2 = Qi;
 
-                    location.CalculatorValue.Q_i_total = (double)location.Stations.Sum(x => x.Q_i_1) + (double)location.Stations.Sum(x => x.Q_i_2);
+                    // location.CalculatorValue.Q_i_total = (double)location.Stations.Sum(x => x.Q_i_1) + (double)location.Stations.Sum(x => x.Q_i_2);
 
-
+                    location.CalculatorValue.Q_i_total = Math.Round(location.Stations.Sum(x => (x.Q_i_1 ?? 0) + (x.Q_i_2 ?? 0)), 2);
+                  
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5848,8 +5847,7 @@ namespace RegistrationForm1
                     location.CalculatorValue.Q_di = TinhQdi;
                     location.CalculatorValue.W_den = TinhWden;
                     location.CalculatorValue.Q_den = Qden;
-
-
+                   
                     location.CalculatorValue.Q_tr = Qtr;
                     location.CalculatorValue.W_tr = TinhWtr;
                     location.CalculatorValue.W1_ho = NoisuyW1_Ho;
@@ -5862,10 +5860,14 @@ namespace RegistrationForm1
                     location.CalculatorValue.W_cs2 = TinhWcs2;
                     location.CalculatorValue.Q_cs3 = TinhQCs3;
                     location.CalculatorValue.W_cs3 = TinhWcs3;
-                   
 
+                    location.Parametters.MNHL_CongSo1 = _MNHL_CongSo1;
+                    location.Parametters.MNHL_CongSo2 = _MNHL_CongSo2;
+                    location.Parametters.MNHL_CongSo3 = _MNHL_CongSo3;
 
-
+                    location.Parametters.DoMoCua_a_CongSo1 = _DoMoCua_a_CongSo1;
+                    location.Parametters.DoMoCua_a_CongSo2 = _DoMoCua_a_CongSo2;
+                    location.Parametters.DoMoCua_a_CongSo3 = _DoMoCua_a_CongSo3;
 
                     using (var dbContext = new ApplicationDbContext())
                     {
@@ -5900,14 +5902,11 @@ namespace RegistrationForm1
         }
 
 
-        private double TinhToan(double tagValue)
-        {
-            return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
+        //private double TinhToan(double tagValue)
+        //{
+        //    return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
 
-        }
-
-
-
+        //}
 
 
         private void button1_Click(object sender, EventArgs e)

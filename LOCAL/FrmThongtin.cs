@@ -12,10 +12,9 @@ namespace RegistrationForm1
 {
 
 
-    public partial class FrmThongtin : Form
+    public partial class FrmThongtin : Form //D:\SCADA\UploadFiles
     {
-        private readonly string _appSaveDirectory = @"D:\SCADA\UploadedFiles"; // Thư mục để lưu các tệp đã tải lên
-                                                                               //    private string _appSaveRootDirectory = "C:\\Data\\MyAppFiles"; // Ví dụ: Thư mục gốc để lưu trữ
+        private readonly string _appSaveDirectory = @"D:\SCADA\UploadFiles"; // Thư mục để lưu các tệp đã tải                                                                      //    private string _appSaveRootDirectory = "C:\\Data\\MyAppFiles"; // Ví dụ: Thư mục gốc để lưu trữ
         private System.Windows.Forms.WebBrowser webBrowserContent; // 👈 CHỈ GIỮ LẠI WEB BROWSER
 
         public FrmThongtin()

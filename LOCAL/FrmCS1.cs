@@ -36,45 +36,12 @@ namespace RegistrationForm1
                     {
                         foreach (var item in location.Stations)
                         {
-                            if (item.Path == "Local Station/DauTieng/S71500/Station_1")
-                            {
-                                //_labALDoor1_Station1.Text = item.Al_Door1.ToString();
-                                //_labALDoor2_Station1.Text = item.Al_Door2.ToString();
-                                //   _labHT_Cylinder1_1.Text = item.HT_Cylinder1_1.ToString();
-                                //    _labHT_Cylinder1_2.Text = item.HT_Cylinder1_2.ToString();
-                                //      _labFllow_ho.Text = item.Fllow_ho.ToString();
-
-
-
-                            }
-                            else if (item.Path == "Local Station/DauTieng/S71500/Station_2")
-                            {
-                                //_labALDoor1_Station2.Text = item.Al_Door1.ToString();
-                                //_labALDoor2_Station2.Text = item.Al_Door2.ToString();
-                            }
-                            else if (item.Path == "Local Station/DauTieng/S71500/Station_3")
-                            {
-                                //_labALDoor1_Station3.Text = item.Al_Door1.ToString();
-                                //_labALDoor2_Station3.Text = item.Al_Door2.ToString();
-                            }
-
                             _LabMNTLCS1.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho_Final.ToString();
                             _LabQCS1.Text = location.CalculatorValue.Q_cs1.ToString();
-
-                            //_LabDomoCS1.Text = location.
-
-
-
-                            //     _LabMNHLCS1.Text = location.Stations?.FirstOrDefault(x => x.Path.Contains
-                            //_lab_Q_tr.Text = location.CalculatorValue.Q_tr.ToString();
-                            //_labQ_cs1.Text = location.CalculatorValue.Q_cs1.ToString();
-                            //_labQ_cs2.Text = location.CalculatorValue.Q_cs2.ToString();
-                            //_labQ_cs3.Text = location.CalculatorValue.Q_cs3.ToString();
-                            //_labQ_den.Text = location.CalculatorValue.Q_den.ToString();
-                            //_labQ_di.Text = location.CalculatorValue.Q_di.ToString();
-
-
-                        }
+                            _LabDomoCS1.Text = location.Parametters.DoMoCua_a_CongSo1.ToString();
+                            _LabMNHLCS1.Text = location.Parametters.MNHL_CongSo1.ToString();
+                          
+                         }
 
                     }
 

@@ -1,16 +1,9 @@
-﻿using Ahd.Core;
-using Dapper;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
+﻿
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
+
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 namespace RegistrationForm1
 {
@@ -44,22 +37,21 @@ namespace RegistrationForm1
 
                     if (dataDisplayStation1.Path == "Local Station/DauTieng/S71500/Station_1")
                     {
-                        // _labALDoor1_Station1.Text = item.Al_Door1.ToString();
-                        //  _labALDoor2_Station1.Text = item.Al_Door2.ToString();
-                        _labHT_Cylinder1_1.Text = dataDisplayStation1.HT_Cylinder1_1.ToString();
-                        _labHT_Cylinder1_2.Text = dataDisplayStation1.HT_Cylinder1_2.ToString();
-                        _labHT_Cylinder2_1.Text = dataDisplayStation1.HT_Cylinder2_1.ToString();
-                        _labHT_Cylinder2_2.Text = dataDisplayStation1.HT_Cylinder2_2.ToString();
-                        _labPressure_Oil_Door1.Text = dataDisplayStation1.Pressure_Oil_Door1.ToString();
-                        _labPressure_Oil_Door2.Text = dataDisplayStation1.Pressure_Oil_Door2.ToString();
-                        //   _lblTemp_Oil1.Text = dataDisplayStation1.S1_Temp_Oil.ToString();
+                       
+                        _labHT_Cylinder1_1.Text = dataDisplayStation1.HT_Cylinder1_1_Final.ToString();
+                        _labHT_Cylinder1_2.Text = dataDisplayStation1.HT_Cylinder1_2_Final.ToString();
+                        _labHT_Cylinder2_1.Text = dataDisplayStation1.HT_Cylinder2_1_Final.ToString();
+                        _labHT_Cylinder2_2.Text = dataDisplayStation1.HT_Cylinder2_2_Final.ToString();
+                        _labPressure_Oil_Door1.Text = dataDisplayStation1.Pressure_Oil_Door1_Final.ToString();
+                        _labPressure_Oil_Door2.Text = dataDisplayStation1.Pressure_Oil_Door2_Final.ToString();
+                        
 
                         _labDoor1_Aperture.Text = dataDisplayStation1.Door1_Aperture_Final.ToString();
                         _labDoor1_Aperture_1.Text = dataDisplayStation1.Door1_Aperture_Final.ToString();
                         _labDoor2_Aperture.Text = dataDisplayStation1.Door2_Aperture_Final.ToString();
                         _labDoor2_Aperture_1.Text = dataDisplayStation1.Door2_Aperture_Final.ToString();
 
-                        _labDoor2_Aperture.Text = dataDisplayStation1.Door2_Aperture.ToString();
+                      
                         _labFllow_Door1.Text = dataDisplayStation1.Q_i_1.ToString();
                         _labFllow_Door2.Text = dataDisplayStation1.Q_i_2.ToString();
 
@@ -169,12 +161,12 @@ namespace RegistrationForm1
                     
                     if (dataDisplayStation2.Path == "Local Station/DauTieng/S71500/Station_2")
                     {
-                        _labHT_Cylinder3_1.Text = dataDisplayStation2.HT_Cylinder1_1.ToString();
-                        _labHT_Cylinder3_2.Text = dataDisplayStation2.HT_Cylinder1_2.ToString();
-                        _labHT_Cylinder4_1.Text = dataDisplayStation2.HT_Cylinder2_1.ToString();
-                        _labHT_Cylinder4_2.Text = dataDisplayStation2.HT_Cylinder2_2.ToString();
-                        _labPressure_Oil_Door3.Text = dataDisplayStation2.Pressure_Oil_Door1.ToString();
-                        _labPressure_Oil_Door4.Text = dataDisplayStation2.Pressure_Oil_Door2.ToString();
+                        _labHT_Cylinder3_1.Text = dataDisplayStation2.HT_Cylinder1_1_Final.ToString();
+                        _labHT_Cylinder3_2.Text = dataDisplayStation2.HT_Cylinder1_2_Final.ToString();
+                        _labHT_Cylinder4_1.Text = dataDisplayStation2.HT_Cylinder2_1_Final.ToString();
+                        _labHT_Cylinder4_2.Text = dataDisplayStation2.HT_Cylinder2_2_Final.ToString();
+                        _labPressure_Oil_Door3.Text = dataDisplayStation2.Pressure_Oil_Door1_Final.ToString();
+                        _labPressure_Oil_Door4.Text = dataDisplayStation2.Pressure_Oil_Door2_Final.ToString();
                    //     _lblTemp_Oil2.Text = dataDisplayStation2.S1_Temp_Oil.ToString();
                         
                         _labDoor3_Aperture.Text = dataDisplayStation2.Door1_Aperture_Final.ToString();
@@ -310,12 +302,12 @@ namespace RegistrationForm1
 
                      if (dataDisplayStation3.Path == "Local Station/DauTieng/S71500/Station_3")
                     {
-                        _labHT_Cylinder5_1.Text = dataDisplayStation3.HT_Cylinder1_1.ToString();
-                        _labHT_Cylinder5_2.Text = dataDisplayStation3.HT_Cylinder1_2.ToString();
-                        _labHT_Cylinder6_1.Text = dataDisplayStation3.HT_Cylinder2_1.ToString();
-                        _labHT_Cylinder6_2.Text = dataDisplayStation3.HT_Cylinder2_2.ToString();
-                        _labPressure_Oil_Door5.Text = dataDisplayStation3.Pressure_Oil_Door1.ToString();
-                        _labPressure_Oil_Door6.Text = dataDisplayStation3.Pressure_Oil_Door2.ToString();
+                        _labHT_Cylinder5_1.Text = dataDisplayStation3.HT_Cylinder1_1_Final.ToString();
+                        _labHT_Cylinder5_2.Text = dataDisplayStation3.HT_Cylinder1_2_Final.ToString();
+                        _labHT_Cylinder6_1.Text = dataDisplayStation3.HT_Cylinder2_1_Final.ToString();
+                        _labHT_Cylinder6_2.Text = dataDisplayStation3.HT_Cylinder2_2_Final.ToString();
+                        _labPressure_Oil_Door5.Text = dataDisplayStation3.Pressure_Oil_Door1_Final.ToString();
+                        _labPressure_Oil_Door6.Text = dataDisplayStation3.Pressure_Oil_Door2_Final.ToString();
                       //  _lblTemp_Oil3.Text = dataDisplayStation3.S1_Temp_Oil.ToString();
                        
                         _labDoor5_Aperture.Text = dataDisplayStation3.Door1_Aperture_Final.ToString();
