@@ -61,7 +61,7 @@
             this.chkShowPassword.Location = new System.Drawing.Point(159, 181);
             this.chkShowPassword.Margin = new System.Windows.Forms.Padding(4);
             this.chkShowPassword.Name = "chkShowPassword";
-            this.chkShowPassword.Size = new System.Drawing.Size(175, 23);
+            this.chkShowPassword.Size = new System.Drawing.Size(353, 40);
             this.chkShowPassword.TabIndex = 181;
             this.chkShowPassword.Text = "Hiển Thị / Ẩn Mật Khẩu";
             this.chkShowPassword.UseVisualStyleBackColor = true;
@@ -98,7 +98,7 @@
             this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(229, 26);
+            this.txtPassword.Size = new System.Drawing.Size(229, 44);
             this.txtPassword.TabIndex = 178;
             this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
@@ -110,7 +110,7 @@
             this.txtUsername.Location = new System.Drawing.Point(159, 80);
             this.txtUsername.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(229, 26);
+            this.txtUsername.Size = new System.Drawing.Size(229, 44);
             this.txtUsername.TabIndex = 177;
             // 
             // label2
@@ -120,7 +120,7 @@
             this.label2.Location = new System.Drawing.Point(159, 124);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 19);
+            this.label2.Size = new System.Drawing.Size(140, 36);
             this.label2.TabIndex = 176;
             this.label2.Text = "Mật Khẩu";
             // 
@@ -132,7 +132,7 @@
             this.label1.Location = new System.Drawing.Point(159, 57);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 19);
+            this.label1.Size = new System.Drawing.Size(214, 36);
             this.label1.TabIndex = 175;
             this.label1.Text = "Tên Đăng Nhập";
             // 
@@ -155,7 +155,8 @@
             // 
             // FrmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AcceptButton = this.btnLogin;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 36F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(473, 258);

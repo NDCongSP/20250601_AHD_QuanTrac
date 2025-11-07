@@ -25,66 +25,26 @@ namespace RegistrationForm1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            using (var dbContext = new ApplicationDbContext())
-            {
-                //   var configTable = await dbContext.FT01s.FirstOrDefaultAsync();
-                //var configTable = dbContext.FT01s.ToList();
-                var configTable = dbContext.FT01s.FirstOrDefault();
-                if (configTable == null)
+            //using (var dbContext = new ApplicationDbContext())
+            //{
+            //    //   var configTable = await dbContext.FT01s.FirstOrDefaultAsync();
+            //    //var configTable = dbContext.FT01s.ToList();
+            //    var configTable = dbContext.FT01s.FirstOrDefault();
+            //    if (configTable == null)
+            //    {
+            //        MessageBox.Show("Cấu hình cơ sở dữ liệu không hợp lệ hoặc chưa được thiết lập. Vui lòng cấu hình.",
+            //                      "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //        return;
+            //    }
+            //    Globalvariable.ConfigSystem = JsonConvert.DeserializeObject<ConfigModel>(configTable.C000);
+            //    Globalvariable.LocationsInfo = JsonConvert.DeserializeObject<LocationsInfo>(configTable.C001);
+
+            Globalvariable.GetConfig();
+
+            
+
+                using (var dbContext = new ApplicationDbContext())
                 {
-                    MessageBox.Show("Cấu hình cơ sở dữ liệu không hợp lệ hoặc chưa được thiết lập. Vui lòng cấu hình.",
-                                  "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                Globalvariable.ConfigSystem = JsonConvert.DeserializeObject<ConfigModel>(configTable.C000);
-                Globalvariable.LocationsInfo = JsonConvert.DeserializeObject<LocationsInfo>(configTable.C001);
-
-
-                ////////chinh tay cac thong so de test
-                //Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi = 0.98;
-                //Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G = 9.81;
-                ////Globalvariable.ConfigSystem.ParametterConfig.DoMoCuaTran_h = 6;
-                //Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo = 1;
-                //Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn = 14;
-
-                //Globalvariable.ConfigSystem.ParametterConfig.HeSoCoHep_ALpha = 0;
-                // Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1 = 10.66;
-                //  Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2 = 10.80;
-                //   Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3 = 2.0;
-
-                ////////////////////////////
-
-                foreach (var location in Globalvariable.LocationsInfo)
-                {
-                    var displayItem = new RealtimeDisplayModel()
-                    {
-                        LocationId = location.Id,
-                        LocationName = location.Name,
-                        CalculatorValue = new CalculatorValueModel(),
-                    };
-
-                    foreach (var station in location.Stations)
-                    {
-                        TagsStation tagStation = new TagsStation();
-                        tagStation.HT_Cylinder1_1_Offset = station.OffsetConfig.HT_Cylinder1_1;
-                        tagStation.HT_Cylinder1_2_Offset = station.OffsetConfig.HT_Cylinder1_2;
-                        tagStation.HT_Cylinder2_1_Offset = station.OffsetConfig.HT_Cylinder2_1;
-                        tagStation.HT_Cylinder2_2_Offset = station.OffsetConfig.HT_Cylinder2_2;
-                        tagStation.Door1_Aperture_Offset = station.OffsetConfig.Door1_Aperture;
-                        tagStation.Door2_Aperture_Offset = station.OffsetConfig.Door2_Aperture;
-                        tagStation.S1_Temp_Oil_Offset = station.OffsetConfig.S1_Temp_Oil;
-                        tagStation.Pressure_Oil_Door1_Offset = station.OffsetConfig.Pressure_Oil_Door1;
-                        tagStation.Pressure_Oil_Door2_Offset = station.OffsetConfig.Pressure_Oil_Door2;
-                        tagStation.Fllow_Door1_Offset = station.OffsetConfig.Fllow_Door1;
-                        tagStation.Fllow_Door2_Offset = station.OffsetConfig.Fllow_Door2;
-                        tagStation.Fllow_Ho_Offset = station.OffsetConfig.Fllow_Ho;
-                        tagStation.Path = station.Path;
-                        tagStation.StationId = station.Id ?? 0;
-                        tagStation.StationName = station.Name ?? string.Empty;
-                        displayItem.Stations.Add(tagStation);
-
-                    }
-                    Globalvariable.RealtimeDisplays.Add(displayItem);
                     var dlRealtime = dbContext.FT02s.FirstOrDefault();
                     if (dlRealtime != null)
                     {
@@ -103,15 +63,11 @@ namespace RegistrationForm1
                         };
 
                     }
-                    //        dbContext.SaveChanges();
-
+                    dbContext.SaveChanges();
                 }
-            }
 
-            Globalvariable.GetConfig();
-
-           Application.Run(new FrmLogin());
-          //   Application.Run(new FrmCS1());
+            Application.Run(new FrmLogin());
+            //   Application.Run(new FrmCS1());
         }
         private static bool TestConnectionSilently(string connectionString)
         {

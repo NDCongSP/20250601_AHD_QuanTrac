@@ -296,8 +296,13 @@ namespace RegistrationForm1
             {
                 _timer.Enabled = false;
 
-                if (Globalvariable.RealtimeDisplays == null || Globalvariable.RealtimeDisplays.Count == 0 )
-                    return;
+                Globalvariable.GetConfig();
+
+                    
+
+
+                if (Globalvariable.RealtimeDisplays == null)
+                    Globalvariable.RealtimeDisplays = new RealtimeDisplays();
 
                 #region hien thi UI
 
@@ -308,6 +313,13 @@ namespace RegistrationForm1
                     {
                         foreach (var item in location.Stations)
                         {
+                            //tinh toans
+                            item.Door2_Aperture_Final = Math.Round(item.Door2_Aperture + item.Door2_Aperture_Offset ?? 0, 2);
+                            item.Door1_Aperture_Final = Math.Round(item.Door1_Aperture + item.Door1_Aperture_Offset ?? 0, 2);
+                        //    item.Q_i_1 = Math.Round((double)Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * alpha1 * h * SumB * Math.Sqrt(insideSqrt), 1)
+                        //: 0; 
+                        //    item.Q_i_2 = Qi;
+
                             if (item.Path == "Local Station/DauTieng/S71500/Station_1")
                             {
                                 _labALDoor1_Station1.Text = item.Al_Door1.ToString();
@@ -343,8 +355,6 @@ namespace RegistrationForm1
                         _labMNHLCS2.Text = location.Parametters.MNHL_CongSo2.ToString();
                         _labMNHLCS3.Text= location.Parametters.MNHL_CongSo3.ToString();
 
-
-
                         _labOffsetbinhnham.Text = location.API_Offset.API_Fllow_BinhNham.ToString();
                         _labOffsetBensuc.Text = location.API_Offset.API_Fllow_BenSuc.ToString();
                         _labOffsetChandap.Text = location.API_Offset.API_ChanDap.ToString();
@@ -365,10 +375,6 @@ namespace RegistrationForm1
                         _labWtr.Text = location.CalculatorValue.W_tr.ToString();
                         _labWdi.Text = location.CalculatorValue.W_di.ToString();
                         _LabQdi.Text = location.CalculatorValue.Q_di.ToString();
-
-
-                  
-
 
 
                     }
@@ -523,7 +529,7 @@ namespace RegistrationForm1
 
                     if (dataLogs.Count == 0)
                       return;
-                    //////     Lưu vào database
+                    ////     Lưu vào database
                     using var dbContext = new ApplicationDbContext();
                     dbContext.FT03s.AddRange(dataLogs);
                     dbContext.SaveChanges();//Luu thay doi vao db
@@ -531,8 +537,6 @@ namespace RegistrationForm1
                     _startTime = DateTime.Now;
                 }
                 #endregion
-
-                Globalvariable.GetConfig();
             }
             catch (Exception ex)
             {
