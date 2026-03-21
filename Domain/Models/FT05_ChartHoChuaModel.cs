@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace Domain.Models;
 
@@ -8,18 +8,17 @@ public class FT05_ChartHoChuaModel : FT05_ChartHoChua
     {
         get
         {
-            var date = DateTime.ParseExact(X_Value, "M/d", CultureInfo.InvariantCulture);
-            var currentYear = DateTime.Now.Year;
+            if (string.IsNullOrWhiteSpace(X_Value))
+                return default;
 
-            var targetYear = date.Month <= 6 ? currentYear + 1 : currentYear;
+            var date = DateTime.ParseExact(X_Value.Trim(), "M/d", CultureInfo.InvariantCulture);
+            var now = DateTime.Now;
 
-            if (date.Month == 1 && date.Day > 31)
-            {
-                return new DateTime(targetYear + 1, 1, date.Day - 31);
-            }
+            var baseYear = now.Month >= 7 ? now.Year : now.Year - 1;
+            var targetYear = date.Month >= 7 ? baseYear : baseYear + 1;
 
             return new DateTime(targetYear, date.Month, date.Day);
         }
-        set => X_Value = value.ToString("M/d");
+        set => X_Value = value.ToString("M/d", CultureInfo.InvariantCulture);
     }
 }

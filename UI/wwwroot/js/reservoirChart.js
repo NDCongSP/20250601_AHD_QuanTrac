@@ -407,13 +407,47 @@ function updateChart(config) {
 
         if (!xScale || !yScale) return;
 
-        const yValue = yScale.getValueForPixel(y);
-        const xValue = xScale.getValueForPixel(x);
+        const xValueMs = xScale.getValueForPixel(x);
+        if (xValueMs == null || !isFinite(xValueMs)) return;
 
-        // Hiển thị trên dòng infoLine2
-        if (yValue && xValue) {
-            const date = luxon.DateTime.fromMillis(xValue).toFormat("dd/MM/yyyy HH:mm");
-            //call c# function OnChartHover
+        function pointTimeMs(p) {
+            if (p == null || typeof p !== 'object') return null;
+            if (p.x == null) return null;
+            if (typeof p.x === 'number') return p.x;
+            if (typeof p.x === 'string') {
+                const d = luxon.DateTime.fromISO(p.x);
+                return d.isValid ? d.toMillis() : null;
+            }
+            return null;
+        }
+
+        // Ưu tiên điểm gần nhất trên Flow_Ho_Final (FT03) theo trục X — tránh lệch ngày so với đường xanh khi rê chuột sang vùng chỉ có đường FT05
+        const flowDs = chart.data.datasets.find(ds => ds && ds.label === 'Flow_Ho_Final');
+        let yValue = yScale.getValueForPixel(y);
+        let dateMs = xValueMs;
+        if (flowDs && Array.isArray(flowDs.data)) {
+            let best = null;
+            let bestDist = Infinity;
+            flowDs.data.forEach((p) => {
+                const ms = pointTimeMs(p);
+                if (ms == null || !isFinite(ms)) return;
+                const px = xScale.getPixelForValue(ms);
+                if (px == null || !isFinite(px)) return;
+                const d = Math.abs(px - x);
+                if (d < bestDist) {
+                    bestDist = d;
+                    best = { ms, y: p.y };
+                }
+            });
+            const snapPx = 48;
+            if (best && bestDist < snapPx && best.y != null && isFinite(Number(best.y))) {
+                dateMs = best.ms;
+                yValue = Number(best.y);
+            }
+        }
+
+        const date = luxon.DateTime.fromMillis(dateMs).toFormat('dd/MM/yyyy HH:mm');
+        if (window.dotNetReference) {
             window.dotNetReference.invokeMethodAsync('OnChartHover', date, yValue);
         }
     });

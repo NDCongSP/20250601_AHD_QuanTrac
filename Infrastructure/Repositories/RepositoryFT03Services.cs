@@ -48,17 +48,19 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                // Nếu không chỉ định ngày bắt đầu/kết thúc, sử dụng năm tài chính hiện tại
                 if (!fromDate.HasValue || !toDate.HasValue)
                 {
                     var now = DateTime.Now;
-                    fromDate = now < new DateTime(now.Year, 7, 31) ?
-                        new DateTime(now.Year - 1, 7, 1) :
-                        new DateTime(now.Year, 7, 1);
-
-                    toDate = now < new DateTime(now.Year, 7, 31) ?
-                        new DateTime(now.Year, 6, 30) :
-                        new DateTime(now.Year + 1, 6, 30);
+                    if (now.Month >= 7)
+                    {
+                        fromDate = new DateTime(now.Year, 7, 1);
+                        toDate = new DateTime(now.Year + 1, 6, 30);
+                    }
+                    else
+                    {
+                        fromDate = new DateTime(now.Year - 1, 7, 1);
+                        toDate = new DateTime(now.Year, 6, 30);
+                    }
                 }
 
                 // Lấy tất cả dữ liệu trong khoảng ngày

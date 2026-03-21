@@ -374,9 +374,26 @@
         allDatasets.AddRange(areaDatasets);
         allDatasets.Add(ft03Dataset);
 
-        // X-axis range for region labels
-        var minDate = chartData.Where(d => d.Date != default).Min(d => d.Date);
-        var maxDate = chartData.Where(d => d.Date != default).Max(d => d.Date);
+        // Trục thời gian: phải khớp dữ liệu FT05 + FT03 (trước đây min/max cố định 2025-07…2026-06 khiến toàn bộ đường L_/A_ lệch ra ngoài màn hình khi năm tài chính thay đổi)
+        var axisDates = new List<DateTime>();
+        axisDates.AddRange(chartData.Where(d => d.Date != default).Select(d => d.Date));
+        if (_ft03ChartData != null)
+            axisDates.AddRange(_ft03ChartData.Where(x => x.Date != default).Select(x => x.Date));
+
+        DateTime minDate;
+        DateTime maxDate;
+        if (axisDates.Count > 0)
+        {
+            minDate = axisDates.Min().AddDays(-3);
+            maxDate = axisDates.Max().AddDays(3);
+        }
+        else
+        {
+            var y = DateTime.Now.Year;
+            minDate = new DateTime(y, 7, 1);
+            maxDate = new DateTime(y + 1, 6, 30);
+        }
+
         var xMinStr = minDate.ToString("yyyy-MM-dd");
         var xMaxStr = maxDate.ToString("yyyy-MM-dd");
 
@@ -469,8 +486,8 @@
                             minRotation = 45,
                             callback = "function(value){ return luxon.DateTime.fromMillis(value).toFormat('dd/MM'); }"
                         },
-                        min = "2025-07-01",
-                        max = "2026-06-30"
+                        min = xMinStr,
+                        max = xMaxStr
                     },
                     y = new
                     {
