@@ -11,14 +11,15 @@ admin
 Pass: Dmc@5001
 * IP server local: 192.168.0.100
 * Ultra viewer: 121365864 - pass: kn@123456
-* SQL server: sa - pass: FTCuAGnnB*Jyd%pW
+* SQL server: sa - pass: *FTCuAGnnB\*Jyd%pW
 dev1  - pass: pR*mBaG)@v(yn\*Wc
 NAT port: local 1433 - public 9168
 * WEB API: 14.224.229.6:9170
-* Web UI: 14.224.229.6:9171
+* Web UI: 14.224.229.6:9171 / http://dautieng.thuyloimiennam.vn/
 
   * user: admin@gmail.com
   * password: admin@gmail.comP1
+  * TK API: api@gmail.com - *&*X3S3E5%AE!!75a
 
 Dùng mediamtx
 https://github.com/bluenviron/mediamtx/releases
