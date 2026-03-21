@@ -19,7 +19,7 @@ NAT port: local 1433 - public 9168
 
   * user: admin@gmail.com
   * password: admin@gmail.comP1
-  * TK API: api@gmail.com - *&*X3S3E5%AE!!75a
+  * TK API: api@gmail.com - api@gmail.comP1
 
 Dùng mediamtx
 https://github.com/bluenviron/mediamtx/releases
