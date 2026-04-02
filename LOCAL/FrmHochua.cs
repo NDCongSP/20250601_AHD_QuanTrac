@@ -71,7 +71,7 @@ namespace RegistrationForm1
             // Gắn sự kiện SizeChanged cho Form để cập nhật vị trí các controls khi Form thay đổi kích thước
             this.SizeChanged += (sender, e) => AdjustLayout();
             AdjustLayout(); // Cập nhật vị trí ban đầu sau khi controls đã được thêm vào form
-            LoadAllRainDataWithTimestamp();
+            LoadAllRainDataWithTimestampAsync();
             InitializeTimer(); // Khởi tạo và cấu hình Timer
             this.Shown += FrmHochua_Shown;
             _timer.Interval = 1000;
@@ -157,11 +157,94 @@ namespace RegistrationForm1
         }
         private void DataRefreshTimer_Tick(object sender, EventArgs e)
         {
-            LoadAllRainDataWithTimestamp(); // Tải lại dữ liệu khi Timer Tick
+            LoadAllRainDataWithTimestampAsync(); // Tải lại dữ liệu khi Timer Tick
         }
 
 
-        private async void LoadAllRainDataWithTimestamp()
+        //private async void LoadAllRainDataWithTimestamp()
+        //{
+        //    try
+        //    {
+        //        if (Globalvariable.RealtimeDisplays.Count == 0)
+        //            return;
+
+        //        using var dbContext = new ApplicationDbContext();
+
+        //        // Lấy bản ghi mới nhất 
+        //        var latest = await Task.Run(() => dbContext.FT03s
+        //            .Where(x => x.IsDeleted == false)
+        //            .OrderByDescending(x => x.CreateAt)
+        //            .FirstOrDefault());
+
+        //        if (latest == null)
+        //        {
+        //            dataGridViewRainData.Invoke((MethodInvoker)(() =>
+        //            {
+        //                dataGridViewRainData.DataSource = null;
+        //            }));
+        //            return;
+        //        }
+
+        //        //  Chuyển kiểu dữ liệu an toàn sang double
+        //        double ToDouble(object? value)
+        //        {
+        //            if (value == null || value == DBNull.Value) return 0;
+        //            try { return Convert.ToDouble(value); }
+        //            catch { return 0; }
+        //        }
+
+        //        // Danh sách trạm mưa (tuple với ép kiểu an toàn)
+        //        var rainDataList = new List<(string Name, double Value, double Total, DateTime? Time)>();
+        //        rainDataList.Add(("Đầu mối HDT", ToDouble(latest.API_D_DM_HoDT), ToDouble(latest.API_D_DM_HoDT_Total), latest.CreateAt));
+        //        rainDataList.Add(("Minh hòa", ToDouble(latest.API_D_MinhHoa), ToDouble(latest.API_D_MinhHoa_Total), latest.CreateAt));
+        //        rainDataList.Add(("Minh tâm", ToDouble(latest.API_D_MinhTam), ToDouble(latest.API_D_MinhTam_Total), latest.CreateAt));
+        //        rainDataList.Add(("Lộc thiện", ToDouble(latest.API_D_LocThien), ToDouble(latest.API_D_LocThien_Total), latest.CreateAt));
+        //        rainDataList.Add(("Lộc ninh", ToDouble(latest.API_D_LocNinh), ToDouble(latest.API_D_LocNinh_Total), latest.CreateAt));
+        //        rainDataList.Add(("Lộc thành", ToDouble(latest.API_D_LocThanh), ToDouble(latest.API_D_LocThanh_Total), latest.CreateAt));
+        //        rainDataList.Add(("Thanh lương", ToDouble(latest.API_D_ThanhLuong), ToDouble(latest.API_D_ThanhLuong_Total), latest.CreateAt));
+        //        rainDataList.Add(("Tân hoà 1", ToDouble(latest.API_D_TanHoa1), ToDouble(latest.API_D_TanHoa1_Total), latest.CreateAt));
+        //        rainDataList.Add(("Tân hoà 2", ToDouble(latest.API_D_TanHoa2), ToDouble(latest.API_D_TanHoa2_Total), latest.CreateAt));
+        //        rainDataList.Add(("Kà tum", ToDouble(latest.API_D_KaTum), ToDouble(latest.API_D_KaTum_Total), latest.CreateAt));
+        //        rainDataList.Add(("Tân thành", ToDouble(latest.API_D_TanThanh), ToDouble(latest.API_D_TanThanh_Total), latest.CreateAt));
+        //        rainDataList.Add(("Đồng ban", ToDouble(latest.API_D_DongBan), ToDouble(latest.API_D_DongBan_Total), latest.CreateAt));
+        //        rainDataList.Add(("Tân hà", ToDouble(latest.API_D_TanHa), ToDouble(latest.API_D_TanHa_Total), latest.CreateAt));
+
+        //        // Tạo DataTable hiển thị
+        //        DataTable dt = new DataTable();
+        //        dt.Columns.Add("Tên", typeof(string));
+        //        dt.Columns.Add("Tức thời", typeof(double));
+        //        dt.Columns.Add("Tổng tích luỹ", typeof(double));
+        //        dt.Columns.Add("Thời gian", typeof(DateTime));
+
+        //        foreach (var item in rainDataList)
+        //        {
+        //            dt.Rows.Add(item.Name, item.Value, item.Total, item.Time);
+        //        }
+
+        //        //  Cập nhật giao diện
+        //        Globalvariable.InvokeIfRequired(this, () =>
+        //        {
+        //            dataGridViewRainData.DataSource = dt;
+
+        //            dataGridViewRainData.Columns["Tức thời"].DefaultCellStyle.Format = "N2";
+        //            dataGridViewRainData.Columns["Tổng tích luỹ"].DefaultCellStyle.Format = "N2";
+        //        //    dataGridViewRainData.Columns["Thời gian"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
+
+        //            dataGridViewRainData.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+        //            dataGridViewRainData.Refresh();
+        //        });
+        //    }
+        //    catch (SqlException ex)
+        //    {
+        //        MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi Cơ sở Dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        private async Task LoadAllRainDataWithTimestampAsync()
         {
             try
             {
@@ -169,6 +252,13 @@ namespace RegistrationForm1
                     return;
 
                 using var dbContext = new ApplicationDbContext();
+
+                // 1. Fetch data asynchronously using EF's native async methods
+                // Note: Requires 'using Microsoft.EntityFrameworkCore;'
+                //var latest = await dbContext.FT03s
+                //    .Where(x => !x.IsDeleted)
+                //    .OrderByDescending(x => x.CreateAt)
+                //    .FirstOrDefaultAsync();
 
                 // Lấy bản ghi mới nhất 
                 var latest = await Task.Run(() => dbContext.FT03s
@@ -178,73 +268,73 @@ namespace RegistrationForm1
 
                 if (latest == null)
                 {
-                    dataGridViewRainData.Invoke((MethodInvoker)(() =>
-                    {
-                        dataGridViewRainData.DataSource = null;
-                    }));
+                    UpdateUI(() => dataGridViewRainData.DataSource = null);
                     return;
                 }
 
-                //  Chuyển kiểu dữ liệu an toàn sang double
-                double ToDouble(object? value)
-                {
-                    if (value == null || value == DBNull.Value) return 0;
-                    try { return Convert.ToDouble(value); }
-                    catch { return 0; }
-                }
+                // 2. Helper for safe conversion
+                double ToDouble(object? value) =>
+                    (value == null || value == DBNull.Value) ? 0 : Convert.ToDouble(value);
 
-                // Danh sách trạm mưa (tuple với ép kiểu an toàn)
-                var rainDataList = new List<(string Name, double Value, double Total, DateTime? Time)>();
-                rainDataList.Add(("Đầu mối HDT", ToDouble(latest.API_D_DM_HoDT), ToDouble(latest.API_D_DM_HoDT_Total), latest.CreateAt));
-                rainDataList.Add(("Minh hòa", ToDouble(latest.API_D_MinhHoa), ToDouble(latest.API_D_MinhHoa_Total), latest.CreateAt));
-                rainDataList.Add(("Minh tâm", ToDouble(latest.API_D_MinhTam), ToDouble(latest.API_D_MinhTam_Total), latest.CreateAt));
-                rainDataList.Add(("Lộc thiện", ToDouble(latest.API_D_LocThien), ToDouble(latest.API_D_LocThien_Total), latest.CreateAt));
-                rainDataList.Add(("Lộc ninh", ToDouble(latest.API_D_LocNinh), ToDouble(latest.API_D_LocNinh_Total), latest.CreateAt));
-                rainDataList.Add(("Lộc thành", ToDouble(latest.API_D_LocThanh), ToDouble(latest.API_D_LocThanh_Total), latest.CreateAt));
-                rainDataList.Add(("Thanh lương", ToDouble(latest.API_D_ThanhLuong), ToDouble(latest.API_D_ThanhLuong_Total), latest.CreateAt));
-                rainDataList.Add(("Tân hoà 1", ToDouble(latest.API_D_TanHoa1), ToDouble(latest.API_D_TanHoa1_Total), latest.CreateAt));
-                rainDataList.Add(("Tân hoà 2", ToDouble(latest.API_D_TanHoa2), ToDouble(latest.API_D_TanHoa2_Total), latest.CreateAt));
-                rainDataList.Add(("Kà tum", ToDouble(latest.API_D_KaTum), ToDouble(latest.API_D_KaTum_Total), latest.CreateAt));
-                rainDataList.Add(("Tân thành", ToDouble(latest.API_D_TanThanh), ToDouble(latest.API_D_TanThanh_Total), latest.CreateAt));
-                rainDataList.Add(("Đồng ban", ToDouble(latest.API_D_DongBan), ToDouble(latest.API_D_DongBan_Total), latest.CreateAt));
-                rainDataList.Add(("Tân hà", ToDouble(latest.API_D_TanHa), ToDouble(latest.API_D_TanHa_Total), latest.CreateAt));
-
-                // Tạo DataTable hiển thị
+                // 3. Define the data structure
                 DataTable dt = new DataTable();
                 dt.Columns.Add("Tên", typeof(string));
                 dt.Columns.Add("Tức thời", typeof(double));
                 dt.Columns.Add("Tổng tích luỹ", typeof(double));
                 dt.Columns.Add("Thời gian", typeof(DateTime));
 
-                foreach (var item in rainDataList)
+                // 4. Populate rows (Mapping the properties)
+                var stations = new[] {
+            ("Đầu mối HDT", latest.API_D_DM_HoDT, latest.API_D_DM_HoDT_Total),
+            ("Minh hòa",    latest.API_D_MinhHoa, latest.API_D_MinhHoa_Total),
+            ("Minh tâm",    latest.API_D_MinhTam, latest.API_D_MinhTam_Total),
+            ("Lộc thiện",   latest.API_D_LocThien, latest.API_D_LocThien_Total),
+            ("Lộc ninh",    latest.API_D_LocNinh, latest.API_D_LocNinh_Total),
+            ("Lộc thành",   latest.API_D_LocThanh, latest.API_D_LocThanh_Total),
+            ("Thanh lương", latest.API_D_ThanhLuong, latest.API_D_ThanhLuong_Total),
+            ("Tân hoà 1",   latest.API_D_TanHoa1, latest.API_D_TanHoa1_Total),
+            ("Tân hoà 2",   latest.API_D_TanHoa2, latest.API_D_TanHoa2_Total),
+            ("Kà tum",      latest.API_D_KaTum, latest.API_D_KaTum_Total),
+            ("Tân thành",   latest.API_D_TanThanh, latest.API_D_TanThanh_Total),
+            ("Đồng ban",    latest.API_D_DongBan, latest.API_D_DongBan_Total),
+            ("Tân hà",      latest.API_D_TanHa, latest.API_D_TanHa_Total)
+        };
+
+                foreach (var (name, instant, total) in stations)
                 {
-                    dt.Rows.Add(item.Name, item.Value, item.Total, item.Time);
+                    dt.Rows.Add(name, ToDouble(instant), ToDouble(total), latest.CreateAt);
                 }
 
-                //  Cập nhật giao diện
-                Globalvariable.InvokeIfRequired(this, () =>
+                // 5. Unified UI Update
+                UpdateUI(() =>
                 {
                     dataGridViewRainData.DataSource = dt;
 
-                    dataGridViewRainData.Columns["Tức thời"].DefaultCellStyle.Format = "N2";
-                    dataGridViewRainData.Columns["Tổng tích luỹ"].DefaultCellStyle.Format = "N2";
-                //    dataGridViewRainData.Columns["Thời gian"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
+                    if (dataGridViewRainData.Columns["Tức thời"] != null)
+                        dataGridViewRainData.Columns["Tức thời"].DefaultCellStyle.Format = "N2";
+
+                    if (dataGridViewRainData.Columns["Tổng tích luỹ"] != null)
+                        dataGridViewRainData.Columns["Tổng tích luỹ"].DefaultCellStyle.Format = "N2";
 
                     dataGridViewRainData.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                    dataGridViewRainData.Refresh();
                 });
             }
             catch (SqlException ex)
             {
-                MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi Cơ sở Dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi kết nối CSDL: {ex.Message}", "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-
+        // Simple helper to handle Cross-thread calls
+        private void UpdateUI(Action action)
+        {
+            if (this.InvokeRequired) this.Invoke(action);
+            else action();
+        }
 
 
 
@@ -1055,54 +1145,56 @@ namespace RegistrationForm1
             List<DateTime> dates = new List<DateTime>();
             List<double> values = new List<double>();
 
-            // Đặt ngưỡng epsilon cho việc so sánh số thực
             const double EPSILON = 0.000001;
 
             try
             {
                 using (var dbContext = new ApplicationDbContext())
                 {
-                    // 1. TRUY VẤN TẤT CẢ các bản ghi (không lọc theo Fllow_Ho_Final.Value)
                     var allRecords = dbContext.FT03s
-                        .Where(x =>
-                            x.IsDeleted == false &&
-                            x.StationName == "Location_Info")
+                        .Where(x => x.IsDeleted == false &&
+                                    x.StationName == "Location_Info")
                         .OrderBy(x => x.CreateAt)
-                        .AsEnumerable() // Chuyển sang xử lý trên bộ nhớ để dùng Math.Abs nếu cần
+                        .Select(x => new
+                        {
+                            x.CreateAt,
+                            x.Fllow_Ho_Final
+                        })
+                        .AsEnumerable()
                         .ToList();
 
-                    // 2. XỬ LÝ TRONG C# (CHUYỂN 0 HOẶC NULL THÀNH double.NaN)
                     foreach (var item in allRecords)
                     {
-                        dates.Add(item.CreateAt ?? DateTime.MinValue);
+                        // Ngày tạo: nếu null thì dùng Now
+                        dates.Add(item.CreateAt ?? DateTime.Now);
 
-                        // Kiểm tra: Nếu có giá trị và giá trị đó khác 0 (vượt ngưỡng EPSILON)
-                        if (item.Fllow_Ho.HasValue && Math.Abs(item.Fllow_Ho.Value) > EPSILON)
+                        // Giá trị hợp lệ khác 0 hoặc khác rất nhỏ
+                        if (item.Fllow_Ho_Final.HasValue &&
+                            Math.Abs(item.Fllow_Ho_Final.Value) > EPSILON)
                         {
-                            values.Add(item.Fllow_Ho.Value);
+                            values.Add(item.Fllow_Ho_Final.Value);
                         }
                         else
                         {
-                            // Trường hợp này bao gồm: 
-                            // a) Fllow_Ho_Final == NULL
-                            // b) Fllow_Ho_Final == 0 (hoặc rất gần 0)
-                            // -> Dùng double.NaN để biểu đồ ngắt đường
+                            // Ngắt đoạn biểu đồ
                             values.Add(double.NaN);
                         }
                     }
 
-                    Console.WriteLine($"✅ Đọc được {values.Count} bản ghi. {values.Count(v => !double.IsNaN(v))} điểm hợp lệ (khác 0/NULL).");
+                    Console.WriteLine(
+                        $"Đọc {values.Count} bản ghi, " +
+                        $"{values.Count(v => !double.IsNaN(v))} điểm hợp lệ."
+                    );
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Lỗi khi đọc dữ liệu Fllow_Ho_Final: {ex.Message}");
-                // dates và values giữ lại danh sách rỗng
+                Console.WriteLine("❌ Lỗi SQL (Fllow_Ho_Final): " + ex.Message);
             }
 
-            // 3. TRẢ VỀ GIÁ TRỊ CUỐI CÙNG
             return Tuple.Create(dates, values);
         }
+
 
         private double InterpolateW(double zValue)
         {

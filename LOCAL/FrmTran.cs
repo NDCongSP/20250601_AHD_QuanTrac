@@ -1,5 +1,6 @@
 ﻿using Ahd.Core;
 using Ahd.Winforms.Controls;
+//using DocumentFormat.OpenXml.Spreadsheet;
 using Domain.Entities;
 using System;
 using System.ComponentModel;
@@ -44,6 +45,16 @@ namespace RegistrationForm1
 
 
                 var dataDisplayStation1 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_1");
+
+
+                if (dataDisplayStation1.Path == "Local Station/DauTieng/S71500/Station_1")
+                {
+                    _labFllow_Door1.Text = dataDisplayStation1.Q_i_1.ToString();
+                    _labFllow_Door2.Text = dataDisplayStation1.Q_i_2.ToString();
+                    
+                }
+
+
 
                 if (dataDisplayStation1?.DC1_Running == true)
                 {
@@ -210,6 +221,14 @@ namespace RegistrationForm1
 
                 // Station 2
                 var dataDisplayStation2 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_2");
+
+                if (dataDisplayStation2.Path == "Local Station/DauTieng/S71500/Station_2")
+                {
+                    _labFllow_Door3.Text = dataDisplayStation2.Q_i_1.ToString();
+                    _labFllow_Door4.Text = dataDisplayStation2.Q_i_2.ToString();
+
+                }
+
                 if (dataDisplayStation2?.DC1_Running == true)
                 {
                     Pic_S2_DC1_Running.Visible = true; PicT4_S2_DC1_Running.Visible = true; Pic_S2_DC1_Stop.Visible = false; PicT4_S2_DC1_Stop.Visible = false;
@@ -402,6 +421,12 @@ namespace RegistrationForm1
                 // Station 3
 
                 var dataDisplayStation3 = Globalvariable.RealtimeDisplays.FirstOrDefault()?.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Station_3");
+                if (dataDisplayStation3.Path == "Local Station/DauTieng/S71500/Station_3")
+                {
+                    _labFllow_Door5.Text = dataDisplayStation3.Q_i_1.ToString();
+                    _labFllow_Door6.Text = dataDisplayStation3.Q_i_2.ToString();
+
+                }
                 if (dataDisplayStation3?.DC1_Running == true)
                 {
                     Pic_S3_DC1_Running.Visible = true; PicT6_S3_DC1_Running.Visible = true; Pic_S3_DC1_Stop.Visible = false; PicT6_S3_DC1_Stop.Visible = false;
@@ -559,7 +584,18 @@ namespace RegistrationForm1
                 }
                 else { Pic_Doorlock5_Closing_Stop.Visible = true; Pic_Doorlock5_Closing.Visible = false; }
 
-
+               
+                var location = Globalvariable.RealtimeDisplays?.FirstOrDefault(loc => loc.LocationId == 1);
+                if (Location != null)
+                {
+                   
+                    _labTotal_Fllow6.Text = location.CalculatorValue.Q_i_total.ToString();
+                    _labTotal_Fllow5.Text = location.CalculatorValue.Q_i_total.ToString();
+                    _labTotal_Fllow4.Text = location.CalculatorValue.Q_i_total.ToString();
+                    _labTotal_Fllow3.Text = location.CalculatorValue.Q_i_total.ToString();
+                    _labTotal_Fllow2.Text = location.CalculatorValue.Q_i_total.ToString();
+                    _labTotal_Fllow1.Text = location.CalculatorValue.Q_i_total.ToString();
+                }
 
                 // });
             }

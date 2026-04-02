@@ -96,7 +96,6 @@
             this.button29 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.ahdTextBox13 = new Ahd.Winforms.Controls.AhdTextBox();
             this.button8 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ahdButton20 = new Ahd.Winforms.Controls.AhdButton();
@@ -145,6 +144,7 @@
             this.ahdTextBox22 = new Ahd.Winforms.Controls.AhdTextBox();
             this.Abnt_OpenDoor6 = new Ahd.Winforms.Controls.AhdButton();
             this.AbntON3 = new Ahd.Winforms.Controls.AhdButton();
+            this.ahdTextBox4 = new Ahd.Winforms.Controls.AhdTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock2)).BeginInit();
@@ -162,7 +162,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoorlock4)).BeginInit();
@@ -200,6 +199,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AbntON3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -627,30 +627,6 @@
             this.button2.Text = "Cài đặt độ mở cửa 1";
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.UseVisualStyleBackColor = true;
-            // 
-            // ahdTextBox13
-            // 
-            this.ahdTextBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ahdTextBox13.DropDownBackColor = System.Drawing.SystemColors.Control;
-            this.ahdTextBox13.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ahdTextBox13.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
-            this.ahdTextBox13.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox13.DropDownForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdTextBox13.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdTextBox13.HightLightStatusTime = 3;
-            this.ahdTextBox13.Location = new System.Drawing.Point(1055, 616);
-            this.ahdTextBox13.Name = "ahdTextBox13";
-            this.ahdTextBox13.Role = null;
-            this.ahdTextBox13.Size = new System.Drawing.Size(263, 41);
-            this.ahdTextBox13.StringFormat = "0.0";
-            this.ahdTextBox13.TabIndex = 382;
-            this.ahdTextBox13.TagPath = "Local Station/DauTieng/PLC1_2/Total_Fllow";
-            this.ahdTextBox13.Text = "0.0";
-            this.ahdTextBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ahdTextBox13.WriteDelay = 200;
-            this.ahdTextBox13.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
             // 
             // button8
             // 
@@ -1578,15 +1554,37 @@
             writeTagCommand44,
             writeTagCommand45});
             // 
+            // ahdTextBox4
+            // 
+            this.ahdTextBox4.DropDownBackColor = System.Drawing.SystemColors.Control;
+            this.ahdTextBox4.DropDownBorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ahdTextBox4.DropDownDirection = Ahd.Winforms.Controls.DropDownDirection.None;
+            this.ahdTextBox4.DropDownFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox4.DropDownForeColor = System.Drawing.SystemColors.ControlText;
+            this.ahdTextBox4.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ahdTextBox4.HightLightStatusTime = 3;
+            this.ahdTextBox4.Location = new System.Drawing.Point(1055, 625);
+            this.ahdTextBox4.Multiline = true;
+            this.ahdTextBox4.Name = "ahdTextBox4";
+            this.ahdTextBox4.Role = null;
+            this.ahdTextBox4.Size = new System.Drawing.Size(263, 35);
+            this.ahdTextBox4.StringFormat = "0.0";
+            this.ahdTextBox4.TabIndex = 399;
+            this.ahdTextBox4.TagPath = "Local Station/DauTieng/PLC1_2/Total_Fllow";
+            this.ahdTextBox4.Text = "0.0";
+            this.ahdTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ahdTextBox4.WriteDelay = 200;
+            this.ahdTextBox4.WriteTrigger = Ahd.Core.WriteTrigger.OnEnter;
+            // 
             // FrmDieukhienscada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1924, 1061);
+            this.Controls.Add(this.ahdTextBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.ahdTextBox13);
             this.Controls.Add(this.button8);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1614,7 +1612,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_CloseDoor1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox13)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdButton20)).EndInit();
@@ -1654,6 +1651,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Abnt_OpenDoor6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AbntON3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ahdTextBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1685,7 +1683,6 @@
         private Ahd.Winforms.Controls.AhdButton ahdButton4;
         private Ahd.Winforms.Controls.AhdButton Abnt_CloseDoor2;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoor2;
-        private Ahd.Winforms.Controls.AhdTextBox ahdTextBox13;
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox12;
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox11;
         private Ahd.Winforms.Controls.AhdButton AbntOFF1;
@@ -1732,5 +1729,6 @@
         private Ahd.Winforms.Controls.AhdTextBox ahdTextBox22;
         private Ahd.Winforms.Controls.AhdButton Abnt_OpenDoor6;
         private Ahd.Winforms.Controls.AhdButton AbntON3;
+        private Ahd.Winforms.Controls.AhdTextBox ahdTextBox4;
     }
 }

@@ -41,35 +41,48 @@ namespace RegistrationForm1
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string userName = txtUsername.Text.Trim();
-            string password = txtPassword.Text.Trim();
-
-            using (var db = new ApplicationDbContext())
+            try
             {
-                var user = db.ScadaUsers
-                    .FirstOrDefault(u => u.UserName == userName
-                                      && (u.IsDeleted == false || u.IsDeleted == null));
+                string userName = txtUsername.Text.Trim();
+                string password = txtPassword.Text.Trim();
 
-                if (user == null)
+                using (var db = new ApplicationDbContext())
                 {
-                    MessageBox.Show("Không tồn tại tài khoản!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    var user = db.ScadaUsers
+                        .FirstOrDefault(u => u.UserName == userName
+                                          && (u.IsDeleted == false || u.IsDeleted == null));
 
-                // ✅ Kiểm tra mật khẩu bằng BCrypt
-                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+                    if (user == null)
+                    {
+                        MessageBox.Show("Không tồn tại tài khoản!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-                if (isPasswordValid)
-                {
-                    // ✅ Gán thông tin người dùng vào biến toàn cục
+                    // ✅ Kiểm tra mật khẩu
+                    bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+                    if (!isPasswordValid)
+                    {
+                        MessageBox.Show("Mật khẩu không đúng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // ✅ Gán user vào biến toàn cục
                     Globalvariable.UserInfo = user;
 
                     MessageBox.Show($"Đăng nhập thành công!\nXin chào {user.FullName} ({user.PermissionScada})",
                                     "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    // ✅ Mở form chính
+                    FrmMain mainForm = new FrmMain();
+                    mainForm.FormClosed += (s, args) => this.Close(); // Đảm bảo đóng app khi main form tắt
                     this.Hide();
-                    new FrmMain().Show();
+                    mainForm.Show();
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi đăng nhập: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

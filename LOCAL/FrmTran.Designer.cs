@@ -55,9 +55,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.ahdLabel26 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel27 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labTotal_Fllow1 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel6 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel23 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labFllow_Door1 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel4 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel5 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -173,9 +173,9 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.ahdLabel8 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel9 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labTotal_Fllow2 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel10 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel11 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labFllow_Door2 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel12 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel13 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -254,9 +254,9 @@
             this.label42 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.ahdLabel29 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel30 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labTotal_Fllow3 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel31 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel32 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labFllow_Door3 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel33 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel34 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
@@ -343,9 +343,9 @@
             this.label61 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
             this.ahdLabel47 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel48 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labTotal_Fllow4 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel49 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel50 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labFllow_Door4 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel51 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel52 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
@@ -439,9 +439,9 @@
             this.label80 = new System.Windows.Forms.Label();
             this.label81 = new System.Windows.Forms.Label();
             this.ahdLabel61 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel62 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labTotal_Fllow5 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel63 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel64 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labFllow_Door5 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel65 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel66 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
@@ -535,9 +535,9 @@
             this.label99 = new System.Windows.Forms.Label();
             this.label100 = new System.Windows.Forms.Label();
             this.ahdLabel75 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel76 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labTotal_Fllow6 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel77 = new Ahd.Winforms.Controls.AhdLabel();
-            this.ahdLabel78 = new Ahd.Winforms.Controls.AhdLabel();
+            this._labFllow_Door6 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel79 = new Ahd.Winforms.Controls.AhdLabel();
             this.ahdLabel80 = new Ahd.Winforms.Controls.AhdLabel();
             this.groupBox27 = new System.Windows.Forms.GroupBox();
@@ -581,9 +581,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel40)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel41)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel26)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel27)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel23)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel5)).BeginInit();
             this.groupBox6.SuspendLayout();
@@ -654,9 +654,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel13)).BeginInit();
             this.groupBox7.SuspendLayout();
@@ -708,9 +708,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel29)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel31)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel32)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel34)).BeginInit();
             this.groupBox13.SuspendLayout();
@@ -764,9 +764,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel45)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel46)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel47)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel48)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel49)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel50)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel51)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel52)).BeginInit();
             this.groupBox17.SuspendLayout();
@@ -825,9 +825,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel59)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel60)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel61)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel62)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel63)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel64)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel65)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel66)).BeginInit();
             this.groupBox22.SuspendLayout();
@@ -886,9 +886,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel73)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel74)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel75)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel76)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel77)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel78)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel79)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel80)).BeginInit();
             this.groupBox27.SuspendLayout();
@@ -950,9 +950,9 @@
             this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.ahdLabel26);
-            this.tabPage1.Controls.Add(this.ahdLabel27);
+            this.tabPage1.Controls.Add(this._labTotal_Fllow1);
             this.tabPage1.Controls.Add(this.ahdLabel6);
-            this.tabPage1.Controls.Add(this.ahdLabel23);
+            this.tabPage1.Controls.Add(this._labFllow_Door1);
             this.tabPage1.Controls.Add(this.ahdLabel4);
             this.tabPage1.Controls.Add(this.ahdLabel5);
             this.tabPage1.Controls.Add(this.groupBox6);
@@ -1277,19 +1277,19 @@
             this.ahdLabel26.Text = "m³/s";
             this.ahdLabel26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel27
+            // _labTotal_Fllow1
             // 
-            this.ahdLabel27.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel27.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel27.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel27.Location = new System.Drawing.Point(970, 195);
-            this.ahdLabel27.Name = "ahdLabel27";
-            this.ahdLabel27.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel27.StringFormat = "0.0";
-            this.ahdLabel27.TabIndex = 217;
-            this.ahdLabel27.TagPath = "Local Station/DauTieng/S71500/Station_1/Total_Fllow";
-            this.ahdLabel27.Text = "0.0";
-            this.ahdLabel27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labTotal_Fllow1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labTotal_Fllow1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotal_Fllow1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labTotal_Fllow1.Location = new System.Drawing.Point(970, 195);
+            this._labTotal_Fllow1.Name = "_labTotal_Fllow1";
+            this._labTotal_Fllow1.Size = new System.Drawing.Size(71, 28);
+            this._labTotal_Fllow1.StringFormat = "0.0";
+            this._labTotal_Fllow1.TabIndex = 217;
+            this._labTotal_Fllow1.TagPath = "Local Station/DauTieng/S71500/Station_1/Total_Fllow";
+            this._labTotal_Fllow1.Text = "0.0";
+            this._labTotal_Fllow1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel6
             // 
@@ -1305,19 +1305,19 @@
             this.ahdLabel6.Text = "m³/s";
             this.ahdLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel23
+            // _labFllow_Door1
             // 
-            this.ahdLabel23.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel23.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel23.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel23.Location = new System.Drawing.Point(970, 140);
-            this.ahdLabel23.Name = "ahdLabel23";
-            this.ahdLabel23.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel23.StringFormat = "0.0";
-            this.ahdLabel23.TabIndex = 212;
-            this.ahdLabel23.TagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door1";
-            this.ahdLabel23.Text = "0.0";
-            this.ahdLabel23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labFllow_Door1.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labFllow_Door1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labFllow_Door1.Location = new System.Drawing.Point(970, 140);
+            this._labFllow_Door1.Name = "_labFllow_Door1";
+            this._labFllow_Door1.Size = new System.Drawing.Size(71, 28);
+            this._labFllow_Door1.StringFormat = "0.0";
+            this._labFllow_Door1.TabIndex = 212;
+            this._labFllow_Door1.TagPath = "";
+            this._labFllow_Door1.Text = "0.0";
+            this._labFllow_Door1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel4
             // 
@@ -2047,9 +2047,9 @@
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.ahdLabel8);
-            this.tabPage2.Controls.Add(this.ahdLabel9);
+            this.tabPage2.Controls.Add(this._labTotal_Fllow2);
             this.tabPage2.Controls.Add(this.ahdLabel10);
-            this.tabPage2.Controls.Add(this.ahdLabel11);
+            this.tabPage2.Controls.Add(this._labFllow_Door2);
             this.tabPage2.Controls.Add(this.ahdLabel12);
             this.tabPage2.Controls.Add(this.ahdLabel13);
             this.tabPage2.Controls.Add(this.groupBox7);
@@ -2991,19 +2991,19 @@
             this.ahdLabel8.Text = "m³/s";
             this.ahdLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel9
+            // _labTotal_Fllow2
             // 
-            this.ahdLabel9.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel9.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel9.Location = new System.Drawing.Point(965, 196);
-            this.ahdLabel9.Name = "ahdLabel9";
-            this.ahdLabel9.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel9.StringFormat = "0.0";
-            this.ahdLabel9.TabIndex = 249;
-            this.ahdLabel9.TagPath = "Local Station/DauTieng/S71500/Station_1/Total_Fllow";
-            this.ahdLabel9.Text = "0.0";
-            this.ahdLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labTotal_Fllow2.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labTotal_Fllow2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotal_Fllow2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labTotal_Fllow2.Location = new System.Drawing.Point(965, 196);
+            this._labTotal_Fllow2.Name = "_labTotal_Fllow2";
+            this._labTotal_Fllow2.Size = new System.Drawing.Size(71, 28);
+            this._labTotal_Fllow2.StringFormat = "0.0";
+            this._labTotal_Fllow2.TabIndex = 249;
+            this._labTotal_Fllow2.TagPath = "Local Station/DauTieng/S71500/Station_1/Total_Fllow";
+            this._labTotal_Fllow2.Text = "0.0";
+            this._labTotal_Fllow2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel10
             // 
@@ -3019,19 +3019,19 @@
             this.ahdLabel10.Text = "m³/s";
             this.ahdLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel11
+            // _labFllow_Door2
             // 
-            this.ahdLabel11.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel11.Location = new System.Drawing.Point(965, 141);
-            this.ahdLabel11.Name = "ahdLabel11";
-            this.ahdLabel11.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel11.StringFormat = "0.0";
-            this.ahdLabel11.TabIndex = 247;
-            this.ahdLabel11.TagPath = "Local Station/DauTieng/S71500/Station_1/Fllow_Door2";
-            this.ahdLabel11.Text = "0.0";
-            this.ahdLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labFllow_Door2.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labFllow_Door2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labFllow_Door2.Location = new System.Drawing.Point(965, 141);
+            this._labFllow_Door2.Name = "_labFllow_Door2";
+            this._labFllow_Door2.Size = new System.Drawing.Size(71, 28);
+            this._labFllow_Door2.StringFormat = "0.0";
+            this._labFllow_Door2.TabIndex = 247;
+            this._labFllow_Door2.TagPath = "";
+            this._labFllow_Door2.Text = "0.0";
+            this._labFllow_Door2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel12
             // 
@@ -3449,9 +3449,9 @@
             this.tabPage3.Controls.Add(this.label42);
             this.tabPage3.Controls.Add(this.label43);
             this.tabPage3.Controls.Add(this.ahdLabel29);
-            this.tabPage3.Controls.Add(this.ahdLabel30);
+            this.tabPage3.Controls.Add(this._labTotal_Fllow3);
             this.tabPage3.Controls.Add(this.ahdLabel31);
-            this.tabPage3.Controls.Add(this.ahdLabel32);
+            this.tabPage3.Controls.Add(this._labFllow_Door3);
             this.tabPage3.Controls.Add(this.ahdLabel33);
             this.tabPage3.Controls.Add(this.ahdLabel34);
             this.tabPage3.Controls.Add(this.groupBox13);
@@ -4185,19 +4185,19 @@
             this.ahdLabel29.Text = "m³/s";
             this.ahdLabel29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel30
+            // _labTotal_Fllow3
             // 
-            this.ahdLabel30.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel30.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel30.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel30.Location = new System.Drawing.Point(966, 196);
-            this.ahdLabel30.Name = "ahdLabel30";
-            this.ahdLabel30.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel30.StringFormat = "0.0";
-            this.ahdLabel30.TabIndex = 251;
-            this.ahdLabel30.TagPath = "Local Station/DauTieng/S71500/Station_2/Total_Fllow";
-            this.ahdLabel30.Text = "0.0";
-            this.ahdLabel30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labTotal_Fllow3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labTotal_Fllow3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotal_Fllow3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labTotal_Fllow3.Location = new System.Drawing.Point(966, 196);
+            this._labTotal_Fllow3.Name = "_labTotal_Fllow3";
+            this._labTotal_Fllow3.Size = new System.Drawing.Size(71, 28);
+            this._labTotal_Fllow3.StringFormat = "0.0";
+            this._labTotal_Fllow3.TabIndex = 251;
+            this._labTotal_Fllow3.TagPath = "Local Station/DauTieng/S71500/Station_2/Total_Fllow";
+            this._labTotal_Fllow3.Text = "0.0";
+            this._labTotal_Fllow3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel31
             // 
@@ -4213,19 +4213,19 @@
             this.ahdLabel31.Text = "m³/s";
             this.ahdLabel31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel32
+            // _labFllow_Door3
             // 
-            this.ahdLabel32.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel32.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel32.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel32.Location = new System.Drawing.Point(966, 141);
-            this.ahdLabel32.Name = "ahdLabel32";
-            this.ahdLabel32.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel32.StringFormat = "0.0";
-            this.ahdLabel32.TabIndex = 249;
-            this.ahdLabel32.TagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door1";
-            this.ahdLabel32.Text = "0.0";
-            this.ahdLabel32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labFllow_Door3.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labFllow_Door3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labFllow_Door3.Location = new System.Drawing.Point(966, 141);
+            this._labFllow_Door3.Name = "_labFllow_Door3";
+            this._labFllow_Door3.Size = new System.Drawing.Size(71, 28);
+            this._labFllow_Door3.StringFormat = "0.0";
+            this._labFllow_Door3.TabIndex = 249;
+            this._labFllow_Door3.TagPath = "";
+            this._labFllow_Door3.Text = "0.0";
+            this._labFllow_Door3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel33
             // 
@@ -4855,9 +4855,9 @@
             this.tabPage4.Controls.Add(this.label61);
             this.tabPage4.Controls.Add(this.label62);
             this.tabPage4.Controls.Add(this.ahdLabel47);
-            this.tabPage4.Controls.Add(this.ahdLabel48);
+            this.tabPage4.Controls.Add(this._labTotal_Fllow4);
             this.tabPage4.Controls.Add(this.ahdLabel49);
-            this.tabPage4.Controls.Add(this.ahdLabel50);
+            this.tabPage4.Controls.Add(this._labFllow_Door4);
             this.tabPage4.Controls.Add(this.ahdLabel51);
             this.tabPage4.Controls.Add(this.ahdLabel52);
             this.tabPage4.Controls.Add(this.groupBox17);
@@ -5489,19 +5489,19 @@
             this.ahdLabel47.Text = "m³/s";
             this.ahdLabel47.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel48
+            // _labTotal_Fllow4
             // 
-            this.ahdLabel48.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel48.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel48.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel48.Location = new System.Drawing.Point(966, 196);
-            this.ahdLabel48.Name = "ahdLabel48";
-            this.ahdLabel48.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel48.StringFormat = "0.0";
-            this.ahdLabel48.TabIndex = 251;
-            this.ahdLabel48.TagPath = "Local Station/DauTieng/S71500/Station_2/Total_Fllow";
-            this.ahdLabel48.Text = "0.0";
-            this.ahdLabel48.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labTotal_Fllow4.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labTotal_Fllow4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotal_Fllow4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labTotal_Fllow4.Location = new System.Drawing.Point(966, 196);
+            this._labTotal_Fllow4.Name = "_labTotal_Fllow4";
+            this._labTotal_Fllow4.Size = new System.Drawing.Size(71, 28);
+            this._labTotal_Fllow4.StringFormat = "0.0";
+            this._labTotal_Fllow4.TabIndex = 251;
+            this._labTotal_Fllow4.TagPath = "Local Station/DauTieng/S71500/Station_2/Total_Fllow";
+            this._labTotal_Fllow4.Text = "0.0";
+            this._labTotal_Fllow4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel49
             // 
@@ -5517,19 +5517,19 @@
             this.ahdLabel49.Text = "m³/s";
             this.ahdLabel49.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel50
+            // _labFllow_Door4
             // 
-            this.ahdLabel50.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel50.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel50.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel50.Location = new System.Drawing.Point(966, 141);
-            this.ahdLabel50.Name = "ahdLabel50";
-            this.ahdLabel50.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel50.StringFormat = "0.0";
-            this.ahdLabel50.TabIndex = 249;
-            this.ahdLabel50.TagPath = "Local Station/DauTieng/S71500/Station_2/Fllow_Door2";
-            this.ahdLabel50.Text = "0.0";
-            this.ahdLabel50.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labFllow_Door4.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labFllow_Door4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labFllow_Door4.Location = new System.Drawing.Point(966, 141);
+            this._labFllow_Door4.Name = "_labFllow_Door4";
+            this._labFllow_Door4.Size = new System.Drawing.Size(71, 28);
+            this._labFllow_Door4.StringFormat = "0.0";
+            this._labFllow_Door4.TabIndex = 249;
+            this._labFllow_Door4.TagPath = "";
+            this._labFllow_Door4.Text = "0.0";
+            this._labFllow_Door4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel51
             // 
@@ -6261,9 +6261,9 @@
             this.tabPage5.Controls.Add(this.label80);
             this.tabPage5.Controls.Add(this.label81);
             this.tabPage5.Controls.Add(this.ahdLabel61);
-            this.tabPage5.Controls.Add(this.ahdLabel62);
+            this.tabPage5.Controls.Add(this._labTotal_Fllow5);
             this.tabPage5.Controls.Add(this.ahdLabel63);
-            this.tabPage5.Controls.Add(this.ahdLabel64);
+            this.tabPage5.Controls.Add(this._labFllow_Door5);
             this.tabPage5.Controls.Add(this.ahdLabel65);
             this.tabPage5.Controls.Add(this.ahdLabel66);
             this.tabPage5.Controls.Add(this.groupBox22);
@@ -6895,19 +6895,19 @@
             this.ahdLabel61.Text = "m³/s";
             this.ahdLabel61.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel62
+            // _labTotal_Fllow5
             // 
-            this.ahdLabel62.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel62.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel62.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel62.Location = new System.Drawing.Point(966, 196);
-            this.ahdLabel62.Name = "ahdLabel62";
-            this.ahdLabel62.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel62.StringFormat = "0.0";
-            this.ahdLabel62.TabIndex = 251;
-            this.ahdLabel62.TagPath = "Local Station/DauTieng/S71500/Station_3/Total_Fllow";
-            this.ahdLabel62.Text = "0.0";
-            this.ahdLabel62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labTotal_Fllow5.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labTotal_Fllow5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotal_Fllow5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labTotal_Fllow5.Location = new System.Drawing.Point(966, 196);
+            this._labTotal_Fllow5.Name = "_labTotal_Fllow5";
+            this._labTotal_Fllow5.Size = new System.Drawing.Size(71, 28);
+            this._labTotal_Fllow5.StringFormat = "0.0";
+            this._labTotal_Fllow5.TabIndex = 251;
+            this._labTotal_Fllow5.TagPath = "Local Station/DauTieng/S71500/Station_3/Total_Fllow";
+            this._labTotal_Fllow5.Text = "0.0";
+            this._labTotal_Fllow5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel63
             // 
@@ -6923,19 +6923,19 @@
             this.ahdLabel63.Text = "m³/s";
             this.ahdLabel63.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel64
+            // _labFllow_Door5
             // 
-            this.ahdLabel64.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel64.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel64.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel64.Location = new System.Drawing.Point(966, 141);
-            this.ahdLabel64.Name = "ahdLabel64";
-            this.ahdLabel64.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel64.StringFormat = "0.0";
-            this.ahdLabel64.TabIndex = 249;
-            this.ahdLabel64.TagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door1";
-            this.ahdLabel64.Text = "0.0";
-            this.ahdLabel64.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labFllow_Door5.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labFllow_Door5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labFllow_Door5.Location = new System.Drawing.Point(966, 141);
+            this._labFllow_Door5.Name = "_labFllow_Door5";
+            this._labFllow_Door5.Size = new System.Drawing.Size(71, 28);
+            this._labFllow_Door5.StringFormat = "0.0";
+            this._labFllow_Door5.TabIndex = 249;
+            this._labFllow_Door5.TagPath = "";
+            this._labFllow_Door5.Text = "0.0";
+            this._labFllow_Door5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel65
             // 
@@ -7667,9 +7667,9 @@
             this.tabPage6.Controls.Add(this.label99);
             this.tabPage6.Controls.Add(this.label100);
             this.tabPage6.Controls.Add(this.ahdLabel75);
-            this.tabPage6.Controls.Add(this.ahdLabel76);
+            this.tabPage6.Controls.Add(this._labTotal_Fllow6);
             this.tabPage6.Controls.Add(this.ahdLabel77);
-            this.tabPage6.Controls.Add(this.ahdLabel78);
+            this.tabPage6.Controls.Add(this._labFllow_Door6);
             this.tabPage6.Controls.Add(this.ahdLabel79);
             this.tabPage6.Controls.Add(this.ahdLabel80);
             this.tabPage6.Controls.Add(this.groupBox27);
@@ -8300,19 +8300,19 @@
             this.ahdLabel75.Text = "m³/s";
             this.ahdLabel75.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel76
+            // _labTotal_Fllow6
             // 
-            this.ahdLabel76.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel76.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel76.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel76.Location = new System.Drawing.Point(966, 196);
-            this.ahdLabel76.Name = "ahdLabel76";
-            this.ahdLabel76.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel76.StringFormat = "0.0";
-            this.ahdLabel76.TabIndex = 251;
-            this.ahdLabel76.TagPath = "Local Station/DauTieng/S71500/Station_3/Total_Fllow";
-            this.ahdLabel76.Text = "0.0";
-            this.ahdLabel76.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labTotal_Fllow6.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labTotal_Fllow6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labTotal_Fllow6.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labTotal_Fllow6.Location = new System.Drawing.Point(966, 196);
+            this._labTotal_Fllow6.Name = "_labTotal_Fllow6";
+            this._labTotal_Fllow6.Size = new System.Drawing.Size(71, 28);
+            this._labTotal_Fllow6.StringFormat = "0.0";
+            this._labTotal_Fllow6.TabIndex = 251;
+            this._labTotal_Fllow6.TagPath = "Local Station/DauTieng/S71500/Station_3/Total_Fllow";
+            this._labTotal_Fllow6.Text = "0.0";
+            this._labTotal_Fllow6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel77
             // 
@@ -8328,19 +8328,19 @@
             this.ahdLabel77.Text = "m³/s";
             this.ahdLabel77.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ahdLabel78
+            // _labFllow_Door6
             // 
-            this.ahdLabel78.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
-            this.ahdLabel78.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ahdLabel78.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ahdLabel78.Location = new System.Drawing.Point(966, 141);
-            this.ahdLabel78.Name = "ahdLabel78";
-            this.ahdLabel78.Size = new System.Drawing.Size(71, 28);
-            this.ahdLabel78.StringFormat = "0.0";
-            this.ahdLabel78.TabIndex = 249;
-            this.ahdLabel78.TagPath = "Local Station/DauTieng/S71500/Station_3/Fllow_Door2";
-            this.ahdLabel78.Text = "0.0";
-            this.ahdLabel78.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._labFllow_Door6.DisplayMode = Ahd.Winforms.Controls.DisplayMode.Value;
+            this._labFllow_Door6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._labFllow_Door6.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._labFllow_Door6.Location = new System.Drawing.Point(966, 141);
+            this._labFllow_Door6.Name = "_labFllow_Door6";
+            this._labFllow_Door6.Size = new System.Drawing.Size(71, 28);
+            this._labFllow_Door6.StringFormat = "0.0";
+            this._labFllow_Door6.TabIndex = 249;
+            this._labFllow_Door6.TagPath = "";
+            this._labFllow_Door6.Text = "0.0";
+            this._labFllow_Door6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ahdLabel79
             // 
@@ -8787,9 +8787,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel40)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel41)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel26)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel27)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel23)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel5)).EndInit();
             this.groupBox6.ResumeLayout(false);
@@ -8866,9 +8866,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel13)).EndInit();
             this.groupBox7.ResumeLayout(false);
@@ -8925,9 +8925,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureLow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Door3_PressureHigh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel29)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel30)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel31)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel32)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel33)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel34)).EndInit();
             this.groupBox13.ResumeLayout(false);
@@ -8985,9 +8985,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel45)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel46)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel47)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel48)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel49)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel50)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel51)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel52)).EndInit();
             this.groupBox17.ResumeLayout(false);
@@ -9051,9 +9051,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel59)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel60)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel61)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel62)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel63)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel64)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel65)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel66)).EndInit();
             this.groupBox22.ResumeLayout(false);
@@ -9117,9 +9117,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel73)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel74)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel75)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel76)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labTotal_Fllow6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel77)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ahdLabel78)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._labFllow_Door6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel79)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ahdLabel80)).EndInit();
             this.groupBox27.ResumeLayout(false);
@@ -9162,9 +9162,9 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label4;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel26;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel27;
+        private Ahd.Winforms.Controls.AhdLabel _labTotal_Fllow1;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel6;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel23;
+        private Ahd.Winforms.Controls.AhdLabel _labFllow_Door1;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel4;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel5;
         private System.Windows.Forms.GroupBox groupBox6;
@@ -9224,9 +9224,9 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel8;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel9;
+        private Ahd.Winforms.Controls.AhdLabel _labTotal_Fllow2;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel10;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel11;
+        private Ahd.Winforms.Controls.AhdLabel _labFllow_Door2;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel12;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel13;
         private System.Windows.Forms.GroupBox groupBox7;
@@ -9268,9 +9268,9 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label label43;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel29;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel30;
+        private Ahd.Winforms.Controls.AhdLabel _labTotal_Fllow3;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel31;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel32;
+        private Ahd.Winforms.Controls.AhdLabel _labFllow_Door3;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel33;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel34;
         private System.Windows.Forms.GroupBox groupBox13;
@@ -9314,9 +9314,9 @@
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label62;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel47;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel48;
+        private Ahd.Winforms.Controls.AhdLabel _labTotal_Fllow4;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel49;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel50;
+        private Ahd.Winforms.Controls.AhdLabel _labFllow_Door4;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel51;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel52;
         private System.Windows.Forms.GroupBox groupBox17;
@@ -9365,9 +9365,9 @@
         private System.Windows.Forms.Label label80;
         private System.Windows.Forms.Label label81;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel61;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel62;
+        private Ahd.Winforms.Controls.AhdLabel _labTotal_Fllow5;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel63;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel64;
+        private Ahd.Winforms.Controls.AhdLabel _labFllow_Door5;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel65;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel66;
         private System.Windows.Forms.GroupBox groupBox22;
@@ -9416,9 +9416,9 @@
         private System.Windows.Forms.Label label99;
         private System.Windows.Forms.Label label100;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel75;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel76;
+        private Ahd.Winforms.Controls.AhdLabel _labTotal_Fllow6;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel77;
-        private Ahd.Winforms.Controls.AhdLabel ahdLabel78;
+        private Ahd.Winforms.Controls.AhdLabel _labFllow_Door6;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel79;
         private Ahd.Winforms.Controls.AhdLabel ahdLabel80;
         private System.Windows.Forms.GroupBox groupBox27;

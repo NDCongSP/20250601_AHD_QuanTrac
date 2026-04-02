@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUserManager));
             this.dgvUsers = new System.Windows.Forms.DataGridView();
-            this.btnReload = new System.Windows.Forms.Button();
             this.btnChangePassword = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
@@ -38,26 +37,15 @@
             // dgvUsers
             // 
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsers.Location = new System.Drawing.Point(267, 12);
+            this.dgvUsers.Location = new System.Drawing.Point(339, 12);
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.Size = new System.Drawing.Size(892, 487);
             this.dgvUsers.TabIndex = 0;
             // 
-            // btnReload
-            // 
-            this.btnReload.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReload.Location = new System.Drawing.Point(1298, 255);
-            this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(285, 35);
-            this.btnReload.TabIndex = 4;
-            this.btnReload.Text = "Làm Mới";
-            this.btnReload.UseVisualStyleBackColor = true;
-            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
-            // 
             // btnChangePassword
             // 
             this.btnChangePassword.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangePassword.Location = new System.Drawing.Point(1298, 334);
+            this.btnChangePassword.Location = new System.Drawing.Point(1247, 12);
             this.btnChangePassword.Name = "btnChangePassword";
             this.btnChangePassword.Size = new System.Drawing.Size(285, 35);
             this.btnChangePassword.TabIndex = 5;
@@ -72,7 +60,6 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1710, 848);
             this.Controls.Add(this.btnChangePassword);
-            this.Controls.Add(this.btnReload);
             this.Controls.Add(this.dgvUsers);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmUserManager";
@@ -86,7 +73,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvUsers;
-        private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.Button btnChangePassword;
     }
 }

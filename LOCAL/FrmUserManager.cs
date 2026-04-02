@@ -29,9 +29,10 @@ namespace RegistrationForm1
                     var users = dbContext.ScadaUsers
                         .Where(u => !u.IsDeleted.HasValue || u.IsDeleted == false)
                         .OrderByDescending(u => u.CreateAt)
-                        .Select(u => new
+                        .AsEnumerable()
+                        .Select((u, index) => new
                         {
-                          //  u.Id,
+                            STT = index + 1,
                             u.UserName,
                             u.FullName,
                             u.PermissionScada,
@@ -42,16 +43,33 @@ namespace RegistrationForm1
                         })
                         .ToList();
 
-             //       MessageBox.Show($"Tổng số user lấy được: {users.Count}");
+                    dgvUsers.SuspendLayout();
 
                     dgvUsers.DataSource = users;
+                    dgvUsers.Columns["CreateAt"].HeaderText = "Ngày tạo";
+                    dgvUsers.Columns["UpdateAt"].HeaderText = "Ngày cập nhật";
+                    dgvUsers.Columns["UserName"].HeaderText = "Tài khoản";
+                    dgvUsers.Columns["FullName"].HeaderText = "Họ tên";
+                    dgvUsers.Columns["PermissionScada"].HeaderText = "Quyền";
+                    dgvUsers.Columns["CreateOperatorId"].HeaderText = "Người tạo";
+                    dgvUsers.Columns["UpdateOperatorId"].HeaderText = "Người sửa";
+
+                    dgvUsers.AutoResizeColumns();
                     dgvUsers.ScrollBars = ScrollBars.Both;
                     dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                     dgvUsers.ReadOnly = true;
                     dgvUsers.RowHeadersVisible = false;
-
                     dgvUsers.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    // Căn chỉnh cột
+                    if (dgvUsers.Columns.Contains("STT"))
+                        dgvUsers.Columns["STT"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    dgvUsers.ResumeLayout();
+
+                    if (users.Count == 0)
+                        MessageBox.Show("Không có người dùng nào được tìm thấy.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -59,8 +77,6 @@ namespace RegistrationForm1
                 MessageBox.Show("Lỗi tải người dùng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
 
 

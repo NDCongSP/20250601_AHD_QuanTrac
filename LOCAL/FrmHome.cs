@@ -9,14 +9,14 @@ namespace RegistrationForm1
 {
     public partial class FrmHome : Form
     {
-        private Timer _timer = new Timer();
+        private Timer _timerhome = new Timer();
         public FrmHome()
         {
             InitializeComponent();
-      
-            _timer.Interval = 1000;
-            _timer.Tick += Timer_Tick;
-            _timer.Start();
+
+            _timerhome.Interval = 3000;
+            _timerhome.Tick += Timer_Tick;
+            _timerhome.Start();
           
           
         }
@@ -25,7 +25,7 @@ namespace RegistrationForm1
         {
             try
             {
-                _timer.Enabled = false; // Tạm dừng timer trong quá trình xử lý
+                _timerhome.Enabled = false; // Tạm dừng timer trong quá trình xử lý
 
                 if (Globalvariable.RealtimeDisplays.Count == 0)
                     return; // Nếu không có dữ liệu, thoát khỏi hàm
@@ -449,7 +449,7 @@ namespace RegistrationForm1
             }
             finally
             {
-                _timer.Enabled = true;
+                _timerhome.Enabled = true;
             }
         }
 

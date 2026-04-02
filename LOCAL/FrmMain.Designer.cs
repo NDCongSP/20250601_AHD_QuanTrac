@@ -56,8 +56,6 @@
             this.labDriverStatus = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
-            this.tm_login = new System.Windows.Forms.Timer(this.components);
-            this.tm_loginMN = new System.Windows.Forms.Timer(this.components);
             this.panelDesktop = new System.Windows.Forms.Panel();
             this._labDOMOCS3 = new System.Windows.Forms.Label();
             this._labDOMOCS2 = new System.Windows.Forms.Label();
@@ -68,12 +66,6 @@
             this._labMNTLCS3 = new System.Windows.Forms.Label();
             this._labMNTLCS2 = new System.Windows.Forms.Label();
             this._labMNTLCS1 = new System.Windows.Forms.Label();
-            this._labOffsetThanhan = new System.Windows.Forms.Label();
-            this._labOffsetChandap = new System.Windows.Forms.Label();
-            this._labOffsetBensuc = new System.Windows.Forms.Label();
-            this._labOffsetTVdautieng = new System.Windows.Forms.Label();
-            this._labOffsetSondai = new System.Windows.Forms.Label();
-            this._labOffsetbinhnham = new System.Windows.Forms.Label();
             this._labAPIBinhnham = new System.Windows.Forms.Label();
             this._labQi6 = new System.Windows.Forms.Label();
             this._labQi5 = new System.Windows.Forms.Label();
@@ -153,7 +145,7 @@
             this.panel1.Controls.Add(this.label5);
             this.panel1.Location = new System.Drawing.Point(-1, -11);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2725, 116);
+            this.panel1.Size = new System.Drawing.Size(3667, 116);
             this.panel1.TabIndex = 5;
             // 
             // ahdPictureBox1
@@ -202,7 +194,6 @@
             this.panel2.Controls.Add(this.bnt_LogIn);
             this.panel2.Controls.Add(this.bnt_Exit);
             this.panel2.Controls.Add(this.bnt_Tran);
-            this.panel2.Controls.Add(this.bnt_CaiDat);
             this.panel2.Location = new System.Drawing.Point(-10, 151);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(200, 887);
@@ -288,7 +279,7 @@
             // bnt_User
             // 
             this.bnt_User.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_User.Location = new System.Drawing.Point(6, 692);
+            this.bnt_User.Location = new System.Drawing.Point(6, 639);
             this.bnt_User.Name = "bnt_User";
             this.bnt_User.Size = new System.Drawing.Size(196, 50);
             this.bnt_User.TabIndex = 13;
@@ -332,7 +323,7 @@
             // bnt_LogIn
             // 
             this.bnt_LogIn.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_LogIn.Location = new System.Drawing.Point(6, 639);
+            this.bnt_LogIn.Location = new System.Drawing.Point(6, 586);
             this.bnt_LogIn.Name = "bnt_LogIn";
             this.bnt_LogIn.Size = new System.Drawing.Size(196, 50);
             this.bnt_LogIn.TabIndex = 8;
@@ -343,7 +334,7 @@
             // bnt_Exit
             // 
             this.bnt_Exit.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_Exit.Location = new System.Drawing.Point(6, 745);
+            this.bnt_Exit.Location = new System.Drawing.Point(6, 692);
             this.bnt_Exit.Name = "bnt_Exit";
             this.bnt_Exit.Size = new System.Drawing.Size(196, 50);
             this.bnt_Exit.TabIndex = 9;
@@ -365,12 +356,13 @@
             // bnt_CaiDat
             // 
             this.bnt_CaiDat.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_CaiDat.Location = new System.Drawing.Point(6, 586);
+            this.bnt_CaiDat.Location = new System.Drawing.Point(53, 558);
             this.bnt_CaiDat.Name = "bnt_CaiDat";
             this.bnt_CaiDat.Size = new System.Drawing.Size(196, 50);
             this.bnt_CaiDat.TabIndex = 10;
             this.bnt_CaiDat.Text = "Cài đặt";
             this.bnt_CaiDat.UseVisualStyleBackColor = true;
+            this.bnt_CaiDat.Visible = false;
             this.bnt_CaiDat.Click += new System.EventHandler(this.bnt_CaiDat_Click);
             // 
             // ahdDriverConnector1
@@ -389,6 +381,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 300;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // lblWelcome
@@ -451,12 +444,7 @@
             this.panelDesktop.Controls.Add(this._labMNTLCS3);
             this.panelDesktop.Controls.Add(this._labMNTLCS2);
             this.panelDesktop.Controls.Add(this._labMNTLCS1);
-            this.panelDesktop.Controls.Add(this._labOffsetThanhan);
-            this.panelDesktop.Controls.Add(this._labOffsetChandap);
-            this.panelDesktop.Controls.Add(this._labOffsetBensuc);
-            this.panelDesktop.Controls.Add(this._labOffsetTVdautieng);
-            this.panelDesktop.Controls.Add(this._labOffsetSondai);
-            this.panelDesktop.Controls.Add(this._labOffsetbinhnham);
+            this.panelDesktop.Controls.Add(this.bnt_CaiDat);
             this.panelDesktop.Controls.Add(this._labAPIBinhnham);
             this.panelDesktop.Controls.Add(this._labQi6);
             this.panelDesktop.Controls.Add(this._labQi5);
@@ -599,66 +587,6 @@
             this._labMNTLCS1.TabIndex = 468;
             this._labMNTLCS1.Text = "MNTLCS1";
             this._labMNTLCS1.Visible = false;
-            // 
-            // _labOffsetThanhan
-            // 
-            this._labOffsetThanhan.AutoSize = true;
-            this._labOffsetThanhan.Location = new System.Drawing.Point(519, 258);
-            this._labOffsetThanhan.Name = "_labOffsetThanhan";
-            this._labOffsetThanhan.Size = new System.Drawing.Size(78, 13);
-            this._labOffsetThanhan.TabIndex = 467;
-            this._labOffsetThanhan.Text = "OffsetThanhan";
-            this._labOffsetThanhan.Visible = false;
-            // 
-            // _labOffsetChandap
-            // 
-            this._labOffsetChandap.AutoSize = true;
-            this._labOffsetChandap.Location = new System.Drawing.Point(519, 224);
-            this._labOffsetChandap.Name = "_labOffsetChandap";
-            this._labOffsetChandap.Size = new System.Drawing.Size(78, 13);
-            this._labOffsetChandap.TabIndex = 466;
-            this._labOffsetChandap.Text = "OffsetChandap";
-            this._labOffsetChandap.Visible = false;
-            // 
-            // _labOffsetBensuc
-            // 
-            this._labOffsetBensuc.AutoSize = true;
-            this._labOffsetBensuc.Location = new System.Drawing.Point(519, 200);
-            this._labOffsetBensuc.Name = "_labOffsetBensuc";
-            this._labOffsetBensuc.Size = new System.Drawing.Size(71, 13);
-            this._labOffsetBensuc.TabIndex = 465;
-            this._labOffsetBensuc.Text = "OffsetBensuc";
-            this._labOffsetBensuc.Visible = false;
-            // 
-            // _labOffsetTVdautieng
-            // 
-            this._labOffsetTVdautieng.AutoSize = true;
-            this._labOffsetTVdautieng.Location = new System.Drawing.Point(519, 139);
-            this._labOffsetTVdautieng.Name = "_labOffsetTVdautieng";
-            this._labOffsetTVdautieng.Size = new System.Drawing.Size(92, 13);
-            this._labOffsetTVdautieng.TabIndex = 464;
-            this._labOffsetTVdautieng.Text = "OffsetTVDautieng";
-            this._labOffsetTVdautieng.Visible = false;
-            // 
-            // _labOffsetSondai
-            // 
-            this._labOffsetSondai.AutoSize = true;
-            this._labOffsetSondai.Location = new System.Drawing.Point(519, 171);
-            this._labOffsetSondai.Name = "_labOffsetSondai";
-            this._labOffsetSondai.Size = new System.Drawing.Size(68, 13);
-            this._labOffsetSondai.TabIndex = 463;
-            this._labOffsetSondai.Text = "OffsetSondai";
-            this._labOffsetSondai.Visible = false;
-            // 
-            // _labOffsetbinhnham
-            // 
-            this._labOffsetbinhnham.AutoSize = true;
-            this._labOffsetbinhnham.Location = new System.Drawing.Point(519, 84);
-            this._labOffsetbinhnham.Name = "_labOffsetbinhnham";
-            this._labOffsetbinhnham.Size = new System.Drawing.Size(84, 13);
-            this._labOffsetbinhnham.TabIndex = 462;
-            this._labOffsetbinhnham.Text = "OffsetBinhNham";
-            this._labOffsetbinhnham.Visible = false;
             // 
             // _labAPIBinhnham
             // 
@@ -1061,6 +989,7 @@
             this.dgvStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStats.Location = new System.Drawing.Point(1085, 28);
             this.dgvStats.Name = "dgvStats";
+            this.dgvStats.RowHeadersWidth = 82;
             this.dgvStats.Size = new System.Drawing.Size(529, 218);
             this.dgvStats.TabIndex = 189;
             this.dgvStats.Visible = false;
@@ -1070,6 +999,7 @@
             this.dgvStations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStations.Location = new System.Drawing.Point(306, 5);
             this.dgvStations.Name = "dgvStations";
+            this.dgvStations.RowHeadersWidth = 82;
             this.dgvStations.Size = new System.Drawing.Size(397, 65);
             this.dgvStations.TabIndex = 188;
             this.dgvStations.Visible = false;
@@ -1149,7 +1079,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ClientSize = new System.Drawing.Size(1779, 968);
+            this.ClientSize = new System.Drawing.Size(1904, 1041);
             this.Controls.Add(this.labDriverStatus);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblTime);
@@ -1200,9 +1130,7 @@
         private System.Windows.Forms.Label labDriverStatus;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.Timer tm_login;
         public Ahd.Winforms.Controls.AhdDriverConnector ahdDriverConnector1;
-        private System.Windows.Forms.Timer tm_loginMN;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button bntNhaplieu;
         private System.Windows.Forms.Button bntEditdata;
@@ -1256,12 +1184,6 @@
         private System.Windows.Forms.Button bntCS2;
         private System.Windows.Forms.Button bntCS1;
         private System.Windows.Forms.Label _labAPIBinhnham;
-        private System.Windows.Forms.Label _labOffsetbinhnham;
-        private System.Windows.Forms.Label _labOffsetBensuc;
-        private System.Windows.Forms.Label _labOffsetTVdautieng;
-        private System.Windows.Forms.Label _labOffsetSondai;
-        private System.Windows.Forms.Label _labOffsetChandap;
-        private System.Windows.Forms.Label _labOffsetThanhan;
         private System.Windows.Forms.Button bntCS3;
         private System.Windows.Forms.Label _labMNTLCS1;
         private System.Windows.Forms.Label _labDOMOCS3;

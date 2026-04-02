@@ -113,10 +113,7 @@ namespace RegistrationForm1
         {
             lblWelcome.Text = $"Xin chào: {Globalvariable.UserInfo.UserName} ({Globalvariable.UserInfo.PermissionScada})";
             ApplyPermission(Globalvariable.UserInfo.PermissionScada);
-
-
-
-            //   lblWelcome.Text = $"Xin chào: {Globalvariable.UserInfo.UserName} ({Globalvariable.UserInfo.PermissionScada.ToString()})";
+        
             driver = AhdDriverConnectorProvider.GetAhdDriverConnector();
 
             if (!driver.IsStarted)
@@ -280,10 +277,17 @@ namespace RegistrationForm1
 
             //// Timer ghi tag về PLC
             writeTagTimer = new Timer();
-            writeTagTimer.Tick += async (s, ev) => await WriteTagTimer_Tick(s, ev);
-            writeTagTimer.Interval = 6000; // 5 giây
-            writeTagTimer.Start();
-
+            //writeTagTimer.Tick += async (s, ev) => await WriteTagTimer_Tick(s, ev);
+            //writeTagTimer.Interval = 6000; // 5 giây
+            //writeTagTimer.Start();
+           
+            writeTagTimer.Tick += async (s, ev) =>
+            {
+                // Tạm dừng timer để tránh tick mới nhảy vào khi tick cũ chưa xong
+                writeTagTimer.Stop();
+                await Task.Run(async () => await WriteTagFromLabel());
+                writeTagTimer.Start();
+            };
 
 
         }
@@ -296,11 +300,7 @@ namespace RegistrationForm1
             {
                 _timer.Enabled = false;
 
-                Globalvariable.GetConfig();
-
-                    
-
-
+                Globalvariable.GetConfig();                 
                 if (Globalvariable.RealtimeDisplays == null)
                     Globalvariable.RealtimeDisplays = new RealtimeDisplays();
 
@@ -314,11 +314,9 @@ namespace RegistrationForm1
                         foreach (var item in location.Stations)
                         {
                             //tinh toans
-                            item.Door2_Aperture_Final = Math.Round(item.Door2_Aperture + item.Door2_Aperture_Offset ?? 0, 2);
-                            item.Door1_Aperture_Final = Math.Round(item.Door1_Aperture + item.Door1_Aperture_Offset ?? 0, 2);
-                        //    item.Q_i_1 = Math.Round((double)Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi * alpha1 * h * SumB * Math.Sqrt(insideSqrt), 1)
-                        //: 0; 
-                        //    item.Q_i_2 = Qi;
+                            item.Door2_Aperture_Final = Math.Round(item.Door2_Aperture  ?? 0, 2);
+                            item.Door1_Aperture_Final = Math.Round(item.Door1_Aperture  ?? 0, 2);
+                       
 
                             if (item.Path == "Local Station/DauTieng/S71500/Station_1")
                             {
@@ -351,30 +349,25 @@ namespace RegistrationForm1
                             }
                         }
                             
-                       _labMNHLCS1.Text = location.Parametters.MNHL_CongSo1.ToString();
-                        _labMNHLCS2.Text = location.Parametters.MNHL_CongSo2.ToString();
-                        _labMNHLCS3.Text= location.Parametters.MNHL_CongSo3.ToString();
+                       //_labMNHLCS1.Text = location.Parametters.MNHL_CongSo1.ToString();
+                       // _labMNHLCS2.Text = location.Parametters.MNHL_CongSo2.ToString();
+                       // _labMNHLCS3.Text= location.Parametters.MNHL_CongSo3.ToString();
 
-                        _labOffsetbinhnham.Text = location.API_Offset.API_Fllow_BinhNham.ToString();
-                        _labOffsetBensuc.Text = location.API_Offset.API_Fllow_BenSuc.ToString();
-                        _labOffsetChandap.Text = location.API_Offset.API_ChanDap.ToString();
-                        _labOffsetSondai.Text = location.API_Offset.API_Fllow_SonDai.ToString();
-                        _labOffsetThanhan.Text= location.API_Offset.API_ThanhAn.ToString();
-                        _labOffsetTVdautieng.Text = location.API_Offset.API_Fllow_DauTieng.ToString();
+                       
 
-                        _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
-                        _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
+                       // _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
+                       // _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
 
-                        _labWtt.Text = location.CalculatorValue.W_tt.ToString();
-                        _labQtt.Text = location.CalculatorValue.Q_tt.ToString();
-                        _labW1_ho.Text = location.CalculatorValue.W1_ho.ToString();
-                        _labW2_ho.Text = location.CalculatorValue.W2_ho.ToString();
-                        _labQden.Text = location.CalculatorValue.Q_den.ToString();
-                        _labWden.Text = location.CalculatorValue.W_den.ToString();
+                        //_labWtt.Text = location.CalculatorValue.W_tt.ToString();
+                        //_labQtt.Text = location.CalculatorValue.Q_tt.ToString();
+                        //_labW1_ho.Text = location.CalculatorValue.W1_ho.ToString();
+                        //_labW2_ho.Text = location.CalculatorValue.W2_ho.ToString();
+                        //_labQden.Text = location.CalculatorValue.Q_den.ToString();
+                        //_labWden.Text = location.CalculatorValue.W_den.ToString();
 
-                        _labWtr.Text = location.CalculatorValue.W_tr.ToString();
-                        _labWdi.Text = location.CalculatorValue.W_di.ToString();
-                        _LabQdi.Text = location.CalculatorValue.Q_di.ToString();
+                        //_labWtr.Text = location.CalculatorValue.W_tr.ToString();
+                        //_labWdi.Text = location.CalculatorValue.W_di.ToString();
+                        //_LabQdi.Text = location.CalculatorValue.Q_di.ToString();
 
 
                     }
@@ -406,12 +399,11 @@ namespace RegistrationForm1
                             line.LocationName = item.LocationName;
                          
                             line.API_Fllow_DauTieng = item.CalculatorValue.API_Fllow_DauTieng;
-                   //        line.API_Fllow_BinhNham = item.API_Offset.API_Fllow_BinhNham;
-  
+                  
                             line.API_Fllow_BenSuc = item.CalculatorValue.API_Fllow_BenSuc;
                             line.API_Fllow_SonDai = item.CalculatorValue.API_Fllow_SonDai;
                             line.API_Fllow_BinhNham = item.CalculatorValue.API_Fllow_BinhNham;
-                            line.API_Fllow_BinhNham2 = item.CalculatorValue.API_Fllow_BinhNham2;
+                          
                             line.API_Fllow_TL_CDD = item.CalculatorValue.API_Fllow_TL_CDD;
                             line.API_Fllow_HL_TXL = item.CalculatorValue.API_Fllow_HL_TXL;
                             line.API_ChanDap = item.CalculatorValue.API_ChanDap;
@@ -466,14 +458,7 @@ namespace RegistrationForm1
                             line.W_cs2 = item.CalculatorValue.W_cs2;
                             line.W_cs3 = item.CalculatorValue.W_cs3;
 
-                            //line.MNHL_CongSo1 = item.Parametters.MNHL_CongSo1;
-                            //line.MNHL_CongSo2 = item.Parametters.MNHL_CongSo2;
-                            //line.MNHL_CongSo3 = item.Parametters.MNHL_CongSo3;
-                            //line.DoMoCua_a_CongSo1 = item.Parametters.DoMoCua_a_CongSo1;
-                            //line.DoMoCua_a_CongSo2 = item.Parametters.DoMoCua_a_CongSo2;
-                            //line.DoMoCua_a_CongSo3 = item.Parametters.DoMoCua_a_CongSo3;
-
-
+                           
                             line.StationId = itemStation.StationId;
                             line.StationName = itemStation.StationName;
                             line.Path = itemStation.Path;
@@ -483,8 +468,8 @@ namespace RegistrationForm1
                             line.HT_Cylinder1_2 = itemStation.HT_Cylinder1_2;
                             line.HT_Cylinder2_1 = itemStation.HT_Cylinder2_1;
                             line.HT_Cylinder2_2 = itemStation.HT_Cylinder2_2;
-                            line.Door1_Aperture = itemStation.Door1_Aperture;
-                            line.Door2_Aperture = itemStation.Door2_Aperture;
+                            //line.Door1_Aperture = itemStation.Door1_Aperture;
+                            //line.Door2_Aperture = itemStation.Door2_Aperture;
                             line.S1_Temp_Oil = itemStation.S1_Temp_Oil;
                             line.Pressure_Oil_Door1 = itemStation.Pressure_Oil_Door1;
                             line.Pressure_Oil_Door2 = itemStation.Pressure_Oil_Door2;
@@ -492,18 +477,7 @@ namespace RegistrationForm1
                             line.Fllow_Door2 = itemStation.Fllow_Door2;
                             line.Fllow_Ho = itemStation.Fllow_Ho;
 
-                            line.HT_Cylinder1_1_Offset = itemStation.HT_Cylinder1_1_Offset;
-                            line.HT_Cylinder1_2_Offset = itemStation.HT_Cylinder1_2_Offset;
-                            line.HT_Cylinder2_1_Offset = itemStation.HT_Cylinder2_1_Offset;
-                            line.HT_Cylinder2_2_Offset = itemStation.HT_Cylinder2_2_Offset;
-                            line.Door1_Aperture_Offset = itemStation.Door1_Aperture_Offset;
-                            line.Door2_Aperture_Offset = itemStation.Door2_Aperture_Offset;
-                            line.S1_Temp_Oil_Offset = itemStation.S1_Temp_Oil_Offset;
-                            line.Pressure_Oil_Door1_Offset = itemStation.Pressure_Oil_Door1_Offset;
-                            line.Pressure_Oil_Door2_Offset = itemStation.Pressure_Oil_Door2_Offset;
-                            line.Fllow_Door1_Offset = itemStation.Fllow_Door1_Offset;
-                            line.Fllow_Door2_Offset = itemStation.Fllow_Door2_Offset;
-                            line.Fllow_Ho_Offset = itemStation.Fllow_Ho_Offset;
+                          
 
                             line.HT_Cylinder1_1_Final = itemStation.HT_Cylinder1_1_Final;
                             line.HT_Cylinder1_2_Final = itemStation.HT_Cylinder1_2_Final;
@@ -529,10 +503,32 @@ namespace RegistrationForm1
 
                     if (dataLogs.Count == 0)
                       return;
-                    ////     Lưu vào database
-                    using var dbContext = new ApplicationDbContext();
-                    dbContext.FT03s.AddRange(dataLogs);
-                    dbContext.SaveChanges();//Luu thay doi vao db
+
+                    try
+                    {
+                        using var dbContext = new ApplicationDbContext();
+                        dbContext.FT03s.AddRange(dataLogs);
+                        dbContext.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        string err =
+                            ex.InnerException?.InnerException?.Message ??
+                            ex.InnerException?.Message ??
+                            ex.Message;
+
+                        MessageBox.Show(err, "Lỗi chi tiết", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+
+
+
+
+
+                    //////     Lưu vào database
+                    //using var dbContext = new ApplicationDbContext();
+                    //dbContext.FT03s.AddRange(dataLogs);
+                    //dbContext.SaveChanges();//Luu thay doi vao db
 
                     _startTime = DateTime.Now;
                 }
@@ -541,7 +537,12 @@ namespace RegistrationForm1
             catch (Exception ex)
             {
 
-                throw;
+                string error = ex.Message;
+                if (ex.InnerException != null)
+                    error += "\n\nChi tiết lỗi: " + ex.InnerException.Message;
+
+                MessageBox.Show(error, "Lỗi khi lưu dữ liệu FT03", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
             finally
             {
@@ -952,7 +953,7 @@ namespace RegistrationForm1
                 HttpResponseMessage response = await client.GetAsync(API_STATIONS_URL);
                 if (!response.IsSuccessStatusCode)
                 {
-                    string errorMessage = $"API trả về lỗi: {(int)response.StatusCode} {response.ReasonPhrase}.";
+                   // string errorMessage = $"API trả về lỗi: {(int)response.StatusCode} {response.ReasonPhrase}.";
                     string errorContent = await response.Content.ReadAsStringAsync();
                     if (!string.IsNullOrEmpty(errorContent))
                     {
@@ -1036,7 +1037,7 @@ namespace RegistrationForm1
 
             if (apiQueryStartTime >= apiQueryEndTime)
             {
-                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.", "Lỗi tham số", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+       //         MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc.", "Lỗi tham số", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -1406,7 +1407,7 @@ namespace RegistrationForm1
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Lỗi đọc API: " + ex.Message);
+              //      Console.WriteLine("Lỗi đọc API: " + ex.Message);
                 }
             }
         }
@@ -1418,23 +1419,17 @@ namespace RegistrationForm1
                 double formattedwp1 = Math.Round(wp1, 2);
                 double formattedwp2 = Math.Round(wp2, 2);
 
-                //await ahdDriverConnector1.WriteTagAsync(
-                //    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham",
-                //    wp1.ToString("0.00"),
-                //    WritePiority.High);
+                
                 Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
                     .CalculatorValue.API_Fllow_BinhNham = formattedwp1;
 
-                //await ahdDriverConnector1.WriteTagAsync(
-                //    $"Local Station/DauTieng/S71500/API/Fllow_BinhNham2",
-                //    wp2.ToString("0.00"),
-                //    WritePiority.High);
+               
                 Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1)?
                     .CalculatorValue.API_Fllow_BinhNham2 = formattedwp2;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi ghi PLC async: " + ex.Message);
+          //      Console.WriteLine("Lỗi ghi PLC async: " + ex.Message);
             }
         }
         public class SoLieuAPIBinhNhamModel
@@ -1673,7 +1668,7 @@ namespace RegistrationForm1
                         */
 
                         default:
-                            Console.WriteLine($"Cảnh báo: Không có property tương ứng cho trạm {stationId}");
+               //             Console.WriteLine($"Cảnh báo: Không có property tương ứng cho trạm {stationId}");
                             break;
                     }
                 }
@@ -1681,7 +1676,7 @@ namespace RegistrationForm1
             catch (Exception ex)
             {
                 // Đã đổi tên log cho rõ ràng hơn
-                Console.WriteLine($"Lỗi khi ghi dữ liệu mưa vào CalculatorValue: {ex.Message}");
+        //        Console.WriteLine($"Lỗi khi ghi dữ liệu mưa vào CalculatorValue: {ex.Message}");
             }
         }
 
@@ -1862,7 +1857,6 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
-
         private void Status_Close_Doorlock2_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -2295,7 +2289,6 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
-
         private void Status_Close_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -2584,8 +2577,6 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
-
-
         private void Door2_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -2726,7 +2717,6 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
-
         private void Door1_PressureLow_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -2872,7 +2862,6 @@ namespace RegistrationForm1
 
 
         }
-
         private void DC3_Over_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -5104,7 +5093,6 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
-
         private void Al_Door2_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -5249,7 +5237,6 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
-
         private void HT_Cylinder1_1_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -5266,7 +5253,7 @@ namespace RegistrationForm1
 
                     //tinh toans
 
-                    station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 + station.HT_Cylinder1_1_Offset ?? 0, 2);
+                    station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 ?? 0, 2);
 
 
                     using (var dbContext = new ApplicationDbContext())
@@ -5313,7 +5300,7 @@ namespace RegistrationForm1
                 {
                     station.HT_Cylinder1_2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.HT_Cylinder1_2_Final = Math.Round(station.HT_Cylinder1_2 + station.HT_Cylinder1_2_Offset ?? 0, 2);
+                    station.HT_Cylinder1_2_Final = Math.Round(station.HT_Cylinder1_2  ?? 0, 2);
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5355,7 +5342,7 @@ namespace RegistrationForm1
                 {
                     station.HT_Cylinder2_1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.HT_Cylinder2_1_Final = Math.Round(station.HT_Cylinder2_1 + station.HT_Cylinder2_1_Offset ?? 0, 2);
+                    station.HT_Cylinder2_1_Final = Math.Round(station.HT_Cylinder2_1  ?? 0, 2);
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5397,7 +5384,7 @@ namespace RegistrationForm1
                 {
                     station.HT_Cylinder2_2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.HT_Cylinder2_2_Final = Math.Round(station.HT_Cylinder2_2 + station.HT_Cylinder2_2_Offset ?? 0, 2);
+                    station.HT_Cylinder2_2_Final = Math.Round(station.HT_Cylinder2_2  ?? 0, 2);
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5439,7 +5426,7 @@ namespace RegistrationForm1
                 {
                     station.Pressure_Oil_Door1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.Pressure_Oil_Door1_Final = Math.Round(station.Pressure_Oil_Door1 + station.Pressure_Oil_Door1_Offset ?? 0, 2);
+                    station.Pressure_Oil_Door1_Final = Math.Round(station.Pressure_Oil_Door1  ?? 0, 2);
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5481,7 +5468,7 @@ namespace RegistrationForm1
                 {
                     station.Pressure_Oil_Door2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.Pressure_Oil_Door2_Final = Math.Round(station.Pressure_Oil_Door2 + station.Pressure_Oil_Door2_Offset ?? 0, 2);
+                    station.Pressure_Oil_Door2_Final = Math.Round(station.Pressure_Oil_Door2  ?? 0, 2);
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5523,7 +5510,7 @@ namespace RegistrationForm1
                 {
                     station.S1_Temp_Oil = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.S1_Temp_Oil_Final = Math.Round(station.S1_Temp_Oil + station.S1_Temp_Oil_Offset ?? 0, 2);
+                    station.S1_Temp_Oil_Final = Math.Round(station.S1_Temp_Oil  ?? 0, 2);
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5552,7 +5539,6 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
-
         private void Door1_Aperture_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -5566,7 +5552,7 @@ namespace RegistrationForm1
                 {
                    station.Door1_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.Door1_Aperture_Final = Math.Round(station.Door1_Aperture + station.Door1_Aperture_Offset ?? 0, 2);
+                    station.Door1_Aperture_Final = Math.Round(station.Door1_Aperture  ?? 0, 2);
                     // Tính lưu lượng qua tràn Qtr và tổng lưu lượng Q
                     double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
                     double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn ;
@@ -5631,7 +5617,7 @@ namespace RegistrationForm1
                 {
                     station.Door2_Aperture = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.Door2_Aperture_Final = Math.Round(station.Door2_Aperture + station.Door2_Aperture_Offset ?? 0, 2);
+                    station.Door2_Aperture_Final = Math.Round(station.Door2_Aperture  ?? 0, 2);
 
 
                     // Tính lưu lượng qua tràn Qtr và tổng lưu lượng Q
@@ -5685,9 +5671,7 @@ namespace RegistrationForm1
                 }
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
-        }
-
-        //Fllow_Door1
+        }  
         private void Fllow_Door1_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -5701,7 +5685,7 @@ namespace RegistrationForm1
                 {
                     station.Fllow_Door1 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.Fllow_Door1_Final = Math.Round(station.Fllow_Door1 + station.Fllow_Door1_Offset ?? 0, 2);
+                    station.Fllow_Door1_Final = Math.Round(station.Fllow_Door1  ?? 0, 2);
 
                     using (var dbContext = new ApplicationDbContext())
                     {
@@ -5744,7 +5728,7 @@ namespace RegistrationForm1
                 {
                     station.Fllow_Door2 = double.TryParse(e.NewValue, out double newValue) ? Math.Round(newValue, 2) : 0;
                     //tinh toans
-                    station.Fllow_Door2_Final = Math.Round(station.Fllow_Door2 + station.Fllow_Door2_Offset ?? 0, 2);
+                    station.Fllow_Door2_Final = Math.Round(station.Fllow_Door2  ?? 0, 2);
                     using (var dbContext = new ApplicationDbContext())
                     {
                         //Real time
@@ -5773,7 +5757,6 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
-
         private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
@@ -5791,7 +5774,7 @@ namespace RegistrationForm1
 
                     //tinh toans
 
-                    station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho + station.Fllow_Ho_Offset ?? 0, 2);
+                    station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho  ?? 0, 2);
 
                     int selectedColumnIndex = 0; // mặc định chọn cột đầu tiên nếu không có combobox
 
@@ -5904,29 +5887,18 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
-
-
         //private double TinhToan(double tagValue)
         //{
         //    return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
 
         //}
-
-
         private void button1_Click(object sender, EventArgs e)
         {
             ActivateMenuButton(sender as Button);
             FrmHochua mn = new FrmHochua();
             OpenFormInPanel(mn, "THÔNG TIN GIÁM SÁT VẬN HÀNH HỒ DẦU TIẾNG");
-            mn.UrlToLoad = "https://www.google.com/maps/d/u/1/embed?mid=12o126XU18Zr1liEdZJloJQNs359En9o&ehbc=2E312F&ll=11.587056362884539%2C106.3739345&z=11";
-
-            //mn.Show();
-
+            mn.UrlToLoad = "https://www.google.com/maps/d/u/1/embed?mid=12o126XU18Zr1liEdZJloJQNs359En9o&ehbc=2E312F&ll=11.587056362884539%2C106.3739345&z=11";       
         }
-
-       
-
-
         private void bntNhaplieu_Click(object sender, EventArgs e)
         {
             //// Kiểm tra nếu chưa đăng nhập
@@ -5949,8 +5921,6 @@ namespace RegistrationForm1
             FrmNhaplieu frm = new FrmNhaplieu();
             frm.ShowDialog();
         }
-
-
         private void ActivateMenuButton(Button btn)
         {
             if (btn == null) return;
@@ -5965,9 +5935,6 @@ namespace RegistrationForm1
             btn.BackColor = Color.LightGreen;
             currentButton = btn; // Lưu lại nút đang được chọn
         }
-
-
-
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (FrmLogin.currentLoginLogId > 0)
@@ -5975,9 +5942,6 @@ namespace RegistrationForm1
                 FrmLogin.SaveLogoutTime(FrmLogin.currentLoginLogId);
             }
         }
-
-
-
         private void OpenFormInPanel(Form childForm, string title)
         {
             try
@@ -6011,8 +5975,8 @@ namespace RegistrationForm1
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi mở form: " + ex.Message, "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Lỗi khi mở form: " + ex.Message, "Lỗi",
+                //    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -6153,41 +6117,110 @@ namespace RegistrationForm1
 
         private void bntEditdata_Click(object sender, EventArgs e)
         {
+            ActivateMenuButton(sender as Button);
             FrmDieukhienscada frm = new FrmDieukhienscada();
             OpenFormInPanel(frm, "ĐIỀU KHIỂN SCADA TỪ XA");
+
+
+           
         }
 
+        //private async Task WriteTagFromLabel()
+        //{
+        //    try
+        //    {
+        //        if (ahdDriverConnector1 == null)
+        //        {
+        //            MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
+        //            writeTagTimer.Stop();
+        //            return;
+        //        }
+
+        //        // Kiểm tra kết nối (nếu có property)
+        //        var connProp = ahdDriverConnector1.GetType().GetProperty("IsConnected")
+        //                     ?? ahdDriverConnector1.GetType().GetProperty("ConnectionState");
+
+        //        if (connProp != null)
+        //        {
+        //            var state = connProp.GetValue(ahdDriverConnector1);
+        //            if (state is bool b && !b)
+        //            {
+        //                Console.WriteLine("PLC chưa kết nối.");
+        //                return;
+        //            }
+        //            else if (!(state is bool) && state?.ToString() != "Connected")
+        //            {
+        //                Console.WriteLine("PLC chưa kết nối.");
+        //                return;
+        //            }
+        //        }
+
+        //        var tagsToWrite = new List<(string TagPath, string Value)>
+        //{
+        //    ("Local Station/DauTieng/PLC1_2/Fllow_Door1", _labQi1.Text),
+        //    ("Local Station/DauTieng/PLC1_2/Fllow_Door2", _labQi2.Text),
+        //    ("Local Station/DauTieng/PLC3_4/Fllow_Door3", _labQi3.Text),
+        //    ("Local Station/DauTieng/PLC3_4/Fllow_Door4", _labQi4.Text),
+        //    ("Local Station/DauTieng/PLC5_6/Fllow_Door5", _labQi5.Text),
+        //    ("Local Station/DauTieng/PLC5_6/Fllow_Door6", _labQi6.Text),
+
+        //    ("Local Station/DauTieng/PLC1_2/Total_Fllow", _labQtr.Text),
+        //    ("Local Station/DauTieng/PLC3_4/Total_Fllow", _labQtr.Text),
+        //    ("Local Station/DauTieng/PLC5_6/Total_Fllow", _labQtr.Text),
+        //};
+
+        //        foreach (var (tagPath, valueStr) in tagsToWrite)
+        //        {
+        //            if (double.TryParse(valueStr, out double value))
+        //            {
+        //                // Scale để giữ 2 số lẻ: nhân 100 rồi ép int
+        //                int intValue = (int)(value * 100);
+
+        //                // Chuyển thành string để ghi xuống PLC
+        //                string formatted = intValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+        //                var result = await ahdDriverConnector1.WriteTagAsync(tagPath, formatted, WritePiority.High);
+
+        //                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Ghi {formatted} → {tagPath} (Kết quả: {result})");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine($"Không parse được giá trị '{valueStr}' cho tag {tagPath}");
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        writeTagTimer.Stop();
+        //        MessageBox.Show("Lỗi ghi PLC: " + ex.Message);
+        //    }
+        //}
+        private bool _isProcessing = false;
+        private async Task WriteTagTimer_Tick(object sender, EventArgs e)
+        {
+            if (_isProcessing) return; // Nếu lượt trước chưa xong, bỏ qua lượt này
+
+            _isProcessing = true;
+            try
+            {
+                await WriteTagFromLabel();
+            }
+            finally
+            {
+                _isProcessing = false; // Luôn giải phóng cờ để lần sau có thể chạy
+            }
+        }
+
+       
         private async Task WriteTagFromLabel()
         {
             try
             {
-                if (ahdDriverConnector1 == null)
-                {
-                    MessageBox.Show("Kết nối PLC chưa được khởi tạo.");
-                    writeTagTimer.Stop();
-                    return;
-                }
+                // Kiểm tra kết nối nhanh (cân nhắc lưu PropertyInfo vào biến static như đã nói trước đó)
+                if (!IsPlcConnected()) return;
 
-                // Kiểm tra kết nối (nếu có property)
-                var connProp = ahdDriverConnector1.GetType().GetProperty("IsConnected")
-                             ?? ahdDriverConnector1.GetType().GetProperty("ConnectionState");
-
-                if (connProp != null)
-                {
-                    var state = connProp.GetValue(ahdDriverConnector1);
-                    if (state is bool b && !b)
-                    {
-                        Console.WriteLine("PLC chưa kết nối.");
-                        return;
-                    }
-                    else if (!(state is bool) && state?.ToString() != "Connected")
-                    {
-                        Console.WriteLine("PLC chưa kết nối.");
-                        return;
-                    }
-                }
-
-                var tagsToWrite = new List<(string TagPath, string Value)>
+                // Đọc dữ liệu từ Label trên UI Thread trước khi đẩy vào Task chạy ngầm
+                var tagsToWrite = new List<(string Path, string Val)>
         {
             ("Local Station/DauTieng/PLC1_2/Fllow_Door1", _labQi1.Text),
             ("Local Station/DauTieng/PLC1_2/Fllow_Door2", _labQi2.Text),
@@ -6195,50 +6228,62 @@ namespace RegistrationForm1
             ("Local Station/DauTieng/PLC3_4/Fllow_Door4", _labQi4.Text),
             ("Local Station/DauTieng/PLC5_6/Fllow_Door5", _labQi5.Text),
             ("Local Station/DauTieng/PLC5_6/Fllow_Door6", _labQi6.Text),
-
             ("Local Station/DauTieng/PLC1_2/Total_Fllow", _labQtr.Text),
             ("Local Station/DauTieng/PLC3_4/Total_Fllow", _labQtr.Text),
             ("Local Station/DauTieng/PLC5_6/Total_Fllow", _labQtr.Text),
         };
 
-                foreach (var (tagPath, valueStr) in tagsToWrite)
+                // Chạy việc ghi xuống Driver ở một luồng tách biệt (Task.Run)
+                await Task.Run(async () =>
                 {
-                    if (double.TryParse(valueStr, out double value))
+                    foreach (var (tagPath, valueStr) in tagsToWrite)
                     {
-                        // Scale để giữ 2 số lẻ: nhân 100 rồi ép int
-                        int intValue = (int)(value * 100);
+                        if (double.TryParse(valueStr.Replace(',', '.'),
+                            System.Globalization.NumberStyles.Any,
+                            System.Globalization.CultureInfo.InvariantCulture, out double value))
+                        {
+                            string formatted = ((int)Math.Round(value * 100)).ToString();
 
-                        // Chuyển thành string để ghi xuống PLC
-                        string formatted = intValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
-
-                        var result = await ahdDriverConnector1.WriteTagAsync(tagPath, formatted, WritePiority.High);
-
-                        Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Ghi {formatted} → {tagPath} (Kết quả: {result})");
+                            // Thực hiện ghi - Nếu Driver tự viết bị lỗi, nó sẽ văng vào catch của Task.Run
+                            await ahdDriverConnector1.WriteTagAsync(tagPath, formatted, WritePiority.High);
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine($"Không parse được giá trị '{valueStr}' cho tag {tagPath}");
-                    }
-                }
+                });
             }
             catch (Exception ex)
             {
-                writeTagTimer.Stop();
-                MessageBox.Show("Lỗi ghi PLC: " + ex.Message);
+                // Bắt lỗi Out Driver
+                string logPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plc_error.txt");
+                System.IO.File.AppendAllText(logPath, $"[{DateTime.Now}] Lỗi Driver: {ex.Message}\n{ex.StackTrace}\n");
+
+                // Console.WriteLine để debug nhanh
+                Console.WriteLine("PLC Error: " + ex.Message);
             }
         }
-
-
-
-        private async Task WriteTagTimer_Tick(object sender, EventArgs e)
+        // Hàm hỗ trợ kiểm tra kết nối (Helper)
+        private bool IsPlcConnected()
         {
-            await WriteTagFromLabel();
+            var connProp = ahdDriverConnector1.GetType().GetProperty("IsConnected")
+                        ?? ahdDriverConnector1.GetType().GetProperty("ConnectionState");
+
+            if (connProp == null) return true; // Không tìm thấy thì mặc định cho qua hoặc xử lý riêng
+
+            var state = connProp.GetValue(ahdDriverConnector1);
+            return state is bool b ? b : state?.ToString() == "Connected";
         }
 
-        private void bntCS1_Click(object sender, EventArgs e)
+        //private async Task WriteTagTimer_Tick(object sender, EventArgs e)
+        //{
+        //    await WriteTagFromLabel();
+        //}
+
+        private async void bntCS1_Click(object sender, EventArgs e)
         {
             ActivateMenuButton(sender as Button);
+
             FrmCS1 cs1 = new FrmCS1();
+            cs1.Url = "https://simc.id.vn/simc_dti/cs1/coso1.html";
+
             OpenFormInPanel(cs1, "CỐNG SỐ 1");
         }
 
@@ -6246,6 +6291,7 @@ namespace RegistrationForm1
         {
             ActivateMenuButton(sender as Button);
             FrmCS2 cs2 = new FrmCS2();
+            cs2.Url = "https://simc.id.vn/simc_dti/cs2/coso2.html";
             OpenFormInPanel(cs2, "CỐNG SỐ 2");
         }
 
@@ -6255,5 +6301,7 @@ namespace RegistrationForm1
             FrmCS3 cs3 = new FrmCS3();
             OpenFormInPanel(cs3, "CỐNG SỐ 3");
         }
+
+        
     }
 }
