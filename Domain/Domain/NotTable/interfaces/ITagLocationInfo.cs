@@ -9,7 +9,6 @@ namespace Domain
     public interface ITagLocationInfo
     {
         public double? Fllow_Ho { get; set; }
-        public double? Fllow_Ho_Offset { get; set; }
         public double? Fllow_Ho_Final { get; set; }
     }
 }

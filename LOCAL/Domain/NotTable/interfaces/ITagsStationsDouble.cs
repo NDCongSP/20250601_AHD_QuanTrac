@@ -22,19 +22,6 @@ namespace Domain
         public double? Fllow_Door2 { get; set; }
         public double? Total_Fllow { get; set; }
 
-        //gia tri offset
-        public double? HT_Cylinder1_1_Offset { get; set; } 
-        public double? HT_Cylinder1_2_Offset { get; set; } 
-        public double? HT_Cylinder2_1_Offset { get; set; } 
-        public double? HT_Cylinder2_2_Offset { get; set; } 
-        public double? Door1_Aperture_Offset { get; set; } 
-        public double? Door2_Aperture_Offset { get; set; } 
-        public double? S1_Temp_Oil_Offset { get; set; } 
-        public double? Pressure_Oil_Door1_Offset { get; set; } 
-        public double? Pressure_Oil_Door2_Offset { get; set; } 
-        public double? Fllow_Door1_Offset { get; set; } 
-        public double? Fllow_Door2_Offset { get; set; } 
-
         //gia tri sau cung = origin + Offset
         public double? HT_Cylinder1_1_Final { get; set; } 
         public double? HT_Cylinder1_2_Final { get; set; } 

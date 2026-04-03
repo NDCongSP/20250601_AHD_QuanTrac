@@ -39,8 +39,10 @@ namespace RegistrationForm1
                         {
                             _LabMNTLCS3.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho_Final.ToString();
                             _LabQCS3.Text = location.CalculatorValue.Q_cs3.ToString();
-                            _LabDomoCS3.Text = location.Parametters.DoMoCua_a_CongSo3.ToString();
-                            _LabMNHLCS3.Text = location.Parametters.MNHL_CongSo3.ToString();
+                            //_LabDomoCS3.Text = location.Parametters.DoMoCua_a_CongSo3.ToString();
+                            // _LabMNHLCS3.Text = location.Parametters.MNHL_CongSo3.ToString();
+                            _LabDomoCS3.Text = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo3.ToString();
+                            _LabMNHLCS3.Text = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo3.ToString();
 
                         }
 

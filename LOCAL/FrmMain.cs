@@ -5237,28 +5237,88 @@ namespace RegistrationForm1
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
 
         }
+        //private void HT_Cylinder1_1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var createAt = DateTime.Now;
+        //        var createOperatorId = "System";
+        //        var path = e.Tag.Parent.Path;
+        //        if (Globalvariable.RealtimeDisplays == null) return;
+        //        var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+        //        var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+        //        if (station != null)
+        //        {
+
+        //            station.HT_Cylinder1_1 = double.TryParse(e.NewValue.ToString(), out double newValue1) ? Math.Round(newValue1, 2) : 0;
+
+        //            //tinh toans
+
+        //            station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 ?? 0, 2);
+
+
+        //            using (var dbContext = new ApplicationDbContext())
+        //            {
+        //                //Real time
+        //                var check = dbContext.FT02s.FirstOrDefault();
+
+        //                if (check != null)
+        //                {
+        //                    check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+        //                    check.UpdateAt = createAt;
+        //                    check.UpdateOperatorId = createOperatorId;
+        //                }
+        //                else
+        //                {
+        //                    var newLine = new FT02
+        //                    {
+        //                        Id = Guid.NewGuid(),
+        //                        C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+        //                        IsDeleted = false,
+        //                        CreateAt = createAt,
+        //                        CreateOperatorId = createOperatorId,
+        //                    };
+
+        //                    dbContext.FT02s.Add(newLine);
+        //                }
+
+        //                dbContext.SaveChanges();//Luu thay doi vao db
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        //}
         private void HT_Cylinder1_1_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
             {
+                // 1. Kiểm tra e và các thuộc tính của e ngay lập tức
+                if (e?.Tag?.Parent == null) return;
+
                 var createAt = DateTime.Now;
                 var createOperatorId = "System";
                 var path = e.Tag.Parent.Path;
+
+                // 2. Kiểm tra danh sách Globalvariable
+                if (Globalvariable.RealtimeDisplays == null) return;
+
                 var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
-                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+
+                // 3. Sử dụng null-conditional operator (?) để tránh lỗi nếu location hoặc Stations null
+                var station = location?.Stations?.FirstOrDefault(x => x.Path == path);
+
                 if (station != null)
                 {
+                    // Kiểm tra e.NewValue trước khi ToString()
+                    string rawValue = e.NewValue?.ToString() ?? "0";
+                    station.HT_Cylinder1_1 = double.TryParse(rawValue, out double newValue1) ? Math.Round(newValue1, 2) : 0;
 
-                    station.HT_Cylinder1_1 = double.TryParse(e.NewValue.ToString(), out double newValue1) ? Math.Round(newValue1, 2) : 0;
-
-                    //tinh toans
-
+                    // Tính toán (HT_Cylinder1_1 đã có giá trị nhờ dòng trên)
                     station.HT_Cylinder1_1_Final = Math.Round(station.HT_Cylinder1_1 ?? 0, 2);
-
 
                     using (var dbContext = new ApplicationDbContext())
                     {
-                        //Real time
                         var check = dbContext.FT02s.FirstOrDefault();
 
                         if (check != null)
@@ -5277,15 +5337,18 @@ namespace RegistrationForm1
                                 CreateAt = createAt,
                                 CreateOperatorId = createOperatorId,
                             };
-
                             dbContext.FT02s.Add(newLine);
                         }
 
-                        dbContext.SaveChanges();//Luu thay doi vao db
+                        dbContext.SaveChanges();
                     }
                 }
             }
-            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+            catch (Exception ex)
+            {
+                // Lưu ý: Nếu e.Tag bị null thì dòng Log này cũng có thể gây crash, nên dùng null-conditional ở đây luôn
+                Log.Error(ex, $"From TagValueChanged {e?.Tag?.Path ?? "Unknown Path"}");
+            }
         }
         private void HT_Cylinder1_2_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
@@ -5757,135 +5820,255 @@ namespace RegistrationForm1
             }
             catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
         }
+        //private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var createAt = DateTime.Now;
+        //        var createOperatorId = "System";
+        //        var path = e.Tag.Parent.Path;
+        //        var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
+        //        var station = location?.Stations.FirstOrDefault(x => x.Path == path);
+        //        if (station != null)
+        //        {
+        //            // Cập nhật Fllow_Ho khi có giá trị mới
+        //            station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
+        //            //    station.Door1_Aperture = double.TryParse(e.NewValue.ToString(), out double newValueDoor1) ? Math.Round(newValueDoor1, 2) : 0;
+
+        //            //tinh toans
+
+        //            station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho  ?? 0, 2);
+
+        //            int selectedColumnIndex = 0; // mặc định chọn cột đầu tiên nếu không có combobox
+
+        //            double Z1 = ((double)station.Fllow_Ho_Final); // Gán mực nước hồ
+        //            double NoisuyW1_Ho = InterpolateSingleValue(table, Z1, selectedColumnIndex);
+        //            // tính toán các giá trị khác dựa trên Z và bảng nội suy 
+        //            double Z2 = ((double)station.Fllow_Ho_Final) + 0.01;
+        //            double NoisuyW2_Ho = InterpolateSingleValue(table, Z2, selectedColumnIndex);
+        //            // Tính Q tt và Wtt
+        //            double TinhWtt = Math.Round((0.024 * (Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho + Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho) / 2.0) / 30.0, 2);
+        //            double TinhQtt = Math.Round((TinhWtt * 1000000.0) / (24.0 * 60.0 * 60.0), 2); // 24*60*60 = 86400
+        //                                                                                          // Tính lưu lượng qua tràn Qtr và tổng lưu lượng
+        //                                                                                          //   double Qtr = 20.0;
+        //            double Qtr = location.CalculatorValue.Q_i_total;
+        //            double TinhWtr = Math.Round(Qtr * (86400.0 / 1000000.0), 2); // *24*60*60/1000000)
+        //            // Tính Q đên = [(W2-W1)*1000000/86400] + Qtr + Qcs1 + Qcs2 + Qcs3 +[(W2+W1)/2*2.4%/30*1000000/86400] 
+        //            double TinhQCs1 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1;
+        //            double TinhQCs2 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2;
+        //            double TinhQCs3 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3;
+        //            double TinhTongW = Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho + Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho;
+        //            double TinhHieuW = Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho - Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho;
+        //            double Qden1 = Math.Round((TinhHieuW * 1000000.0) / 86400.0, 2);
+        //            double Qden2 = Math.Round((TinhTongW / 2.0) * (0.024 / 30.0) * (1000000.0 / 86400.0), 2);
+        //            double Qden = Math.Round(Qden1 + Qden2 + Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3, 2);
+        //            double TinhWden = Math.Round(Qden * (86400.0 / 1000000.0), 2); //*24*60*60/1000000)
+        //            // Tính Q đi Qdi =QTr + QCs1 + QCs2 +QCs3 + QTt
+        //            double TinhQdi = Math.Round(Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3 + TinhQtt, 2);
+        //            double TinhWdi = Math.Round(TinhQdi * (86400.0 / 1000000.0), 2); // *24*60*60/1000000)
+        //                                                                             // Tính W_Cs1,W_Cs2,W_Cs3       R23*24*60*60/1000000)                                                     
+        //            double TinhWcs1 = Math.Round(TinhQCs1* (86400.0 / 1000000.0), 2);
+        //            double TinhWcs2 = Math.Round(TinhQCs2 * (86400.0 / 1000000.0), 2);
+        //            double TinhWcs3 = Math.Round(TinhQCs3 * (86400.0 / 1000000.0), 2);
+
+        //            // Khu vực gán CS1, CS2 ,CS3
+        //            double _MNTL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo1;
+        //            double _MNTL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo2;
+        //            double _MNTL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo3;
+        //            double _MNHL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo1;
+        //            double _MNHL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo2; 
+        //            double _MNHL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo3;
+        //            //DoMoCua_a_CongSo1
+        //            double _DoMoCua_a_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo1;
+        //            double _DoMoCua_a_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo2;
+        //            double _DoMoCua_a_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo3;
+
+        //            foreach (var item in location.Stations.Where(x => !x.Path.Contains("Location_Info")))
+        //            {
+        //                Door1_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture")
+        //                                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture")
+        //                                   , "", ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture").Value));
+        //                Door2_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture")
+        //                                       , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture")
+        //                                       , "", ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture").Value));
+        //            }
+
+        //            location.CalculatorValue.W_di = TinhWdi;
+        //            location.CalculatorValue.Q_di = TinhQdi;
+        //            location.CalculatorValue.W_den = TinhWden;
+        //            location.CalculatorValue.Q_den = Qden;
+
+        //            location.CalculatorValue.Q_tr = Qtr;
+        //            location.CalculatorValue.W_tr = TinhWtr;
+        //            location.CalculatorValue.W1_ho = NoisuyW1_Ho;
+        //            location.CalculatorValue.W2_ho = NoisuyW2_Ho;
+        //            location.CalculatorValue.W_tt = TinhWtt;
+        //            location.CalculatorValue.Q_tt = TinhQtt;
+        //            location.CalculatorValue.Q_cs1 = TinhQCs1;
+        //            location.CalculatorValue.W_cs1 = TinhWcs1;
+        //            location.CalculatorValue.Q_cs2 = TinhQCs2;
+        //            location.CalculatorValue.W_cs2 = TinhWcs2;
+        //            location.CalculatorValue.Q_cs3 = TinhQCs3;
+        //            location.CalculatorValue.W_cs3 = TinhWcs3;
+
+        //            using (var dbContext = new ApplicationDbContext())
+        //            {
+        //                //Real time
+        //                var check = dbContext.FT02s.FirstOrDefault();
+
+        //                if (check != null)
+        //                {
+        //                    check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+        //                    check.UpdateAt = createAt;
+        //                    check.UpdateOperatorId = createOperatorId;
+        //                }
+        //                else
+        //                {
+        //                    var newLine = new FT02
+        //                    {
+        //                        Id = Guid.NewGuid(),
+        //                        C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
+        //                        IsDeleted = false,
+        //                        CreateAt = createAt,
+        //                        CreateOperatorId = createOperatorId,
+        //                    };
+
+        //                    dbContext.FT02s.Add(newLine);
+        //                }
+
+        //                dbContext.SaveChanges();//Luu thay doi vao db
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+        //}
         private void Fllow_Ho_ValueChanged(object sender, TagValueChangedEventArgs e)
         {
             try
             {
+                // 1. Kiểm tra cơ bản các đối tượng đầu vào
+                if (e?.Tag?.Parent == null || Globalvariable.RealtimeDisplays == null) return;
+
                 var createAt = DateTime.Now;
                 var createOperatorId = "System";
                 var path = e.Tag.Parent.Path;
+
                 var location = Globalvariable.RealtimeDisplays.FirstOrDefault(x => x.LocationId == 1);
-                var station = location?.Stations.FirstOrDefault(x => x.Path == path);
-                if (station != null)
+                var station = location?.Stations?.FirstOrDefault(x => x.Path == path);
+
+                // 2. Kiểm tra CalculatorValue và ConfigSystem trước khi tính toán
+                if (station == null || location.CalculatorValue == null || Globalvariable.ConfigSystem?.ParametterConfig == null)
                 {
-                    // Cập nhật Fllow_Ho khi có giá trị mới
-                    station.Fllow_Ho = double.TryParse(e.NewValue.ToString(), out double newValue) ? Math.Round(newValue, 2) : 0;
-                    //    station.Door1_Aperture = double.TryParse(e.NewValue.ToString(), out double newValueDoor1) ? Math.Round(newValueDoor1, 2) : 0;
+                    Log.Warning("Missing configuration or CalculatorValue for calculation.");
+                    return;
+                }
 
-                    //tinh toans
+                // Cập nhật giá trị mực nước hồ
+                string rawValue = e.NewValue?.ToString() ?? "0";
+                station.Fllow_Ho = double.TryParse(rawValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho ?? 0, 2);
 
-                    station.Fllow_Ho_Final = Math.Round(station.Fllow_Ho  ?? 0, 2);
+                int selectedColumnIndex = 0;
+                double Z1 = (double)station.Fllow_Ho_Final;
 
-                    int selectedColumnIndex = 0; // mặc định chọn cột đầu tiên nếu không có combobox
+                // Cần đảm bảo 'table' không null trước khi gọi hàm nội suy
+                if (table == null) { Log.Error("Interpolation table is null"); return; }
 
-                    double Z1 = ((double)station.Fllow_Ho_Final); // Gán mực nước hồ
-                    double NoisuyW1_Ho = InterpolateSingleValue(table, Z1, selectedColumnIndex);
-                    // tính toán các giá trị khác dựa trên Z và bảng nội suy 
-                    double Z2 = ((double)station.Fllow_Ho_Final) + 0.01;
-                    double NoisuyW2_Ho = InterpolateSingleValue(table, Z2, selectedColumnIndex);
-                    // Tính Q tt và Wtt
-                    double TinhWtt = Math.Round((0.024 * (Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho + Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho) / 2.0) / 30.0, 2);
-                    double TinhQtt = Math.Round((TinhWtt * 1000000.0) / (24.0 * 60.0 * 60.0), 2); // 24*60*60 = 86400
-                                                                                                  // Tính lưu lượng qua tràn Qtr và tổng lưu lượng
-                                                                                                  //   double Qtr = 20.0;
-                    double Qtr = location.CalculatorValue.Q_i_total;
-                    double TinhWtr = Math.Round(Qtr * (86400.0 / 1000000.0), 2); // *24*60*60/1000000)
-                    // Tính Q đên = [(W2-W1)*1000000/86400] + Qtr + Qcs1 + Qcs2 + Qcs3 +[(W2+W1)/2*2.4%/30*1000000/86400] 
-                    double TinhQCs1 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo1;
-                    double TinhQCs2 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo2;
-                    double TinhQCs3 = Globalvariable.ConfigSystem.ParametterConfig.Q_CongSo3;
-                    double TinhTongW = Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho + Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho;
-                    double TinhHieuW = Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W2_ho - Globalvariable.RealtimeDisplays.FirstOrDefault().CalculatorValue.W1_ho;
-                    double Qden1 = Math.Round((TinhHieuW * 1000000.0) / 86400.0, 2);
-                    double Qden2 = Math.Round((TinhTongW / 2.0) * (0.024 / 30.0) * (1000000.0 / 86400.0), 2);
-                    double Qden = Math.Round(Qden1 + Qden2 + Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3, 2);
-                    double TinhWden = Math.Round(Qden * (86400.0 / 1000000.0), 2); //*24*60*60/1000000)
-                    // Tính Q đi Qdi =QTr + QCs1 + QCs2 +QCs3 + QTt
-                    double TinhQdi = Math.Round(Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3 + TinhQtt, 2);
-                    double TinhWdi = Math.Round(TinhQdi * (86400.0 / 1000000.0), 2); // *24*60*60/1000000)
-                                                                                     // Tính W_Cs1,W_Cs2,W_Cs3       R23*24*60*60/1000000)                                                     
-                    double TinhWcs1 = Math.Round(TinhQCs1* (86400.0 / 1000000.0), 2);
-                    double TinhWcs2 = Math.Round(TinhQCs2 * (86400.0 / 1000000.0), 2);
-                    double TinhWcs3 = Math.Round(TinhQCs3 * (86400.0 / 1000000.0), 2);
+                double NoisuyW1_Ho = InterpolateSingleValue(table, Z1, selectedColumnIndex);
+                double Z2 = Z1 + 0.01;
+                double NoisuyW2_Ho = InterpolateSingleValue(table, Z2, selectedColumnIndex);
 
-                    // Khu vực gán CS1, CS2 ,CS3
-                    double _MNTL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo1;
-                    double _MNTL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo2;
-                    double _MNTL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo3;
-                    double _MNHL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo1;
-                    double _MNHL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo2; 
-                    double _MNHL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo3;
-                    //DoMoCua_a_CongSo1
-                    double _DoMoCua_a_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo1;
-                    double _DoMoCua_a_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo2;
-                    double _DoMoCua_a_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo3;
+                // Gán tạm thời để tránh lỗi lấy giá trị cũ từ CalculatorValue khi tính TinhWtt
+                location.CalculatorValue.W1_ho = NoisuyW1_Ho;
+                location.CalculatorValue.W2_ho = NoisuyW2_Ho;
 
+                // 3. Thực hiện tính toán với các biến đã được check
+                var config = Globalvariable.ConfigSystem.ParametterConfig;
+
+                double TinhWtt = Math.Round((0.024 * (NoisuyW1_Ho + NoisuyW2_Ho) / 2.0) / 30.0, 2);
+                double TinhQtt = Math.Round((TinhWtt * 1000000.0) / 86400.0, 2);
+
+                double Qtr = location.CalculatorValue.Q_i_total;
+                double TinhWtr = Math.Round(Qtr * (86400.0 / 1000000.0), 2);
+
+                double TinhQCs1 = config.Q_CongSo1;
+                double TinhQCs2 = config.Q_CongSo2;
+                double TinhQCs3 = config.Q_CongSo3;
+
+                double TinhTongW = NoisuyW1_Ho + NoisuyW2_Ho;
+                double TinhHieuW = NoisuyW2_Ho - NoisuyW1_Ho;
+
+                double Qden1 = Math.Round((TinhHieuW * 1000000.0) / 86400.0, 2);
+                double Qden2 = Math.Round((TinhTongW / 2.0) * (0.024 / 30.0) * (1000000.0 / 86400.0), 2);
+                double Qden = Math.Round(Qden1 + Qden2 + Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3, 2);
+                double TinhWden = Math.Round(Qden * (86400.0 / 1000000.0), 2);
+
+                double TinhQdi = Math.Round(Qtr + TinhQCs1 + TinhQCs2 + TinhQCs3 + TinhQtt, 2);
+                double TinhWdi = Math.Round(TinhQdi * (86400.0 / 1000000.0), 2);
+
+                double TinhWcs1 = Math.Round(TinhQCs1 * (86400.0 / 1000000.0), 2);
+                double TinhWcs2 = Math.Round(TinhQCs2 * (86400.0 / 1000000.0), 2);
+                double TinhWcs3 = Math.Round(TinhQCs3 * (86400.0 / 1000000.0), 2);
+
+                // 4. Cập nhật các giá trị vào location
+                location.CalculatorValue.W_di = TinhWdi;
+                location.CalculatorValue.Q_di = TinhQdi;
+                location.CalculatorValue.W_den = TinhWden;
+                location.CalculatorValue.Q_den = Qden;
+                location.CalculatorValue.Q_tr = Qtr;
+                location.CalculatorValue.W_tr = TinhWtr;
+                location.CalculatorValue.W_tt = TinhWtt;
+                location.CalculatorValue.Q_tt = TinhQtt;
+                location.CalculatorValue.Q_cs1 = TinhQCs1;
+                location.CalculatorValue.W_cs1 = TinhWcs1;
+                location.CalculatorValue.Q_cs2 = TinhQCs2;
+                location.CalculatorValue.W_cs2 = TinhWcs2;
+                location.CalculatorValue.Q_cs3 = TinhQCs3;
+                location.CalculatorValue.W_cs3 = TinhWcs3;
+
+                // Gọi cập nhật độ mở cửa (Cần check ahdDriverConnector1 khác null)
+                if (ahdDriverConnector1 != null)
+                {
                     foreach (var item in location.Stations.Where(x => !x.Path.Contains("Location_Info")))
                     {
-                        Door1_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture")
-                                           , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture")
-                                           , "", ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture").Value));
-                        Door2_Aperture_ValueChanged(ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture")
-                                               , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture")
-                                               , "", ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture").Value));
-                    }
+                        var tag1 = ahdDriverConnector1.GetTag($"{item.Path}/Door1_Aperture");
+                        var tag2 = ahdDriverConnector1.GetTag($"{item.Path}/Door2_Aperture");
 
-                    location.CalculatorValue.W_di = TinhWdi;
-                    location.CalculatorValue.Q_di = TinhQdi;
-                    location.CalculatorValue.W_den = TinhWden;
-                    location.CalculatorValue.Q_den = Qden;
-                   
-                    location.CalculatorValue.Q_tr = Qtr;
-                    location.CalculatorValue.W_tr = TinhWtr;
-                    location.CalculatorValue.W1_ho = NoisuyW1_Ho;
-                    location.CalculatorValue.W2_ho = NoisuyW2_Ho;
-                    location.CalculatorValue.W_tt = TinhWtt;
-                    location.CalculatorValue.Q_tt = TinhQtt;
-                    location.CalculatorValue.Q_cs1 = TinhQCs1;
-                    location.CalculatorValue.W_cs1 = TinhWcs1;
-                    location.CalculatorValue.Q_cs2 = TinhQCs2;
-                    location.CalculatorValue.W_cs2 = TinhWcs2;
-                    location.CalculatorValue.Q_cs3 = TinhQCs3;
-                    location.CalculatorValue.W_cs3 = TinhWcs3;
-
-                    location.Parametters.MNHL_CongSo1 = _MNHL_CongSo1;
-                    location.Parametters.MNHL_CongSo2 = _MNHL_CongSo2;
-                    location.Parametters.MNHL_CongSo3 = _MNHL_CongSo3;
-
-                    location.Parametters.DoMoCua_a_CongSo1 = _DoMoCua_a_CongSo1;
-                    location.Parametters.DoMoCua_a_CongSo2 = _DoMoCua_a_CongSo2;
-                    location.Parametters.DoMoCua_a_CongSo3 = _DoMoCua_a_CongSo3;
-
-                    using (var dbContext = new ApplicationDbContext())
-                    {
-                        //Real time
-                        var check = dbContext.FT02s.FirstOrDefault();
-
-                        if (check != null)
-                        {
-                            check.C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
-                            check.UpdateAt = createAt;
-                            check.UpdateOperatorId = createOperatorId;
-                        }
-                        else
-                        {
-                            var newLine = new FT02
-                            {
-                                Id = Guid.NewGuid(),
-                                C000 = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays),
-                                IsDeleted = false,
-                                CreateAt = createAt,
-                                CreateOperatorId = createOperatorId,
-                            };
-
-                            dbContext.FT02s.Add(newLine);
-                        }
-
-                        dbContext.SaveChanges();//Luu thay doi vao db
+                        if (tag1 != null) Door1_Aperture_ValueChanged(tag1, new TagValueChangedEventArgs(tag1, "", tag1.Value));
+                        if (tag2 != null) Door2_Aperture_ValueChanged(tag2, new TagValueChangedEventArgs(tag2, "", tag2.Value));
                     }
                 }
+
+                // 5. Lưu Database
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    var check = dbContext.FT02s.FirstOrDefault();
+                    string jsonContent = JsonConvert.SerializeObject(Globalvariable.RealtimeDisplays);
+
+                    if (check != null)
+                    {
+                        check.C000 = jsonContent;
+                        check.UpdateAt = createAt;
+                        check.UpdateOperatorId = createOperatorId;
+                    }
+                    else
+                    {
+                        dbContext.FT02s.Add(new FT02
+                        {
+                            Id = Guid.NewGuid(),
+                            C000 = jsonContent,
+                            IsDeleted = false,
+                            CreateAt = createAt,
+                            CreateOperatorId = createOperatorId,
+                        });
+                    }
+                    dbContext.SaveChanges();
+                }
             }
-            catch (Exception ex) { Log.Error(ex, $"From TagValueChanged {e.Tag.Path}"); }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error in Fllow_Ho_ValueChanged: {e?.Tag?.Path}");
+            }
         }
         //private double TinhToan(double tagValue)
         //{

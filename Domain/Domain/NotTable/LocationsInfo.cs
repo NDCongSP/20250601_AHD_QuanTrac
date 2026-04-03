@@ -42,7 +42,5 @@
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>
         public string? Path { get; set; }
-
-        public OffsetConfigModel OffsetConfig { get; set; } = new OffsetConfigModel();
     }
 }

@@ -239,27 +239,30 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="CurrentUser.cs" />
     <Compile Include="DbConfig.cs" />
-    <Compile Include="Domain\Entities\BaseEntity\GenericEntity.cs" />
-    <Compile Include="Domain\Entities\IGenericEntity.cs" />
-    <Compile Include="Domain\Entities\ITagLocationInfo.cs" />
-    <Compile Include="Domain\Entities\ITagsStationsDouble.cs" />
-    <Compile Include="Domain\Entities\ScadaUser.cs" />
+    <Compile Include="Domain\Entities\BaseEntity\IGenericEntity.cs" />
     <Compile Include="Domain\Entities\FT01.cs" />
     <Compile Include="Domain\Entities\FT02.cs" />
     <Compile Include="Domain\Entities\FT03.cs" />
     <Compile Include="Domain\Entities\FT04.cs" />
-    <Compile Include="Domain\Entities\FT05.cs" />
+    <Compile Include="Domain\Entities\FT05_ChartHoChua.cs" />
+    <Compile Include="Domain\Entities\FT06_InterpolationTable.cs" />
+    <Compile Include="Domain\Entities\FT07_ChartMucNuoc.cs" />
+    <Compile Include="Domain\Entities\FT08_FilesManagement.cs" />
+    <Compile Include="Domain\Entities\ScadaUser.cs" />
+    <Compile Include="Domain\Enums\EnumMode.cs" />
     <Compile Include="Domain\Enums\EnumPermissionScada.cs" />
     <Compile Include="Domain\Enums\EnumStatus.cs" />
-    <Compile Include="Domain\NotTable\ApiOffsetModel.cs" />
+    <Compile Include="Domain\Interceptors\AuditableSaveChangesInterceptor.cs" />
+    <Compile Include="Domain\Interceptors\ERPAuditableSaveChangesInterceptor.cs" />
+    <Compile Include="Domain\Models\FT03DataPoint.cs" />
+    <Compile Include="Domain\Models\FT05_ChartHoChuaModel.cs" />
+    <Compile Include="Domain\Models\FT07_ChartMucNuocModel.cs" />
     <Compile Include="Domain\NotTable\CameraConfigModel.cs" />
-    <Compile Include="Domain\NotTable\LocationsInfo.cs" />
     <Compile Include="Domain\NotTable\ConfigModel.cs" />
-    <Compile Include="Domain\NotTable\ControlPlcModel.cs" />
-    <Compile Include="Domain\NotTable\DropDownModel.cs" />
-    <Compile Include="Domain\NotTable\FilterModel.cs" />
     <Compile Include="Domain\NotTable\interfaces\ICalculatorValue.cs" />
-    <Compile Include="Domain\NotTable\OffsetConfigModel.cs" />
+    <Compile Include="Domain\NotTable\interfaces\ITagLocationInfo.cs" />
+    <Compile Include="Domain\NotTable\interfaces\ITagsStationsDouble.cs" />
+    <Compile Include="Domain\NotTable\LocationsInfo.cs" />
     <Compile Include="Domain\NotTable\ParamettersModel.cs" />
     <Compile Include="Domain\NotTable\RealtimeDisplayModel.cs" />
     <Compile Include="Domain\NotTable\RealtimeDisplays.cs" />
@@ -400,6 +403,7 @@
     <Compile Include="FrmUserManager.Designer.cs">
       <DependentUpon>FrmUserManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalUsing.cs" />
     <Compile Include="LoginServices.cs" />
     <Compile Include="PopupBensuc.cs">
       <SubType>Form</SubType>

@@ -15,7 +15,7 @@ namespace RegistrationForm1
         public DbSet<FT02> FT02s { get; set; }
         public DbSet<FT03> FT03s { get; set; }
         public DbSet<FT04> FT04s { get; set; }
-        public DbSet<FT05> FT05s { get; set; }
+        public DbSet<FT05_ChartHoChua> FT05s { get; set; }
         public DbSet<ScadaUser> ScadaUsers { get; set; }
 
          protected override void OnModelCreating(DbModelBuilder modelBuilder)
