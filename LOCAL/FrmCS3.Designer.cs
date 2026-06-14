@@ -148,6 +148,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmCS3";
             this.Text = "Cống số 3";
+            this.Load += new System.EventHandler(this.FrmCS3_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

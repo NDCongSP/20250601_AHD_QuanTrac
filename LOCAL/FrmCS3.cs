@@ -37,7 +37,8 @@ namespace RegistrationForm1
                     {
                         foreach (var item in location.Stations)
                         {
-                            _LabMNTLCS3.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho_Final.ToString();
+                            //  _LabMNTLCS3.Text = location.Stations.FirstOrDefault(x => x.Path.Contains("Location_Info"))?.Fllow_Ho_Final.ToString();
+                            _LabMNTLCS3.Text = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo3.ToString();
                             _LabQCS3.Text = location.CalculatorValue.Q_cs3.ToString();
                             //_LabDomoCS3.Text = location.Parametters.DoMoCua_a_CongSo3.ToString();
                             // _LabMNHLCS3.Text = location.Parametters.MNHL_CongSo3.ToString();
@@ -61,6 +62,11 @@ namespace RegistrationForm1
             {
                 _timer.Enabled = true;
             }
+        }
+
+        private void FrmCS3_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

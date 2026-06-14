@@ -32,6 +32,7 @@ namespace RegistrationForm1
         private Timer api_CDDTimer;
         private Timer _refreshTimer;
         private Timer writeTagTimer;
+        private Timer timer_CS12;
         Button currentButton = null; // Biến toàn cục trong Form
 
 
@@ -127,7 +128,9 @@ namespace RegistrationForm1
 
             await LoadRainfallStatsData();
             await LoadStationsData();
-
+            await LoadAll();
+            await CDD();
+            await API_MNDT();
             int cmbX = 0; // Chỉ số cột X mặc định
             table = ParseCsvToDictionary(csvInterpolationData, out xValues);
             
@@ -255,7 +258,11 @@ namespace RegistrationForm1
                                   
             _timer.Tick += _timer_Tick;
             _timer.Start();
-
+            // Timer để lấy dữ liệu từ API CS1 và CS2
+            timer_CS12 = new Timer();
+            timer_CS12.Interval = 10 * 60 * 1000; // 10 phút
+            timer_CS12.Tick += async (s, ev) => await timer_CS12_Tick(s, ev);
+            timer_CS12.Start();
 
             // Timer API Bình Nhâm
             apiTimer = new Timer();
@@ -291,8 +298,58 @@ namespace RegistrationForm1
 
 
         }
+       
+       private async Task timer_CS12_Tick(object sender, EventArgs e)
+        {
+            await LoadAll();
+        }
+        private async Task LoadAll()
+        {
+            await LoadData("https://simc.id.vn/simc_dti/api_dti.php?Ten=coso1", "CS1");
+            await LoadData("https://simc.id.vn/simc_dti/api_dti.php?Ten=coso2", "CS2");
+        }
+        // Hàm dùng chung
+        private async Task LoadData(string url, string station)
+        {
+            try
+            {
+                string json = await client.GetStringAsync(url);
+                var result = JsonConvert.DeserializeObject<ApiResponse>(json);
 
-        
+                if (result?.data?.Count > 0)
+                {
+                    var d = result.data[0];
+
+                    if (station == "CS1")
+                    {
+                        lblA1_CS1.Text = d.A1;
+                        lblA2_CS1.Text = d.A2;
+                        lblAp1_CS1.Text = d.Ap1;
+                        lblAp2_CS1.Text = d.Ap2;
+                        lblZ2_CS1.Text = d.Z2;
+                        lblQc_CS1.Text = d.Qc;
+                        lblTime_CS1.Text = d.Ts;
+                    }
+                    else if (station == "CS2")
+                    {
+                        lblA1_CS2.Text = d.A1;
+                        lblA2_CS2.Text = d.A2;
+                        lblAp1_CS2.Text = d.Ap1;
+                        lblAp2_CS2.Text = d.Ap2;
+                        lblZ2_CS2.Text = d.Z2;
+                        lblQc_CS2.Text = d.Qc;
+                        lblTime_CS2.Text = d.Ts;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (station == "CS1")
+                    lblTime_CS1.Text = "Lỗi";
+                else
+                    lblTime_CS2.Text = "Lỗi";
+            }
+        }
 
         private void _timer_Tick(object sender, EventArgs e)
         {
@@ -494,6 +551,7 @@ namespace RegistrationForm1
                             line.Q_i_1 = itemStation.Q_i_1;
                             line.Q_i_2 = itemStation.Q_i_2;
                             
+                            
                            
                           
 
@@ -550,8 +608,9 @@ namespace RegistrationForm1
             }
         }
 
-        private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
+        private async Task CDD()
         {
+
             string url = "https://apiv2.thuyloivietnam.vn/Api/getSoLieuQuanTrac?Key=apiktdlqtDauTieng&MaQuanTrac=7001";
             try
             {
@@ -573,14 +632,20 @@ namespace RegistrationForm1
                     }
                     catch (Exception ex)
                     {
-                      //  Console.WriteLine("Lỗi đọc API: " + ex.Message);
+                        //  Console.WriteLine("Lỗi đọc API: " + ex.Message);
                     }
                 }
             }
             catch (Exception ex)
             {
-              //  MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
+                //  MessageBox.Show("Lỗi khi gọi API:\n" + ex.Message);
             }
+        }
+
+        private async Task api_CDDTimer_Tick(object sender, EventArgs ev)
+        {
+            await CDD();
+        
         }
         private async Task WriteAPI_CDDsync(double GT)
         {
@@ -1442,7 +1507,7 @@ namespace RegistrationForm1
             public DateTime Timestamp => DateTimeOffset.FromUnixTimeSeconds(ts).ToLocalTime().DateTime;
             public DateTime CreatedAt => DateTimeOffset.FromUnixTimeSeconds(c).ToLocalTime().DateTime;
         }
-        public async Task Api_DTtimer_Tick()
+        private async Task API_MNDT()
         {
             string apiUrl = "http://dautiengphuochoa.com/api/getmn.aspx?key=dauhoaphuongtien%3b";
 
@@ -1513,7 +1578,7 @@ namespace RegistrationForm1
 
                                     // --- Đọc giá trị tham chiếu từ label
                                     double binhNhamValue = 0;
-                           
+
                                     if (double.TryParse(_labAPIBinhnham.Text, out binhNhamValue))
                                     {
                                         // So sánh và cộng/trừ hệ số α1
@@ -1563,12 +1628,16 @@ namespace RegistrationForm1
             catch (HttpRequestException ex)
             {
                 // Bắt lỗi cụ thể khi có vấn đề về HTTP (ví dụ: không kết nối được API)
-             //   AppendLog($"❌ Lỗi đọc API: An error occurred while sending the request. {ex.Message}");
+                //   AppendLog($"❌ Lỗi đọc API: An error occurred while sending the request. {ex.Message}");
             }
             catch (Exception ex)
             {
-              //  AppendLog($"❌ Lỗi Timer_Tick: {ex.Message}");
+                //  AppendLog($"❌ Lỗi Timer_Tick: {ex.Message}");
             }
+        }
+        public async Task Api_DTtimer_Tick()
+        {
+           await API_MNDT();
         }
         
         private async Task WriteQTM(Dictionary<string, RealtimeRainfallData> latestApiData)
@@ -5959,7 +6028,7 @@ namespace RegistrationForm1
                 // 2. Kiểm tra CalculatorValue và ConfigSystem trước khi tính toán
                 if (station == null || location.CalculatorValue == null || Globalvariable.ConfigSystem?.ParametterConfig == null)
                 {
-                    Log.Warning("Missing configuration or CalculatorValue for calculation.");
+                  //  Log.Warning("Missing configuration or CalculatorValue for calculation.");
                     return;
                 }
 
@@ -6009,6 +6078,18 @@ namespace RegistrationForm1
                 double TinhWcs1 = Math.Round(TinhQCs1 * (86400.0 / 1000000.0), 2);
                 double TinhWcs2 = Math.Round(TinhQCs2 * (86400.0 / 1000000.0), 2);
                 double TinhWcs3 = Math.Round(TinhQCs3 * (86400.0 / 1000000.0), 2);
+
+                //            // Khu vực gán CS1, CS2 ,CS3
+                double _MNTL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo1;
+                double _MNTL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo2;
+                double _MNTL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNTL_CongSo3;
+                double _MNHL_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo1;
+                double _MNHL_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo2;
+                double _MNHL_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.MNHL_CongSo3;
+                //DoMoCua_a_CongSo1
+                double _DoMoCua_a_CongSo1 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo1;
+                double _DoMoCua_a_CongSo2 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo2;
+                double _DoMoCua_a_CongSo3 = Globalvariable.ConfigSystem.ParametterConfig.DoMoCua_a_CongSo3;
 
                 // 4. Cập nhật các giá trị vào location
                 location.CalculatorValue.W_di = TinhWdi;
@@ -6485,6 +6566,11 @@ namespace RegistrationForm1
             OpenFormInPanel(cs3, "CỐNG SỐ 3");
         }
 
-        
+        private void bntK5_Click(object sender, EventArgs e)
+        {
+            ActivateMenuButton(sender as Button);
+            FrmK5 cs3 = new FrmK5();
+            OpenFormInPanel(cs3, "CỐNG K5 + 700");
+        }
     }
 }

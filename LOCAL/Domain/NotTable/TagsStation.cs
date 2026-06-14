@@ -157,5 +157,7 @@ namespace Domain
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
         public double Q_i_total { get; set; } = 0;
+         //public double A1_CS1 { get; set; } = 0;
+         //   public double A1_CS2 { get; set; } = 0;
     }
 }
