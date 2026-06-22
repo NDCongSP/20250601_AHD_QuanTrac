@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +31,5 @@ namespace Domain
         /// Giá trị mức nước nhập tay.
         /// </summary>
         public double Fllow_HL_TXL { get; set; } = 0;
-
-        public ApiOffsetModel API_Offset { get; set; }=new ApiOffsetModel();
     }
 }

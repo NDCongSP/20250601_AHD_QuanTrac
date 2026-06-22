@@ -1,4 +1,4 @@
-﻿namespace Domain
+namespace Domain
 {
     /// <summary>
     /// nhiều vị trí ở các khu vực địa lý khác nhau.
@@ -43,6 +43,5 @@
         /// </summary>
         public string? Path { get; set; }
 
-        public OffsetConfigModel OffsetConfig { get; set; } = new OffsetConfigModel();
     }
 }

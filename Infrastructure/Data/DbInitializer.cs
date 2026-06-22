@@ -1,4 +1,4 @@
-﻿using Application.Extentions;
+using Application.Extentions;
 using DocumentFormat.OpenXml.VariantTypes;
 using Domain;
 using Domain.Entities;
@@ -72,35 +72,19 @@ namespace Infrastructure.Data
                 {
                   new StationInfoModel(){  Id=1,
                    Name = "Station_1",
-                   Path = "Local Station/DauTieng/S71500/Station_1",
-                    OffsetConfig = new OffsetConfigModel()
-                    {
-                        S1_Temp_Oil = 1,
-                    }
+                   Path = "Local Station/DauTieng/S71500/Station_1"
                   }
                    ,new StationInfoModel(){  Id=2,
                    Name = "Station_2",
-                   Path = "Local Station/DauTieng/S71500/Station_2",
-                    OffsetConfig = new OffsetConfigModel()
-                    {
-                        S1_Temp_Oil = 2,
-                    }
+                   Path = "Local Station/DauTieng/S71500/Station_2"
                    }
                    ,new StationInfoModel(){  Id=3,
                    Name = "Station_3",
-                   Path = "Local Station/DauTieng/S71500/Station_3",
-                    OffsetConfig = new OffsetConfigModel()
-                    {
-                        S1_Temp_Oil = -1,
-                    }
+                   Path = "Local Station/DauTieng/S71500/Station_3"
                    }
                    ,new StationInfoModel(){  Id=4,
                    Name = "Location_Info",
-                   Path = "Local Station/DauTieng/S71500/Location_Info",
-                    OffsetConfig = new OffsetConfigModel()
-                    {
-                        Fllow_Ho = 1,
-                    }
+                   Path = "Local Station/DauTieng/S71500/Location_Info"
                    },
                 };
 

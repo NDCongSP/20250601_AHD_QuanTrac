@@ -246,7 +246,6 @@ public partial class AddEditLocation : ComponentBase
             station.Name = updated.Name;
             station.Path = updated.Path;
             station.Tags = updated.Tags;
-            station.OffsetConfig = updated.OffsetConfig ?? new OffsetConfigModel();
 
             if (_stationsGrid != null)
             {
