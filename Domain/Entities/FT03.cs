@@ -115,6 +115,24 @@ namespace Domain.Entities
         public double? API_D_Doi95 { get; set; } = 0;
         public double? API_D_Doi95_Total { get; set; } = 0;
 
+        public double? A1_CS1 { get; set; } = 0;
+        public double? A2_CS1 { get; set; } = 0;
+        public double? Ap1_CS1 { get; set; } = 0;
+        public double? Ap2_CS1 { get; set; } = 0;
+        public double? Z2_CS1 { get; set; } = 0;
+        public double? Qc_CS1 { get; set; } = 0;
+
+        public double? A1_CS2 { get; set; } = 0;
+        public double? A2_CS2 { get; set; } = 0;
+        public double? Ap1_CS2 { get; set; } = 0;
+        public double? Ap2_CS2 { get; set; } = 0;
+        public double? Z2_CS2 { get; set; } = 0;
+        public double? Qc_CS2 { get; set; } = 0;
+
+        public double? DoMo_Cua1 { get; set; } = 0;
+        public double? DoMo_Cua2 { get; set; } = 0;
+        public double? DoMo_Cua3 { get; set; } = 0;
+
         public double W1_ho { get; set; } = 0;
         public double W1_ho_old { get; set; } = 0;
         public double W2_ho { get; set; } = 0;

@@ -693,21 +693,21 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
             }
         }
 
-        // Sort children: by type (folders first), then by name (A-Z)
+        // Sort children: by type (folders first), then by CreatedAt (newest first), then by name (A-Z)
         foreach (var item in folderMap.Values)
         {
             item.Children = item.Children
                 .OrderBy(x => x.IsFolder ? 0 : 1) // Folders first, then files
-                .ThenBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase) // Name A-Z
                 .ThenByDescending(x => x.CreatedAt) // Newest to oldest
+                .ThenBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase) // Name A-Z
                 .ToList();
         }
 
-        // Sort root level items: Folders first, then files; Name A-Z; CreatedAt newest-to-oldest
+        // Sort root level items: Folders first, then files; CreatedAt newest-to-oldest; Name A-Z
         return tree
             .OrderBy(x => x.IsFolder ? 0 : 1)
-            .ThenBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
             .ThenByDescending(x => x.CreatedAt)
+            .ThenBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
             .ToList();
     }
 
