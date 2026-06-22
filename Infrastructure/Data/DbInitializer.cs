@@ -62,6 +62,39 @@ namespace Infrastructure.Data
             //    });
             //}
 
+            var viewPerm = await context.Permissions.FirstOrDefaultAsync(p => p.Name == "FileManagement.View");
+            if (viewPerm == null)
+            {
+                var p1 = new Permissions { Id = Guid.NewGuid(), Name = "FileManagement.View", Description = "Xem Bảng tin vận hành", CreateAt = DateTime.Now, CreateOperatorId = "system" };
+                var p2 = new Permissions { Id = Guid.NewGuid(), Name = "FileManagement.Edit", Description = "Sửa/Xóa/Upload Bảng tin vận hành", CreateAt = DateTime.Now, CreateOperatorId = "system" };
+                await context.Permissions.AddRangeAsync(p1, p2);
+                
+                var adminRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == ConstantExtention.Roles.Admin);
+                if (adminRole != null && Guid.TryParse(adminRole.Id, out Guid adminRoleId))
+                {
+                    await context.RoleToPermissions.AddRangeAsync(
+                        new RoleToPermission { Id = Guid.NewGuid(), RoleId = adminRoleId, RoleName = adminRole.Name, PermissionId = p1.Id, PermisionName = p1.Name, PermisionDescription = p1.Description ?? "" },
+                        new RoleToPermission { Id = Guid.NewGuid(), RoleId = adminRoleId, RoleName = adminRole.Name, PermissionId = p2.Id, PermisionName = p2.Name, PermisionDescription = p2.Description ?? "" }
+                    );
+                }
+                var operatorRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == ConstantExtention.Roles.Operator);
+                if (operatorRole != null && Guid.TryParse(operatorRole.Id, out Guid operatorRoleId))
+                {
+                    await context.RoleToPermissions.AddRangeAsync(
+                        new RoleToPermission { Id = Guid.NewGuid(), RoleId = operatorRoleId, RoleName = operatorRole.Name, PermissionId = p1.Id, PermisionName = p1.Name, PermisionDescription = p1.Description ?? "" },
+                        new RoleToPermission { Id = Guid.NewGuid(), RoleId = operatorRoleId, RoleName = operatorRole.Name, PermissionId = p2.Id, PermisionName = p2.Name, PermisionDescription = p2.Description ?? "" }
+                    );
+                }
+                var systemRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == ConstantExtention.Roles.System);
+                if (systemRole != null && Guid.TryParse(systemRole.Id, out Guid systemRoleId))
+                {
+                    await context.RoleToPermissions.AddAsync(
+                        new RoleToPermission { Id = Guid.NewGuid(), RoleId = systemRoleId, RoleName = systemRole.Name, PermissionId = p1.Id, PermisionName = p1.Name, PermisionDescription = p1.Description ?? "" }
+                    );
+                }
+                await context.SaveChangesAsync();
+            }
+
             if (!context.FT01s.Any())
             {
                 var configSystem = new ConfigModel();

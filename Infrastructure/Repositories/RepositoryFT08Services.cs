@@ -12,7 +12,7 @@ namespace Infrastructure.Repositories;
 
 public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContextAccessor contextAccessor) : IFT08
 {
-    private const string RootFolder = @"D:\SCADA\UploadFiles";
+    private const string RootFolder = @"E:\SCADA\UploadFiles";
 
     private static void EnsureRootFolderExists()
     {
@@ -566,7 +566,7 @@ public class RepositoryFT08Services(ApplicationDbContext dbContext, IHttpContext
 
             // Ensure root folder entry exists in DB
             var normalizedRootFolder = NormalizePath(RootFolder);
-            var rootParentPath = NormalizePath(System.IO.Path.GetDirectoryName(RootFolder) ?? "D:\\SCADA");
+            var rootParentPath = NormalizePath(System.IO.Path.GetDirectoryName(RootFolder) ?? "E:\\SCADA");
             var rootFolderName = System.IO.Path.GetFileName(RootFolder); // "UploadFiles"
 
             var rootEntry = allItems.FirstOrDefault(x =>

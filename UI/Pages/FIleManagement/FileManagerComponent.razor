@@ -3,14 +3,17 @@
 @using Application.DTOs.Request
 @using Application.DTOs.Response
 @using Domain.Entities
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
 @using Radzen
 @using Radzen.Blazor
+@using UI.StaticClass
 
 @inject IFT08 _ft08Service
 @inject DialogService DialogService
 @inject NotificationService NotificationService
 @inject IJSRuntime JSRuntime
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Quản lý File</PageTitle>
 
@@ -21,9 +24,12 @@
             <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
                 <RadzenText TextStyle="TextStyle.H6" Style="margin: 0;">Thư mục</RadzenText>
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
-                    <RadzenButton Icon="create_new_folder" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Small" 
-                                  Click="@AddRootLevelFolder" Disabled="@loadingList" 
-                                  title="Thêm thư mục mới" />
+                    @if (canEdit)
+                    {
+                        <RadzenButton Icon="create_new_folder" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Small" 
+                                      Click="@AddRootLevelFolder" Disabled="@loadingList" 
+                                      title="Thêm thư mục mới" />
+                    }
                     <RadzenButton Icon="refresh" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" 
                                   Click="@Reload" Disabled="@loadingList" />
                 </RadzenStack>
@@ -54,13 +60,16 @@
                                     <div class="tree-item-text" title="@treeItem.Text" @onclick="@(() => OnItemClick(treeItem))">
                                         @treeItem.Text
                                     </div>
-                                    <RadzenButton Icon="more_vert" 
-                                                  ButtonStyle="ButtonStyle.Light" 
-                                                  Size="ButtonSize.ExtraSmall"
-                                                  Variant="Variant.Flat"
-                                                  Click="@((args) => ToggleMenu(treeItem))"
-                                                  Style="padding: 0.25rem; flex-shrink: 0;" 
-                                                  id="@($"menu-btn-{treeItem.Id}")" />
+                                    @if (canEdit)
+                                    {
+                                        <RadzenButton Icon="more_vert" 
+                                                      ButtonStyle="ButtonStyle.Light" 
+                                                      Size="ButtonSize.ExtraSmall"
+                                                      Variant="Variant.Flat"
+                                                      Click="@((args) => ToggleMenu(treeItem))"
+                                                      Style="padding: 0.25rem; flex-shrink: 0;" 
+                                                      id="@($"menu-btn-{treeItem.Id}")" />
+                                    }
                                 </RadzenStack>
                             </Template>
                         </RadzenTreeLevel>
@@ -106,9 +115,12 @@
                     <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" 
                                 Style="flex: 1; border: 2px dashed #dee2e6; border-radius: 8px;">
                         <RadzenIcon Icon="picture_as_pdf" Style="font-size: 4rem; color: #adb5bd;" />
-                        <RadzenText TextStyle="TextStyle.Body1" Style="color: #6c757d;">
-                            Click vào nút 3 chấm để thêm folder/file
-                        </RadzenText>
+                        @if (canEdit)
+                        {
+                            <RadzenText TextStyle="TextStyle.Body1" Style="color: #6c757d;">
+                                Click vào nút 3 chấm để thêm folder/file
+                            </RadzenText>
+                        }
                         <RadzenText TextStyle="TextStyle.Body2" Style="color: #adb5bd;">
                             Click vào file PDF để xem nội dung
                         </RadzenText>
@@ -242,7 +254,7 @@
 
 @code {
     // Constants
-    private const string RootFolder = @"D:\SCADA\UploadFiles";
+    private const string RootFolder = @"E:\SCADA\UploadFiles";
 
     // State variables
     string? base64Pdf;
@@ -251,6 +263,10 @@
     bool loadingList;
     string search = "";
     string? selectedFileName;
+    bool canEdit = false;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
 
     // Tree data
     List<TreeItem> treeItems = new();
@@ -275,6 +291,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var authState = await authenticationStateTask;
+        canEdit = await authenticationStateTask.HasPermissionAsync("FileManagement.Edit");
+
         LayoutState.SetTitle(_localizer["THÔNG TIN HỖ TRỢ VẬN HÀNH"]);
         await Reload();
     }
@@ -311,6 +330,8 @@
 
     async Task AddRootLevelFolder()
     {
+        if (!canEdit) return;
+
         var result = await DialogService.OpenAsync("Thêm thư mục mới", ds =>
             @<div>
                 <RadzenStack Gap="1rem">
@@ -483,6 +504,8 @@
 
     async Task ExecuteAndCloseMenu(string action)
     {
+        if (!canEdit) return;
+
         showMenu = false;
         
         switch (action)
