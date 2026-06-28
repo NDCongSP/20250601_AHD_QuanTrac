@@ -291,6 +291,18 @@ Khi bắt đầu session mới, AI **PHẢI**:
 
 ---
 
+### [2026-06-28] — Bộ tài liệu dự án
+
+```
+[DOCS]  Docs/README.md            — Trang index tài liệu
+[DOCS]  Docs/01-Architecture.md   — Tài liệu kiến trúc (tầng, luồng dữ liệu, FT01..FT08, deploy, tech debt)
+[DOCS]  Docs/02-User-Manual.md    — Hướng dẫn sử dụng (đăng nhập, các màn hình, quản trị, FAQ)
+[DOCS]  Docs/Huong-Dan-Su-Dung-AHD-QuanTrac.docx — Bản Word của hướng dẫn sử dụng
+[CHORE] Docs/md-to-docx.ps1       — Script chuyển Markdown → Word (Word COM) để tái tạo bản .docx
+```
+
+---
+
 ### [2026-06-26] — Cập nhật tài liệu + Fix publish UI
 
 ```
