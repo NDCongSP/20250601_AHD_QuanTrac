@@ -186,5 +186,10 @@ namespace Domain
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
         public double Q_i_total { get; set; } = 0;
+
+        public double? Q_cua1 { get; set; } = 0;
+        public double? Q_cua2 { get; set; } = 0;
+        public double? Q_cua3 { get; set; } = 0;
+        public double? Q_k5_700 { get; set; } = 0;
     }
 }
