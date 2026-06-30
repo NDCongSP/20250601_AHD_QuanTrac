@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Request.Account;
+using Application.DTOs.Request.Account;
 using Application.DTOs.Response.Account;
 using AutoMapper;
 using Microsoft.AspNetCore.Components;
@@ -116,6 +116,7 @@ public partial class RoleDetail
                 {
                     if (p is null)
                     {
+                        _model.Permissions.Add(item);
                     }
                 }
                 else
