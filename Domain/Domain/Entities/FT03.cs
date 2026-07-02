@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
@@ -115,6 +115,24 @@ namespace Domain.Entities
         public double? API_D_Doi95 { get; set; } = 0;
         public double? API_D_Doi95_Total { get; set; } = 0;
 
+        public double? A1_CS1 { get; set; } = 0;
+        public double? A2_CS1 { get; set; } = 0;
+        public double? Ap1_CS1 { get; set; } = 0;
+        public double? Ap2_CS1 { get; set; } = 0;
+        public double? Z2_CS1 { get; set; } = 0;
+        public double? Qc_CS1 { get; set; } = 0;
+
+        public double? A1_CS2 { get; set; } = 0;
+        public double? A2_CS2 { get; set; } = 0;
+        public double? Ap1_CS2 { get; set; } = 0;
+        public double? Ap2_CS2 { get; set; } = 0;
+        public double? Z2_CS2 { get; set; } = 0;
+        public double? Qc_CS2 { get; set; } = 0;
+
+        public double? DoMo_Cua1 { get; set; } = 0;
+        public double? DoMo_Cua2 { get; set; } = 0;
+        public double? DoMo_Cua3 { get; set; } = 0;
+
         public double W1_ho { get; set; } = 0;
         public double W1_ho_old { get; set; } = 0;
         public double W2_ho { get; set; } = 0;
@@ -135,5 +153,10 @@ namespace Domain.Entities
         public double Q_di { get; set; } = 0;
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
+
+        public double? Q_cua1 { get; set; } = 0;
+        public double? Q_cua2 { get; set; } = 0;
+        public double? Q_cua3 { get; set; } = 0;
+        public double? Q_k5_700 { get; set; } = 0;
     }
 }

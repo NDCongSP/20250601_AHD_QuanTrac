@@ -3,6 +3,7 @@ using Domain;
 using Domain.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Utilities;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,9 @@ namespace RegistrationForm1
 
         private double[] xValues;
         private Dictionary<double, double[]> table;
-
+        private double Q_cua1 = 0;
+        private double Q_cua2 = 0;
+        private double Q_cua3 = 0;
         public FrmMain()
         {
             InitializeComponent();
@@ -340,6 +343,8 @@ namespace RegistrationForm1
                         lblQc_CS2.Text = d.Qc;
                         lblTime_CS2.Text = d.Ts;
                     }
+                    // Ghi xuống CalculatorValue
+                    WriteApiValue(d, station);
                 }
             }
             catch (Exception ex)
@@ -349,6 +354,41 @@ namespace RegistrationForm1
                 else
                     lblTime_CS2.Text = "Lỗi";
             }
+        }
+
+        private void WriteApiValue(ApiItem d, string station)
+        {
+            var calculator = Globalvariable.RealtimeDisplays
+                                           .FirstOrDefault(x => x.LocationId == 1)?
+                                           .CalculatorValue;
+
+            if (calculator == null)
+                return;
+
+            if (station == "CS1")
+            {
+                calculator.A1_CS1 = ToDouble(d.A1);
+                calculator.A2_CS1 = ToDouble(d.A2);
+                calculator.Ap1_CS1 = ToDouble(d.Ap1);
+                calculator.Ap2_CS1 = ToDouble(d.Ap2);
+                calculator.Z2_CS1 = ToDouble(d.Z2);
+                calculator.Qc_CS1 = ToDouble(d.Qc);
+               
+            }
+            else if (station == "CS2")
+            {
+                calculator.A1_CS2 = ToDouble(d.A1);
+                calculator.A2_CS2 = ToDouble(d.A2);
+                calculator.Ap1_CS2 = ToDouble(d.Ap1);
+                calculator.Ap2_CS2 = ToDouble(d.Ap2);
+                calculator.Z2_CS2 = ToDouble(d.Z2);
+                calculator.Qc_CS2 = ToDouble(d.Qc);
+               
+            }
+        }
+        private double ToDouble(string value)
+        {
+            return double.TryParse(value, out double result) ? result : 0;
         }
 
         private void _timer_Tick(object sender, EventArgs e)
@@ -405,15 +445,15 @@ namespace RegistrationForm1
 
                             }
                         }
-                            
-                       //_labMNHLCS1.Text = location.Parametters.MNHL_CongSo1.ToString();
-                       // _labMNHLCS2.Text = location.Parametters.MNHL_CongSo2.ToString();
-                       // _labMNHLCS3.Text= location.Parametters.MNHL_CongSo3.ToString();
 
-                       
+                        //_labMNHLCS1.Text = location.Parametters.MNHL_CongSo1.ToString();
+                        // _labMNHLCS2.Text = location.Parametters.MNHL_CongSo2.ToString();
+                        // _labMNHLCS3.Text= location.Parametters.MNHL_CongSo3.ToString();
 
-                       // _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
-                       // _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
+
+
+                        // _labAPIBinhnham.Text = location.CalculatorValue.API_Fllow_BinhNham.ToString();
+                        // _labQtr.Text = location.CalculatorValue.Q_i_total.ToString();
 
                         //_labWtt.Text = location.CalculatorValue.W_tt.ToString();
                         //_labQtt.Text = location.CalculatorValue.Q_tt.ToString();
@@ -425,6 +465,14 @@ namespace RegistrationForm1
                         //_labWtr.Text = location.CalculatorValue.W_tr.ToString();
                         //_labWdi.Text = location.CalculatorValue.W_di.ToString();
                         //_LabQdi.Text = location.CalculatorValue.Q_di.ToString();
+
+                        _labDOMOCS1.Text = location.CalculatorValue.DoMo_Cua1.ToString();
+                        _labDOMOCS2.Text = location.CalculatorValue.DoMo_Cua2.ToString();
+                        _labDOMOCS3.Text = location.CalculatorValue.DoMo_Cua3.ToString();
+                        _labQ_DOMOCS1.Text = location.CalculatorValue.Q_cua1.ToString();
+                        _labQ_DOMOCS2.Text = location.CalculatorValue.Q_cua2.ToString();
+                        _labQ_DOMOCS3.Text = location.CalculatorValue.Q_cua3.ToString();
+                        _labQ_K5700.Text = location.CalculatorValue.Q_k5_700.ToString();
 
 
                     }
@@ -515,7 +563,35 @@ namespace RegistrationForm1
                             line.W_cs2 = item.CalculatorValue.W_cs2;
                             line.W_cs3 = item.CalculatorValue.W_cs3;
 
+
+                            line.A1_CS1 = item.CalculatorValue.A1_CS1;
+                            line.A2_CS1 = item.CalculatorValue.A2_CS1;
+                            line .Ap1_CS1 = item.CalculatorValue.Ap1_CS1;
+                            line.Ap2_CS1 = item.CalculatorValue.Ap2_CS1;
+                            line.Z2_CS1 = item.CalculatorValue.Z2_CS1;
+                            line.Qc_CS1 = item.CalculatorValue.Qc_CS1;
+
+                            line.A1_CS2 = item.CalculatorValue.A1_CS2;
+                            line.A2_CS2 = item.CalculatorValue.A2_CS2;
+                            line.Ap1_CS2 = item.CalculatorValue.Ap1_CS2;
+                            line.Ap2_CS2 = item.CalculatorValue.Ap2_CS2;
+                            line.Z2_CS2 = item.CalculatorValue.Z2_CS2;
+                            line.Qc_CS2 = item.CalculatorValue.Qc_CS2;
+
+                            line.DoMo_Cua1 = item.CalculatorValue.DoMo_Cua1;
+                            line.DoMo_Cua2 = item.CalculatorValue.DoMo_Cua2;
+                            line.DoMo_Cua3 = item.CalculatorValue.DoMo_Cua3;
+
+                            line.Q_cua1 = item.CalculatorValue.Q_cua1;
+                            line.Q_cua2 = item.CalculatorValue.Q_cua2;
+                            line.Q_cua3 = item.CalculatorValue.Q_cua3;
+                            line.Q_k5_700 = item.CalculatorValue.Q_k5_700;
+
                            
+
+
+
+
                             line.StationId = itemStation.StationId;
                             line.StationName = itemStation.StationName;
                             line.Path = itemStation.Path;
@@ -550,10 +626,14 @@ namespace RegistrationForm1
                             line.Fllow_Ho_Final = itemStation.Fllow_Ho_Final;
                             line.Q_i_1 = itemStation.Q_i_1;
                             line.Q_i_2 = itemStation.Q_i_2;
-                            
-                            
-                           
-                          
+                         
+                                
+
+
+
+
+
+
 
                             dataLogs.Add(line);
                         }
@@ -684,6 +764,8 @@ namespace RegistrationForm1
                 {
                     //  // Tag mới thêm
 
+                  
+                    ////////////
                     ahdDriverConnector1.GetTag($"{station.Path}/Lock2").ValueChanged += Lock2_ValueChanged;
                     Remote_ValueChanged(ahdDriverConnector1.GetTag($"{station.Path}/Lock2")
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{station.Path}/Lock2")
@@ -999,10 +1081,30 @@ namespace RegistrationForm1
                   , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho")
                   , "", ahdDriverConnector1.GetTag($"{stationLocation.Path}/Fllow_Ho").Value));
 
+                    ////////////////
+                    //TONG1_ValueChanged(driver.GetTag("Local Station/Channel1/DHN/SUM1"),
+                    //      new TagValueChangedEventArgs(driver.GetTag("Local Station/Channel1/DHN/SUM1")
+                    //      , "", driver.GetTag("Local Station/Channel1/DHN/SUM1").Value));
+                    //driver.GetTag("Local Station/Channel1/DHN/SUM1").ValueChanged += TONG1_ValueChanged;
 
+                    ///////////////////
 
 
                 }
+                ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua1").ValueChanged += Do_Mo_CS1_ValueChanged;
+                Do_Mo_CS1_ValueChanged(ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua1")
+              , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua1")
+              , "", ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua1").Value));
+
+                ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua2").ValueChanged += Do_Mo_CS2_ValueChanged;
+                Do_Mo_CS2_ValueChanged(ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua2")
+              , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua2")
+              , "", ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua2").Value));
+
+                ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua3").ValueChanged += Do_Mo_CS3_ValueChanged;
+                Do_Mo_CS3_ValueChanged(ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua3")
+              , new TagValueChangedEventArgs(ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua3")
+              , "", ahdDriverConnector1.GetTag("Local Station/K5_700/PLC/DoMo_Cua3").Value));
 
                 //  }
             }
@@ -6156,6 +6258,257 @@ namespace RegistrationForm1
         //    return Math.Round(tagValue * Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi, 2);
 
         //}
+        ////private void TONG1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        //{
+        //    TONG1 = double.TryParse(e.NewValue, out double value) ? value : 0;
+
+        //    double SUM = TONG1 * 100 + TONG2;
+
+        //driver.GetTag("Local Station/Channel1/DHN/SUM")
+        //          .WritAhdnc(SUM.ToString(), WritePiority.Default);
+        //}
+        private readonly object _lock = new object();
+
+        private void Do_Mo_CS1_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                string rawValue = e.NewValue?.ToString() ?? "0";
+                double DoMo_Cua1 = double.TryParse(rawValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                if (!double.TryParse(e.NewValue, out double doMo))
+                    return;
+
+                var location = Globalvariable.RealtimeDisplays?
+                    .FirstOrDefault(x => x.LocationId == 1);
+
+                if (location == null)
+                    return;
+
+                var info = location.Stations
+                    .FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info");
+
+                if (info == null)
+                    return;
+
+                double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn;
+
+
+                double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
+                double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
+                int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
+
+                double h = doMo / 100.0;
+                double sumB = 10.0 * c;
+
+                double aOverH = H0 == 0 ? 0 : h / H0;
+                double alpha = GetAlphaFromTable(aOverH);
+
+                double inside = 2 * g * (H0 - alpha * h);
+
+                double qi = 0;
+
+                if (inside > 0)
+                    qi = Math.Round(phi * alpha * h * sumB * Math.Sqrt(inside), 1);
+
+                lock (_lock)
+                {
+                    Q_cua1 = qi;
+
+                    double total = Q_cua1 + Q_cua2 + Q_cua3;
+
+                    driver.GetTag("Local Station/K5_700/PLC/Q_K5700_total")
+                          .WritAhdnc(total.ToString(), WritePiority.Default);
+                    driver.GetTag("Local Station/K5_700/PLC/Q_CS1")
+                        .WritAhdnc(Q_cua1.ToString(), WritePiority.Default);
+
+                    int value = (int)Math.Round(Q_cua1 * 100);// nhân 100 để đưa xuống plc lấy số lẽ
+                    driver.GetTag("Local Station/K5_700/PLC/Tag4")
+                          .WritAhdnc(value.ToString(), WritePiority.Default);
+                    int valueSum = (int)Math.Round(total * 100);// nhân 100 để đưa xuống plc lấy số lẽ
+                    driver.GetTag("Local Station/K5_700/PLC/Q_K5700")
+                          .WritAhdnc(valueSum.ToString(), WritePiority.Default);
+
+                    location.CalculatorValue.DoMo_Cua1 = DoMo_Cua1;
+
+                    location.CalculatorValue.Q_cua1 = Q_cua1;
+                    location.CalculatorValue.Q_k5_700 = total;
+
+                }
+
+                Action ui = () => label11.Text = qi.ToString("F1");
+
+                if (label11.InvokeRequired)
+                    label11.BeginInvoke(ui);
+                else
+                    ui();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Do_Mo_CS1_ValueChanged");
+            }
+        }
+
+        private void Do_Mo_CS2_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                string rawValue = e.NewValue?.ToString() ?? "0";
+                double DoMo_Cua2 = double.TryParse(rawValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                if (!double.TryParse(e.NewValue, out double doMo))
+                    return;
+
+                var location = Globalvariable.RealtimeDisplays?
+                    .FirstOrDefault(x => x.LocationId == 1);
+
+                if (location == null)
+                    return;
+
+                var info = location.Stations
+                    .FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info");
+
+                if (info == null)
+                    return;
+
+                double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn;
+
+
+                double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
+                double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
+                int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
+
+                double h = doMo / 100.0;
+                double sumB = 10.0 * c;
+
+                double aOverH = H0 == 0 ? 0 : h / H0;
+                double alpha = GetAlphaFromTable(aOverH);
+
+                double inside = 2 * g * (H0 - alpha * h);
+
+                double qi = 0;
+
+                if (inside > 0)
+                    qi = Math.Round(phi * alpha * h * sumB * Math.Sqrt(inside), 1);
+
+                lock (_lock)
+                {
+                    Q_cua2 = qi;
+
+                    double total = Q_cua1 + Q_cua2 + Q_cua3;
+
+                    driver.GetTag("Local Station/K5_700/PLC/Q_K5700_total")
+                          .WritAhdnc(total.ToString(), WritePiority.Default);
+                    driver.GetTag("Local Station/K5_700/PLC/Q_CS2")
+                        .WritAhdnc(Q_cua2.ToString(), WritePiority.Default);
+
+                    int value = (int)Math.Round(Q_cua2 * 100);// nhân 100 để đưa xuống plc lấy số lẽ
+                    driver.GetTag("Local Station/K5_700/PLC/Tag5")
+                          .WritAhdnc(value.ToString(), WritePiority.Default);
+                    int valueSum = (int)Math.Round(total * 100);// nhân 100 để đưa xuống plc lấy số lẽ
+                    driver.GetTag("Local Station/K5_700/PLC/Q_K5700")
+                          .WritAhdnc(valueSum.ToString(), WritePiority.Default);
+
+
+                    location.CalculatorValue.DoMo_Cua2 = DoMo_Cua2;
+
+                    location.CalculatorValue.Q_cua2 = Q_cua2;
+                    location.CalculatorValue.Q_k5_700 = total;
+                }
+
+                Action ui = () => label14.Text = qi.ToString("F1");
+
+                if (label14.InvokeRequired)
+                    label14.BeginInvoke(ui);
+                else
+                    ui();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Do_Mo_CS2_ValueChanged");
+            }
+        }
+
+        private void Do_Mo_CS3_ValueChanged(object sender, TagValueChangedEventArgs e)
+        {
+            try
+            {
+                string rawValue = e.NewValue?.ToString() ?? "0";
+                double DoMo_Cua3 = double.TryParse(rawValue, out double newValue) ? Math.Round(newValue, 2) : 0;
+                if (!double.TryParse(e.NewValue, out double doMo))
+                    return;
+
+                var location = Globalvariable.RealtimeDisplays?
+                    .FirstOrDefault(x => x.LocationId == 1);
+
+                if (location == null)
+                    return;
+
+                var info = location.Stations
+                    .FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info");
+
+                if (info == null)
+                    return;
+
+                double H0 = (double)location.Stations.FirstOrDefault(x => x.Path == "Local Station/DauTieng/S71500/Location_Info").Fllow_Ho_Final - Globalvariable.ConfigSystem.ParametterConfig.CaoTrinhNguongTran_Zn;
+
+
+                double phi = Globalvariable.ConfigSystem.ParametterConfig.HeSoLuuToc_Phi;
+                double g = Globalvariable.ConfigSystem.ParametterConfig.GiaToc_G;
+                int c = Globalvariable.ConfigSystem.ParametterConfig.SoCuaMo;
+
+                double h = doMo / 100.0;
+                double sumB = 10.0 * c;
+
+                double aOverH = H0 == 0 ? 0 : h / H0;
+                double alpha = GetAlphaFromTable(aOverH);
+
+                double inside = 2 * g * (H0 - alpha * h);
+
+                double qi = 0;
+
+                if (inside > 0)
+                    qi = Math.Round(phi * alpha * h * sumB * Math.Sqrt(inside), 1);
+
+                lock (_lock)
+                {
+                    Q_cua3 = qi;
+
+                    double total = Q_cua1 + Q_cua2 + Q_cua3;
+
+                    driver.GetTag("Local Station/K5_700/PLC/Q_K5700_total")
+                          .WritAhdnc(total.ToString(), WritePiority.Default);
+                    driver.GetTag("Local Station/K5_700/PLC/Q_CS3")
+                        .WritAhdnc(Q_cua3.ToString(), WritePiority.Default);
+
+                    int value = (int)Math.Round(Q_cua3 * 100);// nhân 100 để đưa xuống plc lấy số lẽ
+                    driver.GetTag("Local Station/K5_700/PLC/Tag6")
+                          .WritAhdnc(value.ToString(), WritePiority.Default);
+
+                    int valueSum = (int)Math.Round(total * 100);// nhân 100 để đưa xuống plc lấy số lẽ
+                    driver.GetTag("Local Station/K5_700/PLC/Q_K5700")
+                          .WritAhdnc(valueSum.ToString(), WritePiority.Default);
+                    location.CalculatorValue.DoMo_Cua3 = DoMo_Cua3;
+                    location.CalculatorValue.Q_cua3 = Q_cua3;
+                    location.CalculatorValue.Q_k5_700 = total;
+
+
+
+
+
+                }
+
+                Action ui = () => label13.Text = qi.ToString("F1");
+
+                if (label13.InvokeRequired)
+                    label13.BeginInvoke(ui);
+                else
+                    ui();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Do_Mo_CS3_ValueChanged");
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             ActivateMenuButton(sender as Button);

@@ -58,6 +58,27 @@
             this.lblDate = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.panelDesktop = new System.Windows.Forms.Panel();
+            this._labQ_K5700 = new System.Windows.Forms.Label();
+            this._labQ_DOMOCS3 = new System.Windows.Forms.Label();
+            this._labQ_DOMOCS2 = new System.Windows.Forms.Label();
+            this._labQ_DOMOCS1 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblTime_CS2 = new System.Windows.Forms.Label();
+            this.lblQc_CS2 = new System.Windows.Forms.Label();
+            this.lblZ2_CS2 = new System.Windows.Forms.Label();
+            this.lblAp2_CS2 = new System.Windows.Forms.Label();
+            this.lblAp1_CS2 = new System.Windows.Forms.Label();
+            this.lblA2_CS2 = new System.Windows.Forms.Label();
+            this.lblA1_CS2 = new System.Windows.Forms.Label();
+            this.lblTime_CS1 = new System.Windows.Forms.Label();
+            this.lblQc_CS1 = new System.Windows.Forms.Label();
+            this.lblZ2_CS1 = new System.Windows.Forms.Label();
+            this.lblAp2_CS1 = new System.Windows.Forms.Label();
+            this.lblAp1_CS1 = new System.Windows.Forms.Label();
+            this.lblA2_CS1 = new System.Windows.Forms.Label();
+            this.lblA1_CS1 = new System.Windows.Forms.Label();
             this._labDOMOCS3 = new System.Windows.Forms.Label();
             this._labDOMOCS2 = new System.Windows.Forms.Label();
             this._labDOMOCS1 = new System.Windows.Forms.Label();
@@ -115,20 +136,6 @@
             this._labALDoor1_Station1 = new System.Windows.Forms.Label();
             this.lblStationsTitle = new System.Windows.Forms.Label();
             this.lblStatusMessage = new System.Windows.Forms.Label();
-            this.lblTime_CS2 = new System.Windows.Forms.Label();
-            this.lblQc_CS2 = new System.Windows.Forms.Label();
-            this.lblZ2_CS2 = new System.Windows.Forms.Label();
-            this.lblAp2_CS2 = new System.Windows.Forms.Label();
-            this.lblAp1_CS2 = new System.Windows.Forms.Label();
-            this.lblA2_CS2 = new System.Windows.Forms.Label();
-            this.lblA1_CS2 = new System.Windows.Forms.Label();
-            this.lblTime_CS1 = new System.Windows.Forms.Label();
-            this.lblQc_CS1 = new System.Windows.Forms.Label();
-            this.lblZ2_CS1 = new System.Windows.Forms.Label();
-            this.lblAp2_CS1 = new System.Windows.Forms.Label();
-            this.lblAp1_CS1 = new System.Windows.Forms.Label();
-            this.lblA2_CS1 = new System.Windows.Forms.Label();
-            this.lblA1_CS1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ahdPictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -462,6 +469,13 @@
             // 
             this.panelDesktop.BackColor = System.Drawing.Color.Honeydew;
             this.panelDesktop.BackgroundImage = global::RegistrationForm1.Properties.Resources.Main;
+            this.panelDesktop.Controls.Add(this._labQ_K5700);
+            this.panelDesktop.Controls.Add(this._labQ_DOMOCS3);
+            this.panelDesktop.Controls.Add(this._labQ_DOMOCS2);
+            this.panelDesktop.Controls.Add(this._labQ_DOMOCS1);
+            this.panelDesktop.Controls.Add(this.label14);
+            this.panelDesktop.Controls.Add(this.label13);
+            this.panelDesktop.Controls.Add(this.label11);
             this.panelDesktop.Controls.Add(this.lblTime_CS2);
             this.panelDesktop.Controls.Add(this.lblQc_CS2);
             this.panelDesktop.Controls.Add(this.lblZ2_CS2);
@@ -538,6 +552,244 @@
             this.panelDesktop.Name = "panelDesktop";
             this.panelDesktop.Size = new System.Drawing.Size(1726, 887);
             this.panelDesktop.TabIndex = 7;
+            // 
+            // _labQ_K5700
+            // 
+            this._labQ_K5700.AutoSize = true;
+            this._labQ_K5700.Location = new System.Drawing.Point(420, 509);
+            this._labQ_K5700.Name = "_labQ_K5700";
+            this._labQ_K5700.Size = new System.Drawing.Size(52, 13);
+            this._labQ_K5700.TabIndex = 497;
+            this._labQ_K5700.Text = "Q_K5700";
+            this._labQ_K5700.Visible = false;
+            // 
+            // _labQ_DOMOCS3
+            // 
+            this._labQ_DOMOCS3.AutoSize = true;
+            this._labQ_DOMOCS3.Location = new System.Drawing.Point(308, 530);
+            this._labQ_DOMOCS3.Name = "_labQ_DOMOCS3";
+            this._labQ_DOMOCS3.Size = new System.Drawing.Size(74, 13);
+            this._labQ_DOMOCS3.TabIndex = 496;
+            this._labQ_DOMOCS3.Text = "Q_DOMOCS3";
+            this._labQ_DOMOCS3.Visible = false;
+            // 
+            // _labQ_DOMOCS2
+            // 
+            this._labQ_DOMOCS2.AutoSize = true;
+            this._labQ_DOMOCS2.Location = new System.Drawing.Point(308, 505);
+            this._labQ_DOMOCS2.Name = "_labQ_DOMOCS2";
+            this._labQ_DOMOCS2.Size = new System.Drawing.Size(74, 13);
+            this._labQ_DOMOCS2.TabIndex = 495;
+            this._labQ_DOMOCS2.Text = "Q_DOMOCS2";
+            this._labQ_DOMOCS2.Visible = false;
+            // 
+            // _labQ_DOMOCS1
+            // 
+            this._labQ_DOMOCS1.AutoSize = true;
+            this._labQ_DOMOCS1.Location = new System.Drawing.Point(308, 484);
+            this._labQ_DOMOCS1.Name = "_labQ_DOMOCS1";
+            this._labQ_DOMOCS1.Size = new System.Drawing.Size(74, 13);
+            this._labQ_DOMOCS1.TabIndex = 494;
+            this._labQ_DOMOCS1.Text = "Q_DOMOCS1";
+            this._labQ_DOMOCS1.Visible = false;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(953, 307);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(41, 13);
+            this.label14.TabIndex = 493;
+            this.label14.Text = "label14";
+            this.label14.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(947, 344);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 492;
+            this.label13.Text = "label13";
+            this.label13.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(947, 270);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 13);
+            this.label11.TabIndex = 491;
+            this.label11.Text = "label11";
+            this.label11.Visible = false;
+            // 
+            // lblTime_CS2
+            // 
+            this.lblTime_CS2.AutoSize = true;
+            this.lblTime_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime_CS2.Location = new System.Drawing.Point(767, 376);
+            this.lblTime_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblTime_CS2.Name = "lblTime_CS2";
+            this.lblTime_CS2.Size = new System.Drawing.Size(117, 22);
+            this.lblTime_CS2.TabIndex = 490;
+            this.lblTime_CS2.Text = "lblTime_CS2";
+            this.lblTime_CS2.Visible = false;
+            // 
+            // lblQc_CS2
+            // 
+            this.lblQc_CS2.AutoSize = true;
+            this.lblQc_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblQc_CS2.Location = new System.Drawing.Point(767, 329);
+            this.lblQc_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblQc_CS2.Name = "lblQc_CS2";
+            this.lblQc_CS2.Size = new System.Drawing.Size(99, 22);
+            this.lblQc_CS2.TabIndex = 489;
+            this.lblQc_CS2.Text = "lblQc_CS2";
+            this.lblQc_CS2.Visible = false;
+            // 
+            // lblZ2_CS2
+            // 
+            this.lblZ2_CS2.AutoSize = true;
+            this.lblZ2_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblZ2_CS2.Location = new System.Drawing.Point(758, 285);
+            this.lblZ2_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblZ2_CS2.Name = "lblZ2_CS2";
+            this.lblZ2_CS2.Size = new System.Drawing.Size(97, 22);
+            this.lblZ2_CS2.TabIndex = 488;
+            this.lblZ2_CS2.Text = "lblZ2_CS2";
+            this.lblZ2_CS2.Visible = false;
+            // 
+            // lblAp2_CS2
+            // 
+            this.lblAp2_CS2.AutoSize = true;
+            this.lblAp2_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAp2_CS2.Location = new System.Drawing.Point(758, 238);
+            this.lblAp2_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblAp2_CS2.Name = "lblAp2_CS2";
+            this.lblAp2_CS2.Size = new System.Drawing.Size(108, 22);
+            this.lblAp2_CS2.TabIndex = 487;
+            this.lblAp2_CS2.Text = "lblAp2_CS2";
+            this.lblAp2_CS2.Visible = false;
+            // 
+            // lblAp1_CS2
+            // 
+            this.lblAp1_CS2.AutoSize = true;
+            this.lblAp1_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAp1_CS2.Location = new System.Drawing.Point(758, 189);
+            this.lblAp1_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblAp1_CS2.Name = "lblAp1_CS2";
+            this.lblAp1_CS2.Size = new System.Drawing.Size(108, 22);
+            this.lblAp1_CS2.TabIndex = 486;
+            this.lblAp1_CS2.Text = "lblAp1_CS2";
+            this.lblAp1_CS2.Visible = false;
+            // 
+            // lblA2_CS2
+            // 
+            this.lblA2_CS2.AutoSize = true;
+            this.lblA2_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblA2_CS2.Location = new System.Drawing.Point(758, 141);
+            this.lblA2_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblA2_CS2.Name = "lblA2_CS2";
+            this.lblA2_CS2.Size = new System.Drawing.Size(98, 22);
+            this.lblA2_CS2.TabIndex = 485;
+            this.lblA2_CS2.Text = "lblA2_CS2";
+            this.lblA2_CS2.Visible = false;
+            // 
+            // lblA1_CS2
+            // 
+            this.lblA1_CS2.AutoSize = true;
+            this.lblA1_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblA1_CS2.Location = new System.Drawing.Point(758, 108);
+            this.lblA1_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblA1_CS2.Name = "lblA1_CS2";
+            this.lblA1_CS2.Size = new System.Drawing.Size(98, 22);
+            this.lblA1_CS2.TabIndex = 484;
+            this.lblA1_CS2.Text = "lblA1_CS2";
+            this.lblA1_CS2.Visible = false;
+            // 
+            // lblTime_CS1
+            // 
+            this.lblTime_CS1.AutoSize = true;
+            this.lblTime_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime_CS1.Location = new System.Drawing.Point(526, 368);
+            this.lblTime_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblTime_CS1.Name = "lblTime_CS1";
+            this.lblTime_CS1.Size = new System.Drawing.Size(117, 22);
+            this.lblTime_CS1.TabIndex = 483;
+            this.lblTime_CS1.Text = "lblTime_CS1";
+            this.lblTime_CS1.Visible = false;
+            // 
+            // lblQc_CS1
+            // 
+            this.lblQc_CS1.AutoSize = true;
+            this.lblQc_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblQc_CS1.Location = new System.Drawing.Point(544, 323);
+            this.lblQc_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblQc_CS1.Name = "lblQc_CS1";
+            this.lblQc_CS1.Size = new System.Drawing.Size(34, 22);
+            this.lblQc_CS1.TabIndex = 482;
+            this.lblQc_CS1.Text = "Qc";
+            this.lblQc_CS1.Visible = false;
+            // 
+            // lblZ2_CS1
+            // 
+            this.lblZ2_CS1.AutoSize = true;
+            this.lblZ2_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblZ2_CS1.Location = new System.Drawing.Point(544, 285);
+            this.lblZ2_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblZ2_CS1.Name = "lblZ2_CS1";
+            this.lblZ2_CS1.Size = new System.Drawing.Size(32, 22);
+            this.lblZ2_CS1.TabIndex = 481;
+            this.lblZ2_CS1.Text = "Z2";
+            this.lblZ2_CS1.Visible = false;
+            // 
+            // lblAp2_CS1
+            // 
+            this.lblAp2_CS1.AutoSize = true;
+            this.lblAp2_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAp2_CS1.Location = new System.Drawing.Point(542, 245);
+            this.lblAp2_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblAp2_CS1.Name = "lblAp2_CS1";
+            this.lblAp2_CS1.Size = new System.Drawing.Size(43, 22);
+            this.lblAp2_CS1.TabIndex = 480;
+            this.lblAp2_CS1.Text = "Ap2";
+            this.lblAp2_CS1.Visible = false;
+            // 
+            // lblAp1_CS1
+            // 
+            this.lblAp1_CS1.AutoSize = true;
+            this.lblAp1_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAp1_CS1.Location = new System.Drawing.Point(542, 198);
+            this.lblAp1_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblAp1_CS1.Name = "lblAp1_CS1";
+            this.lblAp1_CS1.Size = new System.Drawing.Size(43, 22);
+            this.lblAp1_CS1.TabIndex = 479;
+            this.lblAp1_CS1.Text = "Ap1";
+            this.lblAp1_CS1.Visible = false;
+            // 
+            // lblA2_CS1
+            // 
+            this.lblA2_CS1.AutoSize = true;
+            this.lblA2_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblA2_CS1.Location = new System.Drawing.Point(542, 154);
+            this.lblA2_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblA2_CS1.Name = "lblA2_CS1";
+            this.lblA2_CS1.Size = new System.Drawing.Size(33, 22);
+            this.lblA2_CS1.TabIndex = 478;
+            this.lblA2_CS1.Text = "A2";
+            this.lblA2_CS1.Visible = false;
+            // 
+            // lblA1_CS1
+            // 
+            this.lblA1_CS1.AutoSize = true;
+            this.lblA1_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblA1_CS1.Location = new System.Drawing.Point(542, 108);
+            this.lblA1_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblA1_CS1.Name = "lblA1_CS1";
+            this.lblA1_CS1.Size = new System.Drawing.Size(33, 22);
+            this.lblA1_CS1.TabIndex = 477;
+            this.lblA1_CS1.Text = "A1";
+            this.lblA1_CS1.Visible = false;
             // 
             // _labDOMOCS3
             // 
@@ -1115,160 +1367,6 @@
             this.lblStatusMessage.Text = "label2";
             this.lblStatusMessage.Visible = false;
             // 
-            // lblTime_CS2
-            // 
-            this.lblTime_CS2.AutoSize = true;
-            this.lblTime_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime_CS2.Location = new System.Drawing.Point(767, 376);
-            this.lblTime_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblTime_CS2.Name = "lblTime_CS2";
-            this.lblTime_CS2.Size = new System.Drawing.Size(117, 22);
-            this.lblTime_CS2.TabIndex = 490;
-            this.lblTime_CS2.Text = "lblTime_CS2";
-            // 
-            // lblQc_CS2
-            // 
-            this.lblQc_CS2.AutoSize = true;
-            this.lblQc_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQc_CS2.Location = new System.Drawing.Point(767, 329);
-            this.lblQc_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblQc_CS2.Name = "lblQc_CS2";
-            this.lblQc_CS2.Size = new System.Drawing.Size(99, 22);
-            this.lblQc_CS2.TabIndex = 489;
-            this.lblQc_CS2.Text = "lblQc_CS2";
-            // 
-            // lblZ2_CS2
-            // 
-            this.lblZ2_CS2.AutoSize = true;
-            this.lblZ2_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblZ2_CS2.Location = new System.Drawing.Point(758, 285);
-            this.lblZ2_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblZ2_CS2.Name = "lblZ2_CS2";
-            this.lblZ2_CS2.Size = new System.Drawing.Size(97, 22);
-            this.lblZ2_CS2.TabIndex = 488;
-            this.lblZ2_CS2.Text = "lblZ2_CS2";
-            // 
-            // lblAp2_CS2
-            // 
-            this.lblAp2_CS2.AutoSize = true;
-            this.lblAp2_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAp2_CS2.Location = new System.Drawing.Point(758, 238);
-            this.lblAp2_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblAp2_CS2.Name = "lblAp2_CS2";
-            this.lblAp2_CS2.Size = new System.Drawing.Size(108, 22);
-            this.lblAp2_CS2.TabIndex = 487;
-            this.lblAp2_CS2.Text = "lblAp2_CS2";
-            // 
-            // lblAp1_CS2
-            // 
-            this.lblAp1_CS2.AutoSize = true;
-            this.lblAp1_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAp1_CS2.Location = new System.Drawing.Point(758, 189);
-            this.lblAp1_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblAp1_CS2.Name = "lblAp1_CS2";
-            this.lblAp1_CS2.Size = new System.Drawing.Size(108, 22);
-            this.lblAp1_CS2.TabIndex = 486;
-            this.lblAp1_CS2.Text = "lblAp1_CS2";
-            // 
-            // lblA2_CS2
-            // 
-            this.lblA2_CS2.AutoSize = true;
-            this.lblA2_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblA2_CS2.Location = new System.Drawing.Point(758, 141);
-            this.lblA2_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblA2_CS2.Name = "lblA2_CS2";
-            this.lblA2_CS2.Size = new System.Drawing.Size(98, 22);
-            this.lblA2_CS2.TabIndex = 485;
-            this.lblA2_CS2.Text = "lblA2_CS2";
-            // 
-            // lblA1_CS2
-            // 
-            this.lblA1_CS2.AutoSize = true;
-            this.lblA1_CS2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblA1_CS2.Location = new System.Drawing.Point(758, 108);
-            this.lblA1_CS2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblA1_CS2.Name = "lblA1_CS2";
-            this.lblA1_CS2.Size = new System.Drawing.Size(98, 22);
-            this.lblA1_CS2.TabIndex = 484;
-            this.lblA1_CS2.Text = "lblA1_CS2";
-            // 
-            // lblTime_CS1
-            // 
-            this.lblTime_CS1.AutoSize = true;
-            this.lblTime_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime_CS1.Location = new System.Drawing.Point(526, 368);
-            this.lblTime_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblTime_CS1.Name = "lblTime_CS1";
-            this.lblTime_CS1.Size = new System.Drawing.Size(117, 22);
-            this.lblTime_CS1.TabIndex = 483;
-            this.lblTime_CS1.Text = "lblTime_CS1";
-            // 
-            // lblQc_CS1
-            // 
-            this.lblQc_CS1.AutoSize = true;
-            this.lblQc_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQc_CS1.Location = new System.Drawing.Point(544, 323);
-            this.lblQc_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblQc_CS1.Name = "lblQc_CS1";
-            this.lblQc_CS1.Size = new System.Drawing.Size(34, 22);
-            this.lblQc_CS1.TabIndex = 482;
-            this.lblQc_CS1.Text = "Qc";
-            // 
-            // lblZ2_CS1
-            // 
-            this.lblZ2_CS1.AutoSize = true;
-            this.lblZ2_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblZ2_CS1.Location = new System.Drawing.Point(544, 285);
-            this.lblZ2_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblZ2_CS1.Name = "lblZ2_CS1";
-            this.lblZ2_CS1.Size = new System.Drawing.Size(32, 22);
-            this.lblZ2_CS1.TabIndex = 481;
-            this.lblZ2_CS1.Text = "Z2";
-            // 
-            // lblAp2_CS1
-            // 
-            this.lblAp2_CS1.AutoSize = true;
-            this.lblAp2_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAp2_CS1.Location = new System.Drawing.Point(542, 245);
-            this.lblAp2_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblAp2_CS1.Name = "lblAp2_CS1";
-            this.lblAp2_CS1.Size = new System.Drawing.Size(43, 22);
-            this.lblAp2_CS1.TabIndex = 480;
-            this.lblAp2_CS1.Text = "Ap2";
-            // 
-            // lblAp1_CS1
-            // 
-            this.lblAp1_CS1.AutoSize = true;
-            this.lblAp1_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAp1_CS1.Location = new System.Drawing.Point(542, 198);
-            this.lblAp1_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblAp1_CS1.Name = "lblAp1_CS1";
-            this.lblAp1_CS1.Size = new System.Drawing.Size(43, 22);
-            this.lblAp1_CS1.TabIndex = 479;
-            this.lblAp1_CS1.Text = "Ap1";
-            // 
-            // lblA2_CS1
-            // 
-            this.lblA2_CS1.AutoSize = true;
-            this.lblA2_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblA2_CS1.Location = new System.Drawing.Point(542, 154);
-            this.lblA2_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblA2_CS1.Name = "lblA2_CS1";
-            this.lblA2_CS1.Size = new System.Drawing.Size(33, 22);
-            this.lblA2_CS1.TabIndex = 478;
-            this.lblA2_CS1.Text = "A2";
-            // 
-            // lblA1_CS1
-            // 
-            this.lblA1_CS1.AutoSize = true;
-            this.lblA1_CS1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblA1_CS1.Location = new System.Drawing.Point(542, 108);
-            this.lblA1_CS1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblA1_CS1.Name = "lblA1_CS1";
-            this.lblA1_CS1.Size = new System.Drawing.Size(33, 22);
-            this.lblA1_CS1.TabIndex = 477;
-            this.lblA1_CS1.Text = "A1";
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1404,5 +1502,12 @@
         private System.Windows.Forms.Label lblAp1_CS1;
         private System.Windows.Forms.Label lblA2_CS1;
         private System.Windows.Forms.Label lblA1_CS1;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label _labQ_DOMOCS3;
+        private System.Windows.Forms.Label _labQ_DOMOCS2;
+        private System.Windows.Forms.Label _labQ_DOMOCS1;
+        private System.Windows.Forms.Label _labQ_K5700;
     }
 }

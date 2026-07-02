@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -44,5 +44,6 @@ namespace Domain
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>
         public string? Path { get; set; }
+
     }
 }

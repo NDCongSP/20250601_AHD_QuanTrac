@@ -26,7 +26,7 @@ namespace RegistrationForm1
             await webView21.EnsureCoreWebView2Async(null);
 
             // Nhúng website
-            webView21.Source = new Uri("https://bando.thuyloimiennam.vn/");
+            webView21.Source = new Uri("https://floodcam.baonamdts.com/embed/dau-tieng-flood-scenario");
         }
     }
 }

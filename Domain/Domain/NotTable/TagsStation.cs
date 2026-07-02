@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
@@ -31,8 +31,7 @@ namespace Domain
         public bool? Door2_Close { get; set; } = false;
         public bool? Doorlock1_1Open { get; set; } = false;
         public bool? Doorlock1_1Close { get; set; } = false;
-        public bool? Doorlock1_2Open { get; set; } = false;  
-        public bool? Doorlock2_1Open { get; set; } = false;
+        public bool? Doorlock1_2Open { get; set; } = false;  public bool? Doorlock2_1Open { get; set; } = false;
      
         public bool? Doorlock1_2Close { get; set; } = false;
          public bool? Doorlock2_1Close { get; set; } = false;
@@ -77,6 +76,17 @@ namespace Domain
         public double? Fllow_Door1 { get; set; } = 0;
         public double? Fllow_Door2 { get; set; } = 0;
         public double? Total_Fllow { get; set; } = 0;
+        public double? HT_Cylinder1_1_Offset { get; set; } = 0;
+        public double? HT_Cylinder1_2_Offset { get; set; } = 0;
+        public double? HT_Cylinder2_1_Offset { get; set; } = 0;
+        public double? HT_Cylinder2_2_Offset { get; set; } = 0;
+        public double? Door1_Aperture_Offset { get; set; } = 0;
+        public double? Door2_Aperture_Offset { get; set; } = 0;
+        public double? S1_Temp_Oil_Offset { get; set; } = 0;
+        public double? Pressure_Oil_Door1_Offset { get; set; } = 0;
+        public double? Pressure_Oil_Door2_Offset { get; set; } = 0;
+        public double? Fllow_Door1_Offset { get; set; } = 0;
+        public double? Fllow_Door2_Offset { get; set; } = 0;
         public double? HT_Cylinder1_1_Final { get; set; } = 0;
         public double? HT_Cylinder1_2_Final { get; set; } = 0;
         public double? HT_Cylinder2_1_Final { get; set; } = 0;
@@ -89,6 +99,7 @@ namespace Domain
         public double? Fllow_Door1_Final { get; set; } = 0;
         public double? Fllow_Door2_Final { get; set; } = 0;
         public double? Fllow_Ho { get; set; } = 0;
+        public double? Fllow_Ho_Offset { get; set; } = 0;
         public double? Fllow_Ho_Final { get; set; } = 0;
         public double? Q_i_1 { get; set; } = 0;
         public double? Q_i_2 { get; set; } = 0;
@@ -137,6 +148,24 @@ namespace Domain
         public double? API_D_Doi95 { get; set; } = 0;
         public double? API_D_Doi95_Total { get; set; } = 0;
 
+        public double? A1_CS1 { get; set; } = 0;
+        public double? A2_CS1 { get; set; } = 0;
+        public double? Ap1_CS1 { get; set; } = 0;
+        public double? Ap2_CS1 { get; set; } = 0;
+        public double? Z2_CS1 { get; set; } = 0;
+        public double? Qc_CS1 { get; set; } = 0;
+
+        public double? A1_CS2 { get; set; } = 0;
+        public double? A2_CS2 { get; set; } = 0;
+        public double? Ap1_CS2 { get; set; } = 0;
+        public double? Ap2_CS2 { get; set; } = 0;
+        public double? Z2_CS2 { get; set; } = 0;
+        public double? Qc_CS2 { get; set; } = 0;
+
+        public double? DoMo_Cua1 { get; set; } = 0;
+        public double? DoMo_Cua2 { get; set; } = 0;
+        public double? DoMo_Cua3 { get; set; } = 0;
+
         public double W1_ho { get; set; } = 0;
         public double W1_ho_old { get; set; } = 0;
         public double W2_ho { get; set; } = 0;
@@ -157,5 +186,10 @@ namespace Domain
         public double W_di { get; set; } = 0;
         public double Q_denta { get; set; } = 0;
         public double Q_i_total { get; set; } = 0;
+
+        public double? Q_cua1 { get; set; } = 0;
+        public double? Q_cua2 { get; set; } = 0;
+        public double? Q_cua3 { get; set; } = 0;
+        public double? Q_k5_700 { get; set; } = 0;
     }
 }

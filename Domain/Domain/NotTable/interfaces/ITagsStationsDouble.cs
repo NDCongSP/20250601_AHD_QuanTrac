@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,7 @@ namespace Domain
         public double? Fllow_Door1 { get; set; } 
         public double? Fllow_Door2 { get; set; }
         public double? Total_Fllow { get; set; }
+
 
         //gia tri sau cung = origin + Offset
         public double? HT_Cylinder1_1_Final { get; set; } 

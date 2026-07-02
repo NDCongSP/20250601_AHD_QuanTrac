@@ -342,7 +342,7 @@
             this.webView22.Size = new System.Drawing.Size(807, 296);
             this.webView22.TabIndex = 185;
             this.webView22.ZoomFactor = 1D;
-            this.webView22.Click += new System.EventHandler(this.webView22_Click);
+       
             // 
             // label17
             // 

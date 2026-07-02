@@ -1,4 +1,4 @@
-﻿namespace Domain
+namespace Domain
 {
     /// <summary>
     /// nhiều vị trí ở các khu vực địa lý khác nhau.
@@ -42,5 +42,6 @@
         /// Lưu thông tin tag path, để phục vụ cho sự kiện tagCHanged.
         /// </summary>
         public string? Path { get; set; }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,6 +93,24 @@ namespace Domain
         //6100014
         public double? API_D_Doi95 { get; set; }
         public double? API_D_Doi95_Total { get; set; }
+
+        public double? A1_CS1 { get; set; }
+        public double? A2_CS1 { get; set; }
+        public double? Ap1_CS1 { get; set; }
+        public double? Ap2_CS1 { get; set; }
+        public double? Z2_CS1 { get; set; }
+        public double? Qc_CS1 { get; set; }
+
+        public double? A1_CS2 { get; set; }
+        public double? A2_CS2 { get; set; }
+        public double? Ap1_CS2 { get; set; }
+        public double? Ap2_CS2 { get; set; }
+        public double? Z2_CS2 { get; set; }
+        public double? Qc_CS2 { get; set; }
+
+        public double? DoMo_Cua1 { get; set; }
+        public double? DoMo_Cua2 { get; set; }
+        public double? DoMo_Cua3 { get; set; }
 
         #endregion
 
